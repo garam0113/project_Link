@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  						
+<mapper namespace="ClubPostMapper">
+
+	<resultMap	id="clubPostSelectMap" type="com.link.service.domain.ClubPost">
+		<result property="clubNo" 					column="club_no" 					jdbcType="NUMERIC"/>
+		<result property="clubPostNo"				column="club_post_no" 				jdbcType="NUMERIC"/>
+		<result property="user.userId" 				column="user_id" 					jdbcType="VARCHAR"/>
+		<result property="clubPostTitle" 			column="club_post_title" 			jdbcType="VARCHAR"/>
+		<result property="clubPostContent" 			column="club_post_content" 			jdbcType="VARCHAR"/>
+		<result property="clubPostVideo1" 			column="club_post_video1" 			jdbcType="VARCHAR"/>
+		<result property="clubPostVideo2" 			column="club_post_video2" 			jdbcType="VARCHAR"/>
+		<result property="clubPostVideo3" 			column="club_post_video3" 			jdbcType="VARCHAR"/>
+		<result property="clubPostRegDate" 			column="club_post_reg_date" 		jdbcType="VARCHAR"/>
+		<result property="clubPostUpdateDate" 		column="club_post_update_date" 		jdbcType="VARCHAR"/>
+		<result property="clubPostLikeCount" 		column="club_post_like_count" 		jdbcType="NUMERIC"/>
+		<result property="clubPostCommentCount" 	column="club_post_comment_count" 	jdbcType="NUMERIC"/>
+		<result property="image1" 					column="image1" 					jdbcType="VARCHAR"/>
+		<result property="image2" 					column="image2" 					jdbcType="VARCHAR"/>
+		<result property="image3" 					column="image3" 					jdbcType="VARCHAR"/>
+		<result property="image4" 					column="image4" 					jdbcType="VARCHAR"/>
+		<result property="image5" 					column="image5" 					jdbcType="VARCHAR"/>
+		<result property="image6" 					column="image6" 					jdbcType="VARCHAR"/>
+		<result property="image7" 					column="image7" 					jdbcType="VARCHAR"/>
+		<result property="image8" 					column="image8" 					jdbcType="VARCHAR"/>
+		<result property="image9" 					column="image9" 					jdbcType="VARCHAR"/>
+		<result property="image10" 					column="image10" 					jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+
+	<insert id="addClubPost" parameterType="com.link.service.domain.ClubPost">
+	 	INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
+		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, IMAGE1, IMAGE2, IMAGE3, IMAGE4, 
+		IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10) VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle},
+		#{clubPostContent}, #{clubPostVideo1}, #{clubPostVideo2}, #{clubPostVideo3}, sysdate, null, 0, 0, #{image1}, #{image2},
+		#{image3}, #{image4}, #{image5}, #{image6}, #{image7}, #{image8}, #{image9}, #{image10})
+	</insert>
+	 
+</mapper>
