@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.link.common.Search;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.feed.FeedDAO;
 
@@ -21,12 +23,103 @@ public class FeedDAOImpl implements FeedDAO {
 
 	public FeedDAOImpl() {
 		// TODO Auto-generated constructor stub
+		System.out.println(this.getClass() + " default constructor");
 	}
 
+	//////////////////////////////////////// Feed
+	
 	@Override
 	public void addFeed(Feed feed) {
 		// TODO Auto-generated method stub
 		sqlSession.insert("FeedMapper.addFeed", feed);
+	}
+	
+	@Override
+	public void getFeed(int feedNo) {
+		// TODO Auto-generated method stub
+		sqlSession.selectOne("FeedMapper.getFeed", feedNo);
+	}
+	
+	@Override
+	public void updateFeed(Feed feed) {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeed", feed);
+	}
+	
+	@Override
+	public void deleteFeed(int feedNo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("FeedMapper.deleteFeed", feedNo);
+	}
+	
+	//////////////////////////////////////// Feed Comment
+	
+	@Override
+	public void addFeedComment(Comment comment) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("FeedMapper.addFeedComment", comment);
+	}
+
+	@Override
+	public void updateFeedComment(Comment comment) {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeedComment", comment);
+	}
+
+	@Override
+	public void deleteFeedComment(int commentNo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("FeedMapper.deleteFeedComment", commentNo);
+	}
+
+	//////////////////////////////////////// Feed List
+	
+	@Override
+	public void getFeedList(Search search) {
+		// TODO Auto-generated method stub
+		sqlSession.selectOne("FeedMapper.getFeedList", search);
+	}
+	
+	//////////////////////////////////////// Feed Report
+
+	@Override
+	public void addFeedReport() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addFeedCommentReport() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	//////////////////////////////////////// Feed Like
+	
+	@Override
+	public void updateFeedLike() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateFeedCommentLike() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	//////////////////////////////////////// Feed Push
+	
+	@Override
+	public void addFeedPush() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addFeedCommentPush() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
