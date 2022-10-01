@@ -1,5 +1,7 @@
 package com.link.service.feed;
 
+import java.util.Map;
+
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
@@ -26,6 +28,6 @@ public interface FeedService {
 	
 	//////////////////////////////////////// Feed List
 	
-	public void getFeedList(Search search);
+	public Map<String, Object> getFeedList(Search search);
 
 }
