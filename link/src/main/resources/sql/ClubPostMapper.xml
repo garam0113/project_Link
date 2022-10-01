@@ -33,12 +33,22 @@
 
 
 
-	<insert id="addClubPost" parameterType="com.link.service.domain.ClubPost">
+	<!-- <insert id="addClubPost" parameterType="com.link.service.domain.ClubPost">
 	 	INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
 		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, IMAGE1, IMAGE2, IMAGE3, IMAGE4, 
 		IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10) VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle},
 		#{clubPostContent}, #{clubPostVideo1}, #{clubPostVideo2}, #{clubPostVideo3}, sysdate, null, 0, 0, #{image1}, #{image2},
 		#{image3}, #{image4}, #{image5}, #{image6}, #{image7}, #{image8}, #{image9}, #{image10})
+	</insert> -->
+	
+	<insert id="addClubPost">
+	 	INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
+		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, IMAGE1, IMAGE2, IMAGE3, IMAGE4, 
+		IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10) VALUES (seq_club_post_no.NEXTVAL, 2, 'USER02', 'clubposttitle000111',
+		null, null, null, null, sysdate, 0, 0, 'a.jpg', null, null, null, null, null, null, null, null, null)
 	</insert>
+	
+	
+	
 	 
 </mapper>

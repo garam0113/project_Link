@@ -22,7 +22,12 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public ClubPost addClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".addClubPost() start");
-		int i = sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
+		System.out.println("오나?");
+		sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
+		System.out.println("오나???");
+		ClubPost clubPost2 = new ClubPost();
+		return clubPost2;
+		/*
 		if(i == 1) {
 			System.out.println("모임게시물 등록 성공");
 			return sqlSession.selectOne("ClubPostMapper.getClubPost");
@@ -30,6 +35,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 			System.out.println("모임게시물 등록 실패");
 			return null;
 		}
+		*/
 	}// end of addClubPost
 
 }

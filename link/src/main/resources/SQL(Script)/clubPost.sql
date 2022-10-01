@@ -15,6 +15,7 @@ getClubPost() - 모임게시물댓글리스트 가져오기
 
 
 getClubPostList()
+SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT FROM CLUB_POST WHERE CLUB_NO=2;
 
 
 

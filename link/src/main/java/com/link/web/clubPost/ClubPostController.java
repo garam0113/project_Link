@@ -24,15 +24,32 @@ public class ClubPostController {
 
 	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
 	public String addClubPostView() throws Exception {
-		System.out.println("/addClubPostView : POST");
+		System.out.println("/addClubPostView : GET");
 		return "redirect:/clubPost/addClubPostView.jsp";
 	}
+	
+	@RequestMapping(value = "addClubPost", method = RequestMethod.GET)
+	public String addClubPost() throws Exception {
+		System.out.println("/addClubPost : GET");
+		ClubPost clubPost = new ClubPost();
+		clubPostServiceImpl.addClubPost(clubPost);
+		return "redirect:/clubPost/getClubPost.jsp";
+	}
 
-	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
+	/*
+	@RequestMapping(value = "addClubPost", method = RequestMethod.GET)
 	public String addClubPost(@ModelAttribute ClubPost clubPost) throws Exception {
 		System.out.println("/addClubPost : POST");
 		clubPostServiceImpl.addClubPost(clubPost);
 		return "redirect:/clubPost/getClubPost.jsp";
+	}
+	*/
+
+	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
+	public String getClubPostList() throws Exception {
+		System.out.println("/getClubPostList : GET");
+		//clubPostServiceImpl.addClubPost();
+		return "redirect:/clubPost/getClubPostList.jsp";
 	}
 
 }
