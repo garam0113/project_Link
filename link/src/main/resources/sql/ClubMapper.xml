@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  						
+<mapper namespace="ClubMapper">
+
+
+
+	<resultMap	id="clubSelectMap"	type="club">
+		<result property="clubNo"			column="club_no"				jdbcType="NUMBER" />
+		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
+		<result property="clubTitle"		column="club_title"				jdbcType="VARCHAR" />
+		<result property="clubDetail"		column="club_detail"			jdbcType="VARCHAR" />
+		<result property="clubRegDate"		column="club_reg_date"			jdbcType="VARCHAR" />
+		<result property="currentMember"	column="current_member"			jdbcType="NUMBER" />
+		<result property="clubMaxMember"	column="club_max_member"		jdbcType="NUMBER" />
+		<result property="clubCategory"		column="club_category"			jdbcType="VARCHAR" />
+		<result property="clubArea"			column="club_area"				jdbcType="VARCHAR" />
+		<result property="clubImage"		column="club_image"				jdbcType="VARCHAR" />		
+	</resultMap>
+	
+	<insert id="addClub" parameterType="club">
+		INSERT
+		INTO club( club_no , user_id , club_title , club_detail , club_image , current_member , club_max_member , club_category , club_area)
+		VALUES ( seq_club_no.NEXTVAL , #{userId} , #{clubTitle} , #{clubDetail} , #{clubImage} , #{currentMember:NUMBER} , #{clubMaxMember:NUMBER} , #{clubCategory} , #{clubArea})
+	
+	</insert>
+
+
+	
+</mapper>
