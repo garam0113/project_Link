@@ -16,6 +16,16 @@
 	<typeAliases>
 		<typeAlias alias="user" type="com.link.service.domain.User" />
 		<typeAlias alias="feed" type="com.link.service.domain.Feed" />
+		<typeAlias alias="feed" type="com.link.service.domain.Club" />
+		<typeAlias alias="feed" type="com.link.service.domain.ClubPost" />
+		<typeAlias alias="feed" type="com.link.service.domain.Notice" />
+		<typeAlias alias="feed" type="com.link.service.domain.Report" />
+		<typeAlias alias="feed" type="com.link.service.domain.QandA" />
+		<typeAlias alias="feed" type="com.link.service.domain.Pay" />
+		<typeAlias alias="feed" type="com.link.service.domain.Meeting" />
+		<typeAlias alias="feed" type="com.link.service.domain.Comment" />
+		<typeAlias alias="feed" type="com.link.service.domain.ClubUser" />
+		<typeAlias alias="feed" type="com.link.service.domain.Block" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
