@@ -1,16 +1,30 @@
+
+// null값일 때  ${IMAGE:VARCHAR2} 붙이자
 addClubPost()
 INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
-CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, IMAGE1, IMAGE2, IMAGE3, IMAGE4, 
-IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10) VALUES (seq_club_post_no.NEXTVAL, 1, 'USER02', 'clubposttitle1',
-null, null, null, null, sysdate, 0, 0, 'a.jpg', null, null, null, null, null, null, null, null, null);
+CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_UPDATE_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, REPORT_CONDITION,
+DELETE_CONDITION, IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10)
+VALUES (seq_club_post_no.NEXTVAL, 2, 'USER02', 'clubposttitle1',
+null, null, null, null, sysdate, null, 0, 0, 0, 0, 'a.jpg', null, null, null, null, null, null, null, null, null);
+
+
+
+//모임원 전체에게 알림
+addPush()
 
 
 
 getClubPost() - 모임게시물상세보기 가져오기
+SELECT CLUB_POST_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, CLUB_POST_VIDEO3,
+CLUB_POST_REG_DATE, CLUB_POST_UPDATE_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION,
+IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10 FROM CLUB_POST
+WHERE REPORT_CONDITION = 0 AND DELETE_CONDITION = 0 AND CLUB_POST_NO = 20;
 
 
 
 getClubPost() - 모임게시물댓글리스트 가져오기
+SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
+REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE FROM CLUB_POST_COMMENT WHERE CLUB_POST_NO = 20;
 
 
 
@@ -19,66 +33,70 @@ SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT FROM
 
 
 
+// null값일 때  ${IMAGE:VARCHAR2} 붙이자
 updateClubPost() - 모임게시물 수정할 떄
+UPDATE CLUB_POST SET CLUB_POST_TITLE = 'updateTitle', CLUB_POST_CONTENT = 'updateContent', CLUB_POST_VIDEO1 = '1', CLUB_POST_VIDEO2 = '2',
+CLUB_POST_VIDEO3 = '3', IMAGE1 = '1', IMAGE2 = '2', IMAGE3 = '3', IMAGE4 = '4', IMAGE5 = '5', IMAGE6 = '6', IMAGE7 = '7', IMAGE8 = '8',
+IMAGE9 = '9', IMAGE10 = '10'
+WHERE CLUB_POST_NO = 20;
 
 
 
-updateClubPost() - 모임게시물 삭제할 때
-
+deleteClubPost()
+UPDATE CLUB_POST SET DELETE_CONDITION = '1' WHERE CLUB_POST_NO = 20;
 
 
 
 updateClubPostLike()
+UPDATE CLUB_POST SET CLUB_POST_LIKE_COUNT = CLUB_POST_LIKE_COUNT + 1 WHERE CLUB_POST_NO = 20;
 
 
 
-
+club_post_comment_no가 없다면 즉, 모임게시물의 댓글이라면? parent 0, depth 0, sequence는 parent의 번호가 같은것 중 sequence의 값이 가장 큰 것 +1
 addClubPostComment()
+INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
+COMMENT_LIKE_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
+VALUES (seq_club_post_comment_no.NEXTVAL, 20, 'USER02', '댓글내용1', sysdate, null, 0, '0', '0', 4, 1, 0);
 
+
+
+// 작성자에게 알림
+addPush()
 
 
 
 updateClubPostComment()
-
+UPDATE CLUB_POST_COMMENT SET COMMENT_CONTENT = '댓글내용9' WHERE CLUB_POST_COMMENT_NO = 9;
 
 
 
 updateClubPostCommentLike()
+UPDATE CLUB_POST_COMMENT SET COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1 WHERE CLUB_POST_COMMENT_NO = 1;
 
 
 
-
-addClubPostRecomment()
-
-
-
-
-getClubPostRecommentList()
+deleteClubPostComment()
+UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1' WHERE CLUB_POST_COMMENT_NO = 1;
 
 
 
-
-updateClubPostRecomment()
-
+addClubNotice()
 
 
 
-deleteClubPostRecomment()
+updateClubNotice()
 
 
 
-
-updateClubPostRecommentLike()
-
+deleteClubNotice()
 
 
 
+getClubNotice()
 
 
 
-
-
-
+getClubNoticeList()
 
 
 

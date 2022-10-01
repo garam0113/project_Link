@@ -70,6 +70,13 @@ DROP SEQUENCE seq_viewer_no;
 
 
 
+ALTER TABLE CLUB_POST_COMMENT ADD PARENT NUMBER(20) NOT NULL;
+
+
+
+
+
+
 여기부터 맨 밑까지 복사해서 사용하세요 (맨 아래 commit도 꼭!!!)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,8 +214,11 @@ CREATE TABLE CLUB_POST (
 	CLUB_POST_VIDEO2				VARCHAR2(100),
 	CLUB_POST_VIDEO3				VARCHAR2(100),
 	CLUB_POST_REG_DATE				DATE											NOT NULL,
+	CLUB_POST_UPDATE_DATE			DATE,
 	CLUB_POST_LIKE_COUNT			NUMBER(20)			DEFAULT 0					NOT NULL,
 	CLUB_POST_COMMENT_COUNT			NUMBER(20)			DEFAULT 0					NOT NULL,
+	REPORT_CONDIRION				CHAR(3)				DEFAULT 0					NOT NULL,
+	DELETE_CONDIRION				CHAR(3)				DEFAULT 0					NOT NULL,
 	IMAGE1							VARCHAR2(100)									NOT NULL,
 	IMAGE2							VARCHAR2(100),
 	IMAGE3							VARCHAR2(100),
@@ -232,10 +242,11 @@ CREATE TABLE CLUB_POST_COMMENT (
 	COMMENT_REG_DATE				DATE,
 	COMMENT_UPDATE_DATE				DATE,
 	COMMENT_LIKE_COUNT				NUMBER(20)			DEFAULT 0					NOT NULL,
-	REPORT_CONDIRION				CHAR(3)				DEFAULT '0'					NOT NULL,
-	PARENT							NUMBER(20)			DEFAULT 0					NOT NULL,
-	DEPTH							NUMBER(20)			DEFAULT 0					NOT NULL,
-	SEQUENCE						NUMBER(20)			DEFAULT 0					NOT NULL,
+	REPORT_CONDITION				CHAR(3)				DEFAULT '0'					NOT NULL,
+	DELETE_CONDITION				CHAR(3)				DEFAULT '0'					NOT NULL,
+	PARENT							NUMBER(20)										NOT NULL,
+	DEPTH							NUMBER(20)										NOT NULL,
+	SEQUENCE						NUMBER(20)										NOT NULL,
 	PRIMARY KEY(club_post_comment_no)
 );
 
