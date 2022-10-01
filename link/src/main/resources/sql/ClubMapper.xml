@@ -9,13 +9,13 @@
 
 
 	<resultMap	id="clubSelectMap"	type="club">
-		<result property="clubNo"			column="club_no"				jdbcType="NUMBER" />
+		<result property="clubNo"			column="club_no"				jdbcType="NUMERIC" />
 		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
 		<result property="clubTitle"		column="club_title"				jdbcType="VARCHAR" />
 		<result property="clubDetail"		column="club_detail"			jdbcType="VARCHAR" />
 		<result property="clubRegDate"		column="club_reg_date"			jdbcType="VARCHAR" />
-		<result property="currentMember"	column="current_member"			jdbcType="NUMBER" />
-		<result property="clubMaxMember"	column="club_max_member"		jdbcType="NUMBER" />
+		<result property="currentMember"	column="current_member"			jdbcType="NUMERIC" />
+		<result property="clubMaxMember"	column="club_max_member"		jdbcType="NUMERIC" />
 		<result property="clubCategory"		column="club_category"			jdbcType="VARCHAR" />
 		<result property="clubArea"			column="club_area"				jdbcType="VARCHAR" />
 		<result property="clubImage"		column="club_image"				jdbcType="VARCHAR" />		
@@ -24,7 +24,7 @@
 	<insert id="addClub" parameterType="club">
 		INSERT
 		INTO club( club_no , user_id , club_title , club_detail , club_image , current_member , club_max_member , club_category , club_area)
-		VALUES ( seq_club_no.NEXTVAL , #{userId} , #{clubTitle} , #{clubDetail} , #{clubImage} , #{currentMember:NUMBER} , #{clubMaxMember:NUMBER} , #{clubCategory} , #{clubArea})
+		VALUES ( seq_club_no.NEXTVAL , #{userId} , #{clubTitle} , #{clubDetail} , #{clubImage} , #{currentMember:NUMERIC} , #{clubMaxMember:NUMERIC} , #{clubCategory} , #{clubArea})
 	
 	</insert>
 
