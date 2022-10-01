@@ -101,7 +101,7 @@ public class FeedController {
 		
 		Map<String, Object> map = feedService.getFeedList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalFeedCount")).intValue(), pageUnit, pageSize);
 		
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

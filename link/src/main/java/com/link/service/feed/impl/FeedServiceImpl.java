@@ -88,6 +88,7 @@ public class FeedServiceImpl implements FeedService {
 		int totalFeedCount = feedDAO.getTotalFeedCount(search);
 		
 		map.put("list", list);
+		map.put("totalFeedCount", totalFeedCount);
 		
 		return map;
 	}

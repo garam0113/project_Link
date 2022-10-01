@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.link.common.Search;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
 
@@ -21,10 +22,11 @@ public class FeedServiceTest {
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
 
-	public FeedServiceTest() {
-		// TODO Auto-generated constructor stub
+	public void testGetFeedList() {
 		
+		Search search = null;
 		
+		feedService.getFeedList(search);
 	}
 
 }
