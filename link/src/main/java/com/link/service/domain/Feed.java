@@ -25,6 +25,134 @@ public class Feed {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public int getFeedNo() {
+		return feedNo;
+	}
+
+	public void setFeedNo(int feedNo) {
+		this.feedNo = feedNo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getOpenCondition() {
+		return openCondition;
+	}
+
+	public void setOpenCondition(int openCondition) {
+		this.openCondition = openCondition;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getImage1() {
+		return image1;
+	}
+
+	public void setImage1(String image1) {
+		this.image1 = image1;
+	}
+
+	public String getImage2() {
+		return image2;
+	}
+
+	public void setImage2(String image2) {
+		this.image2 = image2;
+	}
+
+	public String getImage3() {
+		return image3;
+	}
+
+	public void setImage3(String image3) {
+		this.image3 = image3;
+	}
+
+	public String getImage4() {
+		return image4;
+	}
+
+	public void setImage4(String image4) {
+		this.image4 = image4;
+	}
+
+	public String getVideo() {
+		return video;
+	}
+
+	public void setVideo(String video) {
+		this.video = video;
+	}
+
+	public String getHashTag() {
+		return hashTag;
+	}
+
+	public void setHashTag(String hashTag) {
+		this.hashTag = hashTag;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public int getReportCondition() {
+		return reportCondition;
+	}
+
+	public void setReportCondition(int reportCondition) {
+		this.reportCondition = reportCondition;
+	}
+
+	public int getDeleteCondition() {
+		return deleteCondition;
+	}
+
+	public void setDeleteCondition(int deleteCondition) {
+		this.deleteCondition = deleteCondition;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
