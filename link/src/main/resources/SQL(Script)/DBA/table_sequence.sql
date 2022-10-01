@@ -149,6 +149,7 @@ CREATE TABLE club (
 	club_max_member					NUMBER(20)			DEFAULT 10,
 	club_category					VARCHAR2(20)									NOT NULL,
 	club_area						VARCHAR2(20)									NOT NULL,
+	club_image         				VARCHAR2(100)          							NOT NULL,
 	PRIMARY KEY(club_no)
 );
 
