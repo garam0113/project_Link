@@ -9,68 +9,11 @@
 
 
 	<resultMap	id="feedSelectMap"			type="feed">
-		<result property="feedNo"			column="feed_no"				jdbcType="NUMBER" />
-		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
-		<result property="openCondition"	column="feed_open_condition"	jdbcType="VARCHAR" />
-		<result property="content"			column="feed_content"			jdbcType="VARCHAR" />
-		<result property="image1"			column="feed_image1"			jdbcType="VARCHAR" />
-		<result property="image2"			column="feed_image2"			jdbcType="VARCHAR" />
-		<result property="image3"			column="feed_image3"			jdbcType="VARCHAR" />
-		<result property="image4"			column="feed_image4"			jdbcType="VARCHAR" />
-		<result property="video"			column="feed_video"				jdbcType="VARCHAR" />
-		<result property="hashtag"			column="hashtag"				jdbcType="VARCHAR" />
-		<result property="likeCount"		column="feed_like_count"		jdbcType="VARCHAR" />
-		<result property="commentCount"		column="feed_comment_count"		jdbcType="VARCHAR" />
-		<result property="regDate"			column="feed_reg_date"			jdbcType="VARCHAR" />
-		<result property="updateDate"		column="feed_update_date"		jdbcType="VARCHAR" />
-		<result property="reportCondition"	column="report_condition"		jdbcType="VARCHAR" />
-		<result property="deleteCondition"	column="delete_condition"		jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<resultMap	id="feedCommentSelectMap"	type="feedComment">
-		
-	</resultMap>
-
 
 	<insert 	id="addFeed"		parameterType="feed">
-		INSERT into feed (
-			userId,
-			feed_open_condition,
-			feed_content,
-			feed_image1,
-			feed_image2,
-			feed_image3,
-			feed_image4,
-			feed_video,
-			hashtag,
-			feed_like_count,
-			feed_comment_count,
-			feed_reg_date,
-			feed_update_date,
-			report_condition,
-			delete_condition	)
-		VALUES (
-			#{userId},
-			#{openCondition},
-			#{content},
-			#{image1},
-			#{image2},
-			#{image3},
-			#{image4},
-			#{video},
-			#{hashtag},
-			#{likeCount},
-			#{commentCount},
-			#{regDate},
-			#{updateDate},
-			#{reportCondition},
-			#{deleteCondition}	)
 	</insert>
-	
-	<insert 	id="addFeed"		parameterType="feed">
-		
-	</insert>
-	
 	
 	
 </mapper>
