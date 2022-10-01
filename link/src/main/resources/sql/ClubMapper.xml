@@ -23,11 +23,60 @@
 	
 	<insert id="addClub" parameterType="club">
 		INSERT
-		INTO club( club_no , user_id , club_title , club_detail , club_image , current_member , club_max_member , club_category , club_area)
-		VALUES ( seq_club_no.NEXTVAL , #{userId} , #{clubTitle} , #{clubDetail} , #{clubImage} , #{currentMember:NUMERIC} , #{clubMaxMember:NUMERIC} , #{clubCategory} , #{clubArea})
+		INTO club( 
+					club_no ,
+					user_id ,
+		  			club_title , 
+		  			club_detail ,
+		   			club_image , 
+		   			current_member , 
+		   			club_max_member , 
+		   			club_category , 
+		   			club_area)
+		VALUES ( 
+					seq_club_no.NEXTVAL , 
+					#{userId} , 
+					#{clubTitle} , 
+					#{clubDetail} , 
+					#{clubImage} , 
+					#{currentMember:NUMERIC} , 
+					#{clubMaxMember:NUMERIC} , 
+					#{clubCategory} , 
+					#{clubArea})
 	
 	</insert>
 
 
-
+	<select id="getClub" parameterType="int" resultMap="clubSelectMap">
+		SELECT
+			club_no ,
+			user_id ,
+			club_title ,
+			club_detail ,
+			club_image ,
+			current_member ,
+			club_max_member ,
+			club_category ,
+			club_area
+		FROM club
+		WHERE club_no = #{club_no}	
+	
+	</select>
+	
+	<update id="updateClub" parameterType="club">
+		UPDATE club
+		<set>
+			club_title = #{clubTitle} ,
+			club_detail = #{clubDetail} ,
+			club_category = #{clubCategory} ,
+			club_area = #{clubArea}
+			club_image = #{clubImage}
+		</set>
+		
+	
+	
+	</update>
+	
+	
+	
 </mapper>
