@@ -59,7 +59,7 @@
 			club_category ,
 			club_area
 		FROM club
-		WHERE club_no = #{club_no}	
+		WHERE club_no = #{clubNo}	
 	
 	</select>
 	
@@ -72,10 +72,29 @@
 			club_area = #{clubArea}
 			club_image = #{clubImage}
 		</set>
-		
-	
-	
+		WHERE club_no = #{clubNo}
 	</update>
+	
+	<delete id="deleteClub">
+		DELETE FROM club WHERE club_no = #{clubNo}
+	</delete>
+	
+	
+	
+	<resultMap	id="clubUserSelectMap"		type="clubUser">
+		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
+		<result property="userId"					column="user_id"							jdbcType="VARCHAR" />
+		<result property="applicationRegDate"		column="application_reg_date"				jdbcType="DATE" />
+		<result property="joinRegDate"				column="join_reg_date"						jdbcType="DATE" />
+		<result property="logoutDate"				column="logout_date"						jdbcType="DATE" />
+		<result property="memberRole"				column="member_role"						jdbcType="CHAR" />
+		<result property="approvalCondition"		column="approval_condition"					jdbcType="CHAR" />
+		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />
+				
+	</resultMap>
+	
+	
+	
 	
 	
 	
