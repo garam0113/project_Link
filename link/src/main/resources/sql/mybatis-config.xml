@@ -16,16 +16,16 @@
 	<typeAliases>
 		<typeAlias alias="user" type="com.link.service.domain.User" />
 		<typeAlias alias="feed" type="com.link.service.domain.Feed" />
-		<typeAlias alias="feed" type="com.link.service.domain.Club" />
-		<typeAlias alias="feed" type="com.link.service.domain.ClubPost" />
-		<typeAlias alias="feed" type="com.link.service.domain.Notice" />
-		<typeAlias alias="feed" type="com.link.service.domain.Report" />
-		<typeAlias alias="feed" type="com.link.service.domain.QandA" />
-		<typeAlias alias="feed" type="com.link.service.domain.Pay" />
-		<typeAlias alias="feed" type="com.link.service.domain.Meeting" />
-		<typeAlias alias="feed" type="com.link.service.domain.Comment" />
-		<typeAlias alias="feed" type="com.link.service.domain.ClubUser" />
-		<typeAlias alias="feed" type="com.link.service.domain.Block" />
+		<typeAlias alias="club" type="com.link.service.domain.Club" />
+		<typeAlias alias="clubPost" type="com.link.service.domain.ClubPost" />
+		<typeAlias alias="notice" type="com.link.service.domain.Notice" />
+		<typeAlias alias="report" type="com.link.service.domain.Report" />
+		<typeAlias alias="QandA" type="com.link.service.domain.QandA" />
+		<typeAlias alias="pay" type="com.link.service.domain.Pay" />
+		<typeAlias alias="meeting" type="com.link.service.domain.Meeting" />
+		<typeAlias alias="comment" type="com.link.service.domain.Comment" />
+		<typeAlias alias="clubUser" type="com.link.service.domain.ClubUser" />
+		<typeAlias alias="block" type="com.link.service.domain.Block" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
