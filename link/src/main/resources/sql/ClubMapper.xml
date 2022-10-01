@@ -5,7 +5,6 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   						
 <mapper namespace="ClubMapper">
-<<<<<<< HEAD
 
 
 
@@ -30,8 +29,5 @@
 	</insert>
 
 
-	
-=======
-	 
->>>>>>> refs/remotes/origin/master
+
 </mapper>
