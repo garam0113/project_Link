@@ -11,12 +11,10 @@ public interface UserService {
 	
 	public void addSnsUser(User user) throws Exception;
 	
-	public void addBlockUser(User user) throws Exception;
+//	public void addBlockUser(User user) throws Exception;
 	
 	public User getUser(String userId) throws Exception;
 	
-	public User getId(String name, int rrn) throws Exception;
-
 	public void updateUser(User user) throws Exception;
 	
 	public void updateProfile(User user) throws Exception;
@@ -25,12 +23,10 @@ public interface UserService {
 	
 	public void updatePassword(User user) throws Exception;
 
-	public void updateBlockUser(User user) throws Exception;
+//	public void updateBlockUser(User user) throws Exception;
 	
 	public void logout(User user) throws Exception;
 	
-	//public void updateBlockUser(Block block) throws Exception;
-		
 	public void deleteUser(User user) throws Exception;
 	
 	public boolean checkDuplication(String userId) throws Exception;

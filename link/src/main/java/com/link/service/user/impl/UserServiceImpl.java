@@ -20,20 +20,14 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	@Override
-	public void addBlockUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void addBlockUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public User getUser(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User getId(String name, int rrn) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,11 +56,11 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	@Override
-	public void updateBlockUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void updateBlockUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public void logout(User user) throws Exception {
