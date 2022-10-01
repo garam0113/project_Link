@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  						
+<mapper namespace="FeedMapper">
+
+
+
+	<resultMap	id="feedSelectMap"	type="feed">
+		<result property="feedNo"			column="feed_no"				jdbcType="NUMBER" />
+		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
+		<result property="openCondition"	column="feed_open_condition"	jdbcType="VARCHAR" />
+		<result property="content"			column="feed_content"			jdbcType="VARCHAR" />
+		<result property="image1"			column="feed_image1"			jdbcType="VARCHAR" />
+		<result property="image2"			column="feed_image2"			jdbcType="VARCHAR" />
+		<result property="image3"			column="feed_image3"			jdbcType="VARCHAR" />
+		<result property="image4"			column="feed_image4"			jdbcType="VARCHAR" />
+		<result property="video"			column="feed_video"				jdbcType="VARCHAR" />
+		<result property="hashtag"			column="hashtag"				jdbcType="VARCHAR" />
+		<result property="likeCount"		column="feed_like_count"		jdbcType="VARCHAR" />
+		<result property="commentCount"		column="feed_comment_count"		jdbcType="VARCHAR" />
+		<result property="regDate"			column="feed_reg_date"			jdbcType="VARCHAR" />
+		<result property="updateDate"		column="feed_update_date"		jdbcType="VARCHAR" />
+		<result property="reportCondition"	column="report_condition"		jdbcType="VARCHAR" />
+		<result property="deleteCondition"	column="delete_condition"		jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	
+</mapper>
