@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.feed.FeedService;
@@ -34,16 +35,34 @@ public class FeedRestController {
 	// 없다면 ? 3으로 초기화
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/getFeedList", method = RequestMethod.POST)
+	public List<Feed> getFeedList(@RequestBody Search search) {
+		
+		// 피드 리스트
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
+		return (List<Feed>)feedService.getFeedList(search).get("list");
+	}
 
-	@RequestMapping(value = " /json/addFeedComment", method = RequestMethod.POST)
-	public List<Comment> addFeedComment(@RequestBody Comment comment) {
+	@RequestMapping(value = "/json/addFeedComment", method = RequestMethod.POST)
+	public List<Feed> addFeedComment(@RequestBody Comment comment) {
+		
+		// 댓글 작성
 		
 		feedService.addFeedComment(comment);
 		
 		return null;
 	}
 	
-	@RequestMapping(value = " /json/updateFeedComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
 	public List<Comment> updateFeedComment(@RequestBody Comment comment) {
 		
 		feedService.updateFeedComment(comment);
@@ -51,7 +70,7 @@ public class FeedRestController {
 		return null;
 	}
 	
-	@RequestMapping(value = " /json/deleteFeedComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
 	public List<Comment> deleteFeedComment(@RequestBody Comment comment) {
 		
 		feedService.deleteFeedComment(0);	// 수정
@@ -59,7 +78,7 @@ public class FeedRestController {
 		return null;
 	}
 	
-	@RequestMapping(value = " /json/updateFeedLike")
+	@RequestMapping(value = "/json/updateFeedLike")
 	public List<Feed> updateFeedLike() {
 		
 		return null;

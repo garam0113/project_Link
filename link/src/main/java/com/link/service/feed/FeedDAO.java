@@ -1,5 +1,7 @@
 package com.link.service.feed;
 
+import java.util.List;
+
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
@@ -26,7 +28,7 @@ public interface FeedDAO {
 	
 	//////////////////////////////////////// Feed List
 	
-	public void getFeedList(Search search);
+	public List<Feed> getFeedList(Search search);
 	
 	//////////////////////////////////////// Feed Report
 	
@@ -45,5 +47,9 @@ public interface FeedDAO {
 	public void addFeedPush();
 	
 	public void addFeedCommentPush();
+	
+	//////////////////////////////////////// Count
+
+	public int getTotalFeedCount(Search search);
 	
 }

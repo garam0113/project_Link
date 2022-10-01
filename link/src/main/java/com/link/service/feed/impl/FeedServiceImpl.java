@@ -1,5 +1,9 @@
 package com.link.service.feed.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -75,9 +79,18 @@ public class FeedServiceImpl implements FeedService {
 	//////////////////////////////////////// Feed List
 
 	@Override
-	public void getFeedList(Search search) {
+	public Map<String, Object> getFeedList(Search search) {
 		// TODO Auto-generated method stub
-		feedDAO.getFeedList(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<Feed> list = feedDAO.getFeedList(search);
+		int totalFeedCount = feedDAO.getTotalFeedCount(search);
+		
+		map.put("list", list);
+		map.put("totalFeedCount", totalFeedCount);
+		
+		return map;
 	}
 	
 }

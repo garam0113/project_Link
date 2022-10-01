@@ -1,5 +1,7 @@
 package com.link.service.feed.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -75,9 +77,9 @@ public class FeedDAOImpl implements FeedDAO {
 	//////////////////////////////////////// Feed List
 	
 	@Override
-	public void getFeedList(Search search) {
+	public List<Feed> getFeedList(Search search) {
 		// TODO Auto-generated method stub
-		sqlSession.selectOne("FeedMapper.getFeedList", search);
+		return sqlSession.selectList("FeedMapper.getFeedList", search);
 	}
 	
 	//////////////////////////////////////// Feed Report
@@ -120,6 +122,14 @@ public class FeedDAOImpl implements FeedDAO {
 	public void addFeedCommentPush() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//////////////////////////////////////// Count
+
+	@Override
+	public int getTotalFeedCount(Search search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getTotalFeedCount", search);
 	}
 
 }

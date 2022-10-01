@@ -14,6 +14,7 @@
 	
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
+		<typeAlias alias="search" type="com.link.common.Search" />
 		<typeAlias alias="user" type="com.link.service.domain.User" />
 		<typeAlias alias="feed" type="com.link.service.domain.Feed" />
 		<typeAlias alias="club" type="com.link.service.domain.Club" />
