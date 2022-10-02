@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class User {
 	
-	private String userid;
+	private String userId;
 	private String receiveId;
 	private String password;
 	private String name;
@@ -38,16 +38,16 @@ public class User {
 	private String followState;
 	private Boolean loginStart;
 	
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getReceiveId() {
 		return receiveId;
 	}
-	public void getReceiveId(String receiveId) {
+	public void setReceiveId(String receiveId) {
 		this.receiveId = receiveId;
 	}
 	public String getPassword() {
@@ -236,18 +236,78 @@ public class User {
 	public void setLoginStart(Boolean loginStart) {
 		this.loginStart = loginStart;
 	}
+	
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", ReceiveId=" + receiveId + ", password=" + password + ", name=" + name
-				+ ", rrn=" + rrn + ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email + ", role=" + role
-				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profilewriting=" + profilewriting
-				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
-				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
-				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
-				+ ", outUserType=" + outUserType + ", outUserDate=" + outUserDate + ", addType=" + addType
-				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
-				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
-				+ joinClubCount + ", followState=" + followState + ", loginStart=" + loginStart + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [userId=");
+		builder.append(userId);
+		builder.append(", receiveId=");
+		builder.append(receiveId);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", rrn=");
+		builder.append(rrn);
+		builder.append(", gender=");
+		builder.append(gender);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", role=");
+		builder.append(role);
+		builder.append(", nickName=");
+		builder.append(nickName);
+		builder.append(", profileImage=");
+		builder.append(profileImage);
+		builder.append(", profilewriting=");
+		builder.append(profilewriting);
+		builder.append(", area1=");
+		builder.append(area1);
+		builder.append(", area2=");
+		builder.append(area2);
+		builder.append(", area3=");
+		builder.append(area3);
+		builder.append(", category1=");
+		builder.append(category1);
+		builder.append(", category2=");
+		builder.append(category2);
+		builder.append(", category3=");
+		builder.append(category3);
+		builder.append(", penaltyType=");
+		builder.append(penaltyType);
+		builder.append(", reportCount=");
+		builder.append(reportCount);
+		builder.append(", stopStartDate=");
+		builder.append(stopStartDate);
+		builder.append(", stopEndDate=");
+		builder.append(stopEndDate);
+		builder.append(", outUserType=");
+		builder.append(outUserType);
+		builder.append(", outUserDate=");
+		builder.append(outUserDate);
+		builder.append(", addType=");
+		builder.append(addType);
+		builder.append(", logoutDate=");
+		builder.append(logoutDate);
+		builder.append(", addUserDate=");
+		builder.append(addUserDate);
+		builder.append(", totalVisitCount=");
+		builder.append(totalVisitCount);
+		builder.append(", openCondition=");
+		builder.append(openCondition);
+		builder.append(", pushCondition=");
+		builder.append(pushCondition);
+		builder.append(", joinClubCount=");
+		builder.append(joinClubCount);
+		builder.append(", followState=");
+		builder.append(followState);
+		builder.append(", loginStart=");
+		builder.append(loginStart);
+		builder.append("]");
+		return builder.toString();
 	}
-
+	
 }
