@@ -9,8 +9,16 @@ null, null, null, null, sysdate, null, 0, 0, 0, 0, 'a.jpg', null, null, null, nu
 
 
 
+//현재 등록한 모임게시물의 sequence를 가져온다
+SELECT seq_club_post_no
+
+
+
 //모임원 전체에게 알림
 addPush()
+INSERT INTO REPORT_PUSH (NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_NO, USER_ID1, USER_ID2, REPORT_REGDATE, 
+TYPE) VALUES (seq_REPORT_PUSH_NO.NEXTVAL, 'title', 'content', '1', seq_club_post_no.CURRVAL,
+'USER02', 'USER03', sysdate, '2');
 
 
 
@@ -62,6 +70,8 @@ VALUES (seq_club_post_comment_no.NEXTVAL, 20, 'USER02', '댓글내용1', sysdate
 
 // 작성자에게 알림
 addPush()
+INSERT INTO REPORT_PUSH (NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_COMMENT_NO, USER_ID1, USER_ID2, REPORT_REGDATE, TYPE)
+VALUES (seq_club_post_comment_no, 'titleComment', 'contentComment', '2', seq_club_post_no.currval, 'USER03', 'USER02');
 
 
 
