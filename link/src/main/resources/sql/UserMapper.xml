@@ -14,7 +14,7 @@
 		<result property="name"		column="name" 		jdbcType="VARCHAR" />
 		<result property="rrn" 			column="rrn" 			jdbcType="VARCHAR" />
 		<result property="gender" 		column="gender" 			jdbcType="VARCHAR" />
-		<result property="phoneNo" 		column="phone_no" 	jdbcType="NUMBER" />
+		<result property="phoneNo" 		column="phone_no" 	jdbcType="NUMERIC" />
 		<result property="email" 		column="email" 			jdbcType="VARCHAR" />
 		<result property="role" 		column="role" 			jdbcType="CHAR" />
 		<result property="nickName" 	column="nickname" 			jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
 		<result property="category2" 		column="category2" 		jdbcType="VARCHAR" />
 		<result property="category3" 		column="category3" 		jdbcType="VARCHAR" />
 		<result property="penaltyType" 		column="penalty_type" 		jdbcType="CHAR" />
-		<result property="reportCount" 		column="report_count" 		jdbcType="NUMBER" />
+		<result property="reportCount" 		column="report_count" 		jdbcType="NUMERIC" />
 		<result property="stopStartDate" 		column="stop_start_date" 		jdbcType="DATE" />
 		<result property="stopEndDate" 		column="stop_end_date" 		jdbcType="DATE" />
 		<result property="outUserState" 		column="out_user_state" 		jdbcType="CHAR" />
@@ -35,11 +35,11 @@
 		<result property="addUserType" 		column="out_user_type" 		jdbcType="CHAR" />
 		<result property="logoutDate" 		column="logout_date" 		jdbcType="DATE" />
 		<result property="addUserDate" 		column="add_user_date" 		jdbcType="DATE" />
-		<result property="totalVisitCount" 		column="total_visit_count" 		jdbcType="NUMBER" />
+		<result property="totalVisitCount" 		column="total_visit_count" 		jdbcType="NUMERIC" />
 		<result property="openCondition" 		column="open_condition" 		jdbcType="CHAR" />
 		<result property="pushCondition" 		column="push_condition" 		jdbcType="CHAR" />
-		<result property="joinClubCount" 		column="join_club_count" 		jdbcType="NUMBER" />
-		<result property="joinClubLimit" 		column="join_club_limit" 		jdbcType="NUMBER" />
+		<result property="joinClubCount" 		column="join_club_count" 		jdbcType="NUMERIC" />
+		<result property="joinClubLimit" 		column="join_club_limit" 		jdbcType="NUMERIC" />
 	</resultMap>
 
 	<sql id="select-list">
@@ -68,8 +68,8 @@
 						area1, area2, area3, category1, category2, category3, add_user_date	
 					) 
 		VALUES		(	
-						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:NUMBER}, 
-						#{phoneNo:NUMBER}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
+						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:NUMERIC}, 
+						#{phoneNo:NUMERIC}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
 						#{area1:VARCHAR} , #{area2:VARCHAR} , #{area3:VARCHAR} , #{category1:VARCHAR} , 
 						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE 
 					)
@@ -109,7 +109,7 @@
 	<update	id="updatePhoneNo"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		phone_no 	= #{phoneNo:NUMBER}	,
+	   		phone_no 	= #{phoneNo:NUMERIC}	,
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
@@ -183,7 +183,7 @@
 	 <update id="updateVisitCount" parameterType="user">
 	 	UPDATE users
 	 	<set>
-	 		total_visit_count	= #{totalVisitCount:NUMBER}
+	 		total_visit_count	= #{totalVisitCount:NUMERIC}
 	 	</set>
 	 	WHERE user_id = #{userId}
 	 </update>
@@ -207,7 +207,7 @@
 	 <update id="updateJoinClubCount" parameterType="user">
 	 	UPDATE users
 	 	<set>
-	 		join_club_count	= #{joinClubCount:NUMBER}
+	 		join_club_count	= #{joinClubCount:NUMERIC}
 	 	</set>
 	 	WHERE user_id = #{userId}
 	 </update>
@@ -215,7 +215,7 @@
 	 <update id="updateJoinClubLimit" parameterType="user">
 	 	UPDATE users
 	 	<set>
-	 		join_club_limit	= #{joinClubLimit:NUMBER}
+	 		join_club_limit	= #{joinClubLimit:NUMERIC}
 	 	</set>
 	 	WHERE user_id = #{userId}
 	 </update>
