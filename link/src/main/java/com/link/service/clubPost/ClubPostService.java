@@ -12,17 +12,26 @@ public interface ClubPostService {
 	// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
 	public Map<String, Object> getCurrentClubPostList(String userId) throws Exception;
 	
-	// 최신순 모임게시물 리스트
+	// 모임게시물에서 최신순 클릭시 => 최신순 모임게시물 리스트
 	public Map<String, Object> getClubPostListRecent(int clubNo) throws Exception;
+	
+	// 모임리스트에서 좋아요많은순 클릭시 => 좋아요 많은순 모임게시물 리스트
+	public Map<String, Object> getClubPostListLike(int clubNo) throws Exception;
 	
 	// 내가 작성한 모임게시물 리스트
 	public Map<String, Object> getClubPostListMySelf(String userId, int clubNo) throws Exception;
 	
-	// 모임게시물 상세보기
+	// 모임게시물 상세보기 => 수정화면으로 갈 때
+	public Map<String, Object> getClubPost(int clubPostNo) throws Exception;
 	
-	// 모임게시물 수정
+	// 모임게시물 상세보기 + 모임게시물 댓글리스트
+	public Map<String, Object> getClubPostFull(int clubPostNo) throws Exception;
 	
-	// 모임게시물 삭제
+	// 모임게시물 수정 후 모임게시물 상세보기
+	public ClubPost updateClubPost(int clubPostNo) throws Exception;
+	
+	// 모임게시물 삭제 후 모임게시물 리스트
+	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception;
 	
 	// 모임게시물 좋아요
 	

@@ -33,6 +33,13 @@ public class ClubPostRestController {
 		return clubPostServiceImpl.getClubPostListRecent(clubNo);
 	}
 
+	@RequestMapping(value = "getClubPostListLike", method = RequestMethod.GET)
+	public Map<String, Object> getClubPostListLike(@RequestParam int clubNo) throws Exception {
+		System.out.println("/getClubPostListLike : GET : 특정 모임에서 좋아요 많은순 모임게시물 리스트, 모임게시물 리스트 개수");
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		return clubPostServiceImpl.getClubPostListLike(clubNo);
+	}
+
 	@RequestMapping(value = "getClubPostListMySelf", method = RequestMethod.GET)
 	public Map<String, Object> getClubPostListMySelf(@RequestParam int clubNo) throws Exception {
 		System.out.println("/getClubPostListMySelf : GET : 특정 모임에서 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
@@ -45,7 +52,7 @@ public class ClubPostRestController {
 	public Map<String, Object> getClubPostListMyHome() throws Exception {
 		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		String userId = "user02";
+		String userId = "user03";
 		return clubPostServiceImpl.getClubPostListMyHome(userId);
 	}
 

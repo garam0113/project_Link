@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 
 @Repository("clubPostDAOImpl")
 public class ClubPostDAOImpl implements ClubPostDAO {
@@ -26,21 +27,23 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 
 	@Override
 	public ClubPost addClubPost(ClubPost clubPost) throws Exception {
-		System.out.println(getClass() + ".addClubPost() 왔다");
-		System.out.println("오나?");
+		System.out.println(getClass() + ".addClubPost(ClubPost clubPost) 왔다");
+		// 모임게시물 등록
 		sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
-		System.out.println("오나???");
-		ClubPost clubPost2 = new ClubPost();
-		return clubPost2;
-		/*
-		if(i == 1) {
-			System.out.println("모임게시물 등록 성공");
-			return sqlSession.selectOne("ClubPostMapper.getClubPost");
-		}else {
-			System.out.println("모임게시물 등록 실패");
-			return null;
+		// 모임게시물 현재 sequence 가져오기
+		int currval = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
+		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
+		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberList", clubPost);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		map.put("clubUserList", clubUserList);
+		for (int i = 0; i < clubUserList.size(); i++) {
+			// 해당 모임의 모임원들에게 모임게시물 등록되었다고 알림
+			sqlSession.insert("Report_PushMapper.addPush", map);
 		}
-		*/
+		// 모임게시물 상세보기 가져온 후 화면 이동
+		return sqlSession.selectOne("ClubPostMapper.getClubPost", currval);
+		
 	}// end of addClubPost(ClubPost clubPost)
 
 	@Override
@@ -62,6 +65,15 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getClubPostListRecent(int clubNo)
 
 	@Override
+	public Map<String, Object> getClubPostListLike(int clubNo) throws Exception {
+		System.out.println(getClass() + ".getClubPostListLike(int clubNo) 왔다");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostListLike", clubNo));
+		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
+		return map;
+	}// end of getClubPostListLike(int clubNo)
+
+	@Override
 	public Map<String, Object> getClubPostListMySelf(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostListMySelf(Map<String, Object> map) 왔다");
 		Map<String, Object> returnMap = new HashMap<String, Object>();
@@ -69,6 +81,35 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		returnMap.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListMySelfCount", map));
 		return returnMap;
 	}// end of getClubPostListMySelf(Map<String, Object> map)
+
+	@Override
+	public Map<String, Object> getClubPost(int clubPostNo) throws Exception {
+		System.out.println(getClass() + ".getClubPost(int clubPostNo) 왔다");
+		return sqlSession.selectOne("ClubPostMapper.getClubPost", clubPostNo);
+	}// end of getClubPost(int clubPostNo)
+
+	@Override
+	public Map<String, Object> getClubPostFull(int clubPostNo) throws Exception {
+		System.out.println(getClass() + ".getClubPostFull(int clubPostNo) 왔다");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", clubPostNo));
+		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", clubPostNo));
+		return map;
+	}// end of getClubPostFull(int clubPostNo)
+
+	@Override
+	public ClubPost updateClubPost(int clubPostNo) throws Exception {
+		System.out.println(getClass() + ".updateClubPost(int clubPostNo) 왔다");
+		return null;
+	}// end of updateClubPost(int clubPostNo)
+
+	@Override
+	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception {
+		System.out.println(getClass() + ".deleteClubPost(int clubPostNo) 왔다");
+		sqlSession.update("ClubPostMapper.deleteClubPost", clubPostNo);
+		//map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
+		return null;
+	}// end of deleteClubPost(int clubPostNo)
 
 	@Override
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {

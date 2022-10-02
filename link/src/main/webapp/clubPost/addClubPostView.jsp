@@ -15,6 +15,7 @@ $(function(){
 </head>
 <body>
 <form name="addClubPost" method="post" action="/clubPost/addClubPost">
+<input type="text" name="clubNo" value="${ clubNo }"></br>
 제목<input type="text" name="clubPostTitle"></br>
 내용<input type="text" name="clubPostContent"></br>
 영상1<input type="text" name="clubPostVideo1"></br>

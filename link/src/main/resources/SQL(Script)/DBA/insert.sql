@@ -52,23 +52,23 @@ VALUES	('admin1', '1234', '박경수', '1111110000000', '남자', '01011113333',
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('USER01', '1234', '홍길동', '1111110000000', '남자', '01011113333', 'USER01@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('user01', '1234', '홍길동', '1111110000000', '남자', '01011113333', 'USER01@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('USER02', '1234', '홍길순', '1111110000000', '남자', '01011113333', 'USER02@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('user02', '1234', '홍길순', '1111110000000', '남자', '01011113333', 'USER02@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('USER03', '1234', '박보영', '1111110000000', '남자', '01011113333', 'USER03@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('user03', '1234', '박보영', '1111110000000', '남자', '01011113333', 'USER03@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('USER04', '1234', '박수현', '1111110000000', '남자', '01011113333', 'USER04@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('user04', '1234', '박수현', '1111110000000', '남자', '01011113333', 'USER04@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('USER05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 
 
