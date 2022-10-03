@@ -33,12 +33,112 @@
 
 
 
+	<!-- 모임게시물 등록 -->
 	<insert id="addClubPost" parameterType="com.link.service.domain.ClubPost">
 	 	INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
-		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, IMAGE1, IMAGE2, IMAGE3, IMAGE4, 
-		IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10) VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle},
-		#{clubPostContent}, #{clubPostVideo1}, #{clubPostVideo2}, #{clubPostVideo3}, sysdate, null, 0, 0, #{image1}, #{image2},
-		#{image3}, #{image4}, #{image5}, #{image6}, #{image7}, #{image8}, #{image9}, #{image10})
+		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_UPDATE_DATE, CLUB_POST_LIKE_COUNT, CLUB_POST_COMMENT_COUNT, REPORT_CONDITION,
+		DELETE_CONDITION, IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10)
+		VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle}, #{clubPostContent:VARCHAR},
+		#{clubPostVideo1:VARCHAR}, #{clubPostVideo2:VARCHAR}, #{clubPostVideo3:VARCHAR}, sysdate, null, 0, 0, '0', '0',
+		#{image1}, #{image2:VARCHAR}, #{image3:VARCHAR}, #{image4:VARCHAR}, #{image5:VARCHAR}, #{image6:VARCHAR},
+		#{image7:VARCHAR}, #{image8:VARCHAR}, #{image9:VARCHAR}, #{image10:VARCHAR})
 	</insert>
+	
+	
+	
+	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
+	<select id="getCurrentClubPostList" parameterType="string" resultMap="clubPostSelectMap">
+		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT
+		FROM CLUB_POST
+		WHERE CLUB_NO = ( SELECT V2.CLUB_NO
+							FROM ( SELECT ROWNUM, V1.*
+									FROM ( SELECT *
+											FROM CLUB
+											WHERE USER_ID = #{ userId }
+											ORDER BY CLUB_REG_DATE DESC ) V1
+									WHERE ROWNUM = 1 ) V2 )
+		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY CLUB_POST_REG_DATE DESC
+	</select>
+	
+	
+	
+	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트의 개수 가져온다 -->
+	<select id="getCurrentClubPostListCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM CLUB_POST
+		WHERE CLUB_NO= ( SELECT V2.CLUB_NO
+							FROM ( SELECT ROWNUM, V1.*
+									FROM ( SELECT *
+											FROM CLUB
+											WHERE USER_ID = #{ userId }
+											ORDER BY CLUB_REG_DATE DESC ) V1
+									WHERE ROWNUM = 1 ) V2 )
+		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+	</select>
+	
+	
+	
+	<!-- 모임게시물에서 최신순 클릭시 => 최신순 모임게시물 리스트 -->
+	<select id="getClubPostListRecent" parameterType="int" resultMap="clubPostSelectMap">
+		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT
+		FROM CLUB_POST
+		WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY CLUB_POST_REG_DATE DESC
+	</select>
+	
+	
+	
+	<!-- 모임게시물에서 좋아요 많은순 클릭시 => 좋아요 많은순 모임게시물 리스트 -->
+	<select id="getClubPostListLike" parameterType="int" resultMap="clubPostSelectMap">
+		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT
+		FROM CLUB_POST
+		WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY CLUB_POST_LIKE_COUNT DESC, CLUB_POST_REG_DATE DESC
+	</select>
+	
+	
+	
+	<!-- 최신순, 좋아요 많은 순 모임게시물 개수 -->
+	<select id="getClubPostListCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM CLUB_POST WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+	</select>
+	
+	
+	
+	<!-- 특정 모임에서 내가 작성한 모임게시물 리스트 -->
+	<select id="getClubPostListMySelf" parameterType="map" resultMap="clubPostSelectMap">
+		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT
+		FROM CLUB_POST
+		WHERE USER_ID = #{ userId } AND CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+	</select>
+	
+	
+	
+	<!-- 특정 모임에서 내가 작성한 모임게시물 리스트 개수 -->
+	<select id="getClubPostListMySelfCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM CLUB_POST
+		WHERE USER_ID = #{ userId } AND CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+	</select>
+	
+	
+	
+	<!-- 마이홈피 - 내가 작성한 모임게시물 리스트 -->
+	<select id="getClubPostListMyHome" parameterType="string" resultMap="clubPostSelectMap">
+		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_LIKE_COUNT
+		FROM CLUB_POST
+		WHERE USER_ID = #{ userId } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY CLUB_POST_REG_DATE DESC
+	</select>
+	
+	
+	
+	<!-- 마이홈피 - 내가 작성한 모임게시물 리스트 개수 -->
+	<select id="getClubPostListMyHomeCount" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM CLUB_POST WHERE USER_ID = #{ userId } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+	</select>
+	
+	
 	 
 </mapper>
