@@ -9,11 +9,13 @@
 <body>
 	<h2>Hello World!</h2>
 	
-	<form>
+	<form method="post">
 		<input type="text">
 		<input type="button" value="submit">
 		
-		<a href="/feed/addFeed">aaa</a>
+		<a href="/feed/getFeedList">피드리스트</a>
 	</form>
+	
+	
 </body>
 </html>

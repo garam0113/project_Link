@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.Feed;
-import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 
 @Controller
-@SessionAttributes("user")
 @RequestMapping("/feed/*")
 public class FeedController {
 
@@ -43,8 +40,10 @@ public class FeedController {
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
+	//////////////////////////////////////// Feed
+	
 	@RequestMapping(value = "addFeed", method = RequestMethod.GET)
-	public String addFeed(@ModelAttribute User user, @ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file) throws Exception {
+	public String addFeed(@ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file) throws Exception {
 		
 		for(MultipartFile files : file) {
 			String path = "C:\\Users\\";
@@ -64,33 +63,41 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
-	public String getFeed(@ModelAttribute Feed feed) {
+	public String getFeed(@ModelAttribute Feed feed, Model model) {
 		
-		feedService.getFeed(feed.getFeedNo());
+		feed = feedService.getFeed(1);
+		
+		model.addAttribute("feed", feed);
 		
 		return "forward:/feed/getFeed.jsp";
 	}
 	
-	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
-	public String updateFeed() {
+	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
+	public String updateFeed(@ModelAttribute Feed feed, Model model) {
 		
-		feedService.updateFeed(null);
+		feedService.updateFeed(feed);
+		
+		feed = feedService.getFeed(feed.getFeedNo());
+		
+		model.addAttribute("feed", feed);
 		
 		return "forward:/feed/getFeed.jsp";
 	}
 	
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
-	public String deleteFeed(@ModelAttribute User user, @ModelAttribute Feed feed, Model model) {
+	public String deleteFeed(@ModelAttribute Feed feed, Model model) {
 		
 		feedService.deleteFeed(feed.getFeedNo());
 		
 		return "forward:/feed/getFeedList.jsp";
 	}
 	
-	// 피드 리스트 가져오기
+	//////////////////////////////////////// Feed Comment
 	
-	@RequestMapping(value = "getFeedList", method = RequestMethod.POST)
-	public String getFeedList(@ModelAttribute Search search, @ModelAttribute User user, Model model) {
+	//////////////////////////////////////// Feed List
+	
+	@RequestMapping(value = "getFeedList", method = RequestMethod.GET)
+	public String getFeedList(@ModelAttribute Search search, Model model) {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);

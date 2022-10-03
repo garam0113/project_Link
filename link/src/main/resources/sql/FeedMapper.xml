@@ -49,6 +49,52 @@
 	</insert>
 	
 	
+	<select 	id="getFeed"					parameterType="int"			resultMap="feedSelectMap">
+		SELECT 
+		*
+		FROM feed
+		WHERE feed_no = #{feed_no}
+	</select>
+	
+	
+	
+	<update		id="updateFeed"					parameterType="feed">
+		UPDATE feed
+		<set>
+		
+		</set>	
+		WHERE feed_no 				= #{feedNo}
+	</update>
+	
+	
+	
+	<update		id="deleteFeed"					parameterType="feed">
+		UPDATE feed
+		<set>
+			deleteCondition			= '1'
+		</set>
+		WHERE feed_no 				= #{feedNo}
+	</update>
+	
+	<!-- 
+	<select 	id="getFeedList"				parameterType="search"		resultMap="feedSelectMap">
+		SELECT 
+		*
+		FROM feed
+	</select>
+	
+	
+															 -->
+	
+	<update		id="deleteFeedComment"			parameterType="feed">
+		UPDATE comment
+		<set>
+			deleteCondition			= '1'
+		</set>
+		WHERE feed_no 				= #{feedNo}
+	</update>
+
+	
 	
 	<select 	id="getTotalFeedCount"			parameterType="search"		resultType="int">
 		SELECT
@@ -56,8 +102,7 @@
 	  	FROM (
 	  			SELECT 
 	  			*
-				FROM feed
-							)
+				FROM feed	)
 	</select>
 	
 	
@@ -68,8 +113,7 @@
 	  	FROM (
 	  			SELECT 
 	  			*
-				FROM comment
-							)
+				FROM comment	)
 	</select>
 	
 	

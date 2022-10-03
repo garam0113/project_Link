@@ -12,7 +12,7 @@ public interface FeedService {
 	
 	public void addFeed(Feed feed);
 	
-	public void getFeed(int feedNo);
+	public Feed getFeed(int feedNo);
 	
 	public void updateFeed(Feed feed);
 	

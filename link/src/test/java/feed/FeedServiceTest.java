@@ -1,5 +1,9 @@
 package feed;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,11 +26,17 @@ public class FeedServiceTest {
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
 
+	@Test
 	public void testGetFeedList() {
 		
-		Search search = null;
+		Search search = new Search();
+		search.setCurrentPage(1);
 		
-		feedService.getFeedList(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map = feedService.getFeedList(search);
+		
+		System.out.println(map.get("list"));
 	}
 
 }
