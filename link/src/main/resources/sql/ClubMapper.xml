@@ -81,6 +81,7 @@
 	
 	
 	
+	
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
 		<result property="userId"					column="user_id"							jdbcType="VARCHAR" />
