@@ -29,5 +29,9 @@ public class ClubServiceImpl implements ClubService {
 	public void addClub(Club club) throws Exception {
 		clubDAO.addClub(club);
 	}
+	
+	public void getClub(int clubNo) throws Exception {
+		clubDAO.getClub(clubNo);
+	}
 
 }

@@ -83,6 +83,7 @@
 	
 	
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
+		<result property="clubUserNo"				column="club_user_no"						jdbcType="NUMERIC"/>
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
 		<result property="userId"					column="user_id"							jdbcType="VARCHAR" />
 		<result property="applicationRegDate"		column="application_reg_date"				jdbcType="DATE" />
@@ -90,12 +91,128 @@
 		<result property="logoutDate"				column="logout_date"						jdbcType="DATE" />
 		<result property="memberRole"				column="member_role"						jdbcType="CHAR" />
 		<result property="approvalCondition"		column="approval_condition"					jdbcType="CHAR" />
-		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />
-				
+		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />	
 	</resultMap>
 	
+	<insert id="addClubUser" parameterType="clubUser">
+		INSERT into club_user
+		VALUES (
+			#{userId} ,
+			#{applicationRegDate} ,
+		)
+		
+	</insert>
+	
+	<update id="updateApprovalCondition" parameterType="clubUser">
+		UPDATE club_user
+		<set>
+			approval_Condition = #{approvalCondition}		
+		</set>
+		WHERE club_user_no = #{clubUserNo}
+	</update>
+	
+	<update id="updateMemberRole" parameterType="clubUser">
+		UPDATE club_user
+		<set>
+			member_role = #{memberRole}
+		</set>
+		WHERE club_user_no =#{clubUserNO}
+	</update>
+	
+	<delete id="deleteClubMember">
+		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
+	</delete>
+	
+	<delete id="deleteApprovalCondition">
+		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
+	</delete>
 	
 	
+	<select id="getApprovalConditionList" parameterType="int" resultMap="clubUserSelectMap">
+		
+	</select>
+	
+	<select id="getClubMemberList" parameterType="int" resultMap="clubUserSelectMap">
+	
+	</select>
+	
+	
+	
+	<resultMap	id="meetingSelectMap"		type="meeting">
+		<result property="meetingNo"				column="meeting_no"							jdbcType="NUMERIC"/>
+		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
+		<result property="addMeetingUserId"			column="add_meeting_user_id"				jdbcType="VARCHAR" />
+		<result property="meetingTitle"				column="meeting_title"						jdbcType="VARCHAR" />
+		<result property="meetingContent"			column="meeting_content"					jdbcType="VARCHAR" />
+		<result property="meetingDate"				column="meeting_date"						jdbcType="VARCHAR" />
+		<result property="meetingPlace"				column="meeting_place"						jdbcType="VARCHAR" />
+		<result property="meetingTime"				column="meeting_time"						jdbcType="VARCHAR" />
+		<result property="meetingWeather"			column="meeting_weather"					jdbcType="VARCHAR" />
+		<result property="meetingRegDate"			column="meeting_reg_date"					jdbcType="DATE" />
+		<result property="meetingMember"			column="meeting_member"						jdbcType="NUMERIC" />
+		<result property="meetingMaximumMember"		column="meeting_maximum_member"				jdbcType="NUMERIC" />	
+	</resultMap>
+	
+	<insert id="addMeeting"	parameterType="meeting">
+		INSERT
+		INTO meeting (
+			meeting_no ,
+			club_no ,
+			add_meeting_user_id ,
+			meeting_title ,
+			meeting_content ,
+			meeting_date ,
+			meeting_place ,
+			meeting_time ,
+			meeting_weather ,
+			meeting_reg_date ,
+			meeting_member ,
+			meeting_maximumMember
+			)
+		VALUES (
+			seq_meeting_no.NEXTVAL ,
+			#{clubNo} ,
+			#{addMeetingUserId} ,
+			#{meetingTitle} ,
+			#{meetingContent} ,
+			#{meetingDate} ,
+			#{meetingPlace} ,
+			#{meetingTime} ,
+			#{meetingWeather} ,
+			#{meetingRegDate} ,
+			#{meetingMember:NUMERIC} ,
+			#{meetingMaximumMember:NUMERIC})
+	</insert>
+	
+	<select id="getMeeting" parameterType="int" resultMap="meetingSelectMap">
+		SELECT
+			meeting_no ,
+			club_no ,
+			add_meeting_user_id ,
+			meeting_title ,
+			meeting_content ,
+			meeting_date ,
+			meeting_place ,
+			meeting_time ,
+			meeting_reg_date ,
+			meeting_member ,
+			meeting_maximum_Member
+		FROM meeting
+		WHERE meeting_no = #{meetingNo}
+	</select>
+	
+	<update id="updateMeeting" parameterType="meeting">
+		UPDATE meeting
+		<set>
+			meeting_title = #{meetingTitle} ,
+			meeting_content = #{meetingContent} ,
+			meeting_date = #{meetingDate} ,
+			meeting_place = #{meetingPlace} ,
+			meeting_time = #{meetingTime} ,
+			meeting_maximum_member = #{meetingMaximumMember}
+		</set>
+		WHERE meeting_no = #{meetingNo}
+	</update>
 	
 	
 	
