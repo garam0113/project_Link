@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 import com.link.service.domain.User;
 
 @Controller
@@ -28,6 +30,14 @@ public class ClubPostController {
 	public ClubPostController() {
 		System.out.println(getClass() + " default 생성자 호출");
 	}
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 
 	@RequestMapping(value = "getCurrentClubPostList", method = RequestMethod.GET)
 	public String getCurrentClubPostList(Model model, HttpSession session) throws Exception {
@@ -46,6 +56,7 @@ public class ClubPostController {
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
 
+	/*
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
 	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
@@ -57,24 +68,18 @@ public class ClubPostController {
 		model.addAttribute("map", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
+	*/
 
-	/*
-	@RequestMapping(value = "getClubPost", method = RequestMethod.POST)
-	public String addClubPost(@ModelAttribute ClubPost clubPost) throws Exception {
-		System.out.println("/getClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
-		Map<String, Object> map = clubPostServiceImpl.addClubPost(clubPost);
-		return "forward:/clubPost/getClubPost.jsp";
-	}
-
-	@RequestMapping(value = "getClubPostFull", method = RequestMethod.POST)
-	public String addClubPost(@RequestParam int clubPostNo, Model model) throws Exception {
-		System.out.println("/getClubPostFull : POST : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면으로 이동");
-		model.addAttribute("map", clubPostServiceImpl.getClubPostFull(clubPostNo));
+	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
+	public String getClubPost(@ModelAttribute Comment comment, Model model) throws Exception {
+		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
+		model.addAttribute("map", clubPostServiceImpl.getClubPost(comment));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
 		return "forward:/clubPost/getClubPost.jsp";
 	}
-	
-	@RequestMapping(value = "updateClubPostView", method = RequestMethod.GET)
+
+	/*
+	@RequestMapping(value = "updateClubPostView", method = RequestMethod.POST)
 	public String updateClubPostView() throws Exception {
 		System.out.println("/updateClubPostView : GET : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
 		clubPostServiceImpl.getClubPost(clubNo);
@@ -87,10 +92,12 @@ public class ClubPostController {
 		Map<String, Object> map = clubPostServiceImpl.updateClubPost(clubPost);
 		return "forward:/getClubPost.jsp";
 	}
+	*/
 
+	/*
 	@RequestMapping(value = "deleteClubPost", method = RequestMethod.POST)
-	public String deleteClubPost(@RequestParam String clubPostNo) throws Exception {
-		System.out.println("/deleteClubPost : POST : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
+	public String deleteClubPost(@RequestParam int clubPostNo) throws Exception {
+		System.out.println("/deleteClubPost : GET : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
 		Map<String, Object> map = clubPostServiceImpl.updateClubPost(clubPost);
 		return "forward:/getClubPostList.jsp";
 	}
