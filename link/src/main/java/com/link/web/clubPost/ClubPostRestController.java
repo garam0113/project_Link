@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 
 @RestController
@@ -39,10 +40,10 @@ public class ClubPostRestController {
 	int pageSize;
 
 	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostList(@RequestParam int clubNo) throws Exception {
-		System.out.println("/getClubPostListRecent : GET : 특정 모임에서 최근순 모임게시물 리스트, 모임게시물 리스트 개수");
+	public Map<String, Object> getClubPostList(@ModelAttribute ClubPost clubPost) throws Exception {
+		System.out.println("/getClubPostList : GET : 특정 모임에서 최근순 모임게시물 리스트, 모임게시물 리스트 개수");
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		return clubPostServiceImpl.getClubPostList(clubNo);
+		return clubPostServiceImpl.getClubPostList(clubPost);
 	}
 
 	@RequestMapping(value = "getClubPostListLike", method = RequestMethod.GET)

@@ -37,10 +37,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostList(String userId)
 
 	@Override
-	public Map<String, Object> getClubPostList(int clubNo) throws Exception {
-		System.out.println(getClass() + ".getClubPostList(int clubNo) 도착");
-		return clubPostDAOImpl.getClubPostList(clubNo);
-	}// end of getClubPostList(int clubNo)
+	public Map<String, Object> getClubPostList(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPostList(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.getClubPostList(clubPost);
+	}// end of getClubPostList(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> getClubPostListLike(int clubNo) throws Exception {
@@ -76,10 +76,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of updateClubPost(int clubPostNo)
 
 	@Override
-	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".deleteClubPost(int clubPostNo) 도착");
-		return clubPostDAOImpl.deleteClubPost(clubPostNo);
-	}// end of deleteClubPost(int clubPostNo)
+	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.deleteClubPost(clubPost);
+	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {

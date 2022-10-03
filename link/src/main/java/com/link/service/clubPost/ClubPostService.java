@@ -15,7 +15,7 @@ public interface ClubPostService {
 	public Map<String, Object> getCurrentClubPostList(String userId) throws Exception;
 	
 	// 모임게시물에서 최신순 클릭시 => 최신순 모임게시물 리스트
-	public Map<String, Object> getClubPostList(int clubNo) throws Exception;
+	public Map<String, Object> getClubPostList(ClubPost clubPost) throws Exception;
 	
 	// 모임리스트에서 좋아요많은순 클릭시 => 좋아요 많은순 모임게시물 리스트
 	public Map<String, Object> getClubPostListLike(int clubNo) throws Exception;
@@ -30,7 +30,7 @@ public interface ClubPostService {
 	public ClubPost updateClubPost(int clubPostNo) throws Exception;
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
-	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception;
+	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 좋아요
 	

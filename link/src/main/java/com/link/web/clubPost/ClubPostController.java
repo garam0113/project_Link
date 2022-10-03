@@ -94,13 +94,13 @@ public class ClubPostController {
 	}
 	*/
 
-	/*
 	@RequestMapping(value = "deleteClubPost", method = RequestMethod.POST)
-	public String deleteClubPost(@RequestParam int clubPostNo) throws Exception {
-		System.out.println("/deleteClubPost : GET : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
-		Map<String, Object> map = clubPostServiceImpl.updateClubPost(clubPost);
+	public String deleteClubPost(@ModelAttribute ClubPost clubPost, Model model) throws Exception {
+		System.out.println("/deleteClubPost : POST : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
+		clubPostServiceImpl.deleteClubPost(clubPost);
+		model.addAttribute("map", clubPostServiceImpl.getClubPostList(clubPost));
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/getClubPostList.jsp";
 	}
-	*/
 
 }

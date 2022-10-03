@@ -12,7 +12,7 @@ $(function(){
 		$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo=20").submit();
 	});
 	$("input[value='ªË¡¶']").bind("click", function(){
-		$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubPostNo=20").submit();
+		$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=10&clubPostNo=20").submit();
 	});
 });
 </script>

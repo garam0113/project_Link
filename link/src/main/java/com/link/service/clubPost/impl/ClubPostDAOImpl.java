@@ -58,11 +58,11 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getCurrentClubPostList(String userId)
 
 	@Override
-	public Map<String, Object> getClubPostList(int clubNo) throws Exception {
-		System.out.println(getClass() + ".getClubPostList(int clubNo) 왔다");
+	public Map<String, Object> getClubPostList(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPostList(ClubPost clubPost) 왔다");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", clubNo));
-		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
+		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", clubPost));
+		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubPost));
 		return map;
 	}// end of getClubPostList(int clubNo)
 
@@ -106,12 +106,12 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of updateClubPost(int clubPostNo)
 
 	@Override
-	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".deleteClubPost(int clubPostNo) 왔다");
-		sqlSession.update("ClubPostMapper.deleteClubPost", clubPostNo);
+	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 왔다");
+		sqlSession.update("ClubPostMapper.deleteClubPost", clubPost);
 		//map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
 		return null;
-	}// end of deleteClubPost(int clubPostNo)
+	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
