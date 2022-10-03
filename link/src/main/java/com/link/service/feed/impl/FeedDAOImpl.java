@@ -37,9 +37,9 @@ public class FeedDAOImpl implements FeedDAO {
 	}
 	
 	@Override
-	public void getFeed(int feedNo) {
+	public Feed getFeed(int feedNo) {
 		// TODO Auto-generated method stub
-		sqlSession.selectOne("FeedMapper.getFeed", feedNo);
+		return sqlSession.selectOne("FeedMapper.getFeed", feedNo);
 	}
 	
 	@Override

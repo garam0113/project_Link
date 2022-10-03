@@ -36,18 +36,19 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeed(Feed feed) {
 		// TODO Auto-generated method stub
 		feedDAO.addFeed(feed);
+		feedDAO.addFeedPush();
 	}
 	
 	@Override
-	public void getFeed(int feedNo) {
+	public Feed getFeed(int feedNo) {
 		// TODO Auto-generated method stub
-		feedDAO.getFeed(feedNo);
+		return feedDAO.getFeed(feedNo);
 	}
 	
 	@Override
 	public void updateFeed(Feed feed) {
 		// TODO Auto-generated method stub
-		
+		feedDAO.updateFeed(feed);
 	}
 	
 	@Override
