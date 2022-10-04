@@ -8,7 +8,7 @@
  	
  	
 	<resultMap id="noticeSelectMap" type="notice">
-		<result property="noticeNo" 			column="notice_no" 			jdbcType="VARCHAR"/>
+		<result property="noticeNo" 			column="notice_no" 			jdbcType="NUMERIC"/>
 		<result property="noticeTitle"			column="notice_title" 			jdbcType="VARCHAR" />
 		<result property="noticeContent" 		column="notice_content" 			jdbcType="VARCHAR" />
 		<result property="noticeImage1" 			column="notice_image1" 				jdbcType="VARCHAR" />
