@@ -57,19 +57,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 		map.put("userId", userId);
 		map.put("clubNo", clubNo);
 		return clubPostDAOImpl.getClubPostListMySelf(map);
-	}// end of getClubPostListMySelf(String userId, int clubNo)
+	}// end of getClubPostListMySelf(String userId, int clubNo)	
 
 	@Override
 	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 도착");
 		return clubPostDAOImpl.getClubPost(clubPost);
 	}// end of getClubPost(ClubPost clubPost)
-
-	@Override
-	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
-		return clubPostDAOImpl.getClubPostCommentList(comment);
-	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
 	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
@@ -84,23 +78,41 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
-	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
-		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
-		return clubPostDAOImpl.getClubPostListMyHome(userId);
-	}// end of getClubPostListMyHome(String userId)
-
-	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 도착");
 		heart.setUserId(clubPost.getUser().getUserId());
 		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
 	}// end of updateClubPostLike(Heart heart)
+	
+	
+	
+	
+
+	@Override
+	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
+		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
+		return clubPostDAOImpl.getClubPostListMyHome(userId);
+	}// end of getClubPostListMyHome(String userId)
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public Comment addClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 도착");
 		return clubPostDAOImpl.addClubPostComment(comment);
 	}// end of addClubPostComment(Comment comment)
+
+	@Override
+	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
+		return clubPostDAOImpl.getClubPostCommentList(comment);
+	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
 	public Comment getClubPostComment(Comment comment) throws Exception {
@@ -110,8 +122,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 
 	@Override
 	public Comment updateClubPostComment(Comment comment) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getClass() + ".updateClubPostComment(Comment comment) 도착");
+		return clubPostDAOImpl.updateClubPostComment(comment);
 	}
 
 	@Override
