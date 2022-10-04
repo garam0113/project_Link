@@ -7,7 +7,20 @@
 <mapper namespace="Report_PushMapper">
  	
  	
-	<resultMap id="report_PushSelectMap" type="report_push">
+	<resultMap id="report_PushSelectMap" type="report">
+	<result property="reportNo" column="no" jdbcType="NUMERIC" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
+	
+	
+	
 
 	<association property="userId1" javaType="user">
 		<result property="userId" column="user_id1" jdbcType="VARCHAR"/>

@@ -8,7 +8,7 @@
 
 
 	<resultMap id="qandASelectMap" type="qanda">
-		<result property="qandANo" 				column="qanda_no" 		      jdbcType="VARCHAR" />
+		<result property="qandANo" 				column="qanda_no" 		      jdbcType="NUMERIC" />
 		<result property="qandATitle"			column="qanda_title"		  jdbcType="VARCHAR" />
 		<result property="qandAContent" 		column="qanda_content" 		  jdbcType="VARCHAR" />
 		<result property="noticeRegDate"		column="notice_regdate" 	  jdbcType="DATE" />
@@ -90,7 +90,7 @@
 	</delete>
 
 		<!-- SQL : SELECT LIST -->
-	<select  id="getQandAList"  parameterType="search"	resultMap="noticeSelectMap">
+	<select  id="getQandAList"  parameterType="search"	resultMap="qandASelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_count, qanda_regdate
