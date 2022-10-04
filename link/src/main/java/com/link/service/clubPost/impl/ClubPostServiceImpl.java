@@ -96,4 +96,34 @@ public class ClubPostServiceImpl implements ClubPostService {
 		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
 	}// end of updateClubPostLike(Heart heart)
 
+	@Override
+	public Comment addClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".addClubPostComment(Comment comment) 도착");
+		return clubPostDAOImpl.addClubPostComment(comment);
+	}// end of addClubPostComment(Comment comment)
+
+	@Override
+	public Comment getClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostComment(Comment comment) 도착");
+		return clubPostDAOImpl.getClubPostComment(comment);
+	}// end of getClubPostComment(Comment comment)
+
+	@Override
+	public Comment updateClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

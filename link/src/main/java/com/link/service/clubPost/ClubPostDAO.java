@@ -39,17 +39,22 @@ public interface ClubPostDAO {
 	// 신고
 	
 	// 모임게시물 댓글 등록
+	public Comment addClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 리스트
 	public List<Comment> getClubPostCommentList(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 상세보기
+	public Comment getClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 수정
+	public Comment updateClubPostComment(Comment comment) throws Exception;
 	
 	// 모잉게시물 댓글 삭제
+	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 좋아요
+	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception;
 	
 	// 모임공지사항 등록
 	
