@@ -1,6 +1,7 @@
 package com.link.service.feed.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,18 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.delete("FeedMapper.deleteFeedComment", commentNo);
 	}
 
-	//////////////////////////////////////// Feed List
+	//////////////////////////////////////// List
 	
 	@Override
 	public List<Feed> getFeedList(Search search) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FeedMapper.getFeedList", search);
+	}
+	
+	@Override
+	public List<Comment> getFeedCommentList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getFeedCommentList", map);
 	}
 	
 	//////////////////////////////////////// Feed Report
@@ -130,6 +137,12 @@ public class FeedDAOImpl implements FeedDAO {
 	public int getTotalFeedCount(Search search) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("FeedMapper.getTotalFeedCount", search);
+	}
+
+	@Override
+	public int getTotalFeedCommentCount() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -13,7 +13,7 @@ public class Feed {
 	private String image3;
 	private String image4;
 	private String video;
-	private String hashTag;
+	private String hashtag;
 	private int likeCount;
 	private int commentCount;
 	private Date regDate;
@@ -97,12 +97,12 @@ public class Feed {
 		this.video = video;
 	}
 
-	public String getHashTag() {
-		return hashTag;
+	public String getHashtag() {
+		return hashtag;
 	}
 
-	public void setHashTag(String hashTag) {
-		this.hashTag = hashTag;
+	public void setHashtag(String hashtag) {
+		this.hashtag = hashtag;
 	}
 
 	public int getLikeCount() {
@@ -165,7 +165,7 @@ public class Feed {
 				+ "[image3 : " + image3 + "] "
 				+ "[image4 : " + image4 + "] "
 				+ "[video : " + video + "] "
-				+ "[hashTag : " + hashTag + "] "
+				+ "[hashtag : " + hashtag + "] "
 				+ "[likeCount : " + likeCount + "] "
 				+ "[commentCount : " + commentCount + "] "
 				+ "[regDate : " + regDate + "] "

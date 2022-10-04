@@ -1,7 +1,12 @@
 package com.link.web.feed;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.feed.FeedService;
 
@@ -42,8 +48,17 @@ public class FeedController {
 	
 	//////////////////////////////////////// Feed
 	
-	@RequestMapping(value = "addFeed", method = RequestMethod.GET)
-	public String addFeed(@ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file) throws Exception {
+	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
+	public String addFeed(@ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file,
+						HttpSession httpSession) throws Exception {
+		
+		// 회원 피드 등록
+		
+		// User user = (User) httpSession.getAttribute("user");
+		// feed.setUserId(user.getUserId());
+		feed.setUserId("user01");
+		
+		System.out.println("feed : " + feed);
 		
 		for(MultipartFile files : file) {
 			String path = "C:\\Users\\";
@@ -63,11 +78,24 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
-	public String getFeed(@ModelAttribute Feed feed, Model model) {
+	public String getFeed(@ModelAttribute Feed feed, Model model, Search search) {
 		
-		feed = feedService.getFeed(1);
+		System.out.println("getFeed << feedNo : " + feed.getFeedNo());
 		
-		model.addAttribute("feed", feed);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("feedNo", feed.getFeedNo());
+		map.put("search", search);
+		
+		map = feedService.getFeed(map);
+		
+		model.addAttribute("feed", map.get("feed"));
+		model.addAttribute("comment", map.get("comment"));
+		// FeedComment List
 		
 		return "forward:/feed/getFeed.jsp";
 	}
@@ -77,7 +105,7 @@ public class FeedController {
 		
 		feedService.updateFeed(feed);
 		
-		feed = feedService.getFeed(feed.getFeedNo());
+		// feed = feedService.getFeed(feed.getFeedNo());
 		
 		model.addAttribute("feed", feed);
 		
@@ -85,11 +113,14 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
-	public String deleteFeed(@ModelAttribute Feed feed, Model model) {
+	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) {
 		
-		feedService.deleteFeed(feed.getFeedNo());
+		System.out.println("deleteFeed Start");
+		System.out.println("feed is -> " + feedNo);
 		
-		return "forward:/feed/getFeedList.jsp";
+		feedService.deleteFeed(feedNo);
+		
+		return "forward:/feed/getFeedList";
 	}
 	
 	//////////////////////////////////////// Feed Comment
