@@ -15,12 +15,18 @@ import com.link.service.domain.Meeting;
 
 @Repository("clubDAOImpl")
 public class ClubDAOImpl implements ClubDAO {
+	
+	/*
+	 * @Repository("clubDAOImpl") public class ClubDAOImpl implements ClubDAO {
+	 */	
 
 	//Field
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
 	public void setSqlSession(SqlSession sqlSession) {
+		System.out.println("::"+getClass() + ".setSqlSession() Call....");
 		this.sqlSession = sqlSession;
 	}
 	
@@ -31,15 +37,29 @@ public class ClubDAOImpl implements ClubDAO {
 
 	
 	//Method
-	@Override
-	public void addClub(Club club) throws Exception {
-		sqlSession.insert("ClubMapper.addClub",club);
-	}
+//	@Override
+//	public void addClub(Club club) throws Exception {
+//		sqlSession.insert("ClubMapper.addClub",club);
+//	}
 	
 	@Override
-	public Club getClub(int clubNo) throws Exception {
-		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
+	public int addClub(Club club) throws Exception {
+		return sqlSession.insert("ClubMapper.addClub",club);
 	}
+
+	
+//	@Override
+//	public Club getClub(int clubNo) throws Exception {
+//		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
+//	}
+	
+	
+//	@Override
+	public Club getClub(int clubNo) throws Exception {
+		return (Club)sqlSession.selectOne("ClubMapper.getClub",clubNo);
+	}
+	
+	
 	
 	@Override
 	public List<Club> getClubList(Search search) throws Exception {

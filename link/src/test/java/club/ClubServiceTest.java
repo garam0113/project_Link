@@ -21,10 +21,6 @@ public class ClubServiceTest {
 	@Qualifier("clubServiceImpl")
 	private ClubService clubService;
 	
-	@Autowired
-	@Qualifier("clubDAO")
-	private ClubDAO clubDAO;
-	
 
 //	@Test
 //	public void testAddClub() throws Exception {
@@ -35,18 +31,23 @@ public class ClubServiceTest {
 //		System.out.println("delete 결과 : "+clubDAO.deleteClub(club.getClubNo()));
 //				
 //	}
-	
-	@Test
-	public void testGetClub() throws Exception {
-		
-		System.out.println("\n ===========================");
-		Club club = clubService.getClub(2);
-		System.out.println(club);
-		
-		Assert.assertEquals(2, club.getClubNo());
-		
-		System.out.println("========================\n");
-		
-	}
+//	
+//	@Test
+//	public void testGetClub() throws Exception {
+//		
+//		System.out.println("\n ===========================");
+//		Club club = clubService.getClub(2);
+//		System.out.println(club);
+//		
+//		Assert.assertEquals(1, club.getClubNo());
+//		
+//		System.out.println("========================\n");
+//		
+//	}
+//	
+//	@Test
+//	public void testGetClubList() throws Exception {
+//		
+//	}
 
 }

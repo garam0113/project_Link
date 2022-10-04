@@ -48,7 +48,7 @@
 		<result property="meetingMaximumMember"		column="meeting_maximum_member"				jdbcType="NUMERIC" />	
 	</resultMap>
 	
-	<resultMap type="participantSelectMap" id="participant">
+	<resultMap 	id="participantSelectMap" 	type="participant">
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
 		<result property="participantUserId"			column="participant_user_id"					jdbcType="VARCHAR"/>
