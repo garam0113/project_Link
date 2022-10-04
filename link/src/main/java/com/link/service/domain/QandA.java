@@ -4,20 +4,27 @@ import java.sql.Date;
 
 public class QandA {
 	
-	private int qandANo;
-	private String qandATitle;
-	private String qandAContent;
-	private User user;
+	private int qandANo;				//Q&A 번호
+	private String qandATitle;			//Q&A 제목
+	private String qandAContent;		//Q&A 내용
+	private User user;					//Q&A 작성자
 	private Date qandARegDate;
 	private String qandAImage1;
 	private String qandAImage2;
 	private int qandACondition;
-	private String qandAAnswerContetnt;
+	private String qandAAnswerContent;
 	private Date qandAAnswerRegDate;
 	private int qandAOpenCondition;
+	private int qandACount;
 	
 	
 	
+	public int getQandACount() {
+		return qandACount;
+	}
+	public void setQandACount(int qandACount) {
+		this.qandACount = qandACount;
+	}
 	public int getQandANo() {
 		return qandANo;
 	}
@@ -66,11 +73,11 @@ public class QandA {
 	public void setQandACondition(int qandACondition) {
 		this.qandACondition = qandACondition;
 	}
-	public String getQandAAnswerContetnt() {
-		return qandAAnswerContetnt;
+	public String getQandAAnswerContent() {
+		return qandAAnswerContent;
 	}
-	public void setQandAAnswerContetnt(String qandAAnswerContetnt) {
-		this.qandAAnswerContetnt = qandAAnswerContetnt;
+	public void setQandAAnswerContent(String qandAAnswerContent) {
+		this.qandAAnswerContent = qandAAnswerContent;
 	}
 	public Date getQandAAnswerRegDate() {
 		return qandAAnswerRegDate;
@@ -90,8 +97,9 @@ public class QandA {
 	public String toString() {
 		return "QandA [qandANo=" + qandANo + ", qandATitle=" + qandATitle + ", qandAContent=" + qandAContent + ", user="
 				+ user + ", qandARegDate=" + qandARegDate + ", qandAImage1=" + qandAImage1 + ", qandAImage2="
-				+ qandAImage2 + ", qandACondition=" + qandACondition + ", qandAAnswerContetnt=" + qandAAnswerContetnt
-				+ ", qandAAnswerRegDate=" + qandAAnswerRegDate + ", qandAOpenCondition=" + qandAOpenCondition + "]";
+				+ qandAImage2 + ", qandACondition=" + qandACondition + ", qandAAnswerContent=" + qandAAnswerContent
+				+ ", qandAAnswerRegDate=" + qandAAnswerRegDate + ", qandAOpenCondition=" + qandAOpenCondition
+				+ ", qandACount=" + qandACount + "]";
 	}
 	
 	

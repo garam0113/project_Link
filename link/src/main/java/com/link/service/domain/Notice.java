@@ -5,14 +5,14 @@ import java.sql.Date;
 
 public class Notice {
 	
-	private int noticeNo;
-	private String noticeTitle;
-	private String noticeContent;
-	private String noticeImage1;
-	private String noticeImage2;
-	private Date noticeRegDate;
-	private int noticeCount;
-	private User userId;
+	private int noticeNo;					//공지사항 번호
+	private String noticeTitle;				//공지사항 제목
+	private String noticeContent;			//공지사하 내용
+	private String noticeImage1;			//공지사항 이미지1
+	private String noticeImage2;			//공지사항 이미지2
+	private Date noticeRegDate;				//공지사항 등록날짜
+	private int noticeCount;				//공지사항 조회수
+	private User userId;					//공지사항 작성자
 	
 	
 	

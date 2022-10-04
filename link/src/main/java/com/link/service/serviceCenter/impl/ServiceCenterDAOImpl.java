@@ -78,7 +78,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public List<Report> getReportList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("ReportMapper.getReportList", search);
+		return sqlSession.selectList("Report_PushMapper.getReportList", search);
 	}
 	
 	
@@ -120,19 +120,19 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("ReportMapper.addReport", report);
+		sqlSession.insert("Report_PushMapper.addReport", report);
 	}
 
 	@Override
 	public Report getReport(int reportNo) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("ReportMapper.getReport", reportNo);
+		return sqlSession.selectOne("Report_PushMapper.getReport", reportNo);
 	}
 
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("ReportMapper.updateReport", report);
+		sqlSession.update("Report_PushMapper.updateReport", report);
 		
 	}
 //==================================================================여기까지가 Report
@@ -141,7 +141,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		// TODO Auto-generated method stub
 		
 		if(a == 0) {
-			return sqlSession.update("ReportMapper.getReportList", search);
+			return sqlSession.update("Report_PushMapper.getReportList", search);
 		}else if (a == 1) {
 			return sqlSession.update("QandAMapper.getQandAList", search);
 		}else {

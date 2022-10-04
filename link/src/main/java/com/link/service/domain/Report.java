@@ -18,6 +18,8 @@ public class Report{
 	private Date handleDate;
 	private String reportImage1;
 	private String reportImage2;
+	
+	
 	public int getReportNo() {
 		return reportNo;
 	}
