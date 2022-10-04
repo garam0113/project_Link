@@ -226,6 +226,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/net.nurigo/javaSDK -->
+		<dependency>
+   			 <groupId>net.nurigo</groupId>	<!-- 핸드폰 본인인증에 필요한 SDK -->
+   			 <artifactId>javaSDK</artifactId>
+   			 <version>2.2</version>
+		</dependency>
+		
+
 	</dependencies>
 
 	<!-- ojdbc6 다운로드를 위한 외부 사설 저장소 추가 -->
