@@ -11,11 +11,11 @@ public interface ClubDAO {
 
 	public void addClub(Club club) throws Exception;
 	
-	public void getClub(int clubNo) throws Exception;
+	public Club getClub(int clubNo) throws Exception;
 	
 	public List<Club> getClubList(Search search) throws Exception;
 	
-	public void deleteClub(Club club) throws Exception;
+	public void deleteClub(int clubNo) throws Exception;
 	
 	public void updateClub(Club club) throws Exception;
 	
@@ -27,7 +27,7 @@ public interface ClubDAO {
 	
 	public List<ClubUser> getClubMemberList(Search search) throws Exception;
 	
-	public void deleteClubMember(ClubUser clubUser) throws Exception;
+	public void deleteClubMember(int clubUserNo) throws Exception;
 	
 	public void updateMemberRole(ClubUser clubUser) throws Exception;
 	
@@ -51,5 +51,14 @@ public interface ClubDAO {
 	
 	public void addMeetingPush(Meeting meeting) throws Exception;
 	
+	public int getTotalClubCount(Search search) throws Exception;
+	
+	public int getTotalApprovalConditionCount(Search search) throws Exception;
+	
+	public int getTotalClubMemberCount(Search search) throws Exception;
+	
+	public int getTotalMeetingCount(Search search) throws Exception;
+	
+	public int getTotalMeetingMemberCount(Search search) throws Exception;
 	
 }

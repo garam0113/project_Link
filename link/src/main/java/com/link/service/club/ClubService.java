@@ -1,6 +1,5 @@
 package com.link.service.club;
 
-import java.util.List;
 import java.util.Map;
 
 import com.link.common.Search;
@@ -12,9 +11,11 @@ public interface ClubService {
 
 	public void addClub(Club club) throws Exception;
 				
-	public void getClub(int clubNo) throws Exception;
-	/*
-	public void deleteClub(Club club) throws Exception;
+	public Club getClub(int clubNo) throws Exception;
+	
+//	public Club getMyClubList(String userId) throws Exception;
+
+	public void deleteClub(int clubNo) throws Exception;
 	
 	public void updateClub(Club club) throws Exception;
 	
@@ -22,7 +23,7 @@ public interface ClubService {
 		
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception;
 		
-	public void deleteClubMember(ClubUser clubUser) throws Exception;
+	public void deleteClubMember(int clubUserNo) throws Exception;
 	
 	public void updateMemberRole(ClubUser clubUser) throws Exception;
 	
@@ -44,13 +45,12 @@ public interface ClubService {
 	
 	public Map<String, Object> getClubList(Search search) throws Exception;
 	
-	public List<ClubUser> getApprovalConditionList(Search search) throws Exception;
+	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
 	
-	public List<ClubUser> getClubMemberList(Search search) throws Exception;
+	public Map<String, Object> getClubMemberList(Search search) throws Exception;
 	
-	public List<Meeting> getMeetingList(Search search) throws Exception;
+	public Map<String, Object> getMeetingList(Search search) throws Exception;
 	
-	public List<Meeting> getMeetingMemberList(Search search) throws Exception;
+	public Map<String, Object> getMeetingMemberList(Search search) throws Exception;
 	
-	*/
 }
