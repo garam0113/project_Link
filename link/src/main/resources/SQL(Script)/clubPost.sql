@@ -149,6 +149,11 @@ UPDATE CLUB_POST SET CLUB_POST_LIKE_COUNT = CLUB_POST_LIKE_COUNT + 1 WHERE CLUB_
 
 
 
+INSERT INTO HEART (HEART_NO, USER_ID, SOURCE, SOURCE_NO)
+VALUES( seq_heart_no.NEXTVAL, 'user03', '2', 20)
+
+
+
 club_post_comment_no가 없다면 즉, 모임게시물의 댓글이라면? parent 0, depth 0, sequence는 parent의 번호가 같은것 중 sequence의 값이 가장 큰 것 +1
 addClubPostComment()
 INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
