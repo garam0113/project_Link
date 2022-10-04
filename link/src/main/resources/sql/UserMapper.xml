@@ -30,9 +30,9 @@
 		<result property="reportCount" 		column="report_count" 		jdbcType="NUMERIC" />
 		<result property="stopStartDate" 		column="stop_start_date" 		jdbcType="DATE" />
 		<result property="stopEndDate" 		column="stop_end_date" 		jdbcType="DATE" />
-		<result property="outUserState" 		column="out_user_state" 		jdbcType="CHAR" />
+		<result property="outUserType" 		column="out_user_type" 		jdbcType="CHAR" />
 		<result property="outUserDate" 		column="out_user_date" 		jdbcType="DATE" />
-		<result property="addUserType" 		column="out_user_type" 		jdbcType="CHAR" />
+		<result property="addType" 		column="out_user_type" 		jdbcType="CHAR" />
 		<result property="logoutDate" 		column="logout_date" 		jdbcType="DATE" />
 		<result property="addUserDate" 		column="add_user_date" 		jdbcType="DATE" />
 		<result property="totalVisitCount" 		column="total_visit_count" 		jdbcType="NUMERIC" />
@@ -240,7 +240,7 @@
 	  			SELECT
 	  			deep_table.* 				,
 	  			ROWNUM 			AS row_seq	
-	  			FROM		(<include refid=""></include>) inner_table
+	  			FROM		(<include refid="select-list"></include>) inner_table
 				WHERE ROWNUM &lt;= #{endRowNum} )					
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
@@ -250,7 +250,7 @@
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT
 	  	COUNT(*)
-	  	FROM (<include refid=""></include>) countTable						
+	  	FROM (<include refid="select-list"></include>) countTable						
 	 </select>
 	 
 </mapper>

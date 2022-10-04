@@ -15,7 +15,7 @@ public class User {
 	private String role;
 	private String nickName;
 	private String profileImage;
-	private String profilewriting;
+	private String profileWriting;
 	private String area1;
 	private String area2;
 	private String area3;
@@ -35,6 +35,7 @@ public class User {
 	private String openCondition;
 	private String pushCondition;
 	private int joinClubCount;
+	private int joinClubLimit;
 	private String fbState;
 	private String fbtype;
 	private Boolean loginStart;
@@ -105,11 +106,11 @@ public class User {
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-	public String getProfilewriting() {
-		return profilewriting;
+	public String getProfileWriting() {
+		return profileWriting;
 	}
-	public void setProfilewriting(String profilewriting) {
-		this.profilewriting = profilewriting;
+	public void setProfilewriting(String profileWriting) {
+		this.profileWriting = profileWriting;
 	}
 	public String getArea1() {
 		return area1;
@@ -225,6 +226,12 @@ public class User {
 	public void setJoinClubCount(int joinClubCount) {
 		this.joinClubCount = joinClubCount;
 	}
+	public int getJoinClubLimit() {
+		return joinClubLimit;
+	}
+	public void setJoinClubLimit(int joinClubLimit) {
+		this.joinClubLimit = joinClubLimit;
+	}
 	public String getFbState() {
 		return fbState;
 	}
@@ -247,15 +254,15 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", receiveId=" + receiveId + ", password=" + password + ", name=" + name
 				+ ", rrn=" + rrn + ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email + ", role=" + role
-				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profilewriting=" + profilewriting
+				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profilewriting=" + profileWriting
 				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
 				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
 				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
 				+ ", outUserType=" + outUserType + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
-				+ joinClubCount + ", fbState=" + fbState + ", fbtype=" + fbtype + ", loginStart=" + loginStart + "]";
+				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbtype=" + fbtype
+				+ ", loginStart=" + loginStart + "]";
 	}
-	
 	
 }

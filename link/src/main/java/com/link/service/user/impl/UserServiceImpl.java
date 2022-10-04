@@ -33,10 +33,17 @@ public class UserServiceImpl implements UserService {
 		System.out.println(this.getClass());
 	}
 
+//	@Override
+//	public void addUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		userDAO.addUser(user);
+//		
+//	}
 	@Override
-	public void addUser(User user) throws Exception {
+	public int addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		userDAO.addUser(user);
+		System.out.println("간다!~");
+		return userDAO.addUser(user);
 		
 	}
 
@@ -209,19 +216,19 @@ public class UserServiceImpl implements UserService {
 		return map;
 	}
 
-	@Override
-	public Map<String, Object> getPushList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		
-		List<Report> list = userDAO.getPushList(search);
-		int totalCount = userDAO.getPushTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("Push", list);
-		map.put("tatalCount", totalCount);
-		
-		return map;
-	}
+//	@Override
+//	public Map<String, Object> getPushList(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//		List<Report> list = userDAO.getPushList(search);
+//		int totalCount = userDAO.getPushTotalCount(search);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("Push", list);
+//		map.put("tatalCount", totalCount);
+//		
+//		return map;
+//	}
 
 
 }
