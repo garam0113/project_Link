@@ -3,6 +3,7 @@ package feed;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,33 +11,41 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.link.common.Search;
+import com.link.service.domain.Feed;
 import com.link.service.feed.FeedService;
-import com.link.service.user.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:config/context-*.xml" })
 public class FeedServiceTest {
 	
 	@Autowired
-	@Qualifier("userServiceImpl")
-	private UserService userService;
-	
-	@Autowired
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
 
-	@Test
-	public void testGetFeedList() {
+	// @Test
+	public void testAddFeed() throws Exception {
+		// 피드 등록
+
+		Feed feed = new Feed();
+		feed.setUserId("user01");
+		feed.setOpenCondition(2);
+		feed.setContent("hiyo");
 		
-		Search search = new Search();
-		search.setCurrentPage(1);
+		feedService.addFeed(feed);
+		
+	}
+	
+	@Test
+	public void testGetFeed() throws Exception {
+		// 피드 업데이트
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feedNo", 13);
 		
-		map = feedService.getFeedList(search);
+		Feed feed = (Feed) feedService.getFeed(map).get("feed");
 		
-		System.out.println(map.get("list"));
+		Assert.assertEquals(13, feed.getFeedNo());
+		
 	}
 
 }
