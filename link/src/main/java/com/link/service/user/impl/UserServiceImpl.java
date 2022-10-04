@@ -33,24 +33,32 @@ public class UserServiceImpl implements UserService {
 		System.out.println(this.getClass());
 	}
 
-//	@Override
-//	public void addUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		userDAO.addUser(user);
-//		
-//	}
 	@Override
-	public int addUser(User user) throws Exception {
+	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("간다!~");
-		return userDAO.addUser(user);
+		userDAO.addUser(user);
 		
 	}
+	
+//	@Override
+//	public int addUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		System.out.println("간다!~");
+//		return userDAO.addUser(user);
+//		
+//	}
 
+//	@Override
+//	public void addSnsUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		userDAO.addSnsUser(user);
+//	}
+	
 	@Override
-	public void addSnsUser(User user) throws Exception {
+	public int addSnsUser(User user) throws Exception {
+		System.out.println("Service접속");
 		// TODO Auto-generated method stub
-		userDAO.addSnsUser(user);
+		return	userDAO.addSnsUser(user);
 	}
 
 //	@Override

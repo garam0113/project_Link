@@ -31,7 +31,21 @@ public class UserServiceTest {
 		user.setGender("남자");
 		user.setNickName("랑이");
 		
-		System.out.println("insert 결과 : "+userService.addUser(user) );
+//		System.out.println("insert 결과 : "+userService.addUser(user) );
+//		Assert.assertEquals(0, userService.addUser(user)); 
+		System.out.println("==============================\n");
+	}
+
+	//	@Test
+	public void testSnsAddUser() throws Exception {
+		// TODO Auto-generated constructor stub
+		
+		System.out.println("\n================================");
+		User user = new User();
+		user.setUserId("user10");
+		user.setAddType("1");
+		
+		System.out.println("insert 결과 : "+userService.addSnsUser(user) );
 //		Assert.assertEquals(0, userService.addUser(user)); 
 		System.out.println("==============================\n");
 	}

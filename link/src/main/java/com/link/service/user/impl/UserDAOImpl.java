@@ -26,25 +26,32 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println(this.getClass());
 	}
 	
+//	@Override
+//	public int addUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		return sqlSession.insert("UserMapper.addUser", user);
+//	}
+	
 	@Override
-	public int addUser(User user) throws Exception {
+	public void addUser(User user) throws Exception {
+		
+		sqlSession.insert("UserMapper.addUser", user);
 		// TODO Auto-generated method stub
-		return sqlSession.insert("UserMapper.addUser", user);
+		
+	}
+
+	@Override
+	public int addSnsUser(User user) throws Exception {
+		System.out.println("DB접속");
+		// TODO Auto-generated method stub
+		return sqlSession.insert("UserMapper.addSnsUser", user);
 	}
 //	
 //	@Override
-//	public void addUser(User user) throws Exception {
-//		
-//		sqlSession.insert("UserMapper.addUser", user);
+//	public void addSnsUser(User user) throws Exception {
 //		// TODO Auto-generated method stub
-//		
+//		sqlSession.insert("UserMapper.addSnsUser", user);
 //	}
-
-	@Override
-	public void addSnsUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.insert("UserMapper.addSnsUser", user);
-	}
 
 //	@Override
 //	public void addBlockUser(User user) throws Exception {
