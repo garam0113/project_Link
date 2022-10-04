@@ -27,7 +27,7 @@ ${ map.clubPostList[i].user.userId }</br>
 </c:if>
 <input type="button" value="모임게시물등록">
 <%-- <a href="/clubPostRest/getClubPostListRecent/${ clubNo }">최신순</a> --%>
-<a href="/clubPostRest/getClubPostListRecent?clubNo=2">최신순</a>
+<a href="/clubPostRest/getClubPostList?clubNo=2">최신순</a>
 <a href="/clubPostRest/getClubPostListMySelf?clubNo=10">내가 작성한 게시물</a>
 <a href="/clubPostRest/getClubPostListLike?clubNo=10">좋아요 많은순</a>
 <a href="/clubPostRest/getClubPostListMyHome">마이홈피</a>

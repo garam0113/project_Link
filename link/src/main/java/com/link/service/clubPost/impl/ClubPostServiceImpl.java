@@ -1,6 +1,7 @@
 package com.link.service.clubPost.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {
@@ -35,10 +37,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostList(String userId)
 
 	@Override
-	public Map<String, Object> getClubPostListRecent(int clubNo) throws Exception {
-		System.out.println(getClass() + ".getClubPostListRecent(int clubNo) 도착");
-		return clubPostDAOImpl.getClubPostListRecent(clubNo);
-	}// end of getClubPostListRecent(int clubNo)
+	public Map<String, Object> getClubPostList(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPostList(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.getClubPostList(clubPost);
+	}// end of getClubPostList(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> getClubPostListLike(int clubNo) throws Exception {
@@ -56,16 +58,16 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostListMySelf(String userId, int clubNo)
 
 	@Override
-	public Map<String, Object> getClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".getClubPost(int clubPostNo) 도착");
-		return clubPostDAOImpl.getClubPost(clubPostNo);
-	}// end of getClubPost(int clubPostNo)
+	public Map<String, Object> getClubPost(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPost(Comment comment) 도착");
+		return clubPostDAOImpl.getClubPost(comment);
+	}// end of getClubPost(Comment comment)
 
 	@Override
-	public Map<String, Object> getClubPostFull(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".getClubPostFull(int clubPostNo) 도착");
-		return clubPostDAOImpl.getClubPostFull(clubPostNo);
-	}// end of getClubPostFull(int clubPostNo)
+	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
+		return clubPostDAOImpl.getClubPostCommentList(comment);
+	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
 	public ClubPost updateClubPost(int clubPostNo) throws Exception {
@@ -74,10 +76,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of updateClubPost(int clubPostNo)
 
 	@Override
-	public Map<String, Object> deleteClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".deleteClubPost(int clubPostNo) 도착");
-		return clubPostDAOImpl.deleteClubPost(clubPostNo);
-	}// end of deleteClubPost(int clubPostNo)
+	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.deleteClubPost(clubPost);
+	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {

@@ -10,6 +10,9 @@ $(function(){
 	$("input[value='등록완료']").bind("click", function(){
 		$("form[name='addClubPost']").submit();
 	});
+	$("input[value='상세보기']").bind("click", function(){
+		location.href = "/clubPost/getClubPost?clubPostNo=20";
+	});
 });
 </script>
 </head>
@@ -32,6 +35,7 @@ $(function(){
 이미지9<input type="text" name="image9"></br>
 이미지10<input type="text" name="image10"></br>
 <input type="button" value="등록완료">
+<input type="button" value="상세보기">
 </form>
 </body>
 </html>

@@ -8,7 +8,7 @@ import com.link.service.club.ClubDAO;
 import com.link.service.club.ClubService;
 import com.link.service.domain.Club;
 
-@Service("clubServiceImple")
+@Service("clubServiceImpl")
 public class ClubServiceImpl implements ClubService {
 
 	
@@ -28,6 +28,10 @@ public class ClubServiceImpl implements ClubService {
 	
 	public void addClub(Club club) throws Exception {
 		clubDAO.addClub(club);
+	}
+	
+	public void getClub(int clubNo) throws Exception {
+		clubDAO.getClub(clubNo);
 	}
 
 }
