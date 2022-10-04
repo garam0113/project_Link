@@ -126,11 +126,49 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 왔다");
+		// 모임게시물 좋아요하다 또는 좋아요 취소하다
 		sqlSession.update("ClubPostMapper.updateClubPostLike", clubPost);
+		// 좋아요 등록
 		sqlSession.insert("HeartMapper.insertHeart", heart);
 		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
 		return clubPost.getClubPostLikeCount();
 	}// end of updateClubPostLike(Heart heart)
+
+	@Override
+	public Comment addClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".addClubPostComment(Comment comment) 왔다");
+		// 모임게시물 댓글 등록
+		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
+		// 모임게시물 글 작성자에게 알림
+		sqlSession.insert("pushMapper.addPush", comment);
+		// 가장 최근 모임게시물 댓글 가져온다
+		return sqlSession.selectOne("ClubPostCommentMapper.", comment);
+	}
+
+	@Override
+	public Comment getClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostComment(Comment comment) 왔다");
+		sqlSession.insert("ClubPostCommentMapper.getClubPostComment", comment);
+		return null;
+	}
+
+	@Override
+	public Comment updateClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }
 
