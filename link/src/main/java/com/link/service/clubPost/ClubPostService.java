@@ -3,9 +3,11 @@ package com.link.service.clubPost;
 import java.util.List;
 import java.util.Map;
 
+import com.link.common.Search;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Notice;
 
 public interface ClubPostService {
 	// 모임게시물 등록은 DAOImpl에서 여러가지 해야한다 확인
@@ -39,7 +41,15 @@ public interface ClubPostService {
 	// 모임게시물 좋아요한 후 좋아요 수
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
 	
+	
+	
+	
+	
 	// 신고
+	
+	
+	
+	
 	
 	// 모임게시물 댓글 등록
 	public Comment addClubPostComment(Comment comment) throws Exception;
@@ -59,15 +69,28 @@ public interface ClubPostService {
 	// 모임게시물 댓글 좋아요
 	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception;
 	
+	
+	
+	
+	
 	// 모임공지사항 등록
+	public Map<String, Object> addClubNotice(Search search, Notice notice) throws Exception;
 	
 	// 모임공지사항 리스트
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception;
 	
 	// 모임공지사항 상세보기
+	public Notice getClubNotice(Notice notice) throws Exception;
 	
 	// 모임공지사항 수정
+	public Map<String, Object> updateClubNotice(Search search, Notice notice) throws Exception;
 	
 	// 모임공지사항 삭제
+	public Map<String, Object> deleteClubNotice(Search search, Notice notice) throws Exception;
+	
+	
+	
+	
 	
 	// 마이홈피 - 내가 작성한 모임게시물 리스트
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception;

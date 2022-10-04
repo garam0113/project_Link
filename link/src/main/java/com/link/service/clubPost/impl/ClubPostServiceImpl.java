@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Notice;
 import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
@@ -137,5 +139,47 @@ public class ClubPostServiceImpl implements ClubPostService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Map<String, Object> addClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".addClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.addClubNotice(map);
+	}// end of addClubNotice(Notice notice)
+
+	@Override
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.getClubNoticeList(map);
+	}// getClubNoticeList(Search search, Notice notice)
+
+	@Override
+	public Notice getClubNotice(Notice notice) throws Exception {
+		System.out.println(getClass() + ".getClubNotice(Notice notice) 도착");
+		return clubPostDAOImpl.getClubNotice(notice);
+	}// end of getClubNotice(Notice notice)
+
+	@Override
+	public Map<String, Object> updateClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".updateClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.updateClubNotice(map);
+	}// updateClubNotice(Search search, Notice notice)
+
+	@Override
+	public Map<String, Object> deleteClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".deleteClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.deleteClubNotice(map);
+	}// deleteClubNotice(Search search, Notice notice)
 
 }

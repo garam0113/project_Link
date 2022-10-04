@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Notice;
 import com.link.service.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,7 +64,7 @@ public class ClubPostServiceTest {
 		clubPostServiceImpl.updateClubPostComment(comment);
 	}
 	
-	@Test
+	//@Test
 	public void deleteClubPostComment() throws Exception {
 		// 모임 게시물 댓글 삭제
 		
@@ -72,7 +74,61 @@ public class ClubPostServiceTest {
 		clubPostServiceImpl.deleteClubPostComment(comment);
 	}
 	
+	@Test
+	public void addClubNotice() throws Exception {
+		// 모임 공지사항 등록
+		Search search = new Search();
+		Notice notice = new Notice();
+		notice.setNoticeTitle("title");
+		notice.setNoticeContent("content");
+		notice.setClubNo(2);
+		notice.setNoticeCount(0);
+		User user = new User();
+		user.setUserId("user03");
+		notice.setUserId(user);
+		
+		clubPostServiceImpl.addClubNotice(search, notice);
+	}
+	
+	//@Test
+	public void getClubNotice() throws Exception {
+		// 모임 공지사항 수정
+		Notice notice = new Notice();
+		notice.setNoticeNo(6);
+		
+		clubPostServiceImpl.getClubNotice(notice);
+	}
+	
+	//@Test
+	public void getClubNoticeList() throws Exception {
+		// 모임 공지사항 수정
+		Search search = new Search();
+		Notice notice = new Notice();
+		notice.setNoticeNo(6);
+		
+		clubPostServiceImpl.getClubNoticeList(search, notice);
+	}
+	
+	//@Test
+	public void updateClubNotice() throws Exception {
+		// 모임 공지사항 수정
+		Search search = new Search();
+		Notice notice = new Notice();
+		notice.setNoticeTitle("title");
+		notice.setNoticeContent("content");
+		
+		clubPostServiceImpl.updateClubNotice(search, notice);
+	}
+	
+	//@Test
+	public void deleteClubNotice() throws Exception {
+		// 모임 공지사항 삭제
+		Search search = new Search();
+		Notice notice = new Notice();
+		notice.setClubNo(2);
+		
+		clubPostServiceImpl.deleteClubNotice(search, notice);
+	}
+	
 
 }
-
-
