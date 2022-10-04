@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeMapper">
+ 	
+ 	
+	<resultMap id="noticeSelectMap" type="notice">
+		<result property="noticeNo" 			column="notice_no" 			jdbcType="VARCHAR"/>
+		<result property="noticeTitle"			column="notice_title" 			jdbcType="VARCHAR" />
+		<result property="noticeContent" 		column="notice_content" 			jdbcType="VARCHAR" />
+		<result property="noticeImage1" 			column="notice_image1" 				jdbcType="VARCHAR" />
+		<result property="noticeImage2" 				column="notice_image2" 				jdbcType="VARCHAR" />
+		<result property="noticeRegDate" 			column="notice_regdate" 		jdbcType="DATE" />
+		<result property="noticeCount" 			column="notice_count" 				jdbcType="INTEGER" />
+	
+	
+	<association property="userId" javaType="user">
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+	</association>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addNotice"		parameterType="notice" >
+	 	INSERT
+		INTO notice( notice_no  , notice_title , notice_content , notice_image1 , notice_image2, notice_regdate, notice_count, userId.user_Id:VARCHAR)
+		VALUES	 (	seq_notice_notice_no.nextval , #{notice_title} , #{notice_content} , #{notice_image1} , 
+							#{notice_image2} ,SYSDATE , #{notice_count}, )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getNotice"	parameterType="int"	resultMap="noticeSelectMap">
+	SELECT
+	n.notice_no , n.notice_title , n.notice_content , n.notice_image1 ,  n.notice_image2 , n.notice_regdate, n.notice_count, n.user_id
+	FROM notice n 
+	WHERE n.notice_no = #{notice_no}
+
+	 </select>
+	 
+ 	<update id="getCount" parameterType="int">
+ 	UPDATE notice
+ 	<set>
+ 		notice_count = notice_count+1
+ 	</set>
+ 	WHERE notice_no = #{notice_no}
+ 	
+ 	</update>
+	 
+
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateNotice"	parameterType="notice" >
+	   	UPDATE notice
+	   	<set>
+	   		notice_title 	= #{notice_title} ,
+			notice_content	= #{notice_content},
+			notice_regdate	= SYSDATE ,
+			notice_image1	=	#{notice_image1},
+			notice_image2   =  #{notice_image2}
+	   	</set>
+	   	WHERE notice_no = #{notice_no}
+	 </update>
+	 
+	 <delete id="deleteNotice" parameterType="int">
+	 DELETE
+	 FROM notice
+	 WHERE notice_no = #{notice_no}
+	 
+	 </delete>
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="getNoticeList"  parameterType="search"	resultMap="noticeSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT notice_no , notice_title , user_id ,notice_regdate , notice_count
+											FROM notice
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				LOWER(notice_no) LIKE LOWER('%${searchKeyword}%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				LOWER(notice_title) LIKE LOWER('%${searchKeyword}%')
+													</if>
+												</where>
+											</if>
+											ORDER BY notice_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT notice_title , notice_content , notice_regdate
+						FROM notice
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			notice_title = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		notice_content = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
+	 
+	 
+	 
+</mapper>

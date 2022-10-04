@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 
 @RestController
 @RequestMapping("/clubPostRest/*")
@@ -65,6 +66,12 @@ public class ClubPostRestController {
 	public List<Comment> getClubPostCommentList(@ModelAttribute Comment comment) throws Exception {
 		System.out.println("/getClubPostCommentList : GET : 특정 모임의 또는 특정 댓글의 댓글리스트");
 		return clubPostServiceImpl.getClubPostCommentList(comment);
+	}
+	
+	@RequestMapping(value = "updateClubPostLike", method = RequestMethod.POST)
+	public int updateClubPostLike(@ModelAttribute ClubPost clubPost, Heart heart) throws Exception {
+		System.out.println("/updateClubPostLike : POST : 특정 모임게시물에 좋아요, 좋아요 수");
+		return clubPostServiceImpl.updateClubPostLike(clubPost, heart);
 	}
 
 	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)

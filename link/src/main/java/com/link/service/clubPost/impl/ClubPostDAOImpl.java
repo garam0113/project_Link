@@ -14,6 +14,7 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 
 @Repository("clubPostDAOImpl")
 public class ClubPostDAOImpl implements ClubPostDAO {
@@ -85,13 +86,13 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getClubPostListMySelf(Map<String, Object> map)
 
 	@Override
-	public Map<String, Object> getClubPost(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPost(Comment comment) 왔다");
+	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", comment));
-		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", comment));
+		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost));
+		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", clubPost));
 		return map;
-	}// end of getClubPost(Comment comment)
+	}// end of getClubPost(ClubPost clubPost)
 
 	@Override
 	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
@@ -100,17 +101,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
-	public ClubPost updateClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".updateClubPost(int clubPostNo) 왔다");
-		return null;
-	}// end of updateClubPost(int clubPostNo)
+	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".updateClubPost(ClubPost clubPost) 왔다");
+		sqlSession.update("ClubPostMapper.updateClubPost", clubPost);
+		return getClubPost(clubPost);
+	}// end of updateClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 왔다");
 		sqlSession.update("ClubPostMapper.deleteClubPost", clubPost);
-		//map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
-		return null;
+		return getClubPostList(clubPost);
 	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
@@ -122,4 +123,15 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		return map;
 	}// end of getClubPostListMyHome(String userId)
 
+	@Override
+	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
+		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 왔다");
+		sqlSession.update("ClubPostMapper.updateClubPostLike", clubPost);
+		sqlSession.insert("HeartMapper.insertHeart", heart);
+		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
+		return clubPost.getClubPostLikeCount();
+	}// end of updateClubPostLike(Heart heart)
+
 }
+
+
