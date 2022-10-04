@@ -8,25 +8,193 @@
 
 
 
-	<resultMap	id="feedSelectMap"	type="feed">
-		<result property="feedNo"			column="feed_no"				jdbcType="NUMBER" />
-		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
-		<result property="openCondition"	column="feed_open_condition"	jdbcType="VARCHAR" />
-		<result property="content"			column="feed_content"			jdbcType="VARCHAR" />
-		<result property="image1"			column="feed_image1"			jdbcType="VARCHAR" />
-		<result property="image2"			column="feed_image2"			jdbcType="VARCHAR" />
-		<result property="image3"			column="feed_image3"			jdbcType="VARCHAR" />
-		<result property="image4"			column="feed_image4"			jdbcType="VARCHAR" />
-		<result property="video"			column="feed_video"				jdbcType="VARCHAR" />
-		<result property="hashtag"			column="hashtag"				jdbcType="VARCHAR" />
-		<result property="likeCount"		column="feed_like_count"		jdbcType="VARCHAR" />
-		<result property="commentCount"		column="feed_comment_count"		jdbcType="VARCHAR" />
-		<result property="regDate"			column="feed_reg_date"			jdbcType="VARCHAR" />
-		<result property="updateDate"		column="feed_update_date"		jdbcType="VARCHAR" />
-		<result property="reportCondition"	column="report_condition"		jdbcType="VARCHAR" />
-		<result property="deleteCondition"	column="delete_condition"		jdbcType="VARCHAR" />
+	<resultMap	id="feedSelectMap"			type="feed">
+		<result property="feedNo"			column="feed_no"					jdbcType="NUMERIC" />
+		<result property="userId"			column="user_id"					jdbcType="VARCHAR" />
+		<result property="openCondition"	column="feed_open_condition"		jdbcType="VARCHAR" />
+		<result property="content"			column="feed_content"				jdbcType="VARCHAR" />
+		<result property="image1"			column="feed_image1"				jdbcType="VARCHAR" />
+		<result property="image2"			column="feed_image2"				jdbcType="VARCHAR" />
+		<result property="image3"			column="feed_image3"				jdbcType="VARCHAR" />
+		<result property="image4"			column="feed_image4"				jdbcType="VARCHAR" />
+		<result property="video"			column="feed_video"					jdbcType="VARCHAR" />
+		<result property="hashtag"			column="hashtag"					jdbcType="VARCHAR" />
+		<result property="likeCount"		column="feed_like_count"			jdbcType="NUMERIC" />
+		<result property="commentCount"		column="feed_comment_count"			jdbcType="NUMERIC" />
+		<result property="regDate"			column="feed_reg_date"				jdbcType="DATE" />
+		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
+		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
+		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="feedCommentSelectMap" 		type="comment">
+		<result property="feedCommentNo"		column="feed_comment_no"			jdbcType="NUMERIC" />
+		<result property="feedNo"				column="feed_no"					jdbcType="NUMERIC" />
+		<result property="commentContent"		column="feed_comment"				jdbcType="VARCHAR" />
+		<result property="commentLikeCount"		column="feed_comment_like_count"	jdbcType="NUMERIC" />
+		<result property="commentCount"			column="feed_comment_count"			jdbcType="NUMERIC" />
+		<result property="commentRegDate"		column="feed_comment_reg_date"		jdbcType="DATE" />
+		<result property="commentUpdateDate"	column="feed_comment_update_date"	jdbcType="DATE" />
+		<result property="reportCondition"		column="report_condition"			jdbcType="VARCHAR" />
+		<result property="deleteCondition"		column="delete_condition"			jdbcType="VARCHAR" />
+		<result property="parent"				column="parent"						jdbcType="NUMERIC" />
+		<result property="depth"				column="depth"						jdbcType="NUMERIC" />
+		<result property="sequence"				column="sequence"					jdbcType="NUMERIC" />
+			
+		<association property="user"			javaType="user">
+			<result property="userId" 			column="user_id"		 			jdbcType="VARCHAR" />
+		</association>
+	
 	</resultMap>
 
 
+
+	<insert 	id="addFeed"					parameterType="feed">
+		INSERT into feed
+		VALUES (
+			seq_feed_no.nextval,
+			#{userId:VARCHAR},
+			#{openCondition:VARCHAR},
+			#{content:VARCHAR},
+			#{image1:VARCHAR},
+			#{image2:VARCHAR},
+			#{image3:VARCHAR},
+			#{image4:VARCHAR},
+			#{video:VARCHAR},
+			#{hashtag:VARCHAR},
+			#{likeCount:NUMERIC},
+			#{commentCount:NUMERIC},
+			SYSDATE,
+			#{updateDate:DATE},
+			#{reportCondition:VARCHAR},
+			#{deleteCondition:VARCHAR}	)
+	</insert>
+	
+	
+	<select 	id="getFeed"					parameterType="int"			resultMap="feedSelectMap">
+		SELECT 
+		*
+		FROM feed
+		WHERE feed_no = #{feed_no}
+	</select>
+	
+	
+	
+	<update		id="updateFeed"					parameterType="feed">
+		UPDATE feed
+		<set>
+			feed_content			= #{content}
+			feed_update_date		= SYSDATE
+		</set>	
+		WHERE feed_no 				= #{feedNo}
+	</update>
+	
+	
+	
+	<update		id="deleteFeed"					parameterType="int">
+		UPDATE feed
+		<set>
+			delete_condition		= '1'
+		</set>
+		WHERE feed_no 				= #{feedNo}
+	</update>
+	
+	
+	
+	<select 	id="getFeedList"				parameterType="search"		resultMap="feedSelectMap">
+		SELECT 
+		feed_no, user_id, feed_open_condition, feed_content, feed_image1, feed_image2, feed_image3, feed_image4,
+		feed_video, hashtag, feed_like_count, feed_comment_count, feed_reg_date, feed_update_date, report_condition, delete_condition
+		FROM feed
+		ORDER BY feed_no DESC
+	</select>
+	
+	
+	
+	<insert 	id="addFeedComment"				parameterType="comment">
+		INSERT into feed_comment
+		VALUES (
+			seq_feed_comment_no.nextval,
+			#{feedNo:NUMERIC},
+			#{user.userId:VARCHAR},
+			#{commentContent:VARCHAR},
+			#{commentLikeCount:NUMERIC},
+			#{commentCount:NUMERIC},
+			SYSDATE,
+			#{commentUpdateDate:DATE},
+			'0',
+			'0',
+			#{parent:NUMERIC},
+			#{depth:NUMERIC},
+			#{sequence:NUMERIC}				)
+	</insert>
+	
+	
+	
+	<update id="updateFeedComment"				parameterType="comment">
+		UPDATE feed_comment
+		<set>
+		
+		</set>
+		WHERE feed_no				= #{feedNo}
+	</update>
+	
+											 
+	
+	<update		id="deleteFeedComment"			parameterType="feed">
+		UPDATE comment
+		<set>
+			delete_condition		= '1'
+		</set>
+		WHERE feed_no 				= #{feedNo}
+	</update>
+
+	
+	
+	<select 	id="getFeedCommentList"			parameterType="map"		resultMap="feedCommentSelectMap">
+		SELECT 
+		*
+		FROM feed_comment
+		WHERE feed_no				= #{feedNo}
+		AND report_condition		= '0'
+		AND delete_condition		= '0'
+		ORDER BY feed_comment_no ASC
+	</select>
+	
+	
+	
+	<select 	id="getTotalFeedCount"			parameterType="search"		resultType="int">
+		SELECT
+	  	COUNT(*)
+	  	FROM (
+	  			SELECT 
+	  			*
+				FROM feed			)
+	</select>
+	
+	
+	
+	<select 	id="getTotalFeedCommentCount"	parameterType="search"		resultType="int">
+		SELECT
+	  	COUNT(*)
+	  	FROM (
+	  			SELECT 
+	  			*
+				FROM feed_comment	)
+	</select>
+	
+	
+	
+	<insert id="addHeart"						parameterType="map">
+	
+	</insert>
+	
+	
+	
+	<insert id="deleteHeart"						parameterType="map">
+	
+	</insert>
+	
+	
 	
 </mapper>

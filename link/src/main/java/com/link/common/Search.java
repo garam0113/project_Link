@@ -11,8 +11,6 @@ public class Search {
 	private int order;
 	private int startRowNum;
 	private int endRowNum;
-	private String minPrice;
-	private String maxPrice;
 	
 	public Search(){
 		
@@ -69,29 +67,11 @@ public class Search {
 		return getCurrentPage() * getPageSize();
 	}
 
-
-	public String getMinPrice() {
-		return minPrice;
-	}
-
-	public void setMinPrice(String minPrice) {
-		this.minPrice = minPrice;
-	}
-
-	public String getMaxPrice() {
-		return maxPrice;
-	}
-
-	public void setMaxPrice(String maxPrice) {
-		this.maxPrice = maxPrice;
-	}
-
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Search : [currentPage] = " + currentPage + ", [order] = " + order +", [SearchCondition] = " + searchCondition 
 				+ ", [SearchKeyword] = " + searchKeyword + ", [pageSize] = " + pageSize
-				+ ", [startRowNum] = " + startRowNum + ", [endRowNum] = " + endRowNum
-				+ ", [minPrice] = " + minPrice + ", [maxPrice] = " + maxPrice;
+				+ ", [startRowNum] = " + startRowNum + ", [endRowNum] = " + endRowNum;
 	}
 }
