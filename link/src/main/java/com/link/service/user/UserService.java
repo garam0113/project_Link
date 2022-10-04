@@ -14,6 +14,8 @@ public interface UserService {
 //	public void addBlockUser(User user) throws Exception;
 	
 	public User getUser(String userId) throws Exception;
+
+	public User getUserId(User user) throws Exception;
 	
 	public void updateUser(User user) throws Exception;
 	
@@ -25,18 +27,24 @@ public interface UserService {
 
 //	public void updateBlockUser(User user) throws Exception;
 	
-	public void logout(User user) throws Exception;
+	public void logout(String userId) throws Exception;
 	
 	public void deleteUser(User user) throws Exception;
 	
 	public boolean checkDuplication(String userId) throws Exception;
 	
 	public void sendSMS(String phoneNo, String cerNo);
+
+	public void sendPasswordSMS(User user);
 	
 	public Map<String, Object> getUserList(Search search) throws Exception;
 	
 	public Map<String, Object> getStopList(Search search) throws Exception;
 
 	public Map<String, Object> getForeverStopList(Search search) throws Exception;
+	
+//	public Map<String, Object> getBlockUserList(Search search) throws Exception;
+
+	public Map<String, Object> getPushList(Search search) throws Exception;
 	
 }

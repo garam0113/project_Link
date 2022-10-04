@@ -14,7 +14,7 @@
 		<result property="name"		column="name" 		jdbcType="VARCHAR" />
 		<result property="rrn" 			column="rrn" 			jdbcType="VARCHAR" />
 		<result property="gender" 		column="gender" 			jdbcType="VARCHAR" />
-		<result property="phoneNo" 		column="phone_no" 	jdbcType="NUMERIC" />
+		<result property="phoneNo" 		column="phone_no" 	jdbcType="VARCHAR" />
 		<result property="email" 		column="email" 			jdbcType="VARCHAR" />
 		<result property="role" 		column="role" 			jdbcType="CHAR" />
 		<result property="nickName" 	column="nickname" 			jdbcType="VARCHAR" />
@@ -57,7 +57,11 @@
 		<if test="(searchCondirion == 0 and searchKeyword == '') or (searchCondirion == 0 and searchKeyword != '')" >
 		nickname = LIKE(#{searchKeyword}||'%')
 		</if>
+		<if test="(searchCondirion == null) and (searchKeyword == '1' or  searchKeyword == '2')">
+		penalty_type = #{searchKeyword}
+		</if>
 		</where>
+		ORDER BY user_id 
 	</sql>
 
 
@@ -68,8 +72,8 @@
 						area1, area2, area3, category1, category2, category3, add_user_date	
 					) 
 		VALUES		(	
-						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:NUMERIC}, 
-						#{phoneNo:NUMERIC}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
+						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:VARCHAR}, 
+						#{phoneNo:VARCHAR}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
 						#{area1:VARCHAR} , #{area2:VARCHAR} , #{area3:VARCHAR} , #{category1:VARCHAR} , 
 						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE 
 					)
@@ -96,6 +100,16 @@
 		FROM users
 		Where user_id = #{userId}
 	</select>
+
+	<select		id="getUser"		parameterType="user"			resultMap="userSelectMap">
+		SELECT
+		user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
+		profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 
+		stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date, 
+		total_visit_count, open_condition, push_condition, join_club_count, join_club_limit
+		FROM users
+		Where name = #{name} and rrn = #{rrn}
+	</select>
 	
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
@@ -109,7 +123,7 @@
 	<update	id="updatePhoneNo"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		phone_no 	= #{phoneNo:NUMERIC}	,
+	   		phone_no 	= #{phoneNo:VARCHAR}	,
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
@@ -143,15 +157,15 @@
 	 	UPDATE users
 	 	<set>
 	 		out_user_state	= #{outUserState:CHAR}, 
-	 		out_user_date	= #{outUserDate:DATE}
+	 		out_user_date	= SYSDATE
 	 	</set>
 	 	WHERE user_id = #{userId}
 	 </update>
 	 
-	 <update id="updateLogoutDate" parameterType="user">
+	 <update id="updateLogoutDate" parameterType="String">
 	 	UPDATE users
 	 	<set>
-	 		logout_date	= #{logoutDate:DATE}
+	 		logout_date	= SYSDATE
 	 	</set>
 	 	WHERE user_id = #{userId}
 	 </update>
@@ -220,55 +234,23 @@
 	 	WHERE user_id = #{userId}
 	 </update>
 	 
-	 <select  id="getUserList"  parameterType="int"	resultMap="userSelectMap">
+	 <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT inner_table.*
 	  	FROM (	
 	  			SELECT
 	  			deep_table.* 				,
 	  			ROWNUM 			AS row_seq	
-	  			FROM		(
-	  							SELECT 
-	  							user_id		, 
-	  							user_name	,
-	  							email
-								FROM users
-								<if test="searchCondition != null">
-									<where>
-										<if test="searchCondition == 0 and searchKeyword !='' ">
-							 				LOWER(user_id) LIKE LOWER('%${searchKeyword}%')
-										</if>
-										<if test="searchCondition == 1 and searchKeyword !='' ">
-							 				LOWER(user_name) LIKE LOWER('%${searchKeyword}%')
-										</if>
-									</where>
-								</if>
-								ORDER BY user_id 
-													) deep_table
-				WHERE ROWNUM &lt;= #{endRowNum} 					) inner_table
+	  			FROM		(<include refid=""></include>) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )					
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
 	 
 	 
 	 
-	 <select  id="getTotalCount"  parameterType="int"	 resultType="int">
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT
 	  	COUNT(*)
-	  	FROM (
-	  			SELECT 
-	  			user_id , 
-	  			user_name , 
-	  			email
-				FROM users
-					<if test="searchCondition != null">
-						<where>
-							<if test="searchCondition == 0 and searchKeyword !='' ">
-					 			LOWER(user_id) LIKE LOWER('%${searchKeyword}%')
-							</if>
-							<if test="searchCondition == 1 and searchKeyword !='' ">
-					 			LOWER(user_name) LIKE LOWER('%${searchKeyword}%')
-							</if>
-						</where>
-					</if> 	) countTable						
+	  	FROM (<include refid=""></include>) countTable						
 	 </select>
 	 
 </mapper>
