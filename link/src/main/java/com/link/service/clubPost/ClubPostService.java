@@ -5,8 +5,12 @@ import java.util.Map;
 
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 
 public interface ClubPostService {
+	// 모임게시물 등록은 DAOImpl에서 여러가지 해야한다 확인
+	// 모임게시물 리스트는 Search 매개변수로 보내줘야 한다 페이징해야 한다 확인
+	// 좋아요 화면에서 못봤다 Junit으로 확인해보자
 
 	// 모임게시물 등록
 	public ClubPost addClubPost(ClubPost clubPost) throws Exception;
@@ -24,30 +28,36 @@ public interface ClubPostService {
 	public Map<String, Object> getClubPostListMySelf(String userId, int clubNo) throws Exception;
 	
 	// 모임게시물 상세보기 + 모임게시물 댓글리스트
-	public Map<String, Object> getClubPost(Comment comment) throws Exception;
+	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 수정 후 모임게시물 상세보기
-	public ClubPost updateClubPost(int clubPostNo) throws Exception;
+	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception;
 	
-	// 모임게시물 좋아요
+	// 모임게시물 좋아요한 후 좋아요 수
+	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
 	
 	// 신고
 	
 	// 모임게시물 댓글 등록
+	public Comment addClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 리스트
 	public List<Comment> getClubPostCommentList(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 상세보기
+	public Comment getClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 수정
+	public Comment updateClubPostComment(Comment comment) throws Exception;
 	
 	// 모잉게시물 댓글 삭제
+	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 좋아요
+	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception;
 	
 	// 모임공지사항 등록
 	

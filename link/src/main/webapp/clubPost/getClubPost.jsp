@@ -18,6 +18,7 @@ $(function(){
 </script>
 </head>
 <body>
+<form></form>
 <input type="button" value="수정">
 <input type="button" value="삭제">
 모임 게시물 등록 회원 정보 : ${ map.getClubPost.user }</br>
