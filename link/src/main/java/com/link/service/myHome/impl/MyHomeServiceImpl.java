@@ -17,7 +17,7 @@ import com.link.service.myHome.MyHomeService;
 public class MyHomeServiceImpl implements MyHomeService {
     
 	@Autowired
-	@Qualifier("myHomeServiceImpl")
+	@Qualifier("myHomeDAOImpl")
 	private MyHomeDAO myHomeDAO;
 	
 	public void setMyHomeDAO(MyHomeDAO myHomeDAO) {
