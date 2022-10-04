@@ -37,27 +37,27 @@ public class ClubDAOImpl implements ClubDAO {
 
 	
 	//Method
-//	@Override
-//	public void addClub(Club club) throws Exception {
-//		sqlSession.insert("ClubMapper.addClub",club);
-//	}
-	
 	@Override
-	public int addClub(Club club) throws Exception {
-		return sqlSession.insert("ClubMapper.addClub",club);
+	public void addClub(Club club) throws Exception {
+		sqlSession.insert("ClubMapper.addClub",club);
 	}
+	
+//	@Override
+//	public int addClub(Club club) throws Exception {
+//		return sqlSession.insert("ClubMapper.addClub",club);
+//	}
 
 	
-//	@Override
-//	public Club getClub(int clubNo) throws Exception {
-//		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
-//	}
-	
-	
-//	@Override
+	@Override
 	public Club getClub(int clubNo) throws Exception {
-		return (Club)sqlSession.selectOne("ClubMapper.getClub",clubNo);
+		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
 	}
+	
+
+////	@Override
+//	public Club getClub(int clubNo) throws Exception {
+//		return (Club)sqlSession.selectOne("ClubMapper.getClub",clubNo);
+//	}
 	
 	
 	
