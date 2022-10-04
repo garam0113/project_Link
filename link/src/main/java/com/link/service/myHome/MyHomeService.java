@@ -1,5 +1,11 @@
 package com.link.service.myHome;
 
+import java.util.List;
+import java.util.Map;
+
+import com.link.common.Search;
+import com.link.service.domain.User;
+
 public interface MyHomeService  {
 
     public void updateMyHomeOpenCondition(User user) throws Exception;
@@ -12,9 +18,9 @@ public interface MyHomeService  {
 	
 	public void addFollow(User user) throws Exception;
 	
-	public User getFollowList(String followId) throws Exception;
+	public Map<String, Object> getFollowList(Search search) throws Exception;
 	
-	public User getFollowerList(String followedId) throws Excepiton;
+	public Map<String, Object> getFollowerList(Search search) throws Exception;
 	
 	public void deleteFollow(User user) throws Exception;
 }
