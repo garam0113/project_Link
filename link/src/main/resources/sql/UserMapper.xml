@@ -101,7 +101,7 @@
 		Where user_id = #{userId}
 	</select>
 
-	<select		id="getUser"		parameterType="user"			resultMap="userSelectMap">
+	<select		id="getUserId"		parameterType="user"			resultMap="userSelectMap">
 		SELECT
 		user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
 		profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 

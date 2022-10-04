@@ -27,17 +27,17 @@ public class UserController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['pageUnit']")
-	int pageUnit;
-	@Value("#{commonProperties['pageSize']")
+	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
+	@Value("#{commonProperties['pageUnit']}")
+	int pageUnit;
 	
 	@RequestMapping(value="addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception{
 		
 		System.out.println("/user/addUser : GET");
 		
-		return null;
+		return "redirect:/user/addUserView.jsp";
 	}
 	
 	@RequestMapping(value="addUser", method = RequestMethod.POST)
