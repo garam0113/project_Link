@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 
 public interface ClubPostDAO {
 
@@ -23,16 +24,17 @@ public interface ClubPostDAO {
 	// 내가 작성한 모임게시물 리스트
 	public Map<String, Object> getClubPostListMySelf(Map<String, Object> map) throws Exception;
 	
-	// 모임게시물 상세보기 + 모임게시물 댓글 리스트
-	public Map<String, Object> getClubPost(Comment comment) throws Exception;
+	// 모임게시물 상세보기 + 모임게시물 댓글리스트
+	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 수정 후 모임게시물 상세보기
-	public ClubPost updateClubPost(int clubPostNo) throws Exception;
+	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 좋아요
+	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
 	
 	// 신고
 	

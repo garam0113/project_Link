@@ -12,6 +12,8 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
+import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {
@@ -58,10 +60,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostListMySelf(String userId, int clubNo)
 
 	@Override
-	public Map<String, Object> getClubPost(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPost(Comment comment) 도착");
-		return clubPostDAOImpl.getClubPost(comment);
-	}// end of getClubPost(Comment comment)
+	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.getClubPost(clubPost);
+	}// end of getClubPost(ClubPost clubPost)
 
 	@Override
 	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
@@ -70,10 +72,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
-	public ClubPost updateClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".updateClubPost(int clubPostNo) 도착");
-		return clubPostDAOImpl.updateClubPost(clubPostNo);
-	}// end of updateClubPost(int clubPostNo)
+	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".updateClubPost(ClubPost clubPost) 도착");
+		return clubPostDAOImpl.updateClubPost(clubPost);
+	}// end of updateClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
@@ -86,5 +88,12 @@ public class ClubPostServiceImpl implements ClubPostService {
 		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
 		return clubPostDAOImpl.getClubPostListMyHome(userId);
 	}// end of getClubPostListMyHome(String userId)
+
+	@Override
+	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
+		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 도착");
+		heart.setUserId(clubPost.getUser().getUserId());
+		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
+	}// end of updateClubPostLike(Heart heart)
 
 }
