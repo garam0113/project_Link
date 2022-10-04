@@ -7,7 +7,9 @@ import com.link.service.domain.User;
 
 public interface UserService {
 
-	public void addUser(User user) throws Exception;
+//	public void addUser(User user) throws Exception;
+
+	public int addUser(User user) throws Exception;
 	
 	public void addSnsUser(User user) throws Exception;
 	
@@ -45,6 +47,6 @@ public interface UserService {
 	
 //	public Map<String, Object> getBlockUserList(Search search) throws Exception;
 
-	public Map<String, Object> getPushList(Search search) throws Exception;
+//	public Map<String, Object> getPushList(Search search) throws Exception;
 	
 }

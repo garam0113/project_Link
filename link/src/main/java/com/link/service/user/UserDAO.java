@@ -8,7 +8,9 @@ import com.link.service.domain.User;
 
 public interface UserDAO {
 
-	public void addUser(User user) throws Exception;
+//	public void addUser(User user) throws Exception;
+
+	public int addUser(User user) throws Exception;
 	
 	public void addSnsUser(User user) throws Exception;
 	
@@ -38,8 +40,8 @@ public interface UserDAO {
 
 	public int getTotalCount(Search search) throws Exception;
 	
-	public List<Report> getPushList(Search search) throws Exception;
+//	public List<Report> getPushList(Search search) throws Exception;
 	
-	public int getPushTotalCount(Search search) throws Exception;
+//	public int getPushTotalCount(Search search) throws Exception;
 
 }
