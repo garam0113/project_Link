@@ -53,9 +53,55 @@
 	
 	
 	
-	<!-- <insert id="">
+	<insert id="addClubPostComment" parameterType="comment">
+		INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
+		COMMENT_LIKE_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
+		VALUES (seq_club_post_comment_no.NEXTVAL, #{ clubPostNo }, #{ user.userId }, #{ commentContent }, sysdate, null, 0, 0, '0', '0', #{ parent }, #{ depth }, #{ commentCount })
+	</insert>
 	
-	</insert> -->
+	
+	
+	<!-- 가장 최신 모임게시물 댓글 번호 가져온다 -->
+	<select id="getClubPostCommentNo" resultType="int">
+		SELECT V1.CLUB_POST_COMMENT_NO
+		FROM ( SELECT *
+				FROM CLUB_POST_COMMENT C
+				ORDER BY COMMENT_REG_DATE DESC ) V1
+		WHERE ROWNUM = 1
+	</select>
+	
+	
+
+	<!-- 특정 댓글을 가져온다 -->	
+	<select id="getClubPostComment" parameterType="comment" resultMap="clubPostCommentSelectMap">
+		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
+		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
+		FROM CLUB_POST_COMMENT
+		WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+	</select>
+	
+	
+	
+	<!-- 댓글내용 수정 -->
+	<update id="updateClubPostComment" parameterType="comment">
+		UPDATE CLUB_POST_COMMENT SET COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+	</update>
+	
+	
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteClubPostComment">
+		UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1' WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+	</update>
+	
+	
+	
+	<!-- 댓글 좋아요 하다/ 좋아요 취소하다 -->
+	<update id="updateLike">
+		UPDATE CLUB_POST_COMMENT SET COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1 WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo } 
+	</update>
+	
+	
 	
 	
 	 
