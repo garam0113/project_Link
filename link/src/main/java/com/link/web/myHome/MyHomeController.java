@@ -1,5 +1,8 @@
 package com.link.web.myHome;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -45,14 +48,21 @@ public class MyHomeController {
 	}
 	
 	
-	public String getMyHome(User user, Feed feed, Club club, ClubPost clubPost,
+	public String getMyHome(User user, Feed feed, Club club,
 			@RequestParam("userId")String userId,@RequestParam("clubNo")int clubNo,
-			@RequestParam("clubPostNo")int clubPostNo, Model model) throws Exception{
+			@RequestParam("feedNo")int feedNo, Model model) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
 		
 		user = userService.getUser(user.getUserId());
 		club = clubService.getClub(club.getClubNo());
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		
+		
+		
+				
+		
 		
 		
 		model.addAttribute("user",user);
