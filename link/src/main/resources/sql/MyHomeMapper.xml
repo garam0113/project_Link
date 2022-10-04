@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  						
+<mapper namespace="MyHomeMapper">
+
+
+
+	<resultMap	id="myHomeSelectMap" type="user">
+		<result property="userId" 		column="send_user_id" 		jdbcType="VARCHAR"/>
+		<result property="receiveId" 	column="recv_user_id" 		jdbcType="VARCHAR"/>
+		<result property="fbState"		column="state" 		jdbcType="CHAR" />
+		<result property="fbType"		column="type" 		jdbcType="CHAR" />
+		
+	</resultMap>
+	
+	
+
+
+<insert id="addFollow" parameterType="user">
+
+     INSERT
+     INTO follow_block (
+     no            , 
+     send_user_id  ,
+     recv_user_id  ,
+     state         ,
+     type          
+                      )
+     VALUES (
+     seq_follow_block_no.nextval ,
+     #{userId}                   ,
+     #{receiveId}                ,
+     '1'                 ,
+     '1'                  
+     
+                      )
+
+</insert>
+
+
+<select id="getFollowList" parameterType="search" resultMap="myHomeSelectMap">
+
+     SELECT
+      u.user_id, u.nickname, u.profile_image
+     from users u inner join follow_block f
+     on u.user_id = f.recv_user_id
+     where f.send_user_id = #{userId}
+     order by no
+     
+</select>
+
+<select id="getFollowerList" parameterType="search" resultMap="myHomeSelectMap">
+     
+     SELECT
+      u.user_id, u.nickname, u.profile_image
+     from users u inner join follow_block f
+     on u.user_id = f.send_user_id
+     where f.recv_user_id = #{userId}
+     order by no
+
+</select>
+
+<update id="deleteFollow" parameterType="user" >
+
+     UPDATE follow_block
+		   	<set>
+		   		state			= '2'			,
+				type			= '1'			
+				
+		   	</set>
+		   	WHERE send_user_id = #{userId} and recv_user_id = #{receiveId}
+
+</update>
+
+
+
+
+</mapper>
