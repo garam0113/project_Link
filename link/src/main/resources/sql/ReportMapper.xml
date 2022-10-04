@@ -62,13 +62,6 @@
 	   	</set>
 	   	WHERE notice_no = #{notice_no}
 	 </update>
-	 
-	 <delete id="deleteNotice" parameterType="int">
-	 DELETE
-	 FROM notice
-	 WHERE notice_no = #{notice_no}
-	 
-	 </delete>
 		 
 	<!-- SQL : SELECT LIST -->
 	<select  id="getNoticeList"  parameterType="search"	resultMap="noticeSelectMap">

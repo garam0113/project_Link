@@ -22,6 +22,9 @@
 	<mappers>
 		<mapper resource="sql/UserMapper.xml"/>
 		<mapper resource="sql/FeedMapper.xml"/>
+		<mapper resource="sql/NoticeMapper.xml"/>
+		<mapper resource="sql/QandAMapper.xml"/>
+		<mapper resource="sql/ReportMapper.xml"/>
 	</mappers>
 
 </configuration>
