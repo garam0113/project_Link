@@ -21,67 +21,6 @@
 		<result property="clubImage"		column="club_image"				jdbcType="VARCHAR" />		
 	</resultMap>
 	
-	<insert id="addClub" parameterType="club">
-		INSERT
-		INTO club( 
-					club_no ,
-					user_id ,
-		  			club_title , 
-		  			club_detail ,
-		   			club_image , 
-		   			current_member , 
-		   			club_max_member , 
-		   			club_category , 
-		   			club_area)
-		VALUES ( 
-					seq_club_no.NEXTVAL , 
-					#{userId} , 
-					#{clubTitle} , 
-					#{clubDetail} , 
-					#{clubImage} , 
-					#{currentMember:NUMERIC} , 
-					#{clubMaxMember:NUMERIC} , 
-					#{clubCategory} , 
-					#{clubArea})
-	
-	</insert>
-
-
-	<select id="getClub" parameterType="int" resultMap="clubSelectMap">
-		SELECT
-			club_no ,
-			user_id ,
-			club_title ,
-			club_detail ,
-			club_image ,
-			current_member ,
-			club_max_member ,
-			club_category ,
-			club_area
-		FROM club
-		WHERE club_no = #{clubNo}	
-	
-	</select>
-	
-	<update id="updateClub" parameterType="club">
-		UPDATE club
-		<set>
-			club_title = #{clubTitle} ,
-			club_detail = #{clubDetail} ,
-			club_category = #{clubCategory} ,
-			club_area = #{clubArea}
-			club_image = #{clubImage}
-		</set>
-		WHERE club_no = #{clubNo}
-	</update>
-	
-	<delete id="deleteClub">
-		DELETE FROM club WHERE club_no = #{clubNo}
-	</delete>
-	
-	
-	
-	
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
 		<result property="clubUserNo"				column="club_user_no"						jdbcType="NUMERIC"/>
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
@@ -93,50 +32,6 @@
 		<result property="approvalCondition"		column="approval_condition"					jdbcType="CHAR" />
 		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />	
 	</resultMap>
-	
-	<insert id="addClubUser" parameterType="clubUser">
-		INSERT into club_user
-		VALUES (
-			#{userId} ,
-			#{applicationRegDate} ,
-		)
-		
-	</insert>
-	
-	<update id="updateApprovalCondition" parameterType="clubUser">
-		UPDATE club_user
-		<set>
-			approval_Condition = #{approvalCondition}		
-		</set>
-		WHERE club_user_no = #{clubUserNo}
-	</update>
-	
-	<update id="updateMemberRole" parameterType="clubUser">
-		UPDATE club_user
-		<set>
-			member_role = #{memberRole}
-		</set>
-		WHERE club_user_no =#{clubUserNO}
-	</update>
-	
-	<delete id="deleteClubMember">
-		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
-	</delete>
-	
-	<delete id="deleteApprovalCondition">
-		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
-	</delete>
-	
-	
-	<select id="getApprovalConditionList" parameterType="int" resultMap="clubUserSelectMap">
-		
-	</select>
-	
-	<select id="getClubMemberList" parameterType="int" resultMap="clubUserSelectMap">
-	
-	</select>
-	
-	
 	
 	<resultMap	id="meetingSelectMap"		type="meeting">
 		<result property="meetingNo"				column="meeting_no"							jdbcType="NUMERIC"/>
@@ -153,6 +48,184 @@
 		<result property="meetingMaximumMember"		column="meeting_maximum_member"				jdbcType="NUMERIC" />	
 	</resultMap>
 	
+	<resultMap 	id="participantSelectMap" 	type="participant">
+		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
+		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
+		<result property="participantUserId"			column="participant_user_id"					jdbcType="VARCHAR"/>
+	
+	</resultMap>
+	
+	<!-- 모임 등록 -->
+	<insert id="addClub" parameterType="club">
+		INSERT
+		INTO club( 
+					club_no ,
+					user_id ,
+		  			club_title , 
+		  			club_detail ,
+		   			club_image , 
+		   			current_member , 
+		   			club_max_member , 
+		   			club_category , 
+		   			club_area ,
+		   			club_reg_date)
+		VALUES ( 
+					seq_club_no.NEXTVAL , 
+					#{userId} , 
+					#{clubTitle} , 
+					#{clubDetail} , 
+					#{clubImage} , 
+					#{currentMember:NUMERIC} , 
+					#{clubMaxMember:NUMERIC} , 
+					#{clubCategory} , 
+					#{clubArea} ,
+					sysdate)
+	
+	</insert>
+
+	<!-- 모임 상세보기 -->
+	<select id="getClub" parameterType="int" resultMap="clubSelectMap">
+		SELECT
+			club_no ,
+			user_id ,
+			club_title ,
+			club_detail ,
+			club_image ,
+			current_member ,
+			club_max_member ,
+			club_category ,
+			club_area
+		FROM club
+		WHERE club_no = #{clubNo}	
+	
+	</select>
+	
+	<!-- 모임 수정 -->
+	<update id="updateClub" parameterType="club">
+		UPDATE club
+		<set>
+			club_title = #{clubTitle} ,
+			club_detail = #{clubDetail} ,
+			club_category = #{clubCategory} ,
+			club_area = #{clubArea}
+			club_image = #{clubImage}
+		</set>
+		WHERE club_no = #{clubNo}
+	</update>
+	
+	<!-- 모임 삭제 -->
+	<delete id="deleteClub">
+		DELETE FROM club WHERE club_no = #{clubNo}
+	</delete>
+	
+	<!-- 모임리스트 -->
+	<select id="getClubList" parameterType="search" resultMap="clubSelectMap">
+		SELECT
+		club_no, user_id, club_title, club_detail, club_reg_date, club_image, current_Member, club_max_member, club_category, club_area
+		FROM club
+		OREDER BY club_no DESC
+	
+	</select>
+	
+	
+	<select id="getTotalClubCount" parameterType="search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM (
+				SELECT
+				*
+				FROM club		)
+	
+	</select>
+
+<!-- 수정해야함 -->
+	<insert id="addApprovalCondition" parameterType="clubUser">
+		INSERT INTO club_user (
+			club_user_no ,
+			user_id , 
+			club_no ,
+			application_reg_date ,
+			join_reg_date ,
+			member_role ,
+			approval_condition ,
+			join_greeting
+		)		 		 
+		VALUES (
+			seq_club_user_no.nextval ,
+			#{clubNo} ,
+			#{userId} ,
+			sysdate ,
+			#{joinRegDate} ,
+			#{memberRole} ,
+			#{approvalCondition} ,
+			#{joinGreeting}
+		)
+		
+	</insert>
+	
+	<!-- 가입승인 or 승인거절 -->
+	<update id="updateApprovalCondition" parameterType="clubUser">
+		UPDATE club_user
+		<set>
+			approval_condition = #{approvalCondition}		
+		</set>
+		WHERE club_user_no = #{clubUserNo}
+	</update>
+	
+	<!-- 모임원 직책 수정 -->
+	<update id="updateMemberRole" parameterType="clubUser">
+		UPDATE club_user
+		<set>
+			member_role = #{memberRole}
+		</set>
+		WHERE club_user_no =#{clubUserNO}
+	</update>
+	
+	<!-- 모임원 추방 -->
+	<delete id="deleteClubMember">
+		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
+	</delete>
+	
+	<!-- 가입신청현황 삭제 -->
+	<delete id="deleteApprovalCondition">
+		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
+	</delete>
+	
+<!--  가입신청현황 리스트
+	<select id="getApprovalConditionList" parameterType="int" resultMap="clubUserSelectMap">
+		
+	</select>
+	-->
+	
+	<!--  수정해야함 -->
+	<select id="getTotalApprovalConditionCount" parameterType="search" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM (
+				SELECT
+				*
+				FROM club_user
+		)
+	</select>
+	
+	<!-- 모임원 리스트 -->
+	<select id="getClubMemberList" parameterType="int" resultMap="clubUserSelectMap">
+		SELECT
+			club_user_no,
+			user_id,
+			club_no,
+			application_reg_date,
+			join_reg_date,
+			logout_date,
+			member_role,
+			approval_condition,
+			join_greeting
+			FROM club_user
+			WHERE club_no = #{clubNo}
+			ORDER BY member_role DESC
+	</select>
+	
+	<!-- 모임일정 등록 -->
 	<insert id="addMeeting"	parameterType="meeting">
 		INSERT
 		INTO meeting (
@@ -184,6 +257,7 @@
 			#{meetingMaximumMember:NUMERIC})
 	</insert>
 	
+	<!-- 모임일정 상세보기 -->
 	<select id="getMeeting" parameterType="int" resultMap="meetingSelectMap">
 		SELECT
 			meeting_no ,
@@ -194,13 +268,14 @@
 			meeting_date ,
 			meeting_place ,
 			meeting_time ,
-			meeting_reg_date ,
+			meeting_weather ,
 			meeting_member ,
 			meeting_maximum_Member
 		FROM meeting
 		WHERE meeting_no = #{meetingNo}
 	</select>
 	
+	<!-- 모임일정 수정 -->
 	<update id="updateMeeting" parameterType="meeting">
 		UPDATE meeting
 		<set>
@@ -214,6 +289,45 @@
 		WHERE meeting_no = #{meetingNo}
 	</update>
 	
+	<!-- 모임일정 리스트 -->
+	<select id="getMeetingList" parameterType="int" resultMap="meetingSelectMap">
+		SELECT
+			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
+			FROM meeting
+			WHERE club_no = #{clubNo}
+			ORDER BY meeting_date DESC
+	</select>
 	
+	<!-- 모임일정 삭제 -->
+	<delete id="deleteMeeting">
+		DELETE FROM meeting WHERE meeting_no = #{meetingNo}
+	</delete>
+	
+	<!-- 모임일정 참여신청 수정해야함-->
+	<insert id="addMeetingMember">
+		INSERT into participant		(
+			participant_no ,
+			meeting_no ,
+			participant_user_id		
+			)		
+		VALUES (
+			seq_participant_no.nextval ,
+			#{meetingNo} ,
+			#{userId}
+		)
+	</insert>
+	
+	<!-- 모임일정 참여신청 취소 -->
+	<delete id="deleteMeetingMember">
+		DELETE FROM participant WHERE participant_no = #{participantNo}
+	</delete>
+	
+	<!-- 모임일정 참여인원 리스트 -->
+	<select id="getMeetingMemberList" parameterType="int" resultMap="participantSelectMap">
+		SELECT
+			*
+			FROM participant
+			WHERE participant_no = #{participant_no}
+	</select>
 	
 </mapper>

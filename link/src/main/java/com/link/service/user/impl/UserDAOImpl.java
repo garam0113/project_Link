@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.link.common.Search;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.user.UserDAO;
 
-@Repository("UserDAOImpl")
+@Repository("userDAOImpl")
 public class UserDAOImpl implements UserDAO {
 	
 	@Autowired
@@ -26,12 +27,18 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public void addUser(User user) throws Exception {
-		
-		sqlSession.insert("UserMapper.addUser", user);
+	public int addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return sqlSession.insert("UserMapper.addUser", user);
 	}
+//	
+//	@Override
+//	public void addUser(User user) throws Exception {
+//		
+//		sqlSession.insert("UserMapper.addUser", user);
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public void addSnsUser(User user) throws Exception {
@@ -48,7 +55,20 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUser(String userId) throws Exception {
 		// TODO Auto-generated method stub
+		
+		try {
+			sqlSession.selectOne("UserMapper.getUser",userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return (User)sqlSession.selectOne("UserMapper.getUser",userId);
+	}
+
+	@Override
+	public User getUserId(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return (User)sqlSession.selectOne("UserMapper.getUserId",user);
 	}
 
 	@Override
@@ -66,9 +86,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updatePhoneNo(int phoneNo) throws Exception {
+	public void updatePhoneNo(User user) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("UserMapper.updatePhoneNo", phoneNo);
+		sqlSession.update("UserMapper.updatePhoneNo", user);
 		
 	}
 
@@ -86,9 +106,9 @@ public class UserDAOImpl implements UserDAO {
 //	}
 
 	@Override
-	public void logout(User user) throws Exception {
+	public void logout(String userId) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("UserMapper.updateLogoutDate", user);
+		sqlSession.update("UserMapper.updateLogoutDate", userId);
 	}
 
 	@Override
@@ -100,8 +120,35 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("UserMapper.getUserList",search);
 	}
 
+//	@Override
+//	public List<User> getBlockUserList(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+//	@Override
+//	public int getBlockTotalCount(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("UserMapper.getTotalCount",search);
+//	}
+	
+	@Override
+	public int getTotalCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getTotalCount",search);
+	}
+	
+//	public List<Report>getPushList(Search search) throws Exception{
+//		return sqlSession.selectOne("Report_PushMapper.",search);
+//	}
 
+//	@Override
+//	public int getPushTotalCount(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("Report_PushMapper.",search);
+//	}
+	
 }
