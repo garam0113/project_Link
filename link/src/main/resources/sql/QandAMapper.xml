@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="QandAMapper">
+
+
+	<resultMap id="qandASelectMap" type="qanda">
+		<result property="qandANo" 				column="qanda_no" 		      jdbcType="NUMERIC" />
+		<result property="qandATitle"			column="qanda_title"		  jdbcType="VARCHAR" />
+		<result property="qandAContent" 		column="qanda_content" 		  jdbcType="VARCHAR" />
+		<result property="noticeRegDate"		column="notice_regdate" 	  jdbcType="DATE" />
+		<result property="qandAImage1" 			column="qanda_image1" 		  jdbcType="VARCHAR" />
+		<result property="qandAImage2" 			column="qanda_image2" 		  jdbcType="VARCHAR" />
+		<result property="qandAAnswerContent" 	column="answer_content" 	  jdbcType="VARCHAR" />
+		<result property="qandAAnswerRegDate" 	column="answer_regdate" 	  jdbcType="DATE" />
+		<result property="qandACondition" 		column="answer_condition" 	  jdbcType="CHAR" />
+		<result property="qandAopenCondition" 	column="qanda_open_condition" jdbcType="CHAR" />
+		<result property="qandACount"			column="qanda_count"		  jdbcType="INTEGER" />
+
+
+		<association property="userId" javaType="user">
+			<result property="userId" column="user_id" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+
+
+
+
+	<!-- SQL : INSERT -->
+	<insert id="addQandA" parameterType="qandA" >
+		INSERT INTO qanda
+		( qanda_no, qanda_title, qanda_content, qanda_regdate, qanda_image1,
+		qanda_image2, answer_content,
+		answer_regdate, answer_condition, qanda_open_condition, qanda_count, user_id)
+
+		VALUES (seq_qanda_qanda_no.nextval, #{qanda_title}, #{qanda_content},
+		sysdate, #{qanda_image1}, #{qanda_image2} , #{answer_content},
+		sysdate, '0', '0', '0', #{userId.userId});
+	</insert>
+
+	<!-- SQL : SELECT ONE -->
+	<select id="getQandA" parameterType="int" resultMap="qandASelectMap">
+		SELECT
+		qanda_no, qanda_title, qanda_content, qanda_regdate, qanda_image1,
+		qanda_image2, answer_content,
+		answer_regdate, answer_condition, qanda_open_condition, qanda_count, user_id
+		FROM qanda
+		WHERE qanda_no = qandANo;
+
+	</select>
+
+	<update id="getCount" parameterType="int">
+		UPDATE qanda
+		<set>
+			qanda_count = qanda_count+1
+		</set>
+		WHERE qanda_no = #{qanda_no}
+
+	</update>
+
+
+
+	<!-- SQL : UPDATE    업데이트 SET 마지막 image2 , (쉼표) 없어도 되는지? , 관리자와 유저 어떻게 나눌지 -->
+	<update id="updateQandA" parameterType="qandA">
+		UPDATE qanda
+		<set>
+		qanda_title =#{qanda_title},
+		qanda_content=#{qanda_content},
+		qanda_regdate = sysdate,
+		qanda_image1 = #{qanda_image1},
+		qanda_image2 = #{qanda_image2},
+     	answer_content = #{answer_content},
+     	answer_regdate = sysdate,
+     	answer_condition= '1'
+     	
+		</set>
+		WHERE qanda_no = #{qanda_no}
+	</update>
+
+	<!-- SQL : DELETE -->
+
+	<delete id="deleteQandA" parameterType="int">
+		DELETE
+		FROM qanda
+		WHERE qanda_no = #{qanda_no}
+
+	</delete>
+
+		<!-- SQL : SELECT LIST -->
+	<select  id="getQandAList"  parameterType="search"	resultMap="qandASelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_count, qanda_regdate
+											FROM notice
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				LOWER(qanda_no) LIKE LOWER('%${searchKeyword}%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				LOWER(qanda_title) LIKE LOWER('%${searchKeyword}%')
+													</if>
+												</where>
+											</if>
+											ORDER BY qanda_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT notice_title , notice_content , notice_regdate
+						FROM notice
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			notice_title = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		notice_content = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
+	 
+
+
+</mapper>
