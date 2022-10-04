@@ -40,9 +40,16 @@ public class FeedServiceImpl implements FeedService {
 	}
 	
 	@Override
-	public Feed getFeed(int feedNo) {
+	public Map<String, Object> getFeed(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return feedDAO.getFeed(feedNo);
+		
+		Feed feed = feedDAO.getFeed((Integer)map.get("feedNo"));
+		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		
+		map.put("feed", feed);
+		map.put("comment", comment);
+		
+		return map;
 	}
 	
 	@Override
@@ -63,6 +70,7 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeedComment(Comment comment) {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedComment(comment);
+		feedDAO.addFeedCommentPush();
 	}
 
 	@Override
@@ -94,4 +102,10 @@ public class FeedServiceImpl implements FeedService {
 		return map;
 	}
 	
+	@Override
+	public List<Comment> getFeedCommentList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return feedDAO.getFeedCommentList(map);
+	}
+
 }

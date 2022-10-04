@@ -1,6 +1,7 @@
 package com.link.service.feed;
 
 import java.util.List;
+import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Comment;
@@ -26,9 +27,11 @@ public interface FeedDAO {
 	
 	public void deleteFeedComment(int commentNo);
 	
-	//////////////////////////////////////// Feed List
+	//////////////////////////////////////// List
 	
 	public List<Feed> getFeedList(Search search);
+	
+	public List<Comment> getFeedCommentList(Map<String, Object> map);
 	
 	//////////////////////////////////////// Feed Report
 	
@@ -52,4 +55,5 @@ public interface FeedDAO {
 
 	public int getTotalFeedCount(Search search);
 	
+	public int getTotalFeedCommentCount();
 }
