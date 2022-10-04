@@ -12,7 +12,7 @@ import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.user.UserDAO;
 
-@Repository("UserDAOImpl")
+@Repository("userDAOImpl")
 public class UserDAOImpl implements UserDAO {
 	
 	@Autowired
@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUserId(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return (User)sqlSession.selectOne("UserMapper.getUser",user);
+		return (User)sqlSession.selectOne("UserMapper.getUserId",user);
 	}
 
 	@Override
