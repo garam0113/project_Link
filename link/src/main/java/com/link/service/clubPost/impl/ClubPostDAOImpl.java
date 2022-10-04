@@ -14,6 +14,7 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 
 @Repository("clubPostDAOImpl")
 public class ClubPostDAOImpl implements ClubPostDAO {
@@ -85,13 +86,13 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getClubPostListMySelf(Map<String, Object> map)
 
 	@Override
-	public Map<String, Object> getClubPost(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPost(Comment comment) 왔다");
+	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", comment));
-		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", comment));
+		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost));
+		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", clubPost));
 		return map;
-	}// end of getClubPost(Comment comment)
+	}// end of getClubPost(ClubPost clubPost)
 
 	@Override
 	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
@@ -100,17 +101,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
-	public ClubPost updateClubPost(int clubPostNo) throws Exception {
-		System.out.println(getClass() + ".updateClubPost(int clubPostNo) 왔다");
-		return null;
-	}// end of updateClubPost(int clubPostNo)
+	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
+		System.out.println(getClass() + ".updateClubPost(ClubPost clubPost) 왔다");
+		sqlSession.update("ClubPostMapper.updateClubPost", clubPost);
+		return getClubPost(clubPost);
+	}// end of updateClubPost(ClubPost clubPost)
 
 	@Override
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 왔다");
 		sqlSession.update("ClubPostMapper.deleteClubPost", clubPost);
-		//map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", clubNo));
-		return null;
+		return getClubPostList(clubPost);
 	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
@@ -122,4 +123,53 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		return map;
 	}// end of getClubPostListMyHome(String userId)
 
+	@Override
+	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
+		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 왔다");
+		// 모임게시물 좋아요하다 또는 좋아요 취소하다
+		sqlSession.update("ClubPostMapper.updateClubPostLike", clubPost);
+		// 좋아요 등록
+		sqlSession.insert("HeartMapper.insertHeart", heart);
+		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
+		return clubPost.getClubPostLikeCount();
+	}// end of updateClubPostLike(Heart heart)
+
+	@Override
+	public Comment addClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".addClubPostComment(Comment comment) 왔다");
+		// 모임게시물 댓글 등록
+		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
+		// 모임게시물 글 작성자에게 알림
+		sqlSession.insert("pushMapper.addPush", comment);
+		// 가장 최근 모임게시물 댓글 가져온다
+		return sqlSession.selectOne("ClubPostCommentMapper.", comment);
+	}
+
+	@Override
+	public Comment getClubPostComment(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostComment(Comment comment) 왔다");
+		sqlSession.insert("ClubPostCommentMapper.getClubPostComment", comment);
+		return null;
+	}
+
+	@Override
+	public Comment updateClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
+
+

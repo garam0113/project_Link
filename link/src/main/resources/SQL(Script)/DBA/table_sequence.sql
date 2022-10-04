@@ -142,7 +142,7 @@ CREATE TABLE users	(
 );
 
 
-s
+
 CREATE TABLE club (
 	club_no							NUMBER											NOT NULL,
 	user_id							VARCHAR2(20)									NOT NULL	REFERENCES users(user_id),

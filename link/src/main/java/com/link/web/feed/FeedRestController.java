@@ -1,6 +1,8 @@
 package com.link.web.feed;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,9 +39,14 @@ public class FeedRestController {
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 
-	@SuppressWarnings("unchecked")
+	
+	
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
+	
+	
+	
 	@RequestMapping(value = "/json/addFeedComment", method = RequestMethod.POST)
-	public List<Comment> addFeedComment(@RequestBody Comment comment) {
+	public List<Comment> addFeedComment(@RequestBody Comment comment, Search search) throws Exception {
 		
 		// 댓글 작성
 		
@@ -49,17 +56,24 @@ public class FeedRestController {
 		
 		comment.setUser(user);
 		
-		System.out.println("why : " + comment);
 		feedService.addFeedComment(comment);
+
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
 		
-		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
-		return (List<Comment>) feedService.getFeedList(search).get("list");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("comment", comment);
+		
+		return feedService.getFeedCommentList(map);
 	}
 	
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
-	public List<Comment> updateFeedComment(@RequestBody Comment comment) {
+	public List<Comment> updateFeedComment(@RequestBody Comment comment) throws Exception {
 		
 		feedService.updateFeedComment(comment);
 		
@@ -67,7 +81,7 @@ public class FeedRestController {
 	}
 	
 	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
-	public List<Comment> deleteFeedComment(@RequestBody Comment comment) {
+	public List<Comment> deleteFeedComment(@RequestBody Comment comment) throws Exception {
 		
 		feedService.deleteFeedComment(0);	// 수정
 		
@@ -76,7 +90,7 @@ public class FeedRestController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/getFeedList", method = RequestMethod.POST)
-	public List<Feed> getFeedList(@RequestBody Search search) {
+	public List<Feed> getFeedList(@RequestBody Search search) throws Exception {
 		
 		// 피드 리스트
 		

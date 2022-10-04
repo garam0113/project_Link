@@ -4,9 +4,9 @@ import java.sql.Date;
 
 public class Feed {
 
-	private int feedNo;
-	private String userId;
-	private int openCondition;
+	private int feedNo;				// 피드 번호
+	private String userId;			// 회원 아이디
+	private int openCondition;		// 공개 여부
 	private String content;
 	private String image1;
 	private String image2;

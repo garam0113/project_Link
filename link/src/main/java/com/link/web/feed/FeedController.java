@@ -1,9 +1,7 @@
 package com.link.web.feed;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
-import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.feed.FeedService;
 
@@ -46,7 +43,11 @@ public class FeedController {
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
-	//////////////////////////////////////// Feed
+	
+	
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
+	
+	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file,
@@ -78,9 +79,7 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
-	public String getFeed(@ModelAttribute Feed feed, Model model, Search search) {
-		
-		System.out.println("getFeed << feedNo : " + feed.getFeedNo());
+	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Model model, Search search) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -88,47 +87,52 @@ public class FeedController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("feedNo", feed.getFeedNo());
+		map.put("feedNo", feedNo);
 		map.put("search", search);
 		
 		map = feedService.getFeed(map);
 		
 		model.addAttribute("feed", map.get("feed"));
 		model.addAttribute("comment", map.get("comment"));
-		// FeedComment List
 		
 		return "forward:/feed/getFeed.jsp";
 	}
 	
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
-	public String updateFeed(@ModelAttribute Feed feed, Model model) {
+	public String updateFeed(@ModelAttribute Feed feed, Model model, Search search) throws Exception {
 		
 		feedService.updateFeed(feed);
 		
-		// feed = feedService.getFeed(feed.getFeedNo());
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		model.addAttribute("feed", feed);
+		// 피드 번호 전달
+		map.put("feedNo", feed.getFeedNo());
+		map.put("search", search);
+		
+		// 업데이트 된 피드 찾기
+		map = feedService.getFeed(map);
+				
+		model.addAttribute("feed", map.get("feed"));
 		
 		return "forward:/feed/getFeed.jsp";
 	}
 	
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
-	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) {
-		
-		System.out.println("deleteFeed Start");
-		System.out.println("feed is -> " + feedNo);
+	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) throws Exception {
 		
 		feedService.deleteFeed(feedNo);
 		
 		return "forward:/feed/getFeedList";
 	}
 	
-	//////////////////////////////////////// Feed Comment
 	
-	//////////////////////////////////////// Feed List
+	
+	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
+	
+	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	
 	@RequestMapping(value = "getFeedList", method = RequestMethod.GET)
-	public String getFeedList(@ModelAttribute Search search, Model model) {
+	public String getFeedList(@ModelAttribute Search search, Model model) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -143,7 +147,7 @@ public class FeedController {
 		
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("feed", map.get("feed"));
 		
 		return "forward:/feed/getFeedList.jsp";
 	}
