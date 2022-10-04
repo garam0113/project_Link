@@ -157,8 +157,12 @@ VALUES( seq_heart_no.NEXTVAL, 'user03', '2', 20)
 club_post_comment_no가 없다면 즉, 모임게시물의 댓글이라면? parent 0, depth 0, sequence는 parent의 번호가 같은것 중 sequence의 값이 가장 큰 것 +1
 addClubPostComment()
 INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
-COMMENT_LIKE_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
-VALUES (seq_club_post_comment_no.NEXTVAL, 20, 'USER02', '댓글내용1', sysdate, null, 0, '0', '0', 4, 1, 0)
+COMMENT_LIKE_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE, COMMENT_COUNT)
+VALUES (seq_club_post_comment_no.NEXTVAL,
+10,
+'user02',
+'댓글내용이다',
+sysdate, null, 0, '0', '0', 4, 1, 0, 0)
 
 
 
@@ -169,8 +173,24 @@ VALUES (seq_club_post_comment_no, 'titleComment', 'contentComment', '2', seq_clu
 
 
 
+getCurrval()
+SELECT ROWNUM, seq_club_post_comment_no.currval FROM CLUB_POST_COMMENT WHERE ROWNUM = 1
+
+
+
+getClubPostCommentNo()
+SELECT V1.CLUB_POST_COMMENT_NO FROM ( SELECT * FROM CLUB_POST_COMMENT C ORDER BY COMMENT_REG_DATE DESC ) V1
+WHERE ROWNUM = 1
+
+
+
+getClubPostComment()
+SELECT * FROM CLUB_POST_COMMENT WHERE CLUB_POST_COMMENT_NO = 9;
+
+
+
 updateClubPostComment()
-UPDATE CLUB_POST_COMMENT SET COMMENT_CONTENT = '댓글내용9' WHERE CLUB_POST_COMMENT_NO = 9
+UPDATE CLUB_POST_COMMENT SET COMMENT_CONTENT = '댓글내용99' WHERE CLUB_POST_COMMENT_NO = 9
 
 
 

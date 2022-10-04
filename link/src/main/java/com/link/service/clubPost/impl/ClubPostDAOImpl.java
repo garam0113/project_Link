@@ -140,36 +140,50 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		// 모임게시물 댓글 등록
 		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
 		// 모임게시물 글 작성자에게 알림
-		sqlSession.insert("pushMapper.addPush", comment);
+		//sqlSession.insert("Report_PushMapper.addPush", comment);
+		// 가장 최근 모임게시물 댓글 번호 가져온다
+		comment.setClubPostCommentNo(sqlSession.selectOne("ClubPostCommentMapper.getClubPostCommentNo"));
 		// 가장 최근 모임게시물 댓글 가져온다
-		return sqlSession.selectOne("ClubPostCommentMapper.", comment);
-	}
+		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
+	}// end of addClubPostComment(Comment comment)
 
 	@Override
 	public Comment getClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".getClubPostComment(Comment comment) 왔다");
-		sqlSession.insert("ClubPostCommentMapper.getClubPostComment", comment);
-		return null;
-	}
+		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
+	}// end of getClubPostComment(Comment comment)
 
 	@Override
 	public Comment updateClubPostComment(Comment comment) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getClass() + ".updateClubPostComment(Comment comment) 왔다");
+		sqlSession.update("ClubPostCommentMapper.updateClubPostComment", comment);
+		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
 	}
 
 	@Override
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getClass() + ".deleteClubPostComment(Comment comment) 왔다");
+		sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 부모번호를 가져온다
+		if(comment.getParent() != 0) {
+			return null;
+		}else {
+			sqlSession.selectList("ClubPostMapper.getClubPostCommentList", comment);
+			return null;
+		}
 	}
 
 	@Override
 	public int updateClubPostCommentLike(Comment comment, Heart heart) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println(getClass() + ".updateClubPostCommentLike(Comment comment, Heart heart) 왔다");
+		// 모임게시물 댓글 좋아요하다 또는 좋아요 취소하다
+		sqlSession.update("ClubPostCommentMapper.updateClubPostCommentLike", comment);
+		// 좋아요 등록
+		sqlSession.update("HeartMapper.insertHeart", heart);
 		return 0;
 	}
-
+	
 }
 
 

@@ -11,13 +11,13 @@
 		<result property="qandANo" 				column="qanda_no" 		      jdbcType="NUMERIC" />
 		<result property="qandATitle"			column="qanda_title"		  jdbcType="VARCHAR" />
 		<result property="qandAContent" 		column="qanda_content" 		  jdbcType="VARCHAR" />
-		<result property="noticeRegDate"		column="notice_regdate" 	  jdbcType="DATE" />
+		<result property="qandARegDate"			column="qanda_regdate" 		  jdbcType="DATE" />
 		<result property="qandAImage1" 			column="qanda_image1" 		  jdbcType="VARCHAR" />
 		<result property="qandAImage2" 			column="qanda_image2" 		  jdbcType="VARCHAR" />
 		<result property="qandAAnswerContent" 	column="answer_content" 	  jdbcType="VARCHAR" />
 		<result property="qandAAnswerRegDate" 	column="answer_regdate" 	  jdbcType="DATE" />
-		<result property="qandACondition" 		column="answer_condition" 	  jdbcType="CHAR" />
-		<result property="qandAopenCondition" 	column="qanda_open_condition" jdbcType="CHAR" />
+		<result property="qandACondition" 		column="answer_condition" 	  jdbcType="VARCHAR" />
+		<result property="qandAopenCondition" 	column="qanda_open_condition" jdbcType="VARCHAR" />
 		<result property="qandACount"			column="qanda_count"		  jdbcType="INTEGER" />
 
 
@@ -94,7 +94,7 @@
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_count, qanda_regdate
-											FROM notice
+											FROM qanda
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -113,15 +113,15 @@
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT notice_title , notice_content , notice_regdate
-						FROM notice
+	  	FROM(	SELECT qanda_title , qanda_content , qanda_regdate
+						FROM qanda
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			notice_title = #{searchKeyword}
+						 			qanda_title = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		notice_content = #{searchKeyword}
+						 		qanda_content = #{searchKeyword}
 								</if>
 							</where>
 						</if> ) countTable						

@@ -92,8 +92,10 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		System.out.println("\n[ServiceCenterServiceImpl getReportList start]\n");
 
 		List<Report> list = serviceCenterDAO.getReportList(search);
+		
 		int a = 0;
-		 int totalCount = serviceCenterDAO.getTotalCount(search, a); 
+		
+		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -113,8 +115,10 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		System.out.println("\n[ServiceCenterServiceImpl getQandAList start]\n");
 
 		List<QandA> list = serviceCenterDAO.getQandAList(search);
+		
 		int a = 1 ;
-		 int totalCount = serviceCenterDAO.getTotalCount(search, a); 
+		
+		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -135,7 +139,8 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 
 		List<Notice> list = serviceCenterDAO.getNoticeList(search);
 		int a = 2;
-		 int totalCount = serviceCenterDAO.getTotalCount(search, a); 
+		
+		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
