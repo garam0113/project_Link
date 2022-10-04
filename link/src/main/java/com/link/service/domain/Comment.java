@@ -8,6 +8,7 @@ public class Comment {
 	private int clubPostNo;					// 모임게시물번호
 	private int clubPostCommentNo;			// 모임게시물댓글번호
 	private User user;						// 작성자의 모든 정보
+	private String parentUserId;			// 부모글 작성자
 	private String commentContent;			// 댓글내용
 	private String commentRegDate;			// 댓글등록날짜
 	private String commentUpdateDate;		// 댓글수정날짜
@@ -23,8 +24,9 @@ public class Comment {
 	}
 
 	public Comment(int feedNo, int feedCommentNo, int clubNo, int clubPostNo, int clubPostCommentNo, User user,
-			String commentContent, String commentRegDate, String commentUpdateDate, int commentLikeCount,
-			int commentCount, String reportCondition, String deleteCondition, int parent, int depth, int sequence) {
+			String parentUserId, String commentContent, String commentRegDate, String commentUpdateDate,
+			int commentLikeCount, int commentCount, String reportCondition, String deleteCondition, int parent,
+			int depth, int sequence) {
 		super();
 		this.feedNo = feedNo;
 		this.feedCommentNo = feedCommentNo;
@@ -32,6 +34,7 @@ public class Comment {
 		this.clubPostNo = clubPostNo;
 		this.clubPostCommentNo = clubPostCommentNo;
 		this.user = user;
+		this.parentUserId = parentUserId;
 		this.commentContent = commentContent;
 		this.commentRegDate = commentRegDate;
 		this.commentUpdateDate = commentUpdateDate;
@@ -90,6 +93,14 @@ public class Comment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getParentUserId() {
+		return parentUserId;
+	}
+
+	public void setParentUserId(String parentUserId) {
+		this.parentUserId = parentUserId;
 	}
 
 	public String getCommentContent() {
@@ -187,6 +198,8 @@ public class Comment {
 		builder.append(clubPostCommentNo);
 		builder.append(", user=");
 		builder.append(user);
+		builder.append(", parentUserId=");
+		builder.append(parentUserId);
 		builder.append(", commentContent=");
 		builder.append(commentContent);
 		builder.append(", commentRegDate=");
