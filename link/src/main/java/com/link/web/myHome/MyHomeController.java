@@ -1,6 +1,7 @@
 package com.link.web.myHome;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
@@ -56,15 +58,17 @@ public class MyHomeController {
 			 Model model) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
+		Search search = new Search();
 		
 		user = userService.getUser(user.getUserId());
-		//club = clubService.getClub(club.getClubNo());
-		Map<String, Object> map = new HashMap<String, Object>();
-		//map=feedService.getMyFeed(user);
+		club = clubService.getClub(club.getClubNo());
+		Map<String, Object> map = feedService.getFeedList(search);
+		
 		
 		model.addAttribute("user", user);
 		model.addAttribute("club", club);
-		model.addAttribute("feed", map);
+		model.addAttribute("search", search);
+		model.addAttribute("feed", map.get("feed"));
 	
 		return "forward:/myHome/getMyHome.jsp";
 	}  

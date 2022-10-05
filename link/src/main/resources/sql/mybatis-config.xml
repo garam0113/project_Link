@@ -44,6 +44,8 @@
 		<mapper resource="sql/QandAMapper.xml"/>
 		<mapper resource="sql/Report_PushMapper.xml"/>
 		<mapper resource="sql/HeartMapper.xml"/>
+		<mapper resource="sql/MyHomeMapper.xml"/>
+		
 	</mappers>
 
 </configuration>
