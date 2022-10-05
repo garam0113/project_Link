@@ -179,15 +179,15 @@ public class ClubPostServiceTest {
 		search.setCurrentPage(1);
 		search.setPageSize(10);
 		search.setPageUnit(10);
-		search.setOrder(0);					// 0 : 최신순, 1 : 역최신순
+		search.setOrder(1);					// 0 : 최신순, 1 : 역최신순
 		Notice notice = new Notice();
 		//notice.setNoticeNo(5);
-		//notice.setClubNo(2);
-		notice.setNoticeImage1("1");
-		notice.setNoticeImage2("2");
-		notice.setNoticeTitle("title65");
-		notice.setNoticeContent("content65");
-		notice.setNoticeCount(0);
+		notice.setClubNo(0);
+		//notice.setNoticeImage1("1");
+		//notice.setNoticeImage2("2");
+		//notice.setNoticeTitle("title65");
+		//notice.setNoticeContent("content65");
+		//notice.setNoticeCount(0);
 		User user = new User();
 		user.setUserId("user01");
 		notice.setUserId(user);

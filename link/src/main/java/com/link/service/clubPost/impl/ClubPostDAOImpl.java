@@ -208,7 +208,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");
-		System.out.println(map.get("notice"));
 		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
 		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
 		return map;

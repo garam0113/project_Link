@@ -155,28 +155,29 @@
 
 	<!-- 특정 모임의 공지사항 리스트 -->
 	<select id="getClubNoticeList" parameterType="map" resultMap="noticeSelectMap">
-		SELECT *
-		FROM NOTICE
-		<where>
-			CLUB_NO = 
-			<choose>
-				<when test="notice.clubNo != null and notice.clubNo != '' and notice.clubNo != 0">#{ notice.clubNo }</when>
-				<otherwise>( SELECT V1.CLUB_NO
-								FROM ( SELECT *
-										FROM CLUB
-										WHERE USER_ID = #{ notice.userId }
-										ORDER BY CLUB_REG_DATE DESC )V1
-								WHERE ROWNUM = 1 )
-				</otherwise>				
-			</choose>
-		</where>		
-		<if test="search.order != null and search.order != '' ">
-			ORDER BY NOTICE_REGDATE 
-			<choose>
-				<when test="search.order == 0">DESC</when>
-				<when test="search.order == 1">ASC</when>
-			</choose>
-		</if>
+		SELECT V2.*
+		FROM ( SELECT *
+				FROM NOTICE
+				<where>
+					CLUB_NO = 
+					<choose>
+						<when test="notice.clubNo != null and notice.clubNo != '' and notice.clubNo != 0">#{ notice.clubNo }</when>
+						<otherwise>( SELECT V1.CLUB_NO
+										FROM ( SELECT *
+												FROM CLUB
+												WHERE USER_ID = #{ notice.userId.userId }
+												ORDER BY CLUB_REG_DATE DESC )V1
+										WHERE ROWNUM = 1 )
+						</otherwise>				
+					</choose>
+				</where>
+				ORDER BY NOTICE_REGDATE 
+				<choose>
+					<when test="search.order == 1">ASC</when>
+					<otherwise>DESC</otherwise>
+				</choose>
+				) V2
+		WHERE ROWNUM BETWEEN ((#{search.currentPage}-1)*#{search.pageSize}+1) AND #{search.currentPage}*#{search.pageSize}
 	</select>
 	
 	
