@@ -45,7 +45,7 @@ public class FeedServiceTest {
 
 	}
 	
-	@Test
+//	@Test
 	public void testGetFeed() throws Exception {
 		// 피드 조회
 		
@@ -189,7 +189,7 @@ public class FeedServiceTest {
 		Assert.assertEquals(30, returnMap.get("totalFeedCommentCount"));
 	}
 	
-//	@Test
+	@Test
 	public void testAddFeedHeart() throws Exception {
 		// 피드 좋아요 추가
 		
@@ -199,7 +199,12 @@ public class FeedServiceTest {
 		heart.setSourceNo(5);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Feed feed = new Feed();
+		feed.setFeedNo(5);
+		
 		map.put("heart", heart);
+		map.put("feed", feed);		
 		
 		feedService.addFeedHeart(map);
 		

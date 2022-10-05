@@ -14,7 +14,7 @@ public class Feed {
 	private String image4;
 	private String video;
 	private String hashtag;
-	private int likeCount;
+	private int heartCount;
 	private int commentCount;
 	private Date regDate;
 	private Date updateDate;
@@ -105,12 +105,12 @@ public class Feed {
 		this.hashtag = hashtag;
 	}
 
-	public int getLikeCount() {
-		return likeCount;
+	public int getHeartCount() {
+		return heartCount;
 	}
 
-	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
+	public void setHeartCount(int heartCount) {
+		this.heartCount = heartCount;
 	}
 
 	public int getCommentCount() {
@@ -166,7 +166,7 @@ public class Feed {
 				+ "[image4 : " + image4 + "] "
 				+ "[video : " + video + "] "
 				+ "[hashtag : " + hashtag + "] "
-				+ "[likeCount : " + likeCount + "] "
+				+ "[heartCount : " + heartCount + "] "
 				+ "[commentCount : " + commentCount + "] "
 				+ "[regDate : " + regDate + "] "
 				+ "[updateDate : " + updateDate + "] "
