@@ -4,18 +4,29 @@ import java.sql.Date;
 
 public class ClubUser {
 	
+	private int clubUserNo;
 	private int clubNo;
 	private String userId;
 	private Date applicationRegDate;
 	private Date joinRegDate;
 	private Date logoutDate;
 	private String memberRole;
-	private String approvalStatus;
+	private String approvalCondition;
 	private String joinGreeting;
 	
 
 	public ClubUser() {
 		// TODO Auto-generated constructor stub
+	}
+
+
+	public int getClubUserNo() {
+		return clubUserNo;
+	}
+
+
+	public void setClubUserNo(int clubUserNo) {
+		this.clubUserNo = clubUserNo;
 	}
 
 
@@ -67,12 +78,12 @@ public class ClubUser {
 		this.memberRole = memberRole;
 	}
 
-	public String getApprovalStatus() {
-		return approvalStatus;
+	public String getApprovalCondition() {
+		return approvalCondition;
 	}
 
-	public void setApprovalStatus(String approvalStatus) {
-		this.approvalStatus = approvalStatus;
+	public void setApprovalCondition(String approvalCondition) {
+		this.approvalCondition = approvalCondition;
 	}
 
 	public String getJoinGreeting() {
@@ -86,11 +97,14 @@ public class ClubUser {
 
 	@Override
 	public String toString() {
-		return "ClubUser [clubNo=" + clubNo + ", userId=" + userId + ", applicationRegDate=" + applicationRegDate
-				+ ", joinRegDate=" + joinRegDate + ", logoutDate=" + logoutDate + ", memberRole=" + memberRole
-				+ ", approvalStatus=" + approvalStatus + ", joinGreeting=" + joinGreeting + "]";
+		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", userId=" + userId
+				+ ", applicationRegDate=" + applicationRegDate + ", joinRegDate=" + joinRegDate + ", logoutDate="
+				+ logoutDate + ", memberRole=" + memberRole + ", approvalCondition=" + approvalCondition
+				+ ", joinGreeting=" + joinGreeting + "]";
 	}
-		
+
+
+
 	
 
 }

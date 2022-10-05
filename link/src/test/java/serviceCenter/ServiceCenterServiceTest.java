@@ -13,8 +13,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.link.common.Search;
+import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
+import com.link.service.domain.Feed;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -100,7 +104,7 @@ public class ServiceCenterServiceTest {
 	public void testGetNoticeList()	throws Exception{
 													// 공지 List
 		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setCurrentPage(0);
 		search.setPageSize(1);
 		search.setPageUnit(1);
 		search.setSearchKeyword("내용");
@@ -169,23 +173,24 @@ public class ServiceCenterServiceTest {
 		User user = new User();
 
 		
-		user.setUserId("admin1");
+		user.setUserId("user01");
 		
 		
-		qandA.setQandANo(2);
-		qandA.setQandATitle("바뀐Qna 제목");
+		qandA.setQandANo(3);
+		qandA.setQandATitle("바뀐바뀐Qna 제목");
 		qandA.setQandAContent("바뀐내용ss");
 		qandA.setQandAImage1("abc.jpg");
 		qandA.setQandAImage2("cdf.jpg");
 		qandA.setQandARegDate("22-10-05");
-		qandA.setQandAAnswerContent("답변입니다");
+		qandA.setUser(user);
+		qandA.setQandAAnswerContent("바뀐답변입니다");
 		qandA.setQandAAnswerRegDate("22-11-05");
 		qandA.setQandACondition(1);
 		
 		
 		System.out.println(qandA);
 		 serviceCenterService.updateQandA(qandA);
-		Assert.assertEquals(2, qandA.getQandANo());
+		Assert.assertEquals(3, qandA.getQandANo());
 
 	}
 	
@@ -216,9 +221,71 @@ public class ServiceCenterServiceTest {
 		Assert.assertEquals(2, qandA.getQandANo());
 
 	}
-	//======================================================여기까지가 QandA
+//===================================================================여기까지가 QandA
 	
+	//@Test
+	public void testAddReport() throws Exception {
+													// Report 등록
+
+		Report report = new Report();
+		
+		User user = new User();
+		user.setUserId("admin1");
+		User user2 = new User();
+		user2.setUserId("user03");
+		
+		
+		
+		 Comment comment = new Comment();		
+		 comment.setClubPostCommentNo(9);
+		
+		
+		 ClubPost clubPost = new ClubPost(); 
+		 clubPost.setClubPostNo(10);
+		 
+		 Feed feed = new Feed();
+		 feed.setFeedNo(5);
+		 
+		 Comment comment2 = new Comment();
+		 comment2.setFeedCommentNo(5);
+		
+		report.setNo(1);
+		report.setTitle("신고합니다");
+		report.setContent("신고합니다");
+		report.setReportSource(0);
+		report.setClubPost(clubPost);
+//		report.setClubPostComment(comment);
+//		report.setFeed(feed);
+//		report.setFeedComment(comment2);
+		report.setUser1(user);
+		report.setUser2(user2);
+		report.setRegDate("22-03-30");
+		report.setReportImage1("abc.jpg");
+		report.setReportImage2("넌범죄자.jpg");
+		/* report.setHandleDate(null); */
+		report.setType(0);
+		report.setReportReason(1);
+		report.setReportCondition(1);
+		
+		System.out.println(report);
+		
+		
+		serviceCenterService.addReport(report);
+		Assert.assertEquals(1, report.getNo());
+
+		
+	}
 	
+	@Test
+	public void testGetReport() throws Exception{
+	
+		Report report = new Report();
+		
+		report.setNo(3);
+		
+		serviceCenterService.getReport(report.getNo());
+		Assert.assertEquals(3, report.getNo());
+	}
 	
 	
 }
