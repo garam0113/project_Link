@@ -33,7 +33,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	
-	//////////////////////////////////////// Feed
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 
 	
 	
@@ -41,7 +41,7 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeed(Feed feed) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeed(feed);
-		feedDAO.addFeedPush();
+		feedDAO.addFeedPush(null);
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	
-	//////////////////////////////////////// Feed Comment
+	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 
 	
 	
@@ -79,7 +79,13 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeedComment(Comment comment) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedComment(comment);
-		feedDAO.addFeedCommentPush();
+		feedDAO.addFeedCommentPush(null);
+	}
+	
+	@Override
+	public Comment getFeedComment(int feedCommentNo) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDAO.getFeedComment(feedCommentNo);
 	}
 
 	@Override
@@ -93,38 +99,44 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		feedDAO.deleteFeedComment(commentNo);
 	}
+	
+	
 
-	
-	
-	//////////////////////////////////////// List
+	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 
 	
 	
 	@Override
-	public Map<String, Object> getFeedList(Search search) throws Exception {
+	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
 		
 		List<Feed> feed = feedDAO.getFeedList(map);
-		int totalFeedCount = feedDAO.getTotalFeedCount(search);
+		int totalFeedCount = feedDAO.getTotalFeedCount((Search) map.get("search"));
 		
-		map.put("feed", feed);
-		map.put("totalFeedCount", totalFeedCount);
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("feed", feed);
+		returnMap.put("totalFeedCount", totalFeedCount);
 		
-		return map;
+		return returnMap;
 	}
 	
 	@Override
-	public List<Comment> getFeedCommentList(Map<String, Object> map) throws Exception {
+	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDAO.getFeedCommentList(map);
+		
+		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		int totalFeedCommentCount = feedDAO.getTotalFeedCommentCount(map);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("comment", comment);
+		returnMap.put("totalFeedCommentCount", totalFeedCommentCount);
+		
+		return returnMap;
 	}
 
 	
 	
-	//////////////////////////////////////// Report	
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
 	
 	
 	
@@ -142,7 +154,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	
-	//////////////////////////////////////// Like
+	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	
 

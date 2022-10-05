@@ -92,23 +92,25 @@ INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user05', 'f
 
 
 
-select * from FEED;
+SELECT * from FEED ORDER BY feed_no DESC;
 
-select * from FEED_COMMENT;
-
-
+SELECT * from FEED_COMMENT ORDER BY feed_comment_no DESC;
 
 
 
-
+SELECT f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_like_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition FROM feed f WHERE feed_content LIKE '%정말%' ORDER BY feed_no DESC; 
 
 
 
 
 
+SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_like_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = '5' AND report_condition = '0' AND delete_condition = '0' ORDER BY feed_comment_no ASC 
 
 
 
 
 
-SELECT * FROM feed_comment WHERE feed_no = '5'	AND report_condition = '0'	AND delete_condition = '0' ORDER BY feed_comment_no ASC;
+
+
+
+SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_like_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = '5' AND report_condition = '0' AND delete_condition = '0' ORDER BY feed_comment_no ASC 
