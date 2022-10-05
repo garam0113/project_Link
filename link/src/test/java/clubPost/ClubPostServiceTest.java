@@ -13,7 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.User;
@@ -172,17 +174,17 @@ public class ClubPostServiceTest {
 		clubPostServiceImpl.addPay(pay);
 	}
 	
-	@Test
+	//@Test
 	public void clubNotice() throws Exception {
 		// 공지사항
 		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setCurrentPage(3);
 		search.setPageSize(10);
 		search.setPageUnit(10);
-		search.setOrder(1);					// 0 : 최신순, 1 : 역최신순
+		search.setOrder(0);					// 0 : 최신순, 1 : 역최신순
 		Notice notice = new Notice();
 		//notice.setNoticeNo(5);
-		notice.setClubNo(0);
+		notice.setClubNo(2);
 		//notice.setNoticeImage1("1");
 		//notice.setNoticeImage2("2");
 		//notice.setNoticeTitle("title65");
@@ -200,12 +202,30 @@ public class ClubPostServiceTest {
 		
 		//System.out.println(notice);
 		//System.out.println(map.get("getClubNoticeListCount"));
+		System.out.println("///////////////////////////////////////////////////////////////////////");
 		System.out.println(map.get("getClubNoticeList"));
 		//System.out.println(map.get("getClubNotice"));
 		
 	}
 	
-	
+	@Test
+	public void clubPost() throws Exception {
+		// 모임게시물		
+		ClubPost clubPost = new ClubPost();
+		clubPost.setClubPostNo(30);
+		User user = new User();
+		user.setUserId("user04");
+		clubPost.setUser(user);
+		clubPost.setLikeCondition(1);
+		
+		Heart heart = new Heart();
+		heart.setSource("2");
+		heart.setSourceNo(30);
+		heart.setUserId("user04");
+		
+		clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+		
+	}
 	
 	
 	
