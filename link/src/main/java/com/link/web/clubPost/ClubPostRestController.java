@@ -123,6 +123,14 @@ public class ClubPostRestController {
 		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 모임게시물 댓글 리스트");
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

@@ -5,9 +5,11 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 
 public interface ClubPostService {
 	// 모임게시물 등록은 DAOImpl에서 여러가지 해야한다 확인
@@ -46,6 +48,11 @@ public interface ClubPostService {
 	
 	
 	// 신고
+	
+	// 결제
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
+	
+	public void addPay(Pay pay) throws Exception;
 	
 	
 	

@@ -17,6 +17,7 @@ import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 
 @Repository("clubPostDAOImpl")
 public class ClubPostDAOImpl implements ClubPostDAO {
@@ -226,7 +227,36 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		sqlSession.delete("NoticeMapper.deleteClubNotice", map);
 		return getClubNoticeList(map);
 	}// end of deleteClubNotice(Search search, Notice notice)
+
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 왔다");
+		sqlSession.update("ClubPostMapper.updateClubMember", pay);
+		// pay.getClubNo()가 모임번호입니다
+		return null;
+	}// end of updateClubMember(Pay pay, Search search)
+
+	@Override
+	public void addPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
+		sqlSession.delete("ClubPostMapper.addPay", pay);
+	}// end of addPay(Pay pay)
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

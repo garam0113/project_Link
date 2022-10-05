@@ -12,6 +12,7 @@ import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 import com.link.service.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -74,7 +75,7 @@ public class ClubPostServiceTest {
 		clubPostServiceImpl.deleteClubPostComment(comment);
 	}
 	
-	@Test
+	//@Test
 	public void addClubNotice() throws Exception {
 		// 모임 공지사항 등록
 		Search search = new Search();
@@ -129,6 +130,67 @@ public class ClubPostServiceTest {
 		
 		clubPostServiceImpl.deleteClubNotice(search, notice);
 	}
+	
+	//@Test
+	public void updateClubMember() throws Exception {
+		// 모임원 추가
+		Search search = new Search();
+		Pay pay = new Pay();
+		User user = new User();
+		user.setUserId("user03");
+		pay.setUser(user);
+		pay.setClubNo(2);
+		pay.setPayOption("0");
+		pay.setPayProduct("1");
+		pay.setTotalPrice(10000);
+		pay.setUpdateClubMemberCount(20);
+		pay.setMerchant_uid("111");
+		
+		clubPostServiceImpl.updateClubMember(pay, search);
+		clubPostServiceImpl.addPay(pay);
+	}
+	
+	//@Test
+	public void updateClub() throws Exception {
+		// 모임 추가
+		Search search = new Search();
+		Pay pay = new Pay();
+		User user = new User();
+		user.setUserId("user03");
+		pay.setUser(user);
+		pay.setClubNo(2);
+		pay.setPayOption("0");
+		pay.setPayProduct("1");
+		pay.setTotalPrice(10000);
+		pay.setUpdateClubMemberCount(20);
+		pay.setMerchant_uid("111");
+		
+		//clubPostServiceImpl.updateClub(pay, search);
+		clubPostServiceImpl.addPay(pay);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

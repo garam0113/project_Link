@@ -12,9 +12,11 @@ import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
@@ -181,5 +183,17 @@ public class ClubPostServiceImpl implements ClubPostService {
 		map.put("notice", notice);
 		return clubPostDAOImpl.deleteClubNotice(map);
 	}// deleteClubNotice(Search search, Notice notice)
+
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
+		return clubPostDAOImpl.updateClubMember(pay, search);
+	}// updateClubMember(Pay pay)
+
+	@Override
+	public void addPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".addPay(Pay pay) 도착");
+		clubPostDAOImpl.addPay(pay);
+	}// addPay(Pay pay)
 
 }

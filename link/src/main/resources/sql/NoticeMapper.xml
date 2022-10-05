@@ -111,6 +111,11 @@
 	 
 	 
 	 
+	 
+	 
+	 
+	 
+	 
 	<!-- 특정 모임의 공지사항 등록 -->
 	<insert id="addClubNotice" parameterType="map">
 		<!-- INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2,
