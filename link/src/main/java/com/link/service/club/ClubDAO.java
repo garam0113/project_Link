@@ -6,11 +6,13 @@ import com.link.common.Search;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
+import com.link.service.domain.Participant;
 
 public interface ClubDAO {
 
 	public void addClub(Club club) throws Exception;
 	
+//	//JUNIT TEST
 //	public int addClub(Club club) throws Exception;
 	
 	public Club getClub(int clubNo) throws Exception;
@@ -23,11 +25,14 @@ public interface ClubDAO {
 	
 	public void addApprovalCondition(ClubUser clubUser) throws Exception;
 	
+	//JUNIT TEST
+//	public int addApprovalCondition(ClubUser clubUser) throws Exception;
+	
 	public List<ClubUser> getApprovalConditionList(Search search) throws Exception;
 	
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception;
 	
-	public List<ClubUser> getClubMemberList(Search search) throws Exception;
+	public List<ClubUser> getClubMemberList(Search search, int ClubNo) throws Exception;
 	
 	public void deleteClubMember(int clubUserNo) throws Exception;
 	
@@ -37,17 +42,23 @@ public interface ClubDAO {
 	
 	public void addMeeting(Meeting meeting) throws Exception;
 	
+	//JUNIT TEST
+//	public int addMeeting(Meeting meeting) throws Exception;
+	
 	public List<Meeting> getMeetingList(Search search) throws Exception;
 	
 	public Meeting getMeeting(int meetingNo) throws Exception;
 	
 	public void updateMeeting(Meeting meeting) throws Exception;
 	
-	public void deleteMeeting(Meeting meeting) throws Exception;
+	public void deleteMeeting(int meetingNo) throws Exception;
 	
-	public void addMeetingMember(Meeting meeting) throws Exception;
+//	public void addMeetingMember(Participant participant) throws Exception;
 	
-	public void deleteMeetingMember(Meeting meeting) throws Exception;
+	//JUNIT TEST
+	public int addMeetingMember(Participant participant) throws Exception;
+	
+	public void deleteMeetingMember(int participantNo) throws Exception;
 	
 	public List<Meeting> getMeetingMemberList(Search search) throws Exception;
 	

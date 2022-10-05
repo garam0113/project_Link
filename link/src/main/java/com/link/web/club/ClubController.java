@@ -180,7 +180,7 @@ public class ClubController {
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = clubService.getClubMemberList(search);
+		Map<String, Object> map = clubService.getClubMemberList(search, pageSize);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage : "+resultPage);
@@ -197,7 +197,7 @@ public class ClubController {
 		
 		System.out.println("/addMeeting : POST ");
 		
-		meeting.setUserId("user01");
+		meeting.setAddMeetingUserId("user01");
 		
 		clubService.addMeeting(meeting);
 		return "forward:club/getMeetingList.jsp";

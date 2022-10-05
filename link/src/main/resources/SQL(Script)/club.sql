@@ -7,7 +7,7 @@ VALUES (seq_club_no.nextval, 'user01', 'testClub', 'testDetail', sysdate, 1, 10,
 
 모임가입신청
 INSERT INTO club_user (club_user_no, user_id, club_no, application_reg_date, join_reg_date, member_role, approval_condition, join_greeting)
-VALUES (seq_club_user_no.nextval, 'user03',2, sysdate, null, null, null, '안녕하세요 테스트 가입인사입니다33');
+VALUES (seq_club_user_no.nextval, 'user03',2, sysdate, null, null, null, '안녕하세요 테스트 가입인사입니다44');
 
 모임일정등록
 INSERT INTO meeting (meeting_no, club_no, add_meeting_user_id, meeting_title, meeting_content, meeting_date, meeting_place, meeting_time, meeting_weather, meeting_reg_date, meeting_member, meeting_maximum_member)
@@ -47,7 +47,7 @@ UPDATE club
 	club_category = '카테고리수정' ,
 	club_area = '모임활동영역수정 테스트' ,
 	club_image = '모임이미지 수정 테스트'
-	WHERE club_no = 2;
+	WHERE club_no = 3;
 
 모임 삭제
 DELETE FROM club
@@ -63,8 +63,8 @@ WHERE constraint_name = 'SYS_C007785';
 모임리스트
 SELECT 
 	club_no, user_id, club_title, club_detail, club_reg_date, club_image, current_member, club_max_member, club_category, club_area
-	FROM club
-	ORDER BY club_no DESC;
+	FROM club;
+	
 	
 	
 전체모임 수
@@ -128,7 +128,7 @@ UPDATE meeting
 DELETE FROM participant WHERE participant_no = 2;
 
 모임일정 삭제
-DELETE FROM meeting WHERE meeting_no = 3;
+DELETE FROM meeting WHERE meeting_no = 6;
 
 모임원 직책 수정
 UPDATE club_user

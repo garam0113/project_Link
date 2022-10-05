@@ -107,7 +107,7 @@
 			club_title = #{clubTitle} ,
 			club_detail = #{clubDetail} ,
 			club_category = #{clubCategory} ,
-			club_area = #{clubArea}
+			club_area = #{clubArea} ,
 			club_image = #{clubImage}
 		</set>
 		WHERE club_no = #{clubNo}
@@ -118,27 +118,45 @@
 		DELETE FROM club WHERE club_no = #{clubNo}
 	</delete>
 	
-	<!-- 모임리스트 -->
-	<select id="getClubList" parameterType="search" resultMap="clubSelectMap">
-		SELECT
-		club_no, user_id, club_title, club_detail, club_reg_date, club_image, current_Member, club_max_member, club_category, club_area
-		FROM club
-		OREDER BY club_no DESC
 	
-	</select>
-	
-	
-	<select id="getTotalClubCount" parameterType="search" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM (
-				SELECT
-				*
-				FROM club		)
-	
-	</select>
+	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+											FROM club
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				LOWER(club_no) LIKE LOWER('%${searchKeyword}%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				LOWER(club_title) LIKE LOWER('%${searchKeyword}%')
+													</if>
+												</where>
+											</if>
+											ORDER BY club_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT club_no , club_title , club_detail
+						FROM club
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			club_no = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		club_title = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
 
-<!-- 수정해야함 -->
+
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (
 			club_user_no ,
@@ -152,10 +170,10 @@
 		)		 		 
 		VALUES (
 			seq_club_user_no.nextval ,
-			#{clubNo} ,
 			#{userId} ,
+			#{clubNo} ,
 			sysdate ,
-			#{joinRegDate} ,
+			sysdate ,
 			#{memberRole} ,
 			#{approvalCondition} ,
 			#{joinGreeting}
@@ -178,7 +196,7 @@
 		<set>
 			member_role = #{memberRole}
 		</set>
-		WHERE club_user_no =#{clubUserNO}
+		WHERE club_user_no =#{clubUserNo}
 	</update>
 	
 	<!-- 모임원 추방 -->
@@ -187,9 +205,13 @@
 	</delete>
 	
 	<!-- 가입신청현황 삭제 -->
-	<delete id="deleteApprovalCondition">
-		DELETE FROM club_user WHERE club_user_no = #{clubUserNo}
-	</delete>
+	<update id="deleteApprovalCondition" parameterType="clubUser">
+		UPDATE club_user
+		<set>
+			approval_condition = #{approvalCondition}
+		</set>
+		WHERE club_user_no = #{clubUserNo}
+	</update>
 	
 <!--  가입신청현황 리스트
 	<select id="getApprovalConditionList" parameterType="int" resultMap="clubUserSelectMap">
@@ -219,10 +241,10 @@
 			logout_date,
 			member_role,
 			approval_condition,
-			join_greeting
-			FROM club_user
-			WHERE club_no = #{clubNo}
-			ORDER BY member_role DESC
+			join_greeting 
+		FROM club_user
+		WHERE club_no = #{clubNo}
+			
 	</select>
 	
 	<!-- 모임일정 등록 -->
@@ -240,19 +262,19 @@
 			meeting_weather ,
 			meeting_reg_date ,
 			meeting_member ,
-			meeting_maximumMember
+			meeting_maximum_Member
 			)
 		VALUES (
 			seq_meeting_no.NEXTVAL ,
 			#{clubNo} ,
-			#{addMeetingUserId} ,
+			#{userId} ,
 			#{meetingTitle} ,
 			#{meetingContent} ,
 			#{meetingDate} ,
 			#{meetingPlace} ,
 			#{meetingTime} ,
 			#{meetingWeather} ,
-			#{meetingRegDate} ,
+			sysdate ,
 			#{meetingMember:NUMERIC} ,
 			#{meetingMaximumMember:NUMERIC})
 	</insert>
@@ -295,7 +317,6 @@
 			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
 			FROM meeting
 			WHERE club_no = #{clubNo}
-			ORDER BY meeting_date DESC
 	</select>
 	
 	<!-- 모임일정 삭제 -->

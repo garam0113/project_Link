@@ -72,7 +72,7 @@ public class ClubRestController {
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = clubService.getClubMemberList(search);
+		Map<String, Object> map = clubService.getClubMemberList(search, pageSize);
 		
 		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage = " +resultPage);

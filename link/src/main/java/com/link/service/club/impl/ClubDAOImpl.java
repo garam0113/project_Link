@@ -12,6 +12,7 @@ import com.link.service.club.ClubDAO;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
+import com.link.service.domain.Participant;
 
 @Repository("clubDAOImpl")
 public class ClubDAOImpl implements ClubDAO {
@@ -42,6 +43,7 @@ public class ClubDAOImpl implements ClubDAO {
 		sqlSession.insert("ClubMapper.addClub",club);
 	}
 	
+//	//JUNIT TEST
 //	@Override
 //	public int addClub(Club club) throws Exception {
 //		return sqlSession.insert("ClubMapper.addClub",club);
@@ -81,6 +83,12 @@ public class ClubDAOImpl implements ClubDAO {
 		sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
 	}
 	
+	//JUNIT TEst
+//	@Override
+//	public int addApprovalCondition(ClubUser clubUser) throws Exception {
+//		return sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
+//	}
+	
 	@Override
 	public List<ClubUser> getApprovalConditionList(Search search) throws Exception {
 		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
@@ -92,7 +100,7 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public List<ClubUser> getClubMemberList(Search search) throws Exception {
+	public List<ClubUser> getClubMemberList(Search search, int clubNo) throws Exception {
 		return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}
 	
@@ -116,6 +124,12 @@ public class ClubDAOImpl implements ClubDAO {
 		sqlSession.insert("ClubMapper.addMeeting",meeting); 
 	}
 	
+	//JUNIT TEST
+//	@Override
+//	public int addMeeting(Meeting meeting) throws Exception {
+//		return sqlSession.insert("ClubMapper.addMeeting",meeting); 
+//	}
+	
 	@Override
 	public List<Meeting> getMeetingList(Search search) throws Exception {
 		return sqlSession.selectList("ClubMapper.getMeetingList",search);
@@ -132,18 +146,24 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public void deleteMeeting(Meeting meeting) throws Exception {
-		sqlSession.delete("ClubMapper.deleteMeeting",meeting);
+	public void deleteMeeting(int meetingNo) throws Exception {
+		sqlSession.delete("ClubMapper.deleteMeeting",meetingNo);
+	}
+	
+//	@Override
+//	public void addMeetingMember(Participant participant) throws Exception {
+//		sqlSession.insert("ClubMapper.addMeetingMember",participant);
+//	}
+	
+	//JUNIT TEST
+	@Override
+	public int addMeetingMember(Participant participant) throws Exception {
+		return sqlSession.insert("ClubMapper.addMeetingMember",participant);
 	}
 	
 	@Override
-	public void addMeetingMember(Meeting meeting) throws Exception {
-		sqlSession.insert("ClubMapper.addMeetingMember",meeting);
-	}
-	
-	@Override
-	public void deleteMeetingMember(Meeting meeting) throws Exception {
-		sqlSession.delete("ClubMapper.deleteMeetingMember",meeting);
+	public void deleteMeetingMember(int participant) throws Exception {
+		sqlSession.delete("ClubMapper.deleteMeetingMember",participant);
 	}
 	
 	@Override
