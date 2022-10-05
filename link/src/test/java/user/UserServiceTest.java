@@ -39,7 +39,7 @@ public class UserServiceTest {
 		System.out.println("==============================\n");
 	}
 
-	//	@Test
+	@Test
 	public void testSnsAddUser() throws Exception {
 		// TODO Auto-generated constructor stub
 		
