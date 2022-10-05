@@ -56,16 +56,14 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	}
 
 	@Override
-	public void updateNotice(Map<String, Object> map) throws Exception {
+	public void updateNotice(Notice notice) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl updateNoticet start]\n");
 
-		List<Notice> list = (List<Notice>) map.get("notice");
-
-		for (int i = 0; i < list.size(); i++) {
-			serviceCenterDAO.updateNotice(list.get(i));
-		}
+		
+		  serviceCenterDAO.updateNotice(notice);
+		 
 
 		System.out.println("\n[ServiceCenterServiceImpl updateNotice end]\n");
 
@@ -80,7 +78,7 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	@Override
 	public void deleteNotice(int noticeNo) throws Exception {
 		// TODO Auto-generated method stub
-
+		serviceCenterDAO.deleteNotice(noticeNo);
 	}
 
 //==================================================================여기까지가 Notice	
@@ -180,16 +178,15 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	}
 
 	@Override
-	public void updateQandA(Map<String, Object> map) throws Exception {
+	public void updateQandA(QandA qandA) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl updateQandA start]\n");
 
-		List<QandA> list = (List<QandA>) map.get("qandA");
 
-		for (int i = 0; i < list.size(); i++) {
-			serviceCenterDAO.updateQandA(list.get(i));
-		}
+		
+			serviceCenterDAO.updateQandA(qandA);
+		
 
 		System.out.println("\n[ServiceCenterServiceImpl updateQandA end]\n");
 
@@ -227,16 +224,13 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	}
 
 	@Override
-	public void updateReport(Map<String, Object> map) throws Exception {
+	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
 		
 		System.out.println("\n[ServiceCenterServiceImpl updateReport start]\n");
 
-		List<Report> list = (List<Report>) map.get("repot");
-
-		for (int i = 0; i < list.size(); i++) {
-			serviceCenterDAO.updateReport(list.get(i));
-		}
+		
+			serviceCenterDAO.updateReport(report);
 
 		System.out.println("\n[ServiceCenterServiceImpl updateReport end]\n");
 

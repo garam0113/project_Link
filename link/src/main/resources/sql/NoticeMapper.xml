@@ -24,18 +24,24 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addNotice"		parameterType="notice" >
 	 	INSERT
-		INTO notice( notice_no  , notice_title , notice_content , notice_image1 , notice_image2, notice_regdate, notice_count, userId.user_Id:VARCHAR)
-
-		VALUES	 (	seq_notice_notice_no.nextval , #{noticeTitle} , #{noticeContent} , #{noticeImage1} , 
-							#{noticeImage2} ,SYSDATE , #{noticeCount}, #{userId.userId} )
+		INTO NOTICE( NOTICE_NO  , NOTICE_TITLE , NOTICE_CONTENT , NOTICE_IMAGE1 , NOTICE_IMAGE2, NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
+		VALUES	 (	seq_notice_notice_no.nextval , 
+					#{noticeTitle}, 
+					#{noticeContent}, 
+					#{noticeImage1}, 
+					#{noticeImage2},
+					SYSDATE, 
+					#{noticeCount},
+					#{clubNo},
+					#{userId.userId} )
 
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getNotice"	parameterType="int"	resultMap="noticeSelectMap">
 	SELECT
-	n.notice_no , n.notice_title , n.notice_content , n.notice_image1 ,  n.notice_image2 , n.notice_regdate, n.notice_count, n.user_id
-	FROM notice n 
+	N.NOTICE_NO , N.NOTICE_TITLE , N.NOTICE_CONTENT , N.NOTICE_IMAGE1 , N.NOTICE_IMAGE2, N.NOTICE_REGDATE, N.NOTICE_COUNT, N.CLUB_NO, USER_ID
+	FROM NOTICE N 
 	WHERE n.notice_no = #{notice_no}
 
 	 </select>
@@ -53,21 +59,21 @@
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateNotice"	parameterType="notice" >
-	   	UPDATE notice
+	   	UPDATE NOTICE
 	   	<set>
-	   		notice_title 	= #{notice_title} ,
-			notice_content	= #{notice_content},
-			notice_regdate	= SYSDATE ,
-			notice_image1	=	#{notice_image1},
-			notice_image2   =  #{notice_image2}
+	   		NOTICE_TITLE 	= #{noticeTitle} ,
+			NOTICE_CONTENT	= #{noticeContent},
+			NOTICE_REGDATE	= SYSDATE ,
+			NOTICE_IMAGE1	=	#{noticeImage1},
+			NOTICE_IMAGE2   =  #{noticeImage2}
 	   	</set>
-	   	WHERE notice_no = #{notice_no}
+	   	WHERE notice_no = #{noticeNo}
 	 </update>
 	 
 	 <delete id="deleteNotice" parameterType="int">
 	 DELETE
 	 FROM notice
-	 WHERE notice_no = #{notice_no}
+	 WHERE notice_no = #{noticeNo}
 	 
 	 </delete>
 		 
