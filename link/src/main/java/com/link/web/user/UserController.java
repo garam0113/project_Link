@@ -49,13 +49,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="addUser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user) throws Exception{
+	public String addUser(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
 		System.out.println("/user/addUser : POST");
 		
 		userService.addUser(user);	//회원가입 정보 DB저장
 		
-		return "redirect:/user/loginView.jsp";
+		User getUser = userService.getUser(user);
+		
+		session.setAttribute("user", getUser);
+		
+		return "redirect:/main.jsp";
 	}
 	
 	@RequestMapping(value="addSnsUser", method = RequestMethod.POST)
@@ -98,7 +102,7 @@ public class UserController {
 		
 		System.out.println("/user/getUser : GET");
 		
-		return "forward:/user/getUserIdView.jsp";
+		return "forward:/user/getUserIdView.jsp";	// 화면Navigation
 	}
 
 	@RequestMapping(value="getUserId", method = RequestMethod.POST)
@@ -106,9 +110,9 @@ public class UserController {
 		
 		System.out.println("/user/getUser : POST");
 		
-		User userId = userService.getUser(user);
+		User userId = userService.getUser(user);	//DB에 저장된 회원 정보 userId 객체에 set
 		
-		model.addAttribute("userId",userId);
+		model.addAttribute("userId",userId);	//set한 회원Data session에 저장 
 		
 		return "forward:/user/getUserId.jsp";
 	}
@@ -178,7 +182,7 @@ public class UserController {
 		
 		System.out.println("/user/login : GET");
 		
-		return "redirect:/user/loginView.jsp";	//login 화면 Navigation
+		return "redirect:/user/login.jsp";	//login 화면 Navigation
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
