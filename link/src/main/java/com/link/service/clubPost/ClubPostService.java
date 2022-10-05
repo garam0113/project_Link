@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.ClubPost;
-import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -50,9 +49,11 @@ public interface ClubPostService {
 	// 신고
 	
 	// 결제
-	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
-	
 	public void addPay(Pay pay) throws Exception;
+	
+	//public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
+	
+	//public void updateClub(Pay pay) throws Exception;
 	
 	
 	

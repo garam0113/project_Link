@@ -216,6 +216,7 @@ CREATE TABLE CLUB_POST (
 	CLUB_POST_COMMENT_COUNT			NUMBER(20)				DEFAULT 0					NOT NULL,
 	REPORT_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
 	DELETE_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
+	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
 	IMAGE1							VARCHAR2(100)										NOT NULL,
 	IMAGE2							VARCHAR2(100),
 	IMAGE3							VARCHAR2(100),
@@ -244,6 +245,7 @@ CREATE TABLE CLUB_POST_COMMENT (
 	PARENT							NUMBER(20)											NOT NULL,
 	DEPTH							NUMBER(20)											NOT NULL,
 	SEQUENCE						NUMBER(20)											NOT NULL,
+	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
 	PRIMARY KEY(club_post_comment_no)
 );
 
@@ -299,7 +301,7 @@ CREATE TABLE CHAT (
 
 
 
-CREATE TABLE feed (
+CREATE TABLE FEED (
 	feed_no							NUMBER												NOT NULL,
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	feed_open_condition				CHAR(3)												NOT NULL,
@@ -332,6 +334,7 @@ CREATE TABLE feed_comment (
 	feed_comment_update_date		DATE,
 	report_condition				CHAR(3)												NOT NULL,
 	delete_condition				CHAR(3)												NOT NULL,
+	delete_user_id					VARCHAR2(20)													REFERENCES users(user_id),
 	parent							NUMBER												NOT NULL,
 	depth							NUMBER												NOT NULL,
 	sequence						NUMBER												NOT NULL,
