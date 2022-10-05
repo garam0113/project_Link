@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="/toolbar.jsp" />
 <a href="/clubPost/getCurrentClubPostList">모임게시물리스트</a>
 </body>
 </html>

@@ -50,7 +50,7 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 	}
 	@Override
     public void addFollow(User user) throws Exception{
-    	
+   
 		System.out.println("\n[MyHomeDAOImpl addFollow start]\n");
     	sqlSession.insert("MyHomeMapper.addFollow", user);
     }
@@ -64,7 +64,7 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 	public List<User> getFollowerList(Search search) throws Exception{
 		
 		System.out.println("\n[MyHomeDAOImpl getFollowerList start]\n");
-		return sqlSession.selectList("MyHomeMapper.getFollowList", search);
+		return sqlSession.selectList("MyHomeMapper.getFollowerList", search);
 	}
 	@Override
 	public void deleteFollow(User user) throws Exception{

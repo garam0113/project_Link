@@ -16,3 +16,7 @@ insert into follow_block values(seq_follow_block_no.nextval, 'user01', 'user04',
 insert into follow_block values(seq_follow_block_no.nextval, 'user01', 'user05', '1', '1');
 
 
+select * from users;
+select * from FOLLOW_BLOCK;
+select * from users;
+s
