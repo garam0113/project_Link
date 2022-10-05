@@ -30,7 +30,7 @@
 		<result property="reportCount" 		column="report_count" 		jdbcType="NUMERIC" />
 		<result property="stopStartDate" 		column="stop_start_date" 		jdbcType="DATE" />
 		<result property="stopEndDate" 		column="stop_end_date" 		jdbcType="DATE" />
-		<result property="outUserType" 		column="out_user_type" 		jdbcType="CHAR" />
+		<result property="outUserState" 		column="out_user_state" 		jdbcType="CHAR" />
 		<result property="outUserDate" 		column="out_user_date" 		jdbcType="DATE" />
 		<result property="addType" 		column="out_user_type" 		jdbcType="CHAR" />
 		<result property="logoutDate" 		column="logout_date" 		jdbcType="DATE" />
@@ -54,7 +54,7 @@
 		<if test="(searchCondirion == 0 and searchKeyword == '') or (searchCondirion == 0 and searchKeyword != '')" >
 		user_id = LIKE(#{searchKeyword}||'%')
 		</if>
-		<if test="(searchCondirion == 0 and searchKeyword == '') or (searchCondirion == 0 and searchKeyword != '')" >
+		<if test="(searchCondirion == 1 and searchKeyword == '') or (searchCondirion == 1 and searchKeyword != '')" >
 		nickname = LIKE(#{searchKeyword}||'%')
 		</if>
 		<if test="(searchCondirion == null) and (searchKeyword == '1' or  searchKeyword == '2')">

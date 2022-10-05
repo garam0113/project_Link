@@ -1,5 +1,7 @@
 package user;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.link.common.Search;
 import com.link.service.domain.User;
 import com.link.service.user.UserService;
 
@@ -58,6 +61,69 @@ public class UserServiceTest {
 		System.out.println(user);
 		
 		Assert.assertEquals("uesr01", user.getUserId());
+		System.out.println("==============================\n");
+	}
+
+	//	@Test
+	public void testUpdateUser() throws Exception{
+		
+		System.out.println("\n===================================");
+		User user = new User();
+		user.setUserId("user09");
+		user.setPassword("8520");
+		user.setEmail("skdi@gmail.com");
+
+		System.out.println("update 결과 : "+userService.updateUser(user) );
+		
+//		Assert.assertEquals("uesr01", user.getUserId());
+		System.out.println("==============================\n");
+	}
+
+	//	@Test
+	public void testUpdateProfile() throws Exception{
+		
+		System.out.println("\n===================================");
+		User user = new User();
+		user.setUserId("user02");
+		user.setNickName("향기");
+		user.setGender("여자");
+		user.setArea1("영등포구");
+		user.setArea2("금천구");
+		user.setCategory1("운동");
+		user.setCategory2("음악/댄스");
+		user.setCategory3("여행");
+		user.setProfilewriting("만나서 반갑습니다!");
+		
+		System.out.println("update 결과 : "+userService.updateProfile(user) );
+		
+//		Assert.assertEquals("uesr01", user.getUserId());
+		System.out.println("==============================\n");
+	}
+	
+	//	@Test
+	public void testDeleteUser() throws Exception{
+		
+		System.out.println("\n===================================");
+		User user = new User();
+		user.setUserId("user01");
+		user.setOutUserState("향기");
+		
+		System.out.println("update 결과 : "+userService.deleteUser(user) );
+		
+//		Assert.assertEquals("uesr01", user.getUserId());
+		System.out.println("==============================\n");
+	}
+	
+	//@Test
+	public void testGetUserList() throws Exception{
+		
+		System.out.println("\n===================================");
+		
+		Search search = new Search(); 
+		
+		Map<String, Object> map = userService.getUserList(search);
+		
+		System.out.println("select 결과 : "+map.get("list") );
 		System.out.println("==============================\n");
 	}
 }

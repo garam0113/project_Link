@@ -80,16 +80,30 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) throws Exception {
+	public int updateUser(User user) throws Exception {
+		System.out.println("Service접속");
 		// TODO Auto-generated method stub
-		userDAO.updateUser(user);
+		return userDAO.updateUser(user);
 	}
+//	
+//	@Override
+//	public void updateUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		userDAO.updateUser(user);
+//	}
 
 	@Override
-	public void updateProfile(User user) throws Exception {
+	public int updateProfile(User user) throws Exception {
+		System.out.println("Service접속");
 		// TODO Auto-generated method stub
-		userDAO.updateProfile(user);
+		return userDAO.updateProfile(user);
 	}
+	
+//	@Override
+//	public void updateProfile(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		userDAO.updateProfile(user);
+//	}
 
 	@Override
 	public void updatePhoneNo(User user) throws Exception {
@@ -116,10 +130,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(User user) throws Exception {
+	public int deleteUser(User user) throws Exception {
+		System.out.println("Service접속");
 		// TODO Auto-generated method stub
-		userDAO.deleteUser(user);
+		return userDAO.deleteUser(user);
 	}
+//	
+//	@Override
+//	public void deleteUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		userDAO.deleteUser(user);
+//	}
 
 	@Override
 	public boolean checkDuplication(String userId) throws Exception {

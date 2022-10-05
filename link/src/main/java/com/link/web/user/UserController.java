@@ -1,5 +1,7 @@
 package com.link.web.user;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.link.common.Page;
+import com.link.common.Search;
 import com.link.service.domain.User;
 import com.link.service.user.UserService;
 
@@ -168,9 +172,31 @@ public class UserController {
 		User user = new User();	// get방식으로 들어온 Data 저장을 위해 생성
 		
 		user.setUserId(userId);	//회원ID domain객체에 Set
-		user.setOutUserType(userState);	//회원상태 domain객체에 Set
+		user.setOutUserState(userState);	//회원상태 domain객체에 Set
 		
 		userService.deleteUser(user);	//회원 정보를 DB에 저장
+		
+		return null;
+	}
+	
+	
+	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
+		
+		System.out.println("/user/getUserList : GET/POST");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setCurrentPage(pageSize);
+		
+		Map<String, Object> map = userService.getUserList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search",search);
 		
 		return null;
 	}

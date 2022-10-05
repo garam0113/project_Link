@@ -26,7 +26,7 @@ public class User {
 	private int reportCount;
 	private Date stopStartDate;
 	private Date stopEndDate;
-	private String outUserType;
+	private String outUserState;
 	private Date outUserDate;
 	private String addType;
 	private Date logoutDate;
@@ -172,11 +172,11 @@ public class User {
 	public void setStopEndDate(Date stopEndDate) {
 		this.stopEndDate = stopEndDate;
 	}
-	public String getOutUserType() {
-		return outUserType;
+	public String getOutUserState() {
+		return outUserState;
 	}
-	public void setOutUserType(String outUserType) {
-		this.outUserType = outUserType;
+	public void setOutUserState(String outUserState) {
+		this.outUserState = outUserState;
 	}
 	public Date getOutUserDate() {
 		return outUserDate;
@@ -258,7 +258,7 @@ public class User {
 				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
 				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
 				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
-				+ ", outUserType=" + outUserType + ", outUserDate=" + outUserDate + ", addType=" + addType
+				+ ", outUserType=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
 				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbtype=" + fbtype

@@ -22,9 +22,13 @@ public interface UserDAO {
 
 	public User getUserId(User user) throws Exception;
 	
-	public void updateUser(User user) throws Exception;
+//	public void updateUser(User user) throws Exception;
+
+	public int updateUser(User user) throws Exception;
 	
-	public void updateProfile(User user) throws Exception;
+//	public void updateProfile(User user) throws Exception;
+
+	public int updateProfile(User user) throws Exception;
 	
 	public void updatePhoneNo(User user) throws Exception;
 	
@@ -34,7 +38,9 @@ public interface UserDAO {
 
 	public void logout(String userId) throws Exception;
 	
-	public void deleteUser(User user) throws Exception;
+	public int deleteUser(User user) throws Exception;
+
+//	public void deleteUser(User user) throws Exception;
 	
 	public List<User> getUserList(Search search) throws Exception;
 	

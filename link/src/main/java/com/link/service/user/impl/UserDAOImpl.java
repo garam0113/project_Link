@@ -79,18 +79,35 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUser(User user) throws Exception {
-		sqlSession.update("UserMapper.updateUser", user);
+	public int updateUser(User user) throws Exception {
+
+		System.out.println("DB접속");
 		// TODO Auto-generated method stub
+		return sqlSession.update("UserMapper.updateUser", user);
 		
 	}
+//	
+//	@Override
+//	public void updateUser(User user) throws Exception {
+//		sqlSession.update("UserMapper.updateUser", user);
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
-	public void updateProfile(User user) throws Exception {
+	public int updateProfile(User user) throws Exception {
+		System.out.println("DB접속");
 		// TODO Auto-generated method stub
-		sqlSession.update("UserMapper.updateProfil", user);
+		return sqlSession.update("UserMapper.updateProfil", user);
 		
 	}
+//	
+//	@Override
+//	public void updateProfile(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		sqlSession.update("UserMapper.updateProfil", user);
+//		
+//	}
 
 	@Override
 	public void updatePhoneNo(User user) throws Exception {
@@ -119,10 +136,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void deleteUser(User user) throws Exception {
+	public int deleteUser(User user) throws Exception {
+		System.out.println("DB접속");
 		// TODO Auto-generated method stub
-		sqlSession.update("UserMapper.deleteUser", user);
+		return sqlSession.update("UserMapper.deleteUser", user);
 	}
+//	
+//	@Override
+//	public void deleteUser(User user) throws Exception {
+//		// TODO Auto-generated method stub
+//		sqlSession.update("UserMapper.deleteUser", user);
+//	}
 
 	@Override
 	public List<User> getUserList(Search search) throws Exception {
