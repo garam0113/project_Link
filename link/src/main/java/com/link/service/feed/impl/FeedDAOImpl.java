@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Push;
 import com.link.service.domain.Report;
 import com.link.service.feed.FeedDAO;
@@ -33,7 +34,7 @@ public class FeedDAOImpl implements FeedDAO {
 
 	
 	
-	//////////////////////////////////////// Feed
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 	
 	
 	
@@ -58,12 +59,12 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void deleteFeed(int feedNo) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("FeedMapper.deleteFeed", feedNo);
+		sqlSession.update("FeedMapper.deleteFeed", feedNo);
 	}
 	
 	
 	
-	//////////////////////////////////////// Feed Comment
+	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
 	
 	
@@ -88,12 +89,12 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void deleteFeedComment(int commentNo) throws Exception{
 		// TODO Auto-generated method stub
-		sqlSession.delete("FeedMapper.deleteFeedComment", commentNo);
+		sqlSession.update("FeedMapper.deleteFeedComment", commentNo);
 	}
 
 	
 	
-	//////////////////////////////////////// List
+	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	
 	
 	
@@ -111,7 +112,7 @@ public class FeedDAOImpl implements FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// Count
+	///////////////////////////////////////////////////// Count /////////////////////////////////////////////////////
 	
 		
 		
@@ -133,80 +134,82 @@ public class FeedDAOImpl implements FeedDAO {
 		return sqlSession.selectOne("FeedMapper.getRecommentCount", map);
 	}
 	
-	//////////////////////////////////////// Like
+	
+	
+	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	
 	
 	@Override
-	public void addFeedLike(Map<String, Object> map) throws Exception {
+	public void addFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("HeartMapper.addFeedLike", map);
+		sqlSession.insert("HeartMapper.insertHeart", heart);
 	}
 	
 	@Override
-	public void deleteFeedLike(Map<String, Object> map) throws Exception {
+	public void deleteFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("HeartMapper.deleteFeedLike", map);
-	}
-
-	@Override
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.insert("HeartMapper.addFeedCommentLike", map);
-	}
-	
-	@Override
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.delete("HeartMapper.deleteFeedCommentLike", map);
+		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
 	@Override
-	public int getTotalFeedLike(Map<String, Object> map) throws Exception {
+	public void addFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("HeartMapper.getTotalFeedLike", map);
+		sqlSession.insert("HeartMapper.insertHeart", heart);
+	}
+	
+	@Override
+	public void deleteFeedCommentHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
 	@Override
-	public int getTotalFeedCommentLike(Map<String, Object> map) throws Exception {
+	public int getTotalFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("HeartMapper.getTotalFeedCommentLike", map);
+		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
+	}
+
+	@Override
+	public int getTotalFeedCommentHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
 	}
 	
 	
 	
-	//////////////////////////////////////// Report
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
 	
 		
 		
 	@Override
 	public void addFeedReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("ReportMapper.addReport", report);
+		sqlSession.insert("Report_PushMapper.addReport", report);
 	}
 	
 	@Override
 	public void addFeedCommentReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("ReportMapper.addReport", report);
+		sqlSession.insert("Report_PushMapper.addReport", report);
 	}
 		
 	
 	
-	//////////////////////////////////////// Push
+	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
 	
 	
 	
 	@Override
 	public void addFeedPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("Report_PushMapper.addFeedPush");
+		sqlSession.insert("Report_PushMapper.addPush");
 	}
 
 	@Override
 	public void addFeedCommentPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("Report_PushMapper.addFeedCommentPush");
+		sqlSession.insert("Report_PushMapper.addPush");
 	}
 
 	

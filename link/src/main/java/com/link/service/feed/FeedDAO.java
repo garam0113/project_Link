@@ -6,6 +6,7 @@ import java.util.Map;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Push;
 import com.link.service.domain.Report;
 
@@ -96,22 +97,22 @@ public interface FeedDAO {
 	 */
 	
 	// 피드 좋아요
-	public void addFeedLike(Map<String, Object> map) throws Exception;
+	public void addFeedHeart(Heart heart) throws Exception;
 	
 	// 피드 싫어요
-	public void deleteFeedLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedHeart(Heart heart) throws Exception;
 	
 	// 피드 댓글 좋아요
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void addFeedCommentHeart(Heart heart) throws Exception;
 	
 	// 피드 댓글 싫어요
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedCommentHeart(Heart heart) throws Exception;
 	
 	// 피드 좋아요 개수
-	public int getTotalFeedLike(Map<String, Object> map) throws Exception;
+	public int getTotalFeedHeart(Heart heart) throws Exception;
 	
 	//피드 댓글 좋아요 개수
-	public int getTotalFeedCommentLike(Map<String, Object> map) throws Exception;
+	public int getTotalFeedCommentHeart(Heart heart) throws Exception;
 	
 	
 	

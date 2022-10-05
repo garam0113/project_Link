@@ -98,6 +98,9 @@ SELECT * from FEED_COMMENT ORDER BY feed_comment_no DESC;
 
 
 
+
+
+
 SELECT f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_like_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition FROM feed f WHERE feed_content LIKE '%정말%' ORDER BY feed_no DESC; 
 
 
@@ -109,7 +112,7 @@ SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_lik
 
 
 
-
+SELECT * FROM HEART;
 
 
 

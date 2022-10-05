@@ -1,6 +1,5 @@
 package com.link.service.feed;
 
-import java.util.List;
 import java.util.Map;
 
 import com.link.service.domain.Comment;
@@ -11,17 +10,18 @@ public interface FeedService {
 	
 	
 	
-	//////////////////////////////////////// Feed
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 	
 	
 	// 피드 추가
 	public void addFeed(Feed feed) throws Exception;
 	
+	// 피드 조회 (피드 & 피드 댓글)
 	/*
-	 * 피드 조회 (피드 & 피드 댓글)
 	 * 
 	 * map.put("feedNo", feed.getFeedNo());
 	 * map.put("search", search);
+	 * 
 	 */
 	
 	public Map<String, Object> getFeed(Map<String, Object> map) throws Exception;
@@ -34,7 +34,7 @@ public interface FeedService {
 	
 	
 	
-	//////////////////////////////////////// Feed Comment
+	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
 	
 	// 피드 댓글 추가
@@ -51,30 +51,30 @@ public interface FeedService {
 	
 	
 	
-	//////////////////////////////////////// List
+	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	
 	
-	
+	// 피드 리스트
 	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception;
 	
+	// 피드 댓글 리스트
 	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception;
 
 	
 	
-	//////////////////////////////////////// Report	
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
 	
 	
 	
 	// 피드 신고
 	public void addFeedReport(Report report) throws Exception;
 	
-	
 	// 피드 댓글 신고
 	public void addFeedCommentReport(Report report) throws Exception;
 	
 	
 	
-	//////////////////////////////////////// Like
+	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	/*
 	 * map 안에 feedNo, userId
@@ -85,16 +85,16 @@ public interface FeedService {
 	 */
 	
 	// 피드 좋아요
-	public void addFeedLike(Map<String, Object> map) throws Exception;
+	public void addFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 싫어요
-	public void deleteFeedLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 좋아요
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void addFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 싫어요
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	
 	

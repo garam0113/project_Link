@@ -13,7 +13,7 @@ public interface ServiceCenterService {
 	
 	public Notice getNotice(int noticeNo) throws Exception;
 	
-	public void updateNotice(Map<String, Object> map) throws Exception;
+	public void updateNotice(Notice notice) throws Exception;
 	
 	public void getCount(int noticeNo) throws Exception;
 	
@@ -33,7 +33,7 @@ public interface ServiceCenterService {
 	
 	public QandA getQandA(int qandANo) throws Exception;
 	
-	public void updateQandA(Map<String, Object> map) throws Exception;
+	public void updateQandA(QandA qanda) throws Exception;
 	
 	public void deleteQandA(int qandA) throws Exception;
 	
@@ -43,7 +43,7 @@ public interface ServiceCenterService {
 	
 	public Report getReport(int reportNo) throws Exception;
 	
-	public void updateReport(Map<String, Object> map) throws Exception;
+	public void updateReport(Report report) throws Exception;
 	
 	//==여기까지가 신고 Report  ==//
 	

@@ -1,5 +1,8 @@
 package clubPost;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -146,7 +149,7 @@ public class ClubPostServiceTest {
 		pay.setUpdateClubMemberCount(20);
 		pay.setMerchant_uid("111");
 		
-		clubPostServiceImpl.updateClubMember(pay, search);
+		//clubPostServiceImpl.updateClubMember(pay, search);
 		clubPostServiceImpl.addPay(pay);
 	}
 	
@@ -162,12 +165,46 @@ public class ClubPostServiceTest {
 		pay.setPayOption("0");
 		pay.setPayProduct("1");
 		pay.setTotalPrice(10000);
-		pay.setUpdateClubMemberCount(20);
+		pay.setUpdateClubCount(2);
 		pay.setMerchant_uid("111");
 		
-		//clubPostServiceImpl.updateClub(pay, search);
+		//clubPostServiceImpl.updateClub(pay);
 		clubPostServiceImpl.addPay(pay);
 	}
+	
+	@Test
+	public void clubNotice() throws Exception {
+		// 공지사항
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(10);
+		search.setPageUnit(10);
+		search.setOrder(1);					// 0 : 최신순, 1 : 역최신순
+		Notice notice = new Notice();
+		//notice.setNoticeNo(5);
+		notice.setClubNo(0);
+		//notice.setNoticeImage1("1");
+		//notice.setNoticeImage2("2");
+		//notice.setNoticeTitle("title65");
+		//notice.setNoticeContent("content65");
+		//notice.setNoticeCount(0);
+		User user = new User();
+		user.setUserId("user01");
+		notice.setUserId(user);
+		
+		//clubPostServiceImpl.addClubNotice(search, notice);
+		//notice = clubPostServiceImpl.getClubNotice(notice);
+		Map<String, Object> map = clubPostServiceImpl.getClubNoticeList(search, notice);
+		//clubPostServiceImpl.updateClubNotice(search, notice);
+		//clubPostServiceImpl.deleteClubNotice(search, notice);
+		
+		//System.out.println(notice);
+		//System.out.println(map.get("getClubNoticeListCount"));
+		System.out.println(map.get("getClubNoticeList"));
+		//System.out.println(map.get("getClubNotice"));
+		
+	}
+	
 	
 	
 	

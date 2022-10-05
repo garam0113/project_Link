@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.feed.FeedDAO;
 import com.link.service.feed.FeedService;
@@ -49,10 +50,10 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		
 		Feed feed = feedDAO.getFeed((Integer)map.get("feedNo"));
-		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		List<Comment> commentList = feedDAO.getFeedCommentList(map);
 		
 		map.put("feed", feed);
-		map.put("comment", comment);
+		map.put("commentList", commentList);
 		
 		return map;
 	}
@@ -72,7 +73,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
-
+	
 	
 	
 	@Override
@@ -110,11 +111,11 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Feed> feed = feedDAO.getFeedList(map);
+		List<Feed> feedList = feedDAO.getFeedList(map);
 		int totalFeedCount = feedDAO.getTotalFeedCount((Search) map.get("search"));
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("feed", feed);
+		returnMap.put("feedList", feedList);
 		returnMap.put("totalFeedCount", totalFeedCount);
 		
 		return returnMap;
@@ -124,11 +125,11 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		List<Comment> commentList = feedDAO.getFeedCommentList(map);
 		int totalFeedCommentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("comment", comment);
+		returnMap.put("commentList", commentList);
 		returnMap.put("totalFeedCommentCount", totalFeedCommentCount);
 		
 		return returnMap;
@@ -157,29 +158,42 @@ public class FeedServiceImpl implements FeedService {
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	
+	
+//	private int heartNo;		// 좋아요 테이블 고유번호
+//	private String userId;		// 좋아요하는 회원 아이디
+//	private String source;		// 출처 0:피드, 1:피드 댓글, 2:모임게시물 3:모임게시물 댓글
+//	private int sourceNo;		// 출처 고유번호
+	
+	
 
 	@Override
-	public void addFeedLike(Map<String, Object> map) throws Exception {
+	public void addFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedLike(map);
+		feedDAO.addFeedHeart((Heart) map.get("heart"));
+		
+		// 피드 테이블 좋아요 개수 증가
+		
+		Feed feed = (Feed) map.get("feed");
+		feed.setHeartCount(feed.getHeartCount() + 1);
+		feedDAO.updateFeed(feed);
 	}
 
 	@Override
-	public void deleteFeedLike(Map<String, Object> map) throws Exception {
+	public void deleteFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.deleteFeedLike(map);
+		feedDAO.deleteFeedHeart((Heart)map.get("heart"));
 	}
 
 	@Override
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception {
+	public void addFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedCommentLike(map);
+		feedDAO.addFeedCommentHeart((Heart)map.get("heart"));
 	}
 
 	@Override
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception {
+	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.deleteFeedCommentLike(map);
+		feedDAO.deleteFeedCommentHeart((Heart)map.get("heart"));
 	}
 
 

@@ -50,9 +50,10 @@
 							url : "/feedRest/json/addFeedComment",
 							method : "POST",
 							data : JSON.stringify ({
-								feedNo : $(this).prev().prev().prev().val(),
-								feedCommentNo : $(this).prev().prev().val(),
-								commentContent : $(this).prev().val()
+								feedNo 			: $(this).prev().prev().prev().prev().val(),
+								feedCommentNo 	: $(this).prev().prev().prev().val(),
+								commentContent 	: $(this).prev().val(),
+								depth 			: $(this).prev().prev().val()
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -87,7 +88,7 @@
 		
 		<div class="commentList">
 			<c:set var="i" value="0"></c:set>
-			<c:forEach var="comment" items="${comment}">
+			<c:forEach var="comment" items="${commentList}">
 				<c:set var="i" value="${i + 1}"></c:set>
 
 					<c:if test="${fn:trim(comment.parent) == '0'}">
@@ -96,7 +97,7 @@
 							&nbsp&nbsp&nbsp&nbsp
 							<input type="hidden" name="feedNo" value="${feed.feedNo}">
 							<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
-							<input type="hidden" name="depth" value="${comment.depth + 1}">
+							<input type="hidden" name="depth" value="${comment.depth + 2}">
 							<input type="text" name="commentContent" value="">
 							<input type="button" class="btn_addReComment" value="submit">
 						</form>
