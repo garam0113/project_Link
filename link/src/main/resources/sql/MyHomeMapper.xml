@@ -12,11 +12,13 @@
 		<result property="userId" 		column="send_user_id" 		jdbcType="VARCHAR"/>
 		<result property="receiveId" 	column="recv_user_id" 		jdbcType="VARCHAR"/>
 		<result property="fbState"		column="state" 		jdbcType="CHAR" />
-		<result property="fbType"		column="type" 		jdbcType="CHAR" />
+		<result property="fbtype"		column="type" 		jdbcType="CHAR" />
+		<result property="nickname"		column="u.nickname" 		jdbcType="VARCHAR" />
+		<result property="profileImage"		column="u.profile_image" 		jdbcType="VARCHAR" />
 		
 	</resultMap>
 	
-	
+
 
 
 <insert id="addFollow" parameterType="user">
@@ -31,44 +33,95 @@
                       )
      VALUES (
      seq_follow_block_no.nextval ,
-     #{userId}                   ,
-     #{receiveId}                ,
-     '1'                 ,
-     '1'                  
+     #{userId:VARCHAR}                   ,
+     #{receiveId:VARCHAR}                ,
+     #{fbState:CHAR}                ,
+     #{fbtype:CHAR}                  
      
                       )
 
 </insert>
 
 
-<select id="getFollowList" parameterType="search" resultMap="myHomeSelectMap">
 
-     SELECT
-      u.user_id, u.nickname, u.profile_image
-     from users u inner join follow_block f
-     on u.user_id = f.recv_user_id
-     where f.send_user_id = #{userId}
-     order by no
+
+
+<select id="getFollowList" parameterType="search" resultMap="myHomeSelectMap">
+	SELECT
+	 	inner_table.* 
+	 	FROM (
+	 			SELECT
+	 			rownum AS row_seq						, 
+	 			deep_table.*
+	 			FROM (
+	 					SELECT
+	 					f.send_user_Id   , 
+	 					f.recv_user_id, 
+	 					f.state, 
+	 					f.type, 
+	 					u.nickname  , 
+	 					u.profile_image
+	 					
+	 					
+	 					
+	 					 
+	 					FROM users u, follow_block f
+	 					
+	 							<where>
+	 								u.user_id = f.recv_user_id
+	 								<if test="searchKeyword !=null ">
+							 		and	f.send_user_id = #{searchKeyword}
+									</if>
+								</where>
+						
+	 					
+	 													) deep_table
+	 			  WHERE ROWNUM &lt;= #{endRowNum} 				) inner_table
+	              WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
      
 </select>
 
 <select id="getFollowerList" parameterType="search" resultMap="myHomeSelectMap">
+	SELECT
+	 	inner_table.* 
+	 	FROM (
+	 			SELECT
+	 			rownum AS row_seq						, 
+	 			deep_table.*
+	 			FROM (
+	 					SELECT
+	 					f.send_user_Id   , 
+	 					f.recv_user_id, 
+	 					f.state, 
+	 					f.type, 
+	 					u.nickname  , 
+	 					u.profile_image
+	 					
+	 					
+	 					
+	 					 
+	 					FROM users u, follow_block f
+	 					
+	 							<where>
+	 								u.user_id = f.send_user_id
+	 								<if test="searchKeyword !=null ">
+							 		and	f.recv_user_id = #{searchKeyword}
+									</if>
+								</where>
+						
+	 					
+	 													) deep_table
+	 			<!-- WHERE ROWNUM &lt;= #{endRowNum} -->				) inner_table
+	            <!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}-->
      
-     SELECT
-      u.user_id, u.nickname, u.profile_image
-     from users u inner join follow_block f
-     on u.user_id = f.send_user_id
-     where f.recv_user_id = #{userId}
-     order by no
-
 </select>
 
 <update id="deleteFollow" parameterType="user" >
 
      UPDATE follow_block
 		   	<set>
-		   		state			= '2'			,
-				type			= '1'			
+		   		state			= #{fbState:CHAR}			,
+				type			= #{fbtype:CHAR}			
 				
 		   	</set>
 		   	WHERE send_user_id = #{userId} and recv_user_id = #{receiveId}

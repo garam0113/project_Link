@@ -5,7 +5,7 @@ public class Participant {
 	//Field
 	private int participantNo;
 	private int meetingNo;
-	private String participantUserId;
+	private String userId;
 	
 	
 	public Participant() {
@@ -34,19 +34,19 @@ public class Participant {
 
 
 	public String getParticipantUserId() {
-		return participantUserId;
+		return userId;
 	}
 
 
 	public void setParticipantUserId(String participantUserId) {
-		this.participantUserId = participantUserId;
+		this.userId = participantUserId;
 	}
 
 
 	@Override
 	public String toString() {
 		return "Participant [participantNo=" + participantNo + ", meetingNo=" + meetingNo + ", participantUserId="
-				+ participantUserId + "]";
+				+ userId + "]";
 	}
 	
 	

@@ -30,8 +30,8 @@
 		});
 		
 		$(".btn_getFeed").bind("click", function(){
-			
-			var feedNo = $(this).prev().prev().val();
+			alert($(this).prev().prev().prev().val());
+			var feedNo = $(this).prev().prev().prev().val();
 			
 			location.href="/feed/getFeed?feedNo=" + feedNo;
 		})
@@ -85,18 +85,21 @@
 	<br/><br/>
 	
 		<c:set var="i" value="0"></c:set>
-		<c:forEach var="feed" items="${feed}">
+		<c:forEach var="feedList" items="${feedList}">
 			<c:set var="i" value="${i + 1}"></c:set>
 			
-			<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+			<c:if test="${fn:trim(feedList.deleteCondition) eq '0'}">
 			
 			<form>
 			
-				<input type="hidden" name="feedNo" value="${feed.feedNo}">
+				<input type="hidden" name="feedNo" value="${feedList.feedNo}">
 			
-				${feed.feedNo} // ${feed.content}
+				${feedList.feedNo} // ${feedList.content}
 				
-				<input type="button" id="${feed.feedNo}" name="delete" value="delete">
+				<br/>	좋아요 : ${feedList.likeCount}
+						댓글 수 : ${feedList.commentCount}
+				
+				<input type="button" id="${feedList.feedNo}" name="delete" value="delete">
 				<input type="button" class="btn_getFeed" value="보기">
 			
 			<br/><br/>

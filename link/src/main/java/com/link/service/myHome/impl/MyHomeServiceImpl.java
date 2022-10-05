@@ -75,27 +75,27 @@ public class MyHomeServiceImpl implements MyHomeService {
 		System.out.println("\n[MyHomeServiceImpl getFollowList start]\n");
 		
 		List<User> list= myHomeDAO.getFollowList(search);
-		int FollowCount = myHomeDAO.getFollowCount(search);
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
-		map.put("FollowCount", FollowCount);
+		
 		
 		return map;
 	}
-	
+	@Override
 	public Map<String, Object> getFollowerList(Search search) throws Exception{
 		
 		System.out.println("\n[MyHomeServiceImpl getFollowerList start]\n");
 		
 		List<User> list= myHomeDAO.getFollowerList(search);
-		int FollowerCount = myHomeDAO.getFollowerCount(search);
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
-		map.put("FollowerCount", FollowerCount);
+
 		
 		return map;
 	}

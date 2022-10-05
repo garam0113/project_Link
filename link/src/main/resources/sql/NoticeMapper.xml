@@ -124,66 +124,99 @@
 	 
 	 
 	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	<!-- 특정 모임의 공지사항 등록 -->
 	<insert id="addClubNotice" parameterType="map">
-		<!-- INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2,
-		NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
-		VALUES ( seq_notice_no.nextval, #{notice.noticeTitle}, #{notice.noticeContent}, #{notice.noticeImage1},
-		#{notice.noticeImage2}, SYSDATE, 2, #{notice.noticeCount}, #{notice.userId.userId} ) -->
 		INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2, NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
-		VALUES ( seq_notice_no.nextval, 'clubTitle', 'clubContent', '', '', SYSDATE, 0, 2, 'user03' )
+		VALUES ( seq_notice_no.nextval, #{notice.noticeTitle},  #{notice.noticeContent}, #{notice.noticeImage1}, #{notice.noticeImage2}, SYSDATE, #{notice.noticeCount}, #{notice.clubNo}, #{notice.userId.userId} )
 	</insert>
 	
 	
 	
 	<!-- 가장 최신 모임게시물 댓글 번호 가져온다 -->
-	<!-- <select id="getClubNoticetNo" resultType="int">
+	<select id="getClubNoticetNo" resultType="int">
 		SELECT V1.NOTICE_NO
 		FROM ( SELECT *
 				FROM NOTICE
-				WHERE CLUB_NO = #{ clubNo }
+				WHERE CLUB_NO = #{ notice.clubNo }
 				ORDER BY NOTICE_REGDATE DESC ) V1
 		WHERE ROWNUM = 1
-	</select> -->
+	</select>
+	
+	
+	
+	
 	
 	
 
 	<!-- 특정 모임의 공지사항 리스트 -->
-	<!-- <select id="getClubNoticeList" parameterType="map" resultMap="noticeSelectMap">
-		SELECT * FROM NOTICE WHERE CLUB_NO = #{ notice.clubNo } ORDER BY NOTICE_REGDATE DESC
-	</select> -->
+	<select id="getClubNoticeList" parameterType="map" resultMap="noticeSelectMap">
+		SELECT V3.*
+		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY NOTICE_NO DESC) AS R, V2.*
+				FROM ( SELECT *
+						FROM NOTICE
+						<where>
+							CLUB_NO = 
+							<choose>
+								<when test="notice.clubNo != null and notice.clubNo != '' and notice.clubNo != 0">#{ notice.clubNo }</when>
+								<otherwise>( SELECT V1.CLUB_NO
+												FROM ( SELECT *
+														FROM CLUB
+														WHERE USER_ID = #{ notice.userId.userId }
+														ORDER BY CLUB_REG_DATE DESC )V1
+												WHERE ROWNUM = 1 )
+								</otherwise>				
+							</choose>
+						</where>
+						ORDER BY NOTICE_REGDATE
+						<choose>
+							<when test="search.order == 1">ASC</when>
+							<otherwise>DESC</otherwise>
+						</choose>
+					) V2
+			) V3
+		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
+	</select>
 	
 	
 
 	<!-- 특정 모임의 공지사항 리스트 개수 -->
-	<!-- <select id="getClubNoticeListCount" parameterType="map" resultType="int">
+	<select id="getClubNoticeListCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM NOTICE WHERE CLUB_NO = #{ notice.clubNo } ORDER BY NOTICE_REGDATE DESC
-	</select> -->
+	</select>
 	
 	
 
 	<!-- 특정 모임의 공지사항 상세보기 -->
-	<!-- <select id="getClubNotice" parameterType="notice" resultMap="noticeSelectMap">
+	<select id="getClubNotice" parameterType="notice" resultMap="noticeSelectMap">
 		SELECT *
 		FROM NOTICE
-		WHERE NOTICE_NO = #{ notice.noticeNo }
-	</select> -->
+		WHERE NOTICE_NO = #{ noticeNo }
+	</select>
 	
 	
 	
 	<!-- 특정 모임의 공지사항 수정 -->
-	<!-- <update id="updateClubNotice" parameterType="map">
+	<update id="updateClubNotice" parameterType="map">
 		UPDATE NOTICE SET NOTICE_TITLE = #{ notice.noticeTitle }, NOTICE_CONTENT = #{ notice.noticeContent }
 		WHERE NOTICE_NO = #{ notice.noticeNo }
-	</update> -->
+	</update>
 	
 	
 	
 	<!-- 특정 모임의 공지사항 삭제 -->
-	<!-- <delete id="deleteClubNotice" parameterType="map">
+	<delete id="deleteClubNotice" parameterType="map">
 		DELETE FROM NOTICE
 		WHERE NOTICE_NO = #{ notice.noticeNo }
-	</delete> -->
+	</delete>
 
 
 </mapper>

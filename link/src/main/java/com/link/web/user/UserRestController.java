@@ -83,6 +83,20 @@ public class UserRestController {
 		return userService.getUser(user);	//update된 회원의 핸드폰번호 출력
 	}
 	
+//	@RequestMapping(value = "json/checkDuplication/{userId}", method = RequestMethod.GET)
+//	public String checkDuplication(@RequestBody String userId) throws Exception{
+//		
+//		System.out.println("/user/json/checkDuplication : GET");
+//		
+//		User user = new User();
+//		
+//		user.setUserId(userId);
+//
+//		boolean result = userService.checkDuplication(user);
+//		
+//		return result;
+//	}
+	
 	@RequestMapping(value = "json/sendSMS", method = RequestMethod.GET)
 	public @ResponseBody
 	String sendSMS(String phoneNo) throws Exception{

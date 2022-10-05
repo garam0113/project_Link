@@ -77,7 +77,7 @@ public class FeedRestController {
 		
 		map.put("feedNo", comment.getFeedNo());
 		
-		return null;
+		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
 	}
 	
 	
