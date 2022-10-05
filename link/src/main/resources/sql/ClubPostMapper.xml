@@ -225,11 +225,17 @@
 	
 	
 	
+
+	
+	<!-- 결제추가 -->
+	<insert id="addPay" parameterType="pay">
+		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
+		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payOption }, #{ payProduct }, #{ totalPrice }, SYSDATE, #{ updateClubCount }, #{ updateClubMemberCount }, #{ merchant_uid })
+	</insert>
 	
 	
-	
-	
-	<update id="updateClubMember" parameterType="pay">
+		
+	<!-- <update id="updateClubMember" parameterType="pay">
 		UPDATE CLUB
 		<set>
 			CLUB_MAX_MEMBER = CLUB_MAX_MEMBER + #{ updateClubMemberCount }
@@ -237,49 +243,22 @@
 		<where>
 		CLUB_NO = #{ clubNo }
 		</where>
-	</update>
-
+	</update> -->
 	
 	
-	<insert id="addPay" parameterType="pay">
-		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
-		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payOption }, #{ payProduct }, #{ totalPrice }, SYSDATE, #{ updateClubCount }, #{ updateClubMemberCount }, #{ merchant_uid })
-	</insert>
 	
-
+	<!-- <update id="updateClub" parameterType="pay">
+		UPDATE USERS
+		<set>
+		JOIN_CLUB_LIMIT = JOIN_CLUB_LIMIT + #{ updateClubCount }
+		</set>
+		<where>
+		USER_ID = #{ user.userId }
+		</where>
+	</update> -->
 	
 	
 	 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

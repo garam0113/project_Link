@@ -52,12 +52,20 @@ public class FeedRestController {
 		
 		User user = new User();
 		
+		Comment upperComment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
 		user.setUserId("user01");
 		
 		comment.setUser(user);
 		
+		if(upperComment != null) {
+			// 무한 댓글
+			comment.setParent(comment.getFeedCommentNo());
+		}
+		
 		feedService.addFeedComment(comment);
-
+		
+		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
@@ -67,10 +75,12 @@ public class FeedRestController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("comment", comment);
+		map.put("feedNo", comment.getFeedNo());
 		
-		return feedService.getFeedCommentList(map);
+		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
 	}
+	
+	
 	
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
 	public List<Comment> updateFeedComment(@RequestBody Comment comment) throws Exception {
@@ -80,6 +90,8 @@ public class FeedRestController {
 		return null;
 	}
 	
+	
+	
 	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
 	public List<Comment> deleteFeedComment(@RequestBody Comment comment) throws Exception {
 		
@@ -88,7 +100,8 @@ public class FeedRestController {
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
+	
+	
 	@RequestMapping(value = "/json/getFeedList", method = RequestMethod.POST)
 	public List<Feed> getFeedList(@RequestBody Search search) throws Exception {
 		
@@ -101,8 +114,10 @@ public class FeedRestController {
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
-		return (List<Feed>)feedService.getFeedList(search).get("list");
+		return null;
 	}
+	
+	
 	
 	@RequestMapping(value = "/json/getFeedCommentList", method = RequestMethod.GET)
 	public List<Comment> getFeedCommentList(@RequestBody Search search){
@@ -119,16 +134,22 @@ public class FeedRestController {
 		return null;
 	}
 	
+	
+	
 	@RequestMapping(value = "/json/updateFeedLike")
 	public List<Feed> updateFeedLike() {
 		
 		return null;
 	}
 	
+	
+	
 	@RequestMapping(value = " /json/updateFeedCommentLike")
 	public List<Comment> updateFeedCommentLike() {
 		
 		return null;
 	}
+	
+	
 	
 }

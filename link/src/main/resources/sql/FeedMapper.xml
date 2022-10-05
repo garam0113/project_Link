@@ -19,7 +19,7 @@
 		<result property="image4"			column="feed_image4"				jdbcType="VARCHAR" />
 		<result property="video"			column="feed_video"					jdbcType="VARCHAR" />
 		<result property="hashtag"			column="hashtag"					jdbcType="VARCHAR" />
-		<result property="likeCount"		column="feed_like_count"			jdbcType="NUMERIC" />
+		<result property="heartCount"		column="feed_heart_count"			jdbcType="NUMERIC" />
 		<result property="commentCount"		column="feed_comment_count"			jdbcType="NUMERIC" />
 		<result property="regDate"			column="feed_reg_date"				jdbcType="DATE" />
 		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
@@ -30,8 +30,8 @@
 	<resultMap id="feedCommentSelectMap" 		type="comment">
 		<result property="feedCommentNo"		column="feed_comment_no"			jdbcType="NUMERIC" />
 		<result property="feedNo"				column="feed_no"					jdbcType="NUMERIC" />
-		<result property="commentContent"		column="feed_comment"				jdbcType="VARCHAR" />
-		<result property="commentLikeCount"		column="feed_comment_like_count"	jdbcType="NUMERIC" />
+		<result property="commentContent"		column="feed_comment_content"		jdbcType="VARCHAR" />
+		<result property="commentHeartCount"	column="feed_comment_heart_count"	jdbcType="NUMERIC" />
 		<result property="commentCount"			column="feed_comment_count"			jdbcType="NUMERIC" />
 		<result property="commentRegDate"		column="feed_comment_reg_date"		jdbcType="DATE" />
 		<result property="commentUpdateDate"	column="feed_comment_update_date"	jdbcType="DATE" />
@@ -56,7 +56,7 @@
 
 
 	<insert 	id="addFeed"					parameterType="feed">
-		INSERT into feed
+		INSERT INTO feed
 		VALUES (
 			seq_feed_no.nextval,
 			#{userId:VARCHAR},
@@ -68,8 +68,8 @@
 			#{image4:VARCHAR},
 			#{video:VARCHAR},
 			#{hashtag:VARCHAR},
-			'0',
-			'0',
+			0,
+			0,
 			SYSDATE,
 			#{updateDate:DATE},
 			'0',
@@ -90,7 +90,7 @@
 		feed_image4,
 		feed_video,
 		hashtag,
-		feed_like_count,
+		feed_heart_count,
 		feed_comment_count,
 		feed_reg_date,
 		feed_update_date,
@@ -105,18 +105,28 @@
 	<update		id="updateFeed"					parameterType="feed">
 		UPDATE feed
 		<set>
-			feed_open_condition				= #{openCondition},
-			feed_content					= #{content},
-			feed_image1						= #{image1},
-			feed_image2						= #{image2},
-			feed_image3						= #{image3},
-			feed_image4						= #{image4},
-			feed_video						= #{video},
-			hashtag							= #{hashtag},
+			feed_open_condition				= #{openCondition:VARCHAR},
+			feed_content					= #{content:VARCHAR},
+			feed_image1						= #{image1:VARCHAR},
+			feed_image2						= #{image2:VARCHAR},
+			feed_image3						= #{image3:VARCHAR},
+			feed_image4						= #{image4:VARCHAR},
+			feed_video						= #{video:VARCHAR},
+			hashtag							= #{hashtag:VARCHAR},
 			feed_update_date				= SYSDATE,
-			report_condition				= ${report_condition}
+			report_condition				= #{reportCondition}
 		</set>	
 		WHERE feed_no 						= #{feedNo}
+	</update>
+	
+	
+	
+	<update 	id="updateFeedHeart"			parameterType="hashmap">
+		UPDATE feed
+		<set>
+			feed_heart_count				= #{count} + 1		
+		</set>
+		WHERE feed_no						= #{feedNo}
 	</update>
 	
 	
@@ -144,10 +154,10 @@
 			#{feedNo:NUMERIC},
 			#{user.userId:VARCHAR},
 			#{commentContent:VARCHAR},
-			'0',
-			'0',
+			0,
+			0,
 			SYSDATE,
-			#{commentUpdateDate:DATE},
+			null,
 			'0',
 			'0',
 			#{parent:NUMERIC},
@@ -157,7 +167,28 @@
 	
 	
 	
-	<update id="updateFeedComment"				parameterType="comment">
+	<select 	id="getFeedComment"				parameterType="int"			resultMap="feedCommentSelectMap">
+		SELECT 
+		feed_comment_no,
+		feed_no,
+		user_id,
+		feed_comment_content,
+		feed_comment_heart_count,
+		feed_recomment_count,
+		feed_comment_reg_date,
+		feed_comment_update_date,
+		report_condition,
+		delete_condition,
+		parent,
+		depth,
+		sequence
+		FROM feed_comment
+		WHERE feed_comment_no = #{feed_comment_no}
+	</select>
+	
+	
+	
+	<update 	id="updateFeedComment"			parameterType="comment">
 		UPDATE feed_comment
 		<set>
 			feed_comment_content			= #{commentContent},
@@ -167,13 +198,13 @@
 			depth							= #{depth},
 			sequence						= #{sequence}
 		</set>
-		WHERE feed_no						= #{feedNo}
+		WHERE feed_comment_no				= #{feedCommentNo}
 	</update>
 	
 											 
 	
 	<update		id="deleteFeedComment"			parameterType="comment">
-		UPDATE comment
+		UPDATE feed_comment
 		<set>
 			delete_condition				= '1'
 		</set>
@@ -182,13 +213,24 @@
 
 	
 	
+	<update 	id="updateFeedCommentOrder"		parameterType="int">
+		UPDATE feed_comment
+		<set>
+			depth							= TO_NUMBER(depth) + 1
+			sequence						= TO_NUMBER(sequence) + 1
+		</set>
+		WHERE parent						= #{parent}
+	</update>
+	
+	
+	
 	<!--====================List====================-->
 	<!--====================List====================-->
 	<!--====================List====================-->
 	
 	
 	
-	<select 	id="getFeedList"				parameterType="map"		resultMap="feedSelectMap">
+	<select 	id="getFeedList"				parameterType="search"		resultMap="feedSelectMap">
 		SELECT 
 		f.feed_no,
 		f.user_id,
@@ -200,16 +242,16 @@
 		f.feed_image4,
 		f.feed_video,
 		f.hashtag,
-		f.feed_like_count,
+		f.feed_heart_count,
 		f.feed_comment_count,
 		f.feed_reg_date,
 		f.feed_update_date,
 		f.report_condition,
 		f.delete_condition
-		FROM feed f, follow_block fb, club_user cu
-		<if test="searchKeyword != null and searchKeyword != ''">
+		FROM feed f
+		<if test="searchKeyword != ''">
 			<where>
-				feed_content LIKE '%${searchKeyword}%'
+				f.feed_content LIKE '%${searchKeyword}%'
 			</where>
 		</if>
 		ORDER BY feed_no DESC
@@ -217,13 +259,13 @@
 	
 	
 	
-	<select 	id="getFeedCommentList"			parameterType="map"		resultMap="feedCommentSelectMap">
+	<select 	id="getFeedCommentList"			parameterType="hashmap"		resultMap="feedCommentSelectMap">
 		SELECT 
 		feed_comment_no,
 		feed_no,
 		user_id,
 		feed_comment_content,
-		feed_comment_like_count,
+		feed_comment_heart_count,
 		feed_recomment_count,
 		feed_comment_reg_date,
 		feed_comment_update_date,
@@ -237,6 +279,31 @@
 		AND report_condition				= '0'
 		AND delete_condition				= '0'
 		ORDER BY feed_comment_no ASC
+	</select>
+	
+	
+	
+	<select 	id="getMyFeedList"				parameterType="hashmap"		resultMap="feedSelectMap">
+		SELECT 
+		f.feed_no,
+		f.user_id,
+		f.feed_open_condition,
+		f.feed_content,
+		f.feed_image1,
+		f.feed_image2,
+		f.feed_image3,
+		f.feed_image4,
+		f.feed_video,
+		f.hashtag,
+		f.feed_heart_count,
+		f.feed_comment_count,
+		f.feed_reg_date,
+		f.feed_update_date,
+		f.report_condition,
+		f.delete_condition
+		FROM feed f
+		WHERE user_id =						= #{userId}		
+		ORDER BY feed_no DESC
 	</select>
 	
 	
@@ -262,7 +329,7 @@
 				feed_image4,
 				feed_video,
 				hashtag,
-				feed_like_count,
+				feed_heart_count,
 				feed_comment_count,
 				feed_reg_date,
 				feed_update_date,
@@ -273,7 +340,7 @@
 	
 	
 	
-	<select 	id="getTotalFeedCommentCount"	parameterType="search"		resultType="int">
+	<select 	id="getTotalFeedCommentCount"	parameterType="hashmap"		resultType="int">
 		SELECT
 	  	COUNT(*)
 	  	FROM (
@@ -282,7 +349,7 @@
 				feed_no,
 				user_id,
 				feed_comment_content,
-				feed_comment_like_count,
+				feed_comment_heart_count,
 				feed_recomment_count,
 				feed_comment_reg_date,
 				feed_comment_update_date,
@@ -292,8 +359,130 @@
 				depth,
 				sequence
 				FROM feed_comment
-				WHERE feed_comment_no = ${feedCommentNo}	)
+				WHERE feed_no				= #{feedNo}
+				ORDER BY feed_comment_no ASC	)
 	</select>
+	
+	
+	
+	<select 	id="getRecommentCount"		parameterType="hashmap"		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM(
+				feed_comment_no,
+				feed_no,
+				user_id,
+				feed_comment_content,
+				feed_comment_heart_count,
+				feed_recomment_count,
+				feed_comment_reg_date,
+				feed_comment_update_date,
+				report_condition,
+				delete_condition,
+				parent,
+				depth,
+				sequence
+				FROM feed_comment
+				WHERE feed_no 				= #{comment.feedNo}
+				AND parent					= #{comment.parent}
+				ORDER BY feed_comment_no ASC	)
+	
+	</select>
+	
+	
+	
+	<!--====================Report====================-->
+	<!--====================Report====================-->
+	<!--====================Report====================-->
+	
+	
+	
+	<insert id="addFeedReport"					parameterType="hashmap">
+		INSERT 
+		INTO report_push (
+							title,
+							content,
+							report_source,
+							feed_no,
+							user_id1,
+							user_id2,
+							type,
+							report_reason			) 
+		VALUES (
+			#{title},
+			#{content},
+			'4',
+			#{userId},
+			#{userId2},
+			'1',
+			#{report_reason}						)
+	</insert>
+	
+	
+	
+	<insert id="addFeedCommentReport"			parameterType="hashmap">
+		INSERT 
+		INTO report_push (
+							title,
+							content,
+							report_source,
+							feed_comment_no,
+							user_id1,
+							user_id2,
+							type,
+							report_reason			) 
+		VALUES (
+			#{title},
+			#{content},
+			'5',
+			#{userId},
+			#{userId2},
+			'1',
+			#{report_reason}						)
+	</insert>
+	
+	
+	
+	<!--====================Push====================-->
+	<!--====================Push====================-->
+	<!--====================Push====================-->
+	
+	
+	<insert id="addFeedPush"					parameterType="hashmap">
+		INSERT 
+		INTO report_push (
+							title,
+							content,
+							report_source,
+							feed_no,
+							user_id1,
+							type			) 
+		VALUES (
+			#{title},
+			#{content},
+			'4',
+			#{userId},
+			'2'								)
+	</insert>
+	
+	
+	
+	<insert id="addFeedCommentPush"				parameterType="hashmap">
+		INSERT 
+		INTO report_push (
+							title,
+							content,
+							report_source,
+							feed_comment_no,
+							user_id1,
+							type			) 
+		VALUES (
+			#{title},
+			#{content},
+			'5',
+			#{userId},
+			'2'								)
+	</insert>
 	
 	
 	
