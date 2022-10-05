@@ -59,11 +59,10 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/getMyHome : GET");
 		Search search = new Search();
-		
+
 		user = userService.getUser(user.getUserId());
 		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = feedService.getFeedList(search);
-		
 		
 		model.addAttribute("user", user);
 		model.addAttribute("club", club);
@@ -88,7 +87,8 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/updateProfile : GET");
 		
-		User user = userService.getUser(userId);
+		User user = new User();
+		user = userService.getUser(user);
 		model.addAttribute("user", user);
 		
 		return "forward:/myHome/updateProfile.jsp";
