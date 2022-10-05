@@ -22,7 +22,7 @@ public class ClubServiceTest {
 	private ClubService clubService;
 	
 
-//	@Test
+//	ㅋ@Test
 //	public void testAddClub() throws Exception {
 //		
 //		System.out.println("\n ===================================");

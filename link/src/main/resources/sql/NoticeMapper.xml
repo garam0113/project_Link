@@ -5,17 +5,16 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="NoticeMapper">
- 	
- 	
+	
 	<resultMap id="noticeSelectMap" type="notice">
 		<result property="noticeNo" 			column="notice_no" 			jdbcType="NUMERIC"/>
-		<result property="noticeTitle"			column="notice_title" 			jdbcType="VARCHAR" />
-		<result property="noticeContent" 		column="notice_content" 			jdbcType="VARCHAR" />
-		<result property="noticeImage1" 			column="notice_image1" 				jdbcType="VARCHAR" />
-		<result property="noticeImage2" 				column="notice_image2" 				jdbcType="VARCHAR" />
-		<result property="noticeRegDate" 			column="notice_regdate" 		jdbcType="DATE" />
-		<result property="noticeCount" 			column="notice_count" 				jdbcType="INTEGER" />
-	
+		<result property="noticeTitle"			column="notice_title" 		jdbcType="VARCHAR" />
+		<result property="noticeContent" 		column="notice_content" 	jdbcType="VARCHAR" />
+		<result property="noticeImage1" 		column="notice_image1" 		jdbcType="VARCHAR" />
+		<result property="noticeImage2" 		column="notice_image2" 		jdbcType="VARCHAR" />
+		<result property="noticeRegDate" 		column="notice_regdate" 	jdbcType="DATE" />
+		<result property="noticeCount" 			column="notice_count" 		jdbcType="NUMERIC" />
+		<result property="clubNo"				column="club_no"			jdbcType="NUMERIC" />
 	
 	<association property="userId" javaType="user">
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
@@ -26,8 +25,10 @@
 	<insert 	id="addNotice"		parameterType="notice" >
 	 	INSERT
 		INTO notice( notice_no  , notice_title , notice_content , notice_image1 , notice_image2, notice_regdate, notice_count, userId.user_Id:VARCHAR)
+
 		VALUES	 (	seq_notice_notice_no.nextval , #{noticeTitle} , #{noticeContent} , #{noticeImage1} , 
 							#{noticeImage2} ,SYSDATE , #{noticeCount}, #{userId.userId} )
+
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -111,4 +112,74 @@
 	 
 	 
 	 
+	 
+	 
+	 
+	 
+	 
+	 
+	<!-- 특정 모임의 공지사항 등록 -->
+	<insert id="addClubNotice" parameterType="map">
+		<!-- INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2,
+		NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
+		VALUES ( seq_notice_no.nextval, #{notice.noticeTitle}, #{notice.noticeContent}, #{notice.noticeImage1},
+		#{notice.noticeImage2}, SYSDATE, 2, #{notice.noticeCount}, #{notice.userId.userId} ) -->
+		INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2, NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
+		VALUES ( seq_notice_no.nextval, 'clubTitle', 'clubContent', '', '', SYSDATE, 0, 2, 'user03' )
+	</insert>
+	
+	
+	
+	<!-- 가장 최신 모임게시물 댓글 번호 가져온다 -->
+	<!-- <select id="getClubNoticetNo" resultType="int">
+		SELECT V1.NOTICE_NO
+		FROM ( SELECT *
+				FROM NOTICE
+				WHERE CLUB_NO = #{ clubNo }
+				ORDER BY NOTICE_REGDATE DESC ) V1
+		WHERE ROWNUM = 1
+	</select> -->
+	
+	
+
+	<!-- 특정 모임의 공지사항 리스트 -->
+	<!-- <select id="getClubNoticeList" parameterType="map" resultMap="noticeSelectMap">
+		SELECT * FROM NOTICE WHERE CLUB_NO = #{ notice.clubNo } ORDER BY NOTICE_REGDATE DESC
+	</select> -->
+	
+	
+
+	<!-- 특정 모임의 공지사항 리스트 개수 -->
+	<!-- <select id="getClubNoticeListCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM NOTICE WHERE CLUB_NO = #{ notice.clubNo } ORDER BY NOTICE_REGDATE DESC
+	</select> -->
+	
+	
+
+	<!-- 특정 모임의 공지사항 상세보기 -->
+	<!-- <select id="getClubNotice" parameterType="notice" resultMap="noticeSelectMap">
+		SELECT *
+		FROM NOTICE
+		WHERE NOTICE_NO = #{ notice.noticeNo }
+	</select> -->
+	
+	
+	
+	<!-- 특정 모임의 공지사항 수정 -->
+	<!-- <update id="updateClubNotice" parameterType="map">
+		UPDATE NOTICE SET NOTICE_TITLE = #{ notice.noticeTitle }, NOTICE_CONTENT = #{ notice.noticeContent }
+		WHERE NOTICE_NO = #{ notice.noticeNo }
+	</update> -->
+	
+	
+	
+	<!-- 특정 모임의 공지사항 삭제 -->
+	<!-- <delete id="deleteClubNotice" parameterType="map">
+		DELETE FROM NOTICE
+		WHERE NOTICE_NO = #{ notice.noticeNo }
+	</delete> -->
+
+
 </mapper>
+
+
