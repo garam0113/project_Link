@@ -31,6 +31,11 @@
 		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
 		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
 		FROM CLUB_POST_COMMENT
+		<choose>
+			<when test="clubPostNo != null and clubPostNo != '' and clubPostNo != 0"></when>
+			<when test=""></when>
+			<otherwise></otherwise>
+		</choose>
 		<if test="clubPostNo != null and clubPostNo != '' and clubPostNo != 0">
 		WHERE CLUB_POST_NO = #{ clubPostNo }
 		</if>
@@ -42,17 +47,7 @@
 	
 	
 	
-	<!-- 모임게시물 대댓글 리스트 -->
-	<select id="getClubPostRecommentList" parameterType="comment" resultMap="clubPostCommentSelectMap">
-		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
-		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
-		FROM CLUB_POST_COMMENT
-		WHERE PARENT = 4
-		ORDER BY COMMENT_REG_DATE ASC
-	</select>
-	
-	
-	
+	<!-- 댓글 등록 -->
 	<insert id="addClubPostComment" parameterType="comment">
 		INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
 		COMMENT_LIKE_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
@@ -84,21 +79,21 @@
 	
 	<!-- 댓글내용 수정 -->
 	<update id="updateClubPostComment" parameterType="comment">
-		UPDATE CLUB_POST_COMMENT SET COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+		UPDATE CLUB_POST_COMMENT
+		SET
+		<choose>
+			<when test="heartCondition == 1">COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1</when>
+			<when test="heartCondition == -1">COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT - 1</when>
+			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
+		</choose>
+		WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
 	</update>
 	
 	
 	
 	<!-- 댓글 삭제 -->
-	<update id="deleteClubPostComment">
+	<update id="deleteClubPostComment" parameterType="comment">
 		UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1' WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
-	</update>
-	
-	
-	
-	<!-- 댓글 좋아요 하다/ 좋아요 취소하다 -->
-	<update id="updateLike">
-		UPDATE CLUB_POST_COMMENT SET COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1 WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo } 
 	</update>
 	
 	

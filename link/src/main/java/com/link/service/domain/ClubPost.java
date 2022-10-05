@@ -2,6 +2,8 @@ package com.link.service.domain;
 
 public class ClubPost {
 	
+	// search에 oreder 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순/최신순, 3 : 특정 모임에서 내가 작성한 게시물
+	
 	private int clubNo;						// 모임의 고유번호
 	private int clubPostNo;					// 모임게시물의 고유번호
 	private int clubPostCommentNo;			// 모임게시물댓글의 고유번호

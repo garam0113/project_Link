@@ -49,80 +49,74 @@
 	
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
-	<select id="getCurrentClubPostList" parameterType="string" resultMap="clubPostSelectMap">
-		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
+	<select id="getClubPostList" parameterType="map" resultMap="clubPostSelectMap">
+		SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
 		FROM CLUB_POST
-		WHERE CLUB_NO = ( SELECT V2.CLUB_NO
+		WHERE CLUB_NO = 
+			<choose>
+				<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
+					#{ clubPost.clubNo }
+					<if test="search.order == 3">
+						AND USER_ID = #{ userId }
+					</if>
+				</when>
+				<otherwise>
+					( SELECT V2.CLUB_NO
 							FROM ( SELECT ROWNUM, V1.*
 									FROM ( SELECT *
-											FROM CLUB
-											WHERE USER_ID = #{ userId }
-											ORDER BY CLUB_REG_DATE DESC ) V1
+											FROM CLUB_USER
+											WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
+											ORDER BY JOIN_REG_DATE DESC ) V1
 									WHERE ROWNUM = 1 ) V2 )
+				</otherwise>
+			</choose>
 		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-		ORDER BY CLUB_POST_REG_DATE DESC
+		ORDER BY
+		<choose>
+			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
+			<otherwise>
+				CLUB_POST_REG_DATE DESC
+			</otherwise>
+		</choose>
 	</select>
 	
 	
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트의 개수 가져온다 -->
-	<select id="getCurrentClubPostListCount" parameterType="string" resultType="int">
+	<select id="getClubPostListCount" parameterType="map" resultType="int" >
 		SELECT COUNT(*)
 		FROM CLUB_POST
-		WHERE CLUB_NO= ( SELECT V2.CLUB_NO
+		WHERE CLUB_NO = 
+			<choose>
+				<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
+					#{ clubPost.clubNo }
+					<if test="search.order == 3">
+						AND USER_ID = #{ userId }
+					</if>
+				</when>
+				<otherwise>
+					( SELECT V2.CLUB_NO
 							FROM ( SELECT ROWNUM, V1.*
 									FROM ( SELECT *
-											FROM CLUB
-											WHERE USER_ID = #{ userId }
-											ORDER BY CLUB_REG_DATE DESC ) V1
+											FROM CLUB_USER
+											WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
+											ORDER BY JOIN_REG_DATE DESC ) V1
 									WHERE ROWNUM = 1 ) V2 )
+				</otherwise>
+			</choose>
 		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY
+		<choose>
+			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
+			<otherwise>
+				CLUB_POST_REG_DATE DESC
+			</otherwise>
+		</choose>
 	</select>
 	
+
 	
 	
-	<!-- 모임게시물에서 최신순 클릭시 => 최신순 모임게시물 리스트 -->
-	<select id="getClubPostList" parameterType="clubPost" resultMap="clubPostSelectMap">
-		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
-		FROM CLUB_POST
-		WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-		ORDER BY CLUB_POST_REG_DATE DESC
-	</select>
-	
-	
-	
-	<!-- 모임게시물에서 좋아요 많은순 클릭시 => 좋아요 많은순 모임게시물 리스트 -->
-	<select id="getClubPostListLike" parameterType="int" resultMap="clubPostSelectMap">
-		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
-		FROM CLUB_POST
-		WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-		ORDER BY CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC
-	</select>
-	
-	
-	
-	<!-- 최신순, 좋아요 많은 순 모임게시물 개수 -->
-	<select id="getClubPostListCount" parameterType="clubPost" resultType="int">
-		SELECT COUNT(*) FROM CLUB_POST WHERE CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-	</select>
-	
-	
-	
-	<!-- 특정 모임에서 내가 작성한 모임게시물 리스트 -->
-	<select id="getClubPostListMySelf" parameterType="map" resultMap="clubPostSelectMap">
-		SELECT CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
-		FROM CLUB_POST
-		WHERE USER_ID = #{ userId } AND CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-	</select>
-	
-	
-	
-	<!-- 특정 모임에서 내가 작성한 모임게시물 리스트 개수 -->
-	<select id="getClubPostListMySelfCount" parameterType="map" resultType="int">
-		SELECT COUNT(*)
-		FROM CLUB_POST
-		WHERE USER_ID = #{ userId } AND CLUB_NO = #{ clubNo } AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-	</select>
 	
 	
 	
@@ -146,10 +140,10 @@
 			<when test="likeCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
 			<when test="clubPostCommentNo != 0">clubPostCommentCount = clubPostCommentCount + 1</when>
 			<otherwise>
-				CLUB_POST_TITLE = #{ clubPostTitle }, CLUB_POST_CONTENT = #{ clubPostContent },
-				CLUB_POST_VIDEO1 = #{ clubPostVideo1 }, CLUB_POST_VIDEO2 = #{ clubPostVideo2 }, CLUB_POST_VIDEO3 = #{ clubPostVideo3 },
-				CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ image1 }, IMAGE2 = #{ image2 }, IMAGE3 = #{ image3 }, IMAGE4 = #{ image4 },
-				IMAGE5 = #{ image5 }, IMAGE6 = #{ image6 }, IMAGE7 = #{ image7 }, IMAGE8 = #{ image8 }, IMAGE9 = #{ image9 }, IMAGE10 = #{ image10 }
+				CLUB_POST_TITLE = #{ clubPostTitle }, CLUB_POST_CONTENT = #{ clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPostVideo1:VARCHAR2 }, CLUB_POST_VIDEO2 = #{ clubPostVideo2:VARCHAR2 },
+				CLUB_POST_VIDEO3 = #{ clubPostVideo3:VARCHAR2 }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ image1:VARCHAR2 }, IMAGE2 = #{ image2:VARCHAR2 }, IMAGE3 = #{ image3:VARCHAR2 },
+				IMAGE4 = #{ image4:VARCHAR2 }, IMAGE5 = #{ image5:VARCHAR2 }, IMAGE6 = #{ image6:VARCHAR2 }, IMAGE7 = #{ image7:VARCHAR2 }, IMAGE8 = #{ image8:VARCHAR2 },
+				IMAGE9 = #{ image9:VARCHAR2 }, IMAGE10 = #{ image10:VARCHAR2 }
 			</otherwise>
 		</choose>
 		WHERE CLUB_POST_NO = #{ clubPostNo }
@@ -195,30 +189,6 @@
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
 		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payOption }, #{ payProduct }, #{ totalPrice }, SYSDATE, #{ updateClubCount }, #{ updateClubMemberCount }, #{ merchant_uid })
 	</insert>
-	
-	
-		
-	<!-- <update id="updateClubMember" parameterType="pay">
-		UPDATE CLUB
-		<set>
-			CLUB_MAX_MEMBER = CLUB_MAX_MEMBER + #{ updateClubMemberCount }
-		</set>
-		<where>
-		CLUB_NO = #{ clubNo }
-		</where>
-	</update> -->
-	
-	
-	
-	<!-- <update id="updateClub" parameterType="pay">
-		UPDATE USERS
-		<set>
-		JOIN_CLUB_LIMIT = JOIN_CLUB_LIMIT + #{ updateClubCount }
-		</set>
-		<where>
-		USER_ID = #{ user.userId }
-		</where>
-	</update> -->
 	
 	
 	 

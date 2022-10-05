@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +20,7 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.User;
 
 @RestController
 @RequestMapping("/clubPostRest/*")
@@ -47,34 +47,22 @@ public class ClubPostRestController {
 	
 
 	
-///////////////////////////////////////////////////////////////////////////////////// List /////////////////////////////////////////////////////////////////////////////////////	
+///////////////////////////////////////////////////////////////////////////////////// ClubPost /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	
 	
 	
-	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostList(@ModelAttribute ClubPost clubPost) throws Exception {
-		System.out.println("/getClubPostList : GET : 특정 모임에서 최근순 모임게시물 리스트, 모임게시물 리스트 개수");
+	@RequestMapping(value = "getClubPostList", method = RequestMethod.POST)
+	public Map<String, Object> getClubPostList(@ModelAttribute Search search, @RequestParam int clubNo, ClubPost clubPost, HttpSession session) throws Exception {
+		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
+		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+		clubPost.setClubNo(clubNo);
+		clubPost.setUser((User) session.getAttribute("user"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		return clubPostServiceImpl.getClubPostList(clubPost);
+		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 
-	@RequestMapping(value = "getClubPostListLike", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostListLike(@RequestParam int clubNo) throws Exception {
-		System.out.println("/getClubPostListLike : GET : 특정 모임에서 좋아요 많은순 모임게시물 리스트, 모임게시물 리스트 개수");
-		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		return clubPostServiceImpl.getClubPostListLike(clubNo);
-	}
-
-	@RequestMapping(value = "getClubPostListMySelf", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostListMySelf(@RequestParam int clubNo) throws Exception {
-		System.out.println("/getClubPostListMySelf : GET : 특정 모임에서 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
-		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		String userId = "user02";
-		return clubPostServiceImpl.getClubPostListMySelf(userId, clubNo);
-	}
-	
 	@RequestMapping(value = "updateClubPostLike", method = RequestMethod.POST)
 	public int updateClubPostLike(@ModelAttribute ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println("/updateClubPostLike : POST : 특정 모임게시물에 좋아요, 좋아요 수");
@@ -117,7 +105,7 @@ public class ClubPostRestController {
 	
 
 	
-///////////////////////////////////////////////////////////////////////////////////// Comment /////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// ClubPostComment /////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	
@@ -152,6 +140,12 @@ public class ClubPostRestController {
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
 	
+	@RequestMapping(value = "updateClubPostCommentHeart", method = RequestMethod.POST)
+	public int updateClubPostCommentHeart(@ModelAttribute Comment comment, Heart heart) throws Exception {
+		System.out.println("/updateClubPostCommentHeart : POST : 모임게시물 댓글 좋아요하다/좋아요 취소하다");
+		return clubPostServiceImpl.updateClubPostCommentHeart(comment, heart);
+	}
+	
 	
 
 	
@@ -175,26 +169,6 @@ public class ClubPostRestController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
