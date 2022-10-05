@@ -1,5 +1,6 @@
 package com.link.service.club;
 
+import java.util.List;
 import java.util.Map;
 
 import com.link.common.Search;
@@ -7,6 +8,7 @@ import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
+import com.link.service.domain.Pay;
 
 public interface ClubService {
 
@@ -57,10 +59,13 @@ public interface ClubService {
 	
 	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
 	
-	public Map<String, Object> getClubMemberList(Search search, int clubNo) throws Exception;
+	public Map<String, Object> getClubMemberList(Search search) throws Exception;
 	
 	public Map<String, Object> getMeetingList(Search search) throws Exception;
 	
 	public Map<String, Object> getMeetingMemberList(Search search) throws Exception;
+	
+	//결제
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	
 }

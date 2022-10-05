@@ -15,6 +15,7 @@ import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
+import com.link.service.domain.Pay;
 
 @Service("clubServiceImpl")
 public class ClubServiceImpl implements ClubService {
@@ -144,14 +145,12 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Map<String, Object> getClubList(Search search) throws Exception {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
 		List<Club> list = clubDAO.getClubList(search);
 		int totalClubCount = clubDAO.getTotalClubCount(search);
 		
-		map.put("list", list);
-		map.put("totalClubCount", totalClubCount);
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubList", list);
+		map.put("totalClubCount", new Integer(totalClubCount));
 		return map;
 	}
 	
@@ -170,14 +169,14 @@ public class ClubServiceImpl implements ClubService {
 	}
 	
 	@Override
-	public Map<String, Object> getClubMemberList(Search search, int clubNo) throws Exception {
+	public Map<String, Object> getClubMemberList(Search search) throws Exception {
 
-		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<ClubUser> list = clubDAO.getClubMemberList(search, clubNo);
+		List<ClubUser> list = clubDAO.getClubMemberList(search);
 		int totalClubMemberCount = clubDAO.getTotalClubMemberCount(search);
 		
-		map.put("list", list);
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("clubMemberList", list);
 		map.put("totalClubMemberCount", totalClubMemberCount);
 		
 		return map;
@@ -186,12 +185,12 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Map<String, Object> getMeetingList(Search search) throws Exception {
 
-		Map<String, Object> map = new HashMap<String,Object>();
-		
+				
 		List<Meeting> list = clubDAO.getMeetingList(search);
 		int totalMeetingCount = clubDAO.getTotalMeetingCount(search);
-		
-		map.put("list", list);
+
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("meetingList", list);
 		map.put("totalMeetingCount", totalMeetingCount);
 		
 		return map;
@@ -205,10 +204,18 @@ public class ClubServiceImpl implements ClubService {
 		List<Meeting> list = clubDAO.getMeetingMemberList(search);
 		int totalMeetingMemberCount = clubDAO.getTotalMeetingMemberCount(search);
 		
-		map.put("list", list);
+		map.put("participantList", list);
 		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
 		
 		return map;
 	}	
+	
+	//결제
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		
+	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
+	   return clubDAO.updateClubMember(pay, search);
+	}
 	
 }

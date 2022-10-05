@@ -52,7 +52,6 @@
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
 		<result property="participantUserId"			column="participant_user_id"					jdbcType="VARCHAR"/>
-	
 	</resultMap>
 	
 	<!-- 모임 등록 -->
@@ -119,7 +118,7 @@
 	</delete>
 	
 	
-	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
+<!-- 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
@@ -127,20 +126,43 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				LOWER(club_no) LIKE LOWER('%${searchKeyword}%')
+										 				club_no LIKE('%${searchKeyword}%')
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				LOWER(club_title) LIKE LOWER('%${searchKeyword}%')
+										 				club_title LIKE ('%${searchKeyword}%')
 													</if>
 												</where>
 											</if>
 											ORDER BY club_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select> -->
+	 
+	 
+	  	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+											FROM club
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				club_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				club_title = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY club_no ) inner_table
+						) 
 	 </select>
+	
+	 	  	 	     	 
+	 
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	 <select  id="getTotalClubCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT club_no , club_title , club_detail
 						FROM club
@@ -231,21 +253,37 @@
 	</select>
 	
 	<!-- 모임원 리스트 -->
-	<select id="getClubMemberList" parameterType="int" resultMap="clubUserSelectMap">
+	<select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
+	<!-- <select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap"> -->
 		SELECT
-			club_user_no,
-			user_id,
-			club_no,
-			application_reg_date,
-			join_reg_date,
-			logout_date,
-			member_role,
-			approval_condition,
+			club_user_no ,
+			user_id ,
+			club_no ,
+			application_reg_date ,
+			join_reg_date ,
+			logout_date ,
+			member_role ,
+			approval_condition ,
 			join_greeting 
 		FROM club_user
-		WHERE club_no = #{clubNo}
+		WHERE club_no = #{searchKeyword}
 			
 	</select>
+	
+ 	<select  id="getTotalClubMemberCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT club_no 
+						FROM club_user
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			club_no = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>
+	
+	
 	
 	<!-- 모임일정 등록 -->
 	<insert id="addMeeting"	parameterType="meeting">
@@ -312,12 +350,30 @@
 	</update>
 	
 	<!-- 모임일정 리스트 -->
-	<select id="getMeetingList" parameterType="int" resultMap="meetingSelectMap">
+	<select id="getMeetingList" parameterType="search" resultMap="meetingSelectMap">
 		SELECT
 			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
 			FROM meeting
-			WHERE club_no = #{clubNo}
+			WHERE club_no = #{searchKeyword}
 	</select>
+	
+	
+	<select  id="getTotalMeetingCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT meeting_no 
+						FROM meeting
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			meeting_no = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>
+	
+	
+	
+	
 	
 	<!-- 모임일정 삭제 -->
 	<delete id="deleteMeeting">
@@ -344,11 +400,37 @@
 	</delete>
 	
 	<!-- 모임일정 참여인원 리스트 -->
-	<select id="getMeetingMemberList" parameterType="int" resultMap="participantSelectMap">
+	<select id="getMeetingMemberList" parameterType="search" resultMap="participantSelectMap">
 		SELECT
 			*
 			FROM participant
-			WHERE participant_no = #{participant_no}
+			WHERE meeting_no = #{searchKeyword}
 	</select>
+	
+	<select  id="getTotalMeetingMemberCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT participant_no 
+						FROM participant
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			participant_no = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>
+	 
+	 <!-- 결제입니다 -->
+	 
+	<update id="updateClubMember" parameterType="pay">
+      UPDATE club
+      <set>
+         club_max_member = club_max_member + #{ updateClubMemberCount }
+      </set>
+      <where>
+      	club_no = #{ clubNo }
+      </where>
+   </update>
+	
 	
 </mapper>

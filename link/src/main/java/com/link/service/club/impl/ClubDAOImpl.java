@@ -13,6 +13,7 @@ import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
+import com.link.service.domain.Pay;
 
 @Repository("clubDAOImpl")
 public class ClubDAOImpl implements ClubDAO {
@@ -100,7 +101,7 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public List<ClubUser> getClubMemberList(Search search, int clubNo) throws Exception {
+	public List<ClubUser> getClubMemberList(Search search) throws Exception {
 		return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}
 	
@@ -200,4 +201,13 @@ public class ClubDAOImpl implements ClubDAO {
 	public int getTotalMeetingMemberCount(Search search) {
 		return sqlSession.selectOne("ClubMapper.getTotalMeetingMemberCount",search);
 	}
+	
+	//결제
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 왔다");
+	   sqlSession.update("ClubMapper.updateClubMember", pay);
+	   // pay.getClubNo()가 모임번호입니다
+	   return null;
+	}// end of updateClubMember(Pay pay, Search search)
 }

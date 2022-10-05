@@ -7,6 +7,7 @@ import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
+import com.link.service.domain.Pay;
 
 public interface ClubDAO {
 
@@ -32,7 +33,7 @@ public interface ClubDAO {
 	
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception;
 	
-	public List<ClubUser> getClubMemberList(Search search, int ClubNo) throws Exception;
+	public List<ClubUser> getClubMemberList(Search search) throws Exception;
 	
 	public void deleteClubMember(int clubUserNo) throws Exception;
 	
@@ -73,5 +74,8 @@ public interface ClubDAO {
 	public int getTotalMeetingCount(Search search) throws Exception;
 	
 	public int getTotalMeetingMemberCount(Search search) throws Exception;
+	
+	//결제
+	public List <ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	
 }

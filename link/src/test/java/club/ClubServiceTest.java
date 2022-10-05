@@ -72,14 +72,14 @@ public class ClubServiceTest {
 	public void testGetClubList() throws Exception {
 		
 		System.out.println("\n============================");
+		
 		Search search = new Search();
 		
 		Map<String, Object> map = clubService.getClubList(search);
 						
-		List<Club> list = (List<Club>) map.get("list");
+		List<Club> list = (List<Club>) map.get("clubList");
 		
-		System.out.println("list값?? : "+list);
-		
+		System.out.println("list값?? : "+list);		
 		System.out.println("=============================\n");
 	}
 
@@ -182,22 +182,20 @@ public class ClubServiceTest {
 		clubService.deleteApprovalCondition(clubUser);
 	}
 	
-	//수정해야함
-	//@Test
-//	public void TestGetClubMemberList() throws Exception {
-//		
-//		System.out.println("\n====================================");
-//		Search search = new Search();
-//
-//		Map<String, Object> map = clubService.getClubMemberList(search, 2);
-//		
-//		List<ClubUser> list = (List<ClubUser>) map.get("list");
-//		
-//		
-//		System.out.println("list 값 ?? : "+list);
-//		
-//		System.out.println("===========================\n");
-//	}
+//	@Test
+	public void TestGetClubMemberList() throws Exception {
+		
+		System.out.println("\n====================================");
+		Search search = new Search();
+		
+		search.setSearchKeyword("2");
+		Map<String, Object> map = clubService.getClubMemberList(search);
+		
+		List<ClubUser> list = (List<ClubUser>) map.get("clubMemberList");
+				
+		System.out.println("list 값 ?? : "+list);		
+		System.out.println("===========================\n");
+	}
 	
 //	@Test
 //	public void TestAddMeeting() throws Exception {
@@ -257,19 +255,19 @@ public class ClubServiceTest {
 	}
 	
 //	@Test
-//	public void TestGetMeetingList() throws Exception {
-//		
-//		System.out.println("\n======================================");
-//		Search search = new Search();
-//		
-//		Map<String, Object> map = clubService.getMeetingList(search);
-//		
-//		List<Meeting> list = (List<Meeting>) map.get("list");
-//		
-//		System.out.println("list 값 ?? : "+list);
-//		
-//		System.out.println("===================================\n");
-//	}
+	public void TestGetMeetingList() throws Exception {
+		
+		System.out.println("\n======================================");
+		Search search = new Search();
+		
+		search.setSearchKeyword("2");
+		Map<String, Object> map = clubService.getMeetingList(search);
+		
+		List<Meeting> list = (List<Meeting>) map.get("meetingList");
+		
+		System.out.println("list 값 ?? : "+list);		
+		System.out.println("===================================\n");
+	}
 	
 	//@Test
 	public void TestDeleteMeeting() throws Exception {
@@ -302,19 +300,20 @@ public class ClubServiceTest {
 		clubService.deleteMeetingMember(23);
 	}
 	
-//	@Test
-//	public void TestGetMeetingMemberList() throws Exception {
-//		
-//		System.out.println("\n===========================================");
-//		Search search = new Search();
-//		
-//		Map<String, Object> map = clubService.getMeetingMemberList(search);
-//		
-//		List<Participant> list = (List<Participant>) map.get("list");
-//		
-//		System.out.println("list 값 ?? : " +list);
-//		
-//		System.out.println("=======================================\n");
-//		
-//	}
+	@Test
+	public void TestGetMeetingMemberList() throws Exception {
+		
+		System.out.println("\n===========================================");
+		Search search = new Search();
+		
+		search.setSearchKeyword("2");
+		Map<String, Object> map = clubService.getMeetingMemberList(search);
+		
+		List<Participant> list = (List<Participant>) map.get("participantList");
+		
+		System.out.println("list 값 ?? : " +list);
+		
+		System.out.println("=======================================\n");
+		
+	}
 }
