@@ -16,13 +16,15 @@ public interface MyHomeService  {
 	
 	public void updateMyHomeCount(User user) throws Exception;
 	
-	public void addFollow(User user) throws Exception;
+	public void addFollow(User userId) throws Exception;
 	
 	public Map<String, Object> getFollowList(Search search) throws Exception;
 	
 	public Map<String, Object> getFollowerList(Search search) throws Exception;
 	
 	public void deleteFollow(User user) throws Exception;
+
+	public User addFollow(String userId) throws Exception;
 }
 
 

@@ -82,31 +82,24 @@
 		
 	</form>
 	
-	${list}
-	
 	<br/><br/>
 	
 		<c:set var="i" value="0"></c:set>
-		<c:forEach var="list" items="${list}">
+		<c:forEach var="feed" items="${feed}">
 			<c:set var="i" value="${i + 1}"></c:set>
 			
-			<c:if test="${fn:trim(list.deleteCondition) eq '0'}">
+			<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
 			
 			<form>
 			
-				<input type="hidden" name="feedNo" value="${list.feedNo}">
+				<input type="hidden" name="feedNo" value="${feed.feedNo}">
 			
-				${list.feedNo} // ${list.content}
+				${feed.feedNo} // ${feed.content}
 				
-				<input type="button" id="${list.feedNo}" name="delete" value="delete">
+				<input type="button" id="${feed.feedNo}" name="delete" value="delete">
 				<input type="button" class="btn_getFeed" value="º¸±â">
 			
 			<br/><br/>
-			
-		reply : <input type="text" name="commentContent" value="">
-				<input type="button" class="btn_addComment" value="submit">
-			
-			<br/><hr/>
 			
 			</form>
 			

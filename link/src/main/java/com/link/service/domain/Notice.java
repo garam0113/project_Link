@@ -10,7 +10,7 @@ public class Notice {
 	private String noticeContent;			//공지사하 내용
 	private String noticeImage1;			//공지사항 이미지1
 	private String noticeImage2;			//공지사항 이미지2
-	private Date noticeRegDate;				//공지사항 등록날짜
+	private String noticeRegDate;				//공지사항 등록날짜
 	private int noticeCount;				//공지사항 조회수
 	private User userId;					//공지사항 작성자
 	private int clubNo;						//모임번호
@@ -19,7 +19,7 @@ public class Notice {
 	}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeImage1, String noticeImage2,
-			Date noticeRegDate, int noticeCount, User userId, int clubNo) {
+			String noticeRegDate, int noticeCount, User userId, int clubNo) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -72,11 +72,13 @@ public class Notice {
 		this.noticeImage2 = noticeImage2;
 	}
 
-	public Date getNoticeRegDate() {
+	public String getNoticeRegDate() {
 		return noticeRegDate;
 	}
 
-	public void setNoticeRegDate(Date noticeRegDate) {
+
+	public void setNoticeRegDate(String noticeRegDate) {
+
 		this.noticeRegDate = noticeRegDate;
 	}
 

@@ -30,7 +30,7 @@
 		<result property="reportCount" 		column="report_count" 		jdbcType="NUMERIC" />
 		<result property="stopStartDate" 		column="stop_start_date" 		jdbcType="DATE" />
 		<result property="stopEndDate" 		column="stop_end_date" 		jdbcType="DATE" />
-		<result property="outUserType" 		column="out_user_type" 		jdbcType="CHAR" />
+		<result property="outUserState" 		column="out_user_state" 		jdbcType="CHAR" />
 		<result property="outUserDate" 		column="out_user_date" 		jdbcType="DATE" />
 		<result property="addType" 		column="out_user_type" 		jdbcType="CHAR" />
 		<result property="logoutDate" 		column="logout_date" 		jdbcType="DATE" />
@@ -51,13 +51,13 @@
 		join_club_count, join_club_limit
 		FROM users
 		<where>
-		<if test="(searchCondirion == 0 and searchKeyword == '') or (searchCondirion == 0 and searchKeyword != '')" >
+		<if test="(searchCondition == 0 and searchKeyword == '') or (searchCondition == 0 and searchKeyword != '')" >
 		user_id = LIKE(#{searchKeyword}||'%')
 		</if>
-		<if test="(searchCondirion == 0 and searchKeyword == '') or (searchCondirion == 0 and searchKeyword != '')" >
+		<if test="(searchCondition == 1 and searchKeyword == '') or (searchCondition == 1 and searchKeyword != '')" >
 		nickname = LIKE(#{searchKeyword}||'%')
 		</if>
-		<if test="(searchCondirion == null) and (searchKeyword == '1' or  searchKeyword == '2')">
+		<if test="(searchCondition == null) and (searchKeyword == '1' or  searchKeyword == '2')">
 		penalty_type = #{searchKeyword}
 		</if>
 		</where>
@@ -69,38 +69,45 @@
 	 	INSERT
 		INTO users	(	
 						user_id, password, name, gender, rrn, phone_no, email, nickname, profile_writing,
-						area1, area2, area3, category1, category2, category3, add_user_date	
+						area1, area2, area3, category1, category2, category3, add_user_date, add_user_type	
 					) 
 		VALUES		(	
 						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:VARCHAR}, 
 						#{phoneNo:VARCHAR}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
 						#{area1:VARCHAR} , #{area2:VARCHAR} , #{area3:VARCHAR} , #{category1:VARCHAR} , 
-						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE 
+						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE, #{addType:CHAR}
 					)
 	</insert>
 
-	<insert		id="addSnsUser"		parameterType="user" >
+	<!-- <insert		id="addSnsUser"		parameterType="user" >
 	 	INSERT
 		INTO users	(	
 						user_id, add_user_type,	add_user_date	
 					) 
 		VALUES		(	
-						#{userId}, #{addUserType:CHAR}, SYSDATE 
+						#{userId}, #{addType:CHAR}, SYSDATE 
 					)
-	</insert>
+	</insert> -->
 
 
 
-	<select		id="getUser"		parameterType="string"			resultMap="userSelectMap">
+	<select		id="getUser"		parameterType="user"			resultMap="userSelectMap">
 		SELECT
 		user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
 		profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 
 		stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date, 
 		total_visit_count, open_condition, push_condition, join_club_count, join_club_limit
 		FROM users
-		Where user_id = #{userId}
+		<where>
+			<if test="userId != null">
+				user_id = #{userId}
+			</if>
+			<if test="name != null and rrn != null">
+				name = #{name} and rrn = #{rrn}
+			</if>
+		</where>
 	</select>
-
+<!-- 
 	<select		id="getUserId"		parameterType="user"			resultMap="userSelectMap">
 		SELECT
 		user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
@@ -110,40 +117,64 @@
 		FROM users
 		Where name = #{name} and rrn = #{rrn}
 	</select>
-	
+	 -->
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		password 	= #{password:VARCHAR}	,
-			email		= #{email:VARCHAR}
+	   		<if test="password != null and email != null">
+	   			password 	= #{password:VARCHAR}	,
+				email		= #{email:VARCHAR}
+			</if>
+			<if test="phoneNo != null">
+				phone_no 	= #{phoneNo:VARCHAR}
+			</if>
+			<if test="password != null and email == null">
+				password 	= #{password:VARCHAR}
+			</if>
+			<if test="nickName != null">
+				nickname	= #{nickName:VARCHAR}	,
+	 			gender		= #{gender:VARCHAR}		,
+	 			area1		= #{area1:VARCHAR}		,
+	 			area2		= #{area2:VARCHAR}		,
+	 			area3		= #{area3:VARCHAR}		,
+	 			category1	= #{category1:VARCHAR}	,
+	 			category2	= #{category2:VARCHAR}	,
+	 			category3	= #{category3:VARCHAR}	,
+	 			profile_image	= #{profileImage:VARCHAR}	,
+	 			profile_writing	= #{profileWriting:VARCHAR}
+			</if>
+			<if test="outUserState != null">
+				out_user_state	= #{outUserState:CHAR}, 
+	 			out_user_date	= SYSDATE
+			</if>
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
 
-	<update	id="updatePhoneNo"	parameterType="user" >
+	<!-- <update	id="updatePhoneNo"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		phone_no 	= #{phoneNo:VARCHAR}	,
+	   		phone_no 	= #{phoneNo:VARCHAR}
 	   	</set>
 	   	WHERE user_id = #{userId}
-	 </update>
+	 </update> -->
 
-	<update	id="updatePassword"	parameterType="user" >
+	<!-- <update	id="updatePassword"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
 	   		password 	= #{password:VARCHAR}	,
 	   	</set>
 	   	WHERE user_id = #{userId}
-	 </update>
+	 </update> -->
 	 
-	 <update id="updateProfil" parameterType="user">
+	 <!-- <update id="updateProfil" parameterType="user">
 	 	UPDATE users
 	 	<set>
 	 		nickname	= #{nickName:VARCHAR}	,
 	 		gender		= #{gender:VARCHAR}		,
-	 		area1		= #{area1:VARCHAR}
-	 		area2		= #{area2:VARCHAR}
-	 		area3		= #{area3:VARCHAR}
+	 		area1		= #{area1:VARCHAR}		,
+	 		area2		= #{area2:VARCHAR}		,
+	 		area3		= #{area3:VARCHAR}		,
 	 		category1	= #{category1:VARCHAR}	,
 	 		category2	= #{category2:VARCHAR}	,
 	 		category3	= #{category3:VARCHAR}	,
@@ -151,16 +182,16 @@
 	 		profile_writing	= #{profileWriting:VARCHAR}
 	 	</set>
 	 	WHERE user_id = #{userId}
-	 </update>
+	 </update> -->
 	 
-	 <update id="deleteUser" parameterType="user">
+	<!--  <update id="deleteUser" parameterType="user">
 	 	UPDATE users
 	 	<set>
 	 		out_user_state	= #{outUserState:CHAR}, 
 	 		out_user_date	= SYSDATE
 	 	</set>
 	 	WHERE user_id = #{userId}
-	 </update>
+	 </update> -->
 	 
 	 <update id="updateLogoutDate" parameterType="String">
 	 	UPDATE users
@@ -226,19 +257,21 @@
 	 	WHERE user_id = #{userId}
 	 </update>
 	 
-	 <update id="updateJoinClubLimit" parameterType="user">
-	 	UPDATE users
-	 	<set>
-	 		join_club_limit	= #{joinClubLimit:NUMERIC}
-	 	</set>
-	 	WHERE user_id = #{userId}
-	 </update>
+	<update id="updateClub" parameterType="pay">
+   		UPDATE USERS
+   		<set>
+   			JOIN_CLUB_LIMIT = JOIN_CLUB_LIMIT + #{ updateClubCount }
+   		</set>
+   		<where>
+  			 USER_ID = #{ user.userId }
+  		</where>
+	</update>
 	 
 	 <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT inner_table.*
+	  	SELECT *
 	  	FROM (	
 	  			SELECT
-	  			deep_table.* 				,
+	  			inner_table.* 				,
 	  			ROWNUM 			AS row_seq	
 	  			FROM		(<include refid="select-list"></include>) inner_table
 				WHERE ROWNUM &lt;= #{endRowNum} )					

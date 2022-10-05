@@ -23,7 +23,6 @@
 
 		var title = $("input[name='noticeTitle']").val();
 		var content = $("input[name='noticeContent']").val();
-		var regDate = $("input[name='noticeRegDate']").val();
 		var image = $("input[name='noticeImage']").val();		
 		
 		if(title == null || title.length < 1){
@@ -37,7 +36,7 @@
 		
 	
 		
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/getNotice").submit();
+		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
 	
 
@@ -53,14 +52,6 @@
 			history.go(-1);
 		})
 		
-		$("img[src='../images/ct_icon_date.gif']").bind("click", function(){
-			
-			var manuDate = $("input[name='manuDate']");
-			/* alert("1"); */
-			
-			show_calendar('manuDate', manuDate.val());
-			
-		});
 		
 	});
 	
@@ -74,7 +65,7 @@
 	<!-- form Start /////////////////////////////////////-->
 	<div class="container">
 		<div></div>
-		<div class="page-header text-center">공 지 사 항 등 록ㄴ</div>
+		<div class="page-header text-center">공 지 사 항 등 록</div>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
@@ -97,13 +88,7 @@
 		    </div>
 		  </div>
 
-		  <div class="form-group">
-		    <label for="noticeImage" class="col-sm-offset-1 col-sm-3 control-label">첨부 파일</label>
-		    <div class="col-sm-4">
-		      <input multiple="multiple" type="file" name="noticeImage" class="ct_input_g" 
-							style="width: 200px; height: 19px" maxLength="13"/>
-		    </div>
-		  </div>
+	
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">

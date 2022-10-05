@@ -154,47 +154,8 @@ public class ServiceCenterController {
 		
 		System.out.println("/ServiceCenter/updateNotice : POST");
 		
-		notice.setNoticeRegDate(notice.getNoticeRegDate());
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Notice> list = new ArrayList<Notice>();
-		
-		StringBuilder sb = new StringBuilder();
 
-		int fileCount = 0;
-		
-		for(MultipartFile files : file) {
-			
-			if(!files.getOriginalFilename().equals("")) {
-				fileCount++;
-				System.out.println(files.getOriginalFilename());
-				sb.append(files.getOriginalFilename());
-				
-				if(fileCount != file.length) {
-					sb.append("*");
-				}
-				
-				String path = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles";
-	
-				File saveFile = new File(path + files.getOriginalFilename());
-				
-				boolean isExists = saveFile.exists();
-				
-				if(!isExists) {
-					files.transferTo(saveFile);
-				}
-			}
-		}
-		sb.append("*" + notice.getNoticeImage1());
-		
-		if(sb.charAt(0) == '*') {
-			sb.deleteCharAt(0);
-		}
-		notice.setNoticeImage1(sb.toString());		
-		list.add(notice);
-		
-		map.put("notice", list);
-		serviceCenterService.updateNotice(map);
+		serviceCenterService.updateNotice(notice);
 		
 		System.out.println(notice);
 		
@@ -310,47 +271,8 @@ public class ServiceCenterController {
 		
 		System.out.println("/ServiceCenter/updateNotice : POST");
 		
-		qandA.setQandARegDate(qandA.getQandARegDate());
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<QandA> list = new ArrayList<QandA>();
-		
-		StringBuilder sb = new StringBuilder();
 
-		int fileCount = 0;
-		
-		for(MultipartFile files : file) {
-			
-			if(!files.getOriginalFilename().equals("")) {
-				fileCount++;
-				System.out.println(files.getOriginalFilename());
-				sb.append(files.getOriginalFilename());
-				
-				if(fileCount != file.length) {
-					sb.append("*");
-				}
-				
-				String path = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles";
-	
-				File saveFile = new File(path + files.getOriginalFilename());
-				
-				boolean isExists = saveFile.exists();
-				
-				if(!isExists) {
-					files.transferTo(saveFile);
-				}
-			}
-		}
-		sb.append("*" + qandA.getQandAImage1());
-		
-		if(sb.charAt(0) == '*') {
-			sb.deleteCharAt(0);
-		}
-		qandA.setQandAImage1(sb.toString());		
-		list.add(qandA);
-		
-		map.put("notice", list);
-		serviceCenterService.updateNotice(map);
+		serviceCenterService.updateQandA(qandA);
 		
 		System.out.println(qandA);
 		

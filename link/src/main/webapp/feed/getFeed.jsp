@@ -39,7 +39,34 @@
 							} // success end
 						} // ajax inner close
 				) // ajax close
-			});
+			}); // event close
+			
+			$(".btn_addReComment").bind("click", function(){
+				alert($(this).prev().prev().prev().val());
+				alert($(this).prev().prev().val());
+				alert($(this).prev().val());
+				$.ajax(
+						{
+							url : "/feedRest/json/addFeedComment",
+							method : "POST",
+							data : JSON.stringify ({
+								feedNo : $(this).prev().prev().prev().val(),
+								feedCommentNo : $(this).prev().prev().val(),
+								commentContent : $(this).prev().val()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								$(".commentList").last().append("hi<br/>");
+							} // success end
+						} // ajax inner close
+				) // ajax close
+			}); // event close
 		})
 	
 	</script>
@@ -52,7 +79,7 @@
 	<br/>
 		
 	<form>
-				<input type="hidden" value="${feed.feedNo}">
+				<input type="hidden" name="feedNo" value="${feed.feedNo}">
 	nickname :	<input type="text" name="commentContent" value="">
 				<input type="button" class="btn_addComment" value="submit">
 	
@@ -62,9 +89,19 @@
 			<c:set var="i" value="0"></c:set>
 			<c:forEach var="comment" items="${comment}">
 				<c:set var="i" value="${i + 1}"></c:set>
-					reply : ${comment.feedCommentNo}
-					
-					<br/><hr>
+
+					<c:if test="${fn:trim(comment.parent) == '0'}">
+						reply : ${comment.feedCommentNo} : ${comment.commentContent} 추가 댓글 달기 ${comment.depth + 1}
+						<form>
+							&nbsp&nbsp&nbsp&nbsp
+							<input type="hidden" name="feedNo" value="${feed.feedNo}">
+							<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
+							<input type="hidden" name="depth" value="${comment.depth + 1}">
+							<input type="text" name="commentContent" value="">
+							<input type="button" class="btn_addReComment" value="submit">
+						</form>
+						<br/><hr>
+					</c:if>
 			</c:forEach>
 		</div>
 	

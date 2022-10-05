@@ -17,11 +17,11 @@
 		<result property="qandAAnswerContent" 	column="answer_content" 	  jdbcType="VARCHAR" />
 		<result property="qandAAnswerRegDate" 	column="answer_regdate" 	  jdbcType="DATE" />
 		<result property="qandACondition" 		column="answer_condition" 	  jdbcType="VARCHAR" />
-		<result property="qandAopenCondition" 	column="qanda_open_condition" jdbcType="VARCHAR" />
+		<result property="qandAOpenCondition" 	column="qanda_open_condition" jdbcType="VARCHAR" />
 		<result property="qandACount"			column="qanda_count"		  jdbcType="INTEGER" />
 
 
-		<association property="userId" javaType="user">
+		<association property="user" javaType="user">
 			<result property="userId" column="user_id" jdbcType="VARCHAR" />
 		</association>
 	</resultMap>
@@ -31,53 +31,59 @@
 
 	<!-- SQL : INSERT -->
 	<insert id="addQandA" parameterType="qandA" >
-		INSERT INTO qanda
-		( qanda_no, qanda_title, qanda_content, qanda_regdate, qanda_image1,
-		qanda_image2, answer_content,
-		answer_regdate, answer_condition, qanda_open_condition, qanda_count, user_id)
-
-		VALUES (seq_qanda_qanda_no.nextval, #{qanda_title}, #{qanda_content},
-		sysdate, #{qanda_image1}, #{qanda_image2} , #{answer_content},
-		sysdate, '0', '0', '0', #{userId.userId});
+		INSERT INTO QANDA
+		( QANDA_NO, QANDA_TITLE, QANDA_CONTENT, QANDA_REGDATE, QANDA_IMAGE1,
+		QANDA_IMAGE2, ANSWER_CONDITION, QANDA_OPEN_CONDITION, QANDA_COUNT, USER_ID)
+		
+		VALUES (SEQ_QANDA_NO.NEXTVAL, 
+				#{qandATitle}, 
+				#{qandAContent},
+				SYSDATE,
+				#{qandAImage1},
+				#{qandAImage2}, 
+				#{qandACondition}, 
+				#{qandAOpenCondition}, 
+				#{qandACount}, 
+				#{user.userId} )
+		
 	</insert>
 
 	<!-- SQL : SELECT ONE -->
 	<select id="getQandA" parameterType="int" resultMap="qandASelectMap">
 		SELECT
-		qanda_no, qanda_title, qanda_content, qanda_regdate, qanda_image1,
-		qanda_image2, answer_content,
-		answer_regdate, answer_condition, qanda_open_condition, qanda_count, user_id
-		FROM qanda
-		WHERE qanda_no = qandANo;
+		QANDA_NO, QANDA_TITLE, QANDA_CONTENT, QANDA_REGDATE, QANDA_IMAGE1,
+		QANDA_IMAGE2, ANSWER_CONTENT,
+		ANSWER_REGDATE, ANSWER_CONDITION, QANDA_OPEN_CONDITION, QANDA_COUNT, USER_ID
+		FROM QANDA
+		WHERE QANDA_NO = #{QANDA_NO}
 
 	</select>
 
 	<update id="getCount" parameterType="int">
-		UPDATE qanda
+		UPDATE QANDA
 		<set>
-			qanda_count = qanda_count+1
+			QANDA_COUNT = QANDA_COUNT+1
 		</set>
-		WHERE qanda_no = #{qanda_no}
+		WHERE QANDA_NO = #{QANDA_NO}
 
 	</update>
 
 
 
-	<!-- SQL : UPDATE    업데이트 SET 마지막 image2 , (쉼표) 없어도 되는지? , 관리자와 유저 어떻게 나눌지 -->
+	<!-- SQL : UPDATE 관리자와 유저 어떻게 나눌지 -->
 	<update id="updateQandA" parameterType="qandA">
-		UPDATE qanda
+		UPDATE QANDA
 		<set>
-		qanda_title =#{qanda_title},
-		qanda_content=#{qanda_content},
-		qanda_regdate = sysdate,
-		qanda_image1 = #{qanda_image1},
-		qanda_image2 = #{qanda_image2},
-     	answer_content = #{answer_content},
-     	answer_regdate = sysdate,
+		qanda_title = #{qandATitle},
+		qanda_content= #{qandAContent},
+		qanda_regdate = SYSDATE,
+		qanda_image1 = #{qandAImage1},
+		qanda_image2 = #{qandAImage2},
+     	answer_content = #{qandAAnswerContent},
+     	answer_regdate = SYSDATE,
      	answer_condition= '1'
-     	
 		</set>
-		WHERE qanda_no = #{qanda_no}
+		WHERE qanda_no = #{qandANo}
 	</update>
 
 	<!-- SQL : DELETE -->
