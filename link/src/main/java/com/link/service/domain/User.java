@@ -266,6 +266,7 @@ public class User {
 				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
 				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
 				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
+				+ ", outUserType=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", outUserState=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="

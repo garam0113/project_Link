@@ -11,6 +11,7 @@ public class Search {
 	private int order;
 	private int startRowNum;
 	private int endRowNum;
+	private String userId;
 	
 	public Search(){
 		
@@ -73,5 +74,13 @@ public class Search {
 		return "Search : [currentPage] = " + currentPage + ", [order] = " + order +", [SearchCondition] = " + searchCondition 
 				+ ", [SearchKeyword] = " + searchKeyword + ", [pageSize] = " + pageSize
 				+ ", [startRowNum] = " + startRowNum + ", [endRowNum] = " + endRowNum;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

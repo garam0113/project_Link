@@ -1,5 +1,8 @@
 package user;
 
+import java.util.List;
+import java.util.Map;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,6 +170,7 @@ public class UserServiceTest {
 		List<User> list = (List<User>) map.get("userList");
 		
 		System.out.println("select 결과 : "+list);
+
 		System.out.println("==============================\n");
 	}
 	
@@ -270,8 +274,11 @@ public class UserServiceTest {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
-		}
+		
 	
 		System.out.println("==============================\n");
+		}
+		}	
+		
 	}
-}
+	
