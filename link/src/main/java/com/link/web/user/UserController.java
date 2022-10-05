@@ -2,9 +2,6 @@ package com.link.web.user;
 
 import java.util.Map;
 import java.util.Random;
-import javax.servlet.Servlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +63,6 @@ public class UserController {
 		
 		System.out.println("/user/addSnsUser : POST");
 		
-
-		userService.addUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
-		
-		return null;
-
 		Random rand = new Random();
 		String no = "";
 			
@@ -94,11 +86,6 @@ public class UserController {
 		User user = new User();
 		
 		user.setUserId(userId);
-
-		
-		User getUser = userService.getUser(user);	//회원의 정보를 얻기위해 회원ID DB전송
-		
-		model.addAttribute("user", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
 
 		
 		User getUser = userService.getUser(user);	//회원의 정보를 얻기위해 회원ID DB전송
@@ -129,19 +116,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("userId") String userId, Model model ) throws Exception{
+	public String updateUser(@ModelAttribute("user") User user, Model model ) throws Exception{
 		
 		System.out.println("/user/updateUser : GET");
-		
-		User user = new User();
-		
-		user.setUserId(userId);
-
-		
-		User getUser = userService.getUser(user);	//회원정보를 수정하기 전 기존 회원 정보를 DB에서 출력 
-		
-		model.addAttribute("user", getUser);	//DB의 정보를 Key(user)에 저장
-
 		
 		User getUser = userService.getUser(user);	//회원정보를 수정하기 전 기존 회원 정보를 DB에서 출력 
 		
@@ -258,32 +235,8 @@ public class UserController {
 		userService.updateUser(user);	//회원 정보를 DB에 저장
 
 		
-		return null;
-	}
-	
-	
-	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
-		
-		System.out.println("/user/getUserList : GET/POST");
-		
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setCurrentPage(pageSize);
-		
-		Map<String, Object> map = userService.getUserList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search",search);
-
-		
 		return "redirect:/main.jsp";
 	}
-	
 	
 	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
 		
