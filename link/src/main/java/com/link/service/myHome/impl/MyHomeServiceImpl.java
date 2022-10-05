@@ -59,12 +59,14 @@ public class MyHomeServiceImpl implements MyHomeService {
 		System.out.println("\n[MyHomeServiceImpl updateMyHomeCount start]\n");
 		myHomeDAO.updateMyHomeCount(user);
 	}
-	
+
 	@Override
 	public void addFollow(User user) throws Exception{
 		
 		System.out.println("\n[MyHomeServiceImpl addFollow start]\n");
 		myHomeDAO.addFollow(user);
+		
+		
 	}
 	
 	@Override
@@ -103,6 +105,12 @@ public class MyHomeServiceImpl implements MyHomeService {
 		System.out.println("\n[MyHomeServiceImpl deleteFollow start]\n");
 		myHomeDAO.deleteFollow(user);
 		
+	}
+
+	@Override
+	public User addFollow(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

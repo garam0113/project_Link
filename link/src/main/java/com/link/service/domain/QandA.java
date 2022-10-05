@@ -7,15 +7,15 @@ public class QandA {
 	private int qandANo;				//Q&A 번호
 	private String qandATitle;			//Q&A 제목
 	private String qandAContent;		//Q&A 내용
-	private User user;					//Q&A 작성자
-	private Date qandARegDate;
-	private String qandAImage1;
-	private String qandAImage2;
-	private int qandACondition;
-	private String qandAAnswerContent;
-	private Date qandAAnswerRegDate;
-	private int qandAOpenCondition;
-	private int qandACount;
+	private User user;					//Q&A 이용자
+	private String qandARegDate;		//Q&A 등록날짜
+	private String qandAImage1;			//Q&A 이미지1
+	private String qandAImage2;			//Q&A 이미지2
+	private int qandACondition;			//Q&A 진행상황
+	private String qandAAnswerContent;	//Q&A 답변내용
+	private String qandAAnswerRegDate;	//Q&A 답변등록날짜
+	private int qandAOpenCondition;		//Q&A 공개여부
+	private int qandACount;				//Q&A 누적조회수
 	
 	
 	
@@ -49,10 +49,10 @@ public class QandA {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Date getQandARegDate() {
+	public String getQandARegDate() {
 		return qandARegDate;
 	}
-	public void setQandARegDate(Date qandARegDate) {
+	public void setQandARegDate(String qandARegDate) {
 		this.qandARegDate = qandARegDate;
 	}
 	public String getQandAImage1() {
@@ -79,10 +79,10 @@ public class QandA {
 	public void setQandAAnswerContent(String qandAAnswerContent) {
 		this.qandAAnswerContent = qandAAnswerContent;
 	}
-	public Date getQandAAnswerRegDate() {
+	public String getQandAAnswerRegDate() {
 		return qandAAnswerRegDate;
 	}
-	public void setQandAAnswerRegDate(Date qandAAnswerRegDate) {
+	public void setQandAAnswerRegDate(String qandAAnswerRegDate) {
 		this.qandAAnswerRegDate = qandAAnswerRegDate;
 	}
 	public int getQandAOpenCondition() {

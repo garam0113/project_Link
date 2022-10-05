@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Pay;
 import com.link.service.domain.User;
 
 @Controller
@@ -99,5 +101,41 @@ public class ClubPostController {
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
+	
+	@RequestMapping(value = "updateClub", method = RequestMethod.POST)
+	public String updateClub(@ModelAttribute Pay pay, Search search) throws Exception {
+		System.out.println("/updateClub : POST : 모임번호가 있으면 모임 상세보기, 모임번호가 없으면 모임리스트 화면으로 이동 ");
+		//clubPostServiceImpl
+		return "";
+	}
 
+	@RequestMapping(value = "updateClubMember", method = RequestMethod.POST)
+	public String updateClubMember(@ModelAttribute Pay pay, Search search) throws Exception {
+		System.out.println("/updateClubMember : POST : 모임원 최대 수 수정 후 모임원 리스트 화면으로 이동 모임대표만 올 수 있다");
+		//clubServiceImpl.updateClubMember(pay, search);
+		//clubPostServiceImpl.addPay(pay);
+		return "forward:/club/getClubMemberList.jsp";
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

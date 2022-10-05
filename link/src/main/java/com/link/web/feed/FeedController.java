@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Push;
 import com.link.service.feed.FeedService;
 
 @Controller
@@ -50,16 +51,14 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public String addFeed(@ModelAttribute Feed feed, Model model, @RequestParam("image") MultipartFile[] file,
-						HttpSession httpSession) throws Exception {
+	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
+							@ModelAttribute Push push, Model model, HttpSession httpSession) throws Exception {
 		
 		// 회원 피드 등록
 		
 		// User user = (User) httpSession.getAttribute("user");
 		// feed.setUserId(user.getUserId());
 		feed.setUserId("user01");
-		
-		System.out.println("feed : " + feed);
 		
 		for(MultipartFile files : file) {
 			String path = "C:\\Users\\";
@@ -79,7 +78,7 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
-	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Model model, Search search) throws Exception {
+	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, Model model) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -99,7 +98,7 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
-	public String updateFeed(@ModelAttribute Feed feed, Model model, Search search) throws Exception {
+	public String updateFeed(@ModelAttribute Feed feed, Search search, Model model) throws Exception {
 		
 		feedService.updateFeed(feed);
 		
@@ -131,6 +130,8 @@ public class FeedController {
 	
 	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	
+	
+	
 	@RequestMapping(value = "getFeedList", method = RequestMethod.GET)
 	public String getFeedList(@ModelAttribute Search search, Model model) throws Exception {
 		
@@ -141,7 +142,11 @@ public class FeedController {
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
-		Map<String, Object> map = feedService.getFeedList(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("search", search);
+				
+		map = feedService.getFeedList(map);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalFeedCount")).intValue(), pageUnit, pageSize);
 		
