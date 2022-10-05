@@ -52,16 +52,11 @@ public class FeedRestController {
 		
 		User user = new User();
 		
-		Comment upperComment = feedService.getFeedComment(comment.getFeedCommentNo());
-		
 		user.setUserId("user01");
 		
 		comment.setUser(user);
 		
-		if(upperComment != null) {
-			// 무한 댓글
-			comment.setParent(comment.getFeedCommentNo());
-		}
+		System.out.println("코맨트 찍기 : " + comment.getFeedNo() + "/// " + comment.getUser().getUserId() + "////" + comment.getCommentContent() + "======" + comment.getParent() + "=====" + comment.getDepth() + "=====" + comment.getSequence());
 		
 		feedService.addFeedComment(comment);
 		

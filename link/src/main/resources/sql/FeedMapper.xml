@@ -26,7 +26,7 @@
 		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
 	</resultMap>
-	
+
 	<resultMap id="feedCommentSelectMap" 		type="comment">
 		<result property="feedCommentNo"		column="feed_comment_no"			jdbcType="NUMERIC" />
 		<result property="feedNo"				column="feed_no"					jdbcType="NUMERIC" />
@@ -37,6 +37,7 @@
 		<result property="commentUpdateDate"	column="feed_comment_update_date"	jdbcType="DATE" />
 		<result property="reportCondition"		column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"		column="delete_condition"			jdbcType="VARCHAR" />
+		<result property="parentUserId"			column="delete_user_id"				jdbcType="VARCHAR" />
 		<result property="parent"				column="parent"						jdbcType="NUMERIC" />
 		<result property="depth"				column="depth"						jdbcType="NUMERIC" />
 		<result property="sequence"				column="sequence"					jdbcType="NUMERIC" />
@@ -141,6 +142,16 @@
 	
 	
 	
+	<update		id="updateFeedCommentCount"		parameterType="comment">
+		UPDATE feed
+		<set>
+			feed_comment_count				= feed_comment_count + 1
+		</set>
+		WHERE feed_no						= #{feedNo}
+	</update>
+	
+	
+	
 	<!--====================Feed Comment====================-->
 	<!--====================Feed Comment====================-->
 	<!--====================Feed Comment====================-->
@@ -160,6 +171,7 @@
 			null,
 			'0',
 			'0',
+			#{user.userId:VARCHAR},
 			#{parent:NUMERIC},
 			#{depth:NUMERIC},
 			#{sequence:NUMERIC}				)
@@ -278,7 +290,7 @@
 		WHERE feed_no						= #{feedNo}
 		AND report_condition				= '0'
 		AND delete_condition				= '0'
-		ORDER BY feed_comment_no ASC
+		ORDER BY sequence ASC
 	</select>
 	
 	

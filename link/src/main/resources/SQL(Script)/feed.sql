@@ -1,3 +1,20 @@
+
+DROP TABLE FEED 					CASCADE CONSTRAINTS;
+DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
+
+DROP SEQUENCE seq_feed_no;
+DROP SEQUENCE seq_feed_comment_no;
+
+CREATE SEQUENCE seq_feed_no						INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
+
+
+
+
+
+==========================================================================
+
+
 set linesize 2000
 set pagesize 2000
 
@@ -105,7 +122,7 @@ SELECT f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image
 
 
 
-
+INSERT into feed_comment   VALUES (    seq_feed_comment_no.nextval,    '6',    'user01',    '2222',    0,    SYSDATE,    null,    '0',    '0', '34',    '2',    '0' , 'user01', 2    )
 
 SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_like_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = '5' AND report_condition = '0' AND delete_condition = '0' ORDER BY feed_comment_no ASC 
 

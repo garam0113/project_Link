@@ -63,6 +63,13 @@ public class FeedDAOImpl implements FeedDAO {
 	}
 	
 	
+	@Override
+	public void updateFeed(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeedCommentCount", comment);
+	}
+	
+	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
@@ -203,13 +210,13 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void addFeedPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
+//		sqlSession.insert("Report_PushMapper.addPush");
 	}
 
 	@Override
 	public void addFeedCommentPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
+//		sqlSession.insert("Report_PushMapper.addPush");
 	}
 
 	

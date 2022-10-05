@@ -30,6 +30,9 @@ public interface FeedDAO {
 	// 피드 삭제
 	public void deleteFeed(int feedNo) throws Exception;
 	
+	// 피드 속 댓글 수 업데이트
+	public void updateFeed(Comment comment) throws Exception;
+	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////

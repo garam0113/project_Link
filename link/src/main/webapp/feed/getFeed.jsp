@@ -77,12 +77,18 @@
 
 	content : ${feed.content}
 	
+	<hr/><hr/>
+	
 	<br/>
 		
 	<form>
 				<input type="hidden" name="feedNo" value="${feed.feedNo}">
-	nickname :	<input type="text" name="commentContent" value="">
+				<c:set var="i" value="0"></c:set>
+				<input type="hidden" name="sequence" value="${feed.commentCount}">
+	´ñ±Û´Þ±â :		<input type="text" name="commentContent" value="">
 				<input type="button" class="btn_addComment" value="submit">
+	
+	<hr/>
 	
 	</form>
 		
@@ -91,18 +97,18 @@
 			<c:forEach var="comment" items="${commentList}">
 				<c:set var="i" value="${i + 1}"></c:set>
 
-					<c:if test="${fn:trim(comment.parent) == '0'}">
-						reply : ${comment.feedCommentNo} : ${comment.commentContent} Ãß°¡ ´ñ±Û ´Þ±â ${comment.depth + 1}
+						´ñ±Û¹øÈ£ ${comment.feedCommentNo} :³»¿ë ${comment.commentContent} : ±íÀÌ ${comment.depth + 1}
 						<form>
-							&nbsp&nbsp&nbsp&nbsp
+							
 							<input type="hidden" name="feedNo" value="${feed.feedNo}">
-							<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
-							<input type="hidden" name="depth" value="${comment.depth + 2}">
+							<input type="hidden" name="parent" value="${comment.feedCommentNo}">
+							<input type="hidden" name="sequence" value="${feed.commentCount}">
+							<input type="hidden" name="depth" value="${comment.depth + 1}">
 							<input type="text" name="commentContent" value="">
 							<input type="button" class="btn_addReComment" value="submit">
+							
 						</form>
 						<br/><hr>
-					</c:if>
 			</c:forEach>
 		</div>
 	

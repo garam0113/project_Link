@@ -80,6 +80,7 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeedComment(Comment comment) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedComment(comment);
+		feedDAO.updateFeed(comment);
 		feedDAO.addFeedCommentPush(null);
 	}
 	

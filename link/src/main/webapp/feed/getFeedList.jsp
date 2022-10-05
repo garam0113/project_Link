@@ -94,9 +94,9 @@
 			
 				<input type="hidden" name="feedNo" value="${feedList.feedNo}">
 			
-				${feedList.feedNo} // ${feedList.content}
+				${feedList.feedNo}번째글 // ${feedList.content}
 				
-				<br/>	좋아요 : ${feedList.likeCount}
+				<br/>	좋아요 : ${feedList.heartCount}
 						댓글 수 : ${feedList.commentCount}
 				
 				<input type="button" id="${feedList.feedNo}" name="delete" value="delete">

@@ -61,6 +61,10 @@ public class FeedController {
 		// feed.setUserId(user.getUserId());
 		feed.setUserId("user01");
 		
+		String[] array = (feed.getContent()).split("#");
+
+		StringBuilder stringBuilder = new StringBuilder();
+		
 		for(MultipartFile files : file) {
 			String path = "C:\\Users\\";
 			
