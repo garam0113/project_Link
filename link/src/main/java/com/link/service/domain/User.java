@@ -109,7 +109,7 @@ public class User {
 	public String getProfileWriting() {
 		return profileWriting;
 	}
-	public void setProfilewriting(String profileWriting) {
+	public void setProfileWriting(String profileWriting) {
 		this.profileWriting = profileWriting;
 	}
 	public String getArea1() {

@@ -59,7 +59,7 @@ public class UserController {
 		
 		System.out.println("/user/addSnsUser : POST");
 		
-		userService.addSnsUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
+		userService.addUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
 		
 		return null;
 	}
@@ -69,9 +69,13 @@ public class UserController {
 		
 		System.out.println("/user/getUser : GET");
 		
-		User user = userService.getUser(userId);	//회원의 정보를 얻기위해 회원ID DB전송
+		User user = new User();
 		
-		model.addAttribute("user", user);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
+		user.setUserId(userId);
+		
+		User getUser = userService.getUser(user);	//회원의 정보를 얻기위해 회원ID DB전송
+		
+		model.addAttribute("user", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
 		
 		return null;
 	}
@@ -89,7 +93,7 @@ public class UserController {
 		
 		System.out.println("/user/getUser : POST");
 		
-		User userId = userService.getUserId(user);
+		User userId = userService.getUser(user);
 		
 		model.addAttribute("userId",userId);
 		
@@ -101,9 +105,13 @@ public class UserController {
 		
 		System.out.println("/user/updateUser : GET");
 		
-		User user = userService.getUser(userId);	//회원정보를 수정하기 전 기존 회원 정보를 DB에서 출력 
+		User user = new User();
 		
-		model.addAttribute("user", user);	//DB의 정보를 Key(user)에 저장
+		user.setUserId(userId);
+		
+		User getUser = userService.getUser(user);	//회원정보를 수정하기 전 기존 회원 정보를 DB에서 출력 
+		
+		model.addAttribute("user", getUser);	//DB의 정보를 Key(user)에 저장
 		
 		return null;
 	}
@@ -128,7 +136,7 @@ public class UserController {
 		
 		System.out.println("/user/updateProfile : POST");
 		
-		userService.updateProfile(user);	//SNS회원 프로필 작성
+		userService.updateUser(user);	//SNS회원 프로필 작성
 		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		if(sessionId.equals(user.getUserId())) {
@@ -174,7 +182,7 @@ public class UserController {
 		user.setUserId(userId);	//회원ID domain객체에 Set
 		user.setOutUserState(userState);	//회원상태 domain객체에 Set
 		
-		userService.deleteUser(user);	//회원 정보를 DB에 저장
+		userService.updateUser(user);	//회원 정보를 DB에 저장
 		
 		return null;
 	}

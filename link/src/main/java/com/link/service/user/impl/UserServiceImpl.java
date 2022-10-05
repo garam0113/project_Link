@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.link.common.Search;
+import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.user.UserDAO;
@@ -41,26 +42,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 //	@Override
-//	public int addUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		System.out.println("간다!~");
-//		return userDAO.addUser(user);
-//		
-//	}
-
-//	@Override
 //	public void addSnsUser(User user) throws Exception {
 //		// TODO Auto-generated method stub
 //		userDAO.addSnsUser(user);
 //	}
 	
-	@Override
-	public int addSnsUser(User user) throws Exception {
-		System.out.println("Service접속");
-		// TODO Auto-generated method stub
-		return	userDAO.addSnsUser(user);
-	}
-
 //	@Override
 //	public void addBlockUser(User user) throws Exception {
 //		// TODO Auto-generated method stub
@@ -68,54 +54,33 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
-	public User getUser(String userId) throws Exception {
+	public User getUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return userDAO.getUser(userId);
+		return userDAO.getUser(user);
 	}
 
-	@Override
-	public User getUserId(User user) throws Exception {
-		// TODO Auto-generated method stub
-		return userDAO.getUserId(user);
-	}
-
-	@Override
-	public int updateUser(User user) throws Exception {
-		System.out.println("Service접속");
-		// TODO Auto-generated method stub
-		return userDAO.updateUser(user);
-	}
-//	
 //	@Override
-//	public void updateUser(User user) throws Exception {
+//	public User getUserId(User user) throws Exception {
 //		// TODO Auto-generated method stub
-//		userDAO.updateUser(user);
+//		return userDAO.getUserId(user);
 //	}
 
 	@Override
-	public int updateProfile(User user) throws Exception {
-		System.out.println("Service접속");
+	public void updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return userDAO.updateProfile(user);
-	}
-	
-//	@Override
-//	public void updateProfile(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		userDAO.updateProfile(user);
-//	}
-
-	@Override
-	public void updatePhoneNo(User user) throws Exception {
-		// TODO Auto-generated method stub
-		userDAO.updatePhoneNo(user);
+		userDAO.updateUser(user);
 	}
 
-	@Override
-	public void updatePassword(User user) throws Exception {
-		// TODO Auto-generated method stub
-		userDAO.updatePassword(user);
-	}
+	/*
+	 * @Override public void updateProfile(User user) throws Exception { // TODO
+	 * Auto-generated method stub userDAO.updateProfile(user); }
+	 * 
+	 * @Override public void updatePhoneNo(User user) throws Exception { // TODO
+	 * Auto-generated method stub userDAO.updatePhoneNo(user); }
+	 * 
+	 * @Override public void updatePassword(User user) throws Exception { // TODO
+	 * Auto-generated method stub userDAO.updatePassword(user); }
+	 */
 
 //	@Override
 //	public void updateBlockUser(User user) throws Exception {
@@ -129,27 +94,26 @@ public class UserServiceImpl implements UserService {
 		userDAO.logout(userId);
 	}
 
-	@Override
-	public int deleteUser(User user) throws Exception {
-		System.out.println("Service접속");
-		// TODO Auto-generated method stub
-		return userDAO.deleteUser(user);
-	}
-//	
 //	@Override
 //	public void deleteUser(User user) throws Exception {
 //		// TODO Auto-generated method stub
 //		userDAO.deleteUser(user);
 //	}
-
+	
 	@Override
-	public boolean checkDuplication(String userId) throws Exception {
+	public void updateClub(Pay pay) throws Exception {
+	   System.out.println(getClass() + ".updateClub(Pay pay) 도착");
+	   userDAO.updateClub(pay);
+	}// updateClub(Pay pay)
+	
+	@Override
+	public boolean checkDuplication(User user) throws Exception {
 		// TODO Auto-generated method stub
 		boolean result = true;			//중복확인을 위해 Default 값을 True로 준다.
 		
-		User user = userDAO.getUser(userId);
+		User getUser = userDAO.getUser(user);
 		
-		if(user != null) {
+		if(getUser != null) {
 			result = false;					//userId로 확인 하여 값이 있을 경우 False로 처리 한다.
 		}
 		
@@ -217,33 +181,33 @@ public class UserServiceImpl implements UserService {
 		return map;
 	}
 
-	@Override
-	public Map<String, Object> getStopList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		
-		List<User> stopUserList = userDAO.getUserList(search);
-		int totalCount = userDAO.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("stopUserList", stopUserList);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
-	}
+//	@Override
+//	public Map<String, Object> getStopList(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//		List<User> stopUserList = userDAO.getUserList(search);
+//		int totalCount = userDAO.getTotalCount(search);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("stopUserList", stopUserList);
+//		map.put("totalCount", new Integer(totalCount));
+//		
+//		return map;
+//	}
 
-	@Override
-	public Map<String, Object> getForeverStopList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		
-		List<User> list = userDAO.getUserList(search);
-		int totalCount = userDAO.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("ForeverStopUserList", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
-	}
+//	@Override
+//	public Map<String, Object> getForeverStopList(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//		List<User> list = userDAO.getUserList(search);
+//		int totalCount = userDAO.getTotalCount(search);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("ForeverStopUserList", list);
+//		map.put("totalCount", new Integer(totalCount));
+//		
+//		return map;
+//	}
 
 //	@Override
 //	public Map<String, Object> getPushList(Search search) throws Exception {

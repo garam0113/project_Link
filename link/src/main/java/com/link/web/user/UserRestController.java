@@ -38,7 +38,11 @@ public class UserRestController {
 		
 		System.out.println("/user/json/getUser : GET");
 		
-		return userService.getUser(userId);	//회원정보 리턴
+		User user = new User();
+		
+		user.setUserId(userId);
+		
+		return userService.getUser(user);	//회원정보 리턴
 		
 	}
 	
@@ -58,9 +62,9 @@ public class UserRestController {
 		
 		user.setPassword(password);	//임의의 6자리 숫자 Set
 		
-		userService.updatePassword(user);	//임의의 password DB에 update
+		userService.updateUser(user);	//임의의 password DB에 update
 		
-		User getUser = userService.getUser(user.getUserId());
+		User getUser = userService.getUser(user);
 		
 		System.out.println(getUser.getPassword());
 		
@@ -74,9 +78,9 @@ public class UserRestController {
 		
 		System.out.println("/user/json/updatePhoneNo : POST");
 		
-		userService.updatePhoneNo(user);	//입력받은 핸드폰번호 DB에 update
+		userService.updateUser(user);	//입력받은 핸드폰번호 DB에 update
 		
-		return userService.getUser(user.getUserId());	//update된 회원의 핸드폰번호 출력
+		return userService.getUser(user);	//update된 회원의 핸드폰번호 출력
 	}
 	
 	@RequestMapping(value = "json/sendSMS", method = RequestMethod.GET)
