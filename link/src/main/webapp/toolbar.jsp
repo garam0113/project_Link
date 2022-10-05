@@ -4,6 +4,21 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("a:contains('회원가입')").on("click", function() {
+			self.location = "/user/addUser"
+		});
+	});
+	
+	$(function() {
+		$("a:contains('로그인')").on("click", function() {
+			self.location = "/user/login"
+		});
+	});
+</script>
+
 <div class="navbar  navbar-inverse navbar-fixed-top">
 
 	<div class="container">
@@ -99,11 +114,3 @@
 
 	</div>
 </div>
-
-<script type="text/javascript">
-	$(function() {
-		$("a[href='#']:contains('회원가입')").on("click", function() {
-			self.location = "/user/addUser"
-		});
-	});
-</script>
