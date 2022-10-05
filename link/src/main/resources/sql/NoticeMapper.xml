@@ -26,8 +26,8 @@
 	<insert 	id="addNotice"		parameterType="notice" >
 	 	INSERT
 		INTO notice( notice_no  , notice_title , notice_content , notice_image1 , notice_image2, notice_regdate, notice_count, userId.user_Id:VARCHAR)
-		VALUES	 (	seq_notice_notice_no.nextval , #{notice_title} , #{notice_content} , #{notice_image1} , 
-							#{notice_image2} ,SYSDATE , #{notice_count}, )
+		VALUES	 (	seq_notice_notice_no.nextval , #{noticeTitle} , #{noticeContent} , #{noticeImage1} , 
+							#{noticeImage2} ,SYSDATE , #{noticeCount}, #{userId.userId} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->

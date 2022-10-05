@@ -44,7 +44,7 @@
 		<result property="feedNo" column="feed_no" jdbcType="NUMERIC"/>
 	</association>
 	
-	<association property="feedCommentNo" javaType="comment">
+	<association property="feedComment" javaType="comment">
 		<result property="feedCommentNo" column="feed_comment_no" jdbcType="NUMERIC"/>
 	</association>
 	
@@ -70,10 +70,9 @@
 	( no, title, content, report_source, club_post_no, club_post_comment_no, feed_no, feed_comment_no, live_no, user_id1,
 	user_id2, report_regdate, report_image1, report_image2, handle_date, type, report_reason, report_condition)
 
-	VALUES (seq_report_push_no.nextval, #{report_push_title}, #{report_push_content}, #{club_post_no}, #{club_post_comment_no},
-	#{feed_no}, #{feed_comment_no}, #{live_no}, #{user_id1}, #{user_id2}, SYSDATE, #{report_push_report_image1}, #{report_push_report_report_image2},
- 	NULL, #{type}, #{report_push_report_reason}, #{report_push_report_condition} 
-	
+	VALUES (seq_report_push_no.nextval, #{reportTitle}, #{reportContent}, #{clubPost.clubPostNo}, #{clubPostComment.clubPostCommentNo},
+	#{feed.feedNo}, #{feedComment.feedCommentNo}, #{live_no}, #{user1.userId}, #{user2.userId}, SYSDATE, #{reportImage1}, #{reportImage2},
+ 	NULL, #{type}, #{reportReason}, #{reportCondition} 
 	
 	</insert>
 	 

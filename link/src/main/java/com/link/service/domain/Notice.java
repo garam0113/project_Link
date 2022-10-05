@@ -10,7 +10,7 @@ public class Notice {
 	private String noticeContent;			//공지사하 내용
 	private String noticeImage1;			//공지사항 이미지1
 	private String noticeImage2;			//공지사항 이미지2
-	private Date noticeRegDate;				//공지사항 등록날짜
+	private String noticeRegDate;				//공지사항 등록날짜
 	private int noticeCount;				//공지사항 조회수
 	private User userId;					//공지사항 작성자
 	
@@ -52,10 +52,10 @@ public class Notice {
 	public void setNoticeImage2(String noticeImage2) {
 		this.noticeImage2 = noticeImage2;
 	}
-	public Date getNoticeRegDate() {
+	public String getNoticeRegDate() {
 		return noticeRegDate;
 	}
-	public void setNoticeRegDate(Date noticeRegDate) {
+	public void setNoticeRegDate(String noticeRegDate) {
 		this.noticeRegDate = noticeRegDate;
 	}
 	public int getNoticeCount() {
