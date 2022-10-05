@@ -129,11 +129,23 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 왔다");
+		
 		// 모임게시물 좋아요하다 또는 좋아요 취소하다
-		sqlSession.update("ClubPostMapper.updateClubPostLike", clubPost);
-		// 좋아요 등록
-		sqlSession.insert("HeartMapper.insertHeart", heart);
+		sqlSession.update("ClubPostMapper.updateClubPost", clubPost);
+		
+		if(clubPost.getLikeCondition() == 1) {
+			System.out.println("여기오나?");
+			// 좋아요 등록
+			sqlSession.insert("HeartMapper.insertHeart", heart);
+		}else if(clubPost.getLikeCondition() == -1) {
+			System.out.println("여기는?");
+			// 좋아요 삭제
+			sqlSession.delete("HeartMapper.deleteHeart", heart);
+		}
+
+		// 모임게시물 상세보기
 		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
+		
 		return clubPost.getClubPostLikeCount();
 	}// end of updateClubPostLike(Heart heart)
 
@@ -142,6 +154,9 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 왔다");
 		// 모임게시물 댓글 등록
 		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
+		
+		// 모임게시물 댓글 개수 증가
+		sqlSession.insert("ClubPostMapper.updateClubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo()));
 		// 모임게시물 글 작성자에게 알림
 		//sqlSession.insert("Report_PushMapper.addPush", comment);
 		// 가장 최근 모임게시물 댓글 번호 가져온다
@@ -186,23 +201,28 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		sqlSession.update("HeartMapper.insertHeart", heart);
 		return 0;
 	}
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public Map<String, Object> addClubNotice(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".addClubNotice(Map<String, Object> map) 왔다");
 		sqlSession.insert("NoticeMapper.addClubNotice", map);
-		System.out.println("이제 두번째");
 		int no = sqlSession.selectOne("NoticeMapper.getClubNoticetNo", map);
-		Notice notice = (Notice)map.get("notice");
-		notice.setClubNo(no);
+		Notice notice = ((Notice)map.get("notice"));
+		notice.setNoticeNo(no);
 		map.put("notice", notice);
-		System.out.println("sssss");
+		map.put("getClubNotice", sqlSession.selectOne("NoticeMapper.getClubNotice", notice));
 		return getClubNoticeList(map);
 	}// end of addClubNotice(Map<String, Object> map)
 
 	@Override
 	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");		
+		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");
 		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
 		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
 		return map;
@@ -227,7 +247,20 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		sqlSession.delete("NoticeMapper.deleteClubNotice", map);
 		return getClubNoticeList(map);
 	}// end of deleteClubNotice(Search search, Notice notice)
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void addPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
+		sqlSession.insert("ClubPostMapper.addPay", pay);
+	}// end of addPay(Pay pay)
 
+	/*
 	@Override
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
 		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 왔다");
@@ -235,12 +268,16 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		// pay.getClubNo()가 모임번호입니다
 		return null;
 	}// end of updateClubMember(Pay pay, Search search)
+	*/
 
+	/*
 	@Override
-	public void addPay(Pay pay) throws Exception {
-		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
-		sqlSession.delete("ClubPostMapper.addPay", pay);
+	public void updateClub(Pay pay) throws Exception {
+		System.out.println(getClass() + ".updateClub(Pay pay) 왔다");
+		sqlSession.update("ClubPostMapper.updateClub", pay);
 	}// end of addPay(Pay pay)
+	*/
+	
 	
 }
 

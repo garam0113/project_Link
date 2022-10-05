@@ -30,6 +30,12 @@ public class ClubPost {
 	public ClubPost() {
 	}
 
+	public ClubPost(int clubPostNo, int clubPostCommentNo) {
+		super();
+		this.clubPostNo = clubPostNo;
+		this.clubPostCommentNo = clubPostCommentNo;
+	}
+
 	public ClubPost(int clubNo, int clubPostNo, int clubPostCommentNo, User user, String clubPostTitle,
 			String clubPostContent, String clubPostVideo1, String clubPostVideo2, String clubPostVideo3,
 			String clubPostRegDate, String clubPostUpdateDate, int likeCondition, int clubPostLikeCount,

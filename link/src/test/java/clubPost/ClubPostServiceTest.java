@@ -1,5 +1,8 @@
 package clubPost;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.User;
@@ -146,7 +151,7 @@ public class ClubPostServiceTest {
 		pay.setUpdateClubMemberCount(20);
 		pay.setMerchant_uid("111");
 		
-		clubPostServiceImpl.updateClubMember(pay, search);
+		//clubPostServiceImpl.updateClubMember(pay, search);
 		clubPostServiceImpl.addPay(pay);
 	}
 	
@@ -162,13 +167,65 @@ public class ClubPostServiceTest {
 		pay.setPayOption("0");
 		pay.setPayProduct("1");
 		pay.setTotalPrice(10000);
-		pay.setUpdateClubMemberCount(20);
+		pay.setUpdateClubCount(2);
 		pay.setMerchant_uid("111");
 		
-		//clubPostServiceImpl.updateClub(pay, search);
+		//clubPostServiceImpl.updateClub(pay);
 		clubPostServiceImpl.addPay(pay);
 	}
 	
+	//@Test
+	public void clubNotice() throws Exception {
+		// 공지사항
+		Search search = new Search();
+		search.setCurrentPage(3);
+		search.setPageSize(10);
+		search.setPageUnit(10);
+		search.setOrder(0);					// 0 : 최신순, 1 : 역최신순
+		Notice notice = new Notice();
+		//notice.setNoticeNo(5);
+		notice.setClubNo(2);
+		//notice.setNoticeImage1("1");
+		//notice.setNoticeImage2("2");
+		//notice.setNoticeTitle("title65");
+		//notice.setNoticeContent("content65");
+		//notice.setNoticeCount(0);
+		User user = new User();
+		user.setUserId("user01");
+		notice.setUserId(user);
+		
+		//clubPostServiceImpl.addClubNotice(search, notice);
+		//notice = clubPostServiceImpl.getClubNotice(notice);
+		Map<String, Object> map = clubPostServiceImpl.getClubNoticeList(search, notice);
+		//clubPostServiceImpl.updateClubNotice(search, notice);
+		//clubPostServiceImpl.deleteClubNotice(search, notice);
+		
+		//System.out.println(notice);
+		//System.out.println(map.get("getClubNoticeListCount"));
+		System.out.println("///////////////////////////////////////////////////////////////////////");
+		System.out.println(map.get("getClubNoticeList"));
+		//System.out.println(map.get("getClubNotice"));
+		
+	}
+	
+	@Test
+	public void clubPost() throws Exception {
+		// 모임게시물		
+		ClubPost clubPost = new ClubPost();
+		clubPost.setClubPostNo(30);
+		User user = new User();
+		user.setUserId("user04");
+		clubPost.setUser(user);
+		clubPost.setLikeCondition(1);
+		
+		Heart heart = new Heart();
+		heart.setSource("2");
+		heart.setSourceNo(30);
+		heart.setUserId("user04");
+		
+		clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+		
+	}
 	
 	
 	

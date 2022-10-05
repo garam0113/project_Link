@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Notice;
 
 @RestController
 @RequestMapping("/clubPostRest/*")
@@ -40,6 +42,17 @@ public class ClubPostRestController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 
+	
+	
+	
+
+	
+///////////////////////////////////////////////////////////////////////////////////// List /////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
 	public Map<String, Object> getClubPostList(@ModelAttribute ClubPost clubPost) throws Exception {
 		System.out.println("/getClubPostList : GET : 특정 모임에서 최근순 모임게시물 리스트, 모임게시물 리스트 개수");
@@ -70,6 +83,11 @@ public class ClubPostRestController {
 	
 	
 	
+
+	
+///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
+	
+	
 	
 
 	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)
@@ -82,6 +100,11 @@ public class ClubPostRestController {
 	
 	
 	
+
+	
+///////////////////////////////////////////////////////////////////////////////////// Report /////////////////////////////////////////////////////////////////////////////////////	
+	
+	
 	
 	
 	@RequestMapping(value = "addReport", method = RequestMethod.POST)
@@ -90,6 +113,11 @@ public class ClubPostRestController {
 		// reportServiceImpl.addReport(); 신고 서비스에 신고를 보낸다
 	}
 	
+	
+	
+
+	
+///////////////////////////////////////////////////////////////////////////////////// Comment /////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	
@@ -125,14 +153,36 @@ public class ClubPostRestController {
 	}
 	
 	
+
+	
+///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	
 	
 	
-	
+	@RequestMapping(value = "getClubNotice", method = RequestMethod.POST)
+	public Notice getClubNotice(@ModelAttribute Notice notice) throws Exception {
+		System.out.println("/getClubNotice : POST : 모임공지사항 상세보기");
+		return clubPostServiceImpl.getClubNotice(notice);
+	}
+
+	@RequestMapping(value = "deleteClubNotice", method = RequestMethod.POST)
+	public Map<String, Object> deleteClubNotice(@ModelAttribute Search search, Notice notice) throws Exception {
+		System.out.println("/deleteClubNotice : POST : 모임공지사항 삭제, 모임공지사항 리스트");
+		// 모임공지사항 리스트 : getClubNoticeList, 모임공지사항 리스트 개수 : getClubNoticeListCount
+		return clubPostServiceImpl.deleteClubNotice(search, notice);
+	}
 
 }
+
+
+
+
+
+
+
+
 
 
 

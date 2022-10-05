@@ -138,6 +138,7 @@ CREATE TABLE users	(
 	push_condition					CHAR(3)					DEFAULT '0',
 	join_club_count					NUMBER(20)				DEFAULT	'0',
 	join_club_limit					NUMBER(20)				DEFAULT	'2',
+	sns_user_id						VARCHAR2(20),
 	PRIMARY	KEY(user_id)
 );
 
@@ -211,11 +212,7 @@ CREATE TABLE CLUB_POST (
 	CLUB_POST_VIDEO2				VARCHAR2(100),
 	CLUB_POST_VIDEO3				VARCHAR2(100),
 	CLUB_POST_REG_DATE				DATE												NOT NULL,
-	CLUB_POST_UPDATE_DATE			DATE,
-	CLUB_POST_LIKE_COUNT			NUMBER(20)				DEFAULT 0					NOT NULL,
 	CLUB_POST_COMMENT_COUNT			NUMBER(20)				DEFAULT 0					NOT NULL,
-	REPORT_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
-	DELETE_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
 	IMAGE1							VARCHAR2(100)										NOT NULL,
 	IMAGE2							VARCHAR2(100),
 	IMAGE3							VARCHAR2(100),
@@ -226,6 +223,11 @@ CREATE TABLE CLUB_POST (
 	IMAGE8							VARCHAR2(100),
 	IMAGE9							VARCHAR2(100),
 	IMAGE10							VARCHAR2(100),
+	CLUB_POST_UPDATE_DATE			DATE,
+	REPORT_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
+	DELETE_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
+	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
+	CLUB_POST_HEART_COUNT			NUMBER(20)				DEFAULT 0					NOT NULL,
 	PRIMARY KEY(club_post_no)
 );
 
@@ -238,12 +240,13 @@ CREATE TABLE CLUB_POST_COMMENT (
 	COMMENT_CONTENT					VARCHAR(300)										NOT NULL,
 	COMMENT_REG_DATE				DATE,
 	COMMENT_UPDATE_DATE				DATE,
-	COMMENT_LIKE_COUNT				NUMBER(20)				DEFAULT 0					NOT NULL,
 	REPORT_CONDITION				CHAR(3)					DEFAULT '0'					NOT NULL,
 	DELETE_CONDITION				CHAR(3)					DEFAULT '0'					NOT NULL,
 	PARENT							NUMBER(20)											NOT NULL,
 	DEPTH							NUMBER(20)											NOT NULL,
 	SEQUENCE						NUMBER(20)											NOT NULL,
+	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
+	COMMENT_HEART_COUNT				NUMBER(20)				DEFAULT 0					NOT NULL,
 	PRIMARY KEY(club_post_comment_no)
 );
 
@@ -299,7 +302,7 @@ CREATE TABLE CHAT (
 
 
 
-CREATE TABLE feed (
+CREATE TABLE FEED (
 	feed_no							NUMBER												NOT NULL,
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	feed_open_condition				CHAR(3)												NOT NULL,
@@ -310,7 +313,7 @@ CREATE TABLE feed (
 	feed_image4						VARCHAR2(100),
 	feed_video						VARCHAR2(100),
 	hashtag							VARCHAR2(840),
-	feed_like_count					NUMBER												NOT NULL,
+	feed_heart_count				NUMBER												NOT NULL,
 	feed_comment_count				NUMBER												NOT NULL,
 	feed_reg_date					DATE												NOT NULL,
 	feed_update_date				DATE,
@@ -326,12 +329,13 @@ CREATE TABLE feed_comment (
 	feed_no							NUMBER												NOT NULL,
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	feed_comment_content			VARCHAR2(210)										NOT NULL,
-	feed_comment_like_count			NUMBER												NOT NULL,
+	feed_comment_heart_count		NUMBER												NOT NULL,
 	feed_recomment_count			NUMBER												NOT NULL,
 	feed_comment_reg_date			DATE												NOT NULL,
 	feed_comment_update_date		DATE,
 	report_condition				CHAR(3)												NOT NULL,
 	delete_condition				CHAR(3)												NOT NULL,
+	delete_user_id					VARCHAR2(20)													REFERENCES users(user_id),
 	parent							NUMBER												NOT NULL,
 	depth							NUMBER												NOT NULL,
 	sequence						NUMBER												NOT NULL,

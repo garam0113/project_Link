@@ -12,7 +12,7 @@ public class Comment {
 	private String commentContent;			// 댓글내용
 	private String commentRegDate;			// 댓글등록날짜
 	private String commentUpdateDate;		// 댓글수정날짜
-	private int commentLikeCount;			// 댓글 좋아요 수
+	private int commentHeartCount;			// 댓글 좋아요 수
 	private int commentCount;				// 댓글 수
 	private String reportCondition;			// 신고여부 0-false 1-true
 	private String deleteCondition;			// 삭제여부 0-false 1-true
@@ -25,7 +25,7 @@ public class Comment {
 
 	public Comment(int feedNo, int feedCommentNo, int clubNo, int clubPostNo, int clubPostCommentNo, User user,
 			String parentUserId, String commentContent, String commentRegDate, String commentUpdateDate,
-			int commentLikeCount, int commentCount, String reportCondition, String deleteCondition, int parent,
+			int commentHeartCount, int commentCount, String reportCondition, String deleteCondition, int parent,
 			int depth, int sequence) {
 		super();
 		this.feedNo = feedNo;
@@ -38,7 +38,7 @@ public class Comment {
 		this.commentContent = commentContent;
 		this.commentRegDate = commentRegDate;
 		this.commentUpdateDate = commentUpdateDate;
-		this.commentLikeCount = commentLikeCount;
+		this.commentHeartCount = commentHeartCount;
 		this.commentCount = commentCount;
 		this.reportCondition = reportCondition;
 		this.deleteCondition = deleteCondition;
@@ -127,12 +127,12 @@ public class Comment {
 		this.commentUpdateDate = commentUpdateDate;
 	}
 
-	public int getCommentLikeCount() {
-		return commentLikeCount;
+	public int getCommentHeartCount() {
+		return commentHeartCount;
 	}
 
-	public void setCommentLikeCount(int commentLikeCount) {
-		this.commentLikeCount = commentLikeCount;
+	public void setCommentHeartCount(int commentHeartCount) {
+		this.commentHeartCount = commentHeartCount;
 	}
 
 	public int getCommentCount() {
@@ -206,8 +206,8 @@ public class Comment {
 		builder.append(commentRegDate);
 		builder.append(", commentUpdateDate=");
 		builder.append(commentUpdateDate);
-		builder.append(", commentLikeCount=");
-		builder.append(commentLikeCount);
+		builder.append(", commentHeartCount=");
+		builder.append(commentHeartCount);
 		builder.append(", commentCount=");
 		builder.append(commentCount);
 		builder.append(", reportCondition=");
@@ -222,6 +222,6 @@ public class Comment {
 		builder.append(sequence);
 		builder.append("]");
 		return builder.toString();
-	}
+	}	
 
 }
