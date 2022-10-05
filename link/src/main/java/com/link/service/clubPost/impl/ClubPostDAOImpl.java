@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 
 @Repository("clubPostDAOImpl")
 public class ClubPostDAOImpl implements ClubPostDAO {
@@ -183,7 +186,77 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		sqlSession.update("HeartMapper.insertHeart", heart);
 		return 0;
 	}
+
+	@Override
+	public Map<String, Object> addClubNotice(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".addClubNotice(Map<String, Object> map) 왔다");
+		sqlSession.insert("NoticeMapper.addClubNotice", map);
+		System.out.println("이제 두번째");
+		int no = sqlSession.selectOne("NoticeMapper.getClubNoticetNo", map);
+		Notice notice = (Notice)map.get("notice");
+		notice.setClubNo(no);
+		map.put("notice", notice);
+		System.out.println("sssss");
+		return getClubNoticeList(map);
+	}// end of addClubNotice(Map<String, Object> map)
+
+	@Override
+	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");		
+		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
+		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
+		return map;
+	}// end of getClubNoticeList(Map<String, Object> map)
+
+	@Override
+	public Notice getClubNotice(Notice notice) throws Exception {
+		System.out.println(getClass() + ".getClubNotice(Notice notice) 왔다");
+		return sqlSession.selectOne("NoticeMapper.getClubNotice", notice);
+	}// end of getClubNotice(Notice notice)
+
+	@Override
+	public Map<String, Object> updateClubNotice(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".updateClubNotice(Map<String, Object> map) 왔다");
+		sqlSession.update("NoticeMapper.updateClubNotice", map);
+		return getClubNoticeList(map);
+	}// end of updateClubNotice(Map<String, Object> map)
+
+	@Override
+	public Map<String, Object> deleteClubNotice(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".deleteClubNotice(Map<String, Object> map) 왔다");
+		sqlSession.delete("NoticeMapper.deleteClubNotice", map);
+		return getClubNoticeList(map);
+	}// end of deleteClubNotice(Search search, Notice notice)
+
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 왔다");
+		sqlSession.update("ClubPostMapper.updateClubMember", pay);
+		// pay.getClubNo()가 모임번호입니다
+		return null;
+	}// end of updateClubMember(Pay pay, Search search)
+
+	@Override
+	public void addPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
+		sqlSession.delete("ClubPostMapper.addPay", pay);
+	}// end of addPay(Pay pay)
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

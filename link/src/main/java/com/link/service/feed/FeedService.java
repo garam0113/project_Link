@@ -3,7 +3,6 @@ package com.link.service.feed;
 import java.util.List;
 import java.util.Map;
 
-import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Report;
@@ -19,7 +18,7 @@ public interface FeedService {
 	public void addFeed(Feed feed) throws Exception;
 	
 	/*
-	 * 피드 상세 (피드 & 피드 댓글)
+	 * 피드 조회 (피드 & 피드 댓글)
 	 * 
 	 * map.put("feedNo", feed.getFeedNo());
 	 * map.put("search", search);
@@ -41,6 +40,9 @@ public interface FeedService {
 	// 피드 댓글 추가
 	public void addFeedComment(Comment comment) throws Exception;
 	
+	// 피드 댓글 조회
+	public Comment getFeedComment(int feedCommentNo) throws Exception;
+	
 	// 피드 댓글 수정
 	public void updateFeedComment(Comment comment) throws Exception;
 	
@@ -53,9 +55,9 @@ public interface FeedService {
 	
 	
 	
-	public Map<String, Object> getFeedList(Search search) throws Exception;
+	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception;
 	
-	public List<Comment> getFeedCommentList(Map<String, Object> map) throws Exception;
+	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception;
 
 	
 	

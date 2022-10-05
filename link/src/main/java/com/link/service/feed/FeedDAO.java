@@ -6,13 +6,14 @@ import java.util.Map;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Push;
 import com.link.service.domain.Report;
 
 public interface FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// Feed
+	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 
 	
 	
@@ -30,12 +31,15 @@ public interface FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// Feed Comment
+	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
 	
 	
 	// 피드 댓글 추가
 	public void addFeedComment(Comment comment) throws Exception;
+	
+	// 피드 댓글 수정
+	public Comment getFeedComment(int feedCommentNo) throws Exception;
 	
 	// 피드 댓글 수정
 	public void updateFeedComment(Comment comment) throws Exception;
@@ -45,7 +49,8 @@ public interface FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// List
+	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
+	
 	
 	
 	// 피드 리스트
@@ -56,30 +61,31 @@ public interface FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// Count
+	///////////////////////////////////////////////////// Count /////////////////////////////////////////////////////
 	
 		
 	// 피드 전체 개수
 	public int getTotalFeedCount(Search search) throws Exception;
 	
 	// 피드 댓글 전체 개수
-	public int getTotalFeedCommentCount(Search search) throws Exception;
+	
+	/*
+	 * map.put("feedNo")
+	 */
+	public int getTotalFeedCommentCount(Map<String, Object> map) throws Exception;
+
+	// 피드 댓글의 대댓글 개수
+	
+	/*
+	 * map.put("comment")
+	 */
+	public int getRecommentCount(Map<String, Object> map) throws Exception;
+	
+
+	
+	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	
-	
-	//////////////////////////////////////// Report
-	
-	
-	// 피드 신고
-	public void addFeedReport(Report report) throws Exception;
-	
-	
-	// 피드 댓글 신고
-	public void addFeedCommentReport(Report report) throws Exception;
-	
-	
-	
-	//////////////////////////////////////// Like
 	
 	/*
 	 * map 안에 feedNo, userId
@@ -109,7 +115,22 @@ public interface FeedDAO {
 	
 	
 	
-	//////////////////////////////////////// Push
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
+		
+	
+		
+	// 피드 신고
+	public void addFeedReport(Report report) throws Exception;
+	
+	
+	// 피드 댓글 신고
+	public void addFeedCommentReport(Report report) throws Exception;
+	
+	
+	
+	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
+	
+	
 	
 	/*
 	 * map 안에 feedNo, userId
@@ -119,9 +140,9 @@ public interface FeedDAO {
 	 * 
 	 */
 	
-	public void addFeedPush() throws Exception;
+	public void addFeedPush(Push push) throws Exception;
 	
-	public void addFeedCommentPush() throws Exception;
+	public void addFeedCommentPush(Push push) throws Exception;
 	
 	
 	
