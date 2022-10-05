@@ -51,13 +51,9 @@ public class FeedServiceImpl implements FeedService {
 		
 		Feed feed = feedDAO.getFeed((Integer)map.get("feedNo"));
 		List<Comment> commentList = feedDAO.getFeedCommentList(map);
-		int heartCount = feedDAO.getTotalFeedHeart((Heart) map.get("heart"));
-		int commentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		map.put("feed", feed);
 		map.put("commentList", commentList);
-		map.put("heartCount", heartCount);
-		map.put("commentCount", commentCount);
 		
 		return map;
 	}
@@ -77,7 +73,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
-
+	
 	
 	
 	@Override
@@ -117,14 +113,10 @@ public class FeedServiceImpl implements FeedService {
 		
 		List<Feed> feedList = feedDAO.getFeedList(map);
 		int totalFeedCount = feedDAO.getTotalFeedCount((Search) map.get("search"));
-		int heartCount = feedDAO.getTotalFeedHeart((Heart) map.get("heart"));
-		int commentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("feedList", feedList);
 		returnMap.put("totalFeedCount", totalFeedCount);
-		returnMap.put("heartCount", heartCount);
-		returnMap.put("commentCount", commentCount);
 		
 		return returnMap;
 	}
@@ -166,11 +158,24 @@ public class FeedServiceImpl implements FeedService {
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
 	
+	
+//	private int heartNo;		// 좋아요 테이블 고유번호
+//	private String userId;		// 좋아요하는 회원 아이디
+//	private String source;		// 출처 0:피드, 1:피드 댓글, 2:모임게시물 3:모임게시물 댓글
+//	private int sourceNo;		// 출처 고유번호
+	
+	
 
 	@Override
 	public void addFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedHeart((Heart)map.get("heart"));
+		feedDAO.addFeedHeart((Heart) map.get("heart"));
+		
+		// 피드 테이블 좋아요 개수 증가
+		
+		Feed feed = (Feed) map.get("feed");
+		feed.setHeartCount(feed.getHeartCount() + 1);
+		feedDAO.updateFeed(feed);
 	}
 
 	@Override

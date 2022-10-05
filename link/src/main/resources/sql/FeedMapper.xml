@@ -19,7 +19,7 @@
 		<result property="image4"			column="feed_image4"				jdbcType="VARCHAR" />
 		<result property="video"			column="feed_video"					jdbcType="VARCHAR" />
 		<result property="hashtag"			column="hashtag"					jdbcType="VARCHAR" />
-		<result property="likeCount"		column="feed_like_count"			jdbcType="NUMERIC" />
+		<result property="heartCount"		column="feed_heart_count"			jdbcType="NUMERIC" />
 		<result property="commentCount"		column="feed_comment_count"			jdbcType="NUMERIC" />
 		<result property="regDate"			column="feed_reg_date"				jdbcType="DATE" />
 		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
@@ -31,7 +31,7 @@
 		<result property="feedCommentNo"		column="feed_comment_no"			jdbcType="NUMERIC" />
 		<result property="feedNo"				column="feed_no"					jdbcType="NUMERIC" />
 		<result property="commentContent"		column="feed_comment_content"		jdbcType="VARCHAR" />
-		<result property="commentLikeCount"		column="feed_comment_like_count"	jdbcType="NUMERIC" />
+		<result property="commentHeartCount"	column="feed_comment_heart_count"	jdbcType="NUMERIC" />
 		<result property="commentCount"			column="feed_comment_count"			jdbcType="NUMERIC" />
 		<result property="commentRegDate"		column="feed_comment_reg_date"		jdbcType="DATE" />
 		<result property="commentUpdateDate"	column="feed_comment_update_date"	jdbcType="DATE" />
@@ -90,7 +90,7 @@
 		feed_image4,
 		feed_video,
 		hashtag,
-		feed_like_count,
+		feed_heart_count,
 		feed_comment_count,
 		feed_reg_date,
 		feed_update_date,
@@ -117,6 +117,16 @@
 			report_condition				= #{reportCondition}
 		</set>	
 		WHERE feed_no 						= #{feedNo}
+	</update>
+	
+	
+	
+	<update 	id="updateFeedHeart"			parameterType="hashmap">
+		UPDATE feed
+		<set>
+			feed_heart_count				= #{count} + 1		
+		</set>
+		WHERE feed_no						= #{feedNo}
 	</update>
 	
 	
@@ -150,9 +160,9 @@
 			null,
 			'0',
 			'0',
-			0,
-			0,
-			0				)
+			#{parent:NUMERIC},
+			#{depth:NUMERIC},
+			#{sequence:NUMERIC}				)
 	</insert>
 	
 	
@@ -163,7 +173,7 @@
 		feed_no,
 		user_id,
 		feed_comment_content,
-		feed_comment_like_count,
+		feed_comment_heart_count,
 		feed_recomment_count,
 		feed_comment_reg_date,
 		feed_comment_update_date,
@@ -232,7 +242,7 @@
 		f.feed_image4,
 		f.feed_video,
 		f.hashtag,
-		f.feed_like_count,
+		f.feed_heart_count,
 		f.feed_comment_count,
 		f.feed_reg_date,
 		f.feed_update_date,
@@ -255,7 +265,7 @@
 		feed_no,
 		user_id,
 		feed_comment_content,
-		feed_comment_like_count,
+		feed_comment_heart_count,
 		feed_recomment_count,
 		feed_comment_reg_date,
 		feed_comment_update_date,
@@ -285,7 +295,7 @@
 		f.feed_image4,
 		f.feed_video,
 		f.hashtag,
-		f.feed_like_count,
+		f.feed_heart_count,
 		f.feed_comment_count,
 		f.feed_reg_date,
 		f.feed_update_date,
@@ -319,7 +329,7 @@
 				feed_image4,
 				feed_video,
 				hashtag,
-				feed_like_count,
+				feed_heart_count,
 				feed_comment_count,
 				feed_reg_date,
 				feed_update_date,
@@ -339,7 +349,7 @@
 				feed_no,
 				user_id,
 				feed_comment_content,
-				feed_comment_like_count,
+				feed_comment_heart_count,
 				feed_recomment_count,
 				feed_comment_reg_date,
 				feed_comment_update_date,
@@ -363,7 +373,7 @@
 				feed_no,
 				user_id,
 				feed_comment_content,
-				feed_comment_like_count,
+				feed_comment_heart_count,
 				feed_recomment_count,
 				feed_comment_reg_date,
 				feed_comment_update_date,

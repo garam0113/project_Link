@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Push;
 import com.link.service.feed.FeedService;
 
@@ -92,7 +93,7 @@ public class FeedController {
 		map = feedService.getFeed(map);
 		
 		model.addAttribute("feed", map.get("feed"));
-		model.addAttribute("comment", map.get("comment"));
+		model.addAttribute("commentList", map.get("commentList"));
 		
 		return "forward:/feed/getFeed.jsp";
 	}
@@ -133,7 +134,7 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "getFeedList", method = RequestMethod.GET)
-	public String getFeedList(@ModelAttribute Search search, Model model) throws Exception {
+	public String getFeedList(@ModelAttribute Search search, Heart heart, Model model) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -152,9 +153,28 @@ public class FeedController {
 		
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("feed", map.get("feed"));
+		model.addAttribute("feedList", map.get("feedList"));
 		
 		return "forward:/feed/getFeedList.jsp";
 	}
-
+	
+	
+	
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
+	
+	@RequestMapping(value = "addFeedReport", method = RequestMethod.POST)
+	public String addFeedReport() {
+		
+		return null;
+		
+	}
+	
+	
+	@RequestMapping(value = "addFeedCommentReport", method = RequestMethod.POST)
+	public String addFeedCommentReport() {
+		
+		return null;
+		
+	}
+	
 }
