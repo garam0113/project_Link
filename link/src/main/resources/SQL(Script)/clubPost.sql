@@ -154,6 +154,18 @@ VALUES( seq_heart_no.NEXTVAL, 'user03', '2', 20)
 
 
 
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////// 모임게시물 댓글 /////////////////////////////////////////////////////////////////////////////////////
+
+
+
 club_post_comment_no가 없다면 즉, 모임게시물의 댓글이라면? parent 0, depth 0, sequence는 parent의 번호가 같은것 중 sequence의 값이 가장 큰 것 +1
 addClubPostComment()
 INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
@@ -211,6 +223,12 @@ UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1' WHERE CLUB_POST_COMMENT_NO =
 
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////////// 모임공지사항 /////////////////////////////////////////////////////////////////////////////////////
+
+
+
 가장 최근 가입한 모임번호
 SELECT V1.CLUB_NO
 FROM 
@@ -219,6 +237,53 @@ FROM CLUB
 WHERE USER_ID = 'user01'
 ORDER BY CLUB_REG_DATE DESC )V1
 WHERE ROWNUM = 1
+
+
+
+getClubNoticeList() - 가장 최근 가입한 모임의 리스트
+SELECT V2.*
+FROM ( SELECT *
+		FROM NOTICE
+		WHERE CLUB_NO = ( SELECT V1.CLUB_NO
+							FROM ( SELECT *
+									FROM CLUB
+									WHERE USER_ID = 'user01'
+									ORDER BY CLUB_REG_DATE DESC
+								  )V1
+							WHERE ROWNUM = 1
+						 )
+		ORDER BY NOTICE_REGDATE ASC
+	 ) V2
+WHERE ROWNUM BETWEEN 1 AND 10
+
+
+
+getClubNoticeList() - 특정 모임의 리스트
+SELECT V2.*
+FROM ( SELECT *
+		FROM NOTICE
+		WHERE CLUB_NO = 2
+		ORDER BY NOTICE_REGDATE ASC
+	 ) V2
+WHERE ROWNUM BETWEEN 1 AND 10
+
+
+
+SELECT V3.*
+FROM ( SELECT ROW_NUMBER() OVER(ORDER BY NOTICE_NO DESC) AS R, V2.*
+		FROM ( SELECT *
+				FROM NOTICE
+				WHERE CLUB_NO = 2
+				ORDER BY NOTICE_REGDATE DESC
+			 ) V2
+	) V3
+WHERE R BETWEEN 21 AND 30
+
+
+
+
+
+
 
 
 
@@ -275,7 +340,7 @@ ORDER BY NOTICE_REGDATE DESC
 
 
 
-
+///////////////////////////////////////////////////////////////////////////////////// 결제 /////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -285,12 +350,12 @@ VALUES (seq_pay_no.NEXTVAL, 'user03', 2, '1', '0', 10000, SYSDATE, 0, 20, '111')
 
 
 
-updateClubMember()
+updateClubMember() - 모임원 최대 수 증가
 UPDATE CLUB SET CLUB_MAX_MEMBER = CLUB_MAX_MEMBER + 10 WHERE CLUB_NO = 2
 
 
 
-updateClub()
+updateClub() - 모임 최대 수 증가
 UPDATE USERS SET JOIN_CLUB_LIMIT = JOIN_CLUB_LIMIT + 2 WHERE USER_ID = 'user03'
 
 

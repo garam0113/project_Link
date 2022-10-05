@@ -129,11 +129,23 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 왔다");
+		
 		// 모임게시물 좋아요하다 또는 좋아요 취소하다
-		sqlSession.update("ClubPostMapper.updateClubPostLike", clubPost);
-		// 좋아요 등록
-		sqlSession.insert("HeartMapper.insertHeart", heart);
+		sqlSession.update("ClubPostMapper.updateClubPost", clubPost);
+		
+		if(clubPost.getLikeCondition() == 1) {
+			System.out.println("여기오나?");
+			// 좋아요 등록
+			sqlSession.insert("HeartMapper.insertHeart", heart);
+		}else if(clubPost.getLikeCondition() == -1) {
+			System.out.println("여기는?");
+			// 좋아요 삭제
+			sqlSession.delete("HeartMapper.deleteHeart", heart);
+		}
+
+		// 모임게시물 상세보기
 		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
+		
 		return clubPost.getClubPostLikeCount();
 	}// end of updateClubPostLike(Heart heart)
 
@@ -142,6 +154,9 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 왔다");
 		// 모임게시물 댓글 등록
 		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
+		
+		// 모임게시물 댓글 개수 증가
+		sqlSession.insert("ClubPostMapper.updateClubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo()));
 		// 모임게시물 글 작성자에게 알림
 		//sqlSession.insert("Report_PushMapper.addPush", comment);
 		// 가장 최근 모임게시물 댓글 번호 가져온다
@@ -208,7 +223,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");
-		System.out.println(map.get("notice"));
 		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
 		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
 		return map;
