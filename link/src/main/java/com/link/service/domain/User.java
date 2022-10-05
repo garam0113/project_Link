@@ -37,8 +37,9 @@ public class User {
 	private int joinClubCount;
 	private int joinClubLimit;
 	private String fbState;
-	private String fbtype;
+	private String fbType;
 	private Boolean loginStart;
+	private String snsUserId;
 	
 	public String getUserId() {
 		return userId;
@@ -238,11 +239,11 @@ public class User {
 	public void setFbState(String fbState) {
 		this.fbState = fbState;
 	}
-	public String getFbtype() {
-		return fbtype;
+	public String getFbType() {
+		return fbType;
 	}
-	public void setFbtype(String fbtype) {
-		this.fbtype = fbtype;
+	public void setFbType(String fbType) {
+		this.fbType = fbType;
 	}
 	public Boolean getLoginStart() {
 		return loginStart;
@@ -250,19 +251,26 @@ public class User {
 	public void setLoginStart(Boolean loginStart) {
 		this.loginStart = loginStart;
 	}
+	
+	public String getSnsUserId() {
+		return snsUserId;
+	}
+	public void setSnsUserId(String snsUserId) {
+		this.snsUserId = snsUserId;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", receiveId=" + receiveId + ", password=" + password + ", name=" + name
 				+ ", rrn=" + rrn + ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email + ", role=" + role
-				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profilewriting=" + profileWriting
+				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profileWriting=" + profileWriting
 				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
 				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
 				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
-				+ ", outUserType=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
+				+ ", outUserState=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
-				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbtype=" + fbtype
-				+ ", loginStart=" + loginStart + "]";
+				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbType=" + fbType
+				+ ", loginStart=" + loginStart + ", snsUserId=" + snsUserId + "]";
 	}
 	
 }

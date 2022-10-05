@@ -40,6 +40,7 @@
 		<result property="pushCondition" 		column="push_condition" 		jdbcType="CHAR" />
 		<result property="joinClubCount" 		column="join_club_count" 		jdbcType="NUMERIC" />
 		<result property="joinClubLimit" 		column="join_club_limit" 		jdbcType="NUMERIC" />
+		<result property="snsUserId" 		column="sns_user_Id" 		jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="select-list">
@@ -48,7 +49,7 @@
 		profile_image, profile_writing, area1, area2, area3, category1, category2, category3, 
 		penalty_type, report_count, stop_start_date, stop_end_date, out_user_state, out_user_date, 
 		add_user_type, logout_date, add_user_date, total_visit_count, open_condition, push_condition, 
-		join_club_count, join_club_limit
+		join_club_count, join_club_limit, sns_user_Id
 		FROM users
 		<where>
 		<if test="(searchCondition == 0 and searchKeyword == '') or (searchCondition == 0 and searchKeyword != '')" >
@@ -69,13 +70,13 @@
 	 	INSERT
 		INTO users	(	
 						user_id, password, name, gender, rrn, phone_no, email, nickname, profile_writing,
-						area1, area2, area3, category1, category2, category3, add_user_date, add_user_type	
+						area1, area2, area3, category1, category2, category3, add_user_date, add_user_type, sns_user_Id	
 					) 
 		VALUES		(	
 						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:VARCHAR}, 
 						#{phoneNo:VARCHAR}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
 						#{area1:VARCHAR} , #{area2:VARCHAR} , #{area3:VARCHAR} , #{category1:VARCHAR} , 
-						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE, #{addType:CHAR}
+						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE, #{addType:CHAR}, #{snsUserId:VARCHAR}
 					)
 	</insert>
 
@@ -96,11 +97,14 @@
 		user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
 		profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 
 		stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date, 
-		total_visit_count, open_condition, push_condition, join_club_count, join_club_limit
+		total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
 		FROM users
 		<where>
 			<if test="userId != null">
 				user_id = #{userId}
+			</if>
+			<if test="snsUserId != null and userId == null">
+				sns_user_id = #{snsUserId}
 			</if>
 			<if test="name != null and rrn != null">
 				name = #{name} and rrn = #{rrn}

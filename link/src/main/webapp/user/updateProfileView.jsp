@@ -43,7 +43,7 @@ body>div.container {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 
-		<h1 class="bg-primary text-center">회 원 가 입</h1>
+		<h1 class="bg-primary text-center">프로필작성</h1>
 
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
@@ -54,8 +54,12 @@ body>div.container {
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="userId" name="userId"
 						placeholder="중복확인하세요" readonly> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">영어, 숫자조합 5~8자</strong>
+						class="help-block"> <strong class="text-danger">입력전
+							중복확인 부터..</strong>
 					</span>
+				</div>
+				<div class="col-sm-3">
+					<button type="button" class="btn btn-info">중복확인</button>
 				</div>
 			</div>
 
@@ -63,9 +67,7 @@ body>div.container {
 				<label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 				<div class="col-sm-4">
 					<input type="password" class="form-control" id="password"
-						name="password" placeholder="비밀번호"><span id="helpBlock"
-						class="help-block"> <strong class="text-danger">영어, 숫자조합 6~12자</strong>
-					</span>
+						name="password" placeholder="비밀번호">
 				</div>
 			</div>
 
@@ -74,38 +76,15 @@ body>div.container {
 					class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 				<div class="col-sm-4">
 					<input type="password" class="form-control" id="password2"
-						name="password2" placeholder="비밀번호 확인"><span id="helpBlock"
-						class="help-block"> <strong class="text-danger">영어, 숫자조합 6~12자</strong>
-					</span>
+						name="password2" placeholder="비밀번호 확인">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 				<div class="col-sm-4">
-					<input type="password" class="form-control" id="name"
-						name="name" placeholder="회원이름">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="nickName" name="nickName"
-						placeholder="닉네임"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">"
-							특수문자 사용 불가, 1~10자</strong>
-					</span>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
-				<div class="col-sm-4">
-					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="남자">&nbsp;남자
-					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="여자">&nbsp;여자
+					<input type="password" class="form-control" id="userName"
+						name="userName" placeholder="회원이름">
 				</div>
 			</div>
 
@@ -121,6 +100,14 @@ body>div.container {
 			</div>
 
 			<div class="form-group">
+				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="addr" name="addr"
+						placeholder="주소">
+				</div>
+			</div>
+
+			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 				<div class="col-sm-2">
 					<select class="form-control" name="phone1" id="phone1">
@@ -131,7 +118,6 @@ body>div.container {
 						<option value="019">019</option>
 					</select>
 				</div>
-			
 				<div class="col-sm-2">
 					<input type="text" class="form-control" id="phone2" name="phone2"
 						placeholder="번호">
@@ -156,52 +142,11 @@ body>div.container {
 					<button type="button" id="checkBtn" class="btn ">인증번호확인</button>
 				</div>
 			</div>
-			
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="email" name="email"
 						placeholder="이메일">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">활동영역</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="area1" name="area1"
-						placeholder="활동영역">
-					<input type="text" class="form-control" id="area2" name="area2"
-						placeholder="활동영역">
-					<input type="text" class="form-control" id="area3" name="area3"
-						placeholder="활동영역">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">카테고리</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="category1" name="category1"
-						placeholder="카테고리">
-					<input type="text" class="form-control" id="category2" name="category2"
-						placeholder="카테고리">
-					<input type="text" class="form-control" id="category3" name="category3"
-						placeholder="카테고리">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">프로필글</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="profileWriting" name="profileWriting"
-						placeholder="프로필글">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">프로필사진</label>
-				<div class="col-sm-4">
-					<input type="file" class="form-file" id="profileImage" name="profileImage"
-						placeholder="프로필사진">
 				</div>
 			</div>
 

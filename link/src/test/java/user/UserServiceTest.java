@@ -1,8 +1,11 @@
 package user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.link.common.Search;
 import com.link.service.domain.User;
 import com.link.service.user.UserService;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:config/context-*.xml"})
@@ -40,7 +47,7 @@ public class UserServiceTest {
 		System.out.println("==============================\n");
 	}
 
-	@Test
+//	@Test
 	public void testSnsAddUser() throws Exception {
 		// TODO Auto-generated constructor stub
 		
@@ -160,6 +167,111 @@ public class UserServiceTest {
 		List<User> list = (List<User>) map.get("userList");
 		
 		System.out.println("select 결과 : "+list);
+		System.out.println("==============================\n");
+	}
+	
+//	@Test
+	public void testUpdatePassword() throws Exception{
+		System.out.println("\n===================================");
+		
+		User user1 = new User();
+		
+		user1.setUserId("user01");
+		
+		user1 = userService.getUser(user1);
+		
+		System.out.println("변경 전 Data : "+user1.getPassword());
+		
+		Random rand = new Random();
+		String password = "";
+		
+		for(int i=0; i<6; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			password += ran;	//Random한 숫자 6자리 생성
+		}
+		
+		User user = new User();
+		
+		user.setUserId("user01");
+		user.setPassword(password);	//임의의 6자리 숫자 Set
+		
+		userService.updateUser(user);	//임의의 password DB에 update
+		
+		User getUser = userService.getUser(user);
+		
+		System.out.println(getUser.getPassword());
+		
+		System.out.println("==============================\n");
+	}
+	
+//	@Test
+	public void testPhoneNo() throws Exception{
+		
+		System.out.println("\n===================================");
+		
+		User user1 = new User();
+		
+		user1.setUserId("user01");
+		
+		user1 = userService.getUser(user1);
+		
+		System.out.println("변경 전 Data : "+user1.getPhoneNo());
+		
+		User user = new User();
+		
+		user.setUserId("user01");
+		
+		user.setPhoneNo("01048229119");
+		
+		userService.updateUser(user);
+		
+		User getUser = userService.getUser(user);
+		
+		System.out.println(getUser.getPhoneNo());
+		
+		System.out.println("==============================\n");
+		
+	}
+	
+	@Test
+	public @ResponseBody
+	void sendSMS() throws Exception{
+		
+		System.out.println("\n===================================");
+		
+		Random rand = new Random();
+		String numStr = "";
+		
+		for (int i = 0; i < 4; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr += ran;
+		}
+		
+		String phoneNo = "01099636601";
+		
+		System.out.println("수신자 번호 : "+phoneNo);
+		System.out.println("인증번호 : "+numStr);
+		
+		String api_key = "NCSLBJQF2TUBD2NO";
+		String api_secret = "Y7LH5YMNTFYTCWBHKDJ2YEJRTFOPE9EN";
+		Message coolsms = new Message(api_key,api_secret);
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", phoneNo);
+		params.put("from", "01099636601");
+		params.put("type", "SMS");
+		params.put("text", "Link에서 보낸 인증번호["+numStr+"]");
+		params.put("app_version", "test app 1,2");
+		
+		try {
+			JSONObject obj = (JSONObject) coolsms.send(params);
+			System.out.println(obj.toString());
+		}catch (CoolsmsException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+	
 		System.out.println("==============================\n");
 	}
 }
