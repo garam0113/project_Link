@@ -29,7 +29,6 @@
 		<typeAlias alias="block" type="com.link.service.domain.Block" />
 		<typeAlias alias="heart" type="com.link.service.domain.Heart" />
 		<typeAlias alias="participant" type="com.link.service.domain.Participant"/>
-
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
