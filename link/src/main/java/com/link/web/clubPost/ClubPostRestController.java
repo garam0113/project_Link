@@ -67,6 +67,10 @@ public class ClubPostRestController {
 		System.out.println("/updateClubPostLike : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		return clubPostServiceImpl.updateClubPostLike(clubPost, heart);
 	}
+	
+	
+	
+	
 
 	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)
 	public Map<String, Object> getClubPostListMyHome() throws Exception {
@@ -76,11 +80,19 @@ public class ClubPostRestController {
 		return clubPostServiceImpl.getClubPostListMyHome(userId);
 	}
 	
+	
+	
+	
+	
 	@RequestMapping(value = "addReport", method = RequestMethod.POST)
 	public void addReport(@ModelAttribute ClubPost clubPost) throws Exception {
 		System.out.println("/addReport : POST : 모임게시물 또는 모임게시물 댓글을 신고, 작성자 이외에 가능, 신고되었다 아직 신고승인 전");
 		// reportServiceImpl.addReport(); 신고 서비스에 신고를 보낸다
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "addClubPostComment", method = RequestMethod.POST)
 	public Comment addClubPostComment(@ModelAttribute Comment comment) throws Exception {
@@ -111,6 +123,14 @@ public class ClubPostRestController {
 		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 모임게시물 댓글 리스트");
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

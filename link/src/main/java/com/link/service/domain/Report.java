@@ -5,23 +5,37 @@ import java.sql.Date;
 public class Report{
 	
 
-	private int reportNo;
-	private String reportTitle;
-	private String reportContent;
-	private int reportSource;
-	private User user1;
-	private User user2;
-	private int reportCode;
-	private int reportReason;
-	private int reportCondition;
-	private Date reportRegdate;
-	private Date handleDate;
-	private String reportImage1;
-	private String reportImage2;
-	
-	
+	private int reportNo;				//신고 번호
+	private String reportTitle;			//신고 제목
+	private String reportContent;		//신고 내용
+	private int reportSource;			//신고 출처
+	private User user1;					//신고 한 사람
+	private User user2;					//신고 받은 사람
+	private int reportReason;			//신고 사유
+	private int reportCondition;		//신고 진행상황
+	private Date reportRegDate;			//신고 등록 날짜
+	private Date handleDate;			//신고 처리 날짜
+	private String reportImage1;		//신고 이미지1
+	private String reportImage2;		//신고 이미지2
+	private int type;					//신고/알림 타입
+	private ClubPost clubPost;			//모임 게시물
+	private Comment clubPostComment;    //모임 게시물 댓글
+	private Feed feed;					//피드
+	private Comment feedCommentNo; 		//피드 댓글	
+	private Live live;					//라이브
+ 	
+	/* private Chatting chatiing; */
+ 	
+ 	
+ 	
 	public int getReportNo() {
 		return reportNo;
+	}
+	public Live getLive() {
+		return live;
+	}
+	public void setLive(Live live) {
+		this.live = live;
 	}
 	public void setReportNo(int reportNo) {
 		this.reportNo = reportNo;
@@ -56,12 +70,6 @@ public class Report{
 	public void setUser2(User user2) {
 		this.user2 = user2;
 	}
-	public int getReportCode() {
-		return reportCode;
-	}
-	public void setReportCode(int reportCode) {
-		this.reportCode = reportCode;
-	}
 	public int getReportReason() {
 		return reportReason;
 	}
@@ -74,11 +82,11 @@ public class Report{
 	public void setReportCondition(int reportCondition) {
 		this.reportCondition = reportCondition;
 	}
-	public Date getReportRegdate() {
-		return reportRegdate;
+	public Date getReportRegDate() {
+		return reportRegDate;
 	}
-	public void setReportRegdate(Date reportRegdate) {
-		this.reportRegdate = reportRegdate;
+	public void setReportRegDate(Date reportRegDate) {
+		this.reportRegDate = reportRegDate;
 	}
 	public Date getHandleDate() {
 		return handleDate;
@@ -98,14 +106,50 @@ public class Report{
 	public void setReportImage2(String reportImage2) {
 		this.reportImage2 = reportImage2;
 	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public ClubPost getClubPost() {
+		return clubPost;
+	}
+	public void setClubPost(ClubPost clubPost) {
+		this.clubPost = clubPost;
+	}
+	public Comment getClubPostComment() {
+		return clubPostComment;
+	}
+	public void setClubPostComment(Comment clubPostComment) {
+		this.clubPostComment = clubPostComment;
+	}
+	public Feed getFeed() {
+		return feed;
+	}
+	public void setFeed(Feed feed) {
+		this.feed = feed;
+	}
+	public Comment getFeedCommentNo() {
+		return feedCommentNo;
+	}
+	public void setFeedCommentNo(Comment feedCommentNo) {
+		this.feedCommentNo = feedCommentNo;
+	}
+	
+	
 	
 	@Override
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", reportTitle=" + reportTitle + ", reportContent=" + reportContent
-				+ ", reportSource=" + reportSource + ", user1=" + user1 + ", user2=" + user2 + ", reportCode="
-				+ reportCode + ", reportReason=" + reportReason + ", reportCondition=" + reportCondition
-				+ ", reportRegdate=" + reportRegdate + ", handleDate=" + handleDate + ", reportImage1=" + reportImage1
-				+ ", reportImage2=" + reportImage2 + "]";
+				+ ", reportSource=" + reportSource + ", user1=" + user1 + ", user2=" + user2 + ", reportReason="
+				+ reportReason + ", reportCondition=" + reportCondition + ", reportRegDate=" + reportRegDate
+				+ ", handleDate=" + handleDate + ", reportImage1=" + reportImage1 + ", reportImage2=" + reportImage2
+				+ ", type=" + type + ", clubPost=" + clubPost + ", clubPostComment=" + clubPostComment + ", feed="
+				+ feed + ", feedCommentNo=" + feedCommentNo + "]";
 	}
+	
+
+
 
 }

@@ -8,14 +8,14 @@ public class User {
 	private String receiveId;
 	private String password;
 	private String name;
-	private int rrn;
+	private String rrn;
 	private String gender;
-	private int phoneNo;
+	private String phoneNo;
 	private String email;
 	private String role;
 	private String nickName;
 	private String profileImage;
-	private String profilewriting;
+	private String profileWriting;
 	private String area1;
 	private String area2;
 	private String area3;
@@ -35,7 +35,9 @@ public class User {
 	private String openCondition;
 	private String pushCondition;
 	private int joinClubCount;
-	private String followState;
+	private int joinClubLimit;
+	private String fbState;
+	private String fbtype;
 	private Boolean loginStart;
 	
 	public String getUserId() {
@@ -62,10 +64,10 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getRrn() {
+	public String getRrn() {
 		return rrn;
 	}
-	public void setRrn(int rrn) {
+	public void setRrn(String rrn) {
 		this.rrn = rrn;
 	}
 	public String getGender() {
@@ -74,10 +76,10 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {
@@ -104,11 +106,11 @@ public class User {
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-	public String getProfilewriting() {
-		return profilewriting;
+	public String getProfileWriting() {
+		return profileWriting;
 	}
-	public void setProfilewriting(String profilewriting) {
-		this.profilewriting = profilewriting;
+	public void setProfilewriting(String profileWriting) {
+		this.profileWriting = profileWriting;
 	}
 	public String getArea1() {
 		return area1;
@@ -224,11 +226,23 @@ public class User {
 	public void setJoinClubCount(int joinClubCount) {
 		this.joinClubCount = joinClubCount;
 	}
-	public String getFollowState() {
-		return followState;
+	public int getJoinClubLimit() {
+		return joinClubLimit;
 	}
-	public void setFollowState(String followState) {
-		this.followState = followState;
+	public void setJoinClubLimit(int joinClubLimit) {
+		this.joinClubLimit = joinClubLimit;
+	}
+	public String getFbState() {
+		return fbState;
+	}
+	public void setFbState(String fbState) {
+		this.fbState = fbState;
+	}
+	public String getFbtype() {
+		return fbtype;
+	}
+	public void setFbtype(String fbtype) {
+		this.fbtype = fbtype;
 	}
 	public Boolean getLoginStart() {
 		return loginStart;
@@ -236,78 +250,19 @@ public class User {
 	public void setLoginStart(Boolean loginStart) {
 		this.loginStart = loginStart;
 	}
-	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [userId=");
-		builder.append(userId);
-		builder.append(", receiveId=");
-		builder.append(receiveId);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", rrn=");
-		builder.append(rrn);
-		builder.append(", gender=");
-		builder.append(gender);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", role=");
-		builder.append(role);
-		builder.append(", nickName=");
-		builder.append(nickName);
-		builder.append(", profileImage=");
-		builder.append(profileImage);
-		builder.append(", profilewriting=");
-		builder.append(profilewriting);
-		builder.append(", area1=");
-		builder.append(area1);
-		builder.append(", area2=");
-		builder.append(area2);
-		builder.append(", area3=");
-		builder.append(area3);
-		builder.append(", category1=");
-		builder.append(category1);
-		builder.append(", category2=");
-		builder.append(category2);
-		builder.append(", category3=");
-		builder.append(category3);
-		builder.append(", penaltyType=");
-		builder.append(penaltyType);
-		builder.append(", reportCount=");
-		builder.append(reportCount);
-		builder.append(", stopStartDate=");
-		builder.append(stopStartDate);
-		builder.append(", stopEndDate=");
-		builder.append(stopEndDate);
-		builder.append(", outUserType=");
-		builder.append(outUserType);
-		builder.append(", outUserDate=");
-		builder.append(outUserDate);
-		builder.append(", addType=");
-		builder.append(addType);
-		builder.append(", logoutDate=");
-		builder.append(logoutDate);
-		builder.append(", addUserDate=");
-		builder.append(addUserDate);
-		builder.append(", totalVisitCount=");
-		builder.append(totalVisitCount);
-		builder.append(", openCondition=");
-		builder.append(openCondition);
-		builder.append(", pushCondition=");
-		builder.append(pushCondition);
-		builder.append(", joinClubCount=");
-		builder.append(joinClubCount);
-		builder.append(", followState=");
-		builder.append(followState);
-		builder.append(", loginStart=");
-		builder.append(loginStart);
-		builder.append("]");
-		return builder.toString();
+		return "User [userId=" + userId + ", receiveId=" + receiveId + ", password=" + password + ", name=" + name
+				+ ", rrn=" + rrn + ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email + ", role=" + role
+				+ ", nickName=" + nickName + ", profileImage=" + profileImage + ", profilewriting=" + profileWriting
+				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
+				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
+				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
+				+ ", outUserType=" + outUserType + ", outUserDate=" + outUserDate + ", addType=" + addType
+				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
+				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
+				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbtype=" + fbtype
+				+ ", loginStart=" + loginStart + "]";
 	}
 	
 }
