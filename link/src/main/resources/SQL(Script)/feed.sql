@@ -109,7 +109,7 @@ SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_lik
 
 
 
-
+SELECT * FROM HEART;
 
 
 

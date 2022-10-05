@@ -27,8 +27,28 @@
 	
 	<!-- 좋아요 취소하다 -->
 	<delete id="deleteHeart" parameterType="heart">
-		DELETE FROM HEART WHERE SOURCE_NO = #{ source_no }
+		DELETE FROM HEART 
+		WHERE USER_ID 		= #{ userId }
+		AND TRIM(SOURCE)	= #{ source }
+		AND SOURCE_NO 		= #{ sourceNo }
 	</delete>
+	
+	
+	
+	<!-- 좋아요 개수 -->
+	<select id="getTotalHeart" parameterType="heart"		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM (
+				SELECT
+				heart_no,
+				user_id,
+				source,
+				source_no
+				FROM HEART
+				WHERE SOURCE		= #{ source }
+				AND SOURCE_NO		= #{ sourceNo }	)
+	</select>
 	
 	
 	 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.feed.FeedDAO;
 import com.link.service.feed.FeedService;
@@ -49,10 +50,14 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		
 		Feed feed = feedDAO.getFeed((Integer)map.get("feedNo"));
-		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		List<Comment> commentList = feedDAO.getFeedCommentList(map);
+		int heartCount = feedDAO.getTotalFeedHeart((Heart) map.get("heart"));
+		int commentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		map.put("feed", feed);
-		map.put("comment", comment);
+		map.put("commentList", commentList);
+		map.put("heartCount", heartCount);
+		map.put("commentCount", commentCount);
 		
 		return map;
 	}
@@ -110,12 +115,16 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Feed> feed = feedDAO.getFeedList(map);
+		List<Feed> feedList = feedDAO.getFeedList(map);
 		int totalFeedCount = feedDAO.getTotalFeedCount((Search) map.get("search"));
+		int heartCount = feedDAO.getTotalFeedHeart((Heart) map.get("heart"));
+		int commentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("feed", feed);
+		returnMap.put("feedList", feedList);
 		returnMap.put("totalFeedCount", totalFeedCount);
+		returnMap.put("heartCount", heartCount);
+		returnMap.put("commentCount", commentCount);
 		
 		return returnMap;
 	}
@@ -124,11 +133,11 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Comment> comment = feedDAO.getFeedCommentList(map);
+		List<Comment> commentList = feedDAO.getFeedCommentList(map);
 		int totalFeedCommentCount = feedDAO.getTotalFeedCommentCount(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("comment", comment);
+		returnMap.put("commentList", commentList);
 		returnMap.put("totalFeedCommentCount", totalFeedCommentCount);
 		
 		return returnMap;
@@ -159,27 +168,27 @@ public class FeedServiceImpl implements FeedService {
 	
 
 	@Override
-	public void addFeedLike(Map<String, Object> map) throws Exception {
+	public void addFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedLike(map);
+		feedDAO.addFeedHeart((Heart)map.get("heart"));
 	}
 
 	@Override
-	public void deleteFeedLike(Map<String, Object> map) throws Exception {
+	public void deleteFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.deleteFeedLike(map);
+		feedDAO.deleteFeedHeart((Heart)map.get("heart"));
 	}
 
 	@Override
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception {
+	public void addFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedCommentLike(map);
+		feedDAO.addFeedCommentHeart((Heart)map.get("heart"));
 	}
 
 	@Override
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception {
+	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.deleteFeedCommentLike(map);
+		feedDAO.deleteFeedCommentHeart((Heart)map.get("heart"));
 	}
 
 

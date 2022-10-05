@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 
@@ -44,16 +45,24 @@ public class FeedServiceTest {
 
 	}
 	
-//	@Test
+	@Test
 	public void testGetFeed() throws Exception {
 		// 피드 조회
 		
+		Heart heart = new Heart();
+		heart.setUserId("user01");
+		heart.setSource("0");
+		heart.setSourceNo(13);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("feedNo", 13);
+		map.put("heart", heart);
 		
 		Feed feed = (Feed) feedService.getFeed(map).get("feed");
 		
 		Assert.assertEquals(13, feed.getFeedNo());
+		Assert.assertEquals(0, map.get("heartCount"));
+		Assert.assertEquals(0, map.get("commentCount"));
 		
 	}
 	
@@ -167,7 +176,7 @@ public class FeedServiceTest {
 		Assert.assertEquals("1", comment.getDeleteCondition().trim());
 	}
 	
-	@Test
+//	@Test
 	public void testGetFeedCommentList() throws Exception {
 		// 피드 댓글 리스트
 		
@@ -180,15 +189,35 @@ public class FeedServiceTest {
 		Assert.assertEquals(30, returnMap.get("totalFeedCommentCount"));
 	}
 	
-	public void testGetTotalFeedCommentCount() throws Exception {
-		// 피드에 작성된 댓글의 개수
+//	@Test
+	public void testAddFeedHeart() throws Exception {
+		// 피드 좋아요 추가
 		
-		/*
-		 * feed 15 parent 35
-		 */
+		Heart heart = new Heart();
+		heart.setUserId("user01");
+		heart.setSource("0");
+		heart.setSourceNo(5);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
 		
+		feedService.addFeedHeart(map);
 		
+	}
+	
+//	@Test
+	public void testDeleteFeedHeart() throws Exception {
+		// 피드 좋아요 취소
+		
+		Heart heart = new Heart();
+		heart.setUserId("user01");
+		heart.setSource("0");
+		heart.setSourceNo(5);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
+		
+		feedService.deleteFeedHeart(map);
 	}
 	
 }

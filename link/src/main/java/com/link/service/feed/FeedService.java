@@ -1,6 +1,5 @@
 package com.link.service.feed;
 
-import java.util.List;
 import java.util.Map;
 
 import com.link.service.domain.Comment;
@@ -85,16 +84,16 @@ public interface FeedService {
 	 */
 	
 	// 피드 좋아요
-	public void addFeedLike(Map<String, Object> map) throws Exception;
+	public void addFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 싫어요
-	public void deleteFeedLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 좋아요
-	public void addFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void addFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 싫어요
-	public void deleteFeedCommentLike(Map<String, Object> map) throws Exception;
+	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	
 	
