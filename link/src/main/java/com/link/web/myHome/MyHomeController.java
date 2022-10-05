@@ -59,15 +59,17 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/getMyHome : GET");
 		Search search = new Search();
-
-		user = userService.getUser(user.getUserId());
+        
+		user = userService.getUser(user);
 		club = clubService.getClub(club.getClubNo());
-		Map<String, Object> map = feedService.getFeedList(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map = feedService.getFeedList(map);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("club", club);
 		model.addAttribute("search", search);
-		model.addAttribute("feed", map.get("feed"));
+		model.addAttribute("feedList", map.get("feedList"));
 	
 		return "forward:/myHome/getMyHome.jsp";
 	}  
@@ -76,7 +78,8 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/getProfile : GET");
 		
-		User user = userService.getUser(userId);
+		User user = new User(); 
+		user = userService.getUser(user);
 		model.addAttribute("user", user);
 		
 		return "forward:/myHome/getProfile.jsp";
@@ -99,9 +102,8 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/updateProfile : POST");
 		
-		userService.updateProfile(user);
-		
-		user = userService.getUser(user.getUserId());
+		userService.updateUser(user);
+		user = userService.getUser(user);
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		if(sessionId.equals(user.getUserId())){
@@ -118,7 +120,7 @@ public class MyHomeController {
 		System.out.println("/user/updateMyHomeOpenCondition : POST");
 		
 		myHomeService.updateMyHomeOpenCondition(user);
-		user = userService.getUser(user.getUserId());
+		user = userService.getUser(user);
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		if(sessionId.equals(user.getUserId())){
@@ -136,7 +138,7 @@ public class MyHomeController {
 		System.out.println("/user/updateMyHomePushCondition : POST");
 		
 		myHomeService.updateMyHomePushCondition(user);
-		user = userService.getUser(user.getUserId());
+		user = userService.getUser(user);
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		if(sessionId.equals(user.getUserId())){
