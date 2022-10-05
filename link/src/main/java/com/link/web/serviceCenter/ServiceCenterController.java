@@ -32,7 +32,7 @@ import com.link.service.serviceCenter.ServiceCenterService;
 public class ServiceCenterController {
 
 	@Autowired
-	@Qualifier("ServiceCenterImpl")
+	@Qualifier("ServiceCenterServiceImpl")
 	private ServiceCenterService serviceCenterService;
 	
 	
