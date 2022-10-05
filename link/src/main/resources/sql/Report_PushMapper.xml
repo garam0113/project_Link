@@ -8,31 +8,97 @@
  	
  	
 	<resultMap id="report_PushSelectMap" type="report">
-	<result property="reportNo" column="no" jdbcType="NUMERIC" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	<result property="reportTitle" column="title" jdbcType="VARCHAR" />
-	
-	
-	
+	<result property="reportNo" column="no" 					jdbcType="NUMERIC" />
+	<result property="reportTitle" column="title" 				jdbcType="VARCHAR" />
+	<result property="reportContent" column="content" 			jdbcType="VARCHAR" />
+	<result property="reportSource" column="report_source"  	jdbcType="VARCHAR" />
+	<result property="reportRegdate" column="report_regdate" 	jdbcType="DATE" />
+	<result property="reportHandleDate" column="handle_date"	 jdbcType="DATE" />	
+	<result property="reportImage1" column="report_image1" 		jdbcType="VARCHAR" />
+	<result property="reportImage2" column="report_image2"	 	jdbcType="VARCHAR" />
+	<result property="type"			column="type"		  		 jdbcType="VARCHAR" />
+	<result property="reportCondition" column="report_condition" jdbcType="VARCHAR" />
+	<result property="reportReason" column="report_reason" 		jdbcType="VARCHAR" />
 
-	<association property="userId1" javaType="user">
+	
+	<association property="user1" javaType="user">
 		<result property="userId" column="user_id1" jdbcType="VARCHAR"/>
 	</association>
+	
+	<association property="user2" javaType="user">
+		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
+	</association>
+<!-- FK들 받아야 됨. ex) 모임게시물  등등 -->	
+	
+	<association property="clubPost" javaType="clubpost">
+		<result property="clubPostNo" column="club_post_no" jdbcType="NUMERIC"/>
+	</association>
+	
+		
+	<association property="clubPostComment" javaType="comment">
+		<result property="clubPostCommentNo"    column="club_post_comment_no" jdbcType="NUMERIC"/>
+	</association>
+	
+	
+	<association property="feed" javaType="feed">
+		<result property="feedNo" column="feed_no" jdbcType="NUMERIC"/>
+	</association>
+	
+	<association property="feedComment" javaType="comment">
+		<result property="feedCommentNo" column="feed_comment_no" jdbcType="NUMERIC"/>
+	</association>
+	
+
+
+<!--    라이브와 채팅 안했음	
 	<association property="userId2" javaType="user">
 		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
 	</association>
+	
+	<association property="userId2" javaType="user">
+		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
+	</association>
+	
+ -->
+	
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	
+	<insert id="addReport" parameterType="report">
+	INSERT INTO report_push
+	( no, title, content, report_source, club_post_no, club_post_comment_no, feed_no, feed_comment_no, live_no, user_id1,
+	user_id2, report_regdate, report_image1, report_image2, handle_date, type, report_reason, report_condition)
+
+	VALUES (seq_report_push_no.nextval, #{reportTitle}, #{reportContent}, #{clubPost.clubPostNo}, #{clubPostComment.clubPostCommentNo},
+	#{feed.feedNo}, #{feedComment.feedCommentNo}, #{live_no}, #{user1.userId}, #{user2.userId}, SYSDATE, #{reportImage1}, #{reportImage2},
+ 	NULL, #{type}, #{reportReason}, #{reportCondition} 
+	
+	</insert>
 	 
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select id="getReport" parameterType="int" resultMap="report_PushSelectMap" >
+		SELECT r.*, u.report_count
+        FROM report_push r, users u
+        WHERE r.#{user_id2}=u.{user_id2};
+	 </select>
+
+	<!--  SQL : 신고처리 하기 -->
+	<update id="addReportCount" parameterType="report">
+	UPDATE users
+	<set>
+	report_count = report_count + 1,
+	</set>
+	WHERE user_id = #{user_id2}
+	</update>
+	
+	
+
+
+
+
+
 	 
 	 
 </mapper>

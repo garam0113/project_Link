@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
@@ -57,19 +61,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 		map.put("userId", userId);
 		map.put("clubNo", clubNo);
 		return clubPostDAOImpl.getClubPostListMySelf(map);
-	}// end of getClubPostListMySelf(String userId, int clubNo)
+	}// end of getClubPostListMySelf(String userId, int clubNo)	
 
 	@Override
 	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 도착");
 		return clubPostDAOImpl.getClubPost(clubPost);
 	}// end of getClubPost(ClubPost clubPost)
-
-	@Override
-	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
-		return clubPostDAOImpl.getClubPostCommentList(comment);
-	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
 	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
@@ -84,23 +82,41 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of deleteClubPost(ClubPost clubPost)
 
 	@Override
-	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
-		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
-		return clubPostDAOImpl.getClubPostListMyHome(userId);
-	}// end of getClubPostListMyHome(String userId)
-
-	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 도착");
 		heart.setUserId(clubPost.getUser().getUserId());
 		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
 	}// end of updateClubPostLike(Heart heart)
+	
+	
+	
+	
+
+	@Override
+	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
+		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
+		return clubPostDAOImpl.getClubPostListMyHome(userId);
+	}// end of getClubPostListMyHome(String userId)
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public Comment addClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 도착");
 		return clubPostDAOImpl.addClubPostComment(comment);
 	}// end of addClubPostComment(Comment comment)
+
+	@Override
+	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
+		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
+		return clubPostDAOImpl.getClubPostCommentList(comment);
+	}// end of getClubPostCommentList(Comment comment)
 
 	@Override
 	public Comment getClubPostComment(Comment comment) throws Exception {
@@ -110,8 +126,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 
 	@Override
 	public Comment updateClubPostComment(Comment comment) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getClass() + ".updateClubPostComment(Comment comment) 도착");
+		return clubPostDAOImpl.updateClubPostComment(comment);
 	}
 
 	@Override
@@ -125,5 +141,59 @@ public class ClubPostServiceImpl implements ClubPostService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Map<String, Object> addClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".addClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.addClubNotice(map);
+	}// end of addClubNotice(Notice notice)
+
+	@Override
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.getClubNoticeList(map);
+	}// getClubNoticeList(Search search, Notice notice)
+
+	@Override
+	public Notice getClubNotice(Notice notice) throws Exception {
+		System.out.println(getClass() + ".getClubNotice(Notice notice) 도착");
+		return clubPostDAOImpl.getClubNotice(notice);
+	}// end of getClubNotice(Notice notice)
+
+	@Override
+	public Map<String, Object> updateClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".updateClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.updateClubNotice(map);
+	}// updateClubNotice(Search search, Notice notice)
+
+	@Override
+	public Map<String, Object> deleteClubNotice(Search search, Notice notice) throws Exception {
+		System.out.println(getClass() + ".deleteClubNotice(Search search, Notice notice) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("notice", notice);
+		return clubPostDAOImpl.deleteClubNotice(map);
+	}// deleteClubNotice(Search search, Notice notice)
+
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
+		return clubPostDAOImpl.updateClubMember(pay, search);
+	}// updateClubMember(Pay pay)
+
+	@Override
+	public void addPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".addPay(Pay pay) 도착");
+		clubPostDAOImpl.addPay(pay);
+	}// addPay(Pay pay)
 
 }

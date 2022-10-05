@@ -27,12 +27,18 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public void addUser(User user) throws Exception {
-		
-		sqlSession.insert("UserMapper.addUser", user);
+	public int addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return sqlSession.insert("UserMapper.addUser", user);
 	}
+//	
+//	@Override
+//	public void addUser(User user) throws Exception {
+//		
+//		sqlSession.insert("UserMapper.addUser", user);
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public void addSnsUser(User user) throws Exception {
@@ -49,6 +55,13 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUser(String userId) throws Exception {
 		// TODO Auto-generated method stub
+		
+		try {
+			sqlSession.selectOne("UserMapper.getUser",userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return (User)sqlSession.selectOne("UserMapper.getUser",userId);
 	}
 
@@ -128,14 +141,14 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne("UserMapper.getTotalCount",search);
 	}
 	
-	public List<Report>getPushList(Search search) throws Exception{
-		return sqlSession.selectOne("Report_PushMapper.",search);
-	}
+//	public List<Report>getPushList(Search search) throws Exception{
+//		return sqlSession.selectOne("Report_PushMapper.",search);
+//	}
 
-	@Override
-	public int getPushTotalCount(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("Report_PushMapper.",search);
-	}
+//	@Override
+//	public int getPushTotalCount(Search search) throws Exception {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("Report_PushMapper.",search);
+//	}
 	
 }

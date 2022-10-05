@@ -51,6 +51,13 @@
 			
 		});
 		
+		$("td.ct_btn01:contains('등록')").bind("click", function() {
+			self.location = "../notice/addNoticeView.jsp";
+		})
+		
+		
+		
+		
 	});
 
 	
@@ -60,9 +67,7 @@
 
 <body>
 	
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" /> --%>
-   	<!-- ToolBar End /////////////////////////////////////-->
+
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -160,6 +165,44 @@
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
+	  
+	  <c:if test="${user.role == 'admin'}">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			style="margin-top: 10px;">
+			<tr>
+				<td width="53%"></td>
+				<td align="right">
+
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+
+							<c:if test="${user.role == 'admin'}">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="ct_write01"><input type="hidden"
+											id="Quantity" name="Quantity" value="1" /></td>
+									</tr>
+								</table>
+								<td width="30"></td>
+								<td background="/images/ct_btnbg02.gif" width="90"
+									class="ct_btn01" style="padding-top: 3px;">등록</td>
+							</c:if>
+							<td width="30"></td>
+
+							<td width="14" height="23">
+							<td background="/images/ct_btnbg02.gif" width="90"
+								class="ct_btn01" style="padding-top: 3px;">이전</td>
+
+							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
+								width="14" height="23"></td>
+
+						</tr>
+					</table>
+
+				</td>
+			</tr>
+		</table>
+								</c:if>
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
