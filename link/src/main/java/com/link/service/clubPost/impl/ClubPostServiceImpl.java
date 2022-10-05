@@ -185,15 +185,25 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// deleteClubNotice(Search search, Notice notice)
 
 	@Override
-	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
-		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
-		return clubPostDAOImpl.updateClubMember(pay, search);
-	}// updateClubMember(Pay pay)
-
-	@Override
 	public void addPay(Pay pay) throws Exception {
 		System.out.println(getClass() + ".addPay(Pay pay) 도착");
 		clubPostDAOImpl.addPay(pay);
 	}// addPay(Pay pay)
+
+	/*
+	@Override
+	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
+		System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
+		return clubPostDAOImpl.updateClubMember(pay, search);
+	}// updateClubMember(Pay pay)
+	*/
+
+	/*
+	@Override
+	public void updateClub(Pay pay) throws Exception {
+		System.out.println(getClass() + ".updateClub(Pay pay) 도착");
+		clubPostDAOImpl.updateClub(pay);
+	}// updateClub(Pay pay)
+	*/
 
 }
