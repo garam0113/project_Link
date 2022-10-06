@@ -7,14 +7,14 @@ VALUES (seq_club_no.nextval, 'user01', 'testClub', 'testDetail', sysdate, 1, 10,
 //모임가입신청
 addApprovalCondition()
 INSERT INTO club_user (club_user_no, user_id, club_no, application_reg_date, join_reg_date, member_role, approval_condition, join_greeting)
-VALUES (seq_club_user_no.nextval, 'user03',2, sysdate, null, null, null, '안녕하세요 테스트 가입인사입니다44');
+VALUES (seq_club_user_no.nextval, 'user03',3, sysdate, null, null, null, '안녕하세요 테스트 가입인사입니다44');
 
 //모임일정등록
 addMeeting()
 INSERT INTO meeting (meeting_no, club_no, add_meeting_user_id, meeting_title, meeting_content, meeting_date, meeting_place, meeting_time, meeting_weather, meeting_reg_date, meeting_member, meeting_maximum_member)
-VALUES (seq_meeting_no.nextval, 2, 'user01', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소', '테스트일정시간', '테스트날짜', sysdate, 1, 10);
+VALUES (seq_meeting_no.nextval, 2, 'user01', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소', '테스트일정시간', '테스트날씨', sysdate, 1, 10);
 INSERT INTO meeting (meeting_no, club_no, add_meeting_user_id, meeting_title, meeting_content, meeting_date, meeting_place, meeting_time, meeting_weather, meeting_reg_date, meeting_member, meeting_maximum_member)
-VALUES (seq_meeting_no.nextval, 9, 'user02', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소2', '테스트일정시간2', '테스트날짜2', sysdate, 1, 10);
+VALUES (seq_meeting_no.nextval, 2, 'user02', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소2', '테스트일정시간2', '테스트날씨2', sysdate, 1, 10);
 
 
 //모임일정 참여1
@@ -67,7 +67,15 @@ WHERE club_no=10;
 getClubList()
 SELECT 
 	club_no, user_id, club_title, club_detail, club_reg_date, club_image, current_member, club_max_member, club_category, club_area
-	FROM club;
+	FROM club
+	ORDER BY club_no ASC;
+
+	
+//내가 가입한 모임리스트
+SELECT
+	club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
+	FROM club_user
+	WHERE user_id = 'user02';
 	
 
 //전체모임 수

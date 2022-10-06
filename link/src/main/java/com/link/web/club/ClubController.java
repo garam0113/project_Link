@@ -1,6 +1,7 @@
 package com.link.web.club;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,20 +45,24 @@ public class ClubController {
 	@RequestMapping(value="addClub", method=RequestMethod.POST)
 	public String addClub(@ModelAttribute Club club, Model model, HttpSession httpSession) throws Exception {
 		
-		System.out.println("/addClub : POST");
+		System.out.println("club/addClub : POST");
 		
-		club.setUserId("user01");
+//		club.setUserId("user01");
 		
 		clubService.addClub(club);
 		return "forward:/club/getClub.jsp";
 	}
 	
-	/*@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@ModelAttribute Club club) throws Exception {
-		clubService.getClub(club.getClubNo());
+	@RequestMapping(value="getClub", method=RequestMethod.POST)
+	public String getClub(@ModelAttribute Club club, Model model) throws Exception {
+		
+		System.out.println("club/getClub : POST");
+		
+		clubService.addClub(club);
 		
 		return "forward:/club/getClub.jsp";
-	}*/
+	}
+	
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
 	public String getClub(@RequestParam("clubNo") String clubNo, Model model) throws Exception {
@@ -112,10 +117,12 @@ public class ClubController {
 		
 		Map<String, Object> map = clubService.getClubList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);
 		
-		model.addAttribute("list",map.get("list"));
+		
+		System.out.println("resultPage : "+resultPage);
+		
+		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
 		
@@ -132,43 +139,6 @@ public class ClubController {
 		clubService.addApprovalCondition(clubUser);
 		return "forward:/club/getClub.jsp";
 	}
-	
-	/*
-	//Rest로 이동
-	@RequestMapping(value="updateApprovalCondition", method = RequestMethod.POST)
-	public String updateApprovalCondition(@ModelAttribute ClubUser clubUser, Model model) throws Exception {
-		
-		System.out.println("club/updateApprovalCondition : POST");
-		
-		//Business Logic
-		clubService.updateApprovalCondition(clubUser);
-		
-		return "forward:/club:getClubMemberList.jsp";
-	} 
-	
-	//Rest로 이동
-	@RequestMapping(value="deleteClubMember", method = RequestMethod.GET)
-	public String deleteClubMember(@RequestParam(value="clubUserNo") int clubUserNo, Model model) throws Exception {
-		
-		System.out.println("deleteClub 시작");
-		System.out.println("clubUserNo = " + clubUserNo);
-		
-		clubService.deleteClubMember(clubUserNo);
-		
-		return "forward:/club/getClubMemberList.jsp";
-	}
-	
-	//Rest로 이동
-	@RequestMapping(value="updateMemberRole", method = RequestMethod.POST)
-	public String updateMemberRole(@ModelAttribute ClubUser clubUser, Model model) throws Exception {
-		
-		System.out.println("club/updateMemberRole : POST");
-		
-		//Business Logic
-		clubService.updateMemberRole(clubUser);
-		
-		return "forward:/club:updateMemberRole.jsp";
-	} */
 	
 	@RequestMapping(value="getClubMemberList")
 	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
@@ -195,12 +165,10 @@ public class ClubController {
 	@RequestMapping(value="addMeeting", method=RequestMethod.POST)
 	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession httpSession) throws Exception {
 		
-		System.out.println("/addMeeting : POST ");
-		
-		meeting.setAddMeetingUserId("user01");
-		
+		System.out.println("club/addMeeting : POST ");
+	
 		clubService.addMeeting(meeting);
-		return "forward:club/getMeetingList.jsp";
+		return "forward:club/getMeeting.jsp";
 		
 	}
 	
@@ -216,10 +184,11 @@ public class ClubController {
 		
 		Map<String, Object> map = clubService.getMeetingList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
 		
-		model.addAttribute("list",map.get("list"));
+		System.out.println("resultPage : "+resultPage);
+		
+		model.addAttribute("meetingList",map.get("meetingList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
 		
@@ -227,12 +196,15 @@ public class ClubController {
 		
 	}
 	
-//	@RequestMapping(value="getMeeting", method = RequestMethod.GET)
-//	public String getMeeting(@ModelAttribute Meeting meeting) throws Exception {
-//		clubService.getMeeting(meeting.getMeetingNo());
-//		
-//		return "forward:/club/getMeeting.jsp";
-//	}
+	@RequestMapping(value="getMeeting", method = RequestMethod.POST)
+	public String getMeeting(@ModelAttribute Meeting meeting) throws Exception {
+		
+		System.out.println("club/getMeeting : POST ");
+		
+		clubService.addMeeting(meeting);
+		
+		return "forward:/club/getMeeting.jsp";
+	}
 	
 	@RequestMapping(value="getMeeting", method=RequestMethod.GET)
 	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model) throws Exception {
@@ -261,5 +233,4 @@ public class ClubController {
 		
 		return "forward:/club/getMeetingList.jsp";
 	}
-	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.CommonUtil;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
@@ -61,13 +62,40 @@ public class ClubPostRestController {
 	
 	
 	
-	@RequestMapping(value = "getClubPostList", method = RequestMethod.POST)
-	public Map<String, Object> getClubPostList(@RequestBody Search search, @RequestParam int clubNo, ClubPost clubPost, HttpSession session) throws Exception {
+	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
+	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, HttpSession session, Search search) throws Exception {
 		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
 		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+		
+		// 모임게시물 탭 클릭했을때 currentPage는 null이다
+		int currentPage = 1;
+
+		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
+		if (search.getCurrentPage() != 0) {
+			currentPage = search.getCurrentPage();
+		}
+
+		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
+		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
+		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		
+		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
+		if (!search.getSearchCondition().trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
+			searchKeyword = "";
+		}
+		
+		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getOrder());
+		
+		
+		
+		
+		
+		
+		
 		clubPost.setClubNo(clubNo);
 		clubPost.setUser((User) session.getAttribute("user"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		search.setOrder(order);
 		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 
