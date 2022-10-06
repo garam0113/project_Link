@@ -282,7 +282,7 @@ public class UserServiceTest {
 		}
 		}	
 		
-	@Test
+//	@Test
 	public void testAddPush() throws Exception{
 		
 		System.out.println("\n===================================");
@@ -295,11 +295,10 @@ public class UserServiceTest {
 		user1.setUserId("user02");
 		feed.setFeedNo(2);
 		user2.setUserId("user01");
-		push.setReportTitle("알림");
 		push.setUser1(user1);
 		push.setUser2(user2);
 		push.setFeed(feed);
-		push.setReportContent("User02님이 피드를 등록했습니다.");
+		push.setContent("User02님이 피드를 등록했습니다.");
 		push.setType(2);
 		
 		System.out.println("입력한 Data"+push);
