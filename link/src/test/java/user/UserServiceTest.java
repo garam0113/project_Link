@@ -306,5 +306,23 @@ public class UserServiceTest {
 		userService.addPush(push);
 		System.out.println("==============================\n");
 	}
+
+	@Test
+	public void testAddBlockUser() throws Exception{
+		
+		System.out.println("\n===================================");
+		
+		User user1 = new User();
+		
+		user1.setUserId("user09");
+		user1.setReceiveId("user10");
+		user1.setFbState("1");
+		user1.setFbType("2");
+		
+		System.out.println("입력한 Data"+user1);
+		
+		userService.addBlockUser(user1);
+		System.out.println("==============================\n");
+	}
 	}
 	
