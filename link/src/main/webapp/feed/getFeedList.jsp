@@ -18,7 +18,7 @@
 		
 		$($("input[type='button']")[0]).bind("click", function(){
 			alert("hi");
-			$("form").attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			$($("form")[0]).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 		});
 		
 		$("input[name='delete']").bind("click", function(){

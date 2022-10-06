@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 
@@ -45,6 +46,7 @@ public class FeedRestController {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/addFeedComment", method = RequestMethod.POST)
 	public List<Comment> addFeedComment(@RequestBody Comment comment, Search search) throws Exception {
 		
@@ -56,10 +58,7 @@ public class FeedRestController {
 		
 		comment.setUser(user);
 		
-		System.out.println("코맨트 찍기 : " + comment.getFeedNo() + "/// " + comment.getUser().getUserId() + "////" + comment.getCommentContent() + "======" + comment.getParent() + "=====" + comment.getDepth() + "=====" + comment.getSequence());
-		
 		feedService.addFeedComment(comment);
-		
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -71,32 +70,47 @@ public class FeedRestController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("feedNo", comment.getFeedNo());
+		map.put("search", search);
+		
+		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
+	}
+	
+	@RequestMapping(value = "/json/getFeedComment", method = RequestMethod.POST)
+	public Comment getFeedComment(@RequestBody Comment comment) throws Exception {
+
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
+		return comment;
+		
+	}
+	
+	
+	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
+	public Comment updateFeedComment(@RequestBody Comment comment) throws Exception {
+		
+		feedService.updateFeedComment(comment);
+		
+		return feedService.getFeedComment(comment.getFeedCommentNo());
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
+	public List<Comment> deleteFeedComment(@RequestBody Comment comment) throws Exception {
+		
+		feedService.deleteFeedComment(comment.getFeedCommentNo());	// 수정
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("feedNo", comment.getFeedNo());
 		
 		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
 	}
 	
 	
 	
-	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
-	public List<Comment> updateFeedComment(@RequestBody Comment comment) throws Exception {
-		
-		feedService.updateFeedComment(comment);
-		
-		return null;
-	}
-	
-	
-	
-	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
-	public List<Comment> deleteFeedComment(@RequestBody Comment comment) throws Exception {
-		
-		feedService.deleteFeedComment(0);	// 수정
-		
-		return null;
-	}
-	
-	
-	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/getFeedList", method = RequestMethod.POST)
 	public List<Feed> getFeedList(@RequestBody Search search) throws Exception {
 		
@@ -109,13 +123,17 @@ public class FeedRestController {
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		
+		return (List<Feed>) feedService.getFeedList(map).get("feedList");
 	}
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/getFeedCommentList", method = RequestMethod.GET)
-	public List<Comment> getFeedCommentList(@RequestBody Search search){
+	public List<Comment> getFeedCommentList(@RequestBody Search search) throws Exception{
 	
 		// 피드 댓글 리스트
 		
@@ -126,23 +144,78 @@ public class FeedRestController {
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		
+		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 	}
 	
 	
 	
-	@RequestMapping(value = "/json/updateFeedLike")
-	public List<Feed> updateFeedLike() {
+	@RequestMapping(value = "/json/addFeedHeart", method = RequestMethod.POST)
+	public Feed addFeedHeart(@RequestBody Feed feed, Heart heart) throws Exception {
 		
-		return null;
+		// 피드 좋아요 추가
+		heart.setSourceNo(feed.getFeedNo());
+		heart.setSource("0");
+		heart.setUserId("user01");
+				
+		System.out.println("하트요" + heart);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
+		map.put("feed", feed);
+				
+		return feedService.addFeedHeart(map);
+	}
+
+	@RequestMapping(value = "/json/deleteFeedHeart", method = RequestMethod.POST)
+	public Feed deleteFeedHeart(@RequestBody Feed feed, Heart heart) throws Exception {
+		
+		// 피드 좋아요 취소
+		heart.setSourceNo(feed.getFeedNo());
+		heart.setSource("0");
+		heart.setUserId("user01");
+				
+		System.out.println("하트요" + heart);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
+		map.put("feed", feed);
+				
+		return feedService.deleteFeedHeart(map);
+
 	}
 	
-	
-	
-	@RequestMapping(value = " /json/updateFeedCommentLike")
-	public List<Comment> updateFeedCommentLike() {
+	@RequestMapping(value = "/json/addFeedCommentHeart", method = RequestMethod.POST)
+	public Comment addFeedCommentHeart(@RequestBody Comment comment, Heart heart) throws Exception {
 		
-		return null;
+		// 피드 댓글 좋아요
+		heart.setSourceNo(comment.getFeedNo());
+		heart.setSource("1");
+		heart.setUserId("user07");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
+		map.put("comment", comment);
+		
+		return feedService.addFeedCommentHeart(map);
+	}
+	
+	@RequestMapping(value = "/json/deleteFeedCommentHeart", method = RequestMethod.POST)
+	public Comment deleteFeedCommentHeart(@RequestBody Comment comment, Heart heart) throws Exception {
+		
+		// 피드 댓글 좋아요
+		heart.setSourceNo(comment.getFeedNo());
+		heart.setSource("1");
+		heart.setUserId("user07");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("heart", heart);
+		map.put("comment", comment);
+		
+		return feedService.addFeedCommentHeart(map);
+		
 	}
 	
 	

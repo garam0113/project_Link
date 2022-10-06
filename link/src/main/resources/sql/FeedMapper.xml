@@ -106,31 +106,28 @@
 	<update		id="updateFeed"					parameterType="feed">
 		UPDATE feed
 		<set>
-			feed_open_condition				= #{openCondition:VARCHAR},
-			feed_content					= #{content:VARCHAR},
-			feed_image1						= #{image1:VARCHAR},
-			feed_image2						= #{image2:VARCHAR},
-			feed_image3						= #{image3:VARCHAR},
-			feed_image4						= #{image4:VARCHAR},
-			feed_video						= #{video:VARCHAR},
-			hashtag							= #{hashtag:VARCHAR},
-			feed_update_date				= SYSDATE,
-			report_condition				= #{reportCondition}
+			<choose>
+				<when test="checkHeart == -1">feed_heart_count = feed_heart_count + 1</when>
+				<when test="checkHeart == -2">feed_heart_count = feed_heart_count - 1</when>
+				<when test="commentCount != 0">feed_comment_count = feed_comment_count + 1</when>
+				<otherwise>
+				feed_open_condition				= #{openCondition:VARCHAR},
+				feed_content					= #{content:VARCHAR},
+				feed_image1						= #{image1:VARCHAR},
+				feed_image2						= #{image2:VARCHAR},
+				feed_image3						= #{image3:VARCHAR},
+				feed_image4						= #{image4:VARCHAR},
+				feed_video						= #{video:VARCHAR},
+				hashtag							= #{hashtag:VARCHAR},
+				feed_update_date				= SYSDATE,
+				report_condition				= #{reportCondition}
+				</otherwise>
+			</choose>
 		</set>	
-		WHERE feed_no 						= #{feedNo}
+		WHERE feed_no 							= #{feedNo}
 	</update>
 	
-	
-	
-	<update 	id="updateFeedHeart"			parameterType="hashmap">
-		UPDATE feed
-		<set>
-			feed_heart_count				= #{count} + 1		
-		</set>
-		WHERE feed_no						= #{feedNo}
-	</update>
-	
-	
+
 	
 	<update		id="deleteFeed"					parameterType="int">
 		UPDATE feed
