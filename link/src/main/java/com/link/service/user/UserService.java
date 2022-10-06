@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Pay;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 
 public interface UserService {
@@ -13,6 +14,8 @@ public interface UserService {
 //	public void addSnsUser(User user) throws Exception;
 
 //	public void addBlockUser(User user) throws Exception;
+	
+	public void addPush(Report report) throws Exception;
 	
 	public User getUser(User user) throws Exception;
 

@@ -15,6 +15,8 @@ public interface UserDAO {
 	
 //	public void addBlockUser(User user) throws Exception;
 	
+	public void addPush(Report report) throws Exception;
+	
 	public User getUser(User user) throws Exception;
 
 //	public User getUserId(User user) throws Exception;

@@ -20,7 +20,7 @@
 		<typeAlias alias="club" type="com.link.service.domain.Club" />
 		<typeAlias alias="clubPost" type="com.link.service.domain.ClubPost" />
 		<typeAlias alias="notice" type="com.link.service.domain.Notice" />
-		<typeAlias alias="report" type="com.link.service.domain.Report" />
+		<typeAlias alias="Report" type="com.link.service.domain.Report" />
 		<typeAlias alias="QandA" type="com.link.service.domain.QandA" />
 		<typeAlias alias="pay" type="com.link.service.domain.Pay" />
 		<typeAlias alias="meeting" type="com.link.service.domain.Meeting" />

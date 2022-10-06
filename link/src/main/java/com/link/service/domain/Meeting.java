@@ -6,7 +6,7 @@ public class Meeting {
 
 	private int meetingNo;
 	private int clubNo;
-	private String userId;
+	private String addMeetingUserId;
 	private String meetingTitle;
 	private String meetingImage;
 	private String meetingDate;
@@ -15,7 +15,7 @@ public class Meeting {
 	private String meetingWeather;
 	private Date meetingRegDate;
 	private int meetingMember;
-	private int meetingMaxMember;
+	private int meetingMaximumMember;
 	private String meetingContent;
 		
 	public Meeting() {
@@ -38,12 +38,12 @@ public class Meeting {
 		this.clubNo = clubNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getAddMeetingUserId() {
+		return addMeetingUserId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setAddMeetingUserId(String userId) {
+		this.addMeetingUserId = userId;
 	}
 
 	public String getMeetingTitle() {
@@ -110,12 +110,12 @@ public class Meeting {
 		this.meetingMember = meetingMember;
 	}
 
-	public int getMeetingMaxMember() {
-		return meetingMaxMember;
+	public int getMeetingMaximumMember() {
+		return meetingMaximumMember;
 	}
 
-	public void setMeetingMaxMember(int meetingMaxMember) {
-		this.meetingMaxMember = meetingMaxMember;
+	public void setMeetingMaximumMember(int meetingMaximumMember) {
+		this.meetingMaximumMember = meetingMaximumMember;
 	}
 
 	public String getMeetingContent() {
@@ -128,11 +128,11 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", userId=" + userId + ", meetingTitle="
+		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", userId=" + addMeetingUserId + ", meetingTitle="
 				+ meetingTitle + ", meetingImage=" + meetingImage + ", meetingDate=" + meetingDate + ", meetingTime="
 				+ meetingTime + ", meetingPlace=" + meetingPlace + ", meetingWeather=" + meetingWeather
-				+ ", meetingRegDate=" + meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaxMember="
-				+ meetingMaxMember + ", meetingContent=" + meetingContent + "]";
+				+ ", meetingRegDate=" + meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaximumMember="
+				+ meetingMaximumMember + ", meetingContent=" + meetingContent + "]";
 	}
 
 	

@@ -48,6 +48,12 @@ public class UserDAOImpl implements UserDAO {
 //	}
 
 	@Override
+	public void addPush(Report report) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("Report_PushMapper.addReport",report);
+	}
+
+	@Override
 	public User getUser(User user) throws Exception {
 		// TODO Auto-generated method stub
 		return (User)sqlSession.selectOne("UserMapper.getUser",user);

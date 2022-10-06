@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Page;
@@ -18,6 +19,8 @@ import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
+import com.link.service.domain.Meeting;
+import com.link.service.domain.Participant;
 
 @RestController
 @RequestMapping("/clubRest/*")
@@ -93,5 +96,90 @@ public class ClubRestController {
 		model.addAttribute("clubUser",clubUser);
 		
 		return clubService.getClub(clubUser.getClubNo());
+	}
+	
+	@RequestMapping(value="json/deleteMeeting", method=RequestMethod.POST)
+	public void deleteMeeting(@RequestParam(value="meetingNo") int meetingNo, Model model) throws Exception {
+		
+		System.out.println("deleteMeeting 시작");
+		System.out.println("meetingNo = " +meetingNo);
+		
+		clubService.deleteMeeting(meetingNo);
+	}
+	
+	@RequestMapping(value="json/deleteClubMember", method=RequestMethod.POST)
+	public void deleteClubMember(@RequestParam(value="clubUserNo") int clubUserNo, Model model) throws Exception {
+		
+		System.out.println("deleteClubMemer 시작");
+		System.out.println("clubUserNo = : "+clubUserNo);
+		
+		clubService.deleteClubMember(clubUserNo);
+		
+	}
+	
+	@RequestMapping(value="json/addMeetingMember", method=RequestMethod.POST)
+	public Participant addMeetingMember(@RequestBody Participant participant, Model model) throws Exception {
+		
+		System.out.println("addMeetingMember 시작~");
+		
+		clubService.addMeetingMember(participant);
+		
+		return participant;
+	}
+	
+	@RequestMapping(value="json/deleteMeetingMember", method=RequestMethod.POST)
+	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo, Model model) throws Exception {
+		
+		System.out.println("deleteMeetingMember 시작~");
+		System.out.println("participantNo = : "+participantNo);
+		
+		clubService.deleteMeetingMember(participantNo);
+		
+	}
+	
+	@RequestMapping(value="json/getApprovalConditionList")
+	public Map<String, Object> getApprovalConditionList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
+		
+		System.out.println("getApprovalConditionList 시작!");
+		
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = clubService.getApprovalConditionList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")). intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		model.addAttribute("ApprovalConditionList", map.get("ApprovalConditionList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/updateApprovalCondition", method=RequestMethod.POST)
+	public ClubUser updateApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
+		
+		System.out.println("updateApprovalCondition 시작!");
+		
+		clubService.updateApprovalCondition(clubUser);
+		model.addAttribute("clubUser",clubUser);
+
+		
+		return null;
+	}
+	
+	@RequestMapping(value="json/deleteApprovalCondition", method=RequestMethod.POST)
+	public ClubUser deleteApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
+		
+		System.out.println("deleteApprovalCondition 시작 ! ");
+		
+		clubService.deleteApprovalCondition(clubUser);
+		model.addAttribute("clubUser", clubUser);
+		
+		return null;
+		
 	}
 }
