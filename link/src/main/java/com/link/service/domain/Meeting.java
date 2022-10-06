@@ -6,9 +6,8 @@ public class Meeting {
 
 	private int meetingNo;
 	private int clubNo;
-	private String addMeetingUserId;
+	private String userId;
 	private String meetingTitle;
-	private String meetingImage;
 	private String meetingDate;
 	private String meetingTime;
 	private String meetingPlace;
@@ -38,12 +37,12 @@ public class Meeting {
 		this.clubNo = clubNo;
 	}
 
-	public String getAddMeetingUserId() {
-		return addMeetingUserId;
+	public String getuserId() {
+		return userId;
 	}
 
-	public void setAddMeetingUserId(String userId) {
-		this.addMeetingUserId = userId;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getMeetingTitle() {
@@ -52,14 +51,6 @@ public class Meeting {
 
 	public void setMeetingTitle(String meetingTitle) {
 		this.meetingTitle = meetingTitle;
-	}
-
-	public String getMeetingImage() {
-		return meetingImage;
-	}
-
-	public void setMeetingImage(String meetingImage) {
-		this.meetingImage = meetingImage;
 	}
 
 	public String getMeetingDate() {
@@ -128,8 +119,8 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", userId=" + addMeetingUserId + ", meetingTitle="
-				+ meetingTitle + ", meetingImage=" + meetingImage + ", meetingDate=" + meetingDate + ", meetingTime="
+		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", userId=" + userId + ", meetingTitle="
+				+ meetingTitle + ",  meetingDate=" + meetingDate + ", meetingTime="
 				+ meetingTime + ", meetingPlace=" + meetingPlace + ", meetingWeather=" + meetingWeather
 				+ ", meetingRegDate=" + meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaximumMember="
 				+ meetingMaximumMember + ", meetingContent=" + meetingContent + "]";

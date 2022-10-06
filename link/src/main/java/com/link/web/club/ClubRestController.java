@@ -137,27 +137,28 @@ public class ClubRestController {
 		
 	}
 	
-	@RequestMapping(value="json/getApprovalConditionList")
-	public Map<String, Object> getApprovalConditionList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
-		
-		System.out.println("getApprovalConditionList 시작!");
-		
-		if(search.getCurrentPage()==0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		Map<String, Object> map = clubService.getApprovalConditionList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")). intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		
-		model.addAttribute("ApprovalConditionList", map.get("ApprovalConditionList"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		
-		return map;
-	}
+	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	@RequestMapping(value="json/getApprovalConditionList")
+//	public Map<String, Object> getApprovalConditionList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
+//		
+//		System.out.println("getApprovalConditionList 시작!");
+//		
+//		if(search.getCurrentPage()==0) {
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		
+//		Map<String, Object> map = clubService.getApprovalConditionList(search);
+//		
+//		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")). intValue(), pageUnit, pageSize);
+//		System.out.println(resultPage);
+//		
+//		model.addAttribute("ApprovalConditionList", map.get("ApprovalConditionList"));
+//		model.addAttribute("resultPage", resultPage);
+//		model.addAttribute("search", search);
+//		
+//		return map;
+//	}
 	
 	@RequestMapping(value="json/updateApprovalCondition", method=RequestMethod.POST)
 	public ClubUser updateApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
