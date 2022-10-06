@@ -88,11 +88,11 @@ public class UserServiceImpl implements UserService {
 	 * Auto-generated method stub userDAO.updatePassword(user); }
 	 */
 
-//	@Override
-//	public void updateBlockUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void updateBlockUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.updateBlockUser(user);
+	}
 
 	@Override
 	public void logout(String userId) throws Exception {

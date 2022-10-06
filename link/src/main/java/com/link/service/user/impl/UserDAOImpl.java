@@ -96,7 +96,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void updateBlockUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sqlSession.update("MyHomeMapper.deleteFollow", user);
 	}
 
 	@Override
