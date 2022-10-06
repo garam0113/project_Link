@@ -49,110 +49,70 @@ body>div.container {
 		<form class="form-horizontal">
 
 			<div class="form-group">
-				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아
-					이 디</label>
+				<label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userId" name="userId"
+					<input type="text" class="form-control" id="nickName" name="nickName"
 						placeholder="중복확인하세요" readonly> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">입력전
-							중복확인 부터..</strong>
-					</span>
-				</div>
-				<div class="col-sm-3">
-					<button type="button" class="btn btn-info">중복확인</button>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-				<div class="col-sm-4">
-					<input type="password" class="form-control" id="password"
-						name="password" placeholder="비밀번호">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="password2"
-					class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-				<div class="col-sm-4">
-					<input type="password" class="form-control" id="password2"
-						name="password2" placeholder="비밀번호 확인">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-				<div class="col-sm-4">
-					<input type="password" class="form-control" id="userName"
-						name="userName" placeholder="회원이름">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주민번호</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="ssn" name="ssn"
-						placeholder="주민번호"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">"
-							- " 제외 13자리입력하세요</strong>
+						class="help-block"> <strong class="text-danger">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
 					</span>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="addr" name="addr"
-						placeholder="주소">
+					<input type="radio" class="form-radio" id="gender"
+						name="gender" placeholder="성별">&nbsp;남자
+					<input type="radio" class="form-radio" id="gender"
+						name="gender" placeholder="성별">&nbsp;여자
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
-				<div class="col-sm-2">
-					<select class="form-control" name="phone1" id="phone1">
-						<option value="010">010</option>
-						<option value="011">011</option>
-						<option value="016">016</option>
-						<option value="018">018</option>
-						<option value="019">019</option>
-					</select>
-				</div>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone2" name="phone2"
-						placeholder="번호">
-				</div>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone3" name="phone3"
-						placeholder="번호">
-				</div>
-				<input type="hidden" name="phone" />
-				<div class="col-sm-2">
-					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
+				<label for="area1"
+					class="col-sm-offset-1 col-sm-3 control-label">활동영역</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="area1"
+						name="area1" placeholder="활동영역">
+					<input type="text" class="form-control" id="area2"
+						name="area2" placeholder="활동영역">
+					<input type="text" class="form-control" id="area3"
+						name="area3" placeholder="활동영역">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">인증번호</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="inputCertifiedNumber"
-						name="inputCertifiedNumber" placeholder="인증번호">
-				</div>
-				<div class="col-sm-2">
-					<button type="button" id="checkBtn" class="btn ">인증번호확인</button>
+				<label for="categoty1"
+					class="col-sm-offset-1 col-sm-3 control-label">관심카테고리</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="categoty1"
+						name="categoty1" placeholder="카테고리">
+					<input type="text" class="form-control" id="categoty2"
+						name="categoty2" placeholder="카테고리">
+					<input type="text" class="form-control" id="categoty3"
+						name="categoty3" placeholder="카테고리">
 				</div>
 			</div>
+
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
+				<label for="profileWriting" class="col-sm-offset-1 col-sm-3 control-label">프로필글</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="email" name="email"
-						placeholder="이메일">
+					<input type="text" class="form-control" id="profileWriting"
+						name="profileWriting" placeholder="프로필글">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="profileImage" class="col-sm-offset-1 col-sm-3 control-label">프로필사진</label>
+				<div class="col-sm-4">
+					<input type="file" class="form-file" id="profileImage" name="profileImage"
+						placeholder="프로필사진">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary">가 &nbsp;입</button>
+					<button type="button" class="btn btn-primary">등 &nbsp;록</button>
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 				</div>
 			</div>

@@ -100,7 +100,7 @@ body>div.container {
 			</div>
 
 			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
+				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
 				<div class="col-sm-4">
 					<input type="radio" class="form-radio" id="gender"
 						name="gender" placeholder="남자">&nbsp;남자

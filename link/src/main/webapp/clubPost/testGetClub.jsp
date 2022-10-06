@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href="/clubPost/getClubPostList">모임게시물리스트</a>
 </body>
 </html>
