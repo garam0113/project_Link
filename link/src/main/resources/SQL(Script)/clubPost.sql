@@ -365,5 +365,16 @@ INSERT INTO REPORT_PUSH (NO, CONTENT, USER_ID2, REPORT_REGDATE, TYPE) VALUES (se
 INSERT INTO REPORT_PUSH  ( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,  USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)   VALUES (seq_report_push_no.nextval,     ?,     ?,     ?,     ?,     ?,     ?,     ?,      ?,     ?,     SYSDATE,     ?,     ?,      ?,     ?,        ? )
 
 
-
+		SELECT
+			club_user_no ,
+			user_id ,
+			club_no ,
+			application_reg_date ,
+			join_reg_date ,
+			logout_date ,
+			member_role ,
+			approval_condition ,
+			join_greeting 
+		FROM club_user
+		WHERE club_no = '1'
 

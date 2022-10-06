@@ -28,7 +28,7 @@ public class ClubPostServiceTest {
 	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostServiceImpl;
 
-	@Test
+	//@Test
 	public void addClubPostComment() throws Exception {
 		// 모임게시물 댓글 등록
 
@@ -219,24 +219,25 @@ public class ClubPostServiceTest {
 	public void clubPost() throws Exception {
 		// 모임게시물		
 		ClubPost clubPost = new ClubPost();
-		clubPost.setClubPostNo(30);
+		//clubPost.setClubPostNo(30);
 		User user = new User();
 		user.setUserId("user04");
 		clubPost.setUser(user);
 		//clubPost.setHeartCondition(1);
-		clubPost.setClubPostCommentNo(3);
+		//clubPost.setClubPostCommentNo(3);
 		
 		Heart heart = new Heart();
-		//heart.setSource("2");
-		//heart.setSourceNo(30);
-		//heart.setUserId("user04");
+		heart.setSource("2");
+		heart.setSourceNo(30);
+		heart.setUserId("user04");
 		
 		//clubPostServiceImpl.updateClubPostLike(clubPost, heart);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("heart", heart);
-		clubPostServiceImpl.updateClubPost(map);
+		//clubPostServiceImpl.updateClubPost(map);
 		
+		//clubPostServiceImpl.addClubPost(clubPost);
 	}
 	
 	//@Test

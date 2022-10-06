@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
-import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
@@ -33,23 +33,28 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public ClubPost addClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".addClubPost(ClubPost clubPost) 왔다");
+		Search search = new Search();
+		search.setSearchKeyword(clubPost.getClubNo()+"");
+		
 		// 모임게시물 등록
 		sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
 		// 모임게시물 현재 sequence 가져오기
 		int currval = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
-		System.out.println("currval : " + currval);
+		System.out.println("가장 최근 등록한 시퀀스 : " + currval);
 		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
-		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberList", clubPost);
+		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberList", search);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("clubUserList", clubUserList);
 		for (int i = 0; i < clubUserList.size(); i++) {
+			System.out.println("모임원들 : " + clubUserList.get(i));
 			// 해당 모임의 모임원들에게 모임게시물 등록되었다고 알림
-			sqlSession.insert("Report_PushMapper.addPush", map);
+			Report report = new Report(clubPost.getUser().getUserId() + "님이 게시물을 작성했습니다", 1, new User(clubPost.getUser().getUserId()), new User(clubUserList.get(i).getUserId()), 2, clubPost);
+			sqlSession.insert("Report_PushMapper.addReport", report);
+			System.out.println("알림 : " + (i+1));
 		}
 		// 모임게시물 상세보기 가져온 후 화면 이동
 		return sqlSession.selectOne("ClubPostMapper.getClubPost", currval);
-		
 	}// end of addClubPost(ClubPost clubPost)
 
 	@Override
