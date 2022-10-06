@@ -54,6 +54,12 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
+	public void addPush(Report report) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.addPush(report);
+	}
+
+	@Override
 	public User getUser(User user) throws Exception {
 		// TODO Auto-generated method stub
 		return userDAO.getUser(user);
