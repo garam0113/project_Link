@@ -157,6 +157,9 @@ $(function() {
 		<td height="26">${user.phoneNo}</td>
 		<td height="26">${club.clubDetail}</td>
 		<td height="26">${club.clubArea}</td>
+		<td height="26">${club.clubArea}</td>
+		
+		
 		
 		
 

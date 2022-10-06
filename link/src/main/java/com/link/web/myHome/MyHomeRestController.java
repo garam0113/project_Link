@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Search;
+import com.link.service.club.ClubService;
+import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 
@@ -26,6 +29,8 @@ public class MyHomeRestController {
 	@Autowired
 	@Qualifier("myHomeServiceImpl")
 	private MyHomeService myHomeService;
+	private ClubService clubService;
+	private ClubPostService clubPostService;
 
 	public MyHomeRestController() {
 		// TODO Auto-generated constructor stub
@@ -51,6 +56,7 @@ public class MyHomeRestController {
 		 return map;
 		 
 	 }
+	@RequestMapping(value = "json/getFollowerList", method = RequestMethod.POST)
 	 public Map<String, Object> getFollowerList(@RequestBody Search search)
 			 throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
@@ -69,14 +75,13 @@ public class MyHomeRestController {
 		 User sendId = (User)object;
 		 User receiveId = myHomeService.addFollow(userId);
 		 
-		 User follow = new User();
-		 follow.setUserId(sendId.getUserId());
-		 follow.setReceiveId(receiveId.getUserId());
+		 user.setUserId(sendId.getUserId());
+		 user.setReceiveId(receiveId.getUserId());
 		 
-		 myHomeService.addFollow(follow);
+		 myHomeService.addFollow(user);
 		 
 		 
-		return follow;
+		return user;
 		 
 		 
 	 }
@@ -90,16 +95,38 @@ public class MyHomeRestController {
 			 User sendId = (User)object;
 			 User receiveId = myHomeService.addFollow(userId);
 			 
-			 User follow = new User();
-			 follow.setUserId(sendId.getUserId());
-			 follow.setReceiveId(receiveId.getUserId());
+	
+			 user.setUserId(sendId.getUserId());
+			 user.setReceiveId(receiveId.getUserId());
 			 
-			 myHomeService.deleteFollow(follow);
+			 myHomeService.deleteFollow(user);
 			 
 			 
-			return follow;
+			return user;
 			 
 			 
 		 }
+		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
+		 public Map<String,Object> getClubList(@RequestBody Search search)
+		 throws Exception{
+			 System.out.println("/myHomeRest/json/json/getClubList : POST");
+			 
+			 Map<String,Object>map = clubService.getClubList(search);
+				
+			 return map;
 	 
+ }
+		@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
+		 public Map<String,Object> getClubPostList(@RequestBody Search search, ClubPost clubPost)
+		 throws Exception{
+			 System.out.println("/myHomeRest/json/json/getClubList : POST");
+			 
+			 Map<String,Object>map = clubPostService.getClubPostList(search, clubPost);
+				
+		
+			 return map;
+			 
+			 
+		}
+		
 }

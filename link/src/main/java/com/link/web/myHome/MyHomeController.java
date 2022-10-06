@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
@@ -150,14 +151,37 @@ public class MyHomeController {
 		return "redirect:/myHome/getMyHome?userId="+user.getUserId();
 		
 	}
-	@RequestMapping(value = "getFollowList", method = RequestMethod.GET)
-	public String getFollowList() throws Exception{
-		
-		System.out.println("/myHome/getFollowList : GET");
+	@RequestMapping(value = "getFollowList")
+	public String getFollowList(@ModelAttribute Search search, Model model) throws Exception {
 	
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("search", search);
+				
+		map = myHomeService.getFollowList(search);
+		
+		
+	    
+		model.addAttribute("search", search);
+		model.addAttribute("list", map.get("list"));
 		
 		return "forward:/myHome/getFollowList.jsp";
+	}
+	@RequestMapping(value = "getFollowerList")
+	public String getFollowerList(@ModelAttribute Search search, Model model) throws Exception {
 	
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("search", search);
+				
+		map = myHomeService.getFollowerList(search);
+		
+		
+	
+		model.addAttribute("search", search);
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/myHome/getFollowerList.jsp";
 	}
 }
 
