@@ -18,7 +18,7 @@
 		
 		$($("input[type='button']")[0]).bind("click", function(){
 			alert("hi");
-			$("form").attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			$($("form")[0]).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 		});
 		
 		$("input[name='delete']").bind("click", function(){
@@ -94,9 +94,9 @@
 			
 				<input type="hidden" name="feedNo" value="${feedList.feedNo}">
 			
-				${feedList.feedNo} // ${feedList.content}
+				${feedList.feedNo}번째글 // ${feedList.content}
 				
-				<br/>	좋아요 : ${feedList.likeCount}
+				<br/>	좋아요 : ${feedList.heartCount}
 						댓글 수 : ${feedList.commentCount}
 				
 				<input type="button" id="${feedList.feedNo}" name="delete" value="delete">

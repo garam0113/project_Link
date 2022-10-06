@@ -47,11 +47,11 @@ public class UserServiceImpl implements UserService {
 //		userDAO.addSnsUser(user);
 //	}
 	
-//	@Override
-//	public void addBlockUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void addBlockUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.addBlockUser(user);
+	}
 
 	@Override
 	public void addPush(Report report) throws Exception {
@@ -88,11 +88,11 @@ public class UserServiceImpl implements UserService {
 	 * Auto-generated method stub userDAO.updatePassword(user); }
 	 */
 
-//	@Override
-//	public void updateBlockUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void updateBlockUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.updateBlockUser(user);
+	}
 
 	@Override
 	public void logout(String userId) throws Exception {
@@ -184,6 +184,20 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userList", list);
 		map.put("totalCount",new Integer(totalCount));
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> getBlockUserList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		List<User> blockUserList = userDAO.getBlockUserList(search);
+		int totalCount = userDAO.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stopUserList", blockUserList);
+		map.put("totalCount", new Integer(totalCount));
+		
 		return map;
 	}
 
