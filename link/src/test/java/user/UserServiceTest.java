@@ -19,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.link.common.Search;
+import com.link.service.domain.Feed;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.user.UserService;
 
@@ -237,7 +239,7 @@ public class UserServiceTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public @ResponseBody
 	void sendSMS() throws Exception{
 		
@@ -280,5 +282,29 @@ public class UserServiceTest {
 		}
 		}	
 		
+//	@Test
+	public void testAddPush() throws Exception{
+		
+		System.out.println("\n===================================");
+		
+		Report push = new Report();
+		Feed feed = new Feed();
+		User user1 = new User();
+		User user2 = new User();
+		
+		user1.setUserId("user02");
+		feed.setFeedNo(2);
+		user2.setUserId("user01");
+		push.setUser1(user1);
+		push.setUser2(user2);
+		push.setFeed(feed);
+		push.setContent("User02님이 피드를 등록했습니다.");
+		push.setType(2);
+		
+		System.out.println("입력한 Data"+push);
+		
+		userService.addPush(push);
+		System.out.println("==============================\n");
+	}
 	}
 	

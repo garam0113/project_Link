@@ -74,7 +74,7 @@ public class UserController {
 			
 			userService.addUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
 			
-		return "forward:/user/updateProfile.jsp";
+		return "forward:/user/updateProfileView.jsp";
 
 	}
 	
@@ -92,7 +92,7 @@ public class UserController {
 		
 		model.addAttribute("user", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
 		
-		return "forward:/user/getUserView.jsp";
+		return "forward:/user/getUser.jsp";
 	}
 
 	@RequestMapping(value="getUserId", method = RequestMethod.GET)
@@ -124,7 +124,7 @@ public class UserController {
 		
 		model.addAttribute("user", getUser);	//DB의 정보를 Key(user)에 저장
 		
-		return "forward:/user/getUserView.jsp";
+		return "forward:/user/updateUserView.jsp";
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
@@ -139,7 +139,7 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		return "forward:/user/updateUser.jsp";
+		return "forward:/user/getUser.jsp";
 	}
 	
 	@RequestMapping(value="updateProfile", method = RequestMethod.POST)
@@ -154,7 +154,7 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		return "forward:/user/updateProfileView.jsp";
+		return "forward:/user/updateProfile.jsp";
 	}
 	
 	//REST

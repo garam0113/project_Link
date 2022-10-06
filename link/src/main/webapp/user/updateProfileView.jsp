@@ -49,34 +49,37 @@ body>div.container {
 		<form class="form-horizontal">
 
 			<div class="form-group">
-				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아
-					이 디</label>
+				<label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userId" name="userId"
+					<input type="text" class="form-control" id="nickName" name="nickName"
 						placeholder="중복확인하세요" readonly> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">입력전
-							중복확인 부터..</strong>
+						class="help-block"> <strong class="text-danger">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
 					</span>
 				</div>
-				<div class="col-sm-3">
-					<button type="button" class="btn btn-info">중복확인</button>
+			</div>
+
+			<div class="form-group">
+				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
+				<div class="col-sm-4">
+					<input type="radio" class="form-radio" id="gender"
+						name="gender" placeholder="성별">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+				<label for="area1"
+					class="col-sm-offset-1 col-sm-3 control-label">활동영역</label>
 				<div class="col-sm-4">
-					<input type="password" class="form-control" id="password"
-						name="password" placeholder="비밀번호">
+					<input type="text" class="form-control" id="area1"
+						name="area1" placeholder="활동영역">
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="password2"
-					class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 				<div class="col-sm-4">
-					<input type="password" class="form-control" id="password2"
-						name="password2" placeholder="비밀번호 확인">
+					<input type="text" class="form-control" id="area2"
+						name="area2" placeholder="활동영역">
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="area3"
+						name="area3" placeholder="활동영역">
 				</div>
 			</div>
 

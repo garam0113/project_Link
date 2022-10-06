@@ -12,8 +12,8 @@
 		<result property="userId" 		column="send_user_id" 		jdbcType="VARCHAR"/>
 		<result property="receiveId" 	column="recv_user_id" 		jdbcType="VARCHAR"/>
 		<result property="fbState"		column="state" 		jdbcType="CHAR" />
-		<result property="fbtype"		column="type" 		jdbcType="CHAR" />
-		<result property="nickname"		column="u.nickname" 		jdbcType="VARCHAR" />
+		<result property="fbType"		column="type" 		jdbcType="CHAR" />
+		<result property="nickName"		column="u.nickname" 		jdbcType="VARCHAR" />
 		<result property="profileImage"		column="u.profile_image" 		jdbcType="VARCHAR" />
 		
 	</resultMap>
@@ -36,7 +36,7 @@
      #{userId:VARCHAR}                   ,
      #{receiveId:VARCHAR}                ,
      #{fbState:CHAR}                ,
-     #{fbtype:CHAR}                  
+     #{fbType:CHAR}                  
      
                       )
 
@@ -121,7 +121,7 @@
      UPDATE follow_block
 		   	<set>
 		   		state			= #{fbState:CHAR}			,
-				type			= #{fbtype:CHAR}			
+				type			= #{fbType:CHAR}			
 				
 		   	</set>
 		   	WHERE send_user_id = #{userId} and recv_user_id = #{receiveId}
