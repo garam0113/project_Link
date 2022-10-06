@@ -21,6 +21,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.myHome.MyHomeService;
@@ -52,17 +53,18 @@ public class MyHomeController {
 		System.out.println(this.getClass() + " default constructor");
 	}
 	
-	@RequestMapping(value = "getMyHome", method = RequestMethod.GET)
-	public String getMyHome(User user,  Club club, Feed feed,
-			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo,
-			 Model model) throws Exception{
+	@RequestMapping(value = "getMyHome")
+	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,@RequestParam("feedNo") int feedNo,
+			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-		Search search = new Search();
-        
+        user.setUserId(userId);
+       
+
 		user = userService.getUser(user);
 		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feedNo", feedNo);
 		map.put("search", search);
 		map = feedService.getFeedList(map);
 		
@@ -77,9 +79,9 @@ public class MyHomeController {
 	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession httpSession) throws Exception{
 		
 		System.out.println("/myHome/getProfile : GET");
-		
-		User user = new User(); 
-		user = userService.getUser(user);
+		User user = new User();
+		user.setUserId(userId);
+    	user = userService.getUser(user);
 		model.addAttribute("user", user);
 		
 		return "forward:/myHome/getProfile.jsp";
