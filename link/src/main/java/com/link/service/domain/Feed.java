@@ -20,6 +20,7 @@ public class Feed {
 	private Date updateDate;
 	private int reportCondition;
 	private int deleteCondition;
+	private int checkHeart;			// -1 : 추가, -2 : 취소
 	
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -153,6 +154,14 @@ public class Feed {
 		this.deleteCondition = deleteCondition;
 	}
 
+	public int getCheckHeart() {
+		return checkHeart;
+	}
+
+	public void setCheckHeart(int checkHeart) {
+		this.checkHeart = checkHeart;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -171,7 +180,8 @@ public class Feed {
 				+ "[regDate : " + regDate + "] "
 				+ "[updateDate : " + updateDate + "] "
 				+ "[reportCondition : " + reportCondition + "] "
-				+ "[deleteCondition : " + deleteCondition + "] ";
+				+ "[deleteCondition : " + deleteCondition + "] "
+				+ "[checkHeart : " + checkHeart + "] ";
 	}
 
 }

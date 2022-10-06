@@ -422,7 +422,6 @@ CREATE TABLE viewer (
 
 CREATE TABLE REPORT_PUSH (
 	NO								NUMBER(20)											NOT NULL,
-	TITLE							VARCHAR2(200)										NOT NULL,
 	CONTENT							VARCHAR2(2000)										NOT NULL,
 	REPORT_SOURCE 					CHAR(3)												NOT NULL,
 	CLUB_POST_NO					NUMBER(20)														REFERENCES club_post(club_post_no),
@@ -440,6 +439,7 @@ CREATE TABLE REPORT_PUSH (
 	TYPE							CHAR(3)												NOT NULL,
 	REPORT_REASON					CHAR(3),
 	REPORT_CONDITION				CHAR(3)					DEFAULT '1'					NOT NULL,
+	TITLE							VARCHAR2(200),
 	PRIMARY KEY(NO)
 );
 

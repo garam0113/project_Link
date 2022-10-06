@@ -62,6 +62,12 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.update("FeedMapper.deleteFeed", feedNo);
 	}
 	
+	@Override
+	public void updateFeed(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeedCommentCount", comment);
+	}
+	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
@@ -147,6 +153,12 @@ public class FeedDAOImpl implements FeedDAO {
 	}
 	
 	@Override
+	public int getFeedHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("HeartMapper.getHeart", heart);
+	}
+	
+	@Override
 	public void deleteFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.delete("HeartMapper.deleteHeart", heart);
@@ -156,6 +168,12 @@ public class FeedDAOImpl implements FeedDAO {
 	public void addFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.insert("HeartMapper.insertHeart", heart);
+	}
+	
+	@Override
+	public int getFeedCommentHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override
@@ -203,13 +221,13 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void addFeedPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
+		sqlSession.insert("Report_PushMapper.addReport");
 	}
 
 	@Override
 	public void addFeedCommentPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
+		sqlSession.insert("Report_PushMapper.addReport");
 	}
 
 	

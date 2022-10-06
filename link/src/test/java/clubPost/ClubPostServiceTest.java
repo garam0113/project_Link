@@ -1,9 +1,9 @@
 package clubPost;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +34,18 @@ public class ClubPostServiceTest {
 
 		Comment comment = new Comment();
 		comment.setClubPostNo(20);
+		comment.setClubPostCommentNo(15);
 		User user = new User();
-		user.setUserId("user02");
+		user.setUserId("user03");
 		comment.setUser(user);
 		comment.setCommentContent("댓글내용 들어간다");
 		comment.setParent(5);
 		comment.setDepth(2);
-		comment.setSequence(2);
+		comment.setCommentCount(2);
 		
 		comment = clubPostServiceImpl.addClubPostComment(comment);
 		
+		System.out.println("///////////////////////////////////////////////////////////////");
 		System.out.println(comment);
 	}
 
@@ -67,7 +69,12 @@ public class ClubPostServiceTest {
 		comment.setCommentContent("1");
 		comment.setCommentUpdateDate("22/10/04");
 		
-		clubPostServiceImpl.updateClubPostComment(comment);
+		Heart heart = new Heart();
+		heart.setSource("3");
+		heart.setSourceNo(7);
+		heart.setUserId("user04");
+		
+		clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	//@Test
@@ -208,46 +215,68 @@ public class ClubPostServiceTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void clubPost() throws Exception {
 		// 모임게시물		
 		ClubPost clubPost = new ClubPost();
-		clubPost.setClubPostNo(30);
+		//clubPost.setClubPostNo(30);
 		User user = new User();
 		user.setUserId("user04");
 		clubPost.setUser(user);
-		clubPost.setLikeCondition(1);
+		//clubPost.setHeartCondition(1);
+		//clubPost.setClubPostCommentNo(3);
 		
 		Heart heart = new Heart();
 		heart.setSource("2");
 		heart.setSourceNo(30);
 		heart.setUserId("user04");
 		
-		clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+		//clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		map.put("heart", heart);
+		//clubPostServiceImpl.updateClubPost(map);
 		
+		//clubPostServiceImpl.addClubPost(clubPost);
+	}
+	
+	//@Test
+	public void clubPostList() throws Exception {
+		// 모임 게시물 리스트
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(10);
+		search.setPageUnit(10);
+		search.setOrder(0);					// 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+		
+		ClubPost clubPost = new ClubPost();
+		clubPost.setClubNo(10);
+		User user = new User();
+		user.setUserId("user02");
+		clubPost.setUser(user);
+		
+		// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
+		// search.order = 0, user_id = 'user03'
+		// 모임게시물에서 최신순 클릭시 => 최신순 모임게시물 리스트
+		// search.order = 0, user_id = 'user03', club_no = 10
+		// 모임리스트에서 좋아요많은순 클릭시 => 좋아요 많은순 모임게시물 리스트
+		// search.order = 2, user_id = 'user03', club_no = 10
+		// 내가 작성한 모임게시물 리스트
+		// search.order = 3, user_id = 'user03', club_no = 10
+		
+		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
+		System.out.println("///////////////////////////////////////////");
+		System.out.println(map.get("clubPostListCount"));
+		System.out.println("///////////////////////////////////////////");
+		List<ClubPost> list = (List<ClubPost>)map.get("clubPostList");
+		for (ClubPost c : list) {
+			System.out.println("======== " + c);
+		}
+		System.out.println("///////////////////////////////////////////");
 	}
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

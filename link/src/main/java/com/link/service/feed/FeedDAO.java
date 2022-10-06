@@ -30,7 +30,7 @@ public interface FeedDAO {
 	// 피드 삭제
 	public void deleteFeed(int feedNo) throws Exception;
 	
-	
+	void updateFeed(Comment comment) throws Exception;
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
@@ -99,11 +99,15 @@ public interface FeedDAO {
 	// 피드 좋아요
 	public void addFeedHeart(Heart heart) throws Exception;
 	
+	public int getFeedHeart(Heart heart) throws Exception;
+	
 	// 피드 싫어요
 	public void deleteFeedHeart(Heart heart) throws Exception;
 	
 	// 피드 댓글 좋아요
 	public void addFeedCommentHeart(Heart heart) throws Exception;
+	
+	public int getFeedCommentHeart(Heart heart) throws Exception;
 	
 	// 피드 댓글 싫어요
 	public void deleteFeedCommentHeart(Heart heart) throws Exception;
@@ -144,6 +148,8 @@ public interface FeedDAO {
 	public void addFeedPush(Push push) throws Exception;
 	
 	public void addFeedCommentPush(Push push) throws Exception;
+
+	
 	
 	
 	
