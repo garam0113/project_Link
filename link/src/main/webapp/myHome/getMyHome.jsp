@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +15,9 @@
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 	
 	<!-- CDN(Content Delivery Network) 호스트 사용 -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
 	<script type="text/javascript">
 		
 		//==> 추가된부분 : "수정" "확인"  Event 연결 및 처리
@@ -73,7 +79,7 @@ $(function() {
 
 
 
-<div class="image"><img src="/images/images.png"></div>
+
 				
 				
 <div class="calendar">
@@ -107,7 +113,7 @@ $(function() {
 			이름 
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.name}</td>
+		<td class="ct_write01">${user.nickName}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -147,7 +153,13 @@ $(function() {
 		<td width="104" class="ct_write">가입일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td height="26">${club.clubTitle}</td>
-		<td height="26">${feedList.content}</td>
+		<td height="26">${user.nickName}</td>
+		<td height="26">${user.phoneNo}</td>
+		<td height="26">${club.clubDetail}</td>
+		<td height="26">${club.clubArea}</td>
+		
+		
+
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">자기소개</td>
@@ -191,10 +203,8 @@ $(function() {
 	<div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
 					      
-					      <a class="btn btn-primary btn" href="getMyHome?userId=user1&clubNo=1" role="button">마 &nbsp;이 &nbsp;홈 &nbsp;피</a>
+					      <a class="btn btn-primary btn" href="/myHome/getFollowList" role="button">마 &nbsp;이 &nbsp;홈 &nbsp;피</a>
 					    </div>
-
-
 
 
 </body>

@@ -75,12 +75,12 @@ public class MyHomeServiceImpl implements MyHomeService {
 		System.out.println("\n[MyHomeServiceImpl getFollowList start]\n");
 		
 		List<User> list= myHomeDAO.getFollowList(search);
-		
+		int totalCount = myHomeDAO.getTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
-		
+		map.put("totalCount", totalCount);
 		
 		return map;
 	}

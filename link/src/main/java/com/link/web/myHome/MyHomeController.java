@@ -54,17 +54,16 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,@RequestParam("feedNo") int feedNo,
+	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
 			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-        user.setUserId(userId);
-       
 
+		user.setUserId(userId);
 		user = userService.getUser(user);
 		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feedNo", feedNo);
+
 		map.put("search", search);
 		map = feedService.getFeedList(map);
 		
@@ -151,8 +150,15 @@ public class MyHomeController {
 		return "redirect:/myHome/getMyHome?userId="+user.getUserId();
 		
 	}
+	@RequestMapping(value = "getFollowList", method = RequestMethod.GET)
+	public String getFollowList() throws Exception{
+		
+		System.out.println("/myHome/getFollowList : GET");
 	
+		
+		return "forward:/myHome/getFollowList.jsp";
 	
+	}
 }
 
 
