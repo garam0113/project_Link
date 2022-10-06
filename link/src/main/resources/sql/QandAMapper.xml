@@ -74,17 +74,23 @@
 	<update id="updateQandA" parameterType="qandA">
 		UPDATE QANDA
 		<set>
-		qanda_title = #{qandATitle},
-		qanda_content= #{qandAContent},
-		qanda_regdate = SYSDATE,
-		qanda_image1 = #{qandAImage1},
-		qanda_image2 = #{qandAImage2},
-     	answer_content = #{qandAAnswerContent},
-     	answer_regdate = SYSDATE,
-     	answer_condition= '1'
+		QANDA_TITLE = #{qandATitle},
+		QANDA_CONTENT= #{qandAContent},
+		QANDA_REGDATE = SYSDATE,
+		QANDA_IMAGE1 = #{qandAImage1},
+		QANDA_IMAGE2 = #{qandAImage2}
+			<if test="user.userId == 'admin1'">
+			,	ANSWER_CONTENT = #{qandAAnswerContent},
+	 			ANSWER_REGDATE = SYSDATE,
+	 			ANSWER_CONDITION = '1'
+			</if>
 		</set>
-		WHERE qanda_no = #{qandANo}
+		WHERE QANDA_NO = #{qandANo}
 	</update>
+	
+	
+	
+
 
 	<!-- SQL : DELETE -->
 

@@ -15,28 +15,18 @@
 	<script type="text/javascript">
 		
 		//==> 추가된부분 : "수정" "확인"  Event 연결 및 처리
-		$(function(){
 			
-			$("td.ct_btn01:contains('수정')").bind("click", function(){
-				
-				self.location = "/user/updateUser?userId=${user.userId}"
-						
-			});
-			
-			$("td.ct_btn01:contains('확인')").bind("click", function(){
-				
-				history.go(-1);
-				
-			});
-			
-		});
-	
+		
+		
+		
+		
+		
 	</script>
 <style>
 .calendar
 {
   margin: 0 auto;
-  width: 480px;
+  width: 1000px;
   display: flex;
  justify-content: center;
 }
@@ -47,7 +37,7 @@
 .image
 {
   margin: 0 auto;
-  width: 200px;
+  width: 400px;
   text-align: center;
 }
 .to
@@ -64,6 +54,19 @@
 	padding: 10px;
 }
 </style>
+
+<script>
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+ 	$("a:contains('로그인')").on("click" , function() {
+		//$(self.location).attr("href","/user/logout");
+		self.location = "/myHome/getProfile"
+	}); 
+ });
+
+</script>
+
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -81,7 +84,7 @@
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-<div><img src="/images/uploadFiles/${user.image}"  class="img-response" /></div>
+
 		<td width="104" class="ct_write">
 			아이디 
 		</td>
@@ -104,7 +107,7 @@
 			이름 
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.userName}</td>
+		<td class="ct_write01">${user.name}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -112,7 +115,7 @@
 	<tr>
 		<td width="104" class="ct_write">주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.addr}</td>
+	
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -120,7 +123,7 @@
 	<tr>
 		<td width="104" class="ct_write">휴대전화번호</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.phone}</td>
+		<td class="ct_write01">${user.phoneNo}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -143,19 +146,26 @@
 	<tr>
 		<td width="104" class="ct_write">가입일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.regDate}</td>
+		<td height="26">${club.clubTitle}</td>
+		<td height="26">${feedList.content}</td>
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">자기소개</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.profile}</td>
+		
 	</tr>
 	</table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
 	<tr>
+	<td width="104" class="ct_write">자기소개</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		
 		<td width="53%"></td>
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
+			
+			<li><a href="#" id="sgr">로그인</a></li>
+			
 				<tr>
 					
 					<!--	jQuery Event 처리로 변경
@@ -173,10 +183,16 @@
 <jsp:include page="/myHome/calendar.jsp"/>
 </div> 
 <div>
-
+<td width="104" class="ct_write">자기소개</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		
 </div>
 	
-	
+	<div class="form-group">
+					    <div class="col-sm-offset-4 col-sm-6 text-center">
+					      
+					      <a class="btn btn-primary btn" href="getMyHome?userId=user1&clubNo=1" role="button">마 &nbsp;이 &nbsp;홈 &nbsp;피</a>
+					    </div>
 
 
 

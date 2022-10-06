@@ -197,7 +197,7 @@ public class ClubController {
 		
 		System.out.println("/addMeeting : POST ");
 		
-		meeting.setUserId("user01");
+		meeting.setAddMeetingUserId("user01");
 		
 		clubService.addMeeting(meeting);
 		return "forward:club/getMeetingList.jsp";

@@ -7,18 +7,18 @@
 <mapper namespace="Report_PushMapper">
  	
  	
-	<resultMap id="report_PushSelectMap" type="report">
-	<result property="reportNo" column="no" 					jdbcType="NUMERIC" />
-	<result property="reportTitle" column="title" 				jdbcType="VARCHAR" />
-	<result property="reportContent" column="content" 			jdbcType="VARCHAR" />
-	<result property="reportSource" column="report_source"  	jdbcType="VARCHAR" />
-	<result property="reportRegdate" column="report_regdate" 	jdbcType="DATE" />
-	<result property="reportHandleDate" column="handle_date"	 jdbcType="DATE" />	
-	<result property="reportImage1" column="report_image1" 		jdbcType="VARCHAR" />
-	<result property="reportImage2" column="report_image2"	 	jdbcType="VARCHAR" />
-	<result property="type"			column="type"		  		 jdbcType="VARCHAR" />
-	<result property="reportCondition" column="report_condition" jdbcType="VARCHAR" />
-	<result property="reportReason" column="report_reason" 		jdbcType="VARCHAR" />
+	<resultMap id="Report_PushSelectMap" 	type="report">
+	<result property="no" 					column="no" 					jdbcType="NUMERIC" />
+	<result property="title" 				column="title" 				jdbcType="VARCHAR" />
+	<result property="content" 				column="content" 			jdbcType="VARCHAR" />
+	<result property="reportSource" 		column="report_source"  	jdbcType="VARCHAR" />
+	<result property="regDate" 				column="report_regdate" 	jdbcType="DATE" />
+	<result property="reportHandleDate"		 column="handle_date"		 jdbcType="DATE" />	
+	<result property="reportImage1" 		column="report_image1" 		jdbcType="VARCHAR" />
+	<result property="reportImage2" 		column="report_image2"	 	jdbcType="VARCHAR" />
+	<result property="type"					column="type"		  		 jdbcType="VARCHAR" />
+	<result property="reportCondition" 		column="report_condition"	 jdbcType="VARCHAR" />
+	<result property="reportReason" 		column="report_reason" 		jdbcType="VARCHAR" />
 
 	
 	<association property="user1" javaType="user">
@@ -28,9 +28,12 @@
 	<association property="user2" javaType="user">
 		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
 	</association>
+	
+	
+	
 <!-- FK들 받아야 됨. ex) 모임게시물  등등 -->	
 	
-	<association property="clubPost" javaType="clubpost">
+	<association property="clubPost" javaType="clubPost">
 		<result property="clubPostNo" column="club_post_no" jdbcType="NUMERIC"/>
 	</association>
 	
@@ -63,48 +66,83 @@
 	
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
+	<!-- SQL : INSERT            ★★★★  라이브, 채팅은 빠져있음.★★★★ -->
 	
 	<insert id="addReport" parameterType="report">
 	INSERT INTO REPORT_PUSH
-	( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO, LIVE_NO, USER_ID1,
-	USER_ID2, report_regdate, report_image1, report_image2, handle_date, type, report_reason, report_condition)
+	( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,
+	USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)
 
 	VALUES (seq_report_push_no.nextval,
-			 #{reportTitle},
-			  #{reportContent},
-			   #{clubPost.clubPostNo},
-			    #{clubPostComment.clubPostCommentNo},
-			  	#{feed.feedNo},
-			  	 #{feedComment.feedCommentNo}, 
-			  	 #{live_no},
-			  	  #{user1.userId},
-			  	   #{user2.userId},
-			  	    SYSDATE,
-			  	     #{reportImage1},
-			  	      #{reportImage2},
-			  	      NULL, 
-			  	      #{type},
-			  	       #{reportReason},
-			  	        #{reportCondition} 
+			 #{title:VARCHAR},
+			 #{content},
+			 #{reportSource},
+			 #{clubPost.clubPostNo:NUMERIC},
+			 #{clubPostComment.clubPostCommentNo:NUMERIC},
+			 #{feed.feedNo:NUMERIC},
+			 #{feedComment.feedCommentNo:NUMERIC}, 
+			 #{user1.userId:VARCHAR},
+			 #{user2.userId:VARCHAR},
+			 SYSDATE,
+			 #{reportImage1:VARCHAR},
+			 #{reportImage2:VARCHAR}, 
+			 #{type:VARCHAR},
+			 #{reportReason:VARCHAR},
+		     #{reportCondition:VARCHAR} )
 	
 	</insert>
 	 
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select id="getReport" parameterType="int" resultMap="report_PushSelectMap" >
-		SELECT r.*, u.report_count
-        FROM report_push r, users u
-        WHERE r.#{user_id2}=u.{user_id2};
+	 <select id="getReport" parameterType="int" resultMap="Report_PushSelectMap" >
+		SELECT R.*, U.REPORT_COUNT
+        FROM REPORT_PUSH R, USERS U
+        WHERE R.user_id2 = U.USER_ID AND NO = #{no}
+        
 	 </select>
 
 	<!--  SQL : 신고처리 하기 -->
 	<update id="addReportCount" parameterType="report">
-	UPDATE users
+	UPDATE USERS
 	<set>
-	report_count = report_count + 1,
+	
+
+	<if test ="reportReason==1">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
+		
+	<if test ="reportReason==2">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
+	
+	<if test = "reportReason==3">
+	REPORT_COUNT = REPORT_COUNT + 2					
+	</if>
+	
+	<if test = "reportReason==4">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
+	
+	<if test = "reportReason==5">
+	REPORT_COUNT = REPORT_COUNT + 2
+	</if>
+	
+	<if test = "reportReason==6">
+	REPORT_COUNT = REPORT_COUNT + 2
+	</if>
+	
+	<if test = "reportReason==7">
+	REPORT_COUNT = REPORT_COUNT + 3
+	</if>
+	
+	<if test = "reportReason>=8">
+	PENALTY_TYPE ='2'
+	</if>
+	
+	
 	</set>
-	WHERE user_id = #{user_id2}
+	WHERE USER_ID = #{user2.userId}
+	
 	</update>
 	
 	

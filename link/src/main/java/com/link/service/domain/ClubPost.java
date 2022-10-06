@@ -2,6 +2,8 @@ package com.link.service.domain;
 
 public class ClubPost {
 	
+	// search에 oreder 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순/최신순, 3 : 특정 모임에서 내가 작성한 게시물
+	
 	private int clubNo;						// 모임의 고유번호
 	private int clubPostNo;					// 모임게시물의 고유번호
 	private int clubPostCommentNo;			// 모임게시물댓글의 고유번호
@@ -13,9 +15,13 @@ public class ClubPost {
 	private String clubPostVideo3;			// 영상3 선택
 	private String clubPostRegDate;			// 등록날짜
 	private String clubPostUpdateDate;		// 수정날짜
-	private int likeCondition;				// 좋아요하다/좋아요취소하다
-	private int clubPostLikeCount;			// 좋아요 수 (default 0)
+	private int heartCondition;				// 좋아요하다/좋아요취소하다
+	private int clubPostHeartCount;			// 좋아요 수 (default 0)
 	private int clubPostCommentCount;		// 댓글 수  (default 0)
+	private int reportCondition;			// 신고여부
+	private int deleteCondition;			// 삭제여부
+	private String userId;					// 삭제한 회원 아이디
+	private String nickName;				// 삭제한 회원 닉네임
 	private String image1;					// 이미지1 필수1개
 	private String image2;
 	private String image3;
@@ -34,38 +40,6 @@ public class ClubPost {
 		super();
 		this.clubPostNo = clubPostNo;
 		this.clubPostCommentNo = clubPostCommentNo;
-	}
-
-	public ClubPost(int clubNo, int clubPostNo, int clubPostCommentNo, User user, String clubPostTitle,
-			String clubPostContent, String clubPostVideo1, String clubPostVideo2, String clubPostVideo3,
-			String clubPostRegDate, String clubPostUpdateDate, int likeCondition, int clubPostLikeCount,
-			int clubPostCommentCount, String image1, String image2, String image3, String image4, String image5,
-			String image6, String image7, String image8, String image9, String image10) {
-		super();
-		this.clubNo = clubNo;
-		this.clubPostNo = clubPostNo;
-		this.clubPostCommentNo = clubPostCommentNo;
-		this.user = user;
-		this.clubPostTitle = clubPostTitle;
-		this.clubPostContent = clubPostContent;
-		this.clubPostVideo1 = clubPostVideo1;
-		this.clubPostVideo2 = clubPostVideo2;
-		this.clubPostVideo3 = clubPostVideo3;
-		this.clubPostRegDate = clubPostRegDate;
-		this.clubPostUpdateDate = clubPostUpdateDate;
-		this.likeCondition = likeCondition;
-		this.clubPostLikeCount = clubPostLikeCount;
-		this.clubPostCommentCount = clubPostCommentCount;
-		this.image1 = image1;
-		this.image2 = image2;
-		this.image3 = image3;
-		this.image4 = image4;
-		this.image5 = image5;
-		this.image6 = image6;
-		this.image7 = image7;
-		this.image8 = image8;
-		this.image9 = image9;
-		this.image10 = image10;
 	}
 
 	public int getClubNo() {
@@ -156,20 +130,20 @@ public class ClubPost {
 		this.clubPostUpdateDate = clubPostUpdateDate;
 	}
 
-	public int getLikeCondition() {
-		return likeCondition;
+	public int getHeartCondition() {
+		return heartCondition;
 	}
 
-	public void setLikeCondition(int likeCondition) {
-		this.likeCondition = likeCondition;
+	public void setHeartCondition(int heartCondition) {
+		this.heartCondition = heartCondition;
 	}
 
-	public int getClubPostLikeCount() {
-		return clubPostLikeCount;
+	public int getClubPostHeartCount() {
+		return clubPostHeartCount;
 	}
 
-	public void setClubPostLikeCount(int clubPostLikeCount) {
-		this.clubPostLikeCount = clubPostLikeCount;
+	public void setClubPostHeartCount(int clubPostHeartCount) {
+		this.clubPostHeartCount = clubPostHeartCount;
 	}
 
 	public int getClubPostCommentCount() {
@@ -178,6 +152,38 @@ public class ClubPost {
 
 	public void setClubPostCommentCount(int clubPostCommentCount) {
 		this.clubPostCommentCount = clubPostCommentCount;
+	}
+
+	public int getReportCondition() {
+		return reportCondition;
+	}
+
+	public void setReportCondition(int reportCondition) {
+		this.reportCondition = reportCondition;
+	}
+
+	public int getDeleteCondition() {
+		return deleteCondition;
+	}
+
+	public void setDeleteCondition(int deleteCondition) {
+		this.deleteCondition = deleteCondition;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getImage1() {
@@ -285,12 +291,20 @@ public class ClubPost {
 		builder.append(clubPostRegDate);
 		builder.append(", clubPostUpdateDate=");
 		builder.append(clubPostUpdateDate);
-		builder.append(", likeCondition=");
-		builder.append(likeCondition);
-		builder.append(", clubPostLikeCount=");
-		builder.append(clubPostLikeCount);
+		builder.append(", heartCondition=");
+		builder.append(heartCondition);
+		builder.append(", clubPostHeartCount=");
+		builder.append(clubPostHeartCount);
 		builder.append(", clubPostCommentCount=");
 		builder.append(clubPostCommentCount);
+		builder.append(", reportCondition=");
+		builder.append(reportCondition);
+		builder.append(", deleteCondition=");
+		builder.append(deleteCondition);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", nickName=");
+		builder.append(nickName);
 		builder.append(", image1=");
 		builder.append(image1);
 		builder.append(", image2=");
