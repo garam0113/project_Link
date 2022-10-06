@@ -13,7 +13,7 @@ public interface UserService {
 
 //	public void addSnsUser(User user) throws Exception;
 
-//	public void addBlockUser(User user) throws Exception;
+	public void addBlockUser(User user) throws Exception;
 	
 	public void addPush(Report report) throws Exception;
 	
@@ -29,7 +29,7 @@ public interface UserService {
 	
 //	public void updatePassword(User user) throws Exception;
 
-//	public void updateBlockUser(User user) throws Exception;
+	public void updateBlockUser(User user) throws Exception;
 	
 	public void logout(String userId) throws Exception;
 	
@@ -45,12 +45,12 @@ public interface UserService {
 	
 	public Map<String, Object> getUserList(Search search) throws Exception;
 	
+	public Map<String, Object> getBlockUserList(Search search) throws Exception;
+
 //	public Map<String, Object> getStopList(Search search) throws Exception;
 
 //	public Map<String, Object> getForeverStopList(Search search) throws Exception;
 	
-//	public Map<String, Object> getBlockUserList(Search search) throws Exception;
-
 //	public Map<String, Object> getPushList(Search search) throws Exception;
 	
 }

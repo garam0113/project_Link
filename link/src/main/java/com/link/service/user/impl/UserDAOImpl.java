@@ -41,11 +41,11 @@ public class UserDAOImpl implements UserDAO {
 //		sqlSession.insert("UserMapper.addSnsUser", user);
 //	}
 
-//	@Override
-//	public void addBlockUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		sqlSession.insert()
-//	}
+	@Override
+	public void addBlockUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("MyHomeMapper.addFollow", user);
+	}
 
 	@Override
 	public void addPush(Report report) throws Exception {
@@ -93,11 +93,11 @@ public class UserDAOImpl implements UserDAO {
 //		
 //	}
 
-//	@Override
-//	public void updateBlockUser(User user) throws Exception {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void updateBlockUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("MyHomeMapper.deleteFollow", user);
+	}
 
 	@Override
 	public void logout(String userId) throws Exception {
@@ -123,11 +123,11 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectList("UserMapper.getUserList",search);
 	}
 
-//	@Override
-//	public List<User> getBlockUserList(Search search) throws Exception {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public List<User> getBlockUserList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //	@Override
 //	public int getBlockTotalCount(Search search) throws Exception {

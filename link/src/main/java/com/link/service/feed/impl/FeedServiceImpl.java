@@ -49,8 +49,15 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeed(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Feed feed = feedDAO.getFeed((Integer)map.get("feedNo"));
+		/*
+		 * map.put("feedNo")
+		*/
+		
+		Feed feed = feedDAO.getFeed((Integer) map.get("feedNo"));
 		List<Comment> commentList = feedDAO.getFeedCommentList(map);
+		int checkHeart = feedDAO.getFeedHeart((Heart) map.get("heart"));
+		
+		feed.setCheckHeart(checkHeart);
 		
 		map.put("feed", feed);
 		map.put("commentList", commentList);
@@ -80,6 +87,10 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeedComment(Comment comment) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedComment(comment);
+		
+		Feed feed = feedDAO.getFeed(comment.getFeedNo());
+		
+		feedDAO.updateFeed(feed);
 		feedDAO.addFeedCommentPush(null);
 	}
 	
@@ -167,33 +178,67 @@ public class FeedServiceImpl implements FeedService {
 	
 
 	@Override
-	public void addFeedHeart(Map<String, Object> map) throws Exception {
+	public Feed addFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedHeart((Heart) map.get("heart"));
 		
 		// 피드 테이블 좋아요 개수 증가
 		
-		Feed feed = (Feed) map.get("feed");
-		feed.setHeartCount(feed.getHeartCount() + 1);
+//		Feed feed = (Feed) map.get("feed");
+		Feed feed = feedDAO.getFeed(5);
+		feed.setCheckHeart(-1);
 		feedDAO.updateFeed(feed);
+		
+		Feed returnFeed = feedDAO.getFeed(feed.getFeedNo());
+		returnFeed.setCheckHeart(1);
+
+		return returnFeed;
 	}
 
 	@Override
-	public void deleteFeedHeart(Map<String, Object> map) throws Exception {
+	public Feed deleteFeedHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.deleteFeedHeart((Heart)map.get("heart"));
+		
+//		Feed feed = (Feed) map.get("feed");
+		Feed feed = feedDAO.getFeed(5);
+		feed.setCheckHeart(-2);
+		feedDAO.updateFeed(feed);
+		
+		Feed returnFeed = feedDAO.getFeed(feed.getFeedNo());
+		returnFeed.setCheckHeart(1);
+		
+		return returnFeed;
 	}
 
 	@Override
-	public void addFeedCommentHeart(Map<String, Object> map) throws Exception {
+	public Comment addFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedCommentHeart((Heart)map.get("heart"));
+		
+//		Comment comment = (Comment) map.get("comment");
+		Comment comment = feedDAO.getFeedComment(1);
+//		comment.set
+		
+		Comment returnComment = feedDAO.getFeedComment(comment.getFeedCommentNo());
+//		returnFeed.
+		
+		return returnComment;
 	}
 
 	@Override
-	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception {
+	public Comment deleteFeedCommentHeart(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.deleteFeedCommentHeart((Heart)map.get("heart"));
+				
+//		Comment comment = (Comment) map.get("comment");
+		Comment comment = feedDAO.getFeedComment(1);
+//		comment.set
+		
+		Comment returnComment = feedDAO.getFeedComment(comment.getFeedCommentNo());
+//		returnFeed.
+		
+		return returnComment;
 	}
 
 
