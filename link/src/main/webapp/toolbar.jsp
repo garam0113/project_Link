@@ -18,13 +18,16 @@
 		});
 	});
 	
-/*	아래방식으로 네비게이션 사용 가능
+/*	아래방식으로 네비게이션 사용 가능 */
 	$(function() {
 		$("span:contains('피드')").on("click", function() {
 			self.location = "/user/login"
 		});
+		
+		$("span:contains('모임')").on("click", function(){
+			self.location = "/club/getClubList";
+		});
 	});
-	*/
 </script>
 
 <div class="navbar  navbar-inverse navbar-fixed-top">
@@ -63,6 +66,12 @@
 						data-toggle="dropdown" role="button" aria-expanded="false"> <span>Live</span>
 							<span class="caret"></span>
 					</a>
+
+				<!-- 모임관리 -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"> <span>모임</span>
+						<span class="caret"></span>
+				</a>
 
 				<!-- 구매관리 DrowDown -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
