@@ -14,6 +14,7 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
@@ -35,12 +36,14 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".addClubPost(ClubPost clubPost) 왔다");
 		Search search = new Search();
 		search.setSearchKeyword(clubPost.getClubNo()+"");
+		System.out.println("모임 번호 : " + search);
 		
 		// 모임게시물 등록
 		sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
+		System.out.println("모임게시물 등록");
 		// 모임게시물 현재 sequence 가져오기
-		int currval = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
-		System.out.println("가장 최근 등록한 시퀀스 : " + currval);
+		ClubPost c = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
+		System.out.println("가장 최근 등록한 시퀀스 : " + c);
 		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
 		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberList", search);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -54,7 +57,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 			System.out.println("알림 : " + (i+1));
 		}
 		// 모임게시물 상세보기 가져온 후 화면 이동
-		return sqlSession.selectOne("ClubPostMapper.getClubPost", currval);
+		return sqlSession.selectOne("ClubPostMapper.getClubPost", c);
 	}// end of addClubPost(ClubPost clubPost)
 
 	@Override
@@ -70,7 +73,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost));
-		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostMapper.getClubPostCommentList", clubPost));
+		map.put("getClubPostCommentList", sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", clubPost));
 		return map;
 	}// end of getClubPost(ClubPost clubPost)
 	
@@ -78,15 +81,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".updateClubPost(Map<String, Object> map) 왔다");
 		
-		// 모임게시물 좋아요하다 또는 좋아요 취소하다
+		// 좋아요 or 좋아요취소 or 신고승인 or 내용수정
 		sqlSession.update("ClubPostMapper.updateClubPost", map);
 		
 		if( ((ClubPost)map.get("clubPost")).getHeartCondition() == 1 ) {
 			// 좋아요 등록
-			sqlSession.insert("HeartMapper.insertHeart", map);
+			sqlSession.insert("HeartMapper.insertHeart", map.get("heart"));
+			System.out.println("좋아요 등록");
 		}else if( ((ClubPost)map.get("clubPost")).getHeartCondition() == -1 ) {
 			// 좋아요 삭제
-			sqlSession.delete("HeartMapper.deleteHeart", map);
+			sqlSession.delete("HeartMapper.deleteHeart", map.get("heart"));
+			System.out.println("좋아요 삭제");
 		}
 
 		// 모임게시물 상세보기
@@ -145,10 +150,10 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	}// end of addClubPostComment(Comment comment)
 
 	@Override
-	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 왔다");
-		return sqlSession.selectList("ClubPostMapper.getClubPostCommentList", comment);
-	}// end of getClubPostCommentList(Comment comment)
+	public List<Comment> getClubPostCommentList(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".getClubPostCommentList(Map<String, Object> map) 왔다");
+		return sqlSession.selectList("ClubPostMapper.getClubPostCommentList", map);
+	}// end of getClubPostCommentList(Map<String, Object> map)
 
 	@Override
 	public Comment getClubPostComment(Comment comment) throws Exception {
@@ -159,17 +164,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Comment updateClubPostComment(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".updateClubPostComment(Map<String, Object> map) 왔다");
-		sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);
+		sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map.get("comment"));
 		
 		if(((Comment)map.get("comment")).getHeartCondition() == 1) {
 			// 좋아요 등록
-			sqlSession.insert("HeartMapper.insertHeart", (Comment)map.get("heart"));
+			sqlSession.insert("HeartMapper.insertHeart", map.get("heart"));
 		}else if(((Comment)map.get("comment")).getHeartCondition() == -1) {
 			// 좋아요 삭제
-			sqlSession.delete("HeartMapper.deleteHeart", (Comment)map.get("heart"));
+			sqlSession.delete("HeartMapper.deleteHeart", map.get("heart"));
 		}
 		
-		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", map);
+		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", map.get("comment"));
 	}// end of updateClubPostComment(Map<String, Object> map)
 
 	@Override
