@@ -28,6 +28,9 @@
 	<association property="user2" javaType="user">
 		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
 	</association>
+	
+	
+	
 <!-- FK들 받아야 됨. ex) 모임게시물  등등 -->	
 	
 	<association property="clubPost" javaType="clubPost">
@@ -71,7 +74,7 @@
 	USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)
 
 	VALUES (seq_report_push_no.nextval,
-			 #{title},
+			 #{title:VARCHAR},
 			 #{content},
 			 #{reportSource},
 			 #{clubPost.clubPostNo:NUMERIC},
@@ -79,13 +82,13 @@
 			 #{feed.feedNo:NUMERIC},
 			 #{feedComment.feedCommentNo:NUMERIC}, 
 			 #{user1.userId:VARCHAR},
-			 #{user2.userId},
+			 #{user2.userId:VARCHAR},
 			 SYSDATE,
-			 #{reportImage1},
-			 #{reportImage2}, 
-			 #{type},
-			 #{reportReason},
-		     #{reportCondition} )
+			 #{reportImage1:VARCHAR},
+			 #{reportImage2:VARCHAR}, 
+			 #{type:VARCHAR},
+			 #{reportReason:VARCHAR},
+		     #{reportCondition:VARCHAR} )
 	
 	</insert>
 	 
@@ -101,24 +104,44 @@
 	<!--  SQL : 신고처리 하기 -->
 	<update id="addReportCount" parameterType="report">
 	UPDATE USERS
-	
 	<set>
 	
+
+	<if test ="reportReason==1">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
+		
+	<if test ="reportReason==2">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
 	
+	<if test = "reportReason==3">
+	REPORT_COUNT = REPORT_COUNT + 2					
+	</if>
 	
+	<if test = "reportReason==4">
+	REPORT_COUNT = REPORT_COUNT + 1
+	</if>
 	
-	REPORT_COUNT = REPORT_COUNT + 1,
+	<if test = "reportReason==5">
+	REPORT_COUNT = REPORT_COUNT + 2
+	</if>
 	
+	<if test = "reportReason==6">
+	REPORT_COUNT = REPORT_COUNT + 2
+	</if>
 	
+	<if test = "reportReason==7">
+	REPORT_COUNT = REPORT_COUNT + 3
+	</if>
 	
+	<if test = "reportReason>=8">
+	PENALTY_TYPE ='2'
+	</if>
 	
 	
 	</set>
-	
-	
-	
-	
-	WHERE USER_ID = #{USER_ID2}
+	WHERE USER_ID = #{user2.userId}
 	
 	</update>
 	

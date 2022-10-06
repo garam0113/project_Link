@@ -276,7 +276,7 @@ public class ServiceCenterServiceTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetReport() throws Exception{
 	
 		Report report = new Report();
@@ -287,5 +287,19 @@ public class ServiceCenterServiceTest {
 		Assert.assertEquals(3, report.getNo());
 	}
 	
-	
+	@Test
+	public void testUpdateReport() throws Exception{
+		
+		Report report = new Report();
+		User user = new User();
+		user.setUserId("user02");
+		
+		
+		report.setNo(26);
+		report.setReportReason(5);
+		report.setUser2(user);
+		
+		serviceCenterService.updateReport(report);
+		Assert.assertEquals(26, report.getNo());
+	}
 }

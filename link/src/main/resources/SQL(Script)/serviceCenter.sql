@@ -144,7 +144,7 @@ DROP TABLE report_push;
 
 CREATE TABLE REPORT_PUSH (
 	NO				NUMBER(20)				NOT NULL,
-	TITLE				VARCHAR2(200)				NOT NULL,
+	TITLE				VARCHAR2(200)				
 	CONTENT				VARCHAR2(2000)				NOT NULL,
 	REPORT_SOURCE 			CHAR(3)					,
 	CLUB_POST_NO			NUMBER(20)					NULL	REFERENCES club_post(club_post_no),
@@ -198,11 +198,18 @@ VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , 
 		     #{reportCondition} )
  
  
+ //updateReport()
  
+ SELECT * FROM USERS where user_id='user02';
  
+ SELECT * FROM REPORT_PUSH;
+
+SELECT REPORT_COUNT
+FROM USERS
+WHERE user_id='user02'; / to_number(0) + to_number(1)
+
  
- 
- 
- 
+ SELECT to_number(1) + to_number(1)
+ FROM users; 
  
  
