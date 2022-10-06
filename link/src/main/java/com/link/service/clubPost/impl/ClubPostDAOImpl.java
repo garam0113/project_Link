@@ -102,39 +102,39 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Comment addClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 왔다");
-		// 모임 게시물 번호, 모임 게시물 댓글 작성자 닉네임 꼭 필요하다
-		
-		
-		
+
+		// 모임게시물 수정은 파라미터가 map이다. 모임 게시물 댓글 번호가 있다면 모임 게시물 번호의 테이블에 댓글 개수를 +1 한다
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo()));
+		System.out.println("모임 게시물 //////////////////////////" + map.get("clubPost"));
 		
 		
 		
 		// 모임게시물 작성자 아이디
-		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", comment);
-		System.out.println("게시물 작성자 아이디 : " + clubPost.getUserId());
+		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost"));
+		System.out.println("게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
 		
 
-		User user1 = new User(); // 댓글 작성자		
-		User user2 = new User(); // 게시물 작성자
-		user2.setUserId(clubPost.getUserId()); // 게시물 작성자에게
-		Report report = new Report(comment.getUser().getNickName() + "님이 회원님의 게시물에 댓글을 남겼습니다", 2, user1, user2, 2, comment);
+		//User user1 = new User(); // 댓글 작성자		
+		//User user2 = new User(); // 게시물 작성자
+		//user1.setUserId(comment.getUser().getUserId()); // 댓글 작성자
+		//user2.setUserId(clubPost.getUser().getUserId()); // 게시물 작성자
+		Report report = new Report(comment.getUser().getUserId() + "님이 회원님의 게시물에 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()), new User(clubPost.getUser().getUserId()), 2, comment);
 				
 				
 		
 		// 모임게시물 댓글 등록
 		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
-		System.out.println("댓글등록완료");
+		System.out.println("모임게시물 댓글 등록");
 		// 모임게시물 댓글 개수 증가
 		sqlSession.insert("ClubPostMapper.updateClubPost", map);
-		System.out.println("댓글개수 증가 완료");
+		System.out.println("모임게시물 댓글 개수 증가");
 		// 모임게시물 작성자에게 댓글 추가되었다고 알림
-		sqlSession.insert("Report_PushMapper.addReport", comment);
-		System.out.println("작성자에게 알림");
+		sqlSession.insert("Report_PushMapper.addReport", report);
+		System.out.println("모임게시물 작성자에게 댓글 추가되었다고 알림");
 		// 가장 최근 모임게시물 댓글 번호 가져온다
 		comment.setClubPostCommentNo(sqlSession.selectOne("ClubPostCommentMapper.getClubPostCommentNo"));
-		System.out.println("가장 최근 번호 가져온다 : " + comment.getClubPostCommentNo());
+		System.out.println("가장 최근 모임게시물 댓글 번호 가져온다 : " + comment.getClubPostCommentNo());
 		// 가장 최근 모임게시물 댓글 가져온다
 		return sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
 	}// end of addClubPostComment(Comment comment)

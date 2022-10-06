@@ -41,6 +41,13 @@ public class User {
 	private Boolean loginStart;
 	private String snsUserId;
 	
+	public User() {
+	}
+
+	public User(String userId) {
+		this.userId = userId;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}

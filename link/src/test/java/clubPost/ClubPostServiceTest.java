@@ -34,9 +34,9 @@ public class ClubPostServiceTest {
 
 		Comment comment = new Comment();
 		comment.setClubPostNo(20);
-		comment.setClubPostCommentNo(16);
+		comment.setClubPostCommentNo(15);
 		User user = new User();
-		user.setUserId("user02");
+		user.setUserId("user03");
 		comment.setUser(user);
 		comment.setCommentContent("댓글내용 들어간다");
 		comment.setParent(5);
