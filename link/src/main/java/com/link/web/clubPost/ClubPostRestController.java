@@ -1,5 +1,6 @@
 package com.link.web.clubPost;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,9 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
+import com.link.service.serviceCenter.ServiceCenterService;
 
 @RestController
 @RequestMapping("/clubPostRest/*")
@@ -29,6 +32,10 @@ public class ClubPostRestController {
 	@Autowired
 	@Qualifier("clubPostServiceImpl")
 	ClubPostService clubPostServiceImpl;
+
+	@Autowired
+	@Qualifier("ServiceCenterServiceImpl")
+	private ServiceCenterService serviceCenterService;
 
 	public ClubPostRestController() {
 		System.out.println(getClass() + " default 생성자 호출");
@@ -63,10 +70,13 @@ public class ClubPostRestController {
 		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 
-	@RequestMapping(value = "updateClubPostLike", method = RequestMethod.POST)
-	public int updateClubPostLike(@ModelAttribute ClubPost clubPost, Heart heart) throws Exception {
-		System.out.println("/updateClubPostLike : POST : 특정 모임게시물에 좋아요, 좋아요 수");
-		return clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+	@RequestMapping(value = "updateClubPost", method = RequestMethod.POST)
+	public int updateClubPost(@ModelAttribute ClubPost clubPost, Heart heart) throws Exception {
+		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		map.put("heart", heart);
+		return ((ClubPost)clubPostServiceImpl.updateClubPost(map)).getClubPostHeartCount();
 	}
 	
 	
@@ -96,9 +106,9 @@ public class ClubPostRestController {
 	
 	
 	@RequestMapping(value = "addReport", method = RequestMethod.POST)
-	public void addReport(@ModelAttribute ClubPost clubPost) throws Exception {
+	public void addReport(@ModelAttribute Report report) throws Exception {
 		System.out.println("/addReport : POST : 모임게시물 또는 모임게시물 댓글을 신고, 작성자 이외에 가능, 신고되었다 아직 신고승인 전");
-		// reportServiceImpl.addReport(); 신고 서비스에 신고를 보낸다
+		serviceCenterService.addReport(report);
 	}
 	
 	
@@ -112,7 +122,7 @@ public class ClubPostRestController {
 	
 	@RequestMapping(value = "addClubPostComment", method = RequestMethod.POST)
 	public Comment addClubPostComment(@ModelAttribute Comment comment) throws Exception {
-		System.out.println("/addClubPostComment : POST : 모임게시물 댓글 등록, 모임게시물 작성자에게 알림, 모임게시물 댓글");
+		System.out.println("/addClubPostComment : POST : 모임게시물 댓글 등록, 모임게시물 작성자에게 알림, 해당 모임게시물 댓글 가져온다");
 		return clubPostServiceImpl.addClubPostComment(comment);
 	}
 	
@@ -129,23 +139,24 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "updateClubPostComment", method = RequestMethod.POST)
-	public Comment updateClubPostComment(@ModelAttribute Comment comment) throws Exception {
-		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 모임게시물 댓글");
-		return clubPostServiceImpl.updateClubPostComment(comment);
+	public Comment updateClubPostComment(@ModelAttribute Comment comment, Heart heart) throws Exception {
+		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 해당 모임게시물 댓글 상세보기 가져온다");
+		return (Comment)clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	@RequestMapping(value = "deleteClubPostComment", method = RequestMethod.POST)
 	public Map<String, Object> deleteClubPostComment(@ModelAttribute Comment comment) throws Exception {
-		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 모임게시물 댓글 리스트");
+		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 해당 모임게시물 댓글 리스트 가져온다");
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
 	
+	/*
 	@RequestMapping(value = "updateClubPostCommentHeart", method = RequestMethod.POST)
 	public int updateClubPostCommentHeart(@ModelAttribute Comment comment, Heart heart) throws Exception {
 		System.out.println("/updateClubPostCommentHeart : POST : 모임게시물 댓글 좋아요하다/좋아요 취소하다");
 		return clubPostServiceImpl.updateClubPostCommentHeart(comment, heart);
 	}
-	
+	*/
 	
 
 	

@@ -15,20 +15,20 @@ public interface ClubPostService {
 	// 모임게시물 등록
 	public ClubPost addClubPost(ClubPost clubPost) throws Exception;
 	
-	// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
+	// 모임게시물 리스트, 개수
 	public Map<String, Object> getClubPostList(Search search, ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 상세보기 + 모임게시물 댓글리스트
 	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 수정 후 모임게시물 상세보기
-	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception;
+	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 좋아요한 후 좋아요 수
-	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
+	//public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
 	
 	
 	
@@ -57,13 +57,13 @@ public interface ClubPostService {
 	public Comment getClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 수정
-	public Comment updateClubPostComment(Comment comment) throws Exception;
+	public Comment updateClubPostComment(Comment comment, Heart heart) throws Exception;
 	
 	// 모잉게시물 댓글 삭제
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 좋아요
-	public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception;
+	//public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception;
 	
 	
 	

@@ -50,10 +50,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPost(ClubPost clubPost)
 
 	@Override
-	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception {
-		System.out.println(getClass() + ".updateClubPost(ClubPost clubPost) 도착");
-		return clubPostDAOImpl.updateClubPost(clubPost);
-	}// end of updateClubPost(ClubPost clubPost)
+	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".updateClubPost(Map<String, Object> map) 도착");
+		return clubPostDAOImpl.updateClubPost(map);
+	}// end of updateClubPost(Map<String, Object> map)
 
 	@Override
 	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
@@ -63,13 +63,14 @@ public class ClubPostServiceImpl implements ClubPostService {
 		return clubPostDAOImpl.deleteClubPost(map);
 	}// end of deleteClubPost(ClubPost clubPost)
 
+	/*
 	@Override
 	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 도착");
 		heart.setUserId(clubPost.getUser().getUserId());
 		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
 	}// end of updateClubPostLike(Heart heart)
-	
+	*/
 	
 	
 	
@@ -117,10 +118,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostComment(Comment comment)
 
 	@Override
-	public Comment updateClubPostComment(Comment comment) throws Exception {
-		System.out.println(getClass() + ".updateClubPostComment(Comment comment) 도착");
-		return clubPostDAOImpl.updateClubPostComment(comment);
-	}// end of updateClubPostComment(Comment comment)
+	public Comment updateClubPostComment(Comment comment, Heart heart) throws Exception {
+		System.out.println(getClass() + ".updateClubPostComment(Comment comment, Heart heart) 도착");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comment", comment);
+		map.put("heart", heart);
+		return clubPostDAOImpl.updateClubPostComment(map);
+	}// end of updateClubPostComment(Comment comment, Heart heart)
 
 	@Override
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
@@ -128,12 +132,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 		return clubPostDAOImpl.deleteClubPostComment(comment);
 	}// end of deleteClubPostComment(Comment comment)
 
+	/*
 	@Override
 	public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostCommentHeart(Comment comment) 도착");
 		return clubPostDAOImpl.updateClubPostCommentHeart(comment, heart);
 	}// end of updateClubPostCommentHeart(Comment comment)
-	
+	*/
 	
 	
 	

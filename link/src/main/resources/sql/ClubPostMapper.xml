@@ -19,7 +19,7 @@
 		<result property="clubPostVideo3" 			column="club_post_video3" 			jdbcType="VARCHAR"/>
 		<result property="clubPostRegDate" 			column="club_post_reg_date" 		jdbcType="VARCHAR"/>
 		<result property="clubPostUpdateDate" 		column="club_post_update_date" 		jdbcType="VARCHAR"/>
-		<result property="clubPostLikeCount" 		column="club_post_heart_count" 		jdbcType="NUMERIC"/>
+		<result property="clubPostHeartCount" 		column="club_post_heart_count" 		jdbcType="NUMERIC"/>
 		<result property="clubPostCommentCount" 	column="club_post_comment_count" 	jdbcType="NUMERIC"/>
 		<result property="image1" 					column="image1" 					jdbcType="VARCHAR"/>
 		<result property="image2" 					column="image2" 					jdbcType="VARCHAR"/>
@@ -132,21 +132,22 @@
 	
 	
 	<!-- 수정하는 모임게시물 -->
-	<update id="updateClubPost" parameterType="clubPost">
+	<update id="updateClubPost" parameterType="map">
 		UPDATE CLUB_POST
 		SET
 		<choose>
-			<when test="likeCondition == 1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1</when>
-			<when test="likeCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
-			<when test="clubPostCommentNo != 0">clubPostCommentCount = clubPostCommentCount + 1</when>
+			<when test="clubPost.heartCondition == 1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1</when>
+			<when test="clubPost.heartCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
+			<when test="clubPost.clubPostCommentNo != 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
+			<when test="clubPost.reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>
-				CLUB_POST_TITLE = #{ clubPostTitle }, CLUB_POST_CONTENT = #{ clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPostVideo1:VARCHAR2 }, CLUB_POST_VIDEO2 = #{ clubPostVideo2:VARCHAR2 },
-				CLUB_POST_VIDEO3 = #{ clubPostVideo3:VARCHAR2 }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ image1:VARCHAR2 }, IMAGE2 = #{ image2:VARCHAR2 }, IMAGE3 = #{ image3:VARCHAR2 },
-				IMAGE4 = #{ image4:VARCHAR2 }, IMAGE5 = #{ image5:VARCHAR2 }, IMAGE6 = #{ image6:VARCHAR2 }, IMAGE7 = #{ image7:VARCHAR2 }, IMAGE8 = #{ image8:VARCHAR2 },
-				IMAGE9 = #{ image9:VARCHAR2 }, IMAGE10 = #{ image10:VARCHAR2 }
+				CLUB_POST_TITLE = #{ clubPost.clubPostTitle }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR2 }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR2 },
+				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR2 }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR2 }, IMAGE2 = #{ clubPost.image2:VARCHAR2 }, IMAGE3 = #{ clubPost.image3:VARCHAR2 },
+				IMAGE4 = #{ clubPost.image4:VARCHAR2 }, IMAGE5 = #{ clubPost.image5:VARCHAR2 }, IMAGE6 = #{ clubPost.image6:VARCHAR2 }, IMAGE7 = #{ clubPost.image7:VARCHAR2 }, IMAGE8 = #{ clubPost.image8:VARCHAR2 },
+				IMAGE9 = #{ clubPost.image9:VARCHAR2 }, IMAGE10 = #{ clubPost.image10:VARCHAR2 }
 			</otherwise>
 		</choose>
-		WHERE CLUB_POST_NO = #{ clubPostNo }
+		WHERE CLUB_POST_NO = #{ clubPost.clubPostNo }
 	</update>
 	
 	

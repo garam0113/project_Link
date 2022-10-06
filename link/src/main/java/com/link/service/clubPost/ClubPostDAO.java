@@ -3,7 +3,6 @@ package com.link.service.clubPost;
 import java.util.List;
 import java.util.Map;
 
-import com.link.common.Search;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
@@ -22,13 +21,13 @@ public interface ClubPostDAO {
 	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 수정 후 모임게시물 상세보기
-	public Map<String, Object> updateClubPost(ClubPost clubPost) throws Exception;
+	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 좋아요
-	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
+	//public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
 	
 	
 	
@@ -59,13 +58,13 @@ public interface ClubPostDAO {
 	public Comment getClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 수정
-	public Comment updateClubPostComment(Comment comment) throws Exception;
+	public Comment updateClubPostComment(Map<String, Object> map) throws Exception;
 	
 	// 모잉게시물 댓글 삭제
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 좋아요
-	public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception;
+	//public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception;
 	
 	
 	

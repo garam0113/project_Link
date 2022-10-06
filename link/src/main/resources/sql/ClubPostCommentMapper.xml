@@ -15,7 +15,7 @@
 		<result property="commentContent" 			column="comment_content" 			jdbcType="VARCHAR"/>
 		<result property="commentRegDate" 			column="comment_reg_date" 			jdbcType="DATE"/>
 		<result property="commentUpdateDate" 		column="comment_update_date" 		jdbcType="DATE"/>
-		<result property="commentLikeCount" 		column="comment_like_count" 		jdbcType="NUMERIC"/>
+		<result property="commentHeartCount" 		column="comment_heart_count" 		jdbcType="NUMERIC"/>
 		<result property="commentCount" 			column="comment_count" 				jdbcType="NUMERIC"/>
 		<result property="reportCondition" 			column="report_condition" 			jdbcType="VARCHAR"/>
 		<result property="deleteCondition" 			column="delete_condition" 			jdbcType="VARCHAR"/>
@@ -28,7 +28,7 @@
 	
 	<!-- 모임게시물 댓글 리스트 -->
 	<select id="getClubPostCommentList" parameterType="comment" resultMap="clubPostCommentSelectMap">
-		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
+		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_HEART_COUNT,
 		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
 		FROM CLUB_POST_COMMENT
 		<choose>
@@ -50,7 +50,7 @@
 	<!-- 댓글 등록 -->
 	<insert id="addClubPostComment" parameterType="comment">
 		INSERT INTO CLUB_POST_COMMENT (CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE,
-		COMMENT_LIKE_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
+		COMMENT_HEART_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE)
 		VALUES (seq_club_post_comment_no.NEXTVAL, #{ clubPostNo }, #{ user.userId }, #{ commentContent }, sysdate, null, 0, 0, '0', '0', #{ parent }, #{ depth }, #{ commentCount })
 	</insert>
 	
@@ -69,7 +69,7 @@
 
 	<!-- 특정 댓글을 가져온다 -->	
 	<select id="getClubPostComment" parameterType="comment" resultMap="clubPostCommentSelectMap">
-		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_LIKE_COUNT,
+		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_HEART_COUNT,
 		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
 		FROM CLUB_POST_COMMENT
 		WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
@@ -82,8 +82,9 @@
 		UPDATE CLUB_POST_COMMENT
 		SET
 		<choose>
-			<when test="heartCondition == 1">COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1</when>
-			<when test="heartCondition == -1">COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT - 1</when>
+			<when test="heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
+			<when test="heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
+			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
 		</choose>
 		WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }

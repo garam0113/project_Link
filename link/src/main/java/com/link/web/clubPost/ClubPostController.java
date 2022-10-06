@@ -1,5 +1,8 @@
 package com.link.web.clubPost;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +120,9 @@ public class ClubPostController {
 	@RequestMapping(value = "updateClubPost", method = RequestMethod.POST)
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
-		model.addAttribute("map", clubPostServiceImpl.updateClubPost(clubPost));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		model.addAttribute("map", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
@@ -148,7 +153,7 @@ public class ClubPostController {
 		if(pay.getUpdateClubMemberCount() != 0) {
 			// 모임원 업데이트 수가 있다면 모임대표가 가입신청을 클릭 후 이벤트이다 결제 후 모임원리스트 화면으로 이동
 			// 모임원 최대수 CLUB_MAX_MEMBER 증가
-			//model.addAttribute("getClubMemberList", clubServiceImpl.updateClubMember(pay, search));
+			model.addAttribute("getClubMemberList", clubServiceImpl.updateClubMember(pay, search));
 			return "forward:/club/getClubMemberList.jsp";
 		}else {
 			// 모임 업데이트 수가 있다면 모임등록 또는 모임가입신청 클릭 후 이벤트이다 결제 후 모임번호가 있다면 모임상세보기 화면으로 모임번호가 없다면 모임리스트 화면으로 이동

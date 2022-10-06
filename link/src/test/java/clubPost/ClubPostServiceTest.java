@@ -1,5 +1,6 @@
 package clubPost;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,22 +28,24 @@ public class ClubPostServiceTest {
 	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostServiceImpl;
 
-	//@Test
+	@Test
 	public void addClubPostComment() throws Exception {
 		// 모임게시물 댓글 등록
 
 		Comment comment = new Comment();
 		comment.setClubPostNo(20);
+		comment.setClubPostCommentNo(16);
 		User user = new User();
 		user.setUserId("user02");
 		comment.setUser(user);
 		comment.setCommentContent("댓글내용 들어간다");
 		comment.setParent(5);
 		comment.setDepth(2);
-		comment.setSequence(2);
+		comment.setCommentCount(2);
 		
 		comment = clubPostServiceImpl.addClubPostComment(comment);
 		
+		System.out.println("///////////////////////////////////////////////////////////////");
 		System.out.println(comment);
 	}
 
@@ -66,7 +69,12 @@ public class ClubPostServiceTest {
 		comment.setCommentContent("1");
 		comment.setCommentUpdateDate("22/10/04");
 		
-		clubPostServiceImpl.updateClubPostComment(comment);
+		Heart heart = new Heart();
+		heart.setSource("3");
+		heart.setSourceNo(7);
+		heart.setUserId("user04");
+		
+		clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	//@Test
@@ -215,14 +223,19 @@ public class ClubPostServiceTest {
 		User user = new User();
 		user.setUserId("user04");
 		clubPost.setUser(user);
-		clubPost.setLikeCondition(1);
+		//clubPost.setHeartCondition(1);
+		clubPost.setClubPostCommentNo(3);
 		
 		Heart heart = new Heart();
-		heart.setSource("2");
-		heart.setSourceNo(30);
-		heart.setUserId("user04");
+		//heart.setSource("2");
+		//heart.setSourceNo(30);
+		//heart.setUserId("user04");
 		
 		//clubPostServiceImpl.updateClubPostLike(clubPost, heart);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		map.put("heart", heart);
+		clubPostServiceImpl.updateClubPost(map);
 		
 	}
 	
@@ -265,23 +278,4 @@ public class ClubPostServiceTest {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
