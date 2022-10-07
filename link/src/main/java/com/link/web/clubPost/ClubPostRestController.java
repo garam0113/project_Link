@@ -67,35 +67,17 @@ public class ClubPostRestController {
 		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
 		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
 		
-		// 모임게시물 탭 클릭했을때 currentPage는 null이다
-		int currentPage = 1;
-
-		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
-		if (search.getCurrentPage() != 0) {
-			currentPage = search.getCurrentPage();
-		}
-
-		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
-		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
-		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		System.out.println(search);
+		System.out.println(clubPost);
+		System.out.println("clubNo : " + clubNo);
+		System.out.println("order : " + order);
 		
-		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
-		if (!search.getSearchCondition().trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
-			searchKeyword = "";
-		}
-		
-		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getOrder());
-		
-		
-		
-		
-		
-		
+		search = ClubPostSearchPage.getSearch(order);
 		
 		clubPost.setClubNo(clubNo);
-		clubPost.setUser((User) session.getAttribute("user"));
+		//clubPost.setUser((User) session.getAttribute("user"));
+		clubPost.setUser(new User("user03"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		search.setOrder(order);
 		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 

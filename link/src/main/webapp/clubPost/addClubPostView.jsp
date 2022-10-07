@@ -11,20 +11,20 @@ $(function(){
 		$("form[name='addClubPost']").submit();
 	});
 	$("input[value='상세보기']").bind("click", function(){
-		location.href = "/clubPost/getClubPost?clubPostNo=20";
+		location.href = "/clubPost/getClubPost?clubPostNo=";
 	});
 });
 </script>
 </head>
 <body>
 <form name="addClubPost" method="post" action="/clubPost/addClubPost">
-<input type="text" name="clubNo" value="${ clubNo }"></br>
-제목<input type="text" name="clubPostTitle"></br>
+모임 번호 : <input type="hidden" name="clubNo" value="${ clubNo }"></br>
+제목<input type="text" name="clubPostTitle" value="notnull"></br>
 내용<input type="text" name="clubPostContent"></br>
 영상1<input type="text" name="clubPostVideo1"></br>
 영상2<input type="text" name="clubPostVideo2"></br>
 영상3<input type="text" name="clubPostVideo3"></br>
-이미지1<input type="text" name="image1"></br>
+이미지1<input type="text" name="image1" value="notnull"></br>
 이미지2<input type="text" name="image2"></br>
 이미지3<input type="text" name="image3"></br>
 이미지4<input type="text" name="image4"></br>

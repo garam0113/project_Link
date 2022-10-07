@@ -29,7 +29,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPost addClubPost(ClubPost clubPost) throws Exception {
+	public Map<String, Object> addClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".addClubPost(ClubPost clubPost) 도착");
 		return clubPostDAOImpl.addClubPost(clubPost);
 	}// end of addClubPost(ClubPost clubPost)
@@ -44,10 +44,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostList(Search search, ClubPost clubPost)
 
 	@Override
-	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception {
-		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 도착");
-		return clubPostDAOImpl.getClubPost(clubPost);
-	}// end of getClubPost(ClubPost clubPost)
+	public Map<String, Object> getClubPost(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".getClubPost(Map<String, Object> map) 도착");
+		return clubPostDAOImpl.getClubPost(map);
+	}// end of getClubPost(Map<String, Object> map)
 
 	@Override
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
@@ -56,12 +56,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of updateClubPost(Map<String, Object> map)
 
 	@Override
-	public Map<String, Object> deleteClubPost(ClubPost clubPost) throws Exception {
-		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost) 도착");
+	public Map<String, Object> deleteClubPost(ClubPost clubPost, Search search) throws Exception {
+		System.out.println(getClass() + ".deleteClubPost(ClubPost clubPost, Search search) 도착");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
+		map.put("search", search);
 		return clubPostDAOImpl.deleteClubPost(map);
-	}// end of deleteClubPost(ClubPost clubPost)
+	}// end of deleteClubPost(ClubPost clubPost, Search search)
 
 	/*
 	@Override
