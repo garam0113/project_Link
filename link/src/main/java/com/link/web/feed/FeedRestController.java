@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 
@@ -73,6 +75,7 @@ public class FeedRestController {
 		map.put("search", search);
 		
 		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
+		
 	}
 	
 	@RequestMapping(value = "/json/getFeedComment", method = RequestMethod.POST)
@@ -91,6 +94,7 @@ public class FeedRestController {
 		feedService.updateFeedComment(comment);
 		
 		return feedService.getFeedComment(comment.getFeedCommentNo());
+		
 	}
 	
 	
@@ -106,6 +110,7 @@ public class FeedRestController {
 		map.put("feedNo", comment.getFeedNo());
 		
 		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
+		
 	}
 	
 	
@@ -127,6 +132,7 @@ public class FeedRestController {
 		map.put("search", search);
 		
 		return (List<Feed>) feedService.getFeedList(map).get("feedList");
+		
 	}
 	
 	
@@ -148,6 +154,7 @@ public class FeedRestController {
 		map.put("search", search);
 		
 		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
+		
 	}
 	
 	
@@ -167,6 +174,7 @@ public class FeedRestController {
 		map.put("feed", feed);
 				
 		return feedService.addFeedHeart(map);
+		
 	}
 
 	@RequestMapping(value = "/json/deleteFeedHeart", method = RequestMethod.POST)
@@ -200,6 +208,7 @@ public class FeedRestController {
 		map.put("comment", comment);
 		
 		return feedService.addFeedCommentHeart(map);
+		
 	}
 	
 	@RequestMapping(value = "/json/deleteFeedCommentHeart", method = RequestMethod.POST)
@@ -216,6 +225,21 @@ public class FeedRestController {
 		
 		return feedService.addFeedCommentHeart(map);
 		
+	}
+	
+	
+	
+	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
+		
+		
+		
+	@RequestMapping(value = "/json/addFeedReport", method = RequestMethod.POST)
+	public Report addReport(@ModelAttribute Report report) throws Exception {
+		
+		feedService.addReport(report);
+		
+		return report;
+	
 	}
 	
 	

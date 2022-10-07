@@ -71,14 +71,14 @@ INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user05', 'f
 INSERT INTO heart VALUES (seq_heart_no.nextval, 'user01', '0', '5');
 INSERT INTO heart VALUES (seq_heart_no.nextval, 'user02', '0', '5');
 INSERT INTO heart VALUES (seq_heart_no.nextval, 'user03', '0', '5');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user01', '0', '1');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user02', '1', '1');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user04', '0', '5');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '0', '5');
 
 INSERT INTO heart VALUES (seq_heart_no.nextval, 'user01', '1', '1');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user02', '1', '2');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user03', '1', '3');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user04', '1', '4');
-INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '1', '5');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user02', '1', '1');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user03', '1', '1');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user04', '1', '1');
+INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '1', '1');
 
 
 
@@ -216,4 +216,53 @@ SELECT * FROM HEART;
 
 
 
-SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_like_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = '5' AND report_condition = '0' AND delete_condition = '0' ORDER BY feed_comment_no ASC 
+
+
+
+
+
+
+
+
+
+
+
+SELECT 
+*
+FROM feed f, (
+				SELECT
+				*
+				FROM	(
+							SELECT
+							*
+							FROM HEART
+							WHERE TRIM(source)		= '0'
+							AND user_id				= 'user01'	)) isLike
+WHERE f.feed_no = isLike.source_no(+)
+ORDER BY feed_no DESC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	SELECT
+		COUNT(*)
+		FROM	(
+					SELECT
+					heart_no,
+					user_id,
+					source,
+					source_no
+					FROM HEART
+					WHERE TRIM(source)		= #{ source }
+					AND source_no			= #{ sourceNo }	
+					AND user_id				= #{ userId	}	)
