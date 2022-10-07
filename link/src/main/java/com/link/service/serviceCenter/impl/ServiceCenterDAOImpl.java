@@ -61,6 +61,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void deleteNotice(int noticeNo) throws Exception {
 		// TODO Auto-generated method stub
+		
 		sqlSession.delete("NoticeMapper.deleteNotice", noticeNo);
 		
 	}
@@ -120,21 +121,35 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addReport", report);
+		
+		
+		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
 	}
 
 	@Override
 	public Report getReport(int reportNo) throws Exception {
+		
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("Report_PushMapper.getReport", reportNo);
+	
+	return sqlSession.selectOne("Report_PushMapper.getReport", reportNo);
 	}
 
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.update("Report_PushMapper.addReportCount", report);
-		
+		Report report2 = getReport(report.getNo());
+		sqlSession.update("Report_PushMapper.stopDate", report2); 
+
 	}
+	
+	@Override
+	public Report getReportDuple(Report report) throws Exception{
+	System.out.println("데이터 확인용 : " + report);
+	return	sqlSession.selectOne("Report_PushMapper.getReportDuple", report);
+	
+	}
+	
 //==================================================================여기까지가 Report
 	@Override
 	public int getTotalCount(Search search, int a) throws Exception {
@@ -145,9 +160,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		}else if (a == 1) {
 			return sqlSession.update("QandAMapper.getQandAList", search);
 		}else {
-		
-		
-		return sqlSession.update("NoticeMapper.getNoticeList", search);
+			return sqlSession.update("NoticeMapper.getNoticeList", search);
 		}
 	}
 //==================================================================여기까지가 공통

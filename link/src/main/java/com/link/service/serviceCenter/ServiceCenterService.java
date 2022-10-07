@@ -45,6 +45,8 @@ public interface ServiceCenterService {
 	
 	public void updateReport(Report report) throws Exception;
 	
+	public Report getReportDuple(Report report) throws Exception;
+	
 	//==여기까지가 신고 Report  ==//
 	
 }

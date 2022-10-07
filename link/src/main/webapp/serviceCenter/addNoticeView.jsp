@@ -88,7 +88,18 @@
 		    </div>
 		  </div>
 
-	
+		  <div class="form-group">
+		    <label for="noticeContent" class="col-sm-offset-1 col-sm-3 control-label">이미지1</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="noticeImage1" name="noticeImage1" >
+		    </div>
+		  </div>	
+		    <div class="form-group">
+		    <label for="noticeContent" class="col-sm-offset-1 col-sm-3 control-label">이미지2</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="noticeImage2" name="noticeImage2" >
+		    </div>
+		  </div>
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">

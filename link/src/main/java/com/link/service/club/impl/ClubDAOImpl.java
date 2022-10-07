@@ -2,6 +2,8 @@ package com.link.service.club.impl;
 
 import java.util.List;
 
+import javax.websocket.Session;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -66,6 +68,8 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public Club getClub(int clubNo) throws Exception {
+		
+		System.out.println("getClub DAOImpl 왔나? ");
 		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
 	}
 	
@@ -86,6 +90,8 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public List<Club> getMyClubList(Search search) throws Exception {
+		
+		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
 		return sqlSession.selectList("ClubMapper.getMyClubList",search);
 	}
 	
@@ -96,11 +102,24 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public void updateClub(Club club) throws Exception {
+		
+		System.out.println("updateClub DAOImpl 왔나요? ");
+		
+		club.setClubNo(26);
+		club.setUserId("일단테스트 아디입니다");
+		club.setClubCategory("일단테스트입니다");
+		club.setCurrentMember(1);
+		club.setClubMaxMember(10);
 		sqlSession.update("ClubMapper.updateClub",club);
 	}
 	
 	@Override
 	public void addApprovalCondition(ClubUser clubUser) throws Exception {
+		
+		System.out.println("모임가입신청 DAOImpl 왔나?? ");
+		clubUser.setUserId("user11");
+		clubUser.setMemberRole("0");
+		clubUser.setApprovalCondition("0");
 		sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
 	}
 	
@@ -118,11 +137,15 @@ public class ClubDAOImpl implements ClubDAO {
 //	
 	@Override
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception {
+		
+		System.out.println("updateApprovalCondition DAOImpl 왔나?");
 		sqlSession.update("ClubMapper.updateApprovalCondition",clubUser);
 	}
 	
 	@Override
 	public List<ClubUser> getClubMemberList(Search search) throws Exception {
+		
+		System.out.println("모임원리스트 DAOImpl 왔나? ");
 		return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}
 	
@@ -147,7 +170,7 @@ public class ClubDAOImpl implements ClubDAO {
 		System.out.println("addMeeting DAO왔는가 ? ");
 		
 		meeting.setClubNo(2);
-		meeting.setuserId("user01");
+		meeting.setAddMeetingUserId("user01");
 		meeting.setMeetingWeather("테스트날씨다");
 		meeting.setMeetingMember(1);
 		System.out.println("meeting 값이 뭔가 ? : "+meeting );
@@ -175,6 +198,13 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public void updateMeeting(Meeting meeting) throws Exception {
+		
+		System.out.println("updateMeeting DAOImpl 오나 ?? ");
+		
+		meeting.setMeetingNo(24);
+//		meeting.setClubNo(2);
+		meeting.setAddMeetingUserId("user01");
+		
 		sqlSession.update("ClubMapper.updateMeeting",meeting);
 	}
 	

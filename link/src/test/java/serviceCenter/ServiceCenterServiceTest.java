@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.link.common.Search;
 import com.link.service.domain.ClubPost;
@@ -22,6 +23,7 @@ import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:config/context-*.xml" })
 public class ServiceCenterServiceTest {
@@ -232,22 +234,16 @@ public class ServiceCenterServiceTest {
 		User user = new User();
 		user.setUserId("admin1");
 		User user2 = new User();
-		user2.setUserId("user03");
+		user2.setUserId("user01");
 		
-		
-		
-		 Comment comment = new Comment();		
-		 comment.setClubPostCommentNo(9);
-		
+
 		
 		 ClubPost clubPost = new ClubPost(); 
 		 clubPost.setClubPostNo(10);
 		 
-		 Feed feed = new Feed();
-		 feed.setFeedNo(5);
+	
 		 
-		 Comment comment2 = new Comment();
-		 comment2.setFeedCommentNo(5);
+
 		
 		report.setNo(1);
 		report.setTitle("신고합니다");
@@ -281,25 +277,66 @@ public class ServiceCenterServiceTest {
 	
 		Report report = new Report();
 		
-		report.setNo(3);
-		
+		report.setNo(37);
+		System.out.println(report+"여기");
 		serviceCenterService.getReport(report.getNo());
-		Assert.assertEquals(3, report.getNo());
+		Assert.assertEquals(37, report.getNo());
 	}
 	
-	@Test
+	//@Test
 	public void testUpdateReport() throws Exception{
 		
 		Report report = new Report();
 		User user = new User();
 		user.setUserId("user02");
+		user.setReportCount(2);
 		
 		
+		user.setStopEndDate(null);
 		report.setNo(26);
-		report.setReportReason(5);
+		report.setReportReason(7);
 		report.setUser2(user);
 		
 		serviceCenterService.updateReport(report);
 		Assert.assertEquals(26, report.getNo());
 	}
+	
+	//@Test
+	public void testDuplicationReport() throws Exception{
+		
+		Report report = new Report();
+		User user = new User();
+		report.setNo(45);
+		user.setUserId("user01");
+		report.setUser2(user);
+		User user2 = new User(); 
+		
+		user2.setUserId("admin1");
+		report.setUser1(user2);
+		
+		System.out.println(report+"데이터 확인용");
+		serviceCenterService.getReportDuple(report);
+		Assert.assertEquals(45, report.getNo());
+		
+	}
+	
+	//@Test
+	public void testDuplication2Report() throws Exception{
+		
+		Report report = new Report();
+		report.setNo(47);
+		ClubPost clubPost = new ClubPost();
+		clubPost.setClubPostNo(10);
+		report.setClubPost(clubPost);
+		User user = new User();
+		user.setUserId("user01");
+		report.setUser2(user);
+		
+		
+		System.out.println(report+"데이터 확인요");
+		
+		Assert.assertEquals(47,report.getNo());
+		
+	}
+	
 }

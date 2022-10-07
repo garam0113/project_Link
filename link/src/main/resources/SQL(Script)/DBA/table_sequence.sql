@@ -138,7 +138,7 @@ CREATE TABLE users	(
 	push_condition					CHAR(3)					DEFAULT '0',
 	join_club_count					NUMBER(20)				DEFAULT	'0',
 	join_club_limit					NUMBER(20)				DEFAULT	'2',
-	sns_user_id						VARCHAR2(20),
+	sns_user_id						VARCHAR2(50),
 	PRIMARY	KEY(user_id)
 );
 
