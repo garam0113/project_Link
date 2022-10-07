@@ -29,7 +29,7 @@
 	<hr/>
 	<hr/>
 		<div class="page-header text-info">
-			<a href="/clubPost/getClubPostList?clubNo=2?order=0">모임게시물리스트</a>
+			<a href="/clubPost/getClubPostList?clubNo=2&order=0">모임게시물리스트</a>
 		</div>
 	</div>
 </body>

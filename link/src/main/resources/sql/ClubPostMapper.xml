@@ -40,12 +40,8 @@
 		FROM CLUB_POST
 		WHERE CLUB_NO = 
 		<choose>
-			<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
-			#{ clubPost.clubNo }
-			<if test="search.order == 3">
-			AND USER_ID = #{ userId }
-			</if>
-		</when>
+			<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">#{ clubPost.clubNo }</when>
+			<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0 and search.order == 3">#{ clubPost.clubNo } AND USER_ID = #{ clubPost.user.userId }</when>
 		<otherwise>
 			( SELECT V2.CLUB_NO
 				FROM ( SELECT ROWNUM, V1.*
@@ -132,10 +128,10 @@
 			<when test="clubPost.clubPostCommentNo != 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
 			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>
-				CLUB_POST_TITLE = #{ clubPost.clubPostTitle }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR2 }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR2 },
-				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR2 }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR2 }, IMAGE2 = #{ clubPost.image2:VARCHAR2 }, IMAGE3 = #{ clubPost.image3:VARCHAR2 },
-				IMAGE4 = #{ clubPost.image4:VARCHAR2 }, IMAGE5 = #{ clubPost.image5:VARCHAR2 }, IMAGE6 = #{ clubPost.image6:VARCHAR2 }, IMAGE7 = #{ clubPost.image7:VARCHAR2 }, IMAGE8 = #{ clubPost.image8:VARCHAR2 },
-				IMAGE9 = #{ clubPost.image9:VARCHAR2 }, IMAGE10 = #{ clubPost.image10:VARCHAR2 }
+				CLUB_POST_TITLE = #{ clubPost.clubPostTitle }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },
+				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR }, IMAGE2 = #{ clubPost.image2:VARCHAR }, IMAGE3 = #{ clubPost.image3:VARCHAR },
+				IMAGE4 = #{ clubPost.image4:VARCHAR }, IMAGE5 = #{ clubPost.image5:VARCHAR }, IMAGE6 = #{ clubPost.image6:VARCHAR }, IMAGE7 = #{ clubPost.image7:VARCHAR }, IMAGE8 = #{ clubPost.image8:VARCHAR },
+				IMAGE9 = #{ clubPost.image9:VARCHAR }, IMAGE10 = #{ clubPost.image10:VARCHAR }
 			</otherwise>
 		</choose>
 		WHERE CLUB_POST_NO = #{ clubPost.clubPostNo }
