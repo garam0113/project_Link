@@ -24,6 +24,7 @@ import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
+import com.link.service.domain.Report;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
@@ -54,34 +55,6 @@ public class ServiceCenterController {
 		System.out.println("/ServiceCenter/addNotice : POST");
 		
 		notice.setNoticeRegDate(notice.getNoticeRegDate());
-		
-		StringBuilder sb = new StringBuilder();
-		
-		int fileCount = 0;
-		
-		
-		for(MultipartFile files : file) {
-			fileCount++;
-			System.out.println(files.getOriginalFilename());
-			sb.append(files.getOriginalFilename());
-			
-			if(fileCount != file.length) {
-				sb.append("*");
-			}
-			
-			String path = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles";
-			File saveFile = new File(path + files.getOriginalFilename());
-			
-			boolean isExists = saveFile.exists();
-			
-			if(!isExists) {
-				files.transferTo(saveFile);
-			}
-		}
-		
-		System.out.println(sb.toString());
-		
-		notice.setNoticeImage1(sb.toString());
 		
 		serviceCenterService.addNotice(notice);
 		
@@ -326,8 +299,50 @@ public class ServiceCenterController {
 	
 // 여기까지가 QandA 끝 ====================================================================
 	
+	@RequestMapping(value = "addReport", method = RequestMethod.POST)
+	public String addQandA(@ModelAttribute Report report, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
+		System.out.println(report);
+	
+		System.out.println("/ServiceCenter/addReport : POST");
+		
+		
+		StringBuilder sb = new StringBuilder();
+		
+		int fileCount = 0;
+		
+		
+		for(MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+			sb.append(files.getOriginalFilename());
+			
+			if(fileCount != file.length) {
+				sb.append("*");
+			}
+			
+			String path = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles";
+			File saveFile = new File(path + files.getOriginalFilename());
+			
+			boolean isExists = saveFile.exists();
+			
+			if(!isExists) {
+				files.transferTo(saveFile);
+			}
+		}
+		
+		System.out.println(sb.toString());
+		
+		report.setReportImage1(sb.toString());
+		
+		
+		
+		serviceCenterService.addReport(report);
+		
+		model.addAttribute("report", report);
+		
+		return "forward:/ServiceCenter/addReport.jsp";
+	}
 	
 	
-
 
 }

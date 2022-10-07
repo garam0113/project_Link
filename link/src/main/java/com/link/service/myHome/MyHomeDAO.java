@@ -27,4 +27,5 @@ public interface MyHomeDAO {
 	
 	public int getFollowerCount(Search search) throws Exception;
 	
+	public int getTotalCount(Search search) throws Exception;
 }

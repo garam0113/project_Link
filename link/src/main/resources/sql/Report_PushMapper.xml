@@ -27,7 +27,13 @@
 	
 	<association property="user2" javaType="user">
 		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
+		<result property="reportCount" column="report_count" jdbcType="NUMERIC"/>
+		<result property="stopEndDate" column="stop_start_date" jdbcType="DATE"/>
+		<result property="stopEndDate" column="stop_end_date" jdbcType="DATE"/>
+		
 	</association>
+	
+
 	
 	
 	
@@ -91,66 +97,127 @@
 		     #{reportCondition:VARCHAR} )
 	
 	</insert>
-	 
-	 
+	
+	
+	  <!-- SQL : 중복신고 제거 -->
+	  <select id ="getReportDuple2" parameterType ="report" resultType="report">
+		SELECT R.*
+		FROM REPORT_PUSH R
+		WHERE R.USER_ID1 = #{user1.userId} AND R.USER_ID2 = #{user2.userId}
+		AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') &lt; TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')
+	  </select>
+	  
+	   <select id ="getReportDuple" parameterType ="report" resultType="report">
+		SELECT R.*
+		FROM REPORT_PUSH R
+		WHERE  R.USER_ID2 = #{user2.userId}
+		AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') &lt; TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')
+		 <if test="clubPost.clubPostNo != null">
+        AND R.CLUB_POST_NO
+        </if>
+        <if test="clubPostComment.clubPostCommentNo != null">
+        AND R.CLUB_POST_COMMENT_NO
+        </if>
+        <if test="feed.feedNo != null">
+        AND R.FEED_NO
+        </if>
+        <if test="feedComment.feedCommentNo != null">
+        AND R.FEED_COMMENT_NO
+        </if>
+	  </select>
+	  
+
+
 	 <!-- SQL : SELECT ONE -->
 	 <select id="getReport" parameterType="int" resultMap="Report_PushSelectMap" >
 		SELECT R.*, U.REPORT_COUNT
         FROM REPORT_PUSH R, USERS U
         WHERE R.user_id2 = U.USER_ID AND NO = #{no}
-        
 	 </select>
+	 
+	 
+	 
+	
+	 
 
 	<!--  SQL : 신고처리 하기 -->
 	<update id="addReportCount" parameterType="report">
 	UPDATE USERS
 	<set>
-	
-
-	<if test ="reportReason==1">
-	REPORT_COUNT = REPORT_COUNT + 1
-	</if>
+				<if test ="reportReason==1">
+				REPORT_COUNT = REPORT_COUNT + 1
+				</if>
 		
-	<if test ="reportReason==2">
-	REPORT_COUNT = REPORT_COUNT + 1
-	</if>
+				<if test ="reportReason==2">
+				REPORT_COUNT = REPORT_COUNT + 1
+				</if>
 	
-	<if test = "reportReason==3">
-	REPORT_COUNT = REPORT_COUNT + 2					
+				<if test = "reportReason==3">
+				REPORT_COUNT = REPORT_COUNT + 2					
+				</if>
+				
+				<if test = "reportReason==4">
+				REPORT_COUNT = REPORT_COUNT + 1
+				</if>
+				
+				<if test = "reportReason==5">
+				REPORT_COUNT = REPORT_COUNT + 2
+				</if>
+				
+				<if test = "reportReason==6">
+				REPORT_COUNT = REPORT_COUNT + 2
+				</if>
+				
+				<if test = "reportReason==7">
+				REPORT_COUNT = REPORT_COUNT + 3
+				</if>
+				
+				<if test = "reportReason>=8">
+				PENALTY_TYPE = 2
+				</if>			
+	</set>
+	WHERE USER_ID = #{user2.userId}
+	</update>
+
+	<update id ="stopDate" parameterType="report">
+	UPDATE USERS
+	<set>
+	STOP_START_DATE = SYSDATE
+	<if test = "user2.reportCount>=2">
+
+							<if test ="user2.reportCount==2">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+1)
+							</if>
+							
+							<if test ="user2.reportCount==3">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+1)
+							</if>
+							
+							<if test ="user2.reportCount==4">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+3)
+							</if>
+							
+							<if test ="user2.reportCount==5">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+3)
+							</if>		
+									
+							<if test ="user2.reportCount==6">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+7)	
+							</if>
+							
+							<if test ="user2.reportCount==7">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+7)	
+							</if>
+							<if test ="user2.reportCount>=8">
+									,  STOP_END_DATE = TO_CHAR(SYSDATE+30)
+							</if>
+				,  PENALTY_TYPE = 1
 	</if>
-	
-	<if test = "reportReason==4">
-	REPORT_COUNT = REPORT_COUNT + 1
-	</if>
-	
-	<if test = "reportReason==5">
-	REPORT_COUNT = REPORT_COUNT + 2
-	</if>
-	
-	<if test = "reportReason==6">
-	REPORT_COUNT = REPORT_COUNT + 2
-	</if>
-	
-	<if test = "reportReason==7">
-	REPORT_COUNT = REPORT_COUNT + 3
-	</if>
-	
-	<if test = "reportReason>=8">
-	PENALTY_TYPE ='2'
-	</if>
-	
 	
 	</set>
 	WHERE USER_ID = #{user2.userId}
-	
 	</update>
 	
-	
 
-
-
-
-
-	 
 	 
 </mapper>

@@ -30,6 +30,13 @@ body>div.container {
 }
 </style>
 
+<script type="text/javascript">
+	$(function() {
+		$("button[type='button']").on("click", function() {
+			$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -47,12 +54,12 @@ body>div.container {
 
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
-
+			<input type="hidden" class="form-control" id="userId" name="userId" value="${ user.userId }">
 			<div class="form-group">
 				<label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="nickName" name="nickName"
-						placeholder="중복확인하세요" readonly> <span id="helpBlock"
+						placeholder="중복확인하세요"> <span id="helpBlock"
 						class="help-block"> <strong class="text-danger">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
 					</span>
 				</div>
@@ -62,9 +69,9 @@ body>div.container {
 				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
 				<div class="col-sm-4">
 					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="성별">&nbsp;남자
+						name="gender" placeholder="성별" value="남자">&nbsp;남자
 					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="성별">&nbsp;여자
+						name="gender" placeholder="성별" value="여자">&nbsp;여자
 				</div>
 			</div>
 

@@ -42,7 +42,7 @@ public class FeedServiceImpl implements FeedService {
 	public void addFeed(Feed feed) throws Exception {
 		// TODO Auto-generated method stub
 		feedDAO.addFeed(feed);
-		feedDAO.addFeedPush(null);
+//		feedDAO.addPush(null);
 	}
 	
 	@Override
@@ -51,12 +51,16 @@ public class FeedServiceImpl implements FeedService {
 		
 		/*
 		 * map.put("feedNo")
+		 * map.put("search", search);
+		 * map.put("heart", heart);
 		*/
 		
 		Feed feed = feedDAO.getFeed((Integer) map.get("feedNo"));
 		List<Comment> commentList = feedDAO.getFeedCommentList(map);
-		int checkHeart = feedDAO.getFeedHeart((Heart) map.get("heart"));
 		
+		int checkHeart = feedDAO.checkFeedHeart((Heart) map.get("heart"));
+		
+		System.out.println("체크요 : " + checkHeart);
 		feed.setCheckHeart(checkHeart);
 		
 		map.put("feed", feed);
@@ -67,7 +71,6 @@ public class FeedServiceImpl implements FeedService {
 	
 	@Override
 	public void updateFeed(Feed feed) throws Exception{
-		// TODO Auto-generated method stub
 		feedDAO.updateFeed(feed);
 	}
 	
@@ -91,7 +94,7 @@ public class FeedServiceImpl implements FeedService {
 		Feed feed = feedDAO.getFeed(comment.getFeedNo());
 		
 		feedDAO.updateFeed(feed);
-		feedDAO.addFeedCommentPush(null);
+//		feedDAO.addFeedCommentPush(null);
 	}
 	
 	@Override
@@ -153,15 +156,9 @@ public class FeedServiceImpl implements FeedService {
 	
 	
 	@Override
-	public void addFeedReport(Report report) throws Exception {
+	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.addFeedReport(report);
-	}
-
-	@Override
-	public void addFeedCommentReport(Report report) throws Exception {
-		// TODO Auto-generated method stub
-		feedDAO.addFeedCommentReport(report);
+		feedDAO.addReport(report);
 	}
 	
 	
