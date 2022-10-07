@@ -21,7 +21,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("button:contains('게시물 등록하기')").bind("click", function() {
-			location.href = "/clubPost/addClubPostView?clubNo=10";
+			location.href = "/clubPost/addClubPostView?clubNo=2";
 		});
 		$("b:contains('최신순')").bind("click", function() {
 			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=0";
@@ -36,6 +36,12 @@
 			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=3";
 		});
 	});
+	
+	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
+	function getClubPostGo(clubPostNo){
+		alert("모임 게시물 번호 : " + clubPostNo);
+		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
+	}
 </script>
 </head>
 <body>
@@ -101,10 +107,10 @@
 		<c:if test="${ map.clubPostListCount > 0}">
 		<c:forEach var="i" begin="0" end="${ map.clubPostListCount - 1 }" step="1">
 			<div class="col-md-4">
-				<a href="javascript:getProductGo('${ list[i].prodNo }')">
+				<a href="javascript:getClubPostGo('${ map.clubPostList[i].clubPostNo }')">
 					<img src="/images/uploadFiles/${ uploadList[i] }" height="350" width="350">
 				</a>
-				<p align="center" style="font-size: 30px">모임게시물 번호 : ${ map.clubPostList[i].clubPostNo }</p>
+				<p align="center" style="font-size: 30px">${ map.clubPostList[i].clubPostNo }</p>
 				<p align="center" style="font-size: 20px">제목 : ${ map.clubPostList[i].clubPostTitle }</p>
 				<p align="center" style="font-size: 20px">좋아요 수 : ${ map.clubPostList[i].clubPostHeartCount }</p>
 				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ map.clubPostList[i].user.userId }</p>

@@ -280,8 +280,8 @@
 	</select> -->
 	
 	<!-- 모임원 리스트 -->
+	<!-- <select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
 	<select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
-	<!-- <select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap"> -->
 		SELECT
 			club_user_no ,
 			user_id ,
@@ -295,7 +295,29 @@
 		FROM club_user
 		WHERE club_no = #{searchKeyword}
 			
-	</select>
+	</select> -->
+	
+	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+											FROM club_user
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
+										 				club_user_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
+										 				user_id = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY club_user_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
 	
  	<select  id="getTotalClubMemberCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
