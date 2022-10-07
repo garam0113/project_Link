@@ -12,13 +12,13 @@ import com.link.service.domain.Pay;
 public interface ClubPostDAO {
 
 	// 모임게시물 등록
-	public ClubPost addClubPost(ClubPost clubPost) throws Exception;
+	public Map<String, Object> addClubPost(ClubPost clubPost) throws Exception;
 	
 	// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
 	public Map<String, Object> getClubPostList(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 상세보기 + 모임게시물 댓글리스트
-	public Map<String, Object> getClubPost(ClubPost clubPost) throws Exception;
+	public Map<String, Object> getClubPost(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 수정 후 모임게시물 상세보기
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception;

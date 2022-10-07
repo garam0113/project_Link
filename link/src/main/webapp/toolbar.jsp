@@ -37,7 +37,7 @@
 /*	아래방식으로 네비게이션 사용 가능 */
 	$(function() {
 		$("span:contains('피드')").on("click", function() {
-			self.location = "/user/login"
+			self.location = "/feed/getFeedList"
 		});
 		
 		$("span:contains('모임')").on("click", function(){

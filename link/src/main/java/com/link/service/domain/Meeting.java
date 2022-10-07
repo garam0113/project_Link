@@ -37,11 +37,11 @@ public class Meeting {
 		this.clubNo = clubNo;
 	}
 
-	public String getuserId() {
+	public String getAddMeetingUserId() {
 		return userId;
 	}
 
-	public void setuserId(String userId) {
+	public void setAddMeetingUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -119,7 +119,7 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", userId=" + userId + ", meetingTitle="
+		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", addMeetingUserId=" + userId + ", meetingTitle="
 				+ meetingTitle + ",  meetingDate=" + meetingDate + ", meetingTime="
 				+ meetingTime + ", meetingPlace=" + meetingPlace + ", meetingWeather=" + meetingWeather
 				+ ", meetingRegDate=" + meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaximumMember="

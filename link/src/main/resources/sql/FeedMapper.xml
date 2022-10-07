@@ -25,7 +25,7 @@
 		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
 		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
-		<result property="checkHeart"		column="heart_no"					jdbcType="NUMERIC" />
+		<result property="checkHeart"		column="exist"						jdbcType="NUMERIC" />
 	</resultMap>
 
 	<resultMap id="feedCommentSelectMap" 		type="comment">
@@ -270,31 +270,44 @@
 	
 	
 	
-	<select 	id="getFeedListTest"			parameterType="search"		resultMap="feedSelectMap">
+	<select 	id="getFeedListTest"			parameterType="hashmap"		resultMap="feedSelectMap">
 		SELECT 
-		*
-		FROM feed f, (
-						SELECT
-						*
-						FROM	(
-									SELECT
-									*
-									FROM HEART
-									WHERE TRIM(source)		= '0'
-									AND user_id				= 'user01'	)
-																				) isLike
-		<if test="searchKeyword == ''">														
+		f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
+		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
+		<choose>
+			<when test="user != null">
+				, isLike.EXIST FROM feed f, (
+												SELECT
+												source_no as EXIST
+												FROM HEART
+												WHERE TRIM(source)		= '0'
+												
+													AND user_id			= #{user.userId}
+																							) isLike
+				<where>
+				f.feed_no = isLike.EXIST(+)
+				</where>
+				<if test="search.searchKeyword != ''">
+					AND f.feed_content LIKE '%${search.searchKeyword}%'
+				</if>
+				
+				<!-- 마이홈페이지 유무 -->
+				<if test="myHome == 1">
+					AND f.user_id		= #{user.userId}
+				</if>
+				
+				ORDER BY feed_no DESC
+			</when>
+			<otherwise>
+			FROM feed f
+			<if test="searchKeyword != ''">
 			<where>
-				f.feed_no = isLike.source_no(+)
+				f.feed_content LIKE '%${searchKeyword}%'
 			</where>
-		</if>
-		<if test="searchKeyword != ''">
-			<where>
-				f.feed_no = isLike.source_no(+)
-				AND f.feed_content LIKE '%${searchKeyword}%'
-			</where>
-		</if>
-		ORDER BY feed_no DESC
+			</if>
+			ORDER BY feed_no DESC
+			</otherwise>
+		</choose>
 	</select>
 	
 	

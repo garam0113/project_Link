@@ -35,14 +35,14 @@
 <script type="text/javascript">
 
 
-	function fncAddMeeting() {
+	function fncUpdateMeeting() {
 
 		////////////////////////////////////////////////////
 		//document.detailForm.action = '/addProduct.do';
 		///////////////////////////////////////////////////
 
 
-		$("form").attr("method", "POST").attr("action", "/club/getMeeting")
+		$("form").attr("method", "POST").attr("action", "/club/updateMeeting")
 				.submit();
 	}
 
@@ -51,7 +51,7 @@
 
 		$("button.btn.btn-primary").on("click", function() {
 			
-			fncAddMeeting();
+			fncUpdateMeeting();
 		});
 	});	
 
@@ -69,7 +69,7 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">모 임 일 정 등 록</h1>
+		<h1 class="bg-primary text-center">모 임 일 정 수 정</h1>
 		
 		<form class="form-horizontal">
 		

@@ -88,6 +88,7 @@ public class ClubController {
 		System.out.println("club/updateClub : POST");
 		
 		//Business Logic
+		
 		clubService.updateClub(club);
 		
 		
@@ -134,7 +135,6 @@ public class ClubController {
 		
 		System.out.println("/addApprovalCondition : POST");
 		
-		clubUser.setUserId("user01");
 		
 		clubService.addApprovalCondition(clubUser);
 		return "forward:/club/getClub.jsp";
@@ -152,10 +152,10 @@ public class ClubController {
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage : "+resultPage);
 		
-		model.addAttribute("list",map.get("list"));
+		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("search",search);
 

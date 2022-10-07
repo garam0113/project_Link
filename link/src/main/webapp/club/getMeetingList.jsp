@@ -13,6 +13,68 @@
 	<title>모임일정리스트</title>
 	<meta charset="EUC-KR">
 	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	
+	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	  <!-- jQuery UI toolTip 사용 JS-->
+ 	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 	 
+ 	 <style>
+	body {
+		padding-top : 70px;
+	}
+	
+	</style>
+
+	<script type="text/javascript">
+	
+	function fncUpdateMemberRole() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
+		alert("모임원 수정 화면")
+		.submit();
+	}
+	
+	$(function(){
+		$()
+		
+		
+	})
+	
+	$(function() {
+
+		$("button.btn.btn-primary").on("click", function() {
+			alert("모임을 삭제하시겠습니까?");
+			deleteClub();
+			
+		});
+	});
+	
+	$(function() {
+
+		$("a[href='#']").bind("click", function() {
+			history.go(-1);
+		});
+	});
+	
+	$(function() {
+
+		$("button.btn.btn-waring").on("click", function() {
+			self.location="/club/updateClubView.jsp"
+		});
+	});
+	
+	
+	
+	</script>	
+	
 </head>
 
 <body>
@@ -80,17 +142,13 @@
 		<%-- ${clubList} --%>
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${meetingList}">
-		  <input type="hidden" name="meetingNo" value="${meetingNo}">
-			<%-- <c:set var="i" value="${ i+1 }" /> --%>
+		  <input type="hidden" name="meetingNo" value="${i.meetingNo}">
 			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${meetingTitle}</td>
-			  <td align="left"><i class="glyphicon glyphicon-user"> </i> ${meetingDate}</td>
-			  <td align="left">${meetingTime}</td>
-			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${meetingNo}"></i>
-			  	<input type="hidden" value="${clubNo}">
-			  </td>
+			<td align="center"><a href="/club/getMeeting?meetingNo=${i.meetingNo}">${i.meetingNo}</a>
+			  <td align="left">${i.meetingTitle}</td>
+			  <td align="left">${i.meetingDate}</td>
+			  <td align="left">${i.meetingTime}</td>
+			  <td align="left">${i.meetingPlace}</td>			  
 			</tr>
           </c:forEach>
         </tr>

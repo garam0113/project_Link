@@ -126,6 +126,14 @@
 						} // ajax inner close
 				) // ajax close
 			}); // event close
+		
+		
+			$("#update").bind("click", function() {
+				alert("update");
+				$("form").attr("method", "GET").attr("action", "/feed/update");
+			})
+		
+		
 		})
 	
 	</script>
@@ -133,13 +141,21 @@
 </head>
 <body>
 
+	작성자 : ${feed.userId}
+	<br/><br/>
+	
 	content : ${feed.content}
 	
-	 ${feed.heartCount}
+	좋아요 개수 : ${feed.heartCount}
 	
 	
 	
 	<br> 내가 좋아요 했는지 체크 ${feed.checkHeart}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<c:if test="${sessionScope.user.userId eq feed.userId}">
+		<button type="button" id="update" >수정</button>
+	</c:if>
+	
 	<br>
 	
 	<c:if test="${feed.checkHeart == 0}">
