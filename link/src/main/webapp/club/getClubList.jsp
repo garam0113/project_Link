@@ -136,7 +136,6 @@
             <th align="left">최대 모임원 수</th>
             <th align="left">모임 활동영역</th>
             <th align="left">모임 이미지</th>
-            <th align="left">가입신청</th>      
           </tr>
         </thead>
        

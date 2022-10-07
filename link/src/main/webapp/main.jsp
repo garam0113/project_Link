@@ -31,6 +31,15 @@
 	<hr/>
 		<div class="page-header text-info">
 			<a href="/clubPost/getClubPostList?clubNo=2&order=0">모임게시물리스트</a>
+			
+			<hr/>
+			<a href="/club/addClubView.jsp">모임등록</a>
+			<hr/>
+			<a href="/club/addMeetingView.jsp">모임일정등록</a>
+			<hr/>
+			<a href="/club/getMeetingList">모임일정리스트</a>
+			<hr/>
+			<a href="/club/getClubMemberList">모임원리스트</a>
 		</div>
 	</div>
 
