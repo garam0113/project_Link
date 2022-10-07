@@ -31,6 +31,18 @@
 		<td height="26">${user.nickName}</td>
 		<td height="26">${user.userId}</td>
 		
+<%@page import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
+
+ 
+<c:forEach items=${map} var="map">
+           ${map.key} = ${map.value}  
+</c:forEach>
+ 
+<c:forEach items=${list } var="list">
+          ${list}
+</c:forEach>
 
 
 

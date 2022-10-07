@@ -43,6 +43,9 @@
 		$("span:contains('모임')").on("click", function(){
 			self.location = "/club/getClubList";
 		});
+		$("span:contains('마이홈피')").on("click", function(){
+			self.location = "/myHome/getMyHome?userId=${user.userId}"
+		});
 	});
 </script>
 

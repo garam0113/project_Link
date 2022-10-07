@@ -64,14 +64,19 @@
 <script>
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#sgr:contains('로그인')").on("click" , function() {
+ 	$("#sgr:contains('프로필')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/getProfile"
+		self.location = "/myHome/getProfile?userId=${user.userId}"
 	}); 
 	$("#gg:contains('업데이트')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/updateProfile"
+		self.location = "/myHome/updateProfile?userId=${user.userId}"
+	});
+	$("#ss:contains('팔로우리스트')").on("click" , function() {
+		//$(self.location).attr("href","/user/logout");
+		self.location = "/myHome/getFollowList?userId=${user.userId}"
 	}); 
+
 
  });
 
@@ -184,8 +189,9 @@ $(function() {
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
 			
-			<li><a href="#" id="sgr">로그인</a></li>
+			<li><a href="#" id="sgr">프로필</a></li>
 			<li><a href="#" id="gg">업데이트</a></li>
+			<li><a href="#" id="ss">팔로우리스트</a></li>
 			
 				<tr>
 					
@@ -212,7 +218,7 @@ $(function() {
 	<div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
 					      
-					      <a class="btn btn-primary btn" href="/myHome/getFollowList" role="button">마 &nbsp;이 &nbsp;홈 &nbsp;피</a>
+					
 					    </div>
 
 

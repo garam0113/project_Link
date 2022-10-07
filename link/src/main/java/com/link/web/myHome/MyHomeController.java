@@ -65,17 +65,20 @@ public class MyHomeController {
 	
 	@RequestMapping(value = "getMyHome")
 	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
-			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model,HttpSession httpSession) throws Exception{
+			@RequestParam("userId")String userId, Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-
-		user.setUserId(userId);
+     
 		user = userService.getUser(user);
 		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = new HashMap<String, Object>();
+        
+		
+		
 
 		map.put("search", search);
 		map = feedService.getFeedList(map);
+		
 		
 		model.addAttribute("user", user);
 		model.addAttribute("club", club);
@@ -85,43 +88,54 @@ public class MyHomeController {
 		return "forward:/myHome/getMyHome.jsp";
 	}  
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)
-	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession httpSession) throws Exception{
+	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getProfile : GET");
 		User user = new User();
 		user.setUserId(userId);
     	user = userService.getUser(user);
-		model.addAttribute("user", user);
+		
+        session.setAttribute("user", user);
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		System.out.println("sessionId : "+sessionId);
+		if(sessionId.equals(user.getUserId())) {
+			session.setAttribute("user", user);
+		}
 		
 		return "forward:/myHome/getProfile.jsp";
 		
 	}
-	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
-	public String updateProfile(@RequestParam("userId") String userId, Model model, HttpSession httpSession) throws Exception{
+	@RequestMapping(value="updateProfile", method = RequestMethod.GET)
+	public String updateProfile(@ModelAttribute("userId") String userId,  Model model) throws Exception {
 		
-		System.out.println("/myHome/updateProfile : GET");
+		System.out.println("/user/updateProfile : GET");
 		
 		User user = new User();
+		
 		user.setUserId(userId);
-		user = userService.getUser(user);
-		model.addAttribute("user", user);
+		
+		
+		model.addAttribute("user",user);
 		
 		return "forward:/myHome/updateProfile.jsp";
 	
 	}
-	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-	public String updateProfile(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception{
+	@RequestMapping(value="updateProfile", method = RequestMethod.POST)
+	public String updateProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session) throws Exception {
 		
-		System.out.println("/myHome/updateProfile : POST");
+		System.out.println("/user/updateProfile : POST");
 		
-		userService.updateUser(user);
+		userService.updateUser(user);	//SNS회원 프로필 작성
+		
 		user = userService.getUser(user);
-		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
-		if(sessionId.equals(user.getUserId())){
+		session.setAttribute("user", user);
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		if(sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
-		
 		
 		return "redirect:/myHome/getProfile?userId="+user.getUserId();
   
@@ -175,7 +189,7 @@ public class MyHomeController {
 		map = myHomeService.getFollowList(search);
 		map.put("search", search);
 		
-	    
+		model.addAttribute("map", map);
 		model.addAttribute("search", search);
 		model.addAttribute("list", map.get("list"));
 		
