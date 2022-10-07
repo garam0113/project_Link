@@ -56,6 +56,7 @@
 		ORDER BY
 		<choose>
 			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
+			<when test="search.order == 1">CLUB_POST_REG_DATE DESC</when>
 		<otherwise>
 			CLUB_POST_REG_DATE DESC
 		</otherwise>
