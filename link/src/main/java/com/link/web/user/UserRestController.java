@@ -101,7 +101,7 @@ public class UserRestController {
 	public @ResponseBody
 	String sendSMS(String phoneNo) throws Exception{
 		
-		System.out.println("/user/json/sendSMS : GET");
+		System.out.println("/userRest/json/sendSMS : GET");
 		
 		Random rand = new Random();
 		String numStr = "";
@@ -113,6 +113,8 @@ public class UserRestController {
 		
 		System.out.println("수신자 번호 : "+phoneNo);
 		System.out.println("인증번호 : "+numStr);
+		
+		userService.sendSMS(phoneNo, numStr);
 		
 		return numStr;
 	}

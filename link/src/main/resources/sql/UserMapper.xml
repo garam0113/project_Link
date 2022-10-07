@@ -58,8 +58,8 @@
 		<if test="(searchCondition == 1 and searchKeyword != '')" >
 		nickname LIKE(#{searchKeyword}||'%')
 		</if>
-		<if test="(searchCondition == null) and (searchKeyword == '1' or  searchKeyword == '2')">
-		penalty_type = #{searchKeyword}
+		<if test='((searchCondition == null) and (searchKeyword == 1 or  searchKeyword == 2))'>
+		TRIM(penalty_type) = #{searchKeyword}
 		</if>
 		</where>
 		ORDER BY user_id 
@@ -106,8 +106,8 @@
 			<if test="snsUserId != null and userId == ''">
 				sns_user_id = #{snsUserId} and TRIM(add_user_type) = #{addType}
 			</if>
-			<if test="name != null and rrn != null">
-				name = #{name} and rrn = #{rrn}
+			<if test="name != null and rrn != null and userId == null">
+				TRIM(name) = #{name} and TRIM(rrn) = #{rrn}
 			</if>
 		</where>
 	</select>

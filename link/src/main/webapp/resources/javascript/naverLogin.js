@@ -1,4 +1,4 @@
-			window.onload = function(){
+			$(function(){
 			
 			var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c", "http://localhost:8080/user/loginView.jsp");
 		  	var state = naver_id_login.getUniqState();
@@ -10,4 +10,4 @@
 	
 			naver_id_login.get_naver_userprofile("naverSignInCallback()");
 			
-			}
+			});

@@ -43,15 +43,27 @@
     <script type="text/javascript">
   	 $(function() {
 			$("button.btn.btn-primary").on("click", function() {
-				$("form").attr("method", "POST").attr("action", "/user/login").submit(); 
+				$("form").attr("method", "POST").attr("action", "/user/login").submit(); //로그인
 			});
 		});
     	
     	$(function() {
 			$("a.btn.btn-primary.btn").on("click", function() {
-				self.location = "/user/addUser"
+				self.location = "/user/addUser"	//회원가입
 			});
 		});
+    	
+    	$(function() {
+			$(".ID").on("click", function() {
+				self.location = "/user/getUserId"
+			});
+		});
+    	
+    	$(function() {
+			$(".getPassword").on("click", function() {
+				self.location = "/user/getPassword"
+			})
+		})
     </script>
 </head>
 <body>
@@ -98,6 +110,13 @@
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
+					      <a class="ID" >ID찾기</a>&nbsp;/ 
+					      <a class="getPassword">비밀번호찾기</a>
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					    <div class="col-sm-offset-4 col-sm-6 text-center">
 					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
 					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					    </div>
@@ -120,9 +139,9 @@
 							<input class="naver" type="hidden" id="snsUserId" name="snsUserId">
 							<input class="naverType"type="hidden" id="addType" name="addType">
 					    </div>
-					  </div>
+					  </div> 
 					  <script type="text/javascript">
-					  
+					 
 					  var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c", "http://192.168.0.183:8080/user/login.jsp");
 					  	var state = naver_id_login.getUniqState();
 					  	naver_id_login.setButton("green", 3, 50);

@@ -21,6 +21,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -120,9 +122,9 @@ $(function() {
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주민번호</label>
+				<label for="rrn" class="col-sm-offset-1 col-sm-3 control-label">주민번호</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="ssn" name="ssn"
+					<input type="text" class="form-control" id="rrn" name="rrn"
 						placeholder="주민번호"> <span id="helpBlock"
 						class="help-block"> <strong class="text-danger">"
 							- " 제외 13자리입력하세요</strong>
@@ -150,7 +152,6 @@ $(function() {
 					<input type="text" class="form-control" id="phone3" name="phone3"
 						placeholder="번호">
 				</div>
-				<input type="hidden" name="phone" />
 				<div class="col-sm-2">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 				</div>

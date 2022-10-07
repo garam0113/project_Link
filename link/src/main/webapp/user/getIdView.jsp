@@ -20,6 +20,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+	<script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -30,10 +33,11 @@
     
     <script type="text/javascript">
     	$(function() {
-			$("#chack").on("click", function() {
-				$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();
+			$("#check").on("click", function() {
+				$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();	//ID찾기
 			});
 		});
+    	
     </script>
     
     </head>
@@ -95,7 +99,6 @@
 					<input type="text" class="form-control" id="phone3" name="phone3"
 						placeholder="번호">
 			</div>
-				<input type="hidden" name="phone" />
 				
 			<div class="col-sm-2">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
@@ -105,7 +108,7 @@
 		  <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="변경이메일">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
 		    </div>
 			<div class="col-sm-4">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
@@ -125,7 +128,7 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" id="chack" class="btn btn-primary"  >확 &nbsp;인</button>
+		      <button type="button" id="check" class="btn btn-primary"  >확 &nbsp;인</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
