@@ -1,6 +1,7 @@
 package com.link.service.myHome;
 
 import java.util.List;
+import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.User;
@@ -28,4 +29,8 @@ public interface MyHomeDAO {
 	public int getFollowerCount(Search search) throws Exception;
 	
 	public int getTotalCount(Search search) throws Exception;
+
+	
+
+	
 }
