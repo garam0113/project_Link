@@ -98,11 +98,11 @@ public class ClubDAOImpl implements ClubDAO {
 //	}
 	
 	@Override
-	public List<ClubUser> getMyClubList(Search search) throws Exception {
+	public List<ClubUser> getApprovalConditionList(Search search) throws Exception {
 		
 		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
 		
-		return sqlSession.selectList("ClubMapper.getClubList",search);
+		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
 	}
 	
 	@Override
@@ -252,8 +252,8 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public int getTotalMyClubCount(Search search) throws Exception {
-		return sqlSession.selectOne("ClubMapper.getTotalMyClubCount",search);
+	public int getTotalApprovalConditionCount(Search search) throws Exception {
+		return sqlSession.selectOne("ClubMapper.getTotalApprovalConditionCount",search);
 	}
 	
 	//가입신청현황 리스트 --> GetMyClubList와 병합

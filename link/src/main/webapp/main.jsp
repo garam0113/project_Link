@@ -40,6 +40,9 @@
 			<a href="/club/getMeetingList">모임일정리스트</a>
 			<hr/>
 			<a href="/club/getClubMemberList">모임원리스트</a>
+			<hr/>
+			<a href="/club/getApprovalConditionList">가입신청현황리스트</a>
+			
 		</div>
 	</div>
 

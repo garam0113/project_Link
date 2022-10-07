@@ -51,7 +51,7 @@
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
-			self.location="/club/getApprovalCondition"
+			self.location="/club/getApprovalConditionList"
 			
 		});
 	});
@@ -122,6 +122,7 @@
             <th align="left">최대 모임원 수</th>
             <th align="left">모임 활동영역</th>
             <th align="left">모임 이미지</th>
+            <th align="left">가입현황리스트</th>
           </tr>
         </thead>
        
@@ -141,7 +142,9 @@
 			  <td align="left">${i.currentMember}</td>
 			  <td align="left">${i.clubMaxMember}</td>
 			  <td align="left">${i.clubArea}</td>
-			  <td align="left">${i.clubImage}</td>	
+			  <td align="left">${i.clubImage}</td>
+			  <td align="left"><a href="/club/getApprovalConditionList">신청현황</a>	
+			  
 			</tr>
           </c:forEach>
         </tr>

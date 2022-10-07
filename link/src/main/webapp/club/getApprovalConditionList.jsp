@@ -102,9 +102,9 @@
        
 		<tbody>
 		<tr>
-		${myClubList}
+		${approvalConditionList}
 		  <c:set var="i" value="0" />
-		  <c:forEach var="i" items="${myClubList}">
+		  <c:forEach var="i" items="${approvalConditionList}">
 			<tr>
 			  <td align="left"><a href="/club/getClub?clubNo=${i.clubNo}">${i.clubNo}</a>
 			  <td align="left">${i.clubTitle}</td>

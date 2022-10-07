@@ -180,15 +180,15 @@ public class ClubServiceImpl implements ClubService {
 //	}
 	
 	@Override
-	public Map<String, Object> getMyClubList(Search search) throws Exception {
+	public Map<String, Object> getApprovalConditionList(Search search) throws Exception {
 		
 		System.out.println("나의 모임리스트 ServiceImpl 왔나??");
-		List<ClubUser> list = clubDAO.getMyClubList(search);
-		int totalMyClubCount = clubDAO.getTotalMyClubCount(search);
+		List<ClubUser> list = clubDAO.getApprovalConditionList(search);
+		int totalApprovalConditionCount = clubDAO.getTotalApprovalConditionCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("myClubList",list);
-		map.put("totalMyClubCount", new Integer(totalMyClubCount));
+		map.put("approvalConditionList",list);
+		map.put("totalApprovalConidtionCount", new Integer(totalApprovalConditionCount));
 		return map;
 	}
 	

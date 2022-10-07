@@ -18,8 +18,6 @@ public interface ClubService {
 //	public int addClub(Club club) throws Exception;
 				
 	public Club getClub(int clubNo) throws Exception;
-	
-//	public Club getMyClubList(String userId) throws Exception;
 
 	public void deleteClub(int clubNo) throws Exception;
 	
@@ -60,10 +58,10 @@ public interface ClubService {
 	//GetMyClubList
 //	public Map<String, Object> getMyClubList(Map<String, Object> map) throws Exception;
 	
-	public Map<String, Object> getMyClubList(Search search) throws Exception;
+//	public Map<String, Object> getMyClubList(Search search) throws Exception;
 	
 	//가입신청현황 리스트 --> GetMyClubList와 병합
-//	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
+	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
 	
 	public Map<String, Object> getClubMemberList(Search search) throws Exception;
 	
