@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
 
-	function fncAddClub() {
+	function fncUpdateClub() {
 
 		////////////////////////////////////////////////////
 		//document.detailForm.action = '/addProduct.do';
@@ -44,7 +44,7 @@
 		// 		document.detailForm.action = '/product/addProduct';		
 		// 		document.detailForm.submit(); 
 
-		$("form").attr("method", "POST").attr("action", "/club/getClub")
+		$("form").attr("method", "POST").attr("action", "/club/updateClub")
 				.submit();
 	}
 
@@ -53,7 +53,7 @@
 
 		$("button.btn.btn-primary").on("click", function() {
 			//alert($("td.ct_btn01:contains('µî·Ï')").html());
-			fncAddClub();
+			fncUpdateClub();
 		});
 	});
 
