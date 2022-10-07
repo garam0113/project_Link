@@ -61,6 +61,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void deleteNotice(int noticeNo) throws Exception {
 		// TODO Auto-generated method stub
+		
 		sqlSession.delete("NoticeMapper.deleteNotice", noticeNo);
 		
 	}

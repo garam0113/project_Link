@@ -46,7 +46,7 @@
 	
 	$(function(){
 		$("td:nth-child(3)").on("click",function(){
-			self.location ="/notice/getNotice?noticeNo="+$(this).parent().find("td:eq(0)").text()
+			self.location ="/serviceCenter/getNotice?noticeNo="+$(this).parent().find("td:eq(0)").text()
 			
 			
 		});
@@ -91,8 +91,8 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품번호</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
 					</select>
 				  </div>
 				  
@@ -166,7 +166,7 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
-	  <c:if test="${user.role == 'admin'}">
+	  <c:if test="${user.id == 'ssiroo4'}">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"
 			style="margin-top: 10px;">
 			<tr>
@@ -176,7 +176,7 @@
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 
-							<c:if test="${user.role == 'admin'}">
+							<c:if test="${user.id == 'ssiroo4'}">
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td class="ct_write01"><input type="hidden"

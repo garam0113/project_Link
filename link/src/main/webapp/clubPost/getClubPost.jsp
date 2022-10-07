@@ -18,8 +18,8 @@ $(function(){
 	$("input[value='리스트로이동']").bind("click", function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
-	$("a").bind("click", function(){
-		location.href = "/clubPost/updateClubPost?clubNo="+${ map.getClubPost.clubNo }+"&clubPostNo="+${ map.getClubPost.clubPostNo }+"&heartCondition=1";
+	$("a[href='#']").bind("click", function(){
+		//location.href = "/clubPostRest/updateClubPost?clubNo="+${ map.getClubPost.clubNo }+"&clubPostNo="+${ map.getClubPost.clubPostNo }+"&heartCondition=1";
 	});
 });
 </script>
@@ -53,16 +53,17 @@ $(function(){
 모임 게시물 등록날짜 : ${ map.getClubPost.clubPostRegDate }</br>
 모임 게시물 수정날짜 : ${ map.getClubPost.clubPostUpdateDate }</br>
 모임 게시물 좋아요 수 : ${ map.getClubPost.clubPostHeartCount }</br>
-<%-- 모임 게시물 댓글 개수 : ${ map.getClubPost.clubPostCommentCount }</br> --%>
+모임 게시물 댓글 개수 : ${ map.getClubPost.clubPostCommentCount }</br>
 <c:if test="${ map.getClubPost.clubPostCommentCount > 0 }">
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
-//////////////////////////////////////////////////////////////////////</br>
-//////////////////////////////////////////////////////////////////////</br>
 모임 게시물 댓글 리스트</br>
+//////////////////////////////////////////////////////////////////////</br>
+//////////////////////////////////////////////////////////////////////</br>
+//////////////////////////////////////////////////////////////////////</br>
 <c:forEach var="i" begin="0" end="${ map.getClubPost.clubPostCommentCount - 1 }" step="1">
-<c:if test="${ map.getClubPostCommentList[i].parent == 64 }">
+<c:if test="${ map.getClubPostCommentList[i].parent == map.getClubPost.clubPostNo }">
 모임 게시물 번호 : ${ map.getClubPostCommentList[i].clubPostNo }</br>
 모임 게시물 댓글 번호 : ${ map.getClubPostCommentList[i].clubPostCommentNo }</br>
 모임 게시물 등록 회원 아이디 : ${ map.getClubPostCommentList[i].user.userId }</br>
@@ -76,7 +77,8 @@ $(function(){
 댓글 부모번호 : ${ map.getClubPostCommentList[i].parent }</br>
 댓글 깊이 : ${ map.getClubPostCommentList[i].depth }</br>
 댓글 순서 : ${ map.getClubPostCommentList[i].sequence }</br>
-<a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ map.getClubPostCommentList[i].clubPostCommentNo }">댓글 수 : ${ map.getClubPostCommentList[i].commentCount }</a></br>
+<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ map.getClubPostCommentList[i].clubPostCommentNo }&depth=0">댓글 수 : ${ map.getClubPostCommentList[i].commentCount }</a></br> --%>
+<a href="###">댓글 수 : ${ map.getClubPostCommentList[i].commentCount }</a></br>
 //////////////////////////////////////////////////////////////////////</br>
 </c:if>
 </c:forEach>

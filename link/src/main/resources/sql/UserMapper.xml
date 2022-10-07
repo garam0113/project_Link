@@ -32,7 +32,7 @@
 		<result property="stopEndDate" 		column="stop_end_date" 		jdbcType="DATE" />
 		<result property="outUserState" 		column="out_user_state" 		jdbcType="CHAR" />
 		<result property="outUserDate" 		column="out_user_date" 		jdbcType="DATE" />
-		<result property="addType" 		column="out_user_type" 		jdbcType="CHAR" />
+		<result property="addType" 		column="add_user_type" 		jdbcType="CHAR" />
 		<result property="logoutDate" 		column="logout_date" 		jdbcType="DATE" />
 		<result property="addUserDate" 		column="add_user_date" 		jdbcType="DATE" />
 		<result property="totalVisitCount" 		column="total_visit_count" 		jdbcType="NUMERIC" />
@@ -104,7 +104,7 @@
 				user_id = #{userId}
 			</if>
 			<if test="snsUserId != null and userId == ''">
-				sns_user_id = #{snsUserId}
+				sns_user_id = #{snsUserId} and TRIM(add_user_type) = #{addType}
 			</if>
 			<if test="name != null and rrn != null">
 				name = #{name} and rrn = #{rrn}

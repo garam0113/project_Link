@@ -92,11 +92,11 @@ body>div.container {
 				<label for="categoty1"
 					class="col-sm-offset-1 col-sm-3 control-label">관심카테고리</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="categoty1"
+					<input type="text" class="form-control" id="category1"
 						name="categoty1" placeholder="카테고리">
-					<input type="text" class="form-control" id="categoty2"
+					<input type="text" class="form-control" id="category2"
 						name="categoty2" placeholder="카테고리">
-					<input type="text" class="form-control" id="categoty3"
+					<input type="text" class="form-control" id="categotr3"
 						name="categoty3" placeholder="카테고리">
 				</div>
 			</div>
