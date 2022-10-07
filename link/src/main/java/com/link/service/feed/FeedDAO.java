@@ -79,8 +79,12 @@ public interface FeedDAO {
 	
 	/*
 	 * map.put("comment")
+	 * 
+	 * 
+	 * public int getRecommentCount(Map<String, Object> map) throws Exception;
+	 * 
 	 */
-	public int getRecommentCount(Map<String, Object> map) throws Exception;
+	
 	
 
 	
@@ -99,7 +103,7 @@ public interface FeedDAO {
 	// 피드 좋아요
 	public void addFeedHeart(Heart heart) throws Exception;
 	
-	public int getFeedHeart(Heart heart) throws Exception;
+	public int checkFeedHeart(Heart heart) throws Exception;
 	
 	// 피드 싫어요
 	public void deleteFeedHeart(Heart heart) throws Exception;
@@ -124,30 +128,19 @@ public interface FeedDAO {
 		
 	
 		
-	// 피드 신고
-	public void addFeedReport(Report report) throws Exception;
-	
-	
-	// 피드 댓글 신고
-	public void addFeedCommentReport(Report report) throws Exception;
+	// 피드 & 피드 댓글 신고
+	public void addReport(Report report) throws Exception;
 	
 	
 	
 	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
 	
 	
+	// 피드 or 피드 댓글 알림
+	public void addPush(Push push) throws Exception;
 	
-	/*
-	 * map 안에 feedNo, userId
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-	public void addFeedPush(Push push) throws Exception;
-	
-	public void addFeedCommentPush(Push push) throws Exception;
+//	보류
+//	public void addFeedCommentPush(Push push) throws Exception;
 
 	
 	

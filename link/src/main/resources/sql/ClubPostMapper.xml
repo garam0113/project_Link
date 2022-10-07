@@ -32,6 +32,39 @@
 		<result property="image9" 					column="image9" 					jdbcType="VARCHAR"/>
 		<result property="image10" 					column="image10" 					jdbcType="VARCHAR"/>
 	</resultMap>
+	
+	
+	
+	<sql id="select-list">
+		SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
+		FROM CLUB_POST
+		WHERE CLUB_NO = 
+		<choose>
+			<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
+			#{ clubPost.clubNo }
+			<if test="search.order == 3">
+			AND USER_ID = #{ userId }
+			</if>
+		</when>
+		<otherwise>
+			( SELECT V2.CLUB_NO
+				FROM ( SELECT ROWNUM, V1.*
+						FROM ( SELECT *
+								FROM CLUB_USER
+								WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
+								ORDER BY JOIN_REG_DATE DESC ) V1
+						WHERE ROWNUM = 1 ) V2 )
+		</otherwise>
+		</choose>
+		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+		ORDER BY
+		<choose>
+			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
+		<otherwise>
+			CLUB_POST_REG_DATE DESC
+		</otherwise>
+		</choose>
+	</sql>
 
 
 
@@ -50,34 +83,13 @@
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
 	<select id="getClubPostList" parameterType="map" resultMap="clubPostSelectMap">
-		SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
-		FROM CLUB_POST
-		WHERE CLUB_NO = 
-			<choose>
-				<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
-					#{ clubPost.clubNo }
-					<if test="search.order == 3">
-						AND USER_ID = #{ userId }
-					</if>
-				</when>
-				<otherwise>
-					( SELECT V2.CLUB_NO
-							FROM ( SELECT ROWNUM, V1.*
-									FROM ( SELECT *
-											FROM CLUB_USER
-											WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
-											ORDER BY JOIN_REG_DATE DESC ) V1
-									WHERE ROWNUM = 1 ) V2 )
-				</otherwise>
-			</choose>
-		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-		ORDER BY
-		<choose>
-			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
-			<otherwise>
-				CLUB_POST_REG_DATE DESC
-			</otherwise>
-		</choose>
+		SELECT V3.*
+		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
+				FROM (
+						<include refid="select-list"></include>
+					 ) V2
+			 ) V3
+		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
 	</select>
 	
 	
@@ -85,33 +97,12 @@
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트의 개수 가져온다 -->
 	<select id="getClubPostListCount" parameterType="map" resultType="int" >
 		SELECT COUNT(*)
-		FROM CLUB_POST
-		WHERE CLUB_NO = 
-			<choose>
-				<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">
-					#{ clubPost.clubNo }
-					<if test="search.order == 3">
-						AND USER_ID = #{ userId }
-					</if>
-				</when>
-				<otherwise>
-					( SELECT V2.CLUB_NO
-							FROM ( SELECT ROWNUM, V1.*
-									FROM ( SELECT *
-											FROM CLUB_USER
-											WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
-											ORDER BY JOIN_REG_DATE DESC ) V1
-									WHERE ROWNUM = 1 ) V2 )
-				</otherwise>
-			</choose>
-		AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-		ORDER BY
-		<choose>
-			<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
-			<otherwise>
-				CLUB_POST_REG_DATE DESC
-			</otherwise>
-		</choose>
+		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
+				FROM (
+						<include refid="select-list"></include>
+					 ) V2
+			 ) V3
+		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
 	</select>
 	
 
@@ -139,7 +130,7 @@
 			<when test="clubPost.heartCondition == 1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1</when>
 			<when test="clubPost.heartCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
 			<when test="clubPost.clubPostCommentNo != 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
-			<when test="clubPost.reportCondition == 1">REPORT_CONDITION = 1</when>
+			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>
 				CLUB_POST_TITLE = #{ clubPost.clubPostTitle }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR2 }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR2 },
 				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR2 }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR2 }, IMAGE2 = #{ clubPost.image2:VARCHAR2 }, IMAGE3 = #{ clubPost.image3:VARCHAR2 },
@@ -156,6 +147,12 @@
 	<update id="deleteClubPost" parameterType="clubPost">
 		UPDATE CLUB_POST SET DELETE_CONDITION = '1' WHERE CLUB_POST_NO = #{ clubPostNo }
 	</update>
+	
+	
+	
+	<select id="getCurrval" parameterType="clubPost" resultType="clubPost">
+		SELECT ROWNUM, seq_club_post_no.currval AS clubPostNo FROM CLUB_POST WHERE ROWNUM = 1
+	</select>
 	
 	
 	

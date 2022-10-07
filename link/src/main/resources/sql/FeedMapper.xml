@@ -25,6 +25,7 @@
 		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
 		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
+		<result property="checkHeart"		column="heart_no"					jdbcType="NUMERIC" />
 	</resultMap>
 
 	<resultMap id="feedCommentSelectMap" 		type="comment">
@@ -261,6 +262,36 @@
 		<if test="searchKeyword != ''">
 			<where>
 				f.feed_content LIKE '%${searchKeyword}%'
+			</where>
+		</if>
+		ORDER BY feed_no DESC
+	</select>
+	
+	
+	
+	
+	<select 	id="getFeedListTest"			parameterType="search"		resultMap="feedSelectMap">
+		SELECT 
+		*
+		FROM feed f, (
+						SELECT
+						*
+						FROM	(
+									SELECT
+									*
+									FROM HEART
+									WHERE TRIM(source)		= '0'
+									AND user_id				= 'user01'	)
+																				) isLike
+		<if test="searchKeyword == ''">														
+			<where>
+				f.feed_no = isLike.source_no(+)
+			</where>
+		</if>
+		<if test="searchKeyword != ''">
+			<where>
+				f.feed_no = isLike.source_no(+)
+				AND f.feed_content LIKE '%${searchKeyword}%'
 			</where>
 		</if>
 		ORDER BY feed_no DESC

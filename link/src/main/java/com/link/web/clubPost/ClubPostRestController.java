@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.CommonUtil;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
@@ -60,18 +62,45 @@ public class ClubPostRestController {
 	
 	
 	
-	@RequestMapping(value = "getClubPostList", method = RequestMethod.POST)
-	public Map<String, Object> getClubPostList(@ModelAttribute Search search, @RequestParam int clubNo, ClubPost clubPost, HttpSession session) throws Exception {
+	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
+	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, HttpSession session, Search search) throws Exception {
 		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
 		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+		
+		// 모임게시물 탭 클릭했을때 currentPage는 null이다
+		int currentPage = 1;
+
+		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
+		if (search.getCurrentPage() != 0) {
+			currentPage = search.getCurrentPage();
+		}
+
+		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
+		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
+		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		
+		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
+		if (!search.getSearchCondition().trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
+			searchKeyword = "";
+		}
+		
+		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getOrder());
+		
+		
+		
+		
+		
+		
+		
 		clubPost.setClubNo(clubNo);
 		clubPost.setUser((User) session.getAttribute("user"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		search.setOrder(order);
 		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 
 	@RequestMapping(value = "updateClubPost", method = RequestMethod.POST)
-	public int updateClubPost(@ModelAttribute ClubPost clubPost, Heart heart) throws Exception {
+	public int updateClubPost(@RequestBody ClubPost clubPost, Heart heart) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
@@ -106,9 +135,18 @@ public class ClubPostRestController {
 	
 	
 	@RequestMapping(value = "addReport", method = RequestMethod.POST)
-	public void addReport(@ModelAttribute Report report) throws Exception {
+	public void addReport(@RequestBody Report report) throws Exception {
 		System.out.println("/addReport : POST : 모임게시물 또는 모임게시물 댓글을 신고, 작성자 이외에 가능, 신고되었다 아직 신고승인 전");
 		serviceCenterService.addReport(report);
+	}
+	
+	@RequestMapping(value = "addReportConfirm", method = RequestMethod.POST)
+	public void addReportConfirm(@RequestBody Report report) throws Exception {
+		System.out.println("/addReportConfirm : POST : 신고처리승인, 관리자만 가능");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("report", report);
+		map.put("reportCondition", 1);
+		clubPostServiceImpl.updateClubPost(map);
 	}
 	
 	
@@ -121,31 +159,34 @@ public class ClubPostRestController {
 	
 	
 	@RequestMapping(value = "addClubPostComment", method = RequestMethod.POST)
-	public Comment addClubPostComment(@ModelAttribute Comment comment) throws Exception {
+	public Comment addClubPostComment(@RequestBody Comment comment) throws Exception {
 		System.out.println("/addClubPostComment : POST : 모임게시물 댓글 등록, 모임게시물 작성자에게 알림, 해당 모임게시물 댓글 가져온다");
 		return clubPostServiceImpl.addClubPostComment(comment);
 	}
 	
 	@RequestMapping(value = "getClubPostCommentList", method = RequestMethod.GET)
-	public List<Comment> getClubPostCommentList(@ModelAttribute Comment comment) throws Exception {
+	public List<Comment> getClubPostCommentList(@RequestBody Comment comment, Search search) throws Exception {
 		System.out.println("/getClubPostCommentList : GET : 특정 모임의 또는 특정 댓글의 댓글리스트");
-		return clubPostServiceImpl.getClubPostCommentList(comment);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comment", comment);
+		map.put("search", search);
+		return clubPostServiceImpl.getClubPostCommentList(map);
 	}
 	
 	@RequestMapping(value = "getClubPostComment", method = RequestMethod.POST)
-	public Comment getClubPostComment(@ModelAttribute Comment comment) throws Exception {
+	public Comment getClubPostComment(@RequestBody Comment comment) throws Exception {
 		System.out.println("/getClubPostComment : POST : 모임게시물 댓글");
 		return clubPostServiceImpl.getClubPostComment(comment);
 	}
 	
 	@RequestMapping(value = "updateClubPostComment", method = RequestMethod.POST)
-	public Comment updateClubPostComment(@ModelAttribute Comment comment, Heart heart) throws Exception {
+	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart) throws Exception {
 		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 해당 모임게시물 댓글 상세보기 가져온다");
 		return (Comment)clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	@RequestMapping(value = "deleteClubPostComment", method = RequestMethod.POST)
-	public Map<String, Object> deleteClubPostComment(@ModelAttribute Comment comment) throws Exception {
+	public Map<String, Object> deleteClubPostComment(@RequestBody Comment comment) throws Exception {
 		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 해당 모임게시물 댓글 리스트 가져온다");
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
@@ -167,13 +208,13 @@ public class ClubPostRestController {
 	
 	
 	@RequestMapping(value = "getClubNotice", method = RequestMethod.POST)
-	public Notice getClubNotice(@ModelAttribute Notice notice) throws Exception {
+	public Notice getClubNotice(@RequestBody Notice notice) throws Exception {
 		System.out.println("/getClubNotice : POST : 모임공지사항 상세보기");
 		return clubPostServiceImpl.getClubNotice(notice);
 	}
 
 	@RequestMapping(value = "deleteClubNotice", method = RequestMethod.POST)
-	public Map<String, Object> deleteClubNotice(@ModelAttribute Search search, Notice notice) throws Exception {
+	public Map<String, Object> deleteClubNotice(@RequestBody Search search, Notice notice) throws Exception {
 		System.out.println("/deleteClubNotice : POST : 모임공지사항 삭제, 모임공지사항 리스트");
 		// 모임공지사항 리스트 : getClubNoticeList, 모임공지사항 리스트 개수 : getClubNoticeListCount
 		return clubPostServiceImpl.deleteClubNotice(search, notice);

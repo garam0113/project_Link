@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.link.common.CommonUtil;
+import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
@@ -71,15 +73,41 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
-	public String getCurrentClubPostList(@ModelAttribute Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
-		System.out.println("/getCurrentClubPostList : GET : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
+	public String getClubPostList(@ModelAttribute Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
+		System.out.println("/getClubPostList : GET : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
 		// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
+		
+		// 모임게시물 탭 클릭했을때 currentPage는 null이다
+		System.out.println(search);
+		int currentPage = 1;
+		
+		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
+		if (search.getCurrentPage() != 0) {
+			currentPage = search.getCurrentPage();
+		}
+
+		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
+		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
+		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		
+		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
+		if (!search.getSearchCondition().trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
+			searchKeyword = "";
+		}
+		
+		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getOrder());
+
+		
+		
+		
+		
 		// search.order = 0, user_id = 'user03'
 		
 		//String userId = ((User)session.getAttribute("user")).getUserid();
 		User user = new User();
 		user.setUserId("user03");
 		clubPost.setUser(user);
+		model.addAttribute("resultPage", new Page(currentPage, pageUnit, pageSize));
 		model.addAttribute("map", clubPostServiceImpl.getClubPostList(search, clubPost));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";

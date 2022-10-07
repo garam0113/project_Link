@@ -135,11 +135,23 @@
 
 	content : ${feed.content}
 	
-	<button type="button" id="heart">좋아요</button> ${feed.heartCount}
+	 ${feed.heartCount}
 	
-	<button type="button" id="deleteheart">좋아요취소요</button>
+	
 	
 	<br> 내가 좋아요 했는지 체크 ${feed.checkHeart}
+	<br>
+	
+	<c:if test="${feed.checkHeart == 0}">
+		<button type="button" id="heart">좋아요</button>
+	</c:if>
+	
+	<c:if test="${feed.checkHeart != 0}">
+		<button type="button" id="deleteheart">좋아요취소요</button>
+	</c:if>
+	
+	
+	<br> 해시태그 : ${feed.hashtag}
 	
 	<hr/><hr/>
 	

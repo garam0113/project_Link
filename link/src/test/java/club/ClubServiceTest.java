@@ -68,7 +68,7 @@ public class ClubServiceTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void testGetClubList() throws Exception {
 		
 		System.out.println("\n============================");
@@ -81,6 +81,23 @@ public class ClubServiceTest {
 		
 		System.out.println("list값?? : "+list);		
 		System.out.println("=============================\n");
+	}
+	
+	
+//	@Test
+	public void testGetMyClubList() throws Exception {
+		
+		System.out.println("\n==============================");
+		
+		Search search = new Search();
+		
+		search.setSearchKeyword("user03");
+		Map<String, Object> map = clubService.getMyClubList(search);
+		
+		List<Club> list = (List<Club>) map.get("myClubList");
+		
+		System.out.println("list 값?? : "+list);
+		System.out.println("==================================\n");
 	}
 
 //	@Test
@@ -132,11 +149,24 @@ public class ClubServiceTest {
 //		Assert.assertEquals(1, clubService.addApprovalCondition(clubUser));
 //		
 //	}
-	
-	//@Test
-	public void TestgetApprovalConditionList() throws Exception {
-		
-	}
+
+	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	//@Test
+//	public void TestgetApprovalConditionList() throws Exception {
+//		
+//		System.out.println("\n===============================================");
+//		
+//		Search search = new Search();
+//		
+//		search.setSearchKeyword("user03");
+//		Map<String, Object> map = clubService.getApprovalConditionList(search);
+//		
+//		List<ClubUser> list = (List<ClubUser>) map.get("ApprovalConditionList");
+//		
+//		System.out.println("list 값 ?? : "+list);
+//		System.out.println("================================================\n");
+//		
+//	}
 	
 	//@Test
 	public void TestUpdateApprovalCondition() throws Exception {
@@ -300,7 +330,7 @@ public class ClubServiceTest {
 		clubService.deleteMeetingMember(23);
 	}
 	
-	@Test
+//	@Test
 	public void TestGetMeetingMemberList() throws Exception {
 		
 		System.out.println("\n===========================================");

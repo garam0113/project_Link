@@ -67,12 +67,9 @@ public interface FeedService {
 	
 	
 	
-	// 피드 신고
-	public void addFeedReport(Report report) throws Exception;
-	
-	// 피드 댓글 신고
-	public void addFeedCommentReport(Report report) throws Exception;
-	
+	// 피드 & 피드 댓글 신고
+	public void addReport(Report report) throws Exception;
+
 	
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
