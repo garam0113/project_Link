@@ -64,26 +64,28 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
+	public String getMyHome(@ModelAttribute Search search, User user, 
 			@RequestParam("userId")String userId, Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-     
+        
+		
 		user = userService.getUser(user);
-		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = new HashMap<String, Object>();
         
 		
-		
-
+		map.put("myHome", 1);
+		map.put("user", user);
 		map.put("search", search);
 		map = feedService.getFeedList(map);
+		//map = clubService.getMyClubList(map);
 		
 		
 		model.addAttribute("user", user);
-		model.addAttribute("club", club);
+		model.addAttribute("myClubList",map.get("myClubList"));
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
+        // 글자 왜이렇게 커 ㅅㅂㅋㅋㅋㅋㅋ
 	
 		return "forward:/myHome/getMyHome.jsp";
 	}  

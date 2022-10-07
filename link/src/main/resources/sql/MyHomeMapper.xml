@@ -35,8 +35,8 @@
      seq_follow_block_no.nextval ,
      #{userId:VARCHAR}                   ,
      #{receiveId:VARCHAR}                ,
-     #{fbState:CHAR}                ,
-     #{fbType:CHAR}                  
+     '1'                ,
+     '1'              
      
                       )
 
