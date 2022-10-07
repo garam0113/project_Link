@@ -14,7 +14,6 @@ public class Report{
 	private int reportReason;			// 신고 사유
 	private int reportCondition;		// 신고 진행상황
 	private String regDate;				// 등록 날짜
-	private String handleDate;			// 신고 처리 날짜
 	private String reportImage1;		// 신고 이미지1
 	private String reportImage2;		// 신고 이미지2
 	private int type;					// 신고/알림 타입
@@ -44,7 +43,6 @@ public class Report{
 		this.reportReason = reportReason;
 		this.reportCondition = reportCondition;
 		this.regDate = regDate;
-		this.handleDate = handleDate;
 		this.reportImage1 = reportImage1;
 		this.reportImage2 = reportImage2;
 		this.type = type;
@@ -146,14 +144,7 @@ public class Report{
 	}
 
 
-	public String getHandleDate() {
-		return handleDate;
-	}
 
-
-	public void setHandleDate(String handleDate) {
-		this.handleDate = handleDate;
-	}
 
 
 	public String getReportImage1() {
@@ -258,7 +249,6 @@ public class Report{
 		builder.append(", regDate=");
 		builder.append(regDate);
 		builder.append(", handleDate=");
-		builder.append(handleDate);
 		builder.append(", reportImage1=");
 		builder.append(reportImage1);
 		builder.append(", reportImage2=");
