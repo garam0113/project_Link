@@ -20,7 +20,8 @@ public class Feed {
 	private Date updateDate;
 	private int reportCondition;
 	private int deleteCondition;
-	private int checkHeart;			// -1 : 추가, -2 : 취소
+	private int checkHeart;			// -1 	: 추가,		-2 : 취소
+	private int checkMyHome;		// 1	: myHome 호출
 	
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -162,6 +163,14 @@ public class Feed {
 		this.checkHeart = checkHeart;
 	}
 
+	public int getCheckMyHome() {
+		return checkMyHome;
+	}
+
+	public void setCheckMyHome(int checkMyHome) {
+		this.checkMyHome = checkMyHome;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -181,7 +190,8 @@ public class Feed {
 				+ "[updateDate : " + updateDate + "] "
 				+ "[reportCondition : " + reportCondition + "] "
 				+ "[deleteCondition : " + deleteCondition + "] "
-				+ "[checkHeart : " + checkHeart + "] ";
+				+ "[checkHeart : " + checkHeart + "] "
+				+ "[checkMyHome : " + checkMyHome + "] ";
 	}
 
 }

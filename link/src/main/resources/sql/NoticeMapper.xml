@@ -26,10 +26,10 @@
 	 	INSERT
 		INTO NOTICE( NOTICE_NO  , NOTICE_TITLE , NOTICE_CONTENT , NOTICE_IMAGE1 , NOTICE_IMAGE2, NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
 		VALUES	 (	seq_notice_notice_no.nextval , 
-					#{noticeTitle}, 
-					#{noticeContent}, 
-					#{noticeImage1}, 
-					#{noticeImage2},
+					#{noticeTitle:VARCHAR}, 
+					#{noticeContent:VARCHAR}, 
+					#{noticeImage1:VARCHAR}, 
+					#{noticeImage2:VARCHAR},
 					SYSDATE, 
 					#{noticeCount},
 					#{clubNo},
@@ -74,7 +74,6 @@
 	 DELETE
 	 FROM notice
 	 WHERE notice_no = #{noticeNo}
-	 
 	 </delete>
 		 
 	<!-- SQL : SELECT LIST -->

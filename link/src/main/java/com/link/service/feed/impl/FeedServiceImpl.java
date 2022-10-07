@@ -56,15 +56,16 @@ public class FeedServiceImpl implements FeedService {
 		*/
 		
 		Feed feed = feedDAO.getFeed((Integer) map.get("feedNo"));
-		List<Comment> commentList = feedDAO.getFeedCommentList(map);
+		int checkHeart;
 		
-		int checkHeart = feedDAO.checkFeedHeart((Heart) map.get("heart"));
+		if(( (Heart) map.get("heart")).getUserId() != null ) {
+			checkHeart = feedDAO.checkFeedHeart((Heart) map.get("heart"));
+		} else {
+			checkHeart = 0;
+		}
 		
-		System.out.println("체크요 : " + checkHeart);
 		feed.setCheckHeart(checkHeart);
-		
 		map.put("feed", feed);
-		map.put("commentList", commentList);
 		
 		return map;
 	}
@@ -125,6 +126,12 @@ public class FeedServiceImpl implements FeedService {
 	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		
+		/*
+		 * map.put("heart", heart);
+		 * map.put("search", search);
+		 * map.put("user", user);
+		 */
+		
 		List<Feed> feedList = feedDAO.getFeedList(map);
 		int totalFeedCount = feedDAO.getTotalFeedCount((Search) map.get("search"));
 		
@@ -134,6 +141,8 @@ public class FeedServiceImpl implements FeedService {
 		
 		return returnMap;
 	}
+	
+	//피드 하나에 달린 댓글 리스트
 	
 	@Override
 	public Map<String, Object> getFeedCommentList(Map<String, Object> map) throws Exception {

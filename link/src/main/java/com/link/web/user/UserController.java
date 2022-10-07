@@ -228,16 +228,17 @@ public class UserController {
 		System.out.println("/user/snsLogin : POST");
 		
 		User getUser = userService.getUser(user);	//SNS로그인시 snsUserId가 DB에 있는지 확인
-		
+		System.err.println("서버로 부터 받은 Data : "+user);
 		System.out.println("getUser로 검색한 결과 : "+getUser);
 		
-		if(getUser != null && user.getAddType().equals(getUser.getAddType()) && getUser.getNickName() != null ) {
+		if(getUser != null && getUser.getNickName() != null ) {
 			
 			session.setAttribute("user", getUser);	//입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
 			
 //			return null;
 			return "redirect:/main.jsp";
-		}else if(getUser.getNickName() == null) {
+		}else if(getUser != null && getUser.getNickName() == null) {
+//			return null;
 			return "redirect:/user/updateProfile?userId="+getUser.getUserId();
 		}else {
 //			return null;
