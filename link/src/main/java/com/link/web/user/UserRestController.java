@@ -16,7 +16,7 @@ import com.link.service.domain.User;
 import com.link.service.user.UserService;
 
 @RestController
-@RequestMapping("/user/*")
+@RequestMapping("/userRest/*")
 public class UserRestController {
 
 	@Autowired

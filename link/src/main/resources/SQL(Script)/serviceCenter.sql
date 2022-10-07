@@ -144,7 +144,7 @@ DROP TABLE report_push;
 
 CREATE TABLE REPORT_PUSH (
 	NO				NUMBER(20)				NOT NULL,
-	TITLE				VARCHAR2(200)				
+	TITLE				VARCHAR2(200)				,
 	CONTENT				VARCHAR2(2000)				NOT NULL,
 	REPORT_SOURCE 			CHAR(3)					,
 	CLUB_POST_NO			NUMBER(20)					NULL	REFERENCES club_post(club_post_no),
@@ -158,19 +158,19 @@ CREATE TABLE REPORT_PUSH (
 	REPORT_REGDATE			DATE					NOT NULL,
 	REPORT_IMAGE1			VARCHAR2(100),
 	REPORT_IMAGE2			VARCHAR2(100),
-	HANDLE_DATE			DATE,
 	TYPE				CHAR(3)					NOT NULL,
 	REPORT_REASON			CHAR(3)					,
 	REPORT_CONDITION		CHAR(3)			DEFAULT '1'	,
+	REPORT_DUPLICATION		CHAR(3)			,
 	PRIMARY KEY(NO)
 );
 
 //addReport() 
 INSERT INTO report_push
 ( no, title, content, report_source, club_post_no, club_post_comment_no, feed_no, feed_comment_no, live_no, user_id1,
- user_id2, report_regdate, report_image1, report_image2, handle_date, type, report_reason, report_condition)
+ user_id2, report_regdate, report_image1, report_image2, type, report_reason, report_condition)
 VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , NULL , NULL , NULL , NULL, 'admin1' , 'user01' , SYSDATE, NULL , NULL ,
- NULL, '1' , '1' , '0'); 
+  '1' , '1' , '0'); 
 
 
 
@@ -202,14 +202,51 @@ VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , 
  
  SELECT * FROM USERS where user_id='user02';
  
- SELECT * FROM REPORT_PUSH;
+ SELECT * FROM REPORT_PUSH WHERE no='37';
 
-SELECT REPORT_COUNT
+SELECT u.report_count, u.penalty_type, r.report_reason, u.user_id
+FROM USERS u, report_push r
+WHERE u.user_id=r.user_id2 AND r.user_id2='user02';
+
+
+
+SELECT REPORT_COUNT, penalty_type, stop_start_date, stop_end_date
 FROM USERS
-WHERE user_id='user02'; / to_number(0) + to_number(1)
+WHERE user_id='user02';
+	
+	
+UPDATE USERS
+SET
+REPORT_COUNT = '0',
+PENALTY_TYPE = '0',
+STOP_START_DATE = NULL,
+STOP_END_DATE = NULL
+WHERE USER_ID = 'user02';
 
- 
+
+
  SELECT to_number(1) + to_number(1)
  FROM users; 
  
  
+SELECT r.*
+FROM REPORT_PUSH R;
+
+SELECT R.*
+FROM CLUB_POST R
+WHERE club_post_no='45';
+
+DELETE report_push
+WHERE no='45';
+
+
+
+UPDATE REPORT_PUSH
+SET CLUB_POST_NO = '30'
+WHERE No='45';
+
+SELECT *
+FROM REPORT_PUSH
+WHERE USER_ID1='admin1' AND USER_ID2='user01' AND REPORT_REGDATE < TO_CHAR(REPORT_REGDATE+7,'YYYYMMDD');
+
+SELECT R.*   FROM REPORT_PUSH R      WHERE R.USER_ID1 = 'admin1' AND R.USER_ID2 = 'user01'   AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') < TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')

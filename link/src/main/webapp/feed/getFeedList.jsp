@@ -30,10 +30,8 @@
 		});
 		
 		$(".btn_getFeed").bind("click", function(){
-			alert($(this).prev().prev().prev().val());
-			var feedNo = $(this).prev().prev().prev().val();
-			
-			location.href="/feed/getFeed?feedNo=" + feedNo;
+			alert($(this).prev().prev().val());
+			location.href="/feed/getFeed?feedNo=" + $("input[name='feedNo']").val();
 		})
 		
 		// addComment
@@ -85,22 +83,33 @@
 	<br/><br/>
 	
 		<c:set var="i" value="0"></c:set>
-		<c:forEach var="feedList" items="${feedList}">
+		<c:forEach var="feed" items="${feedList}">
 			<c:set var="i" value="${i + 1}"></c:set>
 			
-			<c:if test="${fn:trim(feedList.deleteCondition) eq '0'}">
+			<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
 			
 			<form>
 			
-				<input type="hidden" name="feedNo" value="${feedList.feedNo}">
+				<input type="hidden" name="feedNo" value="${feed.feedNo}">
 			
-				${feedList.feedNo}번째글 // ${feedList.content}
+				${feed.feedNo}번째글
+				<br/>
+				<br/>	내용 :  ${feed.content}
+				<br/>
 				
-				<br/>	좋아요 : ${feedList.heartCount}
-						댓글 수 : ${feedList.commentCount}
+				<br/>	해시태그 : ${feed.hashtag}
+				<br/>
+						좋아요 : ${feed.heartCount}
+						댓글 수 : ${feed.commentCount}
+						
+						<c:if test="${feed.checkHeart != 0}">
+							★★★내가 좋아요 한 피드입니다.★★★
+						</c:if>
 				
-				<input type="button" id="${feedList.feedNo}" name="delete" value="delete">
+				<input type="button" id="${feed.feedNo}" name="delete" value="delete">
 				<input type="button" class="btn_getFeed" value="보기">
+			
+				<hr/>
 			
 			<br/><br/>
 			

@@ -37,10 +37,10 @@
     
     <script type="text/javascript">
     	$(function() {
-			$("button").on("click", function() {
-				self.location = "/user/getUser.jsp"
-			})
-		})
+			$("button.btn.btn-primary").on("click", function() {
+				$("form").attr("method", "POST").attr("action", "/user/updateUser").submit();
+			});
+		});
     </script>
     
     </head>
@@ -65,6 +65,7 @@
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-4">
 		      <input disabled="disabled" type="text" class="form-control" id="userId" name="userId" value="${user.userId }">
+		      <input type="hidden" class="form-control" id="userId" name="userId" value="${user.userId }">
 		    </div>
 		  </div>
 		
@@ -114,7 +115,6 @@
 		    <div class="col-sm-2">
 		      <input disabled="disabled" type="text" class="form-control" id="phoneNo" name="phoneNo" value="${ user.phoneNo }"   placeholder="변경번호">
 		    </div>
-		    <input type="hidden" name="phoneNo"  />
 		  </div>
 		  
 		   <div class="form-group">

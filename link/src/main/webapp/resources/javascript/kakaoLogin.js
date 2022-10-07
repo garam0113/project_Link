@@ -13,12 +13,11 @@ function kakaoLogin() {
 					console.log(kakao_account)
 					console.log(kakao_account.profile.nickname)
 					console.log(kakao_account.email)
-					var name = kakao_account.profile.nickname;
-					$(".kakao").val(name);
-					sessionStorage.setItem("user", kakao_account.profile.nickname);
-
-					console.log(sessionStorage.getItem("user"));
+						var snsUserId = kakao_account.email;
+							$(".kakao").val(snsUserId)
 					console.log($(".kakao").val());
+					
+					$("form").attr("method","POST").attr("action","/user/snsLogin").attr("target","_parent").submit();
 				}
 			});
 			// window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드

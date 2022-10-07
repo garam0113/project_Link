@@ -35,8 +35,8 @@
 			}	
 		
 	
+		location.href = "/serviceCenter/addNotice?noticeNo="
 		
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice ³¡
 	
 
@@ -79,7 +79,7 @@
 		      </span>
 		    </div>
 		    
-		  </div>
+		  </div>h
 
 		  <div class="form-group">
 		    <label for="noticeContent" class="col-sm-offset-1 col-sm-3 control-label">³» ¿ë</label>

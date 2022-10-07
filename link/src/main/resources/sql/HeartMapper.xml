@@ -45,14 +45,14 @@
 				source,
 				source_no
 				FROM HEART
-				WHERE SOURCE		= #{ source }
+				WHERE TRIM(SOURCE)	= #{ source }
 				AND SOURCE_NO		= #{ sourceNo }	)
 	</select>
 	
 	
 	
 	<!-- 좋아요 테스트 : 하명훈 -->
-	<select id="getHeart"	parameterType="heart"			resultType="int">
+	<select id="checkFeedHeart"	parameterType="heart"		resultType="int">
 		SELECT
 		COUNT(*)
 		FROM	(
@@ -62,9 +62,9 @@
 					source,
 					source_no
 					FROM HEART
-					WHERE SOURCE		= #{ source }
-					AND SOURCE_NO		= #{ sourceNo }	
-					AND USER_ID			= #{ userId	}	)
+					WHERE TRIM(source)		= #{ source }
+					AND source_no			= #{ sourceNo }	
+					AND user_id				= #{ userId	}	)
 	</select>
 	
 	

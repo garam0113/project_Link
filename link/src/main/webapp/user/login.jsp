@@ -22,8 +22,9 @@
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://accounts.google.com/gsi/client" async defer></script>
+	
+	<script type="text/javascript" src="/resources/javascript/kakaoLogin.js"></script>
 	    
-	<script type="text/javascript" src="/javascript/kakaoLogin.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
     	 body >  div.container{ 
@@ -38,6 +39,20 @@
         }
         
     </style>
+    
+    <script type="text/javascript">
+  	 $(function() {
+			$("button.btn.btn-primary").on("click", function() {
+				$("form").attr("method", "POST").attr("action", "/user/login").submit(); 
+			});
+		});
+    	
+    	$(function() {
+			$("a[href='#' ]").on("click", function() {
+				self.location = "/user/addUser"
+			});
+		});
+    </script>
 </head>
 <body>
 
@@ -55,7 +70,7 @@
 		<div class="row">
 		
 			<div class="col-md-6">
-					<img src="/images/logo-spring.png" class="img-rounded" width="100%" />
+					<img src="/resources/image/logo-spring.png" class="img-rounded" width="100%" />
 			</div>
 	   	 	
 	 	 	<div class="col-md-6">
@@ -89,9 +104,10 @@
 					  </div>
 
 					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					       <button class="button" type="button" onclick="kakaoLogin();"><img src="/images/ko/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></button>
-					       <input type="hidden" class="kakao" name="userName" id="userName" value="" >
+					    <div class="col-sm-offset-4 col-sm-6 text-center"> 
+					       <button class="button" type="button" onclick="kakaoLogin();"><img src="/resources/image/ko/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></button>
+					       <input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
+					       <input type="hidden" class="snsType" name="addType" id="addType" value="1">
 					    </div>
 					  </div>
 
@@ -106,7 +122,7 @@
 					<script type="text/javascript" src="/javascript/naverLogin.js"></script>
 					</form>
 			   	 </div>
-				
+				 
 			</div>
 			
   	 	</div>

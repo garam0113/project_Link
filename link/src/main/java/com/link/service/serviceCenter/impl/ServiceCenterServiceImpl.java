@@ -223,6 +223,16 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		return report;
 	}
 
+    @Override
+    public Report getReportDuple(Report report) throws Exception{
+    	
+    	System.out.println("\n[ServiceCenterServiceImpl getReportDuple start]\n");
+ 
+    	
+    	System.out.println("\n[ServiceCenterServiceImpl getReportDuple end]\n");
+    	return	serviceCenterDAO.getReportDuple(report);
+    }
+    
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub

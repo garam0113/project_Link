@@ -2,9 +2,12 @@ SELECT user_id, password, name, gender, rrn, phone_no, email, role, nickname,
 					profile_image, profile_writing, area1, area2, area3, category1, category2, 
 					category3, penalty_type,  report_count, stop_start_date, stop_end_date,
 					out_user_state, out_user_date, add_user_type, logout_date, add_user_date,
-					total_visit_count, open_condition, push_condition, join_club_count, join_club_limit
-FROM users
-WHERE user_id = 'admin1';
+					total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_id
+FROM users;
+WHERE sns_user_id = 'bymin1992@naver.com';
+
+DELETE users
+WHERE user_id = 'Link0889';
 
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)
