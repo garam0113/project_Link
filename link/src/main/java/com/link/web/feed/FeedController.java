@@ -63,9 +63,8 @@ public class FeedController {
 		
 		// 회원 피드 등록
 		
-		// User user = (User) httpSession.getAttribute("user");
-		// feed.setUserId(user.getUserId());
-		feed.setUserId("user01");
+		user = (User) httpSession.getAttribute("user");
+		feed.setUserId(user.getUserId());
 		
 		// 해시태그 저장하기 시작
 		
@@ -108,7 +107,9 @@ public class FeedController {
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
-								User user, Heart heart, Model model) throws Exception {
+								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
+		
+		user = (User) httpSession.getAttribute("user");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -117,23 +118,44 @@ public class FeedController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		heart.setSource("0");
-		heart.setSourceNo(feedNo);
-		heart.setUserId("user01");
+		
+		if(user != null) {
+			heart.setUserId(user.getUserId());
+		}
 		
 		map.put("feedNo", feedNo);
 		map.put("search", search);
 		map.put("heart", heart);
+		map.put("user", user);
 		
 		map = feedService.getFeed(map);
 		
+		Map<String, Object> commentMap = feedService.getFeedCommentList(map);
+		
 		model.addAttribute("feed", map.get("feed"));
-		model.addAttribute("commentList", map.get("commentList"));
+		model.addAttribute("commentList", commentMap.get("commentList"));
+		model.addAttribute("totalFeedCommentCount", commentMap.get("totalFeedCommentCount"));
 		
 		return "forward:/feed/getFeed.jsp";
 	}
 	
+	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
+	public String updateFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
+								User user, Heart heart, Model model) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feedNo", feedNo);
+		map.put("search", search);
+		map.put("heart", heart);
+				
+		model.addAttribute("feed", (Feed) feedService.getFeed(map).get("feed"));
+		
+		return "forward:/feed/updateFeedView.jsp";
+	}
+	
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
-	public String updateFeed(@ModelAttribute Feed feed, Search search, Model model) throws Exception {
+	public String updateFeed(@ModelAttribute Feed feed, Search search, 
+								User user, Heart heart, Model model) throws Exception {
 		
 		feedService.updateFeed(feed);
 		
@@ -169,7 +191,9 @@ public class FeedController {
 	
 	@RequestMapping(value = "getFeedList")
 	public String getFeedList(@ModelAttribute Search search, Heart heart,
-								User user, Model model) throws Exception {
+								User user, HttpSession httpSession, Model model) throws Exception {
+		
+		user = (User) httpSession.getAttribute("user");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -181,6 +205,8 @@ public class FeedController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
 		map.put("search", search);
+		map.put("user", user);
+		map.put("myHome", 0);
 				
 		map = feedService.getFeedList(map);
 		

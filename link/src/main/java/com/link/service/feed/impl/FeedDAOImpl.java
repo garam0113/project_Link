@@ -107,7 +107,7 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public List<Feed> getFeedList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FeedMapper.getFeedListTest", (Search) map.get("search"));
+		return sqlSession.selectList("FeedMapper.getFeedListTest", map);
 	}
 	
 	@Override

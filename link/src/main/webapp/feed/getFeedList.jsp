@@ -30,8 +30,9 @@
 		});
 		
 		$(".btn_getFeed").bind("click", function(){
-			alert($(this).prev().prev().val());
-			location.href="/feed/getFeed?feedNo=" + $("input[name='feedNo']").val();
+			
+			alert("클릭한 글 번호 : " + $(this).parent().find("input[name='feedNo']").val());
+			location.href="/feed/getFeed?feedNo=" + $(this).parent().find("input[name='feedNo']").val();
 		})
 		
 		// addComment
@@ -72,11 +73,16 @@
 
 <body>
 	<h2>Hello World!</h2>
-	
 	<form>
-
+	로그인 정보 : ${sessionScope.user}
+	
+	<br/><br/>
+	<c:if test="${!empty sessionScope.user}">
+	
 		<input type="text" name="content" value="today">
 		<input type="button" value="submit">
+	
+	</c:if>
 		
 	</form>
 	
@@ -90,9 +96,7 @@
 			
 			<form>
 			
-				<input type="hidden" name="feedNo" value="${feed.feedNo}">
-			
-				${feed.feedNo}번째글
+				${feed.feedNo}번째글 [작성자 : ${feed.userId}]
 				<br/>
 				<br/>	내용 :  ${feed.content}
 				<br/>
@@ -105,9 +109,10 @@
 						<c:if test="${feed.checkHeart != 0}">
 							★★★내가 좋아요 한 피드입니다.★★★
 						</c:if>
-				
-				<input type="button" id="${feed.feedNo}" name="delete" value="delete">
+						
+				<input type="button" name="delete" value="delete">
 				<input type="button" class="btn_getFeed" value="보기">
+				<input type="hidden" name="feedNo" value="${feed.feedNo}">
 			
 				<hr/>
 			
