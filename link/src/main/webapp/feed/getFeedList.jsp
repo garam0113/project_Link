@@ -73,6 +73,7 @@
 
 <body>
 	<h2>Hello World!</h2>
+	
 	<form>
 	로그인 정보 : ${sessionScope.user}
 	

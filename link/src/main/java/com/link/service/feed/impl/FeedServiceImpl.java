@@ -190,8 +190,8 @@ public class FeedServiceImpl implements FeedService {
 		
 		// 피드 테이블 좋아요 개수 증가
 		
-//		Feed feed = (Feed) map.get("feed");
-		Feed feed = feedDAO.getFeed(5);
+		Feed feed = (Feed) map.get("feed");
+		
 		feed.setCheckHeart(-1);
 		feedDAO.updateFeed(feed);
 		
@@ -206,8 +206,8 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		feedDAO.deleteFeedHeart((Heart)map.get("heart"));
 		
-//		Feed feed = (Feed) map.get("feed");
-		Feed feed = feedDAO.getFeed(5);
+		Feed feed = (Feed) map.get("feed");
+		
 		feed.setCheckHeart(-2);
 		feedDAO.updateFeed(feed);
 		
@@ -222,8 +222,7 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		feedDAO.addFeedCommentHeart((Heart)map.get("heart"));
 		
-//		Comment comment = (Comment) map.get("comment");
-		Comment comment = feedDAO.getFeedComment(1);
+		Comment comment = (Comment) map.get("comment");
 //		comment.set
 		
 		Comment returnComment = feedDAO.getFeedComment(comment.getFeedCommentNo());
@@ -237,8 +236,7 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		feedDAO.deleteFeedCommentHeart((Heart)map.get("heart"));
 				
-//		Comment comment = (Comment) map.get("comment");
-		Comment comment = feedDAO.getFeedComment(1);
+		Comment comment = (Comment) map.get("comment");
 //		comment.set
 		
 		Comment returnComment = feedDAO.getFeedComment(comment.getFeedCommentNo());
