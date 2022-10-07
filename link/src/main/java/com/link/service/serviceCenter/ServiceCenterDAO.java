@@ -45,6 +45,8 @@ public interface ServiceCenterDAO {
 	
 	public void updateReport(Report report) throws Exception;
 	
+	public Report getReportDuple(Report report) throws Exception;
+	
 	//공통 메써드 
 	
 	public int getTotalCount(Search search, int a) throws Exception;
