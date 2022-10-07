@@ -37,7 +37,7 @@
 		
 	
 		
-		$($("form")[0]).attr("method", "POST").attr("action", "/notice/updateNotice").submit();
+		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateNotice").submit();
 	}
 			
 	

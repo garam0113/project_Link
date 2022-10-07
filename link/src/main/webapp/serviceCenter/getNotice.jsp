@@ -164,7 +164,7 @@
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 
-							<c:if test="${user.userId == 'ssiroo4'}">
+							
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td class="ct_write01"><input type="hidden"
@@ -173,7 +173,7 @@
 								</table>
 							<td width="30"></td>
 							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">¼öÁ¤</td>
-							</c:if>
+							
 							<td width="30"></td>
 
 							<td background="/images/ct_btnbg02.gif" class="ct_btn01"

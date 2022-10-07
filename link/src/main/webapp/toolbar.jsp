@@ -32,6 +32,13 @@
 		});
 	});
 	
+	$(function(){
+		$("a:contains('고객센터')").on("click" , function() {
+			
+			self.location ="/serviceCenter/serviceCenterHome.jsp"
+		})
+		
+	})
 /*	아래방식으로 네비게이션 사용 가능
 =======
 /*	아래방식으로 네비게이션 사용 가능 */
@@ -43,6 +50,7 @@
 		$("span:contains('모임')").on("click", function(){
 			self.location = "/club/getClubList";
 		});
+		
 	});
 </script>
 
