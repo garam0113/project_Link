@@ -1,3 +1,4 @@
+select * from users;
 
 //모임등록
 addClub()
@@ -139,7 +140,7 @@ UPDATE meeting
 		meeting_place = '모임일정장소수정 test' ,
 		meeting_time = '모임일정시간수정 test',
 		meeting_maximum_member = '20'
-		WHERE meeting_no = 4;
+		WHERE meeting_no = 24;
 
 //모임일정 참여신청 취소
 deleteMeetingMember()

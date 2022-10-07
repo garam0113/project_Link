@@ -25,11 +25,12 @@ import com.link.common.Search;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
 @SessionAttributes("user")
-@RequestMapping("/ServiceCenter/*")
+@RequestMapping("/serviceCenter/*")
 public class ServiceCenterController {
 
 	@Autowired
@@ -48,11 +49,13 @@ public class ServiceCenterController {
 	@Value("#{commonProperties['pageUnit'] ?: 10}")
 	int pageUnit;
 	
-	@RequestMapping(value = "addNotice", method = RequestMethod.POST)
+	@RequestMapping(value = "addNotice")
 	public String addNotice(@ModelAttribute Notice notice, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
 		System.out.println(notice);
-	
-		System.out.println("/ServiceCenter/addNotice : POST");
+		User user = new User();																			//★ 지워야됨
+		user.setUserId("ssiroo4");																		//★ 
+		notice.setUserId(user);																			//★
+		System.out.println("/ServiceCenter/addNotice : GET & POST");
 		
 		notice.setNoticeRegDate(notice.getNoticeRegDate());
 		
@@ -60,7 +63,7 @@ public class ServiceCenterController {
 		
 		model.addAttribute("notice", notice);
 		
-		return "forward:/ServiceCenter/addNotice.jsp";
+		return "forward:/serviceCenter/addNotice.jsp";
 	}
 
 
@@ -73,6 +76,10 @@ public class ServiceCenterController {
 		
 		System.out.println("/ServiceCenter/getNotice : GET & POST");
 		
+		User user = new User();																			//★ 지워야됨
+		user.setUserId("ssiroo4");																		//★ 
+		notice.setUserId(user);
+		
 		serviceCenterService.getCount(notice.getNoticeNo());
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());
 		
@@ -82,9 +89,9 @@ public class ServiceCenterController {
 		String URI = null;
 		
 		if(menu.equals("manage")) {
-			URI = "forward:/ServiceCenter/updateNotice";
+			URI = "forward:/serviceCenter/updateNotice";
 		} else if (menu.equals("search")) {
-			URI = "forward:/ServiceCenter/getNotice.jsp";
+			URI = "forward:/serviceCenter/getNotice.jsp";
 		}
 		
 		return URI;
@@ -92,22 +99,24 @@ public class ServiceCenterController {
 	
 	
 	@RequestMapping(value = "deleteNotice")
-	public String deleteNotice(@ModelAttribute Notice notice, @RequestParam(defaultValue = "search") String menu, 
+	public String deleteNotice(@ModelAttribute Notice notice, @RequestParam(value ="menu", defaultValue ="search") String menu, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
 		
 		System.out.println("/ServiceCenter/deleteNotice : GET & POST");
 		
-		notice = serviceCenterService.getNotice(notice.getNoticeNo());
 		
 		
-
-		return "forward:/ServiceCenter/listNotice.jsp";
+		serviceCenterService.deleteNotice(notice.getNoticeNo());
+		
+	
+		
+		return "forward:/serviceCenter/getNoticeList";
 	}
 
 	
 	
-	//@RequestMapping("/updateNoticeView.do")
+
 	@RequestMapping(value = "updateNotice", method = RequestMethod.GET)
 	public String updateNotice(@ModelAttribute Notice notice, Model model) throws Exception {
 		
@@ -117,10 +126,10 @@ public class ServiceCenterController {
 		
 		model.addAttribute("notice", notice);
 		
-		return "forward:/ServiceCenter/updateNoticeView.jsp";
+		return "forward:/serviceCenter/updateNoticeView.jsp";
 	}
 
-	//@RequestMapping("/updateNotice.do")
+	
 	@RequestMapping(value = "updateNotice", method = RequestMethod.POST)
 	public String updateNotice(@ModelAttribute Notice notice, Model model,
 								@RequestParam("image") MultipartFile[] file) throws Exception {
@@ -136,11 +145,11 @@ public class ServiceCenterController {
 		
 		model.addAttribute("notice", notice);
 		
-		return "forward:/ServiceCenter/getNotice.jsp";
+		return "forward:/serviceCenter/getNotice.jsp";
 	}
 	
 	
-	@RequestMapping(value = "listNotice")
+	@RequestMapping(value = "getNoticeList")
 	public String listNotice(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
 								Model model) throws Exception {
 		
@@ -163,7 +172,7 @@ public class ServiceCenterController {
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);
 		
-		return "forward:/ServiceCenter/listNotice.jsp";
+		return "forward:/serviceCenter/getNoticeList.jsp";
 	}
 	
 //======================================================================================여기까지가 Notice	
@@ -209,7 +218,7 @@ public class ServiceCenterController {
 		
 		model.addAttribute("qandA", qandA);
 		
-		return "forward:/ServiceCenter/addQandA.jsp";
+		return "forward:/serviceCenter/addQandA.jsp";
 	}
 
 
@@ -229,9 +238,9 @@ public class ServiceCenterController {
 		String URI = null;
 		
 		if(menu.equals("manage")) {
-			URI = "forward:/ServiceCenter/updateQandA";
+			URI = "forward:/serviceCenter/updateQandA";
 		} else if (menu.equals("search")) {
-			URI = "forward:/ServiceCenter/getQandA.jsp";
+			URI = "forward:/serviceCenter/getQandA.jsp";
 		}
 		
 		return URI;
@@ -242,7 +251,7 @@ public class ServiceCenterController {
 	public String updateQandA(@ModelAttribute QandA qandA, Model model,
 								@RequestParam("image") MultipartFile[] file) throws Exception {
 		
-		System.out.println("/ServiceCenter/updateNotice : POST");
+		System.out.println("/serviceCenter/updateNotice : POST");
 		
 
 		serviceCenterService.updateQandA(qandA);
@@ -253,7 +262,7 @@ public class ServiceCenterController {
 		
 		model.addAttribute("qandA", qandA);
 		
-		return "forward:/ServiceCenter/getQandA.jsp";
+		return "forward:/serviceCenter/getQandA.jsp";
 	}
 	
 	
@@ -268,14 +277,14 @@ public class ServiceCenterController {
 		
 		
 
-		return "forward:/ServiceCenter/listQandA.jsp";
+		return "forward:/serviceCenter/listQandA.jsp";
 	}
 	
 	@RequestMapping(value = "listQandA")
 	public String listQandA(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
 								Model model) throws Exception {
 		
-		System.out.println("/ServiceCenter/listQandA : GET & POST");
+		System.out.println("/serviceCenter/listQandA : GET & POST");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -294,7 +303,7 @@ public class ServiceCenterController {
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);
 		
-		return "forward:/ServiceCenter/listQandA.jsp";
+		return "forward:/serviceCenter/listQandA.jsp";
 	}
 	
 // 여기까지가 QandA 끝 ====================================================================
@@ -303,7 +312,7 @@ public class ServiceCenterController {
 	public String addQandA(@ModelAttribute Report report, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
 		System.out.println(report);
 	
-		System.out.println("/ServiceCenter/addReport : POST");
+		System.out.println("/serviceCenter/addReport : POST");
 		
 		
 		StringBuilder sb = new StringBuilder();
@@ -340,7 +349,7 @@ public class ServiceCenterController {
 		
 		model.addAttribute("report", report);
 		
-		return "forward:/ServiceCenter/addReport.jsp";
+		return "forward:/serviceCenter/addReport.jsp";
 	}
 	
 	

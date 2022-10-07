@@ -27,11 +27,14 @@
 		});
 
 		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../notice/updateNoticeView.jsp";
+			self.location = "../serviceCenter/updateNoticeView.jsp";
 		})
 
 		$("td.ct_btn01:contains('삭제')").bind("click", function() {
-			self.location = "../notice/deleteNotice";
+			
+			alert($('tr.noticeNo').find('td').text().substr(-1,1));
+			
+		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('tr.noticeNo').find('td').text().substr(-1,1); 
 		})
 
 	});
@@ -73,9 +76,9 @@
 				<td bgcolor="D6D6D6" width="1"></td>
 				<td class="ct_write01">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="105"><input type="hidden" name="noticeNo"
-								value="${serviceCenter.noticeNo}"> ${serviceCenter.noticeNo}</td>
+						<tr class ="noticeNo">
+							<td width="105"><input type="hidden" name="noticeNo" id="noticeNo"value="${notice.noticeNo}">
+								${notice.noticeNo}</td>
 						</tr>
 					</table>
 				</td>
@@ -89,13 +92,13 @@
 					align="absmiddle" />
 				</td>
 				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${serviceCenter.noticeTitle}</td>
+				<td class="ct_write01">${notice.noticeTitle}</td>
 			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
 
-			<c:set var="text" value="${fn:split(serviceCenter.noticeImage1, '*')}"></c:set>
+			<c:set var="text" value="${fn:split(notice.noticeImage1, '*')}"></c:set>
 
 			<tr>
 				<td width="104" class="ct_write">이미지 <img
@@ -120,7 +123,7 @@
 					align="absmiddle" />
 				</td>
 				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${serviceCenter.noticeContent}</td>
+				<td class="ct_write01">${notice.noticeContent}</td>
 			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -128,7 +131,7 @@
 			<tr>
 				<td width="104" class="ct_write">작성일자</td>
 				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${serviceCenter.noticeRegDate}</td>
+				<td class="ct_write01">${notice.noticeRegDate}</td>
 			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -137,7 +140,7 @@
 				<td width="104" class="ct_write">WoW</td>
 				<td bgcolor="D6D6D6" width="1"></td>
 				<td class="ct_write01"><fmt:formatNumber type="number"
-						maxFractionDigits="3" value="${serviceCenter.noticeCount}" /></td>
+						maxFractionDigits="3" value="${notice.noticeCount}" /></td>
 			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -145,7 +148,7 @@
 			<tr>
 				<td width="104" class="ct_write">등록일자</td>
 				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${serviceCenter.noticeRegDate}</td>
+				<td class="ct_write01">${notice.noticeRegDate}</td>
 			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -161,21 +164,21 @@
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 
-							<c:if test="${user.userId == 'admin1'}">
+							<c:if test="${user.userId == 'ssiroo4'}">
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td class="ct_write01"><input type="hidden"
 											id="Quantity" name="Quantity" value="1" /></td>
 									</tr>
 								</table>
-								<td width="30"></td>
-								<td background="/images/ct_btnbg02.gif" width="90"
-									class="ct_btn01" style="padding-top: 3px;">수정</td>
+							<td width="30"></td>
+							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">수정</td>
 							</c:if>
 							<td width="30"></td>
 
 							<td background="/images/ct_btnbg02.gif" class="ct_btn01"
 								style="padding-top: 3px;">삭제</td>
+								
 							<td width="14" height="23">
 							<td background="/images/ct_btnbg02.gif" width="90"
 								class="ct_btn01" style="padding-top: 3px;">이전</td>

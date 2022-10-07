@@ -81,12 +81,16 @@ public class ClubPostRestController {
 		return clubPostServiceImpl.getClubPostList(search, clubPost);
 	}
 
-	@RequestMapping(value = "updateClubPost", method = RequestMethod.POST)
-	public int updateClubPost(@RequestBody ClubPost clubPost, Heart heart) throws Exception {
+	@RequestMapping(value = "updateClubPost", method = RequestMethod.GET)
+	public int updateClubPost(@RequestBody int clubPostCommentNo, ClubPost clubPost, Heart heart, Search search) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
+		
+		search = ClubPostSearchPage.getSearch(0);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("heart", heart);
+		map.put("search", search);
 		return ((ClubPost)clubPostServiceImpl.updateClubPost(map)).getClubPostHeartCount();
 	}
 	
@@ -147,9 +151,11 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "getClubPostCommentList", method = RequestMethod.GET)
-	public List<Comment> getClubPostCommentList(@RequestBody Comment comment, Search search) throws Exception {
+	public List<Comment> getClubPostCommentList(@RequestBody int clubPostCommentNo, @RequestBody int depth, Comment comment, Search search, Map<String, Object> map) throws Exception {
 		System.out.println("/getClubPostCommentList : GET : 특정 모임의 또는 특정 댓글의 댓글리스트");
-		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(depth);
+		System.out.println(clubPostCommentNo);
+		search = ClubPostSearchPage.getSearch(0);
 		map.put("comment", comment);
 		map.put("search", search);
 		return clubPostServiceImpl.getClubPostCommentList(map);
