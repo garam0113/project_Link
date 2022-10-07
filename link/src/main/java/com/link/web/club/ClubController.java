@@ -1,5 +1,6 @@
 package com.link.web.club;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import com.link.service.club.ClubService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
+import com.link.service.domain.User;
 
 @Controller
 @RequestMapping("/club/*")
@@ -130,12 +132,73 @@ public class ClubController {
 		return "forward:/club/getClubList.jsp";
 	}
 	
+	@RequestMapping(value="getMyClubList")
+	public String getMyClubList(@ModelAttribute Search search, Model model, User user, HttpSession httpSession) throws Exception {
+		
+		System.out.println("/club/getMyClubList : GET/POST");
+		
+		user = (User) httpSession.getAttribute("user");
+		
+		System.out.println("세션에 뭐가 있나요 : "+user);
+		
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
+		Map<String, Object> map = clubService.getMyClubList(search);		
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMyClubCount")).intValue(), pageUnit, pageSize);
+		
+		System.out.println("resultPage : "+resultPage);
+		
+		model.addAttribute("myClubList",map.get("myClubList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return "forward:/club/getApprovalCondition.jsp";
+	}
+	
+//	@RequestMapping(value="getMyClubList")
+//	public String getMyClubList(@ModelAttribute Search search, Model model, User user, HttpSession httpSession) throws Exception {
+//		
+//		System.out.println("/club/getMyClubList : GET/POST");
+//		
+//		user = (User) httpSession.getAttribute("user");
+//		
+//		System.out.println("세션에 뭐가 있나요 : "+user);
+//		
+//		if(search.getCurrentPage()==0) {
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		search.setPageUnit(pageUnit);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("search",search);
+//		map.put("user", user);
+//		map.put("myHome",0);
+//		
+//		map = clubService.getMyClubList(map);
+//		
+//		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMyClubCount")).intValue(), pageUnit, pageSize);
+//		
+//		model.addAttribute("resultPage", resultPage);
+//		model.addAttribute("search", search);
+//		model.addAttribute("myClubList", map.get("myClubList"));
+//		
+//		return "forward:/club/getApprovalCondition.jsp";
+//	}
+	
 	@RequestMapping(value="addApprovalCondition", method = RequestMethod.POST)
-	public String addApprovalCondition(@ModelAttribute ClubUser clubUser, Model model, HttpSession httpSession) throws Exception {
+	public String addApprovalCondition(@ModelAttribute ClubUser clubUser, User user, Model model, HttpSession httpSession) throws Exception {
 		
 		System.out.println("/addApprovalCondition : POST");
 		
-		
+		user = (User) httpSession.getAttribute("user");
+		clubUser.setMemberRole("0");
+		clubUser.setApprovalCondition("0");
 		clubService.addApprovalCondition(clubUser);
 		return "forward:/club/getClub.jsp";
 	}

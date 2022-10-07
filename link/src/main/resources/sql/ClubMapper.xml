@@ -125,11 +125,11 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
+										 				club_no LIKE('%${searchKeyword}%')
 										 				club_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
+										 				club_title LIKE ('%${searchKeyword}%')
 										 				club_title = #{searchKeyword}
 													</if>
 												</where>
@@ -179,13 +179,34 @@
 						</if> ) countTable						
 	 </select>
 
-	<select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
+		<!-- <select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
 		SELECT 
 			club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
 			FROM club_user
 			WHERE user_id = #{searchKeyword}	
 	
-	</select>
+		</select> -->
+	
+ 	<select  id="getMyClubList"  parameterType="search"	resultMap="clubUserSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT club_user_no , club_no , user_id , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+											FROM club_user
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				club_user_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				club_no = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY club_no ) inner_table)
+		 				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
 	
 	<select id="getTotalMyClubCount" parameterType="search" resultType = "int">
 		SELECT COUNT(*)

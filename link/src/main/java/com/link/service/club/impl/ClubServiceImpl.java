@@ -166,10 +166,24 @@ public class ClubServiceImpl implements ClubService {
 		return map;
 	}
 	
+//	@Override
+//	public Map<String, Object> getMyClubList(Map<String, Object> map) throws Exception {
+//		
+//		System.out.println("나의 모임리스트 ServiceImpl 왔나??");
+//		List<ClubUser> list = clubDAO.getMyClubList(map);
+//		int totalMyClubCount = clubDAO.getTotalMyClubCount((Search) map.get("search"));
+//		
+//		Map<String, Object> returnMap = new HashMap<String, Object>();
+//		returnMap.put("myClubList",list);
+//		returnMap.put("totalMyClubCount", new Integer(totalMyClubCount));
+//		return returnMap;
+//	}
+	
 	@Override
 	public Map<String, Object> getMyClubList(Search search) throws Exception {
 		
-		List<Club> list = clubDAO.getMyClubList(search);
+		System.out.println("나의 모임리스트 ServiceImpl 왔나??");
+		List<ClubUser> list = clubDAO.getMyClubList(search);
 		int totalMyClubCount = clubDAO.getTotalMyClubCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

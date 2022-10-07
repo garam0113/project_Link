@@ -58,6 +58,8 @@ public interface ClubService {
 	public Map<String, Object> getClubList(Search search) throws Exception;
 	
 	//GetMyClubList
+//	public Map<String, Object> getMyClubList(Map<String, Object> map) throws Exception;
+	
 	public Map<String, Object> getMyClubList(Search search) throws Exception;
 	
 	//가입신청현황 리스트 --> GetMyClubList와 병합

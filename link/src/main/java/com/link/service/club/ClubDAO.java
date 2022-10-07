@@ -1,6 +1,7 @@
 package com.link.service.club;
 
 import java.util.List;
+import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Club;
@@ -21,7 +22,9 @@ public interface ClubDAO {
 	public List<Club> getClubList(Search search) throws Exception;
 	
 	//GetMyClubList
-	public List<Club> getMyClubList(Search search) throws Exception;	
+//	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception;
+	
+	public List<ClubUser> getMyClubList(Search search) throws Exception;
 	
 	public void deleteClub(int clubNo) throws Exception;
 	

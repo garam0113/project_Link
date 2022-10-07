@@ -1,6 +1,7 @@
 package com.link.service.club.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.websocket.Session;
 
@@ -88,11 +89,20 @@ public class ClubDAOImpl implements ClubDAO {
 		return sqlSession.selectList("ClubMapper.getClubList",search);
 	}
 	
+//	@Override
+//	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception {
+//		
+//		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
+//		
+//		return sqlSession.selectList("ClubMapper.getClubList",map);
+//	}
+	
 	@Override
-	public List<Club> getMyClubList(Search search) throws Exception {
+	public List<ClubUser> getMyClubList(Search search) throws Exception {
 		
 		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
-		return sqlSession.selectList("ClubMapper.getMyClubList",search);
+		
+		return sqlSession.selectList("ClubMapper.getClubList",search);
 	}
 	
 	@Override
@@ -117,9 +127,6 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addApprovalCondition(ClubUser clubUser) throws Exception {
 		
 		System.out.println("모임가입신청 DAOImpl 왔나?? ");
-		clubUser.setUserId("user11");
-		clubUser.setMemberRole("0");
-		clubUser.setApprovalCondition("0");
 		sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
 	}
 	
