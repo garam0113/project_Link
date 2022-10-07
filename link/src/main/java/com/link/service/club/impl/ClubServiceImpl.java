@@ -122,6 +122,8 @@ public class ClubServiceImpl implements ClubService {
 	
 	@Override
 	public void updateMeeting(Meeting meeting) throws Exception {
+		
+		System.out.println("updateMeeting ServiceImpl 오나?? ");
 		clubDAO.updateMeeting(meeting);
 	}
 	
@@ -195,6 +197,7 @@ public class ClubServiceImpl implements ClubService {
 	public Map<String, Object> getClubMemberList(Search search) throws Exception {
 
 		
+		System.out.println("모임원 리스트 Service왔나?");
 		List<ClubUser> list = clubDAO.getClubMemberList(search);
 		int totalClubMemberCount = clubDAO.getTotalClubMemberCount(search);
 		
