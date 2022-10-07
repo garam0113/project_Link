@@ -18,6 +18,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,14 +66,15 @@ public class ClubPostServiceTest {
 		// 모임 게시물 댓글 수정
 		
 		Comment comment = new Comment();
-		comment.setClubPostCommentNo(9);
-		comment.setCommentContent("1");
-		comment.setCommentUpdateDate("22/10/04");
+		comment.setClubPostCommentNo(34);
+		comment.setHeartCondition(1);
+		//comment.setCommentContent("1");
+		//comment.setCommentUpdateDate("22/10/04");
 		
 		Heart heart = new Heart();
 		heart.setSource("3");
-		heart.setSourceNo(7);
-		heart.setUserId("user04");
+		heart.setSourceNo(34);
+		heart.setUserId("user01");
 		
 		clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
@@ -219,38 +221,42 @@ public class ClubPostServiceTest {
 	public void clubPost() throws Exception {
 		// 모임게시물		
 		ClubPost clubPost = new ClubPost();
-		//clubPost.setClubPostNo(30);
+		clubPost.setClubPostNo(64);
 		User user = new User();
-		user.setUserId("user04");
+		user.setUserId("user03");
 		clubPost.setUser(user);
+		clubPost.setHeartCondition(1);
 		//clubPost.setHeartCondition(1);
 		//clubPost.setClubPostCommentNo(3);
+		//clubPost.setClubPostTitle("title");
+		//clubPost.setClubPostContent("content");
+		clubPost.setClubNo(2);
+		//clubPost.setImage1("image01");
 		
 		Heart heart = new Heart();
 		heart.setSource("2");
-		heart.setSourceNo(30);
-		heart.setUserId("user04");
+		heart.setSourceNo(63);
+		heart.setUserId("user02");
 		
 		//clubPostServiceImpl.updateClubPostLike(clubPost, heart);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("heart", heart);
-		//clubPostServiceImpl.updateClubPost(map);
+		clubPostServiceImpl.updateClubPost(map);
 		
 		//clubPostServiceImpl.addClubPost(clubPost);
 	}
 	
-	//@Test
+	@Test
 	public void clubPostList() throws Exception {
 		// 모임 게시물 리스트
 		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setCurrentPage(2);
 		search.setPageSize(10);
-		search.setPageUnit(10);
 		search.setOrder(0);					// 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
 		
 		ClubPost clubPost = new ClubPost();
-		clubPost.setClubNo(10);
+		clubPost.setClubNo(2);
 		User user = new User();
 		user.setUserId("user02");
 		clubPost.setUser(user);
@@ -280,3 +286,12 @@ public class ClubPostServiceTest {
 	
 	
 }
+
+
+
+
+
+
+
+
+

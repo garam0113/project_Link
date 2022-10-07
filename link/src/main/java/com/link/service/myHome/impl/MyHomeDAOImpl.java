@@ -82,4 +82,10 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 		
 	}
 
+	@Override
+	public int getTotalCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

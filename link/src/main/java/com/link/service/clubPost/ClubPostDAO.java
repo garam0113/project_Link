@@ -52,7 +52,7 @@ public interface ClubPostDAO {
 	public Comment addClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 리스트
-	public List<Comment> getClubPostCommentList(Comment comment) throws Exception;
+	public List<Comment> getClubPostCommentList(Map<String, Object> map) throws Exception;
 	
 	// 모임게시물 댓글 상세보기
 	public Comment getClubPostComment(Comment comment) throws Exception;

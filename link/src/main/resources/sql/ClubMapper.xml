@@ -117,8 +117,7 @@
 		DELETE FROM club WHERE club_no = #{clubNo}
 	</delete>
 	
-	
-<!-- 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
+	 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
@@ -126,20 +125,22 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				club_no LIKE('%${searchKeyword}%')
+										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
+										 				club_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_title LIKE ('%${searchKeyword}%')
+										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
+										 				club_title = #{searchKeyword}
 													</if>
 												</where>
 											</if>
 											ORDER BY club_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select> -->
+	 </select>
 	 
 	 
-	  	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
+	 <!--  	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
@@ -156,7 +157,7 @@
 											</if>
 											ORDER BY club_no ) inner_table
 						) 
-	 </select>
+	 </select> -->
 	
 	 	  	 	     	 
 	 
@@ -178,6 +179,30 @@
 						</if> ) countTable						
 	 </select>
 
+	<select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
+		SELECT 
+			club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
+			FROM club_user
+			WHERE user_id = #{searchKeyword}	
+	
+	</select>
+	
+	<select id="getTotalMyClubCount" parameterType="search" resultType = "int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT club_user_no , club_no
+						FROM club_user
+						<if test="searchCondition != null">
+							<where>
+							<if test="searchCondition == 0 and searchKeyword !='' ">
+					 			club_user_no = #{searchKeyword}
+							</if>
+							<if test="searchCondition == 1 and searchKeyword !='' ">
+					 		club_no = #{searchKeyword}
+							</if>
+						</where>
+					</if> ) countTable			
+	
+	</select>
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (
@@ -236,12 +261,14 @@
 	</update>
 	
 <!--  가입신청현황 리스트
-	<select id="getApprovalConditionList" parameterType="int" resultMap="clubUserSelectMap">
+	<select id="getApprovalConditionList" parameterType="search" resultMap="clubUserSelectMap">
+		SELECT
+			
 		
 	</select>
-	-->
+
 	
-	<!--  수정해야함 -->
+	 수정해야함
 	<select id="getTotalApprovalConditionCount" parameterType="search" resultType="int">
 		SELECT
 		COUNT(*)
@@ -250,7 +277,7 @@
 				*
 				FROM club_user
 		)
-	</select>
+	</select> -->
 	
 	<!-- 모임원 리스트 -->
 	<select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
@@ -313,8 +340,8 @@
 			#{meetingTime} ,
 			#{meetingWeather} ,
 			sysdate ,
-			#{meetingMember:NUMERIC} ,
-			#{meetingMaximumMember:NUMERIC})
+			#{meetingMember} ,
+			#{meetingMaximumMember})
 	</insert>
 	
 	<!-- 모임일정 상세보기 -->
@@ -330,7 +357,7 @@
 			meeting_time ,
 			meeting_weather ,
 			meeting_member ,
-			meeting_maximum_Member
+			meeting_maximum_member
 		FROM meeting
 		WHERE meeting_no = #{meetingNo}
 	</select>
@@ -354,7 +381,7 @@
 		SELECT
 			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
 			FROM meeting
-			WHERE club_no = #{searchKeyword}
+			<!-- WHERE club_no = #{searchKeyword} -->
 	</select>
 	
 	

@@ -76,8 +76,8 @@
 						
 	 					
 	 													) deep_table
-	 			  WHERE ROWNUM &lt;= #{endRowNum} 				) inner_table
-	              WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	 			 <!--  WHERE ROWNUM &lt;= #{endRowNum} 	-->	) inner_table
+	              <!--  WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
      
 </select>
 
@@ -111,8 +111,8 @@
 						
 	 					
 	 													) deep_table
-	 			<!-- WHERE ROWNUM &lt;= #{endRowNum} -->				) inner_table
-	            <!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}-->
+	 			 <!-- WHERE ROWNUM &lt;= #{endRowNum}-->				) inner_table
+	            <!--  WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
      
 </select>
 

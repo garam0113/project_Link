@@ -106,10 +106,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of addClubPostComment(Comment comment)
 
 	@Override
-	public List<Comment> getClubPostCommentList(Comment comment) throws Exception {
-		System.out.println(getClass() + ".getClubPostCommentList(Comment comment) 도착");
-		return clubPostDAOImpl.getClubPostCommentList(comment);
-	}// end of getClubPostCommentList(Comment comment)
+	public List<Comment> getClubPostCommentList(Map<String, Object> map) throws Exception {
+		System.out.println(getClass() + ".getClubPostCommentList(Map<String, Object> map) 도착");
+		return clubPostDAOImpl.getClubPostCommentList(map);
+	}// end of getClubPostCommentList(Map<String, Object> map)
 
 	@Override
 	public Comment getClubPostComment(Comment comment) throws Exception {

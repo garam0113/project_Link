@@ -57,7 +57,11 @@ public interface ClubService {
 	
 	public Map<String, Object> getClubList(Search search) throws Exception;
 	
-	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
+	//GetMyClubList
+	public Map<String, Object> getMyClubList(Search search) throws Exception;
+	
+	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	public Map<String, Object> getApprovalConditionList(Search search) throws Exception;
 	
 	public Map<String, Object> getClubMemberList(Search search) throws Exception;
 	
@@ -67,5 +71,6 @@ public interface ClubService {
 	
 	//결제
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
+
 	
 }

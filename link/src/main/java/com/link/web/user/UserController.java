@@ -100,7 +100,7 @@ public class UserController {
 		
 		System.out.println("/user/getUser : GET");
 		
-		return "forward:/user/getUserIdView.jsp";	// 화면Navigation
+		return "forward:/user/getIdView.jsp";	// 화면Navigation
 	}
 
 	@RequestMapping(value="getUserId", method = RequestMethod.POST)
@@ -112,7 +112,7 @@ public class UserController {
 		
 		model.addAttribute("userId",userId);	//set한 회원Data session에 저장 
 		
-		return "forward:/user/getUserId.jsp";
+		return "forward:/user/getId.jsp";
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
@@ -238,6 +238,7 @@ public class UserController {
 		return "redirect:/main.jsp";
 	}
 	
+	@RequestMapping(value = "getUserList")
 	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
 		
 		System.out.println("/user/getUserList : GET/POST");
@@ -245,18 +246,19 @@ public class UserController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setCurrentPage(pageSize);
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = userService.getUserList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", map.get("userList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
 		
-		return "forward:/user/getUesrList.jsp";
+		return "forward:/user/getUserList.jsp";
 	}
 	
 //	REST

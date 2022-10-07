@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
@@ -54,17 +55,16 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,@RequestParam("feedNo") int feedNo,
+	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
 			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-        user.setUserId(userId);
-       
 
+		user.setUserId(userId);
 		user = userService.getUser(user);
 		club = clubService.getClub(club.getClubNo());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feedNo", feedNo);
+
 		map.put("search", search);
 		map = feedService.getFeedList(map);
 		
@@ -151,8 +151,38 @@ public class MyHomeController {
 		return "redirect:/myHome/getMyHome?userId="+user.getUserId();
 		
 	}
+	@RequestMapping(value = "getFollowList")
+	public String getFollowList(@ModelAttribute Search search, Model model) throws Exception {
 	
+		Map<String, Object> map = new HashMap<String, Object>();
 	
+		map.put("search", search);
+				
+		map = myHomeService.getFollowList(search);
+		
+		
+	    
+		model.addAttribute("search", search);
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/myHome/getFollowList.jsp";
+	}
+	@RequestMapping(value = "getFollowerList")
+	public String getFollowerList(@ModelAttribute Search search, Model model) throws Exception {
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("search", search);
+				
+		map = myHomeService.getFollowerList(search);
+		
+		
+	
+		model.addAttribute("search", search);
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/myHome/getFollowerList.jsp";
+	}
 }
 
 

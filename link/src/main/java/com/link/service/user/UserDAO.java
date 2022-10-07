@@ -13,7 +13,7 @@ public interface UserDAO {
 
 //	public void addSnsUser(User user) throws Exception;    
 	
-//	public void addBlockUser(User user) throws Exception;
+	public void addBlockUser(User user) throws Exception;
 	
 	public void addPush(Report report) throws Exception;
 	
@@ -29,7 +29,7 @@ public interface UserDAO {
 	
 //	public void updatePassword(User user) throws Exception;
 	
-//	public void updateBlockUser(User user) throws Exception;
+	public void updateBlockUser(User user) throws Exception;
 
 	public void logout(String userId) throws Exception;
 	
@@ -39,7 +39,7 @@ public interface UserDAO {
 	
 	public List<User> getUserList(Search search) throws Exception;
 	
-	//	public List<User> getBlockUserList(Search search) throws Exception;
+	public List<User> getBlockUserList(Search search) throws Exception;
 
 	public int getTotalCount(Search search) throws Exception;
 	

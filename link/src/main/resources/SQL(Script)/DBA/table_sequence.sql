@@ -420,6 +420,8 @@ CREATE TABLE viewer (
 
 
 
+HANDLE_DATE 없애자
+
 CREATE TABLE REPORT_PUSH (
 	NO								NUMBER(20)											NOT NULL,
 	CONTENT							VARCHAR2(2000)										NOT NULL,
