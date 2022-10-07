@@ -16,6 +16,7 @@ import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 @Service("clubServiceImpl")
 public class ClubServiceImpl implements ClubService {
@@ -37,7 +38,11 @@ public class ClubServiceImpl implements ClubService {
 	
 	@Override
 	public void addClub(Club club) throws Exception {
+		
+		System.out.println("addClub 서비스 왔나? ");
+
 		clubDAO.addClub(club);
+		
 	}
 	
 //	// JUnit TEST
@@ -95,8 +100,10 @@ public class ClubServiceImpl implements ClubService {
 	
 	@Override
 	public void addMeeting(Meeting meeting) throws Exception {
+		
+		System.out.println("addMeeting 서비스 왔나??");
 		clubDAO.addMeeting(meeting);
-		clubDAO.addMeetingPush(meeting);
+//		clubDAO.addMeetingPush(meeting);
 	}
 	
 	//JUNIT TEST
@@ -108,6 +115,8 @@ public class ClubServiceImpl implements ClubService {
 	
 	@Override
 	public Meeting getMeeting(int meetingNo) throws Exception {
+		
+		System.out.println("getMeeting ServiceImpl 오나??");
 		return clubDAO.getMeeting(meetingNo);
 	}
 	
@@ -145,6 +154,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Map<String, Object> getClubList(Search search) throws Exception {
 		
+		System.out.println("clubList ServiceImpl까지 왔나??");
 		List<Club> list = clubDAO.getClubList(search);
 		int totalClubCount = clubDAO.getTotalClubCount(search);
 		
@@ -155,18 +165,31 @@ public class ClubServiceImpl implements ClubService {
 	}
 	
 	@Override
-	public Map<String, Object> getApprovalConditionList(Search search) throws Exception {
+	public Map<String, Object> getMyClubList(Search search) throws Exception {
+		
+		List<Club> list = clubDAO.getMyClubList(search);
+		int totalMyClubCount = clubDAO.getTotalMyClubCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		List<ClubUser> list = clubDAO.getApprovalConditionList(search);
-		int totalApprovalConditionCount = clubDAO.getTotalApprovalConditionCount(search);
-		
-		map.put("list", list);
-		map.put("totalApprovalConditionCount", totalApprovalConditionCount);
-		
+		map.put("myClubList",list);
+		map.put("totalMyClubCount", new Integer(totalMyClubCount));
 		return map;
 	}
+	
+//	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	@Override
+//	public Map<String, Object> getApprovalConditionList(Search search) throws Exception {
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		List<ClubUser> list = clubDAO.getApprovalConditionList(search);
+//		int totalApprovalConditionCount = clubDAO.getTotalApprovalConditionCount(search);
+//		
+//		map.put("list", list);
+//		map.put("totalApprovalConditionCount", totalApprovalConditionCount);
+//		
+//		return map;
+//	}
 	
 	@Override
 	public Map<String, Object> getClubMemberList(Search search) throws Exception {
@@ -216,6 +239,6 @@ public class ClubServiceImpl implements ClubService {
 		
 	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
 	   return clubDAO.updateClubMember(pay, search);
-	}
+	}	
 	
 }

@@ -25,8 +25,9 @@
 		<result property="updateDate"		column="feed_update_date"			jdbcType="DATE" />
 		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
+		<result property="checkHeart"		column="heart_no"					jdbcType="NUMERIC" />
 	</resultMap>
-	
+
 	<resultMap id="feedCommentSelectMap" 		type="comment">
 		<result property="feedCommentNo"		column="feed_comment_no"			jdbcType="NUMERIC" />
 		<result property="feedNo"				column="feed_no"					jdbcType="NUMERIC" />
@@ -37,6 +38,7 @@
 		<result property="commentUpdateDate"	column="feed_comment_update_date"	jdbcType="DATE" />
 		<result property="reportCondition"		column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"		column="delete_condition"			jdbcType="VARCHAR" />
+		<result property="parentUserId"			column="delete_user_id"				jdbcType="VARCHAR" />
 		<result property="parent"				column="parent"						jdbcType="NUMERIC" />
 		<result property="depth"				column="depth"						jdbcType="NUMERIC" />
 		<result property="sequence"				column="sequence"					jdbcType="NUMERIC" />
@@ -105,31 +107,28 @@
 	<update		id="updateFeed"					parameterType="feed">
 		UPDATE feed
 		<set>
-			feed_open_condition				= #{openCondition:VARCHAR},
-			feed_content					= #{content:VARCHAR},
-			feed_image1						= #{image1:VARCHAR},
-			feed_image2						= #{image2:VARCHAR},
-			feed_image3						= #{image3:VARCHAR},
-			feed_image4						= #{image4:VARCHAR},
-			feed_video						= #{video:VARCHAR},
-			hashtag							= #{hashtag:VARCHAR},
-			feed_update_date				= SYSDATE,
-			report_condition				= #{reportCondition}
+			<choose>
+				<when test="checkHeart == -1">feed_heart_count = feed_heart_count + 1</when>
+				<when test="checkHeart == -2">feed_heart_count = feed_heart_count - 1</when>
+				<when test="commentCount != 0">feed_comment_count = feed_comment_count + 1</when>
+				<otherwise>
+				feed_open_condition				= #{openCondition:VARCHAR},
+				feed_content					= #{content:VARCHAR},
+				feed_image1						= #{image1:VARCHAR},
+				feed_image2						= #{image2:VARCHAR},
+				feed_image3						= #{image3:VARCHAR},
+				feed_image4						= #{image4:VARCHAR},
+				feed_video						= #{video:VARCHAR},
+				hashtag							= #{hashtag:VARCHAR},
+				feed_update_date				= SYSDATE,
+				report_condition				= #{reportCondition}
+				</otherwise>
+			</choose>
 		</set>	
-		WHERE feed_no 						= #{feedNo}
+		WHERE feed_no 							= #{feedNo}
 	</update>
 	
-	
-	
-	<update 	id="updateFeedHeart"			parameterType="hashmap">
-		UPDATE feed
-		<set>
-			feed_heart_count				= #{count} + 1		
-		</set>
-		WHERE feed_no						= #{feedNo}
-	</update>
-	
-	
+
 	
 	<update		id="deleteFeed"					parameterType="int">
 		UPDATE feed
@@ -137,6 +136,16 @@
 			delete_condition				= '1'
 		</set>
 		WHERE feed_no 						= #{feedNo}
+	</update>
+	
+	
+	
+	<update		id="updateFeedCommentCount"		parameterType="comment">
+		UPDATE feed
+		<set>
+			feed_comment_count				= feed_comment_count + 1
+		</set>
+		WHERE feed_no						= #{feedNo}
 	</update>
 	
 	
@@ -160,6 +169,7 @@
 			null,
 			'0',
 			'0',
+			#{user.userId:VARCHAR},
 			#{parent:NUMERIC},
 			#{depth:NUMERIC},
 			#{sequence:NUMERIC}				)
@@ -259,6 +269,36 @@
 	
 	
 	
+	
+	<select 	id="getFeedListTest"			parameterType="search"		resultMap="feedSelectMap">
+		SELECT 
+		*
+		FROM feed f, (
+						SELECT
+						*
+						FROM	(
+									SELECT
+									*
+									FROM HEART
+									WHERE TRIM(source)		= '0'
+									AND user_id				= 'user01'	)
+																				) isLike
+		<if test="searchKeyword == ''">														
+			<where>
+				f.feed_no = isLike.source_no(+)
+			</where>
+		</if>
+		<if test="searchKeyword != ''">
+			<where>
+				f.feed_no = isLike.source_no(+)
+				AND f.feed_content LIKE '%${searchKeyword}%'
+			</where>
+		</if>
+		ORDER BY feed_no DESC
+	</select>
+	
+	
+	
 	<select 	id="getFeedCommentList"			parameterType="hashmap"		resultMap="feedCommentSelectMap">
 		SELECT 
 		feed_comment_no,
@@ -278,7 +318,7 @@
 		WHERE feed_no						= #{feedNo}
 		AND report_condition				= '0'
 		AND delete_condition				= '0'
-		ORDER BY feed_comment_no ASC
+		ORDER BY sequence ASC
 	</select>
 	
 	

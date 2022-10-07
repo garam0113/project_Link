@@ -22,12 +22,18 @@ import com.link.common.Search;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Push;
+import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
+import com.link.service.user.UserService;
 
 @Controller
 @RequestMapping("/feed/*")
 public class FeedController {
 
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	@Autowired
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
@@ -53,13 +59,35 @@ public class FeedController {
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
-							@ModelAttribute Push push, Model model, HttpSession httpSession) throws Exception {
+							User user, Push push, Model model, HttpSession httpSession) throws Exception {
 		
 		// 회원 피드 등록
 		
 		// User user = (User) httpSession.getAttribute("user");
 		// feed.setUserId(user.getUserId());
 		feed.setUserId("user01");
+		
+		// 해시태그 저장하기 시작
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		String[] hashtag = feed.getContent().split("#"); 
+		
+		for(int i = 1 ; i < hashtag.length ; i++) {
+			
+			if(hashtag[i].contains(" ")) {
+				// 공백 체크
+				int index = hashtag[i].indexOf(" ");
+				
+				hashtag[i] = hashtag[i].substring(0, index);
+			}
+			
+			stringBuilder.append("#").append(hashtag[i]);
+			
+		}
+		
+		feed.setHashtag(stringBuilder.toString());
+		
+		// 해시태그 저장하기 종료
 		
 		for(MultipartFile files : file) {
 			String path = "C:\\Users\\";
@@ -75,11 +103,12 @@ public class FeedController {
 		
 		feedService.addFeed(feed);
 		
-		return "forward:/feed/getFeedList.jsp";
+		return "forward:/feed/getFeedList";
 	}
 	
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
-	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, Model model) throws Exception {
+	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
+								User user, Heart heart, Model model) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -87,8 +116,13 @@ public class FeedController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		heart.setSource("0");
+		heart.setSourceNo(feedNo);
+		heart.setUserId("user01");
+		
 		map.put("feedNo", feedNo);
 		map.put("search", search);
+		map.put("heart", heart);
 		
 		map = feedService.getFeed(map);
 		
@@ -122,7 +156,7 @@ public class FeedController {
 		
 		feedService.deleteFeed(feedNo);
 		
-		return "forward:/feed/getFeedList";
+		return "forward:/feed/getFeedList.jsp";
 	}
 	
 	
@@ -133,8 +167,9 @@ public class FeedController {
 	
 	
 	
-	@RequestMapping(value = "getFeedList", method = RequestMethod.GET)
-	public String getFeedList(@ModelAttribute Search search, Heart heart, Model model) throws Exception {
+	@RequestMapping(value = "getFeedList")
+	public String getFeedList(@ModelAttribute Search search, Heart heart,
+								User user, Model model) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -144,7 +179,7 @@ public class FeedController {
 		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		map.put("heart", heart);
 		map.put("search", search);
 				
 		map = feedService.getFeedList(map);
@@ -159,22 +194,5 @@ public class FeedController {
 	}
 	
 	
-	
-	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
-	
-	@RequestMapping(value = "addFeedReport", method = RequestMethod.POST)
-	public String addFeedReport() {
-		
-		return null;
-		
-	}
-	
-	
-	@RequestMapping(value = "addFeedCommentReport", method = RequestMethod.POST)
-	public String addFeedCommentReport() {
-		
-		return null;
-		
-	}
 	
 }

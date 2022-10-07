@@ -41,6 +41,64 @@
 				) // ajax close
 			}); // event close
 			
+			$("#heart").bind("click", function() {
+				
+				$.ajax(
+						{
+							url : "/feedRest/json/addFeedHeart",
+							method : "POST",
+							data : JSON.stringify ({
+								userId : 'user01',
+								source : 0,
+								sourceNo : $("input[name='feedNo']").val(),
+								feedNo : $("input[name='feedNo']").val()
+							}),
+							contentType : 'application/json',
+							dataType : 'json',
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								alert("success");
+							}
+							
+						} // ajax inner close
+				
+				) // ajax close
+				
+			}); // #heart event close
+			
+			$("#deleteheart").bind("click", function() {
+				
+				$.ajax(
+						{
+							url : "/feedRest/json/deleteFeedHeart",
+							method : "POST",
+							data : JSON.stringify ({
+								userId : 'user01',
+								source : 0,
+								sourceNo : $("input[name='feedNo']").val(),
+								feedNo : $("input[name='feedNo']").val()
+							}),
+							contentType : 'application/json',
+							dataType : 'json',
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								alert("success");
+							}
+							
+						} // ajax inner close
+				
+				) // ajax close
+				
+			}); // #heart event close
+			
 			$(".btn_addReComment").bind("click", function(){
 				alert($(this).prev().prev().prev().val());
 				alert($(this).prev().prev().val());
@@ -77,12 +135,35 @@
 
 	content : ${feed.content}
 	
+	 ${feed.heartCount}
+	
+	
+	
+	<br> 내가 좋아요 했는지 체크 ${feed.checkHeart}
+	<br>
+	
+	<c:if test="${feed.checkHeart == 0}">
+		<button type="button" id="heart">좋아요</button>
+	</c:if>
+	
+	<c:if test="${feed.checkHeart != 0}">
+		<button type="button" id="deleteheart">좋아요취소요</button>
+	</c:if>
+	
+	
+	<br> 해시태그 : ${feed.hashtag}
+	
+	<hr/><hr/>
+	
 	<br/>
 		
 	<form>
 				<input type="hidden" name="feedNo" value="${feed.feedNo}">
-	nickname :	<input type="text" name="commentContent" value="">
+				<input type="hidden" name="sequence" value="${feed.commentCount}">
+	댓글달기 :		<input type="text" name="commentContent" value="">
 				<input type="button" class="btn_addComment" value="submit">
+	
+	<hr/>
 	
 	</form>
 		
@@ -91,18 +172,20 @@
 			<c:forEach var="comment" items="${commentList}">
 				<c:set var="i" value="${i + 1}"></c:set>
 
-					<c:if test="${fn:trim(comment.parent) == '0'}">
-						reply : ${comment.feedCommentNo} : ${comment.commentContent} 추가 댓글 달기 ${comment.depth + 1}
+						[댓글번호 ${comment.feedCommentNo}] [내용 ${comment.commentContent}] [깊이 ${comment.depth}]  
+						[좋아요 개수 : ${comment.commentHeartCount}]
 						<form>
-							&nbsp&nbsp&nbsp&nbsp
+							
 							<input type="hidden" name="feedNo" value="${feed.feedNo}">
-							<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
-							<input type="hidden" name="depth" value="${comment.depth + 2}">
-							<input type="text" name="commentContent" value="">
-							<input type="button" class="btn_addReComment" value="submit">
+							<input type="hidden" name="parent" value="${comment.feedCommentNo}">
+							<input type="hidden" name="sequence" value="${feed.commentCount}">
+							<input type="hidden" name="depth" value="${comment.depth}">
+							
+							<button type="button" class="btn btn_addCommentHeart">댓글 좋아요</button>
+							<button type="button" class="btn btn_deleteCommentHeart">댓글 좋아요 취소</button>
+							
 						</form>
 						<br/><hr>
-					</c:if>
 			</c:forEach>
 		</div>
 	

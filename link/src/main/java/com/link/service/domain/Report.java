@@ -29,6 +29,26 @@ public class Report{
 	public Report() {
 	}
 
+	public Report(String content, int reportSource, User user1, User user2, int type, ClubPost clubPost) {
+		super();
+		this.content = content;
+		this.reportSource = reportSource;
+		this.user1 = user1;
+		this.user2 = user2;
+		this.type = type;
+		this.clubPost = clubPost;
+	}
+
+	public Report(String content, int reportSource, User user1, User user2, int type,
+			Comment clubPostComment) {
+		super();
+		this.content = content;
+		this.reportSource = reportSource;
+		this.user1 = user1;
+		this.user2 = user2;
+		this.type = type;
+		this.clubPostComment = clubPostComment;
+	}
 
 	public Report(int no, String title, String content, int reportSource, User user1, User user2, int reportReason,
 			int reportCondition, String regDate, String handleDate, String reportImage1, String reportImage2, int type,

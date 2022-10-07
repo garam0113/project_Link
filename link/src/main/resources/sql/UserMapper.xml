@@ -52,11 +52,11 @@
 		join_club_count, join_club_limit, sns_user_Id
 		FROM users
 		<where>
-		<if test="(searchCondition == 0 and searchKeyword == '') or (searchCondition == 0 and searchKeyword != '')" >
-		user_id = LIKE(#{searchKeyword}||'%')
+		<if test="(searchCondition == 0 and searchKeyword != '')">
+		user_id LIKE(#{searchKeyword}||'%')
 		</if>
-		<if test="(searchCondition == 1 and searchKeyword == '') or (searchCondition == 1 and searchKeyword != '')" >
-		nickname = LIKE(#{searchKeyword}||'%')
+		<if test="(searchCondition == 1 and searchKeyword != '')" >
+		nickname LIKE(#{searchKeyword}||'%')
 		</if>
 		<if test="(searchCondition == null) and (searchKeyword == '1' or  searchKeyword == '2')">
 		penalty_type = #{searchKeyword}
@@ -64,7 +64,7 @@
 		</where>
 		ORDER BY user_id 
 	</sql>
-
+ 
 
 	<insert		id="addUser"		parameterType="user" >
 	 	INSERT
@@ -100,10 +100,10 @@
 		total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
 		FROM users
 		<where>
-			<if test="userId != null">
+			<if test="userId != null and userId != ''"> 
 				user_id = #{userId}
 			</if>
-			<if test="snsUserId != null and userId == null">
+			<if test="snsUserId != null and userId == ''">
 				sns_user_id = #{snsUserId}
 			</if>
 			<if test="name != null and rrn != null">

@@ -24,7 +24,6 @@
 	</insert>
 	
 	
-	
 	<!-- 좋아요 취소하다 -->
 	<delete id="deleteHeart" parameterType="heart">
 		DELETE FROM HEART 
@@ -46,10 +45,28 @@
 				source,
 				source_no
 				FROM HEART
-				WHERE SOURCE		= #{ source }
+				WHERE TRIM(SOURCE)	= #{ source }
 				AND SOURCE_NO		= #{ sourceNo }	)
 	</select>
 	
 	
-	 
+	
+	<!-- 좋아요 테스트 : 하명훈 -->
+	<select id="checkFeedHeart"	parameterType="heart"		resultType="int">
+		SELECT
+		COUNT(*)
+		FROM	(
+					SELECT
+					heart_no,
+					user_id,
+					source,
+					source_no
+					FROM HEART
+					WHERE TRIM(source)		= #{ source }
+					AND source_no			= #{ sourceNo }	
+					AND user_id				= #{ userId	}	)
+	</select>
+	
+	
+	
 </mapper>

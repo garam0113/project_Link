@@ -62,6 +62,12 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.update("FeedMapper.deleteFeed", feedNo);
 	}
 	
+	@Override
+	public void updateFeed(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeedCommentCount", comment);
+	}
+	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
@@ -101,7 +107,7 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public List<Feed> getFeedList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FeedMapper.getFeedList", (Search) map.get("search"));
+		return sqlSession.selectList("FeedMapper.getFeedListTest", (Search) map.get("search"));
 	}
 	
 	@Override
@@ -127,13 +133,6 @@ public class FeedDAOImpl implements FeedDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("FeedMapper.getTotalFeedCommentCount", map);
 	}
-		
-	@Override
-	public int getRecommentCount(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("FeedMapper.getRecommentCount", map);
-	}
-	
 	
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
@@ -143,37 +142,51 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void addFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("HeartMapper.insertHeart", heart);
+//		sqlSession.insert("HeartMapper.insertHeart", heart);
+	}
+	
+	@Override
+	public int checkFeedHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("HeartMapper.checkFeedHeart", heart);
 	}
 	
 	@Override
 	public void deleteFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("HeartMapper.deleteHeart", heart);
+//		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
 	@Override
 	public void addFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("HeartMapper.insertHeart", heart);
+//		sqlSession.insert("HeartMapper.insertHeart", heart);
+	}
+	
+	@Override
+	public int getFeedCommentHeart(Heart heart) throws Exception {
+		// TODO Auto-generated method stub
+		return 13;
 	}
 	
 	@Override
 	public void deleteFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("HeartMapper.deleteHeart", heart);
+//		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
 	@Override
 	public int getTotalFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
+//		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
+		return 14;
 	}
 
 	@Override
 	public int getTotalFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
+//		return sqlSession.selectOne("HeartMapper.getTotalHeart", heart);
+		return 15;
 	}
 	
 	
@@ -183,17 +196,11 @@ public class FeedDAOImpl implements FeedDAO {
 		
 		
 	@Override
-	public void addFeedReport(Report report) throws Exception {
+	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addReport", report);
+//		sqlSession.insert("Report_PushMapper.addReport", report);
 	}
 	
-	@Override
-	public void addFeedCommentReport(Report report) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addReport", report);
-	}
-		
 	
 	
 	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
@@ -201,15 +208,9 @@ public class FeedDAOImpl implements FeedDAO {
 	
 	
 	@Override
-	public void addFeedPush(Push push) throws Exception {
+	public void addPush(Push push) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
-	}
-
-	@Override
-	public void addFeedCommentPush(Push push) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.insert("Report_PushMapper.addPush");
+//		sqlSession.insert("Report_PushMapper.addReport", push);
 	}
 
 	

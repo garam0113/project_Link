@@ -49,6 +49,8 @@ public class UserController {
 		
 		System.out.println("/user/addUser : POST");
 		
+		user.setPhoneNo(user.getPhone1()+user.getPhone2()+user.getPhone3());
+		
 		userService.addUser(user);	//회원가입 정보 DB저장
 		
 		User getUser = userService.getUser(user);
@@ -63,6 +65,8 @@ public class UserController {
 		
 		System.out.println("/user/addSnsUser : POST");
 		
+//		User user= new User();
+//		user.setSnsUserId(snsUserId);
 		Random rand = new Random();
 		String no = "";
 			
@@ -72,9 +76,11 @@ public class UserController {
 		}	
 			user.setUserId("Link"+no);	//SNS회원 ID 임의로 생성 하여 저장
 			
+			System.out.println("User에 입력된 Data : "+user);
+			
 			userService.addUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
 			
-		return "forward:/user/updateProfile.jsp";
+		return "redirect:/user/updateProfile?userId="+user.getUserId();
 
 	}
 	
@@ -92,7 +98,7 @@ public class UserController {
 		
 		model.addAttribute("user", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
 		
-		return "forward:/user/getUserView.jsp";
+		return "forward:/user/getUser.jsp";
 	}
 
 	@RequestMapping(value="getUserId", method = RequestMethod.GET)
@@ -100,7 +106,7 @@ public class UserController {
 		
 		System.out.println("/user/getUser : GET");
 		
-		return "forward:/user/getUserIdView.jsp";	// 화면Navigation
+		return "forward:/user/getIdView.jsp";	// 화면Navigation
 	}
 
 	@RequestMapping(value="getUserId", method = RequestMethod.POST)
@@ -112,7 +118,7 @@ public class UserController {
 		
 		model.addAttribute("userId",userId);	//set한 회원Data session에 저장 
 		
-		return "forward:/user/getUserId.jsp";
+		return "forward:/user/getId.jsp";
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
@@ -124,7 +130,7 @@ public class UserController {
 		
 		model.addAttribute("user", getUser);	//DB의 정보를 Key(user)에 저장
 		
-		return "forward:/user/getUserView.jsp";
+		return "forward:/user/updateUserView.jsp";
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
@@ -133,13 +139,32 @@ public class UserController {
 		System.out.println("/user/updateUser : POST");
 		
 		userService.updateUser(user);	//입력받은 회원 정보를 DB에 저장
-
+		
+		user = userService.getUser(user);
+		
+		session.setAttribute("user", user);
+		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		System.out.println("sessionId : "+sessionId);
 		if(sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
 		
-		return "forward:/user/updateUser.jsp";
+		return "redirect:/user/getUser?userId="+user.getUserId();
+	}
+	
+	@RequestMapping(value="updateProfile", method = RequestMethod.GET)
+	public String updateProfile(@ModelAttribute("userId") String userId,  Model model) throws Exception {
+		
+		System.out.println("/user/updateProfile : GET");
+		
+		User user = new User();
+		
+		user.setUserId(userId);
+		
+		model.addAttribute("user",user);
+		
+		return "forward:/user/updateProfileView.jsp";
 	}
 	
 	@RequestMapping(value="updateProfile", method = RequestMethod.POST)
@@ -149,12 +174,16 @@ public class UserController {
 		
 		userService.updateUser(user);	//SNS회원 프로필 작성
 		
+		user = userService.getUser(user);
+		
+		session.setAttribute("user", user);
+		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		if(sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
 		
-		return "forward:/user/updateProfileView.jsp";
+		return "forward:/main.jsp";
 	}
 	
 	//REST
@@ -196,17 +225,23 @@ public class UserController {
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)
 	public String snsLogin(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
-		System.out.println("/user/snsLogin : GET");
+		System.out.println("/user/snsLogin : POST");
 		
 		User getUser = userService.getUser(user);	//SNS로그인시 snsUserId가 DB에 있는지 확인
 		
-		if(getUser != null && user.getAddType().equals(getUser.getAddType())) {
+		System.out.println("getUser로 검색한 결과 : "+getUser);
+		
+		if(getUser != null && user.getAddType().equals(getUser.getAddType()) && getUser.getNickName() != null ) {
 			
 			session.setAttribute("user", getUser);	//입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
 			
+//			return null;
 			return "redirect:/main.jsp";
+		}else if(getUser.getNickName() == null) {
+			return "redirect:/user/updateProfile?userId="+getUser.getUserId();
 		}else {
-			return "redirect:/user/addSnsUser";
+//			return null;
+			return "forward:/user/addSnsUser";
 		}
 	}
 	
@@ -238,6 +273,7 @@ public class UserController {
 		return "redirect:/main.jsp";
 	}
 	
+	@RequestMapping(value = "getUserList")
 	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
 		
 		System.out.println("/user/getUserList : GET/POST");
@@ -245,18 +281,19 @@ public class UserController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setCurrentPage(pageSize);
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = userService.getUserList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", map.get("userList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
 		
-		return "forward:/user/getUesrList.jsp";
+		return "forward:/user/getUserList.jsp";
 	}
 	
 //	REST

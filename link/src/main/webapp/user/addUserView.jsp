@@ -30,6 +30,16 @@ body>div.container {
 }
 </style>
 
+<script type="text/javascript">
+
+$(function() {
+	$("#addUser").on("click", function() {
+		$("form").attr("method", "POST").attr("action", "/user/addUser").submit();
+	});
+});
+
+</script>
+
 </head>
 
 <body>
@@ -53,10 +63,10 @@ body>div.container {
 					이 디</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="userId" name="userId"
-						placeholder="중복확인하세요" readonly> <span id="helpBlock"
+						placeholder="중복확인하세요"> <span id="helpBlock"
 						class="help-block"> <strong class="text-danger">영어, 숫자조합 5~8자</strong>
 					</span>
-				</div>
+				</div> 
 			</div>
 
 			<div class="form-group">
@@ -83,7 +93,7 @@ body>div.container {
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 				<div class="col-sm-4">
-					<input type="password" class="form-control" id="name"
+					<input type="text" class="form-control" id="name"
 						name="name" placeholder="회원이름">
 				</div>
 			</div>
@@ -100,12 +110,12 @@ body>div.container {
 			</div>
 
 			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
+				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
 				<div class="col-sm-4">
 					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="남자">&nbsp;남자
+						name="gender" placeholder="남자" value="남자">남자
 					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="여자">&nbsp;여자
+						name="gender" placeholder="여자" value="여자">여자
 				</div>
 			</div>
 
@@ -207,7 +217,7 @@ body>div.container {
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary">가 &nbsp;입</button>
+					<button type="button" id="addUser" class="btn btn-primary">가 &nbsp;입</button>
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 				</div>
 			</div>

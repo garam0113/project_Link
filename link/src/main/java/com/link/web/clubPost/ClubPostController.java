@@ -1,5 +1,6 @@
 package com.link.web.clubPost;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.link.common.CommonUtil;
+import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
-import com.link.service.domain.Comment;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.User;
@@ -53,31 +55,63 @@ public class ClubPostController {
 	int pageSize;
 
 	
+
+///////////////////////////////////////////////////////////////////////////////////// Test /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
-	
-	
-///////////////////////////////////////////////////////////////////////////////////// 모임게시물 첫화면 /////////////////////////////////////////////////////////////////////////////////////	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "getCurrentClubPostList", method = RequestMethod.GET)
-	public String getCurrentClubPostList(Model model, HttpSession session) throws Exception {
-		System.out.println("/getCurrentClubPostList : GET : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
-		//String userId = ((User)session.getAttribute("user")).getUserid();
-		String userId = "user03";
-		model.addAttribute("map", clubPostServiceImpl.getCurrentClubPostList(userId));
-		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		return "forward:/clubPost/getClubPostList.jsp";
-	}
-	
-	
+	@RequestMapping(value = "getClub", method = RequestMethod.GET)
+	public String getClub() throws Exception {
+		System.out.println("/getClub : GET : 모임 화면으로 이동");
+		return "forward:/clubPost/testGetClub.jsp";
+	}	
 	
 	
 ///////////////////////////////////////////////////////////////////////////////////// ClubPost /////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
+	public String getClubPostList(@ModelAttribute Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
+		System.out.println("/getClubPostList : GET : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
+		// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
+		
+		// 모임게시물 탭 클릭했을때 currentPage는 null이다
+		System.out.println(search);
+		int currentPage = 1;
+		
+		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
+		if (search.getCurrentPage() != 0) {
+			currentPage = search.getCurrentPage();
+		}
+
+		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
+		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
+		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		
+		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
+		if (!search.getSearchCondition().trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
+			searchKeyword = "";
+		}
+		
+		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getOrder());
+
+		
+		
+		
+		
+		// search.order = 0, user_id = 'user03'
+		
+		//String userId = ((User)session.getAttribute("user")).getUserid();
+		User user = new User();
+		user.setUserId("user03");
+		clubPost.setUser(user);
+		model.addAttribute("resultPage", new Page(currentPage, pageUnit, pageSize));
+		model.addAttribute("map", clubPostServiceImpl.getClubPostList(search, clubPost));
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		return "forward:/clubPost/getClubPostList.jsp";
+	}
 	
 	
 	
@@ -90,7 +124,6 @@ public class ClubPostController {
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
 
-	/*
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
 	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
@@ -102,7 +135,6 @@ public class ClubPostController {
 		model.addAttribute("map", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
-	*/
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
 	public String getClubPost(@ModelAttribute ClubPost clubPost, Model model) throws Exception {
@@ -122,7 +154,9 @@ public class ClubPostController {
 	@RequestMapping(value = "updateClubPost", method = RequestMethod.POST)
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
-		model.addAttribute("map", clubPostServiceImpl.updateClubPost(clubPost));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubPost", clubPost);
+		model.addAttribute("map", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
@@ -153,12 +187,12 @@ public class ClubPostController {
 		if(pay.getUpdateClubMemberCount() != 0) {
 			// 모임원 업데이트 수가 있다면 모임대표가 가입신청을 클릭 후 이벤트이다 결제 후 모임원리스트 화면으로 이동
 			// 모임원 최대수 CLUB_MAX_MEMBER 증가
-			//model.addAttribute("getClubMemberList", clubServiceImpl.updateClubMember(pay, search));
+			model.addAttribute("getClubMemberList", clubServiceImpl.updateClubMember(pay, search));
 			return "forward:/club/getClubMemberList.jsp";
 		}else {
 			// 모임 업데이트 수가 있다면 모임등록 또는 모임가입신청 클릭 후 이벤트이다 결제 후 모임번호가 있다면 모임상세보기 화면으로 모임번호가 없다면 모임리스트 화면으로 이동
 			// 모임 최대수 JOIN_CLUB_LIMIT 증가
-			//userServiceImpl.updateClub(pay);
+			userServiceImpl.updateClub(pay);
 			
 			if(pay.getClubNo() != 0) {
 				// 모임상세보기
@@ -219,31 +253,6 @@ public class ClubPostController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

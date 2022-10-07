@@ -54,6 +54,7 @@ public interface FeedService {
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	
 	
+	
 	// 피드 리스트
 	public Map<String, Object> getFeedList(Map<String, Object> map) throws Exception;
 	
@@ -66,12 +67,9 @@ public interface FeedService {
 	
 	
 	
-	// 피드 신고
-	public void addFeedReport(Report report) throws Exception;
-	
-	// 피드 댓글 신고
-	public void addFeedCommentReport(Report report) throws Exception;
-	
+	// 피드 & 피드 댓글 신고
+	public void addReport(Report report) throws Exception;
+
 	
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
@@ -85,16 +83,16 @@ public interface FeedService {
 	 */
 	
 	// 피드 좋아요
-	public void addFeedHeart(Map<String, Object> map) throws Exception;
+	public Feed addFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 싫어요
-	public void deleteFeedHeart(Map<String, Object> map) throws Exception;
+	public Feed deleteFeedHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 좋아요
-	public void addFeedCommentHeart(Map<String, Object> map) throws Exception;
+	public Comment addFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 싫어요
-	public void deleteFeedCommentHeart(Map<String, Object> map) throws Exception;
+	public Comment deleteFeedCommentHeart(Map<String, Object> map) throws Exception;
 	
 	
 	

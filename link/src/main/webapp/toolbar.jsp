@@ -17,6 +17,33 @@
 			self.location = "/user/login"
 		});
 	});
+	
+	$(function() {
+		$("a:contains('로그아웃')").on("click", function() {
+			self.location = "/user/logout"
+		})
+	})
+	
+	$(function() {
+		$("a:contains('내정보관리')").on("click", function() {
+			
+		self.location = "/user/getUser?userId=${user.userId}"
+		
+		});
+	});
+	
+/*	아래방식으로 네비게이션 사용 가능
+=======
+/*	아래방식으로 네비게이션 사용 가능 */
+	$(function() {
+		$("span:contains('피드')").on("click", function() {
+			self.location = "/user/login"
+		});
+		
+		$("span:contains('모임')").on("click", function(){
+			self.location = "/club/getClubList";
+		});
+	});
 </script>
 
 <div class="navbar  navbar-inverse navbar-fixed-top">
@@ -45,55 +72,34 @@
 			<ul class="nav navbar-nav">
 
 				<!--  회원관리 DrowDown -->
-				<c:if test="${sessionScope.user.role == 'admin'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"> <span>회원관리</span>
+						data-toggle="dropdown" role="button" aria-expanded="false"> <span>피드</span>
 							<span class="caret"></span>
 					</a>
-						<ul class="dropdown-menu">
-
-							<li><a href="#">회원정보조회</a></li>
-
-							<li class="divider"></li>
-							<li><a href="#">etc...</a></li>
-						</ul></li>
-				</c:if>
 
 				<!-- 판매상품관리 DrowDown  -->
-				<c:if test="${sessionScope.user.role == 'admin'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"> <span>판매상품관리</span>
+						data-toggle="dropdown" role="button" aria-expanded="false"> <span>Live</span>
 							<span class="caret"></span>
 					</a>
-						<ul class="dropdown-menu">
-							<li><a href="#">판매상품등록</a></li>
-							<li><a href="#">판매상품관리</a></li>
-							<li class="divider"></li>
-							<li><a href="#">etc..</a></li>
-						</ul></li>
-				</c:if>
+
+				<!-- 모임관리 -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"> <span>모임</span>
+						<span class="caret"></span>
+				</a>
 
 				<!-- 구매관리 DrowDown -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"> <span>카테고리</span>
+					data-toggle="dropdown" role="button" aria-expanded="false"> <span>마이홈피</span>
 						<span class="caret"></span>
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">전체</a></li>
-						<li><a href="#">전자제품</a></li>
-						<li><a href="#">가전제품</a></li>
-						<li><a href="#">스포츠용품</a></li>
-						<li><a href="#">꽃/식물/정원</a></li>
-						<li><a href="#">식품/과자/음료</a></li>
-						<li><a href="#">기타</a></li>
-						<li><a href="#">미분류</a></li>
 
-						<!-- <li><a href="#">최근본상품</a></li> -->
-						<li class="divider"></li>
-						<li><a href="#">etc..</a></li>
-					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"> <span>고객센터</span>
+						<span class="caret"></span>
+				</a>
 
-				<li><a href="#">etc...</a></li>
 			</ul>
 
 			<c:if test="${! empty user }">

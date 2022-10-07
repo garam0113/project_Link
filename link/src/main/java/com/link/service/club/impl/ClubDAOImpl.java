@@ -14,6 +14,7 @@ import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 @Repository("clubDAOImpl")
 public class ClubDAOImpl implements ClubDAO {
@@ -41,6 +42,18 @@ public class ClubDAOImpl implements ClubDAO {
 	//Method
 	@Override
 	public void addClub(Club club) throws Exception {
+		System.out.println("addClub DAO까지 왔나??");
+
+//		User user = new User();		
+		//회원 세션으로 바꿔야함
+//		club.setClubNo(77);
+		club.setUserId("user01");
+		
+		club.setCurrentMember(1);
+		club.setClubMaxMember(10);
+		club.setClubCategory("test카테고리");
+		
+		System.out.println("club에 값 뭐있지 ? : "+club);
 		sqlSession.insert("ClubMapper.addClub",club);
 	}
 	
@@ -66,7 +79,14 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public List<Club> getClubList(Search search) throws Exception {
+		
+		System.out.println("모임리스트 DAOImpl까지 왔나??");
 		return sqlSession.selectList("ClubMapper.getClubList",search);
+	}
+	
+	@Override
+	public List<Club> getMyClubList(Search search) throws Exception {
+		return sqlSession.selectList("ClubMapper.getMyClubList",search);
 	}
 	
 	@Override
@@ -90,11 +110,12 @@ public class ClubDAOImpl implements ClubDAO {
 //		return sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
 //	}
 	
-	@Override
-	public List<ClubUser> getApprovalConditionList(Search search) throws Exception {
-		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
-	}
-	
+	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	@Override
+//	public List<ClubUser> getApprovalConditionList(Search search) throws Exception {
+//		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
+//	}
+//	
 	@Override
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception {
 		sqlSession.update("ClubMapper.updateApprovalCondition",clubUser);
@@ -122,6 +143,14 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public void addMeeting(Meeting meeting) throws Exception {
+		
+		System.out.println("addMeeting DAO왔는가 ? ");
+		
+		meeting.setClubNo(2);
+		meeting.setuserId("user01");
+		meeting.setMeetingWeather("테스트날씨다");
+		meeting.setMeetingMember(1);
+		System.out.println("meeting 값이 뭔가 ? : "+meeting );
 		sqlSession.insert("ClubMapper.addMeeting",meeting); 
 	}
 	
@@ -133,11 +162,14 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public List<Meeting> getMeetingList(Search search) throws Exception {
+		
+		System.out.println("MeetingList DAOImpl 오나? ");
 		return sqlSession.selectList("ClubMapper.getMeetingList",search);
 	}
 	
 	@Override
 	public Meeting getMeeting(int meetingNo) throws Exception {
+		System.out.println("getMeeting DAOImpl 오나??");
 		return sqlSession.selectOne("ClubMapper.getMeeting",meetingNo);
 	}
 	
@@ -178,27 +210,33 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public int getTotalClubCount(Search search) {
+	public int getTotalClubCount(Search search) throws Exception {
 		return sqlSession.selectOne("ClubMapper.getTotalClubCount",search);
 	}
 	
 	@Override
-	public int getTotalApprovalConditionCount(Search search) {
-		return sqlSession.selectOne("ClubMapper.getTotalApprovalConditionCount",search);
+	public int getTotalMyClubCount(Search search) throws Exception {
+		return sqlSession.selectOne("ClubMapper.getTotalMyClubCount",search);
 	}
 	
+	//가입신청현황 리스트 --> GetMyClubList와 병합
+//	@Override
+//	public int getTotalApprovalConditionCount(Search search) throws Exception {
+//		return sqlSession.selectOne("ClubMapper.getTotalApprovalConditionCount",search);
+//	}
+	
 	@Override
-	public int getTotalClubMemberCount(Search search) {
+	public int getTotalClubMemberCount(Search search) throws Exception {
 		return sqlSession.selectOne("ClubMapper.getTotalClubMemberCount",search);
 	}
 	
 	@Override
-	public int getTotalMeetingCount(Search search) {
+	public int getTotalMeetingCount(Search search) throws Exception {
 		return sqlSession.selectOne("ClubMapper.getTotalMeetingCount",search);
 	}
 	
 	@Override
-	public int getTotalMeetingMemberCount(Search search) {
+	public int getTotalMeetingMemberCount(Search search) throws Exception {
 		return sqlSession.selectOne("ClubMapper.getTotalMeetingMemberCount",search);
 	}
 	
