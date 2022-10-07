@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,6 +49,14 @@ public class MyHomeController {
 	@Autowired
 	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostService;
+	@Value("#{commonProperties['pageSize']}")
+	int pageSize;
+	
+	//@Value("#{commonProperties['pageUnit'] ? : 3}")
+	// 없다면 ? 3으로 초기화
+	@Value("#{commonProperties['pageUnit']}")
+	int pageUnit;
+	
 	
 	public MyHomeController() {
 		// TODO Auto-generated constructor stub
@@ -56,7 +65,7 @@ public class MyHomeController {
 	
 	@RequestMapping(value = "getMyHome")
 	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
-			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model) throws Exception{
+			@RequestParam("userId")String userId, @RequestParam("clubNo") int clubNo, Model model,HttpSession httpSession) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
 
@@ -88,11 +97,12 @@ public class MyHomeController {
 		
 	}
 	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
-	public String updateProfile(@RequestParam("userId") String userId, Model model) throws Exception{
+	public String updateProfile(@RequestParam("userId") String userId, Model model, HttpSession httpSession) throws Exception{
 		
 		System.out.println("/myHome/updateProfile : GET");
 		
 		User user = new User();
+		user.setUserId(userId);
 		user = userService.getUser(user);
 		model.addAttribute("user", user);
 		
@@ -154,12 +164,16 @@ public class MyHomeController {
 	@RequestMapping(value = "getFollowList")
 	public String getFollowList(@ModelAttribute Search search, Model model) throws Exception {
 	
-		Map<String, Object> map = new HashMap<String, Object>();
-	
-		map.put("search", search);
-				
-		map = myHomeService.getFollowList(search);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
 		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map = myHomeService.getFollowList(search);
+		map.put("search", search);
 		
 	    
 		model.addAttribute("search", search);
@@ -169,7 +183,14 @@ public class MyHomeController {
 	}
 	@RequestMapping(value = "getFollowerList")
 	public String getFollowerList(@ModelAttribute Search search, Model model) throws Exception {
-	
+        
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		map.put("search", search);

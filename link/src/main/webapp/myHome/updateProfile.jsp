@@ -8,5 +8,11 @@
 </head>
 <body>
 
+<p class="navbar-text">${user.nickName}</p>
+<p class="navbar-text">${user.userId}</p>
+<p class="navbar-text">${user.gender}</p>
+
+
+
 </body>
 </html>

@@ -64,10 +64,15 @@
 <script>
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("a:contains('로그인')").on("click" , function() {
+ 	$("#sgr:contains('로그인')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
 		self.location = "/myHome/getProfile"
 	}); 
+	$("#gg:contains('업데이트')").on("click" , function() {
+		//$(self.location).attr("href","/user/logout");
+		self.location = "/myHome/updateProfile"
+	}); 
+
  });
 
 </script>
@@ -180,6 +185,7 @@ $(function() {
 			<table border="0" cellspacing="0" cellpadding="0">
 			
 			<li><a href="#" id="sgr">로그인</a></li>
+			<li><a href="#" id="gg">업데이트</a></li>
 			
 				<tr>
 					
