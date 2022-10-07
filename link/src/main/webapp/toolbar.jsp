@@ -18,6 +18,20 @@
 		});
 	});
 	
+	$(function() {
+		$("a:contains('로그아웃')").on("click", function() {
+			self.location = "/user/logout"
+		})
+	})
+	
+	$(function() {
+		$("a:contains('내정보관리')").on("click", function() {
+			
+		self.location = "/user/getUser?userId=${user.userId}"
+		
+		});
+	});
+	
 /*	아래방식으로 네비게이션 사용 가능
 	$(function() {
 		$("span:contains('피드')").on("click", function() {

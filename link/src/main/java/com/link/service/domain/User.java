@@ -40,6 +40,9 @@ public class User {
 	private String fbType;
 	private Boolean loginStart;
 	private String snsUserId;
+	private String phone1;
+	private String phone2;
+	private String phone3;
 	
 	public User() {
 	}
@@ -265,6 +268,31 @@ public class User {
 	public void setSnsUserId(String snsUserId) {
 		this.snsUserId = snsUserId;
 	}
+	
+	public String getPhone1() {
+		return phone1;
+	}
+
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
+	}
+
+	public String getPhone2() {
+		return phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+
+	public String getPhone3() {
+		return phone3;
+	}
+
+	public void setPhone3(String phone3) {
+		this.phone3 = phone3;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", receiveId=" + receiveId + ", password=" + password + ", name=" + name
@@ -273,12 +301,12 @@ public class User {
 				+ ", area1=" + area1 + ", area2=" + area2 + ", area3=" + area3 + ", category1=" + category1
 				+ ", category2=" + category2 + ", category3=" + category3 + ", penaltyType=" + penaltyType
 				+ ", reportCount=" + reportCount + ", stopStartDate=" + stopStartDate + ", stopEndDate=" + stopEndDate
-				+ ", outUserType=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", outUserState=" + outUserState + ", outUserDate=" + outUserDate + ", addType=" + addType
 				+ ", logoutDate=" + logoutDate + ", addUserDate=" + addUserDate + ", totalVisitCount=" + totalVisitCount
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
 				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbType=" + fbType
-				+ ", loginStart=" + loginStart + ", snsUserId=" + snsUserId + "]";
+				+ ", loginStart=" + loginStart + ", snsUserId=" + snsUserId + ", phone1=" + phone1 + ", phone2="
+				+ phone2 + ", phone3=" + phone3 + "]";
 	}
-	
+
 }
