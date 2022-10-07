@@ -1,6 +1,7 @@
 package com.link.service.myHome.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class MyHomeDAOImpl implements MyHomeDAO {
     	sqlSession.insert("MyHomeMapper.addFollow", user);
     }
 	@Override
-	public List<User> getFollowList(Search search) throws Exception{
+	public List<User>getFollowList (Search search) throws Exception{
 		
 		System.out.println("\n[MyHomeDAOImpl getFollowList start]\n");
 		return sqlSession.selectList("MyHomeMapper.getFollowList", search);

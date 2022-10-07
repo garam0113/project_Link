@@ -19,7 +19,7 @@ $(function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
 	$("a[href='#']").bind("click", function(){
-		location.href = "/clubPostRest/updateClubPost?clubNo="+${ map.getClubPost.clubNo }+"&clubPostNo="+${ map.getClubPost.clubPostNo }+"&heartCondition=1";
+		//location.href = "/clubPostRest/updateClubPost?clubNo="+${ map.getClubPost.clubNo }+"&clubPostNo="+${ map.getClubPost.clubPostNo }+"&heartCondition=1";
 	});
 });
 </script>
