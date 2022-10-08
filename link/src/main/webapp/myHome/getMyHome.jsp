@@ -56,7 +56,7 @@ $(function() {
         	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
         				alert(data);   
         			},
-        			error:function(){   //데이터 주고받기가 실패했을 경우 실행할 결과
+        			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
         				alert('실패');
         			}
         		})
@@ -158,7 +158,8 @@ $(function() {
 				<tr>
 					<td width="104" class="ct_write">휴대전화번호</td>
 					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">${user.phoneNo}</td>
+					<td height="26">${list[1].receiveId}</td>
+								
 				</tr>
 				<tr>
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -169,7 +170,9 @@ $(function() {
 					<td class="ct_write01">
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td height="26">${user.email}</td>
+							
+								<td height="26">${list[1].userId}</td>
+								
 							</tr>
 						</table>
 					</td>
@@ -186,9 +189,10 @@ $(function() {
 					<td height="26">${user.phoneNo}</td>
 					<td height="26">${club.clubDetail}</td>
 					<td height="26">${club.clubArea}</td>
-					<td height="26">${club.clubArea}</td> ${feedList} ${clubList}
+					<td height="26">${club.clubArea}</td> 
+					<td>${feedList}</td>
 
-
+                 <li><a href="/myHome/getMyHome?userId=user11" id="ff">user11</a></li>
 				</tr>
 				<tr>
 					<td width="104" class="ct_write">자기소개</td>
