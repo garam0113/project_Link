@@ -41,7 +41,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		ClubPost returnClubPost = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
 		System.out.println("가장 최근 등록한 시퀀스 : " + returnClubPost);
 		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
-		List<ClubUser> clubUserList = sqlSession.selectList("ClubPostMapper.getClubMemberList", clubPost);
+		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberListToClubPost", clubPost);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", returnClubPost);
 		map.put("clubUserList", clubUserList);
