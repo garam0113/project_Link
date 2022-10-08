@@ -76,7 +76,7 @@ public class ClubPostController {
 		clubPost.setUser(user);
 		
 		model.addAttribute("search", search);
-		model.addAttribute("clubPost", clubPostServiceImpl.getClubPostList(ClubPostSearchPage.getSearch(search), clubPost));
+		model.addAttribute("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -108,7 +108,7 @@ public class ClubPostController {
 		System.out.println("search : " + search);
 		System.out.println("clubPost : " + clubPost);
 		
-		map.put("search", ClubPostSearchPage.getSearch(search));
+		map.put("search", ClubPostCommon.getSearch(search));
 		map.put("clubPost", clubPost);
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
@@ -128,12 +128,12 @@ public class ClubPostController {
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Heart heart, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
 		map.put("clubPost", clubPost);
-		heart.setSource("2");
-		heart.setSourceNo(clubPost.getClubPostNo());
+		//heart.setSource("2");
+		//heart.setSourceNo(clubPost.getClubPostNo());
 		// session에 있는 userId 가져와서 넣어줘야한다
 		//String userId = ((User)session.getAttribute("user")).getUserId();
-		heart.setUserId("user04");
-		map.put("heart", heart);
+		//heart.setUserId("user04");
+		//map.put("heart", heart);
 		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
@@ -146,7 +146,7 @@ public class ClubPostController {
 		System.out.println("clubPost : " + clubPost);
 		
 		clubPost.setUser(new User("user02"));
-		model.addAttribute("clubPost", clubPostServiceImpl.deleteClubPost(clubPost, ClubPostSearchPage.getSearch(search)));
+		model.addAttribute("clubPost", clubPostServiceImpl.deleteClubPost(clubPost, ClubPostCommon.getSearch(search)));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -215,7 +215,7 @@ public class ClubPostController {
 		//String userId = ((User)session.getAttribute("user")).getUserId();
 		String userId = "user04";
 		
-		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostSearchPage.getSearch(search), notice, userId));
+		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostCommon.getSearch(search), notice, userId));
 		// 모임 공지사항 리슽 : getClubNoticeList, 모임 공지사항 리스트 개수 : getClubNoticeListCount
 		return "forward:/clubPost/getClubNoticeList.jsp";
 	}

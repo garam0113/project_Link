@@ -607,40 +607,6 @@ UPDATE CLUB_POST SET CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1 WHERE CLU
 UPDATE CLUB_POST SET CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1 WHERE CLUB_POST_NO = 63;
 
 
-
-SELECT V3.*
-FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
-		FROM (
-				SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
-				FROM CLUB_POST
-				WHERE CLUB_NO = 
-				<choose>
-					<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0">#{ clubPost.clubNo }</when>
-					<when test="clubPost.clubNo != null and clubPost.clubNo != '' and clubPost.clubNo != 0 and search.order == 3">#{ clubPost.clubNo } AND USER_ID = #{ clubPost.user.userId }</when>
-				<otherwise>
-					( SELECT V2.CLUB_NO
-						FROM ( SELECT ROWNUM, V1.*
-								FROM ( SELECT *
-										FROM CLUB_USER
-										WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
-										ORDER BY JOIN_REG_DATE DESC ) V1
-								WHERE ROWNUM = 1 ) V2 )
-				</otherwise>
-				</choose>
-				AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
-				ORDER BY
-				<choose>
-					<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_REG_DATE DESC</when>
-					<when test="search.order == 1">CLUB_POST_REG_DATE DESC</when>
-				<otherwise>
-					CLUB_POST_REG_DATE DESC
-				</otherwise>
-				</choose>		
-			 ) V2
-	 ) V3
-WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
-				
-				
 				
 				
 				

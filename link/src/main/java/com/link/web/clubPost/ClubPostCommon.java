@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.link.common.CommonUtil;
 import com.link.common.Search;
 
-public class ClubPostSearchPage {
+public class ClubPostCommon {
 	
 	@Value("#{commonProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")

@@ -27,9 +27,6 @@ public interface ClubPostService {
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(ClubPost clubPost, Search search) throws Exception;
 	
-	// 모임게시물 좋아요한 후 좋아요 수
-	//public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
-	
 	
 	
 	

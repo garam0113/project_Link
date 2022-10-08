@@ -19,12 +19,13 @@ $(function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
 	$("a:contains('하트')").bind("click", function(){
+		alert('a');
 		$.ajax( "/clubPostRest/json/updateClubPost",
 				{
 					method : "POST",
 					data : JSON.stringify({
 								clubPostNo : ${ clubPost.getClubPost.clubPostNo },
-								userId : ${ clubPost.getClubPost.user.userId }
+								userId : "${ clubPost.getClubPost.user.userId }"
 							}),
 					headers : {
 						"Accept" : "application/json",
@@ -32,11 +33,12 @@ $(function(){
 					},
 					dataType : "json",
 					success : function(JSONData, status){
-						alert(JSONData);
-						alert(status);
+						//alert(status);
+						//alert(JSONData);
+						$("a[href='#']").text(JSONData);
 					}
 				});
-	}); // end fo 하트
+	}); // end of 하트
 });
 </script>
 </head>

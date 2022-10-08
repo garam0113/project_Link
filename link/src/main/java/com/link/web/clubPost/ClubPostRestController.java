@@ -73,39 +73,27 @@ public class ClubPostRestController {
 		//clubPost.setUser((User) session.getAttribute("user"));
 		clubPost.setUser(new User("user03"));	
 		map.put("search", search);
-		map.put("clubPost", clubPostServiceImpl.getClubPostList(ClubPostSearchPage.getSearch(search), clubPost));
+		map.put("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount	
 		
 		return map;
 	}
 
 	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.POST)
-	public int updateClubPost(@RequestBody int clubPostCommentNo, ClubPost clubPost, Heart heart, Search search) throws Exception {
+	public int updateClubPost(@RequestBody ClubPost clubPost, Heart heart, Search search, Map<String, Object> map) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		
 		System.out.println("search : " + search);
 		System.out.println("clubPost : " + clubPost);
 		System.out.println("heart : " + heart);
-		System.out.println("clubPostCommentNo : " + clubPostCommentNo);
+		System.out.println("clubPostCommentNo : " + clubPost.getClubPostCommentNo());
 		
-		heart.setUserId(clubPost.getUserId());
-		if(clubPostCommentNo == 0) {
-			System.out.println("댓글번호 : 없다");
-			heart.setSource("2");
-			heart.setSourceNo(clubPostCommentNo);
-		}else{
-			System.out.println("댓글번호 : 있다");
-			heart.setSource("3");
-			heart.setSourceNo(clubPost.getClubPostNo());
-		}
-
-		System.out.println("수정된 heart : " + heart);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("heart", heart);
-		map.put("search", ClubPostSearchPage.getSearch(search));
-		return ((ClubPost)clubPostServiceImpl.updateClubPost(map)).getClubPostHeartCount();
+		//map.put("search", ClubPostCommon.getSearch(search));
+		map = clubPostServiceImpl.updateClubPost(map);
+		System.out.println("확인용 데이터 : " + map.get("getClubPost"));
+		return ((ClubPost)map.get("getClubPost")).getClubPostHeartCount();
 	}
 	
 	
@@ -173,7 +161,7 @@ public class ClubPostRestController {
 		System.out.println("clubPostCommentNo : " + clubPostCommentNo);
 
 		map.put("comment", comment);
-		map.put("search", ClubPostSearchPage.getSearch(search));
+		map.put("search", ClubPostCommon.getSearch(search));
 		return clubPostServiceImpl.getClubPostCommentList(map);
 	}
 	

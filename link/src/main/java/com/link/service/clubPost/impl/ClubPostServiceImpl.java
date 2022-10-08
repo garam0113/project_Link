@@ -52,6 +52,25 @@ public class ClubPostServiceImpl implements ClubPostService {
 	@Override
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".updateClubPost(Map<String, Object> map) 도착");
+		
+		Heart heart = (Heart)map.get("heart");
+		ClubPost clubPost = (ClubPost)map.get("clubPost");
+		
+		if(heart != null) {
+			// heart가 null이 아니라며 즉, restController에서 왔다면 즉, 하트를 클릭했다면 수행
+			
+			heart.setUserId(clubPost.getUserId());
+			heart.setSource("2");
+			heart.setSourceNo(clubPost.getClubPostNo());
+
+			clubPost.setHeartCondition((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
+
+			System.out.println("수정된 heart : " + heart + "수정된 clubPost : " + clubPost);
+			
+			map.put("heart", heart);
+			map.put("clubPost", clubPost);			
+		}
+		
 		return clubPostDAOImpl.updateClubPost(map);
 	}// end of updateClubPost(Map<String, Object> map)
 
@@ -78,6 +97,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 	
 	
 	
+
+
 	
 
 	@Override

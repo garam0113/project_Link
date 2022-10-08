@@ -26,13 +26,13 @@ public interface ClubPostDAO {
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception;
 	
-	// 모임게시물 좋아요
-	//public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
-	
 	
 	
 	
 	// 신고
+	
+	// 좋아요 확인
+	public int getHeart(Heart heart) throws Exception;
 	
 	// 결제
 	public void addPay(Pay pay) throws Exception;

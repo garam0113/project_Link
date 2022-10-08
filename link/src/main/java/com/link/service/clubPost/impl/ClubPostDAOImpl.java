@@ -14,6 +14,7 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
+import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
@@ -100,7 +101,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".deleteClubPost(Map<String, Object> map) 왔다");
 		sqlSession.update("ClubPostMapper.deleteClubPost", map.get("clubPost"));
 		return getClubPostList(map);
-	}// end of deleteClubPost(Map<String, Object> map)	
+	}// end of deleteClubPost(Map<String, Object> map)
 	
 	
 ///////////////////////////////////////////////////////////////////////////////////// ClubPostComment /////////////////////////////////////////////////////////////////////////////////////		
@@ -199,6 +200,14 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		return ((Comment)sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment)).getCommentHeartCount();
 	}
 	*/
+
+///////////////////////////////////////////////////////////////////////////////////// Heart /////////////////////////////////////////////////////////////////////////////////////	
+
+	@Override
+	public int getHeart(Heart heart) throws Exception {
+		System.out.println(getClass() + ".getHeart(Heart heart) 왔다");
+		return sqlSession.selectOne("HeartMapper.checkFeedHeart", heart);
+	}
 	
 ///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
 	
