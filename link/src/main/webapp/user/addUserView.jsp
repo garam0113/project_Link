@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 
-
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -21,6 +20,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -37,6 +38,81 @@ $(function() {
 		$("form").attr("method", "POST").attr("action", "/user/addUser").submit();
 	});
 });
+
+$(function() {
+	//alert("function시작")
+	$("#userId").on("keyup", function() {
+		
+		console.log($("#userId").val());
+		
+		var input = $("#userId").val();
+		
+		$.ajax("/userRest/json/getUser",{
+			
+			method : "POST",
+			data : JSON.stringify({
+				userId : input
+			}),
+			dataType : "json",
+			contentType: "application/json",
+			henders : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
+		
+					//console.log("JSONData : "+JSONData);
+					//console.log("JSONData.userId : "+JSONData.userId);
+			
+				var userId = JSONData.userId;
+				console.log("DB로 받은 UserId : "+userId);
+			
+			 
+				if(userId == ""){
+					$("#userIdCheck").html("사용가능한 아이디 입니다.");
+				}else{
+					$("#userIdCheck").html("사용중인 아이디 입니다.");
+				}
+			
+			}
+		});
+	});
+});
+
+$(function() {
+	$("#nickName").on("keyup", function() {
+		var nickName = $("#nickName").val();
+		console.log(nickName);
+		
+		$.ajax("/userRest/json/getUser", {
+				
+			type : "POST",
+			data : JSON.stringify({ 
+				nickName : nickName
+			}),
+			dataType : "json",
+			contentType : "application/json",
+			henders : {
+				"Accept" : "application/json", 
+				
+			},
+			success : function(JSONData, status) {
+				
+				console.log("JSONData : "+JSONData.nickName);
+				
+				console.log("DB로 받은 nickName : "+JSONData.nickName);
+			
+			 
+				if(JSONData.nickName == ""){
+					$("#nickNameCheck").html("사용가능한 닉네임 입니다.");
+				}else{
+					$("#nickNameCheck").html("사용중인 닉네임 입니다.");
+				}
+			
+			}
+			});
+		}); 
+	});
 
 </script>
 
@@ -59,12 +135,12 @@ $(function() {
 		<form class="form-horizontal">
 
 			<div class="form-group">
-				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아
+				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label" id="id">아
 					이 디</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="userId" name="userId"
 						placeholder="중복확인하세요"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">영어, 숫자조합 5~8자</strong>
+						class="help-block"> <strong class="text-danger" id="userIdCheck">영어, 숫자조합 5~8자</strong>
 					</span>
 				</div> 
 			</div>
@@ -103,7 +179,7 @@ $(function() {
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="nickName" name="nickName"
 						placeholder="닉네임"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">"
+						class="help-block"> <strong class="text-danger" id="nickNameCheck">"
 							특수문자 사용 불가, 1~10자</strong>
 					</span>
 				</div>
@@ -120,9 +196,9 @@ $(function() {
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주민번호</label>
+				<label for="rrn" class="col-sm-offset-1 col-sm-3 control-label">주민번호</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="ssn" name="ssn"
+					<input type="text" class="form-control" id="rrn" name="rrn"
 						placeholder="주민번호"> <span id="helpBlock"
 						class="help-block"> <strong class="text-danger">"
 							- " 제외 13자리입력하세요</strong>
@@ -150,7 +226,6 @@ $(function() {
 					<input type="text" class="form-control" id="phone3" name="phone3"
 						placeholder="번호">
 				</div>
-				<input type="hidden" name="phone" />
 				<div class="col-sm-2">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 				</div>
