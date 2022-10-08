@@ -33,17 +33,30 @@ public class UserRestController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 
-	@RequestMapping(value = "json/getUser/{userId}", method = RequestMethod.GET)
-	public User getUser(@PathVariable String userId) throws Exception{
+	@RequestMapping(value = "json/getUser", method = RequestMethod.POST)
+	public User getUser(@RequestBody User user ) throws Exception{
 		
-		System.out.println("/user/json/getUser : GET");
+		System.out.println("/userRest/json/getUser : POST");
 		
-		User user = new User();
+		System.out.println("입력받은 User 값 : "+user);
 		
-		user.setUserId(userId);
+		User getUser = userService.getUser(user);
 		
-		return userService.getUser(user);	//회원정보 리턴
+		System.out.println("DB에서 받은 정보 : "+user);
 		
+		if(getUser != null) {
+			
+			return getUser;	//회원정보가 null이 아닐경우 리턴
+		
+		}else{
+			
+			user.setUserId("");
+			user.setNickName("");
+			
+			System.out.println("null값을 넣은 User : "+user);
+			
+			return user;	//회원정보가 없을 경우 회원ID에 null값을 저장하여 출력
+		}
 	}
 	
 	

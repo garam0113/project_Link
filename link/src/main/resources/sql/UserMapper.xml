@@ -106,6 +106,9 @@
 			<if test="snsUserId != null and userId == ''">
 				sns_user_id = #{snsUserId} and TRIM(add_user_type) = #{addType}
 			</if>
+			<if test="nickName != null and userId == null">
+				nickname = #{nickName}
+			</if>
 			<if test="name != null and rrn != null and userId == null">
 				TRIM(name) = #{name} and TRIM(rrn) = #{rrn}
 			</if>
