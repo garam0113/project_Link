@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,27 +65,31 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, User user,  Club club,
-			@RequestParam("userId")String userId, Model model,HttpSession session) throws Exception{
+	public String getMyHome(@ModelAttribute Search search, User user, Heart heart,
+		       Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
-     
-		user = userService.getUser(user);
-		club = clubService.getClub(club.getClubNo());
+		
+		user = (User) session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
-        
 		
-		
-
+		map.put("heart", heart);
+		map.put("myHome", 1);
+		map.put("user", user);
 		map.put("search", search);
+
 		map = feedService.getFeedList(map);
 		
+		map.put("list",myHomeService.getFollowList(search).get("list"));
+		//map = clubService.getMyClubList(map);
 		
 		model.addAttribute("user", user);
-		model.addAttribute("club", club);
+		model.addAttribute("myClubList",map.get("myClubList"));
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
-	
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("heart", heart);
+		
 		return "forward:/myHome/getMyHome.jsp";
 	}  
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)

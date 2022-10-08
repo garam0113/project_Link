@@ -107,11 +107,8 @@ public class MyHomeServiceImpl implements MyHomeService {
 		
 	}
 
-	@Override
-	public User addFollow(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
 	
 
 }
