@@ -10,12 +10,15 @@
 
 	<resultMap	id="myHomeSelectMap" type="user">
 		<result property="userId" 		column="send_user_id" 		jdbcType="VARCHAR"/>
-		<result property="receiveId" 	column="recv_user_id" 		jdbcType="VARCHAR"/>
+		<result property="receiveId.userId" 	column="recv_user_id" 		jdbcType="VARCHAR"/>
 		<result property="fbState"		column="state" 		jdbcType="CHAR" />
 		<result property="fbType"		column="type" 		jdbcType="CHAR" />
-		<result property="nickName"		column="u.nickname" 		jdbcType="VARCHAR" />
-		<result property="profileImage"		column="u.profile_image" 		jdbcType="VARCHAR" />
-		
+		<result property="nickName"		column="nickname" 		jdbcType="VARCHAR" />
+		<result property="profileImage"		column="profile_image" 		jdbcType="VARCHAR" />
+		<result property="receiveId.profileImage"		column="profile_image" 		jdbcType="VARCHAR" />
+		<result property="receiveId.nickName"		column="nickname" 		jdbcType="VARCHAR" />
+		<result property="receiveId.fbState"		column="state" 		jdbcType="CHAR" />
+		<result property="receiveId.fbType"		column="type" 		jdbcType="CHAR" />
 	</resultMap>
 	
 
@@ -34,7 +37,7 @@
      VALUES (
      seq_follow_block_no.nextval ,
      #{userId:VARCHAR}                   ,
-     #{receiveId:VARCHAR}                ,
+     #{receiveId.userId:VARCHAR}                ,
      '1'                ,
      '1'              
      
@@ -124,7 +127,7 @@
 				type			= #{fbType:CHAR}			
 				
 		   	</set>
-		   	WHERE send_user_id = #{userId} and recv_user_id = #{receiveId}
+		   	WHERE send_user_id = #{userId} and recv_user_id = #{receiveId.userId}
 
 </update>
 

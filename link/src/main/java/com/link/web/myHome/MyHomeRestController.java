@@ -97,8 +97,11 @@ public class MyHomeRestController {
 			 
 			 String sendId =((User)session.getAttribute("user")).getUserId();
 			 User user = new User();
+			 User receiveId = new User();
 			 user.setUserId(sendId);
-			 user.setReceiveId(userId);
+			 receiveId.setUserId(userId);
+			 
+			 user.setReceiveId(receiveId);
 			 myHomeService.addFollow(user);
 			 
 		} catch( Exception e) {

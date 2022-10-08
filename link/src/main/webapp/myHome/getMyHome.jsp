@@ -156,10 +156,22 @@ $(function() {
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
 				<tr>
+					<c:set var ="i" value="0"></c:set>
+					<c:forEach var="list" items="${list}">
+					<c:set var="i" value="${i+1 }"></c:set>
+			
+		
+					
 					<td width="104" class="ct_write">휴대전화번호</td>
 					<td bgcolor="D6D6D6" width="1"></td>
-					<td height="26">${list[1].receiveId}</td>
-								
+					
+					<td height="26">${list[i].receiveId.nickName}</td>
+					<td height="26">${list[i].receiveId.userId}</td>
+					<td height="26">${list[i].receiveId.profileImage}</td>
+					
+		
+		             </c:forEach>
+			
 				</tr>
 				<tr>
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -171,7 +183,7 @@ $(function() {
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
 							
-								<td height="26">${list[1].userId}</td>
+							
 								
 							</tr>
 						</table>
