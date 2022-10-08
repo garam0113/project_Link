@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.link.common.Search;
+import com.link.service.domain.Feed;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeDAO;
 import com.link.service.myHome.MyHomeService;
@@ -70,17 +71,16 @@ public class MyHomeServiceImpl implements MyHomeService {
 	}
 	
 	@Override
-	public Map<String, Object> getFollowList(Search search) throws Exception{
+	public Map<String, Object> getFollowList (Search search) throws Exception{
 		
 		System.out.println("\n[MyHomeServiceImpl getFollowList start]\n");
 		
-		List<User> list= myHomeDAO.getFollowList(search);
-		int totalCount = myHomeDAO.getTotalCount(search);
+		List<User> list = myHomeDAO.getFollowList(search);
+	
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		map.put("list", list);
-		map.put("totalCount", totalCount);
+	
 		
 		return map;
 	}

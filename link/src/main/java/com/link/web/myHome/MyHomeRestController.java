@@ -1,5 +1,6 @@
 package com.link.web.myHome;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.Feed;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 
@@ -46,23 +49,38 @@ public class MyHomeRestController {
 		@Value("#{commonProperties['pageUnit']}")
 		int pageUnit;
 	
+	
 	@RequestMapping(value = "json/getFollowList", method = RequestMethod.POST)
-	 public Map<String,Object> getFollowList(@RequestBody Search search)
-	 throws Exception{
+	 public Map<String, Object> getFollowList(@RequestBody Search search) throws Exception{
 		 System.out.println("/myHomeRest/json/getFollowList : POST");
 		 
-		 Map<String,Object>map = myHomeService.getFollowList(search);
+		 if(search.getCurrentPage() == 0) {
+				search.setCurrentPage(1);
+			}
+			
+			search.setPageSize(pageSize);
+			search.setPageUnit(pageUnit);
+		 
+		 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("search",search);
 			
 		 return map;
 		 
 	 }
 	@RequestMapping(value = "json/getFollowerList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowerList(@RequestBody Search search)
-			 throws Exception{
+	 public Map<String, Object> getFollowerList(@RequestBody Search search) throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
-				
+				 
+				 if(search.getCurrentPage() == 0) {
+						search.setCurrentPage(1);
+					}
+					
+					search.setPageSize(pageSize);
+					search.setPageUnit(pageUnit);
+				 
 				 Map<String,Object>map = myHomeService.getFollowerList(search);
-				
+				 map.put("search", search);
 				 return map;
 				 
     }
@@ -107,9 +125,15 @@ public class MyHomeRestController {
 			 
 		 }
 		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubList(@RequestBody Search search)
-		 throws Exception{
+		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{
 			 System.out.println("/myHomeRest/json/json/getClubList : POST");
+			
+			 if(search.getCurrentPage() == 0) {
+					search.setCurrentPage(1);
+				}
+				
+				search.setPageSize(pageSize);
+				search.setPageUnit(pageUnit);
 			 
 			 Map<String,Object>map = clubService.getClubList(search);
 				
@@ -117,9 +141,15 @@ public class MyHomeRestController {
 	 
  }
 		@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubPostList(@RequestBody Search search, ClubPost clubPost)
-		 throws Exception{
+		 public Map<String,Object> getClubPostList(@RequestBody Search search, ClubPost clubPost)  throws Exception{
 			 System.out.println("/myHomeRest/json/json/getClubList : POST");
+			 
+			 if(search.getCurrentPage() == 0) {
+					search.setCurrentPage(1);
+				}
+				
+				search.setPageSize(pageSize);
+				search.setPageUnit(pageUnit);
 			 
 			 Map<String,Object>map = clubPostService.getClubPostList(search, clubPost);
 				

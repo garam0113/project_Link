@@ -68,7 +68,7 @@ public class ClubServiceTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetClubList() throws Exception {
 		
 		System.out.println("\n============================");
@@ -84,18 +84,19 @@ public class ClubServiceTest {
 	}
 	
 	
-//	@Test
-	public void testGetMyClubList() throws Exception {
+	@Test
+	public void testGetApprovalConditionList() throws Exception {
 		
 		System.out.println("\n==============================");
 		
 		Search search = new Search();
 		
-		search.setSearchKeyword("user03");
-		Map<String, Object> map = clubService.getMyClubList(search);
+		search.setSearchKeyword("user02");
 		
-		List<Club> list = (List<Club>) map.get("myClubList");
+		Map<String, Object> map = clubService.getApprovalConditionList(search);
 		
+		List<Club> list = (List<Club>) map.get("approvalConditionList");
+				
 		System.out.println("list 값?? : "+list);
 		System.out.println("==================================\n");
 	}

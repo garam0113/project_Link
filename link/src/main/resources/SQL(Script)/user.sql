@@ -77,3 +77,30 @@ WHERE user_id = 'user01';
 UPDATE users
 SET join_club_limit = 2
 WHERE user_id = 'user01';
+
+
+
+
+SELECT user_id , password , name , gender, rrn, phone_no , email, role, nickname , profile_image,
+profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count,
+stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date,
+total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
+FROM users WHERE name = '방진수' and rrn = '9212101001005'
+
+SELECT *
+	  	FROM (	
+	  			SELECT
+	  			inner_table.* 				,
+	  			ROWNUM 			AS row_seq	
+	  			FROM		(SELECT
+								user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
+								profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 
+								stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date, 
+								total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
+								FROM users
+								WHERE user_id LIKE 'user%'
+								) inner_table
+				WHERE ROWNUM <= 10 )					
+		WHERE row_seq BETWEEN 1 AND 10 ;
+
+
