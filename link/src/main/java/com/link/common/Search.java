@@ -15,8 +15,8 @@ public class Search {
 	
 	public Search(){
 		
-	}	
-	
+	}
+
 	public Search(int currentPage, String searchCondition, String searchKeyword, int pageSize, int order) {
 		super();
 		this.currentPage = currentPage;

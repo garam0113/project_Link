@@ -62,32 +62,24 @@ public class ClubPostController {
 	
 	
 	
-	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
-	public String getClubPostList(@RequestParam int clubNo, @RequestParam int order, Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
-		System.out.println("/getClubPostList : GET : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
+	@RequestMapping(value = "getClubPostList")
+	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
+		System.out.println("/getClubPostList : GET,POST : 최근 가입한 모임게시물 리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
 		// question : clubNo와 order가 잘 들어온다 왜? RequestParam도 들어오고 Search, ClubPost에도 들어오나?
 		// 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다
 
 		System.out.println("search : " + search);
 		System.out.println("clubPost : " + clubPost);
-		System.out.println("order : " + order);
-		System.out.println("clubNo : " + clubNo);
-		
-		search = ClubPostSearchPage.getSearch(order);
-		
-		// search.order = 0, user_id = 'user03'
 		
 		//String userId = ((User)session.getAttribute("user")).getUserid();
 		User user = new User("user03");
 		clubPost.setUser(user);
-		model.addAttribute("map", clubPostServiceImpl.getClubPostList(search, clubPost));
+		
+		model.addAttribute("search", search);
+		model.addAttribute("clubPost", clubPostServiceImpl.getClubPostList(ClubPostSearchPage.getSearch(search), clubPost));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
-	
-	
-	
-	
 
 	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
 	public String addClubPostView(@RequestParam int clubNo, Model model) throws Exception {
@@ -105,21 +97,21 @@ public class ClubPostController {
 		user.setUserId("user02");
 		user.setNickName("user02nickName");
 		clubPost.setUser(user);
-		model.addAttribute("map", clubPostServiceImpl.addClubPost(clubPost));
+		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Search search, Model model) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Search search, Map<String, Object> map, Model model) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
+
+		System.out.println("search : " + search);
+		System.out.println("clubPost : " + clubPost);
 		
-		search = ClubPostSearchPage.getSearch(0);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
+		map.put("search", ClubPostSearchPage.getSearch(search));
 		map.put("clubPost", clubPost);
 		
-		model.addAttribute("map", clubPostServiceImpl.getClubPost(map));
+		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
 		return "forward:/clubPost/getClubPost.jsp";
 	}
@@ -128,7 +120,7 @@ public class ClubPostController {
 	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map) throws Exception {
 		System.out.println("/updateClubPostView : POST : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
 		map.put("clubPost", clubPost);
-		model.addAttribute("map", clubPostServiceImpl.getClubPost(map));
+		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		return "forward:/clubPost/updateClubPostView.jsp";
 	}
 
@@ -142,16 +134,19 @@ public class ClubPostController {
 		//String userId = ((User)session.getAttribute("user")).getUserId();
 		heart.setUserId("user04");
 		map.put("heart", heart);
-		model.addAttribute("map", clubPostServiceImpl.updateClubPost(map));
+		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
 	@RequestMapping(value = "deleteClubPost", method = RequestMethod.POST)
 	public String deleteClubPost(@ModelAttribute ClubPost clubPost, Search search, Model model) throws Exception {
 		System.out.println("/deleteClubPost : POST : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
-		search = ClubPostSearchPage.getSearch(0);
+
+		System.out.println("search : " + search);
+		System.out.println("clubPost : " + clubPost);
+		
 		clubPost.setUser(new User("user02"));
-		model.addAttribute("map", clubPostServiceImpl.deleteClubPost(clubPost, search));
+		model.addAttribute("clubPost", clubPostServiceImpl.deleteClubPost(clubPost, ClubPostSearchPage.getSearch(search)));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -208,14 +203,21 @@ public class ClubPostController {
 	@RequestMapping(value = "addClubNotice", method = RequestMethod.POST)
 	public String addClubNotice(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
 		System.out.println("/updateClubNotice : POST : 모임공지사항 등록, 등록한 모임공지사항 상세보기, 모임공지사항 리스트");
-		return "forward:/clubPost/updateClubPostNoticeView.jsp";
+		return "forward:/clubPost/updateClubNoticeView.jsp";
 	}
 	
-	@RequestMapping(value = "getClubNoticeList", method = RequestMethod.POST)
-	public String getClubNoticeList(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
+	@RequestMapping(value = "getClubNoticeList", method = RequestMethod.GET)
+	public String getClubNoticeList(@ModelAttribute Search search, Notice notice, HttpSession session, Model model) throws Exception {
 		System.out.println("/updateClubNotice : POST : 모임공지사항 리스트");
-		clubPostServiceImpl.getClubNoticeList(search, notice);
-		return "forward:/clubPost/getClubPostNoticeList.jsp";
+		
+		System.out.println("search : " + search);
+		
+		//String userId = ((User)session.getAttribute("user")).getUserId();
+		String userId = "user04";
+		
+		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostSearchPage.getSearch(search), notice, userId));
+		// 모임 공지사항 리슽 : getClubNoticeList, 모임 공지사항 리스트 개수 : getClubNoticeListCount
+		return "forward:/clubPost/getClubNoticeList.jsp";
 	}
 	
 	@RequestMapping(value = "updateClubNoticeView", method = RequestMethod.POST)
@@ -229,7 +231,7 @@ public class ClubPostController {
 	public String updateClubNotice(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
 		System.out.println("/updateClubNotice : POST : 모임공지사항 수정, 수정한 모임공지사항 상세보기, 모임공지사항 리스트, 수정한 모임공지사항 리스트 화면으로 이동");
 		model.addAttribute("map", clubPostServiceImpl.updateClubNotice(search, notice));
-		return "forward:/clubPost/getClubPostNoticeList.jsp";
+		return "forward:/clubPost/getClubNoticeList.jsp";
 	}
 
 	@RequestMapping(value = "deleteClubNotice", method = RequestMethod.POST)
@@ -237,7 +239,7 @@ public class ClubPostController {
 		System.out.println("/deleteClubNotice : POST : 모임공지사항 삭제, 모임공지사항 리스트");
 		// 모임공지사항 리스트 : getClubNoticeList, 모임공지사항 리스트 개수 : getClubNoticeListCount
 		model.addAttribute("map", clubPostServiceImpl.deleteClubNotice(search, notice));
-		return "forward:/clubPost/getClubPostNoticeList.jsp";
+		return "forward:/clubPost/getClubNoticeList.jsp";
 	}
 
 }

@@ -9,14 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.link.common.CommonUtil;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
@@ -62,35 +60,38 @@ public class ClubPostRestController {
 	
 	
 	
-	@RequestMapping(value = "getClubPostList", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, HttpSession session, Search search) throws Exception {
+	@RequestMapping(value = "json/getClubPostList", method = RequestMethod.GET)
+	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, Map<String, Object> map, HttpSession session, Search search) throws Exception {
 		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
 		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
-		
-		System.out.println(search);
-		System.out.println(clubPost);
+
 		System.out.println("clubNo : " + clubNo);
 		System.out.println("order : " + order);
+		System.out.println(search);
+		System.out.println(clubPost);
 		
-		search = ClubPostSearchPage.getSearch(order);
-		
-		clubPost.setClubNo(clubNo);
 		//clubPost.setUser((User) session.getAttribute("user"));
-		clubPost.setUser(new User("user03"));
-		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
-		return clubPostServiceImpl.getClubPostList(search, clubPost);
+		clubPost.setUser(new User("user03"));	
+		map.put("search", search);
+		map.put("clubPost", clubPostServiceImpl.getClubPostList(ClubPostSearchPage.getSearch(search), clubPost));
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount	
+		
+		return map;
 	}
 
-	@RequestMapping(value = "updateClubPost", method = RequestMethod.GET)
+	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.GET)
 	public int updateClubPost(@RequestBody int clubPostCommentNo, ClubPost clubPost, Heart heart, Search search) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		
-		search = ClubPostSearchPage.getSearch(0);
+		System.out.println("search : " + search);
+		System.out.println("clubPost : " + clubPost);
+		System.out.println("heart : " + heart);
+		System.out.println("clubPostCommentNo : " + clubPostCommentNo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);
 		map.put("heart", heart);
-		map.put("search", search);
+		map.put("search", ClubPostSearchPage.getSearch(search));
 		return ((ClubPost)clubPostServiceImpl.updateClubPost(map)).getClubPostHeartCount();
 	}
 	
@@ -153,11 +154,13 @@ public class ClubPostRestController {
 	@RequestMapping(value = "getClubPostCommentList", method = RequestMethod.GET)
 	public List<Comment> getClubPostCommentList(@RequestBody int clubPostCommentNo, @RequestBody int depth, Comment comment, Search search, Map<String, Object> map) throws Exception {
 		System.out.println("/getClubPostCommentList : GET : 특정 모임의 또는 특정 댓글의 댓글리스트");
-		System.out.println(depth);
-		System.out.println(clubPostCommentNo);
-		search = ClubPostSearchPage.getSearch(0);
+		System.out.println("depth : " + depth);
+		System.out.println("comment : " + comment);
+		System.out.println("search : " + search);
+		System.out.println("clubPostCommentNo : " + clubPostCommentNo);
+
 		map.put("comment", comment);
-		map.put("search", search);
+		map.put("search", ClubPostSearchPage.getSearch(search));
 		return clubPostServiceImpl.getClubPostCommentList(map);
 	}
 	

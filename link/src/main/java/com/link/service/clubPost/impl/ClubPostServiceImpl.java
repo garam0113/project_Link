@@ -16,6 +16,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {
@@ -158,11 +159,12 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of addClubNotice(Notice notice)
 
 	@Override
-	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception {
-		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice) 도착");
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice, String userId) throws Exception {
+		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice, String userId) 도착");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("notice", notice);
+		map.put("userId", userId);
 		return clubPostDAOImpl.getClubNoticeList(map);
 	}// getClubNoticeList(Search search, Notice notice)
 

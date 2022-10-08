@@ -73,7 +73,7 @@ public interface ClubPostService {
 	public Map<String, Object> addClubNotice(Search search, Notice notice) throws Exception;
 	
 	// 모임공지사항 리스트
-	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception;
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice, String userId) throws Exception;
 	
 	// 모임공지사항 상세보기
 	public Notice getClubNotice(Notice notice) throws Exception;

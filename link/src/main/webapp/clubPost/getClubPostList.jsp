@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,22 +25,25 @@
 			location.href = "/clubPost/addClubPostView?clubNo=2";
 		});
 		$("b:contains('최신순')").bind("click", function() {
-			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=0";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=0";
 		});
-		$("b:contains('역최신순')").bind("click", function() {
-			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=1";
+		$("b:contains('오래된순')").bind("click", function() {
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=1";
 		});
 		$("b:contains('좋아요 많은순')").bind("click", function() {
-			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=2";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=2";
 		});
 		$("b:contains('내가 작성한 게시물')").bind("click", function() {
-			location.href = "/clubPostRest/getClubPostList?clubNo="+${ map.clubPostList[0].clubNo }+"&order=3";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=3";
+		});
+		$("button:contains('검색')").bind("click", function() {
+			$("input[name='currentPage']").val("1");
+			$("form").submit();
 		});
 	});
 	
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
-		alert("모임 게시물 번호 : " + clubPostNo);
 		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
 	}
 </script>
@@ -64,15 +68,16 @@
 		    	<p class="text-primary">
 		    		전체  ${ map.clubPostListCount } 건수, 현재 ${resultPage.currentPage} 페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<b>최신순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-					<b>역최신순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
+					<b>오래된순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>좋아요 많은순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>내가 작성한 게시물</b>	&nbsp;&nbsp;&nbsp;
+					<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
 					<button type="button" class="btn btn-default">게시물 등록하기</button>
 		    	</p>
 		    </div>
 		    
-			<%-- <div class="col-md-6 text-right">
-				<form class="form-inline" name="detailForm" action="/product/listProduct" method="post">
+			<div class="col-md-6 text-right">
+				<form class="form-inline" name="detailForm" action="/clubPost/getClubPostList" method="post">
 			 
 			<div class="form-group">
 				<select class="form-control" name="searchCondition" >
@@ -89,11 +94,11 @@
 			<button type="button" class="btn btn-default">검색</button>
 			
 			<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-			<input type="hidden" id="currentPage" name="currentPage" value=""/>
+			<input type="hidden" name="currentPage" value=""/>
 			<input type="hidden" name="order" value="${ search.order }">
 			  
 			</form>
-			</div> --%>
+			</div>
 	    	
 		</div>		
 	  
@@ -104,16 +109,17 @@
  	
  	<!-- 썸네일로 list display start -->
 	<div class="contains" id="container">
-		<c:if test="${ map.clubPostListCount > 0}">
-		<c:forEach var="i" begin="0" end="${ map.clubPostListCount - 1 }" step="1">
+		<c:set var="i" value="${ clubPost.clubPostList }"></c:set>
+		<c:if test="${ clubPost.clubPostListCount > 0}">
+		<c:forEach var="i" begin="0" end="${ fn:length(clubPost.clubPostList) - 1 }" step="1">
 			<div class="col-md-4">
-				<a href="javascript:getClubPostGo('${ map.clubPostList[i].clubPostNo }')">
+				<a href="javascript:getClubPostGo('${ clubPost.clubPostList[i].clubPostNo }')">
 					<img src="/images/uploadFiles/${ uploadList[i] }" height="350" width="350">
 				</a>
-				<p align="center" style="font-size: 30px">${ map.clubPostList[i].clubPostNo }</p>
-				<p align="center" style="font-size: 20px">제목 : ${ map.clubPostList[i].clubPostTitle }</p>
-				<p align="center" style="font-size: 20px">좋아요 수 : ${ map.clubPostList[i].clubPostHeartCount }</p>
-				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ map.clubPostList[i].user.userId }</p>
+				<p align="center" style="font-size: 30px">${ clubPost.clubPostList[i].clubPostNo }</p>
+				<p align="center" style="font-size: 20px">제목 : ${ clubPost.clubPostList[i].clubPostTitle }</p>
+				<p align="center" style="font-size: 20px">좋아요 수 : ${ clubPost.clubPostList[i].clubPostHeartCount }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ clubPost.clubPostList[i].user.userId }</p>
 			</div>
 		</c:forEach>
 		</c:if>

@@ -34,18 +34,14 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> addClubPost(ClubPost clubPost) throws Exception {
 		System.out.println(getClass() + ".addClubPost(ClubPost clubPost) 왔다");
-		Search search = new Search();
-		search.setSearchKeyword(clubPost.getClubNo()+"");
-		System.out.println("모임 번호 : " + search);
 		
 		// 모임게시물 등록
 		sqlSession.insert("ClubPostMapper.addClubPost", clubPost);
-		System.out.println("모임게시물 등록");
 		// 모임게시물 현재 sequence 가져오기
 		ClubPost returnClubPost = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
 		System.out.println("가장 최근 등록한 시퀀스 : " + returnClubPost);
 		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
-		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberList", search);
+		List<ClubUser> clubUserList = sqlSession.selectList("ClubPostMapper.getClubMemberList", clubPost);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", returnClubPost);
 		map.put("clubUserList", clubUserList);
@@ -64,7 +60,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> getClubPostList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostList(Map<String, Object> map) 왔다");
-		System.out.println("search.order의 값은 : " + (Search) map.get("search") );
 		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", map));
 		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", map));
 		return map;
@@ -74,15 +69,9 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public Map<String, Object> getClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
 		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost")));
-		System.out.println(map.get("search"));
-		System.out.println("여기는?");
 		if( map.get("search") != null ) {
-			System.out.println("여기 오나?");
 			map.put("getClubPostCommentList", sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", map));
-		}
-		
-		System.out.println(((ClubPost)map.get("getClubPost")).getClubNo());
-		
+		}		
 		return map;
 	}// end of getClubPost(ClubPost clubPost)
 	
@@ -92,8 +81,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 좋아요 or 좋아요취소 or 신고승인 or 내용수정
 		sqlSession.update("ClubPostMapper.updateClubPost", map);
-		
-		System.out.println(map.get("heart"));
 		
 		if( ((ClubPost)map.get("clubPost")).getHeartCondition() == 1 ) {
 			// 좋아요 등록
@@ -163,6 +150,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public List<Comment> getClubPostCommentList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostCommentList(Map<String, Object> map) 왔다");
+		System.out.println(((Search)map.get("search")).getOrder());
 		return sqlSession.selectList("ClubPostMapper.getClubPostCommentList", map);
 	}// end of getClubPostCommentList(Map<String, Object> map)
 

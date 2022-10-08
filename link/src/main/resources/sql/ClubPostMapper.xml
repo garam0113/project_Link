@@ -36,7 +36,7 @@
 	
 	
 	<sql id="select-list">
-		SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
+		<!-- SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
 		FROM CLUB_POST
 		WHERE CLUB_NO = 
 		<choose>
@@ -60,8 +60,65 @@
 		<otherwise>
 			CLUB_POST_REG_DATE DESC
 		</otherwise>
-		</choose>
+		</choose> -->
+		SELECT ROW_NUMBER() OVER(ORDER BY 
+										<choose>
+											<when test="search.order == 2">CLUB_POST_HEART_COUNT DESC, CLUB_POST_NO DESC</when>
+											<when test="search.order == 1">CLUB_POST_NO ASC</when>
+										<otherwise>
+											CLUB_POST_NO DESC
+										</otherwise>
+										</choose> ) AS R, V3.*
+		FROM ( SELECT CLUB_NO, CLUB_POST_NO, IMAGE1, CLUB_POST_TITLE, USER_ID, CLUB_POST_HEART_COUNT
+				FROM CLUB_POST
+				WHERE CLUB_NO = 
+				<choose>
+					<when test="clubPost.clubNo != 0">#{ clubPost.clubNo }
+						<if test="search.order == 3">AND USER_ID = #{ clubPost.user.userId }</if>
+					</when>
+				<otherwise>
+				( SELECT V2.CLUB_NO
+					FROM ( SELECT ROWNUM, V1.*
+							FROM ( SELECT *
+									FROM CLUB_USER
+									WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
+									ORDER BY JOIN_REG_DATE DESC ) V1
+							WHERE ROWNUM = 1
+						 ) V2 )
+					</otherwise>
+				</choose>
+				AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
+				<if test="search.searchKeyword != '' and search.searchCondition != ''">
+					<choose>
+						<when test="search.searchCondition == 0">AND USER_ID LIKE '%'||#{search.searchKeyword}||'%'</when>
+						<when test="search.searchCondition == 1">AND CLUB_POST_CONTENT LIKE '%'||#{search.searchKeyword}||'%'</when>
+					</choose>
+				</if>
+		) V3
 	</sql>
+	
+	
+	
+	<resultMap	id="clubUserSelectMap"		type="clubUser">
+		<result property="clubUserNo"				column="club_user_no"						jdbcType="NUMERIC"/>
+		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
+		<result property="userId"					column="user_id"							jdbcType="VARCHAR" />
+		<result property="applicationRegDate"		column="application_reg_date"				jdbcType="DATE" />
+		<result property="joinRegDate"				column="join_reg_date"						jdbcType="DATE" />
+		<result property="logoutDate"				column="logout_date"						jdbcType="DATE" />
+		<result property="memberRole"				column="member_role"						jdbcType="CHAR" />
+		<result property="approvalCondition"		column="approval_condition"					jdbcType="CHAR" />
+		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />	
+	</resultMap>
+	
+	
+	
+	<select id="getClubMemberList" parameterType="clubPost" resultMap="clubUserSelectMap">
+		SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+		FROM club_user
+		WHERE CLUB_NO = ${ clubNo } AND JOIN_REG_DATE IS NOT NULL
+		ORDER BY club_user_no ASC
+	 </select>
 
 
 
@@ -80,12 +137,10 @@
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
 	<select id="getClubPostList" parameterType="map" resultMap="clubPostSelectMap">
-		SELECT V3.*
-		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
-				FROM (
+		SELECT V4.*
+		FROM ( 
 						<include refid="select-list"></include>
-					 ) V2
-			 ) V3
+			 ) V4
 		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
 	</select>
 	
@@ -99,7 +154,6 @@
 						<include refid="select-list"></include>
 					 ) V2
 			 ) V3
-		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
 	</select>
 	
 

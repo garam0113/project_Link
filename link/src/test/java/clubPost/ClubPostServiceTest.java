@@ -120,8 +120,9 @@ public class ClubPostServiceTest {
 		Search search = new Search();
 		Notice notice = new Notice();
 		notice.setNoticeNo(6);
+		String userId = "user02";
 		
-		clubPostServiceImpl.getClubNoticeList(search, notice);
+		clubPostServiceImpl.getClubNoticeList(search, notice, userId);
 	}
 	
 	//@Test
@@ -199,13 +200,11 @@ public class ClubPostServiceTest {
 		//notice.setNoticeTitle("title65");
 		//notice.setNoticeContent("content65");
 		//notice.setNoticeCount(0);
-		User user = new User();
-		user.setUserId("user01");
-		notice.setUserId(user);
+		String userId = "user02";
 		
 		//clubPostServiceImpl.addClubNotice(search, notice);
 		//notice = clubPostServiceImpl.getClubNotice(notice);
-		Map<String, Object> map = clubPostServiceImpl.getClubNoticeList(search, notice);
+		Map<String, Object> map = clubPostServiceImpl.getClubNoticeList(search, notice, userId);
 		//clubPostServiceImpl.updateClubNotice(search, notice);
 		//clubPostServiceImpl.deleteClubNotice(search, notice);
 		
