@@ -305,8 +305,23 @@ SELECT COUNT(*) FROM CLUB_POST WHERE USER_ID = 'user02' AND REPORT_CONDITION = '
 
 
 
+checkFeedHeart() - 좋아요 했는지 체크
+SELECT
+COUNT(*)
+FROM	(
+			SELECT
+			heart_no,
+			user_id,
+			source,
+			source_no
+			FROM HEART
+			WHERE TRIM(source)		= 2
+			AND source_no			= 71
+			AND user_id				= 'user01'	)
 
-// null값일 때  ${IMAGE:VARCHAR2} 붙이자
+
+
+// null값일 때  ${IMAGE:VARCHAR} 붙이자
 updateClubPost() - 모임게시물 수정할 떄
 UPDATE CLUB_POST SET CLUB_POST_TITLE = 'updateTitle', CLUB_POST_CONTENT = 'updateContent', CLUB_POST_VIDEO1 = '1', CLUB_POST_VIDEO2 = '2',
 CLUB_POST_VIDEO3 = '3', IMAGE1 = '1', IMAGE2 = '2', IMAGE3 = '3', IMAGE4 = '4', IMAGE5 = '5', IMAGE6 = '6', IMAGE7 = '7', IMAGE8 = '8',

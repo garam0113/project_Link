@@ -79,7 +79,7 @@ public class ClubPostRestController {
 		return map;
 	}
 
-	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.GET)
+	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.POST)
 	public int updateClubPost(@RequestBody int clubPostCommentNo, ClubPost clubPost, Heart heart, Search search) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		
@@ -87,6 +87,19 @@ public class ClubPostRestController {
 		System.out.println("clubPost : " + clubPost);
 		System.out.println("heart : " + heart);
 		System.out.println("clubPostCommentNo : " + clubPostCommentNo);
+		
+		heart.setUserId(clubPost.getUserId());
+		if(clubPostCommentNo == 0) {
+			System.out.println("댓글번호 : 없다");
+			heart.setSource("2");
+			heart.setSourceNo(clubPostCommentNo);
+		}else{
+			System.out.println("댓글번호 : 있다");
+			heart.setSource("3");
+			heart.setSourceNo(clubPost.getClubPostNo());
+		}
+
+		System.out.println("수정된 heart : " + heart);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubPost", clubPost);

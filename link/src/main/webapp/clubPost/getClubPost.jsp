@@ -18,9 +18,25 @@ $(function(){
 	$("input[value='리스트로이동']").bind("click", function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
-	$("a[href='#']").bind("click", function(){
-		//location.href = "/clubPostRest/updateClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&heartCondition=1";
-	});
+	$("a:contains('하트')").bind("click", function(){
+		$.ajax( "/clubPostRest/json/updateClubPost",
+				{
+					method : "POST",
+					data : JSON.stringify({
+								clubPostNo : ${ clubPost.getClubPost.clubPostNo },
+								userId : ${ clubPost.getClubPost.user.userId }
+							}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					dataType : "json",
+					success : function(JSONData, status){
+						alert(JSONData);
+						alert(status);
+					}
+				});
+	}); // end fo 하트
 });
 </script>
 </head>

@@ -16,7 +16,6 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
-import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {

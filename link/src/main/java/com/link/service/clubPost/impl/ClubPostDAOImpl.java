@@ -14,7 +14,6 @@ import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
-import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;

@@ -173,7 +173,7 @@
 	
 	<!-- 삭제하는 모임게시물 -->
 	<update id="deleteClubPost" parameterType="clubPost">
-		UPDATE CLUB_POST SET DELETE_CONDITION = '1' WHERE CLUB_POST_NO = #{ clubPostNo }
+		UPDATE CLUB_POST SET DELETE_CONDITION = '1', DELETE_USER_ID = #{ user.userId } WHERE CLUB_POST_NO = #{ clubPostNo }
 	</update>
 	
 	

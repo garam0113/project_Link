@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- alert창 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- Bootstrap Dropdown Hover CSS -->
 <link href="/css/animate.min.css" rel="stylesheet">
@@ -22,6 +24,8 @@
 <script type="text/javascript">
 	$(function() {
 		$("button:contains('게시물 등록하기')").bind("click", function() {
+			//swal.fire("아이디를 입력하셔야 합니다.");
+			//self.location = "/clubPost/addClubPostView?clubNo=2";
 			location.href = "/clubPost/addClubPostView?clubNo=2";
 		});
 		$("b:contains('최신순')").bind("click", function() {
