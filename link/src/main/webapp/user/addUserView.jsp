@@ -39,6 +39,23 @@ $(function() {
 	});
 });
 
+function fncAddUser() {
+	
+	var id = $("#userId").val();
+	var chaeckId = $("#checkId").val();
+	var pw = $("#password").val();
+	var pw2 = $("#password2").val();
+	var name = $("#name").val();
+	var gender = $("#gender").val();
+	var rrn = $("#rrn").val();
+	var phone2 = $("#phone2").val();
+	var phone3 = $("#phone3").val();
+	var checkNo = $("#checkNo").val();		
+	var email = $("email").val();
+	
+}
+
+
 $(function() {
 	//alert("function시작")
 	$("#userId").on("keyup", function() {
@@ -70,20 +87,30 @@ $(function() {
 			 
 				if(userId == ""){
 					$("#userIdCheck").html("사용가능한 아이디 입니다.");
+					$("#checkId").val(1);
 				}else{
 					$("#userIdCheck").html("사용중인 아이디 입니다.");
+					$("#checkId").val(2);
 				}
 			
 			}
+			
+			if(input == null && input ==""){
+				$("#checkId").val(0);
+				$("#userIdCheck").html("영어, 숫자조합 5~8자");
+			}
+			
 		});
 	});
 });
 
 $(function() {
 	$("#nickName").on("keyup", function() {
+		
+		
 		var nickName = $("#nickName").val();
 		console.log(nickName);
-		
+
 		$.ajax("/userRest/json/getUser", {
 				
 			type : "POST",
@@ -142,6 +169,7 @@ $(function() {
 						placeholder="중복확인하세요"> <span id="helpBlock"
 						class="help-block"> <strong class="text-danger" id="userIdCheck">영어, 숫자조합 5~8자</strong>
 					</span>
+					<input type="hidden" id="checkId">
 				</div> 
 			</div>
 
@@ -236,6 +264,7 @@ $(function() {
 				<div class="col-sm-2">
 					<input type="text" class="form-control" id="inputCertifiedNumber"
 						name="inputCertifiedNumber" placeholder="인증번호">
+					<input type="hidden" id="checkNo">
 				</div>
 				<div class="col-sm-2">
 					<button type="button" id="checkBtn" class="btn ">인증번호확인</button>
