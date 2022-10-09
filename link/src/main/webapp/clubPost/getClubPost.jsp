@@ -19,8 +19,31 @@ $(function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
 	$("a:contains('ÇÏÆ®')").bind("click", function(){
-		alert('a');
+		alert('ÇÏÆ®');
 		$.ajax( "/clubPostRest/json/updateClubPost",
+				{
+					method : "POST",
+					data : JSON.stringify({
+								clubPostNo : ${ clubPost.getClubPost.clubPostNo },
+								userId : "${ clubPost.getClubPost.user.userId }"
+							}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					dataType : "json",
+					success : function(JSONData, status){
+						//alert(status);
+						//alert(JSONData);
+						$("a[href='#']").text(JSONData);
+					}
+				});
+	}); // end of ÇÏÆ®
+	$("b:contains('´ñ±Û ¼ö')").bind("click", function(){
+		alert("´ñ±Û ¼ö");
+		var thisClick = $(this).val();
+		alert("´ñ±Û Á¤º¸ : " + thisClick);
+		$.ajax( "/clubPostRest/json/getClubPostCommentList",
 				{
 					method : "POST",
 					data : JSON.stringify({
@@ -96,7 +119,7 @@ $(function(){
 ´ñ±Û ±íÀÌ : ${ clubPostComment.getClubPostCommentList[i].depth }</br>
 ´ñ±Û ¼ø¼­ : ${ clubPostComment.getClubPostCommentList[i].sequence }</br>
 <%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPostComment.getClubPostCommentList[i].clubPostCommentNo }&depth=0">´ñ±Û ¼ö : ${ clubPostComment.getClubPostCommentList[i].commentCount }</a></br> --%>
-<a href="###">´ñ±Û ¼ö : ${ clubPostComment.getClubPostCommentList[i].commentCount }</a></br>
+<b id="${ clubPostComment.getClubPostCommentList[i] }">´ñ±Û ¼ö ${ clubPostComment.getClubPostCommentList[i] }</b></br>
 //////////////////////////////////////////////////////////////////////</br>
 </c:if>
 </c:forEach>

@@ -23,8 +23,22 @@ public class ClubPostCommon {
 		int currentPage = 1;
 		
 		// 모임게시물 탭 클릭시 null, 검색버튼 클릭시 nullString
-		if (search.getCurrentPage() != 0) {
-			currentPage = search.getCurrentPage();
+		if (search != null) {
+			if (search.getCurrentPage() != 0) {
+				currentPage = search.getCurrentPage();
+			}
+		}
+		
+		if(search.getSearchCondition() == null) {
+			System.out.println("컨디션 null");
+		}else if(search.getSearchCondition().equals("")) {
+			System.out.println("컨디션 nullString");
+		}
+		
+		if(search.getSearchKeyword() == null) {
+			System.out.println("키원드 null");
+		}else if(search.getSearchKeyword().equals("")) {
+			System.out.println("키워드 nullString");
 		}
 
 		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환

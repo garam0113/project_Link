@@ -9,6 +9,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 public interface ClubPostService {
 
@@ -35,6 +36,12 @@ public interface ClubPostService {
 	
 	// 결제
 	public void addPay(Pay pay) throws Exception;
+	
+	// 결제 리스트
+	public List<Pay> getPayList(User user) throws Exception;
+	
+	// 결제 상세보기
+	public Pay getPay(Pay pay) throws Exception;
 	
 	//public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	

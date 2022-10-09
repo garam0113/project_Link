@@ -246,7 +246,7 @@ public class ClubPostServiceTest {
 		//clubPostServiceImpl.addClubPost(clubPost);
 	}
 	
-	@Test
+	//@Test
 	public void clubPostList() throws Exception {
 		// 모임 게시물 리스트
 		Search search = new Search();
@@ -280,17 +280,21 @@ public class ClubPostServiceTest {
 		System.out.println("///////////////////////////////////////////");
 	}
 	
+	@Test
+	public void pay() throws Exception {
+		Pay pay = new Pay();
+		pay.setPayNo(21);
+		User user = new User();
+		user.setUserId("user02");
+		
+		//clubPostServiceImpl.getPay(pay);
+		clubPostServiceImpl.getPayList(user);
+	}
+	
 	
 	
 	
 	
 }
-
-
-
-
-
-
-
 
 

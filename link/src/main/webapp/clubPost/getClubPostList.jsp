@@ -124,6 +124,8 @@
 				<p align="center" style="font-size: 20px">제목 : ${ clubPost.clubPostList[i].clubPostTitle }</p>
 				<p align="center" style="font-size: 20px">좋아요 수 : ${ clubPost.clubPostList[i].clubPostHeartCount }</p>
 				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ clubPost.clubPostList[i].user.userId }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 닉네임 : ${ clubPost.clubPostList[i].user.nickName }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 프로필이미지 : ${ clubPost.clubPostList[i].user.profileImage }</p>
 			</div>
 		</c:forEach>
 		</c:if>

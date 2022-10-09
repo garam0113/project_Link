@@ -16,6 +16,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {
@@ -112,6 +113,18 @@ public class ClubPostServiceImpl implements ClubPostService {
 		System.out.println(getClass() + ".addPay(Pay pay) 도착");
 		clubPostDAOImpl.addPay(pay);
 	}// addPay(Pay pay)
+
+	@Override
+	public List<Pay> getPayList(User user) throws Exception {
+		System.out.println(getClass() + ".getPayList(User user) 도착");
+		return clubPostDAOImpl.getPayList(user);
+	}// getPayList(User user)
+
+	@Override
+	public Pay getPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".getPay(Pay pay) 도착");
+		return clubPostDAOImpl.getPay(pay);
+	}// getPay(Pay pay)
 	
 	
 	

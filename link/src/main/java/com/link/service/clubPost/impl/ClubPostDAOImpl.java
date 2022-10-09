@@ -233,6 +233,18 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
 		sqlSession.insert("ClubPostMapper.addPay", pay);
 	}// end of addPay(Pay pay)
+
+	@Override
+	public List<Pay> getPayList(User user) throws Exception {
+		System.out.println(getClass() + ".getPayList(User user) 왔다");
+		return sqlSession.selectList("ClubPostMapper.getPayList", user);
+	}// end of getPayList(User user)
+
+	@Override
+	public Pay getPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".getPay(Pay pay) 왔다");
+		return sqlSession.selectOne("ClubPostMapper.getPay", pay);
+	}// end of getPay(Pay pay)
 	
 	
 	
@@ -282,20 +294,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
