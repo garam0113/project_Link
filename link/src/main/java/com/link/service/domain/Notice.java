@@ -1,8 +1,5 @@
 package com.link.service.domain;
 
-import java.sql.Date;
-
-
 public class Notice {
 	
 	private int noticeNo;					//공지사항 번호

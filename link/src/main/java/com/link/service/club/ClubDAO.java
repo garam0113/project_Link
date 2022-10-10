@@ -1,6 +1,7 @@
 package com.link.service.club;
 
 import java.util.List;
+import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Club;
@@ -21,7 +22,9 @@ public interface ClubDAO {
 	public List<Club> getClubList(Search search) throws Exception;
 	
 	//GetMyClubList
-	public List<Club> getMyClubList(Search search) throws Exception;	
+//	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception;
+	
+//	public List<ClubUser> getMyClubList(Search search) throws Exception;
 	
 	public void deleteClub(int clubNo) throws Exception;
 	
@@ -33,7 +36,7 @@ public interface ClubDAO {
 //	public int addApprovalCondition(ClubUser clubUser) throws Exception;
 	
 	//가입신청현황 리스트 --> GetMyClubList와 병합
-	//public List<ClubUser> getApprovalConditionList(Search search) throws Exception;
+	public List<ClubUser> getApprovalConditionList(Search search) throws Exception;
 	
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception;
 	
@@ -80,7 +83,9 @@ public interface ClubDAO {
 	
 	public int getTotalMeetingMemberCount(Search search) throws Exception;
 	
-	public int getTotalMyClubCount(Search search) throws Exception;
+//	public int getTotalMyClubCount(Search search) throws Exception;
+	
+	public int getTotalApprovalConditionCount(Search search) throws Exception;
 	
 	//결제
 	public List <ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
