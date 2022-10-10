@@ -43,6 +43,23 @@
 				});
 		});
 		
+		$(function() {
+			$("button:contains('회원목록')").on("click", function() {
+				self.location = "/user/getUserList"
+			});
+		});
+		
+		$(function() {
+			$("button:contains('정지회원')").on("click", function() {
+				self.location = "/user/getUserList?searchKeyword=1"
+			});
+		});
+
+		$(function() {
+			$("button:contains('영구정지회원')").on("click", function() {
+				self.location = "/user/getUserList?searchKeyword=2"
+			});
+		});
 	</script>
 	
 </head>
@@ -112,6 +129,15 @@
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			<button type="button" class="btn btn-primary">정보수정</button>
+	  		</div>
+		</div>
+		<br/>
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			<button type="button" class="btn btn-primary">회원목록</button>
+	  			<button type="button" class="btn btn-primary">차단리스트</button>
+	  			<button type="button" class="btn btn-primary">정지회원</button>
+	  			<button type="button" class="btn btn-primary">영구정지회원</button>
 	  		</div>
 		</div>
 		

@@ -96,7 +96,7 @@ body>div.container {
 						name="categoty1" placeholder="카테고리">
 					<input type="text" class="form-control" id="category2"
 						name="categoty2" placeholder="카테고리">
-					<input type="text" class="form-control" id="categotr3"
+					<input type="text" class="form-control" id="category3"
 						name="categoty3" placeholder="카테고리">
 				</div>
 			</div>

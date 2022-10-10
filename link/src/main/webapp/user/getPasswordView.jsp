@@ -112,7 +112,7 @@
 		  <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="변경이메일">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
 		    </div>
 			<div class="col-sm-4">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>

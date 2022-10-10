@@ -3,6 +3,7 @@ package com.link.web.myHome;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -84,46 +85,52 @@ public class MyHomeRestController {
 				 return map;
 				 
     }
-	 @RequestMapping(value="/json/addFollow", method=RequestMethod.POST)
-    public User addFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
+	 
+	@RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
+    public void addFollow(@PathVariable String userId, HttpSession session, Model model) throws Exception{
+		
+		try {
+			
+			System.out.println("/myHomeRest/json/addFollow : GET");
+			 System.out.println("userId : " + userId);
+			 
+			 
+			 String sendId =((User)session.getAttribute("user")).getUserId();
+			 User user = new User();
+			 User receiveId = new User();
+			 user.setUserId(sendId);
+			 receiveId.setUserId(userId);
+			 
+			 user.setReceiveId(receiveId);
+			 myHomeService.addFollow(user);
+			 
+		} catch( Exception e) {
+			e.printStackTrace();
+		}
 		 
-		 System.out.println("/myHomeRest/json/addFollow : POST");
-		 
-		 Object object = session.getAttribute("login");
-		 User sendId = (User)object;
-		 User receiveId = myHomeService.addFollow(userId);
-		 
-		 user.setUserId(sendId.getUserId());
-		 user.setReceiveId(receiveId.getUserId());
-		 
-		 myHomeService.addFollow(user);
-		 
-		 
-		return user;
-		 
-		 
+ 
 	 }
 	 
-	 @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
-	    public User deleteFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
+//	 @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
+//	    public User deleteFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
+//			 
+//			 System.out.println("/myHomeRest/json/addFollow : POST");
+//			 
+//			 Object object = session.getAttribute("login");
+//			 User sendId = (User)object;
+//			 User receiveId = myHomeService.addFollow(userId);
+//			 
+//	
+//			 user.setUserId(sendId.getUserId());
+//			 user.setReceiveId(receiveId.getUserId());
+//			 
+//			 myHomeService.deleteFollow(user);
+//			 
+//			 
+//			return user;
 			 
-			 System.out.println("/myHomeRest/json/addFollow : POST");
 			 
-			 Object object = session.getAttribute("login");
-			 User sendId = (User)object;
-			 User receiveId = myHomeService.addFollow(userId);
-			 
-	
-			 user.setUserId(sendId.getUserId());
-			 user.setReceiveId(receiveId.getUserId());
-			 
-			 myHomeService.deleteFollow(user);
-			 
-			 
-			return user;
-			 
-			 
-		 }
+		// }
 		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
 		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{
 			 System.out.println("/myHomeRest/json/json/getClubList : POST");
