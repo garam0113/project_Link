@@ -39,16 +39,18 @@ $(function(){
 					}
 				});
 	}); // end of 하트
-	$("b:contains('댓글 수')").bind("click", function(){
-		alert("댓글 수");
-		var thisClick = $(this).val();
-		alert("댓글 정보 : " + thisClick);
+	$(document).on("click", "b:contains('댓글 수')", function(){
+	//$("b:contains('댓글 수')").on("click", function(){
+		var clubPostCommentNo = $(this).attr("clubPostCommentNo");
+		var clubPostNo = $(this).attr("clubPostNo");
+		alert("clubPostCommentNo : " + clubPostCommentNo);
+		alert("clubPostNo : " + clubPostNo);
 		$.ajax( "/clubPostRest/json/getClubPostCommentList",
 				{
 					method : "POST",
 					data : JSON.stringify({
-								clubPostNo : ${ clubPost.getClubPost.clubPostNo },
-								userId : "${ clubPost.getClubPost.user.userId }"
+								clubPostCommentNo : clubPostCommentNo,
+								clubPostNo : clubPostNo
 							}),
 					headers : {
 						"Accept" : "application/json",
@@ -56,12 +58,33 @@ $(function(){
 					},
 					dataType : "json",
 					success : function(JSONData, status){
-						//alert(status);
-						//alert(JSONData);
-						$("a[href='#']").text(JSONData);
-					}
-				});
-	}); // end of 하트
+						alert(status);
+						$.each( JSONData, function( index, el ){
+							///* 
+							var display = "<div>"
+											+"<b style='color : blue;'>댓글번호 : " + el.clubPostCommentNo + "</b></br>"
+											+"댓글내용 : " + el.commentContent + "</br>"
+											+"댓글등록날짜 : " + el.commentRegDate + "</br>"
+											+"댓글수정날짜 : " + el.commentUpdateDate + "</br>"
+											+"댓글 좋아요 수 : " + el.commentHeartCount + "</br>"
+											+"댓글 신고여부 : " + el.reportCondition + "</br>"
+											+"댓글 삭제여부 : " + el.deleteCondition + "</br>"
+											+"댓글 부모번호 : " + el.parent + "</br>"
+											+"댓글 깊이 : " + el.depth + "</br>"
+											+"댓글 순서 : " + el.sequence + "</br>"
+											+"<div class='"+el.clubPostCommentNo+"'>"
+											+"<b style='color : green;' clubPostNo="+el.clubPostNo+" clubPostCommentNo="
+													+el.clubPostCommentNo+">댓글 수 " + el.commentCount + "</b></br>"
+											+"</div>"
+											+"</div>";
+							alert(display);
+
+							$("div[class='"+clubPostCommentNo+"']").append(display);
+							//*/
+						});
+					} // end of success
+				}); // end of ajax
+	}); // end of 댓글 수
 });
 </script>
 </head>
@@ -104,22 +127,30 @@ $(function(){
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
 <c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
-<c:if test="${ clubPostComment.getClubPostCommentList[i].parent == clubPost.getClubPost.clubPostNo }">
-모임 게시물 번호 : ${ clubPostComment.getClubPostCommentList[i].clubPostNo }</br>
-모임 게시물 댓글 번호 : ${ clubPostComment.getClubPostCommentList[i].clubPostCommentNo }</br>
-모임 게시물 등록 회원 아이디 : ${ clubPostComment.getClubPostCommentList[i].user.userId }</br>
-모임 게시물 등록 회원 닉네임 : ${ clubPostComment.getClubPostCommentList[i].user.nickName }</br>
-댓글 내용 : ${ clubPostComment.getClubPostCommentList[i].commentContent }</br>
-댓글 등록날짜 : ${ clubPostComment.getClubPostCommentList[i].commentRegDate }</br>
-댓글 수정날짜 : ${ clubPostComment.getClubPostCommentList[i].commentUpdateDate }</br>
-댓글 좋아요 수 : ${ clubPostComment.getClubPostCommentList[i].commentHeartCount }</br>
-신고여부 : ${ clubPostComment.getClubPostCommentList[i].reportCondition }</br>
-삭제여부 : ${ clubPostComment.getClubPostCommentList[i].deleteCondition }</br>
-댓글 부모번호 : ${ clubPostComment.getClubPostCommentList[i].parent }</br>
-댓글 깊이 : ${ clubPostComment.getClubPostCommentList[i].depth }</br>
-댓글 순서 : ${ clubPostComment.getClubPostCommentList[i].sequence }</br>
-<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPostComment.getClubPostCommentList[i].clubPostCommentNo }&depth=0">댓글 수 : ${ clubPostComment.getClubPostCommentList[i].commentCount }</a></br> --%>
-<b id="${ clubPostComment.getClubPostCommentList[i] }">댓글 수 ${ clubPostComment.getClubPostCommentList[i] }</b></br>
+<c:if test="${ clubPost.getClubPostCommentList[i].parent == clubPost.getClubPost.clubPostNo }">
+댓글 내용 : ${ sessionScope.user.userid }<div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+${ clubPost.getClubPostCommentList[i].commentContent }</div>
+<if test="${ user.userid }">
+<button class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">수정</button>
+</if></br>
+모임 게시물 번호 : ${ clubPost.getClubPostCommentList[i].clubPostNo }</br>
+모임 게시물 댓글 번호 : ${ clubPost.getClubPostCommentList[i].clubPostCommentNo }</br>
+모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPostCommentList[i].user.userId }</br>
+모임 게시물 등록 회원 닉네임 : ${ clubPost.getClubPostCommentList[i].user.nickName }</br>
+댓글 등록날짜 : ${ clubPost.getClubPostCommentList[i].commentRegDate }</br>
+댓글 수정날짜 : ${ clubPost.getClubPostCommentList[i].commentUpdateDate }</br>
+댓글 좋아요 수 : ${ clubPost.getClubPostCommentList[i].commentHeartCount }</br>
+신고여부 : ${ clubPost.getClubPostCommentList[i].reportCondition }</br>
+삭제여부 : ${ clubPost.getClubPostCommentList[i].deleteCondition }</br>
+댓글 부모번호 : ${ clubPost.getClubPostCommentList[i].parent }</br>
+댓글 깊이 : ${ clubPost.getClubPostCommentList[i].depth }</br>
+댓글 순서 : ${ clubPost.getClubPostCommentList[i].sequence }</br>
+<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPost.getClubPostCommentList[i].clubPostCommentNo }&depth=0">댓글 수 : ${ clubPost.getClubPostCommentList[i].commentCount }</a></br> --%>
+<div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+	<b style="color : red;" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }"
+	clubPostNo="${ clubPost.getClubPostCommentList[i].clubPostNo }">
+	댓글 수 ${ clubPost.getClubPostCommentList[i].commentCount }</b></br>
+</div>
 //////////////////////////////////////////////////////////////////////</br>
 </c:if>
 </c:forEach>

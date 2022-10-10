@@ -1,6 +1,5 @@
 package com.link.web.clubPost;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +18,7 @@ import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
@@ -102,14 +102,17 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Search search, Map<String, Object> map, Model model) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Map<String, Object> map, Model model) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
-
+		
 		System.out.println("search : " + search);
 		System.out.println("clubPost : " + clubPost);
-		
+		System.out.println("comment : " + comment);
+
+		// search가 없으면 상세보기를 가져오고 있으면 상세보기 + 댓글리스트를 가져온다
 		map.put("search", ClubPostCommon.getSearch(search));
 		map.put("clubPost", clubPost);
+		map.put("comment", comment);
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
