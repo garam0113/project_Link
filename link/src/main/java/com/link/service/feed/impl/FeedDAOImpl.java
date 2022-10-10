@@ -44,12 +44,14 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.insert("FeedMapper.addFeed", feed);
 	}
 	
+	// 사용
 	@Override
-	public Feed getFeed(int feedNo) throws Exception {
+	public Feed getFeed(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("FeedMapper.getFeed", feedNo);
+		return sqlSession.selectOne("FeedMapper.getFeed", map);
 	}
 	
+	// 사용
 	@Override
 	public void updateFeed(Feed feed) throws Exception {
 		// TODO Auto-generated method stub
@@ -62,18 +64,13 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.update("FeedMapper.deleteFeed", feedNo);
 	}
 	
-	@Override
-	public void updateFeed(Comment comment) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.update("FeedMapper.updateFeedCommentCount", comment);
-	}
-	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
 	
 	
+	// 사용
 	@Override
 	public void addFeedComment(Comment comment) throws Exception {
 		// TODO Auto-generated method stub
@@ -97,6 +94,13 @@ public class FeedDAOImpl implements FeedDAO {
 		// TODO Auto-generated method stub
 		sqlSession.update("FeedMapper.deleteFeedComment", commentNo);
 	}
+	
+	// 사용
+	@Override
+	public void updateFeedCommentOrder(Comment comment) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateFeedCommentOrder", comment);
+	}
 
 	
 	
@@ -107,7 +111,7 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public List<Feed> getFeedList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FeedMapper.getFeedListTest", map);
+		return sqlSession.selectList("FeedMapper.getFeedList", map);
 	}
 	
 	@Override
@@ -134,6 +138,12 @@ public class FeedDAOImpl implements FeedDAO {
 		return sqlSession.selectOne("FeedMapper.getTotalFeedCommentCount", map);
 	}
 	
+	// 사용
+	@Override
+	public int getRecommentCount(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getRecommentCount", map);
+	}
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
@@ -142,7 +152,7 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void addFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("HeartMapper.insertHeart", heart);
+		sqlSession.insert("HeartMapper.insertHeart", heart);
 	}
 	
 	@Override
@@ -154,13 +164,15 @@ public class FeedDAOImpl implements FeedDAO {
 	@Override
 	public void deleteFeedHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.delete("HeartMapper.deleteHeart", heart);
+		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
+	// 사용
 	@Override
 	public void addFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.insert("HeartMapper.insertHeart", heart);
+		// 사용
+		sqlSession.insert("HeartMapper.insertHeart", heart);
 	}
 	
 	@Override
@@ -169,10 +181,11 @@ public class FeedDAOImpl implements FeedDAO {
 		return 13;
 	}
 	
+	// 사용
 	@Override
 	public void deleteFeedCommentHeart(Heart heart) throws Exception {
 		// TODO Auto-generated method stub
-//		sqlSession.delete("HeartMapper.deleteHeart", heart);
+		sqlSession.delete("HeartMapper.deleteHeart", heart);
 	}
 
 	@Override
