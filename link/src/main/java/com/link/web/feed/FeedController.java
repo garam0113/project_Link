@@ -21,7 +21,7 @@ import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Push;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
@@ -56,10 +56,10 @@ public class FeedController {
 	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 	
 	
-	
+	// 사용
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
-							User user, Push push, Model model, HttpSession httpSession) throws Exception {
+							User user, Report report, Model model, HttpSession httpSession) throws Exception {
 		
 		// 회원 피드 등록
 		
@@ -100,11 +100,14 @@ public class FeedController {
 			}
 		}
 		
+		// Report & Push
+		
 		feedService.addFeed(feed);
 		
 		return "forward:/feed/getFeedList";
 	}
 	
+	// 사용
 	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
@@ -118,6 +121,7 @@ public class FeedController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		heart.setSource("0");
+		heart.setSourceNo(feedNo);
 		
 		if(user != null) {
 			heart.setUserId(user.getUserId());
@@ -139,9 +143,12 @@ public class FeedController {
 		return "forward:/feed/getFeed.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
 	public String updateFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
+		
+		heart.setSource("0");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("feedNo", feedNo);
@@ -153,6 +160,7 @@ public class FeedController {
 		return "forward:/feed/updateFeedView.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
 	public String updateFeed(@ModelAttribute Feed feed, Search search, 
 								User user, Heart heart, Model model) throws Exception {
@@ -161,9 +169,12 @@ public class FeedController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		heart.setSource("0");
+		
 		// 피드 번호 전달
 		map.put("feedNo", feed.getFeedNo());
 		map.put("search", search);
+		map.put("heart", heart);
 		
 		// 업데이트 된 피드 찾기
 		map = feedService.getFeed(map);
@@ -188,7 +199,7 @@ public class FeedController {
 	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	
 	
-	
+	// 사용
 	@RequestMapping(value = "getFeedList")
 	public String getFeedList(@ModelAttribute Search search, Heart heart,
 								User user, HttpSession httpSession, Model model) throws Exception {

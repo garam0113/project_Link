@@ -42,6 +42,7 @@
 		<result property="parent"				column="parent"						jdbcType="NUMERIC" />
 		<result property="depth"				column="depth"						jdbcType="NUMERIC" />
 		<result property="sequence"				column="sequence"					jdbcType="NUMERIC" />
+		<result property="heartCondition"		column="exist"						jdbcType="NUMERIC" />
 			
 		<association property="user"			javaType="user">
 			<result property="userId" 			column="user_id"		 			jdbcType="VARCHAR" />
@@ -80,26 +81,27 @@
 	
 	
 	
-	<select 	id="getFeed"					parameterType="int"			resultMap="feedSelectMap">
+	<select 	id="getFeed"					parameterType="hashmap"			resultMap="feedSelectMap">
 		SELECT 
-		feed_no,
-		user_id,
-		feed_open_condition,
-		feed_content,
-		feed_image1,
-		feed_image2,
-		feed_image3,
-		feed_image4,
-		feed_video,
-		hashtag,
-		feed_heart_count,
-		feed_comment_count,
-		feed_reg_date,
-		feed_update_date,
-		report_condition,
-		delete_condition
-		FROM feed
-		WHERE feed_no = #{feed_no}
+		f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
+		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
+		<choose>
+			<when test="user != null">
+				, isLike.EXIST FROM feed f, (
+												SELECT
+												source_no as EXIST
+												FROM HEART
+												WHERE TRIM(source)		= '0'
+												AND user_id			= #{user.userId}
+																							) isLike
+			WHERE f.feed_no							= isLike.EXIST(+) 
+			AND f.feed_no							= #{feedNo}
+			</when>
+			<otherwise>
+			FROM feed f
+			WHERE f.feed_no							= #{feedNo}
+			</otherwise>
+		</choose>
 	</select>
 	
 	
@@ -108,20 +110,21 @@
 		UPDATE feed
 		<set>
 			<choose>
-				<when test="checkHeart == -1">feed_heart_count = feed_heart_count + 1</when>
-				<when test="checkHeart == -2">feed_heart_count = feed_heart_count - 1</when>
-				<when test="commentCount != 0">feed_comment_count = feed_comment_count + 1</when>
+				<when test="checkHeart == 1">feed_heart_count = feed_heart_count + 1</when>
+				<when test="checkHeart == -1">feed_heart_count = feed_heart_count - 1</when>
+				<when test="checkComment == 1">feed_comment_count = feed_comment_count + 1</when>
+				<when test="checkComment == -1">feed_comment_count = feed_comment_count - 1</when>
 				<otherwise>
-				feed_open_condition				= #{openCondition:VARCHAR},
-				feed_content					= #{content:VARCHAR},
-				feed_image1						= #{image1:VARCHAR},
-				feed_image2						= #{image2:VARCHAR},
-				feed_image3						= #{image3:VARCHAR},
-				feed_image4						= #{image4:VARCHAR},
-				feed_video						= #{video:VARCHAR},
-				hashtag							= #{hashtag:VARCHAR},
-				feed_update_date				= SYSDATE,
-				report_condition				= #{reportCondition}
+					feed_open_condition				= #{openCondition:VARCHAR},
+					feed_content					= #{content:VARCHAR},
+					feed_image1						= #{image1:VARCHAR},
+					feed_image2						= #{image2:VARCHAR},
+					feed_image3						= #{image3:VARCHAR},
+					feed_image4						= #{image4:VARCHAR},
+					feed_video						= #{video:VARCHAR},
+					hashtag							= #{hashtag:VARCHAR},
+					feed_update_date				= SYSDATE,
+					report_condition				= #{reportCondition}
 				</otherwise>
 			</choose>
 		</set>	
@@ -169,7 +172,7 @@
 			null,
 			'0',
 			'0',
-			#{user.userId:VARCHAR},
+			null,
 			#{parent:NUMERIC},
 			#{depth:NUMERIC},
 			#{sequence:NUMERIC}				)
@@ -198,18 +201,26 @@
 	
 	
 	
+	<!-- 사용 -->
 	<update 	id="updateFeedComment"			parameterType="comment">
 		UPDATE feed_comment
 		<set>
-			feed_comment_content			= #{commentContent},
-			feed_comment_update_date		= SYSDATE,
-			report_condition				= #{reportCondition},
-			parent							= #{parent},
-			depth							= #{depth},
-			sequence						= #{sequence}
+			<choose>
+				<when test="heartCondition == 1">feed_comment_heart_count = feed_comment_heart_count + 1</when>
+				<when test="heartCondition == -1">feed_comment_heart_count = feed_comment_heart_count - 1</when>
+				<otherwise>
+					feed_comment_content			= #{commentContent},
+					feed_comment_update_date		= SYSDATE,
+					report_condition				= #{reportCondition},
+					parent							= #{parent},
+					depth							= #{depth},
+					sequence						= #{sequence}
+				</otherwise>
+			</choose>
 		</set>
 		WHERE feed_comment_no				= #{feedCommentNo}
 	</update>
+	<!-- 사용 -->
 	
 											 
 	
@@ -223,13 +234,12 @@
 
 	
 	
-	<update 	id="updateFeedCommentOrder"		parameterType="int">
+	<update 	id="updateFeedCommentOrder"		parameterType="comment">
 		UPDATE feed_comment
 		<set>
-			depth							= TO_NUMBER(depth) + 1
 			sequence						= TO_NUMBER(sequence) + 1
 		</set>
-		WHERE parent						= #{parent}
+		WHERE sequence					&gt;= #{sequence}
 	</update>
 	
 	
@@ -240,37 +250,8 @@
 	
 	
 	
-	<select 	id="getFeedList"				parameterType="search"		resultMap="feedSelectMap">
-		SELECT 
-		f.feed_no,
-		f.user_id,
-		f.feed_open_condition,
-		f.feed_content,
-		f.feed_image1,
-		f.feed_image2,
-		f.feed_image3,
-		f.feed_image4,
-		f.feed_video,
-		f.hashtag,
-		f.feed_heart_count,
-		f.feed_comment_count,
-		f.feed_reg_date,
-		f.feed_update_date,
-		f.report_condition,
-		f.delete_condition
-		FROM feed f
-		<if test="searchKeyword != ''">
-			<where>
-				f.feed_content LIKE '%${searchKeyword}%'
-			</where>
-		</if>
-		ORDER BY feed_no DESC
-	</select>
-	
-	
-	
-	
-	<select 	id="getFeedListTest"			parameterType="hashmap"		resultMap="feedSelectMap">
+	<!-- 사용 -->
+	<select 	id="getFeedList"			parameterType="hashmap"		resultMap="feedSelectMap">
 		SELECT 
 		f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
 		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
@@ -281,8 +262,7 @@
 												source_no as EXIST
 												FROM HEART
 												WHERE TRIM(source)		= '0'
-												
-													AND user_id			= #{user.userId}
+												AND user_id			= #{user.userId}
 																							) isLike
 				<where>
 				f.feed_no = isLike.EXIST(+)
@@ -312,51 +292,37 @@
 	
 	
 	
+	<!-- 사용 -->
 	<select 	id="getFeedCommentList"			parameterType="hashmap"		resultMap="feedCommentSelectMap">
 		SELECT 
-		feed_comment_no,
-		feed_no,
-		user_id,
-		feed_comment_content,
-		feed_comment_heart_count,
-		feed_recomment_count,
-		feed_comment_reg_date,
-		feed_comment_update_date,
-		report_condition,
-		delete_condition,
-		parent,
-		depth,
-		sequence
-		FROM feed_comment
-		WHERE feed_no						= #{feedNo}
-		AND report_condition				= '0'
-		AND delete_condition				= '0'
-		ORDER BY sequence ASC
-	</select>
-	
-	
-	
-	<select 	id="getMyFeedList"				parameterType="hashmap"		resultMap="feedSelectMap">
-		SELECT 
-		f.feed_no,
-		f.user_id,
-		f.feed_open_condition,
-		f.feed_content,
-		f.feed_image1,
-		f.feed_image2,
-		f.feed_image3,
-		f.feed_image4,
-		f.feed_video,
-		f.hashtag,
-		f.feed_heart_count,
-		f.feed_comment_count,
-		f.feed_reg_date,
-		f.feed_update_date,
-		f.report_condition,
-		f.delete_condition
-		FROM feed f
-		WHERE user_id =						= #{userId}		
-		ORDER BY feed_no DESC
+		c.feed_comment_no, c.feed_no, c.user_id, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
+		c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence
+		<choose>
+			<when test="user != null">
+				, isLike.EXIST FROM feed_comment c, (
+														SELECT
+														source_no as EXIST
+														FROM HEART
+														WHERE TRIM(source) = '1'
+														AND user_id = #{user.userId}
+																						) isLike
+				<where>
+				c.feed_comment_no = isLike.EXIST(+)
+				AND c.feed_no						= #{feedNo}
+				AND report_condition				= '0'
+				AND delete_condition				= '0'
+				</where>
+				
+				ORDER BY sequence ASC
+			</when>
+			<otherwise>
+			FROM feed_comment c
+			WHERE report_condition				= '0'
+			AND delete_condition				= '0'
+			AND c.feed_no						= #{feedNo}
+			ORDER BY sequence ASC
+			</otherwise>
+		</choose>
 	</select>
 	
 	
@@ -422,6 +388,7 @@
 		SELECT
 		COUNT(*)
 		FROM(
+				SELECT
 				feed_comment_no,
 				feed_no,
 				user_id,
@@ -443,100 +410,5 @@
 	</select>
 	
 	
-	
-	<!--====================Report====================-->
-	<!--====================Report====================-->
-	<!--====================Report====================-->
-	
-	
-	
-	<insert id="addFeedReport"					parameterType="hashmap">
-		INSERT 
-		INTO report_push (
-							title,
-							content,
-							report_source,
-							feed_no,
-							user_id1,
-							user_id2,
-							type,
-							report_reason			) 
-		VALUES (
-			#{title},
-			#{content},
-			'4',
-			#{userId},
-			#{userId2},
-			'1',
-			#{report_reason}						)
-	</insert>
-	
-	
-	
-	<insert id="addFeedCommentReport"			parameterType="hashmap">
-		INSERT 
-		INTO report_push (
-							title,
-							content,
-							report_source,
-							feed_comment_no,
-							user_id1,
-							user_id2,
-							type,
-							report_reason			) 
-		VALUES (
-			#{title},
-			#{content},
-			'5',
-			#{userId},
-			#{userId2},
-			'1',
-			#{report_reason}						)
-	</insert>
-	
-	
-	
-	<!--====================Push====================-->
-	<!--====================Push====================-->
-	<!--====================Push====================-->
-	
-	
-	<insert id="addFeedPush"					parameterType="hashmap">
-		INSERT 
-		INTO report_push (
-							title,
-							content,
-							report_source,
-							feed_no,
-							user_id1,
-							type			) 
-		VALUES (
-			#{title},
-			#{content},
-			'4',
-			#{userId},
-			'2'								)
-	</insert>
-	
-	
-	
-	<insert id="addFeedCommentPush"				parameterType="hashmap">
-		INSERT 
-		INTO report_push (
-							title,
-							content,
-							report_source,
-							feed_comment_no,
-							user_id1,
-							type			) 
-		VALUES (
-			#{title},
-			#{content},
-			'5',
-			#{userId},
-			'2'								)
-	</insert>
-	
-	
-	
+		
 </mapper>
