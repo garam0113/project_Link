@@ -49,8 +49,6 @@ public class UserController {
 		
 		System.out.println("/user/addUser : POST");
 		
-		user.setPhoneNo(user.getPhone1()+user.getPhone2()+user.getPhone3());
-		
 		userService.addUser(user);	//회원가입 정보 DB저장
 		
 		User getUser = userService.getUser(user);
@@ -114,21 +112,21 @@ public class UserController {
 		
 		System.out.println("/user/getUser : POST");
 		
-		User userId = userService.getUser(user);	//DB에 저장된 회원 정보 userId 객체에 set
+		User userId = new User();
 		
-		model.addAttribute("userId",userId);	//set한 회원Data session에 저장 
+		userId = userService.getUser(user);	//DB에 저장된 회원 정보 userId 객체에 set
+		
+		System.out.println("DB에서 받은 정보 : "+userId);
+		
+		model.addAttribute("userId",userId);	//set한 회원Data model에 저장 
 		
 		return "forward:/user/getId.jsp";
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("user") User user, Model model ) throws Exception{
+	public String updateUser() throws Exception{
 		
 		System.out.println("/user/updateUser : GET");
-		
-		User getUser = userService.getUser(user);	//회원정보를 수정하기 전 기존 회원 정보를 DB에서 출력 
-		
-		model.addAttribute("user", getUser);	//DB의 정보를 Key(user)에 저장
 		
 		return "forward:/user/updateUserView.jsp";
 	}
@@ -141,8 +139,6 @@ public class UserController {
 		userService.updateUser(user);	//입력받은 회원 정보를 DB에 저장
 		
 		user = userService.getUser(user);
-		
-		session.setAttribute("user", user);
 		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		System.out.println("sessionId : "+sessionId);
@@ -215,7 +211,7 @@ public class UserController {
 		
 		User getUser = userService.getUser(user);	//입력받은 회원ID로 회원 정보 확인
 		
-		if(user.getPassword().equals(getUser.getPassword())) {
+		if(getUser != null && user.getPassword().equals(getUser.getPassword())) {
 			session.setAttribute("user", getUser);	//DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
 		}
 		

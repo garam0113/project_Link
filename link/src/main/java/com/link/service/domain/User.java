@@ -1,11 +1,11 @@
 package com.link.service.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class User {
 	
 	private String userId;
-	private String receiveId;
+	private User receiveId;
 	private String password;
 	private String name;
 	private String rrn;
@@ -43,6 +43,8 @@ public class User {
 	private String phone1;
 	private String phone2;
 	private String phone3;
+	private String stopStartDateString;
+	private String stopEndDateString;
 	
 	public User() {
 	}
@@ -57,10 +59,10 @@ public class User {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getReceiveId() {
+	public User getReceiveId() {
 		return receiveId;
 	}
-	public void setReceiveId(String receiveId) {
+	public void setReceiveId(User receiveId) {
 		this.receiveId = receiveId;
 	}
 	public String getPassword() {
@@ -92,6 +94,12 @@ public class User {
 	}
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
+		
+		if(phoneNo != null && phoneNo.length() != 0) {
+			phone1 = phoneNo.split("-")[0];
+			phone2 = phoneNo.split("-")[1];
+			phone3 = phoneNo.split("-")[2];
+		}
 	}
 	public String getEmail() {
 		return email;
@@ -176,12 +184,24 @@ public class User {
 	}
 	public void setStopStartDate(Date stopStartDate) {
 		this.stopStartDate = stopStartDate;
+		
+		if(stopStartDate != null) {
+			this.setStopStartDateString(stopStartDate.toString().split("-")[0]
+													+"-"+stopStartDate.toString().split("-")[1]
+													+"-"+stopStartDate.toString().split("-")[2]);
+		}
 	}
 	public Date getStopEndDate() {
 		return stopEndDate;
 	}
 	public void setStopEndDate(Date stopEndDate) {
 		this.stopEndDate = stopEndDate;
+		
+		if(stopEndDate != null) {
+			this.setStopEndDateString(stopEndDate.toString().split("-")[0]
+														+"-"+stopEndDate.toString().split("-")[1]
+														+"-"+stopEndDate.toString().split("-")[2]);
+		}
 	}
 	public String getOutUserState() {
 		return outUserState;
@@ -292,6 +312,24 @@ public class User {
 	public void setPhone3(String phone3) {
 		this.phone3 = phone3;
 	}
+	
+	
+
+	public String getStopStartDateString() {
+		return stopStartDateString;
+	}
+
+	public void setStopStartDateString(String stopStartDateString) {
+		this.stopStartDateString = stopStartDateString;
+	}
+
+	public String getStopEndDateString() {
+		return stopEndDateString;
+	}
+
+	public void setStopEndDateString(String stopEndDateString) {
+		this.stopEndDateString = stopEndDateString;
+	}
 
 	@Override
 	public String toString() {
@@ -306,7 +344,8 @@ public class User {
 				+ ", openCondition=" + openCondition + ", pushCondition=" + pushCondition + ", joinClubCount="
 				+ joinClubCount + ", joinClubLimit=" + joinClubLimit + ", fbState=" + fbState + ", fbType=" + fbType
 				+ ", loginStart=" + loginStart + ", snsUserId=" + snsUserId + ", phone1=" + phone1 + ", phone2="
-				+ phone2 + ", phone3=" + phone3 + "]";
+				+ phone2 + ", phone3=" + phone3 + ", stopStartDateString=" + stopStartDateString
+				+ ", stopEndDateString=" + stopEndDateString + "]";
 	}
 
 }

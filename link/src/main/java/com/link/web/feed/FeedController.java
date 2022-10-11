@@ -2,6 +2,7 @@ package com.link.web.feed;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Push;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
@@ -57,14 +60,15 @@ public class FeedController {
 	
 	
 	
+	// 사용
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
-							User user, Push push, Model model, HttpSession httpSession) throws Exception {
+							User user, Report report, Model model, HttpSession httpSession) throws Exception {
 		
 		// 회원 피드 등록
 		
 		user = (User) httpSession.getAttribute("user");
-		feed.setUserId(user.getUserId());
+		feed.setUser(user);
 		
 		// 해시태그 저장하기 시작
 		
@@ -100,12 +104,15 @@ public class FeedController {
 			}
 		}
 		
+		// Report & Push
+		
 		feedService.addFeed(feed);
 		
 		return "forward:/feed/getFeedList";
 	}
 	
-	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
+	// 사용
+	@RequestMapping(value = "getFeed")
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
 		
@@ -118,6 +125,7 @@ public class FeedController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		heart.setSource("0");
+		heart.setSourceNo(feedNo);
 		
 		if(user != null) {
 			heart.setUserId(user.getUserId());
@@ -139,9 +147,12 @@ public class FeedController {
 		return "forward:/feed/getFeed.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
 	public String updateFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
+		
+		heart.setSource("0");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("feedNo", feedNo);
@@ -153,6 +164,7 @@ public class FeedController {
 		return "forward:/feed/updateFeedView.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
 	public String updateFeed(@ModelAttribute Feed feed, Search search, 
 								User user, Heart heart, Model model) throws Exception {
@@ -161,9 +173,12 @@ public class FeedController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		heart.setSource("0");
+		
 		// 피드 번호 전달
 		map.put("feedNo", feed.getFeedNo());
 		map.put("search", search);
+		map.put("heart", heart);
 		
 		// 업데이트 된 피드 찾기
 		map = feedService.getFeed(map);
@@ -173,22 +188,33 @@ public class FeedController {
 		return "forward:/feed/getFeed.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
 	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) throws Exception {
 		
 		feedService.deleteFeed(feedNo);
 		
-		return "forward:/feed/getFeedList.jsp";
+		return "forward:/feed/getFeedList";
 	}
 	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
+	// 사용 (Rest에서 이동)
+	@RequestMapping(value = "/deleteFeedComment", method = RequestMethod.POST)
+	public String deleteFeedComment(@ModelAttribute Comment comment) throws Exception {
+		
+		feedService.deleteFeedComment(comment.getFeedCommentNo());
+		
+		return "forward:/feed/getFeed";
+		
+	}
+	
 	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	
 	
-	
+	// 사용
 	@RequestMapping(value = "getFeedList")
 	public String getFeedList(@ModelAttribute Search search, Heart heart,
 								User user, HttpSession httpSession, Model model) throws Exception {

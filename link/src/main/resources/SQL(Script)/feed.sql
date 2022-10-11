@@ -86,9 +86,47 @@ INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '1', '1');
 
 SELECT * FROM FEED ORDER BY feed_no DESC;
 
-SELECT * FROM FEED_COMMENT ORDER BY feed_comment_no DESC;
+SELECT * FROM FEED_COMMENT ORDER BY sequence ASC;
 
 SELECT * FROM HEART;
+
+
+
+
+
+DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
+DROP SEQUENCE seq_feed_comment_no;
+CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE feed_comment (
+	feed_comment_no					NUMBER												NOT NULL,
+	feed_no							NUMBER												NOT NULL,
+	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
+	feed_comment_content			VARCHAR2(210)										NOT NULL,
+	feed_comment_heart_count		NUMBER												NOT NULL,
+	feed_recomment_count			NUMBER												NOT NULL,
+	feed_comment_reg_date			DATE												NOT NULL,
+	feed_comment_update_date		DATE,
+	report_condition				CHAR(3)												NOT NULL,
+	delete_condition				CHAR(3)												NOT NULL,
+	delete_user_id					VARCHAR2(20)													REFERENCES users(user_id),
+	parent							NUMBER												NOT NULL,
+	depth							NUMBER												NOT NULL,
+	sequence						NUMBER												NOT NULL,
+	PRIMARY KEY(feed_comment_no)
+);
+
+INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user01', 'first', '5', '0', SYSDATE, null, '0', '0', null,'0', '0', '0');
+INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user02', 'second', '0', '0', SYSDATE, null, '0', '0', null,'0', '0', '1');
+INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user03', 'third', '0', '0', SYSDATE, null, '0', '0', null,'0', '0', '2');
+INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user04', 'fourth', '0', '0', SYSDATE, null, '0', '0', null,'0', '0', '3');
+INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user05', 'fifit', '0', '0', SYSDATE, null, '0', '0', null,'0', '0', '4');
+
+
+
+
+
+
 
 ==========================================================================
 
@@ -217,52 +255,15 @@ SELECT * FROM HEART;
 
 
 
-
-
-
-
-
-
-
-
-
-
 SELECT 
-*
-FROM feed f, (
-				SELECT
-				*
-				FROM	(
-							SELECT
-							*
-							FROM HEART
-							WHERE TRIM(source)		= '0'
-							AND user_id				= 'user01'	)) isLike
-WHERE f.feed_no = isLike.source_no(+)
-ORDER BY feed_no DESC;
+		c.feed_comment_no, c.feed_no, c.user_id, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
+		c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence, isLike.EXIST
+		FROM feed_comment c, (
+								SELECT
+								source_no as EXIST
+								FROM HEART
+								WHERE TRIM(source) = '1'
+								AND user_id = 'user05' ) isLike
+WHERE c.feed_comment_no = isLike.EXIST(+)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-	SELECT
-		COUNT(*)
-		FROM	(
-					SELECT
-					heart_no,
-					user_id,
-					source,
-					source_no
-					FROM HEART
-					WHERE TRIM(source)		= #{ source }
-					AND source_no			= #{ sourceNo }	
-					AND user_id				= #{ userId	}	)

@@ -7,7 +7,7 @@ FROM users;
 WHERE sns_user_id = 'bymin1992@naver.com' and add_user_type = '1';
 
 DELETE users
-WHERE user_id = 'Link4947';
+WHERE phone_no = '010';
 
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)
@@ -20,7 +20,7 @@ VALUES	('user07', '1233', '화요비', 1234561234567, '여자', 01033336666, 'bi
 
 UPDATE users
 SET password = '1111', email = 'user01@bitcamp.com'
-WHERE user_id = 'user01';
+WHERE user_id = 'user';
 
 UPDATE users
 SET password= ''
@@ -35,7 +35,7 @@ SET out_user_date = SYSDATE
 WHERE user_id = 'user01';
 
 UPDATE users
-SET phone_no = 01022224444
+SET phone_no = '010-2222-5555'
 WHERE user_id = 'user01';
 
 UPDATE users
@@ -51,12 +51,12 @@ SET report_count = 1
 WHERE user_id = 'user01';
 
 UPDATE users
-SET stop_start_date = '2022-10-11', stop_end_date = '2022-10-12'
-WHERE user_id = 'user01';
+SET stop_start_date = '2022-10-01', stop_end_date = '2022-10-12'
+WHERE user_id = 'user001';
 
 UPDATE users
 SET penalty_type = '1'
-WHERE user_id = 'user01';
+WHERE user_id = 'user001';
 
 UPDATE users
 SET total_visit_count = 1
@@ -77,3 +77,30 @@ WHERE user_id = 'user01';
 UPDATE users
 SET join_club_limit = 2
 WHERE user_id = 'user01';
+
+
+
+
+SELECT user_id , password , name , gender, rrn, phone_no , email, role, nickname , profile_image,
+profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count,
+stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date,
+total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
+FROM users WHERE name = '방진수' and rrn = '9212101001005'
+
+SELECT *
+	  	FROM (	
+	  			SELECT
+	  			inner_table.* 				,
+	  			ROWNUM 			AS row_seq	
+	  			FROM		(SELECT
+								user_id		, password 	, name	 	, gender, rrn, phone_no	, email, role, nickname	, profile_image, 
+								profile_writing, area1, area2, area3, category1, category2, category3, penalty_type, report_count, 
+								stop_start_date, stop_end_date, out_user_state, out_user_date, add_user_type, logout_date, add_user_date, 
+								total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_Id
+								FROM users
+								WHERE user_id LIKE 'user%'
+								) inner_table
+				WHERE ROWNUM <= 10 )					
+		WHERE row_seq BETWEEN 1 AND 10 ;
+
+

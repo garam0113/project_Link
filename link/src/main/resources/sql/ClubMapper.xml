@@ -125,7 +125,7 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
+										 				<!-- club_no LIKE('%${searchKeyword}%') -->
 										 				club_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
@@ -179,30 +179,50 @@
 						</if> ) countTable						
 	 </select>
 
-	<select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
+		<!-- <select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
 		SELECT 
 			club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
 			FROM club_user
 			WHERE user_id = #{searchKeyword}	
 	
-	</select>
+		</select> -->
 	
-	<select id="getTotalMyClubCount" parameterType="search" resultType = "int">
+ 	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT club_user_no , club_no , user_id , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+											FROM club_user
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				club_user_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				club_no = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY club_no ) inner_table
+		 				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	
+	 <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
 		SELECT COUNT(*)
 	  	FROM(	SELECT club_user_no , club_no
 						FROM club_user
-						<if test="searchCondition != null">
-							<where>
-							<if test="searchCondition == 0 and searchKeyword !='' ">
-					 			club_user_no = #{searchKeyword}
-							</if>
-							<if test="searchCondition == 1 and searchKeyword !='' ">
-					 		club_no = #{searchKeyword}
-							</if>
-						</where>
-					</if> ) countTable			
-	
+						WHERE user_id = #{user.userId})	
 	</select>
+	
+	<!-- <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT *
+	  		FROM club_user)
+		WHERE user_id = #{userId}			
+	
+	</select> -->
+	
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (
@@ -296,6 +316,19 @@
 		WHERE club_no = #{searchKeyword}
 			
 	</select> -->
+	
+	
+	
+	
+	
+	<!-- 모임게시물 등록할 때 해당 모임의 모임원들에게 게시물 등록되었다고 알림. 해당 모임의 모임원들 찾는 Query -->
+	<select id="getClubMemberListToClubPost" parameterType="clubPost" resultMap="clubUserSelectMap">
+		SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+		FROM club_user
+		WHERE CLUB_NO = ${ clubNo } AND JOIN_REG_DATE IS NOT NULL
+		ORDER BY club_user_no ASC
+	 </select>
+	
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
 	  	SELECT *

@@ -5,7 +5,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,19 +34,39 @@ public class UserRestController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 
-	@RequestMapping(value = "json/getUser/{userId}", method = RequestMethod.GET)
-	public User getUser(@PathVariable String userId) throws Exception{
+	@RequestMapping(value = "json/getUser", method = RequestMethod.POST)
+	public User getUser(@RequestBody User user ) throws Exception{
 		
-		System.out.println("/user/json/getUser : GET");
+		System.out.println("/userRest/json/getUser : POST");
 		
-		User user = new User();
+		System.out.println("입력받은 User 값 : "+user);
 		
-		user.setUserId(userId);
+		User getUser = userService.getUser(user);
 		
-		return userService.getUser(user);	//회원정보 리턴
+		System.out.println("DB에서 받은 정보 : "+user);
 		
+		if(getUser != null) {
+			
+			return getUser;	//회원정보가 null이 아닐경우 리턴
+		
+		}else{
+			
+			user.setUserId("");
+			user.setNickName("");
+			
+			System.out.println("null값을 넣은 User : "+user);
+			
+			return user;	//회원정보가 없을 경우 회원ID에 null값을 저장하여 출력
+		}
 	}
 	
+	@RequestMapping(value="json/getUserId", method = RequestMethod.POST)
+	public User getUserId(@RequestBody User user) throws Exception{		
+		
+		System.out.println("/userRest/json/getUserId : POST");
+		
+		return userService.getUser(user);
+	}
 	
 	@RequestMapping(value = "json/updatePassword", method = RequestMethod.POST)
 	public User updatePassword(@RequestBody User user ) throws Exception{
@@ -101,7 +122,7 @@ public class UserRestController {
 	public @ResponseBody
 	String sendSMS(String phoneNo) throws Exception{
 		
-		System.out.println("/user/json/sendSMS : GET");
+		System.out.println("/userRest/json/sendSMS : GET");
 		
 		Random rand = new Random();
 		String numStr = "";
@@ -113,6 +134,8 @@ public class UserRestController {
 		
 		System.out.println("수신자 번호 : "+phoneNo);
 		System.out.println("인증번호 : "+numStr);
+		
+		userService.sendSMS(phoneNo, numStr);
 		
 		return numStr;
 	}

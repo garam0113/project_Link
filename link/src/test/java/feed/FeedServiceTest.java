@@ -32,7 +32,7 @@ public class FeedServiceTest {
 		// 피드 등록
 
 		Feed feed = new Feed();
-		feed.setUserId("user01");
+//		feed.setUserId("user01");
 		feed.setOpenCondition(3);
 		feed.setContent("hiyo");
 		feed.setImage1("a.jpg");
@@ -132,7 +132,7 @@ public class FeedServiceTest {
 		comment.setUser(user);
 		comment.setCommentContent("test입니다");
 		
-		feedService.addFeedComment(comment);
+//		feedService.addFeedComment(comment);
 	}
 	
 //	@Test

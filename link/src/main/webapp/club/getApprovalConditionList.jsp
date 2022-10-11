@@ -51,7 +51,7 @@
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
-			self.location="/club/getApprovalConditionList"
+			self.location="/club/getApprovalCondition"
 			
 		});
 	});
@@ -68,9 +68,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>모임리스트</h3>
-	       <a href="/clubPost/getClubPostList">모임게시물리스트</a>
-	       
+	       <h3>가입현황모임리스트</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -81,31 +79,6 @@
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
-				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
-	    	</div>
 	    	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -124,19 +97,15 @@
             <th align="left">최대 모임원 수</th>
             <th align="left">모임 활동영역</th>
             <th align="left">모임 이미지</th>
-            <th align="left">가입현황리스트</th>
           </tr>
         </thead>
        
 		<tbody>
 		<tr>
-		<%-- ${clubList} --%>
+		${approvalConditionList}
 		  <c:set var="i" value="0" />
-		  <c:forEach var="i" items="${clubList}">
-		  <%-- <input type="hidden" name="clubNo" value="${clubNo}"> --%>
-			<%-- <c:set var="i" value="${ i+1 }" /> --%>
+		  <c:forEach var="i" items="${approvalConditionList}">
 			<tr>
-			  <%-- <td align="center">${ i }</td> --%>
 			  <td align="left"><a href="/club/getClub?clubNo=${i.clubNo}">${i.clubNo}</a>
 			  <td align="left">${i.clubTitle}</td>
 			  <td align="left">${i.clubDetail}</td>
@@ -144,9 +113,7 @@
 			  <td align="left">${i.currentMember}</td>
 			  <td align="left">${i.clubMaxMember}</td>
 			  <td align="left">${i.clubArea}</td>
-			  <td align="left">${i.clubImage}</td>
-			  <td align="left"><a href="/club/getApprovalConditionList">신청현황</a>	
-			  
+			  <td align="left">${i.clubImage}</td>	
 			</tr>
           </c:forEach>
         </tr>

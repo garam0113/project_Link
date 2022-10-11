@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Feed {
 
 	private int feedNo;				// 피드 번호
-	private String userId;			// 회원 아이디
+	private User user;			// 회원 아이디
 	private int openCondition;		// 공개 여부
 	private String content;
 	private String image1;
@@ -22,6 +22,8 @@ public class Feed {
 	private int deleteCondition;
 	private int checkHeart;			// -1 	: 추가,		-2 : 취소
 	private int checkMyHome;		// 1	: myHome 호출
+	private int checkComment;
+	private int currentPage;
 	
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -35,12 +37,12 @@ public class Feed {
 		this.feedNo = feedNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getOpenCondition() {
@@ -171,11 +173,27 @@ public class Feed {
 		this.checkMyHome = checkMyHome;
 	}
 
+	public int getCheckComment() {
+		return checkComment;
+	}
+
+	public void setCheckComment(int checkComment) {
+		this.checkComment = checkComment;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Feed [feedNo : " + feedNo + "] "
-				+ "[userId : " + userId + "] "
+				+ "[user : " + user + "] "
 				+ "[openCondition : " + openCondition + "] "
 				+ "[content : " + content + "] "
 				+ "[image1 : " + image1 + "] "
@@ -191,7 +209,9 @@ public class Feed {
 				+ "[reportCondition : " + reportCondition + "] "
 				+ "[deleteCondition : " + deleteCondition + "] "
 				+ "[checkHeart : " + checkHeart + "] "
-				+ "[checkMyHome : " + checkMyHome + "] ";
+				+ "[checkMyHome : " + checkMyHome + "] "
+				+ "[checkComment : " + checkComment + "] "
+				+ "[currentPage : " + currentPage + "] ";
 	}
 
 }

@@ -1,124 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Alexander Persky Milestone 4 - Twitter</title>
-    <link rel="stylesheet" href="css/styles.css">
+	<meta charset="EUC-KR">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			$(".btn_update").bind("click", function() {
+				alert("수정하기");
+				$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+			})
+		
+		})
+	
+	</script>
+
 </head>
 <body>
 
-    <main>
-        <header>
-            <form class="compose">
-                <textarea placeholder="Compose new Tweet..."></textarea>
+	글번호 : ${feed.feedNo}
+	
+	<br/><br/>
 
-                <div>
-                    <span class="count">140</span>
-                    <button>Send</button>
-                </div>
-            </form>
-        </header>
+	작성자 : ${feed.userId}
+	<br/><br/>
+	
+	<form>
+				<input type="hidden" name="feedNo" value="${feed.feedNo}">
 
-        <div class="tweets">
-            <div class="thread">
-                <div class="tweet">
-                    <img src="images/rockit.png">
-
-                    <div class="body">
-                        <div class="title">@ROCKIT_BOOTCAMP</div>
-                        <div class="message">tweet tweet!!</div>
-                    </div>
-                </div>
-
-                <div class="replies">
-                    <form class="compose">
-                        <textarea placeholder="Compose new Tweet..."></textarea>
-
-                        <div>
-                            <span class="count">140</span>
-                            <button>Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="thread">
-                <div class="tweet">
-                    <img src="images/rockit.png">
-
-                    <div class="body">
-                        <div class="title">@ROCKIT_BOOTCAMP</div>
-                        <div class="message">Hey who wants to teach?</div>
-                    </div>
-                </div>
-
-                <div class="replies">
-                    <form class="compose">
-                        <textarea placeholder="Compose new Tweet..."></textarea>
-
-                        <div>
-                            <span class="count">140</span>
-                            <button>Send</button>
-                        </div>
-                    </form>
-
-                    <div class="tweet">
-                        <img src="images/brad.png">
-
-                        <div class="body">
-                            <div class="title">@bradwestfall</div>
-                            <div class="message">I do!</div>
-                        </div>
-                    </div>
-
-                    <div class="tweet">
-                        <img src="images/rockit.png">
-
-                        <div class="body">
-                            <div class="title">@ROCKIT_BOOTCAMP</div>
-                            <div class="message">sweet!</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Handlebars Templates -->
-    <script id="template-tweet" type="text/x-handlebars-template">
-       	<div class="tweet">
-            <img src="images/{{ img }}">
-
-            <div class="body">
-                <div class="title">{{ handle }}</div>
-                <div class="message">{{ message }}</div>
-            </div>
-        </div>
-    </script>
-
-    <script id="template-compose" type="text/x-handlebars-template">
-        <div class="replies">
-            <form class="compose">
-                <textarea placeholder="Compose new Tweet..."></textarea>
-
-                <div>
-                    <span class="count">140</span>
-                    <button>Send</button>
-                </div>
-            </form>
-        </div>
-    </script>
-
-    <script id="template-thread" type="text/x-handlebars-template">
-        <div class="thread">
-            {{{ tweetTemplate }}}
-            {{{ composeTemplate }}}
-        </div>
-    </script>
-
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
-    <script src="js/main.js"></script>
+	content :	<input type="text" name="content" value="${feed.content}">
+				<button type="button" class="btn_update">수정</button>
+	
+	수정됐니
+	</form>
+		
+	<hr/><hr/>
+	
+	<br/>
+		
+	
 </body>
 </html>
