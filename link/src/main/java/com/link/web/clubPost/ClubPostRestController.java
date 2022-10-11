@@ -59,10 +59,10 @@ public class ClubPostRestController {
 	
 	
 	
-	
+	/*
 	@RequestMapping(value = "json/getClubPostList", method = RequestMethod.GET)
 	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, Map<String, Object> map, HttpSession session, Search search) throws Exception {
-		System.out.println("/getClubPostList : POST : 특정 모임에서 모임게시물 리스트, 개수");
+		System.out.println("/getClubPostList : GET : 특정 모임에서 모임게시물 리스트, 개수");
 		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
 
 		System.out.println(search);
@@ -75,6 +75,28 @@ public class ClubPostRestController {
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount	
 		
 		return map;
+	}
+	*/
+	
+	@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
+	public Map<String, Object> getClubPostList(@RequestBody Search search, ClubPost clubPost, Map<String, Object> map, HttpSession session) throws Exception {
+		System.out.println("/getClubPostList : POST : 페이징, 특정 모임에서 모임게시물 리스트, 개수");
+		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+
+		System.out.println(search);
+		System.out.println(clubPost);
+		
+		//clubPost.setUser((User) session.getAttribute("user"));
+		clubPost.setUser(new User("user03"));
+		search.setPageSize(pageSize);
+		clubPost.setClubNo(search.getPageUnit());
+		map.put("search", search);
+		//map.put("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		
+		System.out.println("확인용 데이터 : " + map.get("clubPost"));
+		
+		return clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost);
 	}
 
 	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.POST)

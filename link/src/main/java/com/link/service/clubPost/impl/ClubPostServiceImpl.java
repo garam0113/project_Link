@@ -175,13 +175,11 @@ public class ClubPostServiceImpl implements ClubPostService {
 		System.out.println("heart댓글 정보 : " + heart);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		heart = (Heart)map.get("heart");
-		comment = (Comment)map.get("comment");
 		
 		if(comment.getHeartCondition() == 1) {
 			// heart가 null이 아니라며 즉, 하트를 클릭했다면 수행
 			
-			heart.setUserId(comment.getUser().getUserId());
+			heart.setUserId(comment.getUserId());
 			heart.setSource("3");
 			heart.setSourceNo(comment.getClubPostCommentNo());
 

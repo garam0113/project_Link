@@ -175,10 +175,17 @@ $(function(){
 					success : function(JSONData, status){
 						//alert(status);
 						//alert(JSONData);
-						$("a[href='#']").text(JSONData);
+						$("a[href='###']").text(JSONData);
 					}
 				});
-	}); // end of 하트
+	}); // end of 댓글좋아요
+	//검색버튼 클릭시 검색 내용에 맞는 상품리스트를 display
+	function fncGetProductList() {
+		document.detailForm.searchCondition.value = document.detailForm.searchCondition.value;
+		document.forms[0].elements[1].value = document.forms[0].elements[1].value;
+		$("#currentPage").val("1");
+		$("form").attr("method","post").attr("action","/product/listProduct").submit();
+	}
 });
 </script>
 </head>
@@ -219,7 +226,7 @@ $(function(){
 모임 게시물 댓글 리스트</br>
 <div add="add" clubPostNo="${ clubPost.getClubPost.clubPostNo }">
 <input type="button" value="등록">
-<a href="#"><img alt="" src="abcd.jpg">댓글좋아요</a></br>
+<a href="###"><img alt="" src="abcd.jpg">댓글좋아요</a></br>
 </div>
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>

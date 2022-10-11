@@ -76,7 +76,9 @@ public class ClubPostController {
 		clubPost.setUser(user);
 		
 		model.addAttribute("search", search);
-		model.addAttribute("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
+		Map<String, Object> map = clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost);
+		model.addAttribute("clubPostList", map.get("clubPostList"));
+		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
