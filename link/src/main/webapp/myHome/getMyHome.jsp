@@ -64,9 +64,11 @@ $(function() {
               
      });
  });			
-		
-		
-		
+ 
+ 
+ 
+
+   
 		
 		
 	</script>
@@ -158,16 +160,18 @@ $(function() {
 				<tr>
 					<c:set var ="i" value="0"></c:set>
 					<c:forEach var="list" items="${list}">
-					<c:set var="i" value="${i+1 }"></c:set>
+					<c:set var="i" value="${i + 1 }"></c:set>
 			
 		
 					
 					<td width="104" class="ct_write">휴대전화번호</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					
-					<td height="26">${list[i].receiveId.nickName}</td>
-					<td height="26">${list[i].receiveId.userId}</td>
-					<td height="26">${list[i].receiveId.profileImage}</td>
+					<td height="26">${list.receiveId.nickName}</td>
+					<br/>
+					<td height="26">${list.receiveId.userId}</td>
+					<br/>
+					<td height="26">${list.receiveId.profileImage}</td>
 					
 		
 		             </c:forEach>
@@ -225,6 +229,7 @@ $(function() {
 							<li><a href="#" id="sgr">프로필</a></li>
 							<li><a href="#" id="gg">업데이트</a></li>
 							<li><a href="#" id="ff">팔로우리스트</a></li>
+							<li><a href="#" id="zz">팔팔리스트</a></li>
 
 							<tr>
 
@@ -250,6 +255,66 @@ $(function() {
 
 		<div class="form-group">
 			<div class="col-sm-offset-4 col-sm-6 text-center"></div>
+			
+<p id="demo"></p><br>
+<button type="button" class="abc" value="${user.userId}">클릭</button>
+<!-- json 불러서 p태그에 넣기 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$("button").click(function() {
+		var userId = $(".abc").val();
+		console.log($(".abc").val());
+		alert("생성");
+		$.ajax({
+			url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
+			type : "POST", // 타입은 뭘 쓸거니?
+			datatype : "json",
+			 data		:  JSON.stringify({userId}),
+			contentType : "application/json",
+			success : function(data) { // 갔다온 다음 결과값
+				alert('seccuss');	// 나오면 파일을 찾았다는 것
+			//	alert(data);  // [object Object],[object Object],[object Object]
+				
+			// 데이터를 확인하고 싶을 때.
+			//	let str = JSON.stringify(data); // <> parse()
+			//	alert(str); 
+           console.log(data.list[0].receiveId.nickName);
+				$.each(data.list, function(index, item) { // 데이터 =item
+					$("#demo").append(index + " "); // index가 끝날때까지 
+					$("#demo").append(item.receiveId.userId + " ");
+					$("#demo").append(item.receiveId.nickName + " ");
+					$("#demo").append(item.receiveId.name + " ");
+					$("#demo").append(item.receiveId.profileImage + "<br>");
+					console.log(item.receiveId);
+				});
+			},
+			error : function() {
+				alert('error');			
+			}
+		});
+	});
+});
+</script>		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 </body>
 
 </html>

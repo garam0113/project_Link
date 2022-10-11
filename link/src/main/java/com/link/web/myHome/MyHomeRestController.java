@@ -23,6 +23,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 
@@ -52,7 +53,7 @@ public class MyHomeRestController {
 	
 	
 	@RequestMapping(value = "json/getFollowList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowList(@RequestBody Search search) throws Exception{
+	 public Map<String, Object> getFollowList(@RequestBody Search search, User user, HttpSession session) throws Exception{
 		 System.out.println("/myHomeRest/json/getFollowList : POST");
 		 
 		 if(search.getCurrentPage() == 0) {
@@ -62,15 +63,20 @@ public class MyHomeRestController {
 			search.setPageSize(pageSize);
 			search.setPageUnit(pageUnit);
 		 
-		 
+		 user = (User) session.getAttribute("user");
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("search",search);
-			
+		 map.put("user", user);	
+		 map.put("list",myHomeService.getFollowList(search).get("list"));
+		 
+		 
+		 
+		 
 		 return map;
 		 
 	 }
 	@RequestMapping(value = "json/getFollowerList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowerList(@RequestBody Search search) throws Exception{
+	 public Map<String, Object> getFollowerList(@RequestBody Search search,User user, HttpSession session) throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
 				 
 				 if(search.getCurrentPage() == 0) {
@@ -79,9 +85,12 @@ public class MyHomeRestController {
 					
 					search.setPageSize(pageSize);
 					search.setPageUnit(pageUnit);
-				 
+				 user = (User) session.getAttribute("user");
 				 Map<String,Object>map = myHomeService.getFollowerList(search);
-				 map.put("search", search);
+				 map.put("search",search);
+				 map.put("user", user);	
+				 map.put("list",myHomeService.getFollowList(search).get("list"));
+				 
 				 return map;
 				 
     }
