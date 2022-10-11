@@ -28,6 +28,8 @@
 		
 		<association property="user"			javaType="user">
 			<result property="userId" 			column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"			column="nickName"					jdbcType="VARCHAR" />
 		</association>
 		
 	</resultMap>
@@ -251,20 +253,20 @@
 	
 	
 	
-	<!--====================List====================-->
-	<!--====================List====================-->
-	<!--====================List====================-->
+	<!--========================================List========================================-->
+	<!--========================================List========================================-->
+	<!--========================================List========================================-->
 	
 	
 	
-	<!-- 사용 -->
+	<!--========================================사용========================================-->
 	<select 	id="getFeedList"			parameterType="hashmap"		resultMap="feedSelectMap">
 		SELECT 
-		f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
+		f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
 		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
 		<choose>
 			<when test="user != null">
-				, isLike.EXIST FROM feed f, (
+				, isLike.EXIST FROM users u, feed f, (
 												SELECT
 												source_no as EXIST
 												FROM HEART
@@ -272,7 +274,8 @@
 												AND user_id			= #{user.userId}
 																							) isLike
 				<where>
-				f.feed_no = isLike.EXIST(+)
+				u.user_id = f.user_id
+				AND f.feed_no = isLike.EXIST(+)
 				</where>
 				<if test="search.searchKeyword != ''">
 					AND f.feed_content LIKE '%${search.searchKeyword}%'
@@ -286,16 +289,18 @@
 				ORDER BY feed_no DESC
 			</when>
 			<otherwise>
-			FROM feed f
+			FROM users u, feed f
 			<if test="searchKeyword != ''">
 			<where>
-				f.feed_content LIKE '%${searchKeyword}%'
+			u.user_id = f.user_id
+			AND f.feed_content LIKE '%${searchKeyword}%'
 			</where>
 			</if>
 			ORDER BY feed_no DESC
 			</otherwise>
 		</choose>
 	</select>
+	<!--========================================사용========================================-->
 	
 	
 	
@@ -331,6 +336,7 @@
 			</otherwise>
 		</choose>
 	</select>
+	
 	
 	
 	

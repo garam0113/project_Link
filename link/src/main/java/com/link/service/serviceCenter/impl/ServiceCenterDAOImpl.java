@@ -50,7 +50,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		sqlSession.update("NoticeMapper.updateNotice", notice);
 	}
 
-
+	
 
 	@Override
 	public void getCount(int noticeNo) throws Exception {
@@ -86,7 +86,11 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 
 	@Override
 	public List<QandA> getQandAList(Search search) throws Exception {
-		// TODO Auto-generated method stub
+		List<QandA> list = sqlSession.selectList("QandAMapper.getQandAList", search);
+		for (QandA qandA : list) {
+			System.out.println("===========" + qandA);
+		}
+		
 		return sqlSession.selectList("QandAMapper.getQandAList", search);
 	}
 //==================================================================여기까지가 List
@@ -97,17 +101,19 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		sqlSession.insert("QandAMapper.addQandA", qandA);
 	}
 
-	@Override
-	public QandA getQandA(int qandANo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("QandAMapper.getQandA", qandANo);
-	}
+
 
 	@Override
 	public void updateQandA(QandA qandA) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.update("QandAMapper.updateQandA",qandA);
 		
+	}
+	
+	@Override
+	public QandA getQandA(int qandANo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("QandAMapper.getQandA", qandANo);
 	}
 
 	@Override
@@ -156,12 +162,18 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		// TODO Auto-generated method stub
 		
 		if(a == 0) {
+			System.out.println("1");
 			return sqlSession.update("Report_PushMapper.getReportList", search);
+			
 		}else if (a == 1) {
+			System.out.println("2");
 			return sqlSession.update("QandAMapper.getQandAList", search);
 		}else {
+			System.out.println("3");
 			return sqlSession.update("NoticeMapper.getNoticeList", search);
 		}
 	}
 //==================================================================여기까지가 공통
+
+
 }

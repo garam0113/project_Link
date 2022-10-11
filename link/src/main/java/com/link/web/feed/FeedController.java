@@ -108,7 +108,7 @@ public class FeedController {
 		
 		feedService.addFeed(feed);
 		
-		return "forward:/feed/getFeedList";
+		return "redirect:/feed/getFeedList";
 	}
 	
 	// 사용

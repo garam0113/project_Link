@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Feed {
 
 	private int feedNo;				// 피드 번호
-	private User user;			// 회원 아이디
+	private User user;				// 회원 아이디
 	private int openCondition;		// 공개 여부
 	private String content;
 	private String image1;

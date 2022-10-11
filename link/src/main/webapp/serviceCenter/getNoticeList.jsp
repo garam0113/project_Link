@@ -52,7 +52,7 @@
 		});
 		
 		$("td.ct_btn01:contains('등록')").bind("click", function() {
-			self.location = "../notice/addNoticeView.jsp";
+			self.location = "../serviceCenter/addNoticeView.jsp";
 		})
 		
 		
@@ -166,7 +166,7 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
-	  <c:if test="${user.id == 'ssiroo4'}">
+	 
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"
 			style="margin-top: 10px;">
 			<tr>
@@ -176,7 +176,7 @@
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 
-							<c:if test="${user.id == 'ssiroo4'}">
+							
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td class="ct_write01"><input type="hidden"
@@ -186,7 +186,7 @@
 								<td width="30"></td>
 								<td background="/images/ct_btnbg02.gif" width="90"
 									class="ct_btn01" style="padding-top: 3px;">등록</td>
-							</c:if>
+							
 							<td width="30"></td>
 
 							<td width="14" height="23">
@@ -202,7 +202,7 @@
 				</td>
 			</tr>
 		</table>
-								</c:if>
+								<
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
