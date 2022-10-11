@@ -155,10 +155,10 @@ public class ServiceCenterServiceTest {
 		qandA.setQandAImage1("abc.jpg");
 		qandA.setQandAImage2("cdf.jpg");
 		qandA.setQandARegDate("22-10-05");
-		qandA.setQandACount(0);
+
 		qandA.setQandACondition(0);
 		qandA.setQandAOpenCondition(0);
-		qandA.setUser(user);
+		qandA.setUserId(user);
 		
 		System.out.println(qandA);
 		serviceCenterService.addQandA(qandA);
@@ -184,7 +184,7 @@ public class ServiceCenterServiceTest {
 		qandA.setQandAImage1("abc.jpg");
 		qandA.setQandAImage2("cdf.jpg");
 		qandA.setQandARegDate("22-10-05");
-		qandA.setUser(user);
+		qandA.setUserId(user);
 		qandA.setQandAAnswerContent("바뀐답변입니다");
 		qandA.setQandAAnswerRegDate("22-11-05");
 		qandA.setQandACondition(1);

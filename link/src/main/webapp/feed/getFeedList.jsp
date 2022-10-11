@@ -138,7 +138,7 @@
 			
 			<form>
 			
-				${feed.feedNo}번째글 [작성자 : ${feed.userId}]
+				${feed.feedNo}번째글 [작성자 : ${feed.user.userId}]
 				<br/>
 				<br/>	내용 :  ${feed.content}
 				<br/>

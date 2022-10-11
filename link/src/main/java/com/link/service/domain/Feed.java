@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Feed {
 
 	private int feedNo;				// 피드 번호
-	private String userId;			// 회원 아이디
+	private User user;			// 회원 아이디
 	private int openCondition;		// 공개 여부
 	private String content;
 	private String image1;
@@ -37,12 +37,12 @@ public class Feed {
 		this.feedNo = feedNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getOpenCondition() {
@@ -193,7 +193,7 @@ public class Feed {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Feed [feedNo : " + feedNo + "] "
-				+ "[userId : " + userId + "] "
+				+ "[user : " + user + "] "
 				+ "[openCondition : " + openCondition + "] "
 				+ "[content : " + content + "] "
 				+ "[image1 : " + image1 + "] "

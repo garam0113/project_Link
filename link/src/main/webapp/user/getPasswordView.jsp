@@ -40,10 +40,6 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	

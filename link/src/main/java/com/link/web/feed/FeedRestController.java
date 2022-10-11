@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Search;
@@ -83,6 +81,7 @@ public class FeedRestController {
 		
 	}
 	
+	// 사용
 	@RequestMapping(value = "/json/getFeedComment", method = RequestMethod.POST)
 	public Comment getFeedComment(@RequestBody Comment comment) throws Exception {
 
@@ -92,6 +91,7 @@ public class FeedRestController {
 		
 	}
 	
+	// 사용
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
 	public Comment updateFeedComment(@RequestBody Comment comment) throws Exception {
 		
@@ -99,22 +99,10 @@ public class FeedRestController {
 		
 		return feedService.getFeedComment(comment.getFeedCommentNo());
 		
+		// 리스트로 가져와서 수정 성공시 리스트로 뿌리는 것 고려
+		
 	}
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
-	public List<Comment> deleteFeedComment(@RequestBody Comment comment) throws Exception {
-		
-		feedService.deleteFeedComment(comment.getFeedCommentNo());	// 수정
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("feedNo", comment.getFeedNo());
-		
-		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
-		
-	}
-	
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/getFeedList", method = RequestMethod.POST)

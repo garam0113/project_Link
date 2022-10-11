@@ -19,6 +19,96 @@
 		
 	
 		$(function(){
+			
+			// 댓글 삭제
+			$(".deleteComment").bind("click", function() {
+				alert("삭제 요청 // 이 피드 번호 : " + ${feed.feedNo} + "댓글 번호 : " + $(this).parent().next().find("input[name='feedCommentNo']").val());
+				
+				$("form").attr("method", "POST").attr("action", "/feed/deleteFeedComment").submit();
+			})
+			
+			// 댓글 수정 화면 띄우기 
+			
+			$(".updateCommentView").bind("click", function() {
+
+				alert("수정화면 요청 // 이 피드 번호 : " + ${feed.feedNo} + "댓글 번호 : " + $(this).parent().next().find("input[name='feedCommentNo']").val());
+				alert("여기 html를 수정하자 : " + $(this).parent().html());
+				
+				var beforeComment = $(this).parent().html();
+				
+				var changePoint = $(this).parent();
+				var commentNo = $(this).parent().next().find("input[name='feedCommentNo']").val();
+				
+				$.ajax (
+						
+						{
+							url : "/feedRest/json/getFeedComment",
+							method : "POST",
+							data : JSON.stringify ({
+								feedNo : ${feed.feedNo},
+								feedCommentNo : commentNo
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								swal.fire("수정 화면 요청 성공 : " + data.commentContent + "\n" + changePoint);
+								
+								var changeHtml = "<input type='text' name='commentContent' value='" + data.commentContent + "'>" +
+													"<button type='button' class='updateFeedComment'>댓글 수정</button>";
+													
+								alert("바꿀 내용 : " + changeHtml);
+								$(changePoint).html(changeHtml);
+								
+								// 댓글 수정 클릭시 이벤트 걸기
+								
+								
+								$(".updateFeedComment").bind("click", function(){
+									
+									alert("바꾸고 싶은 내용은 " + $(this).prev().val());
+									swal.fire("수정되었습니다.");
+									
+									var wantComment = $(this).prev().val();
+									
+									$.ajax(
+												{
+													url : "/feedRest/json/updateFeedComment",
+													method : "POST",
+													data : JSON.stringify ({
+														feedNo : ${feed.feedNo},
+														feedCommentNo : commentNo,
+														commentContent : wantComment
+													}),
+													contentType: 'application/json',
+													dataType : "json",
+													header : {
+														"Accept" : "application/json",
+														"Content-Type" : "application/json"
+													}, // header end
+													
+													success : function(data, status) {
+														swal.fire("성공");
+													}
+													
+												}
+									) // ajax close;
+									
+									// $(changePoint).html(beforeComment);
+									
+								}) // event close
+								
+								
+								
+							} // success close
+						}
+						
+				) // ajax close
+			})
 		
 			// 댓글 리스트 ajax 테스트
 			
@@ -354,7 +444,7 @@
 </head>
 <body>
 
-	작성자 : ${feed.userId}
+	작성자 : ${feed.user.userId}
 	<br/>
 	세션 아이디 : ${sessionScope.user.userId}
 	<br/><br/>
@@ -367,7 +457,7 @@
 	
 	<span id="check"> 내가 좋아요 했는지 체크 ${feed.checkHeart}</span>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<c:if test="${sessionScope.user.userId eq feed.userId}">
+	<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 		<button type="button" id="update" >수정</button>
 	</c:if>
 	
@@ -418,13 +508,14 @@
 			<c:set var="i" value="0"></c:set>
 			<c:forEach var="comment" items="${commentList}">
 				<c:set var="i" value="${i + 1}"></c:set>
-						<div style = "border: 1px solid gray; width:800px; padding:5px;
+						<div style = "border: 1px solid gray; width:1200px; padding:5px;
 								margin-top:5px; margin-left:<c:out value='${50 * comment.depth}'/>px; display:inline-block">
 
 						작성자 :: ${comment.user.userId} :: [댓글번호 ${comment.feedCommentNo}] [내용 ${comment.commentContent}] [깊이 ${comment.depth}]  
 						[좋아요 개수 : ${comment.commentHeartCount}]
 							<c:if test="${sessionScope.user.userId == comment.user.userId}">
 								<button type="button" class="updateCommentView">댓글 수정하기</button>
+								<button type="button" class="deleteComment">댓글 삭제하기</button>
 							</c:if>
 						
 							<c:if test="${comment.heartCondition == 0}">

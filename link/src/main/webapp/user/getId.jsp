@@ -30,16 +30,18 @@
     </style>
     
     <script type="text/javascript">
+    
+    $(function() {
+		$("#chack").on("click", function() {
+			window.close();
+		});
+	});
     </script>
     
     </head>
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -58,7 +60,6 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" id="chack" class="btn btn-primary"  >확 &nbsp;인</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
 		</form>
