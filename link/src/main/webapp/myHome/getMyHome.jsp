@@ -64,14 +64,34 @@ $(function() {
               
      });
  });			
- 
- 
- 
+ $(function(){
 
+
+     $(".pp").on("click" , function() {
    
-		
-		
-	</script>
+           var userId = $(".pp").html();
+           console.log(userId);
+           alert("생성");
+           // 이게안된다는거지?ㅇㅇㅇㅇ
+           $(document).ready(function(){
+        		$.ajax({
+        			type: 'GET',   //get방식으로 명시
+        			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
+        			dataType:'json',   //문자형식으로 받기
+        			success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
+        	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+        				alert(data);   
+        			},
+        			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
+        				alert('실패');
+        			}
+        		})
+        	});
+              
+     });
+ });			
+ 
+</script>
 <style>
 .calendar {
 	margin: 0 auto;
@@ -112,11 +132,7 @@ $(function() {
 <body bgcolor="#ffffff" text="#000000">
 
 
-
-
-
-
-	<div class="calendar">
+<div class="calendar">
 
 		<div class="usertext">
 			<table width="300px" border="0" cellspacing="0" cellpadding="0"
@@ -125,13 +141,13 @@ $(function() {
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
 				<tr>
-
+                    
 					<td width="104" class="ct_write">아이디</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					<td class="ct_write01">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td width="105" class="pp">${user.userId}</td>
+								<td width="105" class="pp">${user.userId}</td>  
 								<td></td>
 							</tr>
 						</table>
@@ -157,26 +173,7 @@ $(function() {
 				<tr>
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
-				<tr>
-					<c:set var ="i" value="0"></c:set>
-					<c:forEach var="list" items="${list}">
-					<c:set var="i" value="${i + 1 }"></c:set>
-			
-		
-					
-					<td width="104" class="ct_write">휴대전화번호</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					
-					<td height="26">${list.receiveId.nickName}</td>
-					<br/>
-					<td height="26">${list.receiveId.userId}</td>
-					<br/>
-					<td height="26">${list.receiveId.profileImage}</td>
-					
-		
-		             </c:forEach>
-			
-				</tr>
+				
 				<tr>
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
@@ -207,8 +204,8 @@ $(function() {
 					<td height="26">${club.clubArea}</td>
 					<td height="26">${club.clubArea}</td> 
 					<td>${feedList}</td>
+					<td>${clubList}</td>
 
-                 <li><a href="/myHome/getMyHome?userId=user11" id="ff">user11</a></li>
 				</tr>
 				<tr>
 					<td width="104" class="ct_write">자기소개</td>
@@ -230,9 +227,9 @@ $(function() {
 							<li><a href="#" id="gg">업데이트</a></li>
 							<li><a href="#" id="ff">팔로우리스트</a></li>
 							<li><a href="#" id="zz">팔팔리스트</a></li>
-
+<a href="/myHome/getMyHome?userId=user11" id="zz">유저11</a></li>
 							<tr>
-
+           
 								<!--	jQuery Event 처리로 변경
 					
 						<a href="javascript:history.go(-1);">확인</a>
@@ -291,9 +288,24 @@ $(document).ready(function() {
 			error : function() {
 				alert('error');			
 			}
+			
 		});
+		
+		
+	});
+	
+	
+});
+
+
+$(function(){
+	$("#demo").on("click", function(){
+		
+		self.location ="/myHome/getMyHome?userId=" + $(this).text().trim();
 	});
 });
+
+
 </script>		
 			
 			

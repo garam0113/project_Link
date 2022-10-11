@@ -95,31 +95,43 @@ public class MyHomeRestController {
 				 
     }
 	 
-	@RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
-    public void addFollow(@PathVariable String userId, HttpSession session, Model model) throws Exception{
-		
-		try {
-			
-			System.out.println("/myHomeRest/json/addFollow : GET");
-			 System.out.println("userId : " + userId);
-			 
-			 
-			 String sendId =((User)session.getAttribute("user")).getUserId();
-			 User user = new User();
-			 User receiveId = new User();
-			 user.setUserId(sendId);
-			 receiveId.setUserId(userId);
-			 
-			 user.setReceiveId(receiveId);
-			 myHomeService.addFollow(user);
-			 
-		} catch( Exception e) {
-			e.printStackTrace();
-		}
-		 
+    @RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
+    public void addFollow(@PathVariable String userId, User receiveId, HttpSession session, Model model) throws Exception{
+      
+      try {
+         
+         System.out.println("/myHomeRest/json/addFollow : GET");
+
+         // 팔로우 받는 유저 id ( 패스파라미터로 받음 )
+         // @PathVariable String userId
+          
+          // 팔로우 보내는 유저 id ( 로그인 세션에 저장되어있음 )
+          String sendId =((User)session.getAttribute("user")).getUserId();
+
+          // User 객체 생성
+          User user = new User();
+          
+          // 보내는사람 id set
+          user.setUserId(sendId);
+
+          // 받는사람 정보 객체생성
+          User receiveUser = new User();
+          receiveUser.setReceiveId(receiveId);
+          // 받는사람 정보 set
+          user.setReceiveId(receiveUser);
+
+          System.out.println("send_user_id : " + sendId);
+          System.out.println("recv_user_id : " + receiveUser.getReceiveId());
+
+          // 서비스 실행
+          myHomeService.addFollow(user);
+          
+      } catch( Exception e) {
+         e.printStackTrace();
+      }
+       
  
-	 }
-	 
+    }
 //	 @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
 //	    public User deleteFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
 //			 
