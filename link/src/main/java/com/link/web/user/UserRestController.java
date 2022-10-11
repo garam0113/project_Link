@@ -5,7 +5,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +60,13 @@ public class UserRestController {
 		}
 	}
 	
+	@RequestMapping(value="json/getUserId", method = RequestMethod.POST)
+	public User getUserId(@RequestBody User user) throws Exception{		
+		
+		System.out.println("/userRest/json/getUserId : POST");
+		
+		return userService.getUser(user);
+	}
 	
 	@RequestMapping(value = "json/updatePassword", method = RequestMethod.POST)
 	public User updatePassword(@RequestBody User user ) throws Exception{

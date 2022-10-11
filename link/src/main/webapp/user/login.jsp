@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
@@ -43,27 +44,80 @@
     <script type="text/javascript">
   	 $(function() {
 			$("button.btn.btn-primary").on("click", function() {
-				$("form").attr("method", "POST").attr("action", "/user/login").submit(); //로그인
+				login(); //로그인
 			});
-		});
-    	
-    	$(function() {
+			
 			$("a.btn.btn-primary.btn").on("click", function() {
 				self.location = "/user/addUser"	//회원가입
 			});
-		});
-    	
-    	$(function() {
+			
 			$(".ID").on("click", function() {
-				self.location = "/user/getUserId"
+				var child;
+				child = window.open("/user/getUserId", "_blank", "width = 800, height = 500");
 			});
-		});
-    	
-    	$(function() {
+			
 			$(".getPassword").on("click", function() {
-				self.location = "/user/getPassword"
-			})
-		})
+				var child;
+				child = window.open("/user/getPassword", "_blank", "width = 800, height = 500");
+			});
+			
+		});
+    
+  	 function login() {
+		 
+  		 //const date = new Date();
+  		 var id = $("#userId").val();
+  		 var pw = $("#password").val();
+  		 
+  		 console.log("date : "+Date.now());
+  		 
+  		 if(id == null || id.length < 1){
+  			 swal.fire("아이디를 입력해주세요.");
+  			 return;
+  		 }
+  		 
+  		 if(pw == null || pw.length < 1){
+  			 swal.fire("비밀번호를 입력해주세요.");
+  			 return;
+  		 }
+  		 
+  		 $.ajax("/userRest/json/getUser", {
+  			 
+  			 type : "POST",
+  			 data : JSON.stringify({
+  				 userId : id
+  			 }),
+  			 dataType : "json",
+  			 contentType : "application/json",
+  			 henders : {
+  				 "Accept" : "applicattion/json"
+  			 },
+  			 success : function(Data, status) {
+				
+  				 console.log(Data.stopEndDate);
+  				 
+  				 if(Data.userId == ""){
+  					 swal.fire("존재하지 않는 아이디입니다.");
+  					 return;
+  				 }else if(Data.userId != "" && pw != Data.password){
+  					 swal.fire("비밀번호가 틀립니다.");
+  					 return;
+  				 }else if(Data.penaltyType == 2){
+  					 swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
+  					 return;
+  				 }else if(Data.penaltyType == 1 && Date.now() < Data.stopEndDate){
+  					 swal.fire("회원은 정지대상자로 ["+Data.stopStartDateString+" ~ "+Data.stopEndDateString+"까지 로그인이 제한됩니다.");
+  					 return;
+  				 }
+  				 else if(Data.userID != "" && pw == Data.password){
+  					 
+  					$("form").attr("method", "POST").attr("action", "/user/login").submit();
+  				 }
+			}
+  		 });
+  		 
+	}
+  	 
     </script>
 </head>
 <body>
@@ -86,7 +140,6 @@
 			</div>
 	   	 	
 	 	 	<div class="col-md-6">
-	 	 	
 		 	 	<br/><br/>
 				
 				<div class="jumbotron">	 	 	

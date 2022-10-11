@@ -20,7 +20,7 @@
 	
 	$(function() {
 		$("a:contains('·Î±×¾Æ¿ô')").on("click", function() {
-			self.location = "/user/logout"
+			self.location = "/user/logout?userId=${user.userId}"
 		})
 	})
 	
