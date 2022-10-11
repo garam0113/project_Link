@@ -56,6 +56,12 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUser(User user) throws Exception {
 		// TODO Auto-generated method stub
+		try {
+		sqlSession.selectOne("UserMapper.getUser",user);
+		} catch (Exception e) {
+		e.printStackTrace();
+			// TODO: handle exception
+		}
 		return (User)sqlSession.selectOne("UserMapper.getUser",user);
 	}
 

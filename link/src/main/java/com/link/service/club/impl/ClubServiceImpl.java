@@ -188,7 +188,7 @@ public class ClubServiceImpl implements ClubService {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("approvalConditionList",list);
-		map.put("totalApprovalConidtionCount", new Integer(totalApprovalConditionCount));
+		map.put("totalApprovalConditionCount", new Integer(totalApprovalConditionCount));
 		return map;
 	}
 	

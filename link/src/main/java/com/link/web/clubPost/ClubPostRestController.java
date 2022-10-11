@@ -151,14 +151,19 @@ public class ClubPostRestController {
 	
 	@RequestMapping(value = "json/getClubPostCommentList", method = RequestMethod.POST)
 	public List<Comment> getClubPostCommentList(@RequestBody Comment comment, Search search, Map<String, Object> map) throws Exception {
-		System.out.println("/getClubPostCommentList : GET : 특정 모임의 또는 특정 댓글의 댓글리스트");
+		System.out.println("/getClubPostCommentList : POST : 특정 모임의 또는 특정 댓글의 댓글리스트");
 		// search - currentPaget와 pageSize, comment - depth, clubPostCommentNo
-		
+
 		System.out.println("comment : " + comment);
 		System.out.println("search : " + search);
+		
+		//int currentPage = (comment.getSequence() + 1)/10 + 1;
 
 		map.put("comment", comment);
 		map.put("search", ClubPostCommon.getSearch(search));
+		
+		System.out.println("search 처리 후 : " + search);
+		
 		return clubPostServiceImpl.getClubPostCommentList(map);
 	}
 	

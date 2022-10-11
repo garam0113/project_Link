@@ -150,8 +150,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public List<Comment> getClubPostCommentList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostCommentList(Map<String, Object> map) 왔다");
-		System.out.println(((Search)map.get("search")).getOrder());
-		return sqlSession.selectList("ClubPostMapper.getClubPostCommentList", map);
+		return sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", map);
 	}// end of getClubPostCommentList(Map<String, Object> map)
 
 	@Override

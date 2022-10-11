@@ -208,22 +208,21 @@
 	 </select>
 	 
 	
-	<select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
+	 <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
 		SELECT COUNT(*)
 	  	FROM(	SELECT club_user_no , club_no
 						FROM club_user
-						<if test="searchCondition != null">
-							<where>
-							<if test="searchCondition == 0 and searchKeyword !='' ">
-					 			club_user_no = #{searchKeyword}
-							</if>
-							<if test="searchCondition == 1 and searchKeyword !='' ">
-					 		club_no = #{searchKeyword}
-							</if>
-						</where>
-					</if> ) countTable			
-	
+						WHERE user_id = #{user.userId})	
 	</select>
+	
+	<!-- <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT *
+	  		FROM club_user)
+		WHERE user_id = #{userId}			
+	
+	</select> -->
+	
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (
