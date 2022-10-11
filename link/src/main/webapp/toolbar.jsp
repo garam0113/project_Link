@@ -47,7 +47,7 @@
 							<li class="menu-item">
 								<a href="/">Live</a>
 							</li>
-							<li class="menu-item"><a href="/club/getClubList">¸ðÀÓ</a></li>
+							<li class="menu-item"><a href="/club/getClubList">Club</a></li>
 							<li class="menu-item">
 								<a href="/myHome/getMyHome?userId=${user.userId}">MyHome</a>
 							</li>
