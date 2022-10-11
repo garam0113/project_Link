@@ -4,7 +4,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,8 +50,8 @@
 							<li class="menu-item">
 								<a href="/myHome/getMyHome?userId=${user.userId}">MyHome</a>
 							</li>
-							<c:if test="${ empty user }">
 							<li class="menu-item"><a href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+							<c:if test="${ empty user }">
 							<li class="menu-item"><a href="/user/login">로그인</a></li>
 							<li class="menu-item"><a href="/user/addUser">회원가입</a></li>
 							</c:if>
