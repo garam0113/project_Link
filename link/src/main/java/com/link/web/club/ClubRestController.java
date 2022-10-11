@@ -77,10 +77,10 @@ public class ClubRestController {
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage = " +resultPage);
 		
-		model.addAttribute("list",map.get("list"));
+		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("search",search);
 		
@@ -118,13 +118,12 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="json/addMeetingMember", method=RequestMethod.POST)
-	public Participant addMeetingMember(@RequestBody Participant participant, Model model) throws Exception {
+	public void addMeetingMember(@RequestBody Participant participant, Model model) throws Exception {
 		
 		System.out.println("addMeetingMember 시작~");
 		
 		clubService.addMeetingMember(participant);
 		
-		return participant;
 	}
 	
 	@RequestMapping(value="json/deleteMeetingMember", method=RequestMethod.POST)

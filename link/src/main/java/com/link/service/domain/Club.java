@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Club {
 
 	private int clubNo;
-	private String userId;
+	private User user;
 	private String clubTitle;
 	private String clubDetail;
 	private Date clubRegDate;
@@ -22,11 +22,11 @@ public class Club {
 	public void setClubNo(int clubNo) {
 		this.clubNo = clubNo;
 	}
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public String getClubTitle() {
 		return clubTitle;
@@ -78,7 +78,7 @@ public class Club {
 	}
 	@Override
 	public String toString() {
-		return "Club [clubNo=" + clubNo + ", userId=" + userId + ", clubTitle=" + clubTitle + ", clubDetail="
+		return "Club [clubNo=" + clubNo + ", user=" + user + ", clubTitle=" + clubTitle + ", clubDetail="
 				+ clubDetail + ", clubRegDate=" + clubRegDate + ", clubImage=" + clubImage + ", currentMember="
 				+ currentMember + ", clubMaxMember=" + clubMaxMember + ", clubCategory=" + clubCategory + ", clubArea="
 				+ clubArea + "]";

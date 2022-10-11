@@ -73,12 +73,12 @@
 		
 		<form class="form-horizontal">
 		
-			<div class="form-group">
-				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
+		<!-- 	<div class="form-group">
+				<label for="user.userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userId" name="userId" placeholder="이름은 필수입니다">
+					<input type="text" class="form-control" id="user.userId" name="user.userId" placeholder="이름은 필수입니다">
 				</div>					
-			</div>
+			</div> -->
 						
 			<div class="form-group">
 				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> 가 입 인 사</label>

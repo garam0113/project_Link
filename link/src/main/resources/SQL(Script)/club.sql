@@ -1,5 +1,7 @@
 select * from users;
 
+select * from FEED;
+
 //모임등록
 addClub()
 INSERT INTO club (club_no, user_id, club_title, club_detail, club_reg_date, current_member, club_max_member, club_category, club_area, club_image)
@@ -13,9 +15,9 @@ VALUES (seq_club_user_no.nextval, 'user03',3, sysdate, null, null, null, '안녕
 //모임일정등록
 addMeeting()
 INSERT INTO meeting (meeting_no, club_no, add_meeting_user_id, meeting_title, meeting_content, meeting_date, meeting_place, meeting_time, meeting_weather, meeting_reg_date, meeting_member, meeting_maximum_member)
-VALUES (seq_meeting_no.nextval, 2, 'user01', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소', '테스트일정시간', '테스트날씨', sysdate, 1, 10);
+VALUES (seq_meeting_no.nextval, 1, 'user01', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소', '테스트일정시간', '테스트날씨', sysdate, 1, 10);
 INSERT INTO meeting (meeting_no, club_no, add_meeting_user_id, meeting_title, meeting_content, meeting_date, meeting_place, meeting_time, meeting_weather, meeting_reg_date, meeting_member, meeting_maximum_member)
-VALUES (seq_meeting_no.nextval, 2, 'user02', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소2', '테스트일정시간2', '테스트날씨2', sysdate, 1, 10);
+VALUES (seq_meeting_no.nextval, 1, 'user02', '테스트일정제목', '테스트일정내용', '테스트일정날짜', '테스트일정장소3', '테스트일정시간3', '테스트날씨2', sysdate, 1, 10);
 
 
 //모임일정 참여1
@@ -61,7 +63,7 @@ UPDATE club
 //모임 삭제
 deleteClub()
 DELETE FROM club
-WHERE club_no=10;
+WHERE club_no=21;
 
 
 //모임리스트

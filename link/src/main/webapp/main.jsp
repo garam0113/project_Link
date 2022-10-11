@@ -424,8 +424,8 @@
 
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
-		<script src="resrouces/javascript/plugins.js"></script>
-		<script src="resrouces/javascript/beetle.js"></script>
+		<script src="resources/javascript/plugins.js"></script>
+		<script src="resources/javascript/beetle.js"></script>
 
 	</body>
 

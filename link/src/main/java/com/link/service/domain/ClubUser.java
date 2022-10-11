@@ -6,7 +6,7 @@ public class ClubUser {
 	
 	private int clubUserNo;
 	private int clubNo;
-	private String userId;
+	private User user;
 	private Date applicationRegDate;
 	private Date joinRegDate;
 	private Date logoutDate;
@@ -38,12 +38,12 @@ public class ClubUser {
 		this.clubNo = clubNo;
 	}
 	
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getApplicationRegDate() {
@@ -97,7 +97,7 @@ public class ClubUser {
 
 	@Override
 	public String toString() {
-		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", userId=" + userId
+		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", user=" + user
 				+ ", applicationRegDate=" + applicationRegDate + ", joinRegDate=" + joinRegDate + ", logoutDate="
 				+ logoutDate + ", memberRole=" + memberRole + ", approvalCondition=" + approvalCondition
 				+ ", joinGreeting=" + joinGreeting + "]";
