@@ -94,7 +94,7 @@
 					}
 				}
   			})
-  			//$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();
+  			$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();
 		}
     	
     </script>
