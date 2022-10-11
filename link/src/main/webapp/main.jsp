@@ -5,7 +5,6 @@
 
 <jsp:include page="/toolbar.jsp" />
 
-
 		<main role="main">
 			<div id="intro-wrap">
 				<div id="intro" class="preload darken" data-autoplay="5000" data-navigation="true" data-pagination="true" data-transition="fadeUp">					
