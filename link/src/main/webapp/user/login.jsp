@@ -15,6 +15,7 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<link rel="stylesheet" href="/resources/css/login.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -24,26 +25,15 @@
 	<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://accounts.google.com/gsi/client" async defer></script>
 	
+	
 	<script type="text/javascript" src="/resources/javascript/kakaoLogin.js"></script>
 	    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-    	 body >  div.container{ 
-        	border: 0;
-        	outline: 0;
-            margin-top: 10px;
-        }
-        
-        .button{
-      		border: 0;
-        	outline: 0;
-        }
-        
-    </style>
     
     <script type="text/javascript">
+    
   	 $(function() {
-			$("button.btn.btn-primary").on("click", function() {
+			$(".login__button").on("click", function() {
 				login(); //로그인
 			});
 			
@@ -111,7 +101,7 @@
   				 }
   				 else if(Data.userID != "" && pw == Data.password){
   					 
-  					$("form").attr("method", "POST").attr("action", "/user/login").submit();
+  					$($("form")[0]).attr("method", "POST").attr("action", "/user/login").submit();
   				 }
 			}
   		 });
@@ -120,61 +110,37 @@
   	 
     </script>
 </head>
-<body>
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">Link</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->	
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-		<!--  row Start /////////////////////////////////////-->
-		<div class="row">
-		
-			<div class="col-md-6">
-					<img src="/resources/image/logo-spring.png" class="img-rounded" width="100%" />
-			</div>
-	   	 	
-	 	 	<div class="col-md-6">
-		 	 	<br/><br/>
-				
-				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
-
-			        <form class="form-horizontal">
-		  
-					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
-					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <a class="ID" >ID찾기</a>&nbsp;/ 
-					      <a class="getPassword">비밀번호찾기</a>
-					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					    </div>
-					  </div>
-
+  <div class="login">
+    <div class="login__content">
+      <div class="login__img">
+        <img src="https://image.freepik.com/free-vector/code-typing-concept-illustration_114360-3581.jpg" alt="user login">
+      </div>
+      <div class="login__forms">
+<!--         login form -->
+        <form class="login__register" id="login-in">
+          <h1 class="login__title">Sign In</h1>
+          <div class="login__box">
+            <i class='bx bx-user login__icon'></i>
+            <input type="text" placeholder="Username" class="login__input" name = "userId" id = "userId">
+          </div>
+          <div class="login__box">
+            <i class='bx bx-lock login__icon'></i>
+            <input type="text" placeholder="Password" class="login__input" name = "password" id = "password">
+          </div>
+          <a href="#" class="login__forgot">Forgot Password? </a>
+          <a href="#" class="login__forgot">Forgot Id? </a>
+          
+          <a href="#login" class="login__button">Sign In</a>
+          
+          <div>
+            <span class="login__account login__account--account">Don't Have an Account?</span>
+            <span class="login__signin login__signin--signup" id="sign-up">Sign Up</span>
+          </div>
+        </form>
+        
+					<!-- 
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center"> 
 					       <button class="button" type="button" onclick="kakaoLogin();"><img src="/resources/image/ko/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></button>
@@ -219,16 +185,7 @@
 						  	   $("form").attr("method","POST").attr("action","/user/snsLogin").submit();
 						  	  }
 					  </script>
-					</form>
-			   	 </div>
-				 
-			</div>
-			
-  	 	</div>
-  	 	<!--  row Start /////////////////////////////////////-->
-  	 	
- 	</div>
- 	<!--  화면구성 div end /////////////////////////////////////-->
+					   -->
 
 </body>
 </html>

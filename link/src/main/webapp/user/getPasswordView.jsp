@@ -69,15 +69,13 @@
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="select" class="col-sm-offset-1 col-sm-3 control-label">본인인증방법</label>
-		    <div class="col-sm-4">
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;핸드폰
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;이메일
-		    </div>
-		  </div>
+		   <ul class="nav nav-tabs" role="tablist" >
+		     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">핸드폰</a></li>
+		      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">이메일</a></li>
+		  </ul>
 		  
-		  <div class="form-group">
+		  <div class="tab-content">
+		  <div role="tabpanel" class="tab-pane active" id="home">
 		    <label for="phoneNo" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 		    <div class="col-sm-2">
 		     <select class="form-control" name="phone1" id="phone1">
@@ -105,7 +103,7 @@
 			</div>
 		  </div>
 		  
-		  <div class="form-group">
+		   <div role="tabpanel" class="tab-pane" id="profile">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
@@ -113,6 +111,7 @@
 			<div class="col-sm-4">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 			</div>
+		  </div>
 		  </div>
 		  
 		  <div class="form-group">
