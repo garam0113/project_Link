@@ -38,14 +38,15 @@ $(function() {
 	
 
  });
+ 		
  $(function(){
 
 
      $(".pp").on("click" , function() {
    
            var userId = $(".pp").html();
-           console.log(userId);
-           alert("생성");
+           //console.log(userId);
+           //alert("생성");
            // 이게안된다는거지?ㅇㅇㅇㅇ
            $(document).ready(function(){
         		$.ajax({
@@ -54,36 +55,11 @@ $(function() {
         			dataType:'json',   //문자형식으로 받기
         			success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
         	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-        				alert(data);   
+        				//alert(data); 
+        			    console.log("userId : "+data);
         			},
         			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-        				alert('실패');
-        			}
-        		})
-        	});
-              
-     });
- });			
- $(function(){
-
-
-     $(".pp").on("click" , function() {
-   
-           var userId = $(".pp").html();
-           console.log(userId);
-           alert("생성");
-           // 이게안된다는거지?ㅇㅇㅇㅇ
-           $(document).ready(function(){
-        		$.ajax({
-        			type: 'GET',   //get방식으로 명시
-        			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
-        			dataType:'json',   //문자형식으로 받기
-        			success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
-        	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-        				alert(data);   
-        			},
-        			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-        				alert('실패');
+        				//alert('실패');
         			}
         		})
         	});
@@ -227,7 +203,7 @@ $(function() {
 							<li><a href="#" id="gg">업데이트</a></li>
 							<li><a href="#" id="ff">팔로우리스트</a></li>
 							<li><a href="#" id="zz">팔팔리스트</a></li>
-<a href="/myHome/getMyHome?userId=user11" id="zz">유저11</a></li>
+<a href="/myHome/getMyHome?userId=user33" id="zz">유저33</a></li>
 							<tr>
            
 								<!--	jQuery Event 처리로 변경

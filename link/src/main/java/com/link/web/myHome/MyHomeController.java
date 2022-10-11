@@ -77,14 +77,16 @@ public class MyHomeController {
 		map.put("myHome", 1);
 		map.put("user", user);
 		map.put("search", search);
-
-		map = feedService.getFeedList(map);
-		
 		map.put("list",myHomeService.getFollowList(search).get("list"));
-		//map = clubService.getMyClubList(map);
+		map.put("clubList",clubService.getClubList(search).get("clubList"));
+		
+		
+		map = feedService.getFeedList(map);
+	
+		
 		
 		model.addAttribute("user", user);
-		model.addAttribute("myClubList",map.get("myClubList"));
+		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
 		model.addAttribute("list", map.get("list"));

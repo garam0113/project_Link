@@ -96,9 +96,9 @@ public class MyHomeRestController {
     }
 	 
     @RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
-    public void addFollow(@PathVariable String userId, User receiveId, HttpSession session, Model model) throws Exception{
+    public void addFollow(@PathVariable String userId, HttpSession session, Model model) throws Exception{
       
-      try {
+
          
          System.out.println("/myHomeRest/json/addFollow : GET");
 
@@ -110,25 +110,25 @@ public class MyHomeRestController {
 
           // User 객체 생성
           User user = new User();
-          
+          User receiveUser = new User();
+          receiveUser.setUserId(userId);
           // 보내는사람 id set
           user.setUserId(sendId);
+          user.setReceiveId(receiveUser);
+     
 
           // 받는사람 정보 객체생성
-          User receiveUser = new User();
-          receiveUser.setReceiveId(receiveId);
+     
+          
           // 받는사람 정보 set
-          user.setReceiveId(receiveUser);
 
           System.out.println("send_user_id : " + sendId);
-          System.out.println("recv_user_id : " + receiveUser.getReceiveId());
+          System.out.println("recv_user_id : " +  receiveUser);
 
           // 서비스 실행
           myHomeService.addFollow(user);
           
-      } catch( Exception e) {
-         e.printStackTrace();
-      }
+     
        
  
     }
