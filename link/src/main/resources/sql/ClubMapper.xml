@@ -318,6 +318,19 @@
 			
 	</select> -->
 	
+	
+	
+	
+	
+	<!-- 모임게시물 등록할 때 해당 모임의 모임원들에게 게시물 등록되었다고 알림. 해당 모임의 모임원들 찾는 Query -->
+	<select id="getClubMemberListToClubPost" parameterType="clubPost" resultMap="clubUserSelectMap">
+		SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
+		FROM club_user
+		WHERE CLUB_NO = ${ clubNo } AND JOIN_REG_DATE IS NOT NULL
+		ORDER BY club_user_no ASC
+	 </select>
+	
+	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq

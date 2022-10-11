@@ -22,7 +22,7 @@ public interface FeedDAO {
 	public void addFeed(Feed feed) throws Exception;
 	
 	// 피드 상세
-	public Feed getFeed(int feedNo) throws Exception;
+	public Feed getFeed(Map<String, Object> map) throws Exception;
 	
 	// 피드 수정
 	public void updateFeed(Feed feed) throws Exception;
@@ -30,7 +30,7 @@ public interface FeedDAO {
 	// 피드 삭제
 	public void deleteFeed(int feedNo) throws Exception;
 	
-	void updateFeed(Comment comment) throws Exception;
+
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
@@ -48,7 +48,8 @@ public interface FeedDAO {
 	// 피드 댓글 삭제
 	public void deleteFeedComment(int commentNo) throws Exception;
 	
-	
+	// 댓글의 순서 변경
+	public void updateFeedCommentOrder(Comment comment) throws Exception;
 	
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	
@@ -73,18 +74,18 @@ public interface FeedDAO {
 	/*
 	 * map.put("feedNo")
 	 */
+	
 	public int getTotalFeedCommentCount(Map<String, Object> map) throws Exception;
 
-	// 피드 댓글의 대댓글 개수
+	// 하나의 댓글에 달린 대댓글 개수 세기
 	
 	/*
 	 * map.put("comment")
 	 * 
 	 * 
-	 * public int getRecommentCount(Map<String, Object> map) throws Exception;
-	 * 
 	 */
 	
+	public int getRecommentCount(Map<String, Object> map) throws Exception;
 	
 
 	

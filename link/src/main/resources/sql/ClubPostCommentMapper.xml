@@ -30,24 +30,24 @@
 		SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_HEART_COUNT,
 		COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
 		FROM CLUB_POST_COMMENT
+		WHERE CLUB_POST_NO = #{ comment.clubPostNo }
 		<choose>
-			<when test="clubPostNo != null and clubPostNo != '' and clubPostNo != 0">WHERE CLUB_POST_NO = #{ clubPostNo }</when>
-			<when test="clubPostCommentNo != null and clubPostCommentNo != '' and clubPostCommentNo != 0">WHERE PARENT = #{ clubPostCommentNo }</when>
+			<when test="comment.clubPostCommentNo != 0">AND PARENT = #{ comment.clubPostCommentNo }</when>
 		</choose>
-		ORDER BY COMMENT_REG_DATE ASC
+		ORDER BY CLUB_POST_COMMENT_NO ASC
 	</sql>
 
 
 	
 	<!-- 모임게시물 댓글 리스트 -->
 	<select id="getClubPostCommentList" parameterType="map" resultMap="clubPostCommentSelectMap">
-		SELECT V3.*
-		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
-				FROM (
+		<!-- SELECT V3.* -->
+		<!-- FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.* -->
+				<!-- FROM ( -->
 						<include refid="select-list"></include>
-					 ) V2
-			 ) V3
-		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
+					 <!-- ) V2 -->
+			 <!-- ) V3 -->
+		<!-- WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize } -->
 	</select>
 	
 	

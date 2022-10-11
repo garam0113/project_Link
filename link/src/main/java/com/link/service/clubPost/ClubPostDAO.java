@@ -8,6 +8,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 public interface ClubPostDAO {
 
@@ -26,16 +27,22 @@ public interface ClubPostDAO {
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception;
 	
-	// 모임게시물 좋아요
-	//public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception;
-	
 	
 	
 	
 	// 신고
 	
+	// 좋아요 확인
+	public int getHeart(Heart heart) throws Exception;
+	
 	// 결제
 	public void addPay(Pay pay) throws Exception;
+	
+	// 결제 리스트
+	public List<Pay> getPayList(User user) throws Exception;
+	
+	// 결제 상세보기
+	public Pay getPay(Pay pay) throws Exception;
 	
 	//public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	

@@ -22,6 +22,8 @@ public class Feed {
 	private int deleteCondition;
 	private int checkHeart;			// -1 	: 추가,		-2 : 취소
 	private int checkMyHome;		// 1	: myHome 호출
+	private int checkComment;
+	private int currentPage;
 	
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -171,6 +173,22 @@ public class Feed {
 		this.checkMyHome = checkMyHome;
 	}
 
+	public int getCheckComment() {
+		return checkComment;
+	}
+
+	public void setCheckComment(int checkComment) {
+		this.checkComment = checkComment;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -191,7 +209,9 @@ public class Feed {
 				+ "[reportCondition : " + reportCondition + "] "
 				+ "[deleteCondition : " + deleteCondition + "] "
 				+ "[checkHeart : " + checkHeart + "] "
-				+ "[checkMyHome : " + checkMyHome + "] ";
+				+ "[checkMyHome : " + checkMyHome + "] "
+				+ "[checkComment : " + checkComment + "] "
+				+ "[currentPage : " + currentPage + "] ";
 	}
 
 }
