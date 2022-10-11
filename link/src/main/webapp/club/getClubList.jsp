@@ -69,6 +69,8 @@
 	
 		<div class="page-header text-info">
 	       <h3>모임리스트</h3>
+	       <a href="/clubPost/getClubPostList">모임게시물리스트</a>
+	       
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->

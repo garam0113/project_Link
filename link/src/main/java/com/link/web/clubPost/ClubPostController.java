@@ -76,7 +76,9 @@ public class ClubPostController {
 		clubPost.setUser(user);
 		
 		model.addAttribute("search", search);
-		model.addAttribute("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
+		Map<String, Object> map = clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost);
+		model.addAttribute("clubPostList", map.get("clubPostList"));
+		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -102,8 +104,10 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Map<String, Object> map, Model model) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
+		
+		System.out.println(session.getAttribute("user"));
 		
 		System.out.println("search : " + search);
 		System.out.println("clubPost : " + clubPost);

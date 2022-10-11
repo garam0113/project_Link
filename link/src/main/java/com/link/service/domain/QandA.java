@@ -7,7 +7,7 @@ public class QandA {
 	private int qandANo;				//Q&A 번호
 	private String qandATitle;			//Q&A 제목
 	private String qandAContent;		//Q&A 내용
-	private User user;					//Q&A 이용자
+	private User userId;				//Q&A 이용자
 	private String qandARegDate;		//Q&A 등록날짜
 	private String qandAImage1;			//Q&A 이미지1
 	private String qandAImage2;			//Q&A 이미지2
@@ -15,16 +15,11 @@ public class QandA {
 	private String qandAAnswerContent;	//Q&A 답변내용
 	private String qandAAnswerRegDate;	//Q&A 답변등록날짜
 	private int qandAOpenCondition;		//Q&A 공개여부
-	private int qandACount;				//Q&A 누적조회수
 	
 	
 	
-	public int getQandACount() {
-		return qandACount;
-	}
-	public void setQandACount(int qandACount) {
-		this.qandACount = qandACount;
-	}
+	
+
 	public int getQandANo() {
 		return qandANo;
 	}
@@ -43,11 +38,11 @@ public class QandA {
 	public void setQandAContent(String qandAContent) {
 		this.qandAContent = qandAContent;
 	}
-	public User getUser() {
-		return user;
+	public User getUserId() {
+		return userId;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(User userId) {
+		this.userId = userId;
 	}
 	public String getQandARegDate() {
 		return qandARegDate;
@@ -95,11 +90,11 @@ public class QandA {
 	
 	@Override
 	public String toString() {
-		return "QandA [qandANo=" + qandANo + ", qandATitle=" + qandATitle + ", qandAContent=" + qandAContent + ", user="
-				+ user + ", qandARegDate=" + qandARegDate + ", qandAImage1=" + qandAImage1 + ", qandAImage2="
+		return "QandA [qandANo=" + qandANo + ", qandATitle=" + qandATitle + ", qandAContent=" + qandAContent + ", userId="
+				+ userId + ", qandARegDate=" + qandARegDate + ", qandAImage1=" + qandAImage1 + ", qandAImage2="
 				+ qandAImage2 + ", qandACondition=" + qandACondition + ", qandAAnswerContent=" + qandAAnswerContent
 				+ ", qandAAnswerRegDate=" + qandAAnswerRegDate + ", qandAOpenCondition=" + qandAOpenCondition
-				+ ", qandACount=" + qandACount + "]";
+				  + "]";
 	}
 	
 	
