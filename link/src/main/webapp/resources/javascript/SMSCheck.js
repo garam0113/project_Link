@@ -19,6 +19,7 @@ $(function smsCheck() {
 								"휴대폰인증이 정상적으로 완료되었습니다.",
 								"success"
 								)
+								$("#checkNo").val(1);
 					}else{
 						Swal.fire({
 							icon: "error",

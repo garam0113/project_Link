@@ -34,9 +34,68 @@
     <script type="text/javascript">
     	$(function() {
 			$("#check").on("click", function() {
-				$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();	//ID찾기
+				fncGetId();	//ID찾기
+			});
+			
+			$("a[href='#']").on("click", function() {
+				window.close();
 			});
 		});
+    	
+    	function fncGetId() {
+			
+    		var name = $("#name").val();
+    		var rrn = $("#rrn").val();
+    		var phone2 = $("#phone2").val();
+    		var phone3 = $("#phone3").val();
+    		var phoneNo = $("#phone1").val()+"-"+phone2+"-"+phone3;
+  			var checkNo = $("#checkNo").val();
+  			var email = $("#email").val();
+  			
+  			if(name == null || name.length < 1){
+  				swal.fire("이름을 입력해 주세요.");
+  				return;
+  			}
+  			
+  			if(rrn == null || rrn.length < 1){
+  				swal.fire("주민번호를 입력해 주세요.");
+  				return;
+  			}
+  			/*
+  			if(checkNo != 1){
+  				swal.fire("인증이 필요합니다.");
+  				return;
+  			}*/
+  			
+  			$('#myTabs a').click(function (e) {
+  			  e.preventDefault()
+  			  $(this).tab('show')
+  			})
+  			
+  			$.ajax("/userRest/json/getUserId", {
+  				
+  				type : "POST",
+  				data : JSON.stringify({
+  					name : name,
+  					rrn : rrn
+  				}),
+  				dataType : "json",
+  				contentType : "application/json",
+  				henders : {
+  					"Accept" : "application"
+  				},
+  				success : function(Data, status) {
+					console.log(Data.phoneNo)
+					console.log(phoneNo)
+					
+					if(Data.phoneNo != phoneNo){
+						swal.fire("핸드폰번호가 일치하지 않습니다.");
+						return;
+					}
+				}
+  			})
+  			//$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();
+		}
     	
     </script>
     
@@ -44,10 +103,6 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -70,15 +125,13 @@
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="select" class="col-sm-offset-1 col-sm-3 control-label">본인인증방법</label>
-		    <div class="col-sm-4">
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;핸드폰
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;이메일
-		    </div>
-		  </div>
+		  <ul class="nav nav-tabs" role="tablist" >
+		     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">핸드폰</a></li>
+		      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">이메일</a></li>
+		  </ul>
 		  
-		  <div class="form-group">
+		  <div class="tab-content">
+		   <div role="tabpanel" class="tab-pane active" id="home">
 		    <label for="phoneNo" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 		    <div class="col-sm-2">
 		     <select class="form-control" name="phone1" id="phone1">
@@ -99,13 +152,14 @@
 					<input type="text" class="form-control" id="phone3" name="phone3"
 						placeholder="번호">
 			</div>
+			<input type="hidden" name="phoneNo" />
 				
 			<div class="col-sm-2">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 			</div>
 		  </div>
 		  
-		  <div class="form-group">
+		   <div role="tabpanel" class="tab-pane" id="profile">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
@@ -114,7 +168,11 @@
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 			</div>
 		  </div>
+		  </div>
 		  
+		  <br/>
+		  <br/>
+		  <br/>
 		  <div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">인증번호</label>
 				<div class="col-sm-4">
@@ -123,6 +181,7 @@
 				</div>
 				<div class="col-sm-4">
 					<button type="button" id="checkBtn" class="btn ">인증번호확인</button>
+					<input type="hidden" id=checkNo>
 				</div>
 		</div>
 		  

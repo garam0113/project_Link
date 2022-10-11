@@ -49,8 +49,6 @@ public class UserController {
 		
 		System.out.println("/user/addUser : POST");
 		
-		user.setPhoneNo(user.getPhone1()+user.getPhone2()+user.getPhone3());
-		
 		userService.addUser(user);	//회원가입 정보 DB저장
 		
 		User getUser = userService.getUser(user);
@@ -141,8 +139,6 @@ public class UserController {
 		userService.updateUser(user);	//입력받은 회원 정보를 DB에 저장
 		
 		user = userService.getUser(user);
-		
-		session.setAttribute("user", user);
 		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		System.out.println("sessionId : "+sessionId);
