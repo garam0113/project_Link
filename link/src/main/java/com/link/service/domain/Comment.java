@@ -21,7 +21,7 @@ public class Comment {
 	private int sequence;					// 댓글 순서
 	private int heartCondition;				// 좋아요 여부
 	private int currentPage;
-	private String deleteUserId;			// 삭제한 유저 아이디
+	private String userId;					// 삭제한 유저 아이디
 	
 	public Comment() {
 	}
@@ -178,12 +178,12 @@ public class Comment {
 		this.currentPage = currentPage;
 	}
 
-	public String getDeleteUserId() {
-		return deleteUserId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setDeleteUserId(String deleteUserId) {
-		this.deleteUserId = deleteUserId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	@Override
@@ -227,8 +227,8 @@ public class Comment {
 		builder.append(heartCondition);
 		builder.append(", currentPage=");
 		builder.append(currentPage);
-		builder.append(", deleteUserId=");
-		builder.append(deleteUserId);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
 	}

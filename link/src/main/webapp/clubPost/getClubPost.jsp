@@ -164,7 +164,7 @@ $(function(){
 					method : "POST",
 					data : JSON.stringify({
 								clubPostCommentNo : 9,
-								heart_condition : 1,
+								heartCondition : 1,
 								userId : "user03"
 							}),
 					headers : {
