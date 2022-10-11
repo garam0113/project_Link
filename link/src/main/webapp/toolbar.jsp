@@ -4,122 +4,64 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$("a:contains('회원가입')").on("click", function() {
-			self.location = "/user/addUser"
-		});
-	});
-	
-	$(function() {
-		$("a:contains('로그인')").on("click", function() {
-			self.location = "/user/login"
-		});
-	});
-	
-	$(function() {
-		$("a:contains('로그아웃')").on("click", function() {
-			self.location = "/user/logout?userId=${user.userId}"
-		})
-	})
-	
-	$(function() {
-		$("a:contains('내정보관리')").on("click", function() {
-			
-		self.location = "/user/getUser?userId=${user.userId}"
-		
-		});
-	});
-	
-/*	아래방식으로 네비게이션 사용 가능
-=======
-/*	아래방식으로 네비게이션 사용 가능 */
-	$(function() {
-		$("span:contains('피드')").on("click", function() {
-			self.location = "/feed/getFeedList"
-		});
-		
-		$("span:contains('모임')").on("click", function(){
-			self.location = "/club/getClubList";
-		});
-		$("span:contains('마이홈피')").on("click", function(){
-			self.location = "/myHome/getMyHome?userId=${user.userId}"
-		});
-	});
-</script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="EUC-KR">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="description" content="The Page Description">
+		<style type="text/css">@-ms-viewport{width: device-width;}</style>
+		<title>Beetle - Home page</title>
+		<link rel="stylesheet" href="resources/css/layers.min.css" media="screen">
+		<link rel="stylesheet" href="resources/css/font-awesome.min.css" media="screen"> 
+		<link rel="stylesheet" href="resources/css/style.css" media="screen">
+		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+		<link rel="icon" href="favicon.ico">
+		<link rel="apple-touch-icon" href="resources/image/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="resources/imageimg/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="resources/imageimg/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="resources/imageimg/apple-touch-icon-152x152.png">		
+	</head>
 
-<div class="navbar  navbar-inverse navbar-fixed-top">
+	<body class="page">
 
-	<div class="container">
-
-		<a class="navbar-brand" href="/mian.jsp">Link</a>
-
-		<!-- toolBar Button Start //////////////////////// -->
-		<div class="navbar-header">
-			<button class="navbar-toggle collapsed" data-toggle="collapse"
-				data-target="#target">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-		</div>
-		<!-- toolBar Button End //////////////////////// -->
-
-		<!--  dropdown hover Start -->
-		<div class="collapse navbar-collapse" id="target"
-			data-hover="dropdown"
-			data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
-
-			<!-- Tool Bar 를 다양하게 사용하면.... -->
-			<ul class="nav navbar-nav">
-
-				<!--  회원관리 DrowDown -->
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"> <span>피드</span>
-							<span class="caret"></span>
-					</a>
-
-				<!-- 판매상품관리 DrowDown  -->
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"> <span>Live</span>
-							<span class="caret"></span>
-					</a>
-
-				<!-- 모임관리 -->
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"> <span>모임</span>
-						<span class="caret"></span>
-				</a>
-
-				<!-- 구매관리 DrowDown -->
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"> <span>마이홈피</span>
-						<span class="caret"></span>
-				</a>
-
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"> <span>고객센터</span>
-						<span class="caret"></span>
-				</a>
-
-			</ul>
-
-			<c:if test="${! empty user }">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">내정보관리</a></li>
-					<li><a href="#">로그아웃</a></li>
-				</ul>
-			</c:if>
-
-			<c:if test="${ empty user }">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
-				</ul>
-			</c:if>
-		</div>
-		<!-- dropdown hover END -->
-
-	</div>
-</div>
+		<header role="banner" class="transparent light">
+			<div class="row">
+				<div class="nav-inner row-content buffer-left buffer-right even clear-after">
+					<div id="brand">
+						<h1 class="reset"><!--<img src="img/logo.png" alt="logo">--><a href="main.jsp">Link</a></h1>
+					</div><!-- brand -->
+					<a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+					<nav>
+						<ul class="reset" role="navigation">
+							<li class="menu-item">
+								<a href="main.jsp">Home</a>
+							</li>
+							<li class="menu-item">
+								<a href="/feed/getFeedList">Feed</a>
+							</li>
+							<li class="menu-item">
+								<a href="/">Live</a>
+							</li>
+							<li class="menu-item"><a href="/club/getClubList">모임</a></li>
+							<li class="menu-item">
+								<a href="/myHome/getMyHome?userId=${user.userId}">MyHome</a>
+							</li>
+							<c:if test="${ empty user }">
+							<li class="menu-item"><a href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+							<li class="menu-item"><a href="/user/login">로그인</a></li>
+							<li class="menu-item"><a href="/user/addUser">회원가입</a></li>
+							</c:if>
+							<c:if test="${! empty user }">
+							<li class="menu-item"><a href="/user/logout?userId=${user.userId}">로그아웃</a></li>
+							<li class="menu-item"><a href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
+							</c:if>
+						</ul>
+					</nav>
+				</div><!-- row-content -->	
+			</div><!-- row -->	
+		</header>
