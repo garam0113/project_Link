@@ -137,6 +137,21 @@ public class ClubPostServiceImpl implements ClubPostService {
 	@Override
 	public Comment addClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 도착");
+		if(comment.getClubPostCommentNo() == 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("comment", comment);
+			// 댓글번호가 없을 때
+			List<Comment> c = (List<Comment>) clubPostDAOImpl.getClubPostCommentList(map);
+			comment.setSequence(c.size());
+			comment.setDepth(0);
+			comment.setParent(comment.getClubPostNo());
+		}else {
+			// 댓글번호가 있을 때
+			Comment c = clubPostDAOImpl.getClubPostComment(comment);
+			comment.setSequence(c.getCommentCount());
+			comment.setDepth(1);
+			comment.setParent(comment.getClubPostCommentNo());
+		}
 		return clubPostDAOImpl.addClubPostComment(comment);
 	}// end of addClubPostComment(Comment comment)
 
@@ -155,9 +170,29 @@ public class ClubPostServiceImpl implements ClubPostService {
 	@Override
 	public Comment updateClubPostComment(Comment comment, Heart heart) throws Exception {
 		System.out.println(getClass() + ".updateClubPostComment(Comment comment, Heart heart) 도착");
+		
+		System.out.println("댓글 정보 : " + comment);
+		System.out.println("heart댓글 정보 : " + heart);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("comment", comment);
+		heart = (Heart)map.get("heart");
+		comment = (Comment)map.get("comment");
+		
+		if(comment.getHeartCondition() == 1) {
+			// heart가 null이 아니라며 즉, 하트를 클릭했다면 수행
+			
+			heart.setUserId(comment.getUser().getUserId());
+			heart.setSource("3");
+			heart.setSourceNo(comment.getClubPostCommentNo());
+
+			comment.setHeartCondition((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
+
+			System.out.println("수정된 heart : " + heart + "수정된 comment : " + comment);
+		}
+		
 		map.put("heart", heart);
+		map.put("comment", comment);
+		
 		return clubPostDAOImpl.updateClubPostComment(map);
 	}// end of updateClubPostComment(Comment comment, Heart heart)
 
