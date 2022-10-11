@@ -132,7 +132,7 @@ public class FeedServiceTest {
 		comment.setUser(user);
 		comment.setCommentContent("test입니다");
 		
-		feedService.addFeedComment(comment);
+//		feedService.addFeedComment(comment);
 	}
 	
 //	@Test

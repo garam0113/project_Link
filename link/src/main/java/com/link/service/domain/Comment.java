@@ -20,6 +20,7 @@ public class Comment {
 	private int depth;						// 댓글 깊이
 	private int sequence;					// 댓글 순서
 	private int heartCondition;				// 좋아요 여부
+	private int currentPage;
 	
 	public Comment() {
 	}
@@ -27,7 +28,7 @@ public class Comment {
 	public Comment(int feedNo, int feedCommentNo, int clubNo, int clubPostNo, int clubPostCommentNo, User user,
 			String parentUserId, String commentContent, String commentRegDate, String commentUpdateDate,
 			int commentHeartCount, int commentCount, String reportCondition, String deleteCondition, int parent,
-			int depth, int sequence, int heartCondition) {
+			int depth, int sequence, int heartCondition, int currentPage) {
 		super();
 		this.feedNo = feedNo;
 		this.feedCommentNo = feedCommentNo;
@@ -47,6 +48,7 @@ public class Comment {
 		this.depth = depth;
 		this.sequence = sequence;
 		this.heartCondition = heartCondition;
+		this.currentPage = currentPage;
 	}
 
 	public int getFeedNo() {
@@ -193,6 +195,14 @@ public class Comment {
 		this.heartCondition = heartCondition;
 	}
 
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -232,6 +242,8 @@ public class Comment {
 		builder.append(sequence);
 		builder.append(", heartCondition=");
 		builder.append(heartCondition);
+		builder.append(", currentPage=");
+		builder.append(currentPage);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -16,6 +16,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
 public class ClubPostServiceImpl implements ClubPostService {
@@ -52,6 +53,25 @@ public class ClubPostServiceImpl implements ClubPostService {
 	@Override
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".updateClubPost(Map<String, Object> map) 도착");
+		
+		Heart heart = (Heart)map.get("heart");
+		ClubPost clubPost = (ClubPost)map.get("clubPost");
+		
+		if(heart != null) {
+			// heart가 null이 아니라며 즉, restController에서 왔다면 즉, 하트를 클릭했다면 수행
+			
+			heart.setUserId(clubPost.getUserId());
+			heart.setSource("2");
+			heart.setSourceNo(clubPost.getClubPostNo());
+
+			clubPost.setHeartCondition((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
+
+			System.out.println("수정된 heart : " + heart + "수정된 clubPost : " + clubPost);
+			
+			map.put("heart", heart);
+			map.put("clubPost", clubPost);			
+		}
+		
 		return clubPostDAOImpl.updateClubPost(map);
 	}// end of updateClubPost(Map<String, Object> map)
 
@@ -78,6 +98,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 	
 	
 	
+
+
 	
 
 	@Override
@@ -91,6 +113,18 @@ public class ClubPostServiceImpl implements ClubPostService {
 		System.out.println(getClass() + ".addPay(Pay pay) 도착");
 		clubPostDAOImpl.addPay(pay);
 	}// addPay(Pay pay)
+
+	@Override
+	public List<Pay> getPayList(User user) throws Exception {
+		System.out.println(getClass() + ".getPayList(User user) 도착");
+		return clubPostDAOImpl.getPayList(user);
+	}// getPayList(User user)
+
+	@Override
+	public Pay getPay(Pay pay) throws Exception {
+		System.out.println(getClass() + ".getPay(Pay pay) 도착");
+		return clubPostDAOImpl.getPay(pay);
+	}// getPay(Pay pay)
 	
 	
 	
@@ -158,11 +192,12 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of addClubNotice(Notice notice)
 
 	@Override
-	public Map<String, Object> getClubNoticeList(Search search, Notice notice) throws Exception {
-		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice) 도착");
+	public Map<String, Object> getClubNoticeList(Search search, Notice notice, String userId) throws Exception {
+		System.out.println(getClass() + ".getClubNoticeList(Search search, Notice notice, String userId) 도착");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("notice", notice);
+		map.put("userId", userId);
 		return clubPostDAOImpl.getClubNoticeList(map);
 	}// getClubNoticeList(Search search, Notice notice)
 

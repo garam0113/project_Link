@@ -161,14 +161,15 @@
 						<where>
 							CLUB_NO = 
 							<choose>
-								<when test="notice.clubNo != null and notice.clubNo != '' and notice.clubNo != 0">#{ notice.clubNo }</when>
-								<otherwise>( SELECT V1.CLUB_NO
+								<when test="userId != null and userId != ''">
+								( SELECT V1.CLUB_NO
 												FROM ( SELECT *
 														FROM CLUB
-														WHERE USER_ID = #{ notice.userId.userId }
+														WHERE USER_ID = #{ userId }
 														ORDER BY CLUB_REG_DATE DESC )V1
 												WHERE ROWNUM = 1 )
-								</otherwise>				
+								</when>
+								<otherwise>#{ notice.clubNo }</otherwise>
 							</choose>
 						</where>
 						ORDER BY NOTICE_REGDATE

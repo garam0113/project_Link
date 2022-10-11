@@ -11,10 +11,48 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
 	<script type="text/javascript">
 	
 	$(function(){
+		
+		$(".btn_jsonTest").bind("click", function(){
+			
+			$.ajax(
+					{
+						url : "/feedRest/json/getFeedList",
+						method : "POST",
+						data : JSON.stringify ({
+							currentPage : 1
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							swal.fire("엥?");
+							
+							var value = "";
+							
+							$.each(data, function(index, item) {
+								value += item.content + " // ";
+							}); // $.each close
+							
+							$("#test").text(value);
+							
+						} // success close
+						
+					} // ajax inner close
+					
+			) // ajax close
+
+		}); // btn_jsonTest close
+		
 		
 		$($("input[type='button']")[0]).bind("click", function(){
 			alert("hi");
@@ -73,6 +111,7 @@
 
 <body>
 	<h2>Hello World!</h2>
+	
 	<form>
 	로그인 정보 : ${sessionScope.user}
 	
@@ -83,6 +122,9 @@
 		<input type="button" value="submit">
 	
 	</c:if>
+	
+	<button type="button" class="btn_jsonTest">데이터 테스트</button>
+	<p id="test">123</p>
 		
 	</form>
 	
