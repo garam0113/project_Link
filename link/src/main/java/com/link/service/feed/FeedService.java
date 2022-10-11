@@ -38,7 +38,7 @@ public interface FeedService {
 	
 	
 	// 피드 댓글 추가
-	public void addFeedComment(Comment comment) throws Exception;
+	public void addFeedComment(Map<String, Object> map) throws Exception;
 	
 	// 피드 댓글 조회
 	public Comment getFeedComment(int feedCommentNo) throws Exception;
