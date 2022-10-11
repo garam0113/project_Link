@@ -41,14 +41,6 @@
 							</li>
 							<li class="menu-item">
 								<a href="/feed/getFeedList">Feed</a>
-								<ul class="sub-menu">
-									<li><a href="works-4-columns.html">Four Columns Grid Style</a></li>
-									<li><a href="works-3-columns.html">Three Columns Grid Style</a></li>
-									<li><a href="works-4-columns-alternative.html">Four Columns Mosaic Style</a></li>
-									<li><a href="works-3-columns-alternative.html">Three Columns Mosaic Style</a></li>
-									<li><a href="works-4-columns-lightbox.html">Lightbox Gallery</a></li>
-									<li><a href="single-work-post.html">Single Work Page</a></li>
-								</ul>
 							</li>
 							<li class="menu-item">
 								<a href="/">Live</a>

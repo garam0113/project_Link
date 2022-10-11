@@ -33,7 +33,7 @@
 	
 	<br/><br/>
 
-	작성자 : ${feed.userId}
+	작성자 : ${feed.user.userId}
 	<br/><br/>
 	
 	<form>
