@@ -20,19 +20,19 @@
 	$(function(){
 		
 		$("td.ct_btn01:contains('확인')").bind("click", function(){
-			self.location = "/notice/listNotice?menu=manage";
+			self.location = "/serviceCenter/getNoticeList";
 		});
 		
 		$("td.ct_btn01:contains('추가등록')").bind("click", function(){
-			self.location = "../notice/addNoticeView.jsp";
+			self.location = "../serviceCenter/addNoticeView.jsp";
 		})
 		
 		$("td.ct_btn01:contains('수정')").bind("click", function(){
-			self.location = "../notice/updateNoticeView.jsp";
+			self.location = "../serviceCenter/updateNoticeView.jsp";
 		})
 		
 		$("td.ct_btn01:contains('삭제')").bind("click", function(){
-		self.location = "../notice/deleteNotice";
+		self.location = "../serviceCenter/deleteNotice";
 		})
 	});
 	
@@ -98,7 +98,7 @@
 		<tr>
 			<td width="104" class="ct_write">
 				등록 일자<img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-			</td>
+			</td>${notice.noticeRegDate}
 			<td bgcolor="D6D6D6" width="1"></td>
 			<td class="ct_write01">${notice.noticeRegDate}</td>
 		</tr>
@@ -167,19 +167,7 @@
 						<td width="14" height="23">
 							<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 						</td>
-						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-							
-							수정
-							
-						</td>
-						<td width="14" height="23">
-							<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-						</td>
-						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-							
-							삭제
-							
-						</td>
+		
 						<td width="14" height="23">
 							<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 						</td>

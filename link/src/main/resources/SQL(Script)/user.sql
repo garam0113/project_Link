@@ -4,10 +4,10 @@ SELECT user_id, password, name, gender, rrn, phone_no, email, role, nickname,
 					out_user_state, out_user_date, add_user_type, logout_date, add_user_date,
 					total_visit_count, open_condition, push_condition, join_club_count, join_club_limit, sns_user_id
 FROM users;
-WHERE sns_user_id = 'bymin1992@naver.com';
+WHERE sns_user_id = 'bymin1992@naver.com' and add_user_type = '1';
 
 DELETE users
-WHERE user_id = 'Link0889';
+WHERE user_id = 'Link4947';
 
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)

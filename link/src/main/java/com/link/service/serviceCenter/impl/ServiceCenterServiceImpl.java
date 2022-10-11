@@ -117,7 +117,7 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		int a = 1 ;
 		
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
-
+		System.out.println("test 용입니다.");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("list", list);

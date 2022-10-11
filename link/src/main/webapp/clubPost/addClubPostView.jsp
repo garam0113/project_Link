@@ -10,8 +10,8 @@ $(function(){
 	$("input[value='등록완료']").bind("click", function(){
 		$("form[name='addClubPost']").submit();
 	});
-	$("input[value='상세보기']").bind("click", function(){
-		location.href = "/clubPost/getClubPost?clubPostNo=";
+	$("input[value='리스트로이동']").bind("click", function(){
+		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
 });
 </script>
@@ -35,7 +35,7 @@ $(function(){
 이미지9<input type="text" name="image9"></br>
 이미지10<input type="text" name="image10"></br>
 <input type="button" value="등록완료">
-<input type="button" value="상세보기">
+<input type="button" value="리스트로이동">
 </form>
 </body>
 </html>

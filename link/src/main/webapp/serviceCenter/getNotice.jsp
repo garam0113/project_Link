@@ -32,9 +32,9 @@
 
 		$("td.ct_btn01:contains('ªË¡¶')").bind("click", function() {
 			
-			alert($('tr.noticeNo').find('td').text().substr(-1,1));
+			alert($('tr.noticeNo').find('td').text());
 			
-		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('tr.noticeNo').find('td').text().substr(-1,1); 
+		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('tr.noticeNo').find('td').text(); 
 		})
 
 	});

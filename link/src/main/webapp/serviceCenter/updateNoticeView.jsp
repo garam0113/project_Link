@@ -25,18 +25,10 @@
 		var title = $("input[name='noticeTitle']").val();
 		var content = $("input[name='noticeContent']").val();
 
-		
-		if(title == null || title.length < 1){
-			alert("제목은 반드시 입력하여야 합니다.");
-			return;
-			}
-		if(content == null || content.length < 1){
-			alert("내용은 반드시 입력하여야 합니다.");
-			return;
-			}	
+
 		
 	
-		
+		alert($($("form")[0]));
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateNotice").submit();
 	}
 			
@@ -66,7 +58,7 @@
 
 <form>
 
-<input type="hidden" name="noticeNo" value="${notice.noticeNo}"/>
+<input type="text" name="noticeNo" value="${notice.noticeNo}"/>
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -118,6 +110,28 @@
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input type="text" name="noticeContent" value="${notice.noticeContent}" class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">
+			이미지1 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input type="text" name="noticeImage1" value="${notice.noticeImage1}" class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">
+			이미지2 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input type="text" name="noticeImage2" value="${notice.noticeImage2}" class="ct_input_g" 
 						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
 		</td>
 	</tr>

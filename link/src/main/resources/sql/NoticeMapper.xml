@@ -16,7 +16,7 @@
 		<result property="noticeCount" 			column="notice_count" 		jdbcType="NUMERIC" />
 		<result property="clubNo"				column="club_no"			jdbcType="NUMERIC" />
 	
-	<association property="userId" javaType="user">
+	<association property="userId" javaType="User">
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
 	</association>
 	</resultMap>
