@@ -50,7 +50,7 @@ img {
 .login__register, .login__create {
   position: absolute;
   bottom: 1rem;
-  width: 500px;
+  width: 400px;
   background-color: #f2f2f2;
   padding: 2rem 1rem;
   border-radius: 1rem;
