@@ -667,7 +667,7 @@ ORDER BY CLUB_POST_COMMENT_NO ASC
 
 
 
-
+select * from report_push order by report_regdate desc;
 
 
 

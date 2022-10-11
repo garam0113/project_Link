@@ -5,7 +5,7 @@ import java.sql.Date;
 public class User {
 	
 	private String userId;
-	private String receiveId;
+	private User receiveId;
 	private String password;
 	private String name;
 	private String rrn;
@@ -59,10 +59,10 @@ public class User {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getReceiveId() {
+	public User getReceiveId() {
 		return receiveId;
 	}
-	public void setReceiveId(String receiveId) {
+	public void setReceiveId(User receiveId) {
 		this.receiveId = receiveId;
 	}
 	public String getPassword() {
