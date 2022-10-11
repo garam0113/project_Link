@@ -2,6 +2,7 @@ package com.link.web.feed;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
@@ -56,6 +59,7 @@ public class FeedController {
 	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 	
 	
+	
 	// 사용
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
@@ -64,7 +68,7 @@ public class FeedController {
 		// 회원 피드 등록
 		
 		user = (User) httpSession.getAttribute("user");
-		feed.setUserId(user.getUserId());
+		feed.setUser(user);
 		
 		// 해시태그 저장하기 시작
 		
@@ -108,7 +112,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "getFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "getFeed")
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
 		
@@ -184,17 +188,28 @@ public class FeedController {
 		return "forward:/feed/getFeed.jsp";
 	}
 	
+	// 사용
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
 	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) throws Exception {
 		
 		feedService.deleteFeed(feedNo);
 		
-		return "forward:/feed/getFeedList.jsp";
+		return "forward:/feed/getFeedList";
 	}
 	
 	
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
+	
+	// 사용 (Rest에서 이동)
+	@RequestMapping(value = "/deleteFeedComment", method = RequestMethod.POST)
+	public String deleteFeedComment(@ModelAttribute Comment comment) throws Exception {
+		
+		feedService.deleteFeedComment(comment.getFeedCommentNo());
+		
+		return "forward:/feed/getFeed";
+		
+	}
 	
 	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	

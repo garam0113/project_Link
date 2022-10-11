@@ -10,7 +10,6 @@
 
 	<resultMap	id="feedSelectMap"			type="feed">
 		<result property="feedNo"			column="feed_no"					jdbcType="NUMERIC" />
-		<result property="userId"			column="user_id"					jdbcType="VARCHAR" />
 		<result property="openCondition"	column="feed_open_condition"		jdbcType="VARCHAR" />
 		<result property="content"			column="feed_content"				jdbcType="VARCHAR" />
 		<result property="image1"			column="feed_image1"				jdbcType="VARCHAR" />
@@ -26,6 +25,11 @@
 		<result property="reportCondition"	column="report_condition"			jdbcType="VARCHAR" />
 		<result property="deleteCondition"	column="delete_condition"			jdbcType="VARCHAR" />
 		<result property="checkHeart"		column="exist"						jdbcType="NUMERIC" />
+		
+		<association property="user"			javaType="user">
+			<result property="userId" 			column="user_id"		 			jdbcType="VARCHAR" />
+		</association>
+		
 	</resultMap>
 
 	<resultMap id="feedCommentSelectMap" 		type="comment">
@@ -62,7 +66,7 @@
 		INSERT INTO feed
 		VALUES (
 			seq_feed_no.nextval,
-			#{userId:VARCHAR},
+			#{user.userId:VARCHAR},
 			#{openCondition:VARCHAR},
 			#{content:VARCHAR},
 			#{image1:VARCHAR},
@@ -222,16 +226,6 @@
 	</update>
 	<!-- 사용 -->
 	
-											 
-	
-	<update		id="deleteFeedComment"			parameterType="comment">
-		UPDATE feed_comment
-		<set>
-			delete_condition				= '1'
-		</set>
-		WHERE feed_comment_no				= #{feedCommentNo}
-	</update>
-
 	
 	
 	<update 	id="updateFeedCommentOrder"		parameterType="comment">
@@ -240,7 +234,20 @@
 			sequence						= TO_NUMBER(sequence) + 1
 		</set>
 		WHERE sequence					&gt;= #{sequence}
+		AND feed_no							= #{feedNo}
 	</update>
+	
+			
+											 
+	<!-- 사용 -->
+	<update		id="deleteFeedComment"			parameterType="comment">
+		UPDATE feed_comment
+		<set>
+			delete_condition				= '1'
+		</set>
+		WHERE feed_comment_no				= #{feedCommentNo}
+	</update>
+	<!-- 사용 -->
 	
 	
 	
