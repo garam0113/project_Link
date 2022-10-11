@@ -123,7 +123,7 @@ $(function() {
 					<td class="ct_write01">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td width="105" class="pp">${user.userId}</td>  
+								<td width="105" class="pp">${getUser.userId}</td>  
 								<td></td>
 							</tr>
 						</table>
@@ -204,7 +204,7 @@ $(function() {
 							<li><a href="#" id="gg">업데이트</a></li>
 							<li><a href="#" id="ff">팔로우리스트</a></li>
 							<li><a href="#" id="zz">팔팔리스트</a></li>
-<a href="/myHome/getYourHome?userId=user33" id="zz">유저33</a></li>
+<a href="/myHome/getYourHome?userId=user33" id="zz">${getUser.userId}</a></li>
 							<tr>
            
 								<!--	jQuery Event 처리로 변경

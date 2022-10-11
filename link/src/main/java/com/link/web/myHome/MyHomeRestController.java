@@ -107,14 +107,13 @@ public class MyHomeRestController {
           
           // 팔로우 보내는 유저 id ( 로그인 세션에 저장되어있음 )
           String sendId =((User)session.getAttribute("user")).getUserId();
-
+          System.out.println("send_user_id : " + sendId);
           // User 객체 생성
           User user = new User();
-          User receiveUser = new User();
-          receiveUser.setUserId(userId);
+       
           // 보내는사람 id set
           user.setUserId(sendId);
-          user.setReceiveId(receiveUser);
+          user.setReceiveId(userId);
      
 
           // 받는사람 정보 객체생성
@@ -122,8 +121,8 @@ public class MyHomeRestController {
           
           // 받는사람 정보 set
 
-          System.out.println("send_user_id : " + sendId);
-          System.out.println("recv_user_id : " +  receiveUser);
+
+          System.out.println("recv_user_id : " +  userId);
 
           // 서비스 실행
           myHomeService.addFollow(user);
