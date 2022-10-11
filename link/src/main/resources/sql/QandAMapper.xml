@@ -18,12 +18,13 @@
 		<result property="qandAAnswerRegDate" 	column="answer_regdate" 	  jdbcType="DATE" />
 		<result property="qandACondition" 		column="answer_condition" 	  jdbcType="VARCHAR" />
 		<result property="qandAOpenCondition" 	column="qanda_open_condition" jdbcType="VARCHAR" />
-		<result property="qandACount"			column="qanda_count"		  jdbcType="INTEGER" />
+	
 
 
-		<association property="user" javaType="user">
-			<result property="userId" column="user_id" jdbcType="VARCHAR" />
-		</association>
+	<association property="userId" javaType="User">
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+	</association>
+		
 	</resultMap>
 
 
@@ -33,18 +34,17 @@
 	<insert id="addQandA" parameterType="qandA" >
 		INSERT INTO QANDA
 		( QANDA_NO, QANDA_TITLE, QANDA_CONTENT, QANDA_REGDATE, QANDA_IMAGE1,
-		QANDA_IMAGE2, ANSWER_CONDITION, QANDA_OPEN_CONDITION, QANDA_COUNT, USER_ID)
+		QANDA_IMAGE2, ANSWER_CONDITION, QANDA_OPEN_CONDITION, USER_ID)
 		
 		VALUES (SEQ_QANDA_NO.NEXTVAL, 
-				#{qandATitle}, 
-				#{qandAContent},
+				#{qandATitle:VARCHAR}, 
+				#{qandAContent:VARCHAR},
 				SYSDATE,
-				#{qandAImage1},
-				#{qandAImage2}, 
+				#{qandAImage1:VARCHAR},
+				#{qandAImage2:VARCHAR}, 
 				#{qandACondition}, 
 				#{qandAOpenCondition}, 
-				#{qandACount}, 
-				#{user.userId} )
+				#{userId.userId:VARCHAR} )
 		
 	</insert>
 
@@ -53,20 +53,12 @@
 		SELECT
 		QANDA_NO, QANDA_TITLE, QANDA_CONTENT, QANDA_REGDATE, QANDA_IMAGE1,
 		QANDA_IMAGE2, ANSWER_CONTENT,
-		ANSWER_REGDATE, ANSWER_CONDITION, QANDA_OPEN_CONDITION, QANDA_COUNT, USER_ID
+		ANSWER_REGDATE, ANSWER_CONDITION, QANDA_OPEN_CONDITION, USER_ID
 		FROM QANDA
 		WHERE QANDA_NO = #{QANDA_NO}
 
 	</select>
 
-	<update id="getCount" parameterType="int">
-		UPDATE QANDA
-		<set>
-			QANDA_COUNT = QANDA_COUNT+1
-		</set>
-		WHERE QANDA_NO = #{QANDA_NO}
-
-	</update>
 
 
 
@@ -76,10 +68,13 @@
 		<set>
 		QANDA_TITLE = #{qandATitle},
 		QANDA_CONTENT= #{qandAContent},
+		<if test="userId.userId != 'admin1'">
 		QANDA_REGDATE = SYSDATE,
-		QANDA_IMAGE1 = #{qandAImage1},
-		QANDA_IMAGE2 = #{qandAImage2}
-			<if test="user.userId == 'admin1'">
+		</if>
+		QANDA_IMAGE1 = #{qandAImage1:VARCHAR},
+		QANDA_IMAGE2 = #{qandAImage2:VARCHAR},
+		QANDA_OPEN_CONDITION= #{qandAOpenCondition:VARCHAR}
+			<if test="userId.userId == 'admin1'">
 			,	ANSWER_CONTENT = #{qandAAnswerContent},
 	 			ANSWER_REGDATE = SYSDATE,
 	 			ANSWER_CONDITION = '1'
@@ -105,7 +100,7 @@
 	<select  id="getQandAList"  parameterType="search"	resultMap="qandASelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_count, qanda_regdate
+	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_regdate
 											FROM qanda
 											<if test="searchCondition != null">
 												<where>

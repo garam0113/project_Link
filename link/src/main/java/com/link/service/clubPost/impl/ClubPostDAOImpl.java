@@ -113,27 +113,30 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 
 		// 모임게시물 수정은 파라미터가 map이다. 모임 게시물 댓글 번호가 있다면 모임 게시물 번호의 테이블에 댓글 개수를 +1 한다
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo()));
-		System.out.println("모임 게시물 //////////////////////////" + map.get("clubPost"));
+		ClubPost clubPost = new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo());
+		System.out.println("모임 게시물 //////////////////////////" + clubPost);
 		
 		
 		
 		// 모임게시물 작성자 아이디
-		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost"));
+		clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", clubPost);
 		System.out.println("게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
 		
-
-		//User user1 = new User(); // 댓글 작성자		
-		//User user2 = new User(); // 게시물 작성자
-		//user1.setUserId(comment.getUser().getUserId()); // 댓글 작성자
-		//user2.setUserId(clubPost.getUser().getUserId()); // 게시물 작성자
 		Report report = new Report(comment.getUser().getUserId() + "님이 회원님의 게시물에 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()), new User(clubPost.getUser().getUserId()), 2, comment);
-				
-				
+
+		
 		
 		// 모임게시물 댓글 등록
 		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
 		System.out.println("모임게시물 댓글 등록");
+		
+		// 가장 최근 모임게시물 댓글번호 가져온다
+		comment.setClubPostCommentNo(sqlSession.selectOne("ClubPostCommentMapper.getClubPostCommentNo"));
+		System.out.println("가장 최근 모임게시물 댓글 번호 가져온다 : " + comment.getClubPostCommentNo());
+		map.put("comment", comment);
+		clubPost.setClubPostCommentNo(comment.getClubPostCommentNo());
+		map.put("clubPost", clubPost);
+		
 		// 모임게시물 댓글 개수 증가
 		sqlSession.insert("ClubPostMapper.updateClubPost", map);
 		System.out.println("모임게시물 댓글 개수 증가");
