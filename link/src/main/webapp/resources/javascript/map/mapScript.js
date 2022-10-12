@@ -25,6 +25,10 @@ function initMap() {
 	const locationButton = document.createElement("button");
 	const input = document.getElementById("pac-input");
 	const searchBox = new google.maps.places.SearchBox(input);
+	
+	const searchCafe = document.getElementById("food");
+	
+	searchCafe.addEventListener("click", showCafe);
 
 	// Bias the SearchBox results towards current map's viewport.
 	map.addListener("bounds_changed", () => {
@@ -127,5 +131,25 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	);
 	infoWindow.open(map);
 };
+
+function showCafe() {
+	let request = {
+		location : center,
+		radius : "500",
+		type : ["cafe"],
+	};
+	
+	service = new google.maps.places.PlacesService(map);
+	service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+	if(status == google.maps.places.PlacesServiceStatus.OK) {
+		for(var i = 0 ; i < results.length ; i++){
+			var place = results[i];
+			createMarker(results[i]);
+		}
+	}
+}
 
 window.initMap = initMap;
