@@ -19,7 +19,7 @@ function kakaoLogin() {
 					console.log($(".kakao").val());
 					console.log($(".snsType").val());  
 					
-				 	$("form").attr("method","POST").attr("action","/user/snsLogin").submit();
+				 	$($("form")[0]).attr("method","POST").attr("action","/user/snsLogin").submit();
 				}
 			});
 			// window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드

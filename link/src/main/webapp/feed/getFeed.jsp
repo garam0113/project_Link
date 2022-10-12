@@ -444,6 +444,8 @@
 </head>
 <body>
 
+	<jsp:include page="/toolbar.jsp" />
+	
 	작성자 : ${feed.user.userId}
 	<br/>
 	세션 아이디 : ${sessionScope.user.userId}

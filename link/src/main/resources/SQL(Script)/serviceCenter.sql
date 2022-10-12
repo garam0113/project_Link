@@ -139,7 +139,7 @@ DROP SEQUENCE seq_qanda_qanda_no;
 DROP SEQUENCE seq_qanda_no;
 DROP TABLE qanda;
 CREATE SEQUENCE SEQ_QANDA_NO					INCREMENT BY 1 START WITH 1;
- 
+
 
 select * from qanda;
 
@@ -152,6 +152,10 @@ select * from report_push;
 desc report_push;
 
 select * from club_post;
+
+
+select * from users;
+
 
 DROP TABLE report_push;
 ================
@@ -174,7 +178,7 @@ CREATE TABLE REPORT_PUSH (
 	REPORT_IMAGE2			VARCHAR2(100),
 	TYPE				CHAR(3)					NOT NULL,
 	REPORT_REASON			CHAR(3)					,
-	REPORT_CONDITION		CHAR(3)			DEFAULT '1'	,
+	REPORT_CONDITION		CHAR(3)			DEFAULT '0'	,
 	REPORT_DUPLICATION		CHAR(3)			,
 	PRIMARY KEY(NO)
 );
@@ -186,10 +190,12 @@ INSERT INTO report_push
 VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , NULL , NULL , NULL , NULL, 'admin1' , 'user01' , SYSDATE, NULL , NULL ,
   '1' , '1' , '0'); 
 
-
+DROP SEQUENCE seq_report_push_no;
+CREATE SEQUENCE SEQ_REPORT_PUSH_NO  	INCREMENT BY 1 START WITH 1;
 
  SELECT * FROM REPORT_PUSH;
  
+DROP TABLE REPORT_PUSH				CASCADE CONSTRAINTS; 
  
  INSERT INTO REPORT_PUSH
 	( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,
@@ -222,26 +228,29 @@ SELECT u.report_count, u.penalty_type, r.report_reason, u.user_id
 FROM USERS u, report_push r
 WHERE u.user_id=r.user_id2 AND r.user_id2='user02';
 
-
+DESC REPORT_PUSH;
 
 SELECT REPORT_COUNT, penalty_type, stop_start_date, stop_end_date
 FROM USERS
 WHERE user_id='user02';
 	
-	
+
 UPDATE USERS
 SET
 REPORT_COUNT = '0',
 PENALTY_TYPE = '0',
 STOP_START_DATE = NULL,
 STOP_END_DATE = NULL
-WHERE USER_ID = 'user02';
+WHERE USER_ID = 'user03';
 
+DELETE FROM REPORT_PUSH;
 
 
  SELECT to_number(1) + to_number(1)
  FROM users; 
  
+SELECT *
+FROM users;
  
 SELECT r.*
 FROM REPORT_PUSH R;
@@ -251,7 +260,7 @@ FROM CLUB_POST R
 WHERE club_post_no='45';
 
 DELETE report_push
-WHERE no='45';
+WHERE no='8';
 
 
 
