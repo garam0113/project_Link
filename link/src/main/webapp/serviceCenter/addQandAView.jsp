@@ -25,7 +25,7 @@
 	
 		
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addQandA").submit();
-	} //funtion AddNotice ³¡
+	} //funtion  ³¡
 	
 
 	$(function(){

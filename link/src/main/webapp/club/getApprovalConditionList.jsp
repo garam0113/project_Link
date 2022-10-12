@@ -10,7 +10,7 @@
 <html lang="ko">
 	
 <head>
-	<title>모임리스트</title>
+	<title>가입현황리스트</title>
 	<meta charset="EUC-KR">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,7 +68,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>가입현황모임리스트</h3>
+	       <h3>가입현황리스트</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -97,12 +97,13 @@
             <th align="left">최대 모임원 수</th>
             <th align="left">모임 활동영역</th>
             <th align="left">모임 이미지</th>
+            <th align="left">가입현황</th>
           </tr>
         </thead>
        
 		<tbody>
 		<tr>
-		${approvalConditionList}
+
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${approvalConditionList}">
 			<tr>
@@ -113,7 +114,8 @@
 			  <td align="left">${i.currentMember}</td>
 			  <td align="left">${i.clubMaxMember}</td>
 			  <td align="left">${i.clubArea}</td>
-			  <td align="left">${i.clubImage}</td>	
+			  <td align="left">${i.clubImage}</td>
+<%-- 			  <td align="left">${i.approvalCondition }</td>	 --%>
 			</tr>
           </c:forEach>
         </tr>

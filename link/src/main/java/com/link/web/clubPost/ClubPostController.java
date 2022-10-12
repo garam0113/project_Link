@@ -1,5 +1,7 @@
 package com.link.web.clubPost;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Search;
 import com.link.service.club.ClubService;
@@ -52,6 +55,9 @@ public class ClubPostController {
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
+	
+	@Value("#{commonProperties['clubPostUploadTemDir']}")
+	String clubPostUploadTemDir;
 
 	
 
@@ -74,10 +80,12 @@ public class ClubPostController {
 		//String userId = ((User)session.getAttribute("user")).getUserid();
 		User user = new User("user03");
 		clubPost.setUser(user);
+		search = ClubPostCommon.getSearch(search);
 		
+		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
 		model.addAttribute("search", search);
-		Map<String, Object> map = clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
+		model.addAttribute("heartList", map.get("heartList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
@@ -91,14 +99,27 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
-	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
+	public String addClubPost(@RequestParam List<MultipartFile> multiParFile, @ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
 		//clubPost.setUser((User)session.getAttribute("user"));
 		System.out.println(clubPost);
-		User user = new User();
-		user.setUserId("user02");
-		user.setNickName("user02nickName");
+		User user = new User("user03");
 		clubPost.setUser(user);
+		
+		System.err.println(multiParFile.size());
+		
+		for (int i = 0; i < multiParFile.size(); i++) {
+			multiParFile.get(i).transferTo(new File("clubPostUploadTemDir\\", multiParFile.get(i).getOriginalFilename()));
+		}
+		int j = 0;
+		clubPost = new ClubPost(clubPost.getClubNo(), user, clubPost.getClubPostTitle(), clubPost.getClubPostContent(),
+				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
+				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
+				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
+				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
+				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j).getOriginalFilename());
+		System.out.println("파일 확인용 : " + clubPost);		
+		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}

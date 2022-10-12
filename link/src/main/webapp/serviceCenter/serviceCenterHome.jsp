@@ -25,6 +25,9 @@ $(function(){
 		location.href = "/serviceCenter/getQandAList";
 	});
 	
+	$("button:contains('신고목록')").bind("click", function(){
+		location.href = "/serviceCenter/getReportList";
+	});
 	
 	
 	
@@ -39,7 +42,7 @@ $(function(){
 <button>공지사항</button>
 
 <button>Q&A</button>
-
+<button>신고목록</button>
 <button>내신고보기</button>
 <button>내Q&A보기</button>
 
