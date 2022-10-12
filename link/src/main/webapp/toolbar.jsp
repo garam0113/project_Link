@@ -28,9 +28,6 @@
 		<link rel="apple-touch-icon" sizes="120x120" href="/resources/imageimg/apple-touch-icon-120x120.png">
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">	
 		
-		<!-- MyKey -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtYM84InYYv2cSOImZRZz9mIqZFEpfL9A&callback=initMap&v=weekly" defer></script>
-							
 	</head>
 
 	<body class="page">
