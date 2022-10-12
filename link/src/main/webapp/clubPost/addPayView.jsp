@@ -1,0 +1,253 @@
+<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+<meta charset="EUC-KR">
+
+<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Dropdown Hover CSS -->
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<!-- calendar.js -->
+<script type="text/javascript" src="/javascript/calendar.js"></script>
+<!-- import.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<!--  ///////////////////////// CSS ////////////////////////// -->
+<style>
+	body {
+		padding-top: 50px;
+	}
+</style>
+
+<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<!-- import를 사용하기 위함 -->
+
+<script type="text/javascript">
+	$(function(){
+		$("input[value='결제하기']").bind("click", function(){
+			requestPayment();
+		});
+		$("input[value='취소하기']").bind("click", function(){
+			history.go(-1);
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	function requestPayment() {
+		alert('여기로 오나?');
+		
+		var email = "${ user.email }";
+		var name = "${ user.name }";
+		var phoneNo = "${ user.phoneNo }";
+		var totalPrice = $("div[class='pay-totalPrice']").find("b").text();
+		var payOption = $();
+		var payProduct = $();
+		//alert(email);
+		//alert(name);
+		//alert(phoneNo);
+		//alert(totalPrice);
+		
+		IMP.init("imp83557107"); // 가맹점 식별코드로 IMP 객체를 초기화한다
+		//IMP.init("imp36216644"); // 가맹점 식별코드로 IMP 객체를 초기화한다
+		
+		IMP.request_pay({
+			//pay_method : card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+			//신용카드 결제
+			/*
+				pg : 'danal_tpay',
+				//pg : 'html5_inicis',
+				pay_method : 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+				name : '추가모임수',
+				amount : totalPrice,
+				customer_uid : 'your-customer-unique-id', // 필수 입력.
+				buyer_email : email,
+				buyer_name : name,
+				buyer_tel : phoneNo
+			/*/
+
+			//카카오페이
+			/*
+				pg : 'kakaopay',
+				pay_method : 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+				name : '최초인증결제',
+				amount : 100,
+				customer_uid : 'your-customer-unique-id', // 필수 입력.
+				buyer_email : 'iamport@siot.do',
+				buyer_name : '아임포트',
+				buyer_tel : '02-1234-1234'
+			 */
+
+			//휴대폰결제
+			/*
+			    pg : 'html5_inicis',
+			    pay_method : 'phone',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+			 */
+		
+			//토스페이
+			/*
+			    pg : 'tosspay',
+			    pay_method : 'card',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile	
+			 */
+		
+			//실시간 계좌이체
+			///*
+			    pg : 'html5_inicis',
+			    pay_method : 'trans',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 1000,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+			// */
+
+			//무통장 입금
+				/*
+				pg : 'html5_inicis',
+				pay_method : 'vbank',
+				merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+				name : '주문명:결제테스트',
+				amount : 100,
+				buyer_email : 'itzrb577@naver.com',
+				buyer_name : '황다래',
+				buyer_tel : '010-8325-6825',
+				//buyer_addr : '서울특별시 강남구 삼성동',
+				//buyer_postcode : '123-456',
+				//m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}', // 예: https://www.my-service.com/payments/complete/mobile
+				//notice_url : 'http://192.168.0.74:8080/purchase/json/complete', //웹훅수신 URL 설
+			*/
+
+		}, function(rsp) { // callback
+			if (rsp.success) {
+				msg += '\n고유ID : ' + rsp.imp_uid;
+    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
+    			alert(msg);
+    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+				alert(msg);
+			}
+		});
+	}
+</script>
+
+</head>
+
+<body>
+	<form name="addPayForm" method="post" action="/clubPost/addPay">
+	
+		<input type="text" name="payProduct" value="">
+		<input type="text" name="totalPrice" value="">
+
+		<!--  화면구성 div Start /////////////////////////////////////-->
+		<div class="pay-view">
+		
+			<div class="pay-payOption">
+				결제방법&nbsp;&nbsp;:&nbsp;&nbsp;
+				<input type="radio" name="payOption" value="신용카드">신용카드
+				<input type="radio" name="payOption" value="카카오페이">카카오페이
+				<input type="radio" name="payOption" value="휴대폰결제">휴대폰결제
+				<input type="radio" name="payOption" value="토스페이">토스페이
+			</div>
+			
+			<div class="pay-payProduct">
+				<c:choose>
+					<c:when test="${ pay.clubNo != 0 }">추가 모임원 수<b class="payProduct-member">20</b>명
+					</c:when>
+					<c:when test="${ pay.clubNo == 0 }">추가 모임 수<b class="payProduct-club">2</b>개방
+					</c:when>
+				</c:choose>
+			</div>
+			
+			<div class="pay-totalPrice">
+				총 결제금액 : <b class="totalPrice">1000</b>원
+			</div>
+			
+			<div>
+				<input type="button" value="결제하기">
+				<input type="button" value="취소하기">
+			</div>
+		
+		</div>
+		<!--  화면구성 div Start /////////////////////////////////////-->
+	</form>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

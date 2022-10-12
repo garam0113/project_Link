@@ -185,8 +185,10 @@ public class FeedRestController {
 		map.put("feed", feed);
 		map.put("user", user);
 		map.put("feedNo", feed.getFeedNo());
+		
+		feed = feedService.addFeedHeart(map);
 				
-		return feedService.addFeedHeart(map).getCheckHeart();
+		return feed.getHeartCount();
 		
 	}
 	
@@ -209,8 +211,10 @@ public class FeedRestController {
 		map.put("feed", feed);
 		map.put("user", user);
 		map.put("feedNo", feed.getFeedNo());
+		
+		feed = feedService.deleteFeedHeart(map);
 				
-		return feedService.deleteFeedHeart(map).getCheckHeart();
+		return feed.getHeartCount();
 
 	}
 	

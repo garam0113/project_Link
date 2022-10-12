@@ -29,22 +29,76 @@
 			location.href = "/clubPost/addClubPostView?clubNo=2";
 		});
 		$("b:contains('최신순')").bind("click", function() {
-			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=0";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=0";
 		});
 		$("b:contains('오래된순')").bind("click", function() {
-			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=1";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=1";
 		});
 		$("b:contains('좋아요 많은순')").bind("click", function() {
-			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=2";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=2";
 		});
 		$("b:contains('내가 작성한 게시물')").bind("click", function() {
-			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.clubPostList[0].clubNo }+"&order=3";
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=3";
 		});
 		$("button:contains('검색')").bind("click", function() {
 			$("input[name='currentPage']").val("1");
 			$("form").submit();
 		});
-	});
+		
+		var currentPage = 1;
+		$(window).scroll(function() {
+			var maxHeight = $(document).height();
+			var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+			
+			if(currentScroll >= maxHeight) {
+				
+				currentPage++;
+				//alert(currentPage);
+				$("input[name='currentPage']").val(currentPage);
+				
+				var clubNo = "2";
+				var searchCondition = $("option:selected").val();
+				var searchKeyword = $("input[name='searchKeyword']").val();
+				var order = $("input[name='order']").val();
+				
+				//alert(searchCondition);
+				//alert(searchKeyword);
+				//alert(order);
+				
+				$.ajax({
+					url : "/clubPostRest/json/getClubPostList",
+					type : "post",
+					dataType : "json",
+					data : JSON.stringify({
+						pageUnit : clubNo,
+						currentPage : currentPage,
+						searchCondition : searchCondition,
+						searchKeyword : searchKeyword,
+						order : order
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function( JSONData, status ) {
+						alert(status);
+						
+						console.log(JSONData.search);
+						console.log(JSONData.clubPostListCount);
+						console.log(JSONData.clubPostList);
+					}// end of success
+				});// end of ajax				
+			}// end of if			
+		}); // end of scroll
+		
+		$("b:contains('결제')").bind("click", function(){
+			//alert('결제');
+			location.href = "/clubPost/addPayView?clubNo="+${ clubPostList[0].clubNo };
+		});
+		
+		
+		
+	});// end of function()
 	
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
@@ -75,6 +129,7 @@
 					<b>오래된순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>좋아요 많은순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>내가 작성한 게시물</b>	&nbsp;&nbsp;&nbsp;
+					<b>결제</b>	&nbsp;&nbsp;&nbsp;
 					<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
 					<button type="button" class="btn btn-default">게시물 등록하기</button>
 		    	</p>
@@ -113,19 +168,19 @@
  	
  	<!-- 썸네일로 list display start -->
 	<div class="contains" id="container">
-		<c:set var="i" value="${ clubPost.clubPostList }"></c:set>
-		<c:if test="${ clubPost.clubPostListCount > 0}">
-		<c:forEach var="i" begin="0" end="${ fn:length(clubPost.clubPostList) - 1 }" step="1">
+		<c:set var="i" value="${ clubPostList }"></c:set>
+		<c:if test="${ clubPostListCount > 0}">
+		<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
 			<div class="col-md-4">
-				<a href="javascript:getClubPostGo('${ clubPost.clubPostList[i].clubPostNo }')">
+				<a href="javascript:getClubPostGo('${ clubPostList[i].clubPostNo }')">
 					<img src="/images/uploadFiles/${ uploadList[i] }" height="350" width="350">
 				</a>
-				<p align="center" style="font-size: 30px">${ clubPost.clubPostList[i].clubPostNo }</p>
-				<p align="center" style="font-size: 20px">제목 : ${ clubPost.clubPostList[i].clubPostTitle }</p>
-				<p align="center" style="font-size: 20px">좋아요 수 : ${ clubPost.clubPostList[i].clubPostHeartCount }</p>
-				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ clubPost.clubPostList[i].user.userId }</p>
-				<p align="center" style="font-size: 20px; color: red;">작성자 닉네임 : ${ clubPost.clubPostList[i].user.nickName }</p>
-				<p align="center" style="font-size: 20px; color: red;">작성자 프로필이미지 : ${ clubPost.clubPostList[i].user.profileImage }</p>
+				<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostNo }</p>
+				<p align="center" style="font-size: 20px">제목 : ${ clubPostList[i].clubPostTitle }</p>
+				<p align="center" style="font-size: 20px">좋아요 수 : ${ clubPostList[i].clubPostHeartCount }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 아이디 : ${ clubPostList[i].user.userId }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 닉네임 : ${ clubPostList[i].user.nickName }</p>
+				<p align="center" style="font-size: 20px; color: red;">작성자 프로필이미지 : ${ clubPostList[i].user.profileImage }</p>
 			</div>
 		</c:forEach>
 		</c:if>
