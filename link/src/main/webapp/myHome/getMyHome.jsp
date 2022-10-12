@@ -1,309 +1,363 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<title>È¸¿øÁ¤º¸Á¶È¸</title>
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<!-- CDN(Content Delivery Network) È£½ºÆ® »ç¿ë -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
 <script type="text/javascript">
-		
-		//==> Ãß°¡µÈºÎºĞ : "¼öÁ¤" "È®ÀÎ"  Event ¿¬°á ¹× Ã³¸®
+
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#sgr:contains('ÇÁ·ÎÇÊ')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/getProfile?userId=${user.userId}"
-	}); 
-	$("#gg:contains('¾÷µ¥ÀÌÆ®')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/updateProfile?userId=${user.userId}"
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
+	$(".glyphicon glyphicon-user").on("click" , function() {
+		
+		self.location = "/myHome/updateProfile?userId="${user.userId}
 	});
-	$("#ff:contains('ÆÈ·Î¿ì¸®½ºÆ®')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/getFollowList?userId=${user.userId}"
-	}); 
 	
-
+	
  });
- 		
- $(function(){
-
-
-     $(".pp").on("click" , function() {
-   
-           var userId = $(".pp").html();
-           //console.log(userId);
-           //alert("»ı¼º");
-           // ÀÌ°Ô¾ÈµÈ´Ù´Â°ÅÁö?¤·¤·¤·¤·
-           $(document).ready(function(){
-        		$.ajax({
-        			type: 'GET',   //get¹æ½ÄÀ¸·Î ¸í½Ã
-        			url : '/myHomeRest/json/addFollow/'+userId,  //ÀÌµ¿ÇÒ jsp ÆÄÀÏ ÁÖ¼Ò
-        			dataType:'json',   //¹®ÀÚÇü½ÄÀ¸·Î ¹Ş±â
-        			success: function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â ¼º°øÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        	            //function(data)¸¦ ¾²°Ô µÇ¸é Àü´Ş¹ŞÀº µ¥ÀÌÅÍ°¡ data¾È¿¡ ´ã¾Æ¼­ µé¾î¿À°Ô µÈ´Ù. 
-        				//alert(data); 
-        			    console.log("userId : "+data);
-        			},
-        			error:function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â°¡ ½ÇÆĞÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        				//alert('½ÇÆĞ');
-        			}
-        		})
-        	});
-              
-     });
- });			
- 
-</script>
-<style>
-.calendar {
-	margin: 0 auto;
-	width: 1000px;
-	display: flex;
-	justify-content: center;
-}
-</style>
-
-<style>
-.image {
-	margin: 0 auto;
-	width: 400px;
-	text-align: center;
-}
-
-.to {
-	margin: 0;
-	width: 350px;
-	text-align: left;
-}
-
-.usertext {
-	margin-right: 10px;
-	padding: 10px;
-	margin-left: -100px;
-}
-
-.calendertext {
-	padding: 10px;
-}
-</style>
-
-
-
-</head>
-
-<body bgcolor="#ffffff" text="#000000">
-
-
-<div class="calendar">
-
-		<div class="usertext">
-			<table width="300px" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 13px;" class="to">
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-                    
-					<td width="104" class="ct_write">¾ÆÀÌµğ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td width="105" class="pp">${user.userId}</td>  
-								<td></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-
-				<tr>
-					<td width="104" class="ct_write">ÀÌ¸§</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">${user.nickName}</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÁÖ¼Ò</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÀÌ¸ŞÀÏ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-							
-							
-								
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-
-				<tr>
-					<td width="104" class="ct_write">°¡ÀÔÀÏÀÚ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<!--
-					<td height="26">${club.clubTitle}</td>
-					<td height="26">${user.nickName}</td>
-					<td height="26">${user.phoneNo}</td>
-					<td height="26">${club.clubDetail}</td>
-					<td height="26">${club.clubArea}</td>
-					<td height="26">${club.clubArea}</td> 
-					 <td>${feedList}</td>
-					<td>${clubList}</td>-->
-
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<li><a href="#" id="ss">ÆÈ·Î¿ì</a></li>
-				</tr>
-			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 10px;">
-				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-
-					<td width="53%"></td>
-					<td align="right">
-						<table border="0" cellspacing="0" cellpadding="0">
-
-							<li><a href="#" id="sgr">ÇÁ·ÎÇÊ</a></li>
-							<li><a href="#" id="gg">¾÷µ¥ÀÌÆ®</a></li>
-							<li><a href="#" id="ff">ÆÈ·Î¿ì¸®½ºÆ®</a></li>
-							<li><a href="#" id="zz">ÆÈÆÈ¸®½ºÆ®</a></li>
-<a href="/myHome/getYourHome?userId=user33" id="zz">À¯Àú33</a></li>
-							<tr>
-           
-								<!--	jQuery Event Ã³¸®·Î º¯°æ
-					
-						<a href="javascript:history.go(-1);">È®ÀÎ</a>
-						
-					-->
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="calendertext">
-			<jsp:include page="/myHome/calendar.jsp" />
-		</div>
-		<div>
-			<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-			<td bgcolor="D6D6D6" width="1"></td>
-
-		</div>
-
-		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-6 text-center"></div>
-			
-<p id="demo"></p><br>
-<button type="button" class="abc" value="${user.userId}">Å¬¸¯</button>
-<!-- json ºÒ·¯¼­ pÅÂ±×¿¡ ³Ö±â -->
-<script type="text/javascript">
-$(document).ready(function() {
-	$("button").click(function() {
-		var userId = $(".abc").val();
-		console.log($(".abc").val());
-		alert("»ı¼º");
-		$.ajax({
-			url : "/myHomeRest/json/getFollowList", // ¾îµğ·Î °¥°Å´Ï? // °¥ ¶§ µ¥ÀÌÅÍ
-			type : "POST", // Å¸ÀÔÀº ¹» ¾µ°Å´Ï?
-			datatype : "json",
-			 data		:  JSON.stringify({userId}),
-			contentType : "application/json",
-			success : function(data) { // °¬´Ù¿Â ´ÙÀ½ °á°ú°ª
-				alert('seccuss');	// ³ª¿À¸é ÆÄÀÏÀ» Ã£¾Ò´Ù´Â °Í
-			//	alert(data);  // [object Object],[object Object],[object Object]
-				
-			// µ¥ÀÌÅÍ¸¦ È®ÀÎÇÏ°í ½ÍÀ» ¶§.
-			//	let str = JSON.stringify(data); // <> parse()
-			//	alert(str); 
-           console.log(data.list[0].receiveId.nickName);
-				$.each(data.list, function(index, item) { // µ¥ÀÌÅÍ =item
-					$("#demo").append(index + " "); // index°¡ ³¡³¯¶§±îÁö 
-					$("#demo").append(item.receiveId.userId + " ");
-					$("#demo").append(item.receiveId.nickName + " ");
-					$("#demo").append(item.receiveId.name + " ");
-					$("#demo").append(item.receiveId.profileImage + "<br>");
-					console.log(item.receiveId);
-				});
-			},
-			error : function() {
-				alert('error');			
-			}
-			
-		});
-		
-		
-	});
-	
-	
-});
 
 
 $(function(){
-	$("#demo").on("click", function(){
-		
-		self.location ="/myHome/getMyHome?userId=" + $(this).text().trim();
-	});
-});
 
 
-</script>		
+    $(".btn btn-success btn-sm").on("click" , function() {
+  
+          var userId = $(".btn btn-success btn-sm").html();
+          //console.log(userId);
+          alert("íŒ”ë¡œìš°");
+          $(document).ready(function(){
+       		$.ajax({
+       			type: 'GET',   //getë°©ì‹ìœ¼ë¡œ ëª…ì‹œ
+       			url : '/myHomeRest/json/addFollow/'+userId,  //ì´ë™í•  jsp íŒŒì¼ ì£¼ì†Œ
+       			dataType:'json',   //ë¬¸ìí˜•ì‹ìœ¼ë¡œ ë°›ê¸°
+       			success: function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸° ì„±ê³µí–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+       	            //function(data)ë¥¼ ì“°ê²Œ ë˜ë©´ ì „ë‹¬ë°›ì€ ë°ì´í„°ê°€ dataì•ˆì— ë‹´ì•„ì„œ ë“¤ì–´ì˜¤ê²Œ ëœë‹¤. 
+       				//alert(data); 
+       			    console.log("userId : "+data);
+       			},
+       			error:function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸°ê°€ ì‹¤íŒ¨í–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+       				//alert('ì‹¤íŒ¨');
+       			}
+       		})
+       	});
+             
+    });
+});			
+
+</script>
+
+<style>
+#calendar{
+    margin-left: 100px;
+    margin-top: 50px;
+	width: 700px;
+	display: inline-block;
+	justify-content: center;
+	
+}
+.container {
+  
+  float: left;
+  margin-left:300px;
+  
+}
+
+/* Profile container */
+.profile {
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+ 
+}
+
+.profile-userpic img {
+  float: left;
+  margin: 0 auto;
+  width: 50%;
+  height: 40%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+  margin-right:200px;
+}
+
+.profile-usertitle-name {
+  color: #5b9bd1;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  float:left;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+    
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #5b9bd1;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+ 
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  
+  min-height: 460px;
+}
+.comment-section{
+    margin-left: 100px;
+    margin-top: 50px;
+	width: 700px;
+	display: inline-block;
+	justify-content: center;
+
+}
+.single-comment{
+   padding-left : 0;
+}
+</style>
+</head>
+	
+
+	<body class="blog masonry-style">
+
+		<jsp:include page="/toolbar.jsp" />
+
+		<main role="main">
+			<div id="intro-wrap" data-height="27.778">
+				<div id="intro" class="preload darken">
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>MyBlog</h2>
+							<p>Write down your daily life</p>
+						</div><!-- caption -->								
+					</div><!-- intro -->
+				</div><!-- intro -->				
+			</div><!-- intro-wrap -->
+
+			<div id="main" class="row">
+			<div id="calendar" >
 			
+			<jsp:include page="/myHome/calendar.jsp" />
+			</div>
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-</body>
+<div class="container" >
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					<img src="https://m.citybreeze.co.kr/file_data/ctbreeze/2022/04/19/ac007ff0b38eec2ee299876fbc2cbca8.jpg" class="img-responsive" alt="">
+				</div>
+				<br>
+				<br>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						${user.nickName }
+					</div>
+					<div class="profile-usertitle-job">
+						${user.profileWriting }
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+				<div class="profile-userbuttons">
+				<c:if test="${ empty user }">
+					<button type="button" class="btn btn-success btn-sm">Follow</button>
+					<button type="button" class="btn btn-danger btn-sm">Message</button>
+			    </c:if>
+			    
+					<br>
+					<br>
+					
+				</div>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active">
+							<a href="/club/getClubList">
+							<i class="glyphicon glyphicon-home"></i>
+							ë‚´ ëª¨ì„ </a>
+						</li>
+						<li>
+							<a href="/myHome/updateProfile?userId=${user.userId }">
+							<i class="glyphicon glyphicon-user"></i>
+							í”„ë¡œí•„ ìˆ˜ì • </a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+							<i class="glyphicon glyphicon-ok"></i>
+							Tasks </a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-flag"></i>
+							Help </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+		<div class="col-md-9">
+            <div class="profile-content">
+			   ${user.profileWriting}
+            </div>
+		</div>
+	</div>
+</div>
+<div class="comment-section">
+						<h3 id="comments">19 Comments</h3>
+						<ul class="comment-list plain">
+							<li class="comment">
+								<div class="single-comment">
+									<div class="comment-author">
+										<img src="http://placehold.it/60x60" class="avatar" alt="">
+										<cite><a href="#">${user.nickName }</a></cite>
+										<span class="says">says:</span>
+									</div><!-- comment-author -->
+									<div class="comment-meta">
+										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
+									</div><!-- comment-meta -->
+									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+								</div><!-- single-comment -->
+								<ul class="children plain">
+									<li class="comment">
+										<div class="single-comment">
+											<div class="comment-author">
+												<img src="http://placehold.it/60x60" class="avatar" alt="">
+												<cite><a href="#">Mark Robben</a></cite>
+												<span class="says">says:</span>
+											</div><!-- comment-author -->
+											<div class="comment-meta">
+												<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
+											</div><!-- comment-meta -->
+											<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+										</div><!-- single-comment -->
+										<ul class="children plain">
+											<li class="comment">
+												<div class="single-comment">
+													<div class="comment-author">
+														<img src="http://placehold.it/60x60" class="avatar" alt="">
+														<cite><a href="#">Mark Robben</a></cite>
+														<span class="says">says:</span>
+													</div><!-- comment-author -->
+													<div class="comment-meta">
+														<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
+													</div><!-- comment-meta -->
+													<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+												</div><!-- single-comment -->
+											</li>
+										</ul>										
+									</li>
+								</ul>								
+							</li>
+							<li class="comment">
+								<div class="single-comment">
+									<div class="comment-author">
+										<img src="http://placehold.it/60x60" class="avatar" alt="">
+										<cite><a href="#">Mark Robben</a></cite>
+										<span class="says">says:</span>
+									</div><!-- comment-author -->
+									<div class="comment-meta">
+										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
+									</div><!-- comment-meta -->
+									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+								</div><!-- single-comment -->
+							</li>	
+							<li class="comment">
+								<div class="single-comment">
+									<div class="comment-author">
+										<img src="http://placehold.it/60x60" class="avatar" alt="">
+										<cite><a href="#">Mark Robben</a></cite>
+										<span class="says">says:</span>
+									</div><!-- comment-author -->
+									<div class="comment-meta">
+										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
+									</div><!-- comment-meta -->
+									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+								</div><!-- single-comment -->
+							</li>													
+						</ul>
+						</div>
+				
+
+				
+
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
+		<script src="js/plugins.js"></script>
+		<script src="js/beetle.js"></script>
+
+	</body>
 
 </html>

@@ -1398,7 +1398,7 @@ a.reply:hover {
 }
 
 .comment-list .children {
-    padding-left: 2em;
+    padding-left: 0em;
 }
 
 
@@ -2126,7 +2126,7 @@ section.greyish {
 }
 
 .author:before {
-    content: 'âˆ’ ';
+    content: '?ˆ’ ';
 }
 
 .author:after {
@@ -2896,7 +2896,7 @@ footer .row-content.buffer {
     LineIcon font - Made with Fontastic.me - Icons: http://graphicburger.com/line-icon-set-for-ui/
 ----------------------------------------------------------------*/
 
-@charset "UTF-8";
+
 
 @font-face {
     font-weight: normal;
@@ -3443,7 +3443,7 @@ footer .row-content.buffer {
 
 .icon,
 .fa {
-    /* vertical-align: middle; */;
+    /* vertical-align: middle; */
 }
 
 
