@@ -3,6 +3,7 @@ package com.link.service.club.impl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
@@ -47,14 +48,14 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addClub(Club club) throws Exception {
 		System.out.println("addClub DAO까지 왔나??");
 
-//		User user = new User();		
+//		User user = new User();
+
 		//회원 세션으로 바꿔야함
-//		club.setClubNo(77);
-		club.setUserId("user01");
-		
-		club.setCurrentMember(1);
-		club.setClubMaxMember(10);
-		club.setClubCategory("test카테고리");
+//		user = (User) HttpSession.getAttribute("user");
+//		
+//		club.setCurrentMember(1);
+//		club.setClubMaxMember(10);
+//		club.setClubCategory("test카테고리");
 		
 		System.out.println("club에 값 뭐있지 ? : "+club);
 		sqlSession.insert("ClubMapper.addClub",club);
@@ -102,6 +103,15 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
 		
+		System.out.println(search.getSearchKeyword());
+		
+//		List<Club> list = sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
+//		
+//		for (Club c : list) {
+//			System.out.println(c);
+//		}
+		
+//		return null;
 		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
 	}
 	
@@ -115,11 +125,11 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("updateClub DAOImpl 왔나요? ");
 		
-		club.setClubNo(26);
-		club.setUserId("일단테스트 아디입니다");
-		club.setClubCategory("일단테스트입니다");
-		club.setCurrentMember(1);
-		club.setClubMaxMember(10);
+//		club.setClubNo(26);
+//		club.setUserId("일단테스트 아디입니다");
+//		club.setClubCategory("일단테스트입니다");
+//		club.setCurrentMember(1);
+//		club.setClubMaxMember(10);
 		sqlSession.update("ClubMapper.updateClub",club);
 	}
 	
@@ -176,11 +186,11 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("addMeeting DAO왔는가 ? ");
 		
-		meeting.setClubNo(2);
-		meeting.setAddMeetingUserId("user01");
-		meeting.setMeetingWeather("테스트날씨다");
-		meeting.setMeetingMember(1);
-		System.out.println("meeting 값이 뭔가 ? : "+meeting );
+//		meeting.setClubNo(2);
+//		meeting.setAddMeetingUserId("user01");
+//		meeting.setMeetingWeather("테스트날씨다");
+//		meeting.setMeetingMember(1);
+		System.out.println("meeting 값이 뭔가 ? : "+meeting);
 		sqlSession.insert("ClubMapper.addMeeting",meeting); 
 	}
 	
@@ -208,9 +218,9 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("updateMeeting DAOImpl 오나 ?? ");
 		
-		meeting.setMeetingNo(24);
+//		meeting.setMeetingNo(24);
 //		meeting.setClubNo(2);
-		meeting.setAddMeetingUserId("user01");
+//		meeting.setAddMeetingUserId("user01");
 		
 		sqlSession.update("ClubMapper.updateMeeting",meeting);
 	}

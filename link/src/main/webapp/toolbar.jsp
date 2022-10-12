@@ -30,6 +30,7 @@
 
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">
 		
+
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
 		<script src="/resources/javascript/plugins.js"></script>
@@ -48,6 +49,8 @@
 
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">	
 		
+
+
 	</head>
 
 	<body class="page">

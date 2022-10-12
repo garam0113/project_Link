@@ -54,7 +54,10 @@ public class ServiceCenterController {
 		notice.setUserId(user);																			//★
 		System.out.println("/ServiceCenter/addNotice : GET & POST");
 		
-		notice.setNoticeRegDate(notice.getNoticeRegDate());
+		
+		
+		
+		
 		
 		serviceCenterService.addNotice(notice);
 		
@@ -89,6 +92,8 @@ public class ServiceCenterController {
 			URI = "forward:/serviceCenter/updateNotice";
 		} else if (menu.equals("search")) {
 			URI = "forward:/serviceCenter/getNotice.jsp";
+		} else {
+			URI = "forward:/serviceCenter/getNotice.jsp";   //지워야됨
 		}
 		
 		return URI;
@@ -111,17 +116,29 @@ public class ServiceCenterController {
 		return "forward:/serviceCenter/getNoticeList";
 	}
 
-	
+	@RequestMapping(value = "updateNotice", method = RequestMethod.GET)
+	public String updateNotice(@ModelAttribute Notice notice, Model model) throws Exception {
+		
+		System.out.println("/serviceCenter/updateNotice : GET");
+		
+
+		System.out.println(notice);
+		
+		notice = serviceCenterService.getNotice(notice.getNoticeNo());
+		
+		model.addAttribute("notice", notice);
+		
+		return "forward:/serviceCenter/updateNoticeView.jsp";
+	}	
 	
 
 
 
 	
 	@RequestMapping(value = "updateNotice", method = RequestMethod.POST)
-	public String updateNotice(@ModelAttribute Notice notice, Model model
-								) throws Exception {
+	public String updateNotice(@ModelAttribute Notice notice, Model model, User user) throws Exception {
 		
-		System.out.println("/ServiceCenter/updateNotice : POST");
+		System.out.println("/serviceCenter/updateNotice : POST");
 		
 		
 		serviceCenterService.updateNotice(notice);
@@ -204,19 +221,34 @@ public class ServiceCenterController {
 			URI = "forward:/serviceCenter/updateQandA";
 		} else if (menu.equals("search")) {
 			URI = "forward:/serviceCenter/getQandA.jsp";
+		} else {
+			URI = "forward:/serviceCenter/getQandA.jsp";  //지워야됨
 		}
 		
 		return URI;
 	}
 
-	
+	@RequestMapping(value = "updateQandA", method = RequestMethod.GET)
+	public String updateQandA(@ModelAttribute QandA qandA, Model model) throws Exception {
+		
+		System.out.println("/ServiceCenter/updateQandA : GET");
+
+		System.out.println(qandA);
+		
+		qandA = serviceCenterService.getQandA(qandA.getQandANo());
+		
+		model.addAttribute("qandA", qandA);
+		
+		return "forward:/serviceCenter/updateQandAView.jsp";
+	}
+
 
 	
 	@RequestMapping(value = "updateQandA", method = RequestMethod.POST)
-	public String updateQandA(@ModelAttribute QandA qandA, Model model) throws Exception {
+	public String updateQandA(@ModelAttribute QandA qandA, Model model, User user) throws Exception {
 		
 		System.out.println("/ServiceCenter/updateQandA : POST");
-		User user = new User();
+	
 		user.setUserId("admin1");
 		qandA.setUserId(user);
 		
@@ -274,51 +306,90 @@ public class ServiceCenterController {
 	}
 	
 // 여기까지가 QandA 끝 ====================================================================
-	
-	@RequestMapping(value = "addReport", method = RequestMethod.POST)
-	public String addQandA(@ModelAttribute Report report, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
-		System.out.println(report);
-	
-		System.out.println("/serviceCenter/addReport : POST");
+
+
+
+	@RequestMapping(value = "updateReport", method = RequestMethod.GET)
+	public String updateReport(@ModelAttribute Report report, Model model) throws Exception {
 		
+		System.out.println("/ServiceCenter/updateReport : GET");
 		
-		StringBuilder sb = new StringBuilder();
-		
-		int fileCount = 0;
-		
-		
-		for(MultipartFile files : file) {
-			fileCount++;
-			System.out.println(files.getOriginalFilename());
-			sb.append(files.getOriginalFilename());
-			
-			if(fileCount != file.length) {
-				sb.append("*");
-			}
-			
-			String path = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles";
-			File saveFile = new File(path + files.getOriginalFilename());
-			
-			boolean isExists = saveFile.exists();
-			
-			if(!isExists) {
-				files.transferTo(saveFile);
-			}
-		}
-		
-		System.out.println(sb.toString());
-		
-		report.setReportImage1(sb.toString());
-		
-		
-		
-		serviceCenterService.addReport(report);
+		report = serviceCenterService.getReport(report.getNo());
 		
 		model.addAttribute("report", report);
 		
-		return "forward:/serviceCenter/addReport.jsp";
+		return "forward:/serviceCenter/updateReportView.jsp";
+	}	
+	
+	
+	
+	
+	@RequestMapping(value = "updateReport", method = RequestMethod.POST)
+	public String updateReport(@ModelAttribute Report report, Model model, User user) throws Exception {
+		
+		System.out.println("/ServiceCenter/updateReport : POST");
+
+		serviceCenterService.updateReport(report);
+
+		System.out.println(report);
+		
+		report = serviceCenterService.getReport(report.getNo());
+		
+		model.addAttribute("report", report);
+		System.out.println("들렸다 갑니다.");
+		return "forward:/serviceCenter/getReportList";
 	}
 	
+	@RequestMapping(value = "getReport")
+	public String getReport(@ModelAttribute Report report, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+								 Model model , HttpServletResponse response) throws Exception {
+		
+		
+		System.out.println("/ServiceCenter/getReport : GET & POST");
+		
+		
+		report = serviceCenterService.getReport(report.getNo());
+		
+		model.addAttribute("report", report);
+		model.addAttribute("menu", menu);
+		
+		String URI = null;
+		
+		if(menu.equals("manage")) {
+			URI = "forward:/serviceCenter/updateReport";  //매니저일경우
+		} else if (menu.equals("search")) {
+			URI = "forward:/serviceCenter/getReport.jsp"; //회원일경우
+		} else {
+			URI = "forward:/serviceCenter/getReport.jsp"; 
+		}
+		
+		return URI;
+	}
 	
-
-}
+	@RequestMapping(value = "getReportList")
+	public String getReportList(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+								Model model) throws Exception {
+		
+		System.out.println("/serviceCenter/getReportList : GET & POST");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		
+		
+		System.out.println(search);
+		Map<String, Object> map = serviceCenterService.getReportList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		model.addAttribute("menu", menu);
+		
+		return "forward:/serviceCenter/getReportList.jsp";
+	}
+	
+}//ServiceCenter 끝
