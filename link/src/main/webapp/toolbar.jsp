@@ -23,7 +23,6 @@
 		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen"> 
 		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
@@ -49,6 +48,13 @@
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>		
+
+
+		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">	
+		
+		<!-- MyKey -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtYM84InYYv2cSOImZRZz9mIqZFEpfL9A&callback=initMap&v=weekly" defer></script>
+							
 
 	</head>
 
