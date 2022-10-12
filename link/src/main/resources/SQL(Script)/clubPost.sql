@@ -656,6 +656,77 @@ VALUES (seq_pay_no.NEXTVAL, 'user02', 2, 1, 0, 10000, SYSDATE, 0, 20, 0);
 
 
 
+UPDATE CLUB_POST SET IMAGE1 = 'flower20clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg', IMAGE6 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg', IMAGE7 = 'blue_flower.jpg', IMAGE8 = 'five_flower.jpg', IMAGE9 = 'flower.jpg', IMAGE10 = 'red_rose.png' WHERE CLUB_POST_NO = 74;
+UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 71;
+UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'flower.jpg', IMAGE4 = 'red_rose.png' WHERE CLUB_POST_NO = 64;
+UPDATE CLUB_POST SET IMAGE1 = 'flower2clubPost.jpg' WHERE CLUB_POST_NO = 63;
+UPDATE CLUB_POST SET IMAGE1 = 'flower8clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 62;
+UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPost.jpg', IMAGE2 = 'red_rose.png' WHERE CLUB_POST_NO = 61;
+UPDATE CLUB_POST SET IMAGE1 = 'flower12clubPost.jpg', IMAGE2 = 'blue_flower.jpg', IMAGE3 = 'five_flower.jpg', IMAGE4 = 'flower.jpg' WHERE CLUB_POST_NO = 60;
+UPDATE CLUB_POST SET IMAGE1 = 'flower13clubPost.jpg', IMAGE2 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 59;
+UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg', IMAGE2 = 'flower.jpg', IMAGE3 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 58;
+UPDATE CLUB_POST SET IMAGE1 = 'flower5clubPost.jpg' WHERE CLUB_POST_NO = 57;
+UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 56;
+UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPostjpg.jpg' WHERE CLUB_POST_NO = 55;
+UPDATE CLUB_POST SET IMAGE1 = 'flower1clubPost.jpg' WHERE CLUB_POST_NO = 54;
+UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 53;
+UPDATE CLUB_POST SET IMAGE1 = 'flower15clubPost.jpg' WHERE CLUB_POST_NO = 52;
+UPDATE CLUB_POST SET IMAGE1 = 'flower7clubPost.jpg' WHERE CLUB_POST_NO = 51;
+UPDATE CLUB_POST SET IMAGE1 = 'flower18clubPost.jpg' WHERE CLUB_POST_NO = 50;
+UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg' WHERE CLUB_POST_NO = 49;
+UPDATE CLUB_POST SET IMAGE1 = 'flower19clubPostjpg.jpg' WHERE CLUB_POST_NO = 48;
+UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg' WHERE CLUB_POST_NO = 29;
+UPDATE CLUB_POST SET IMAGE1 = 'flower16clubPost.jpg' WHERE CLUB_POST_NO = 27;
+UPDATE CLUB_POST SET IMAGE1 = 'flower10clubPost.jpg' WHERE CLUB_POST_NO = 26;
+UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg' WHERE CLUB_POST_NO = 25;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE USERS SET PROFILE_IMAGE = 'profile_image1clubPost.jpg' WHERE USER_ID = 'user01';
+UPDATE USERS SET PROFILE_IMAGE = 'profile_image2clubPost.jpg' WHERE USER_ID = 'user02';
+UPDATE USERS SET PROFILE_IMAGE = 'profile_image3clubPost.jpg' WHERE USER_ID = 'user03';
+UPDATE USERS SET PROFILE_IMAGE = 'profile_image4clubPost.jpg' WHERE USER_ID = 'user04';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 SELECT V4.*
 FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC ) AS R, V3.*
@@ -668,7 +739,14 @@ FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC ) AS R, V3.*
 													WHERE USER_ID = 'user03' AND JOIN_REG_DATE IS NOT NULL
 													ORDER BY JOIN_REG_DATE DESC ) V1
 											WHERE ROWNUM = 1 ) V2 ) AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0' AND CP.USER_ID = U.USER_ID ) V3 ) V4
-WHERE R BETWEEN 11 AND 20
+WHERE R BETWEEN 1 AND 10
+
+
+
+
+
+
+
 
 
 

@@ -87,7 +87,7 @@ VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333',
 
 
 INSERT INTO CLUB (CLUB_NO, USER_ID, CLUB_TITLE, CLUB_DETAIL, CLUB_REG_DATE, CURRENT_MEMBER, CLUB_MAX_MEMBER, 
-CLUB_CATEGORY, CLUB_AREA, CLUB_IMAGE) VALUES (seq_club_no.NEXTVAL, 'user02', 'CLUB1TITLE', 'CLUB1DETAIL', sysdate, 1, 10, '운동', '서울시 동작구', 'a.jpg');
+CLUB_CATEGORY, CLUB_AREA, CLUB_IMAGE) VALUES (seq_club_no.NEXTVAL, 'user02', 'CLUB1TITLE', 'CLUB1DETAIL', sysdate, 1, 10, '운동', '서울시 동작구', 'flower14clubPost.jpg');
 
 INSERT INTO club (club_no, user_id, club_title, club_detail, club_reg_date, current_member, club_max_member, club_category, club_area, club_image)
 VALUES (seq_club_no.nextval, 'user01', 'testClub', 'testDetail', sysdate, 1, 10, '봉사활동', '서울시 강남구', 'b.jpg');
@@ -268,6 +268,56 @@ INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user02', 's
 INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user03', 'third', '0', '0', SYSDATE, null, '0', '0', '0', '0', '0');
 INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user04', 'fourth', '0', '0', SYSDATE, null, '0', '0', '0', '0', '0');
 INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user05', 'fifit', '0', '0', SYSDATE, null, '0', '0', '0', '0', '0');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE CLUB_POST SET IMAGE1 = 'flower20clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg', IMAGE6 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg', IMAGE7 = 'blue_flower.jpg', IMAGE8 = 'five_flower.jpg', IMAGE9 = 'flower.jpg', IMAGE10 = 'red_rose.png' WHERE CLUB_POST_NO = 74;
+UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 71;
+UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'flower.jpg', IMAGE4 = 'red_rose.png' WHERE CLUB_POST_NO = 64;
+UPDATE CLUB_POST SET IMAGE1 = 'flower2clubPost.jpg' WHERE CLUB_POST_NO = 63;
+UPDATE CLUB_POST SET IMAGE1 = 'flower8clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 62;
+UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPost.jpg', IMAGE2 = 'red_rose.png' WHERE CLUB_POST_NO = 61;
+UPDATE CLUB_POST SET IMAGE1 = 'flower12clubPost.jpg', IMAGE2 = 'blue_flower.jpg', IMAGE3 = 'five_flower.jpg', IMAGE4 = 'flower.jpg' WHERE CLUB_POST_NO = 60;
+UPDATE CLUB_POST SET IMAGE1 = 'flower13clubPost.jpg', IMAGE2 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 59;
+UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg', IMAGE2 = 'flower.jpg', IMAGE3 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 58;
+UPDATE CLUB_POST SET IMAGE1 = 'flower5clubPost.jpg' WHERE CLUB_POST_NO = 57;
+UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 56;
+UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPostjpg.jpg' WHERE CLUB_POST_NO = 55;
+UPDATE CLUB_POST SET IMAGE1 = 'flower1clubPost.jpg' WHERE CLUB_POST_NO = 54;
+UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 53;
+UPDATE CLUB_POST SET IMAGE1 = 'flower15clubPost.jpg' WHERE CLUB_POST_NO = 52;
+UPDATE CLUB_POST SET IMAGE1 = 'flower7clubPost.jpg' WHERE CLUB_POST_NO = 51;
+UPDATE CLUB_POST SET IMAGE1 = 'flower18clubPost.jpg' WHERE CLUB_POST_NO = 50;
+UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg' WHERE CLUB_POST_NO = 49;
+UPDATE CLUB_POST SET IMAGE1 = 'flower19clubPostjpg.jpg' WHERE CLUB_POST_NO = 48;
+UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg' WHERE CLUB_POST_NO = 29;
+UPDATE CLUB_POST SET IMAGE1 = 'flower16clubPost.jpg' WHERE CLUB_POST_NO = 27;
+UPDATE CLUB_POST SET IMAGE1 = 'flower10clubPost.jpg' WHERE CLUB_POST_NO = 26;
+UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg' WHERE CLUB_POST_NO = 25;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
