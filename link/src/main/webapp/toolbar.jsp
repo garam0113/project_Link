@@ -5,6 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page pageEncoding="utf-8"%>
+
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -29,6 +32,7 @@
 		<link rel="apple-touch-icon" sizes="76x76" href="/resources/imageimg/apple-touch-icon-76x76.png">
 		<link rel="apple-touch-icon" sizes="120x120" href="/resources/imageimg/apple-touch-icon-120x120.png">
 
+
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
@@ -37,6 +41,14 @@
 		<script src="/resources/javascript/beetle.js"></script>		
 
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">		
+
+
+		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">
+		
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
+		<script src="/resources/javascript/plugins.js"></script>
+		<script src="/resources/javascript/beetle.js"></script>		
 
 	</head>
 
