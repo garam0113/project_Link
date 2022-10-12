@@ -13,6 +13,8 @@ public class ClubUser {
 	private String memberRole;
 	private String approvalCondition;
 	private String joinGreeting;
+	private String nickName;
+	private Club club;
 	
 
 	public ClubUser() {
@@ -95,13 +97,38 @@ public class ClubUser {
 	}
 
 
+	public String getNickName() {
+		return nickName;
+	}
+	
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+
+
+	public Club getClub() {
+		return club;
+	}
+
+
+	public void setClub(Club club) {
+		this.club = club;
+	}
+
+
 	@Override
 	public String toString() {
-		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", user=" + user
-				+ ", applicationRegDate=" + applicationRegDate + ", joinRegDate=" + joinRegDate + ", logoutDate="
-				+ logoutDate + ", memberRole=" + memberRole + ", approvalCondition=" + approvalCondition
-				+ ", joinGreeting=" + joinGreeting + "]";
+		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", user=" + user + ", applicationRegDate="
+				+ applicationRegDate + ", joinRegDate=" + joinRegDate + ", logoutDate=" + logoutDate + ", memberRole="
+				+ memberRole + ", approvalCondition=" + approvalCondition + ", joinGreeting=" + joinGreeting
+				+ ", nickName=" + nickName + ", club=" + club + "]";
 	}
+
+
+	
+
+
 
 
 

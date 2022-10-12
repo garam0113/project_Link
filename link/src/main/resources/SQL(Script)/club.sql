@@ -78,7 +78,7 @@ SELECT
 SELECT
 	club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
 	FROM club_user
-	WHERE user_id = 'user02';
+	WHERE user_id = 'user04';
 	
 
 //전체모임 수
@@ -176,6 +176,25 @@ updateApprovalCondition()
 UPDATE club_user
 	SET approval_condition = 1
 	WHERE club_user_no = 12;
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT c.club_title , c.club_detail , c.club_category , c.current_member , c.club_max_member , c.club_area , c.club_image
+				FROM club c, club_User cU
+				WHERE c.club_no = cU.club_no and cU.user_id = 'user15' ) deep_table ) inner_table 
+
+
+
 
 
 

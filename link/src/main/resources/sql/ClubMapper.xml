@@ -52,7 +52,7 @@
 	<resultMap 	id="participantSelectMap" 	type="participant">
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
-		<result property="participantUserId"			column="participant_user_id"					jdbcType="VARCHAR"/>
+		<result property="user.userId"			column="participant_user_id"					jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 모임 등록 -->
@@ -190,41 +190,69 @@
 	
 		</select> -->
 	
- 	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
+<!--  	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_user_no , club_no , user_id , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
 											FROM club_user
-											<if test="searchCondition != null">
+											 <if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
 										 				club_user_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_no = #{searchKeyword}
+										 				user_id = #{searchKeyword}
 													</if>
 												</where>
 											</if>
-											ORDER BY club_no ) inner_table
+											ORDER BY club_no ) inner_table ) WHERE user_id = #{searchKeyword}
 		 				WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND user_id = #{searchKeyword}
+	 </select> -->
 	 
-	
-	 <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
-		SELECT COUNT(*)
-	  	FROM(	SELECT club_user_no , club_no
-						FROM club_user
-						WHERE user_id = #{user.userId})	
+	<select id="getApprovalConditionList" parameterType="search" resultMap="clubSelectMap">
+	SELECT inner_table.*
+		FROM (
+			SELECT rownum AS row_seq, deep_table.*
+			FROM (
+				SELECT
+				c.club_title ,
+				c.club_detail ,
+				c.club_category ,
+				c.current_member ,
+				c.club_max_member ,
+				c.club_area ,
+				c.club_image
+			
+				FROM club c, club_User cU
+
+				<where>
+					c.club_no = cU.club_no
+					<if test="searchKeyword != null">
+					and cU.user_id = #{searchKeyword}
+					</if>
+				</where>
+				
+				) deep_table
+			) inner_table
+			<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
+
 	</select>
 	
-	<!-- <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
-		SELECT COUNT(*)
-	  	FROM(	SELECT *
-	  		FROM club_user)
-		WHERE user_id = #{userId}			
+	<select  id="getTotalApprovalConditionCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT club_no 
+						FROM club_user
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			cU.user_id = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>
 	
-	</select> -->
+	
 	
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
@@ -338,21 +366,20 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
 											FROM club_user
-											<if test="searchCondition != null">
+											<!-- <if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
-										 				club_user_no = #{searchKeyword}
+										 				club_no = #{searchKeyword}										 				
 													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
+												 	<if test="searchCondition == 1 and searchKeyword !='' ">										 														 			
 										 				user_id = #{searchKeyword}
 													</if>
 												</where>
-											</if>
-											ORDER BY club_user_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+											</if> -->
+											ORDER BY club_user_no ) inner_table ) WHERE club_no = #{searchKeyword}
+					<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+					 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} -->
+		
 	 </select>
 	
  	<select  id="getTotalClubMemberCount"  parameterType="search"	 resultType="int">
@@ -389,7 +416,7 @@
 			)
 		VALUES (
 			seq_meeting_no.NEXTVAL ,
-			#{club.clubNo} ,
+			#{clubNo} ,
 			#{user.userId} ,
 			#{meetingTitle} ,
 			#{meetingContent} ,
@@ -447,22 +474,19 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT meeting_no , club_no , meeting_title , meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member
 											FROM meeting
-											<if test="searchCondition != null">
+											<!-- <if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->										 			
 										 				club_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
 										 				meeting_no = #{searchKeyword}
 													</if>
-													WHERE club_no = #{searchKeyword}
 												</where>
-											</if>
-											ORDER BY meeting_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+											</if> -->
+											ORDER BY meeting_no ) inner_table ) WHERE club_no = #{searchKeyword}
+						<!-- WHERE ROWNUM &lt;= #{endRowNum} ) WHERE club_no = #{searchKeyword} -->
+		<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} --> 
 	 </select>
 	
 	
@@ -473,7 +497,7 @@
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			meeting_no = #{searchKeyword}
+						 			club_no = #{searchKeyword}
 								</if>								
 							</where>
 						</if> ) countTable						
@@ -499,7 +523,7 @@
 		VALUES (
 			seq_participant_no.nextval ,
 			#{meetingNo} ,
-			#{userId}
+			#{user.userId}
 		)
 	</insert>
 	

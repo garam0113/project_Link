@@ -72,9 +72,9 @@
 	});
 	
 	function popup() {
-		var url = "popup.html";
-		var name = "popup test";
-		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+		var url = "/club/updateMemberRoleView.jsp";
+		var name = "updateMemberRoleView";
+		var option = "width = 800, height = 300, top = 100, left = 200, location = no"
 		window.open(url, name, option);
 	}
 	
@@ -83,13 +83,14 @@
 		$("form").attr("method" , "POST").attr("action" , "/club/getClubMemberList").submit();
 	}
 	
-	 $(function() {
-		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 $( "button.btn.btn-default" ).on("click" , function() {
-			fncGetClubMemberList(1);
+	$(function() {
+		$("#updateMemberRole").on("click", function() {
+			popup();
 		});
-	 });
+		
+	});
 	
+ 
 	
 	</script>	
 	
@@ -169,7 +170,7 @@
        
 		<tbody>
 		<tr>
-		<%-- ${clubList} --%>
+
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${clubMemberList}">
 		  <input type="hidden" name="clubUserNo" value="${clubUserNo}">
@@ -177,15 +178,14 @@
 			<tr>
 			<td align="center">${i.clubUserNo}</td>
 			  <td align="left">${i.user.userId}</td>
-			  <td align="left">${i.user.nickName}</td>
+			  <td align="left">${clubUser.nickName}</td>
 			  <td align="left">${i.memberRole}</td>
 			  <td align="left">${i.user.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${i.approvalCondition}</td>
-			  <td align="left"><a href="javascript:popup()" target="_blank">직책수정</a>
+			  <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
 			</tr>
           </c:forEach>
-        </tr>
         </tbody>
       
       </table>
@@ -194,7 +194,7 @@
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	<jsp:include page="../common/pageNavigator_new2.jsp"/>
+ 	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
 	
 	
 </body>

@@ -103,6 +103,15 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("나의 모임리스트 DAO Impl 왔나?? ");
 		
+		System.out.println(search.getSearchKeyword());
+		
+//		List<Club> list = sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
+//		
+//		for (Club c : list) {
+//			System.out.println(c);
+//		}
+		
+//		return null;
 		return sqlSession.selectList("ClubMapper.getApprovalConditionList",search);
 	}
 	
@@ -181,7 +190,7 @@ public class ClubDAOImpl implements ClubDAO {
 //		meeting.setAddMeetingUserId("user01");
 //		meeting.setMeetingWeather("테스트날씨다");
 //		meeting.setMeetingMember(1);
-		System.out.println("meeting 값이 뭔가 ? : "+meeting );
+		System.out.println("meeting 값이 뭔가 ? : "+meeting);
 		sqlSession.insert("ClubMapper.addMeeting",meeting); 
 	}
 	

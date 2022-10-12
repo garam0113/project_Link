@@ -76,8 +76,8 @@
 			<div class="form-group">
 				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 일 정 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" placeholder="모임일정제목은 필수입니다">
-				</div>					
+					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" placeholder="${meeting.meetingTitle}">
+				</div>						
 			</div>
 			
 			
@@ -85,35 +85,35 @@
 			<div class="form-group">
 				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">모 임 날 짜</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="모임날짜는 필수입니다.">
+					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="${meeting.meetingDate}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">모 임 시 간</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" placeholder="모임시간은 필수입니다.">
+					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" placeholder="${meeting.meetingTime}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">모 임 장 소</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다.">
+					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" placeholder="${meeting.meetingPlace}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
 				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">일 정 내 용</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingContent" name="meetingContent" placeholder="일정내용은 필수입니다.">
+					<input type="text" class="form-control" id="meetingContent" name="meetingContent" placeholder="${meeting.meetingContent}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> 정 원</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="정원을 입력해주세요.">
+					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="${meeting.meetingMaximumMember}">
 				</div>		
 			</div>
 			
@@ -121,7 +121,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
+		      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 			</div>
