@@ -91,6 +91,11 @@
 			}// end of if			
 		}); // end of scroll
 		
+		$("b:contains('결제')").bind("click", function(){
+			//alert('결제');
+			location.href = "/clubPost/addPayView?clubNo="+${ clubPostList[0].clubNo };
+		});
+		
 		
 		
 	});// end of function()
@@ -124,7 +129,7 @@
 					<b>오래된순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>좋아요 많은순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
 					<b>내가 작성한 게시물</b>	&nbsp;&nbsp;&nbsp;
-					<a href="/clubPost/addPay">결제</a>
+					<b>결제</b>	&nbsp;&nbsp;&nbsp;
 					<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
 					<button type="button" class="btn btn-default">게시물 등록하기</button>
 		    	</p>
