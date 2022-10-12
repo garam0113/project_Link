@@ -27,7 +27,7 @@
 		});
 
 		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateNoticeView.jsp";
+			self.location = "../serviceCenter/updateNotice?noticeNo="+$('tr.noticeNo').find('td').text();
 		})
 
 		$("td.ct_btn01:contains('삭제')").bind("click", function() {
@@ -145,11 +145,7 @@
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
-			<tr>
-				<td width="104" class="ct_write">등록일자</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeRegDate}</td>
-			</tr>
+	
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>

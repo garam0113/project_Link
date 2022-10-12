@@ -10,7 +10,7 @@
 
 	<resultMap	id="clubSelectMap"	type="club">
 		<result property="clubNo"			column="club_no"				jdbcType="NUMERIC" />
-		<result property="userId"			column="user_id"				jdbcType="VARCHAR" />
+		<result property="user.userId"			column="user_id"				jdbcType="VARCHAR" />
 		<result property="clubTitle"		column="club_title"				jdbcType="VARCHAR" />
 		<result property="clubDetail"		column="club_detail"			jdbcType="VARCHAR" />
 		<result property="clubRegDate"		column="club_reg_date"			jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
 		<result property="clubUserNo"				column="club_user_no"						jdbcType="NUMERIC"/>
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
-		<result property="userId"					column="user_id"							jdbcType="VARCHAR" />
+		<result property="user.userId"					column="user_id"							jdbcType="VARCHAR" />
 		<result property="applicationRegDate"		column="application_reg_date"				jdbcType="DATE" />
 		<result property="joinRegDate"				column="join_reg_date"						jdbcType="DATE" />
 		<result property="logoutDate"				column="logout_date"						jdbcType="DATE" />
@@ -36,7 +36,8 @@
 	<resultMap	id="meetingSelectMap"		type="meeting">
 		<result property="meetingNo"				column="meeting_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
-		<result property="addMeetingUserId"			column="add_meeting_user_id"				jdbcType="VARCHAR" />
+		<result property="user.userId"			column="add_meeting_user_id"				jdbcType="VARCHAR" />
+		<!-- <result property="user.addMeetingUserId"			column="add_meeting_user_id"				jdbcType="VARCHAR" /> -->
 		<result property="meetingTitle"				column="meeting_title"						jdbcType="VARCHAR" />
 		<result property="meetingContent"			column="meeting_content"					jdbcType="VARCHAR" />
 		<result property="meetingDate"				column="meeting_date"						jdbcType="VARCHAR" />
@@ -51,7 +52,7 @@
 	<resultMap 	id="participantSelectMap" 	type="participant">
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
-		<result property="participantUserId"			column="participant_user_id"					jdbcType="VARCHAR"/>
+		<result property="user.userId"			column="participant_user_id"					jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 모임 등록 -->
@@ -70,7 +71,7 @@
 		   			club_reg_date)
 		VALUES ( 
 					seq_club_no.NEXTVAL , 
-					#{userId} , 
+					#{user.userId} , 
 					#{clubTitle} , 
 					#{clubDetail} , 
 					#{clubImage} , 
@@ -78,7 +79,7 @@
 					#{clubMaxMember:NUMERIC} , 
 					#{clubCategory} , 
 					#{clubArea} ,
-					sysdate)
+					SYSDATE)
 	
 	</insert>
 
@@ -114,7 +115,9 @@
 	
 	<!-- 모임 삭제 -->
 	<delete id="deleteClub">
-		DELETE FROM club WHERE club_no = #{clubNo}
+		DELETE 
+		FROM club 
+		WHERE club_no = #{clubNo}
 	</delete>
 	
 	 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
@@ -187,41 +190,69 @@
 	
 		</select> -->
 	
- 	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
+<!--  	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_user_no , club_no , user_id , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
 											FROM club_user
-											<if test="searchCondition != null">
+											 <if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
 										 				club_user_no = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_no = #{searchKeyword}
+										 				user_id = #{searchKeyword}
 													</if>
 												</where>
 											</if>
-											ORDER BY club_no ) inner_table
+											ORDER BY club_no ) inner_table ) WHERE user_id = #{searchKeyword}
 		 				WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND user_id = #{searchKeyword}
+	 </select> -->
 	 
-	
-	 <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
-		SELECT COUNT(*)
-	  	FROM(	SELECT club_user_no , club_no
-						FROM club_user
-						WHERE user_id = #{user.userId})	
+	<select id="getApprovalConditionList" parameterType="search" resultMap="clubSelectMap">
+	SELECT inner_table.*
+		FROM (
+			SELECT rownum AS row_seq, deep_table.*
+			FROM (
+				SELECT
+				c.club_title ,
+				c.club_detail ,
+				c.club_category ,
+				c.current_member ,
+				c.club_max_member ,
+				c.club_area ,
+				c.club_image
+			
+				FROM club c, club_User cU
+
+				<where>
+					c.club_no = cU.club_no
+					<if test="searchKeyword != null">
+					and cU.user_id = #{searchKeyword}
+					</if>
+				</where>
+				
+				) deep_table
+			) inner_table
+			<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
+
 	</select>
 	
-	<!-- <select id="getTotalApprovalConditionCount" parameterType="search" resultType = "int">
-		SELECT COUNT(*)
-	  	FROM(	SELECT *
-	  		FROM club_user)
-		WHERE user_id = #{userId}			
+	<select  id="getTotalApprovalConditionCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT club_no 
+						FROM club_user
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			cU.user_id = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable						
+	 </select>
 	
-	</select> -->
+	
 	
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
@@ -237,10 +268,10 @@
 		)		 		 
 		VALUES (
 			seq_club_user_no.nextval ,
-			#{userId} ,
+			#{user.userId} ,
 			#{clubNo} ,
-			sysdate ,
-			sysdate ,
+			SYSDATE ,
+			SYSDATE ,
 			#{memberRole} ,
 			#{approvalCondition} ,
 			#{joinGreeting}
@@ -335,21 +366,20 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
 											FROM club_user
-											<if test="searchCondition != null">
+											<!-- <if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 		<!-- 		club_no LIKE('%${searchKeyword}%') -->
-										 				club_user_no = #{searchKeyword}
+										 				club_no = #{searchKeyword}										 				
 													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
+												 	<if test="searchCondition == 1 and searchKeyword !='' ">										 														 			
 										 				user_id = #{searchKeyword}
 													</if>
 												</where>
-											</if>
-											ORDER BY club_user_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+											</if> -->
+											ORDER BY club_user_no ) inner_table ) WHERE club_no = #{searchKeyword}
+					<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+					 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} -->
+		
 	 </select>
 	
  	<select  id="getTotalClubMemberCount"  parameterType="search"	 resultType="int">
@@ -387,14 +417,14 @@
 		VALUES (
 			seq_meeting_no.NEXTVAL ,
 			#{clubNo} ,
-			#{userId} ,
+			#{user.userId} ,
 			#{meetingTitle} ,
 			#{meetingContent} ,
 			#{meetingDate} ,
 			#{meetingPlace} ,
 			#{meetingTime} ,
 			#{meetingWeather} ,
-			sysdate ,
+			SYSDATE ,
 			#{meetingMember} ,
 			#{meetingMaximumMember})
 	</insert>
@@ -432,12 +462,32 @@
 	</update>
 	
 	<!-- 모임일정 리스트 -->
-	<select id="getMeetingList" parameterType="search" resultMap="meetingSelectMap">
+<!-- 	<select id="getMeetingList" parameterType="search" resultMap="meetingSelectMap">
 		SELECT
 			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
 			FROM meeting
-			<!-- WHERE club_no = #{searchKeyword} -->
-	</select>
+			WHERE club_no = #{searchKeyword}
+	</select> -->
+	
+		<select  id="getMeetingList"  parameterType="search"	resultMap="meetingSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT meeting_no , club_no , meeting_title , meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member
+											FROM meeting
+											<!-- <if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				club_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				meeting_no = #{searchKeyword}
+													</if>
+												</where>
+											</if> -->
+											ORDER BY meeting_no ) inner_table ) WHERE club_no = #{searchKeyword}
+						<!-- WHERE ROWNUM &lt;= #{endRowNum} ) WHERE club_no = #{searchKeyword} -->
+		<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} --> 
+	 </select>
 	
 	
 	<select  id="getTotalMeetingCount"  parameterType="search"	 resultType="int">
@@ -447,7 +497,7 @@
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			meeting_no = #{searchKeyword}
+						 			club_no = #{searchKeyword}
 								</if>								
 							</where>
 						</if> ) countTable						
@@ -459,7 +509,8 @@
 	
 	<!-- 모임일정 삭제 -->
 	<delete id="deleteMeeting">
-		DELETE FROM meeting WHERE meeting_no = #{meetingNo}
+		DELETE FROM meeting
+		WHERE meeting_no = #{meetingNo}
 	</delete>
 	
 	<!-- 모임일정 참여신청 수정해야함-->
@@ -472,7 +523,7 @@
 		VALUES (
 			seq_participant_no.nextval ,
 			#{meetingNo} ,
-			#{userId}
+			#{user.userId}
 		)
 	</insert>
 	

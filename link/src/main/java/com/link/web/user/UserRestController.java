@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,6 +74,8 @@ public class UserRestController {
 		
 		System.out.println("/user/json/updatePassword : POST");
 		
+		System.out.println("입력받는 email : "+user.getEmail());
+		
 		Random rand = new Random();
 		String password = "";
 		
@@ -87,9 +90,18 @@ public class UserRestController {
 		
 		User getUser = userService.getUser(user);
 		
-		System.out.println(getUser.getPassword());
-		
-		userService.sendPasswordSMS(getUser);
+		System.out.println("변경된 비밀번호 : "+getUser.getPassword());
+
+		if(user.getEmail() == "") {
+			
+			userService.sendPasswordSMS(getUser);
+
+		}else {
+			
+			getUser.setEmail(user.getEmail());
+			userService.sendPasswordEmail(getUser);
+			
+		}
 		
 		return getUser;
 	}
@@ -138,5 +150,30 @@ public class UserRestController {
 		userService.sendSMS(phoneNo, numStr);
 		
 		return numStr;
+	}
+	
+	@RequestMapping(value = "json/mailCheck/{email}", method = RequestMethod.GET)
+	public String mailCheck(@PathVariable String email) throws Exception{
+		
+		System.out.println("/userRest/json/mailCheck : GET");
+		
+		Random rand = new Random();
+		String numStr = "";
+		
+		for (int i = 0; i<6; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr += ran;
+		}
+		
+		System.out.println(email);
+		
+		String emailStr = email+".com";
+
+		System.out.println(emailStr);
+		
+		userService.mailCheck(emailStr, numStr);
+		
+		return numStr;
+		
 	}
 }

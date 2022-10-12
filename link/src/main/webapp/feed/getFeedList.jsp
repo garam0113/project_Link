@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
 	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
 	<link rel="stylesheet" href="/resources/css/style.css" media="screen">
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 	
 	<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="/resources/image/apple-touch-icon-76x76.png">

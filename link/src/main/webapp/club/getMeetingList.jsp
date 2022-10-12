@@ -130,10 +130,10 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >회원 ID</th>
-            <th align="left">회원명</th>
-            <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th align="left" >모임일정제목</th>
+            <th align="left">모임일정날짜</th>
+            <th align="left">모임일정시간</th>
+            <th align="left">모임장소</th>
           </tr>
         </thead>
        

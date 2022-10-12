@@ -13,7 +13,6 @@
 	<result property="content" 				column="content" 			jdbcType="VARCHAR" />
 	<result property="reportSource" 		column="report_source"  	jdbcType="VARCHAR" />
 	<result property="regDate" 				column="report_regdate" 	jdbcType="DATE" />
-	<result property="reportHandleDate"		 column="handle_date"		 jdbcType="DATE" />	
 	<result property="reportImage1" 		column="report_image1" 		jdbcType="VARCHAR" />
 	<result property="reportImage2" 		column="report_image2"	 	jdbcType="VARCHAR" />
 	<result property="type"					column="type"		  		 jdbcType="VARCHAR" />
@@ -28,7 +27,7 @@
 	<association property="user2" javaType="user">
 		<result property="userId" column="user_id2" jdbcType="VARCHAR"/>
 		<result property="reportCount" column="report_count" jdbcType="NUMERIC"/>
-		<result property="stopEndDate" column="stop_start_date" jdbcType="DATE"/>
+		<result property="stopStartDate" column="stop_start_date" jdbcType="DATE"/>
 		<result property="stopEndDate" column="stop_end_date" jdbcType="DATE"/>
 		
 	</association>
@@ -82,7 +81,7 @@
 	VALUES (seq_report_push_no.nextval,
 			 #{title:VARCHAR},
 			 #{content},
-			 #{reportSource},
+			 #{reportSource:VARCHAR},
 			 #{clubPost.clubPostNo:NUMERIC},
 			 #{clubPostComment.clubPostCommentNo:NUMERIC},
 			 #{feed.feedNo:NUMERIC},
@@ -130,13 +129,19 @@
 
 	 <!-- SQL : SELECT ONE -->
 	 <select id="getReport" parameterType="int" resultMap="Report_PushSelectMap" >
-		SELECT R.*, U.REPORT_COUNT
+		SELECT R.*, U.REPORT_COUNT , U.STOP_START_DATE , U.STOP_END_DATE
         FROM REPORT_PUSH R, USERS U
         WHERE R.user_id2 = U.USER_ID AND NO = #{no}
 	 </select>
 	 
 	 
-	 
+	 <update id ="handleReportCondition" parameterType="report">
+	 UPDATE REPORT_PUSH
+	 <set>
+	 REPORT_CONDITION = 1
+	 </set>
+	 WHERE NO = #{no}
+	 </update>
 	
 	 
 
@@ -144,36 +149,37 @@
 	<update id="addReportCount" parameterType="report">
 	UPDATE USERS
 	<set>
+	STOP_START_DATE = SYSDATE
 				<if test ="reportReason==1">
-				REPORT_COUNT = REPORT_COUNT + 1
+			,	REPORT_COUNT = REPORT_COUNT + 1
 				</if>
 		
 				<if test ="reportReason==2">
-				REPORT_COUNT = REPORT_COUNT + 1
+			,	REPORT_COUNT = REPORT_COUNT + 1
 				</if>
 	
 				<if test = "reportReason==3">
-				REPORT_COUNT = REPORT_COUNT + 2					
+			,	REPORT_COUNT = REPORT_COUNT + 2					
 				</if>
 				
 				<if test = "reportReason==4">
-				REPORT_COUNT = REPORT_COUNT + 1
+			,	REPORT_COUNT = REPORT_COUNT + 1
 				</if>
 				
 				<if test = "reportReason==5">
-				REPORT_COUNT = REPORT_COUNT + 2
+			,	REPORT_COUNT = REPORT_COUNT + 2
 				</if>
 				
 				<if test = "reportReason==6">
-				REPORT_COUNT = REPORT_COUNT + 2
+			,	REPORT_COUNT = REPORT_COUNT + 2
 				</if>
 				
 				<if test = "reportReason==7">
-				REPORT_COUNT = REPORT_COUNT + 3
+			,	REPORT_COUNT = REPORT_COUNT + 3
 				</if>
 				
 				<if test = "reportReason>=8">
-				PENALTY_TYPE = 2
+			,	PENALTY_TYPE = 2
 				</if>			
 	</set>
 	WHERE USER_ID = #{user2.userId}
@@ -218,6 +224,40 @@
 	WHERE USER_ID = #{user2.userId}
 	</update>
 	
-
+	<select  id="getReportList"  parameterType="search"	resultMap="Report_PushSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT NO , TITLE , USER_ID2 , REPORT_CONDITION , REPORT_REGDATE
+											FROM REPORT_PUSH
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				LOWER(NO) LIKE LOWER('%${searchKeyword}%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				LOWER(TITLE) LIKE LOWER('%${searchKeyword}%')
+													</if>
+												</where>
+											</if>
+											ORDER BY NO ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
 	 
+	 
+	  <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT TITLE , CONTENT , REPORT_REGDATE
+						FROM REPORT_PUSH
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			TITLE = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 			CONTENT = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
 </mapper>

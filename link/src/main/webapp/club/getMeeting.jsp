@@ -37,10 +37,26 @@
 
 	<script type="text/javascript">
 	
+	
+	function fncDeleteMeeting() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/deleteMeeting")
+			.submit();
+	}
+	
+	function fncAddMeetingMember() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember")
+			.submit();
+		
+	}
+	
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
-			self.location="/purchase/addPurchaseView?prod_no=${product.prodNo}"
+			alert("눌리나?");
+			fncDeleteMeeting();
+			
 		});
 	});
 	
@@ -58,6 +74,14 @@
 		});
 	});
 	
+	$(function() {
+
+		$("button.btn.btn-success").on("click", function() {
+			alert("신청되었습니다.");
+			fncAddMeetingMember();
+			
+		});
+	});
 	
 	
 	</script>	
@@ -72,6 +96,7 @@
 	       <h3 class=" text-info">모임일정상세조회</h3>
 	    </div>
 	
+		<form class="form-horizontal">
 	
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 번 호</strong></div>
@@ -126,12 +151,14 @@
 		
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >구&nbsp;매</button>
+		      		<button type="button" class="btn btn-primary"  >삭&nbsp;제</button>
 					<a class="btn btn-primary btn" href="#" role="button">이&nbsp;전</a>
 					<button type="button" class="btn btn-waring"  >수&nbsp;정</button>
+					<button type="button" class="btn btn-success"  >참&nbsp;가&nbsp;신&nbsp;청</button>
 					
 		    </div>
-			</div>			
+			</div>		
+			</form>	
 	</div>
 </body>
 </html>

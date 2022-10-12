@@ -52,7 +52,7 @@
 
 <form>
 
-번호<input type="text" name="qandANo" value="${qandA.qandANo}"/>
+번호<input type="hidden" name="qandANo" value="${qandA.qandANo}"/>  ${qandA.qandANo}
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -154,7 +154,7 @@
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="qandAAnswerContent" value="${qandA.AnswerContent}" class="ct_input_g" 
+			<input type="text" name="qandAAnswerContent" value="${qandA.qandAAnswerContent}" class="ct_input_g" 
 						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
 		</td>
 	</tr>
