@@ -1,7 +1,3 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -52,10 +48,6 @@
 
 		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">	
 		
-		<!-- MyKey -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtYM84InYYv2cSOImZRZz9mIqZFEpfL9A&callback=initMap&v=weekly" defer></script>
-							
-
 	</head>
 
 	<body class="page">

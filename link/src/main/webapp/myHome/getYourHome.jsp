@@ -6,6 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -25,23 +32,28 @@ $(function() {
 $(function(){
 
 
-    $(".btn btn-success btn-sm").on("click" , function() {
-  
-          var userId = $(".btn btn-success btn-sm").html();
-          //console.log(userId);
+    $("#follow").on("click" , function() {
           alert("팔로우");
           $(document).ready(function(){
        		$.ajax({
        			type: 'GET',   //get방식으로 명시
        			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
+       			data: JSON.stringify({
+       				userId: $("input[name='sendId']").val();
+       			 receiveId.userId : $("input[name=recvId]").val();
+       			}),
        			dataType:'json',   //문자형식으로 받기
-       			success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
+       			header : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				}, // header end
+       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
        	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
        				//alert(data); 
        			    console.log("userId : "+data);
        			},
        			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-       				//alert('실패');
+       				alert('실패');
        			}
        		})
        	});
@@ -223,13 +235,17 @@ $(function(){
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
 				<c:if test="${! empty getUser }">
-					<button type="button" class="btn btn-success btn-sm">Follow</button>
+					<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
 					<button type="button" class="btn btn-danger btn-sm">Message</button>
 			    </c:if>
 					<br>
 					<br>
 					
 				</div>
+				<div>
+				<input type="hidden" name="sendId" value="${sessionScope.user.userId}">
+			    <input type="hidden" name="recvId" value="${receiveId.userId}">
+			    </div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
