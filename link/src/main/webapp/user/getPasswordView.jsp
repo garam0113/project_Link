@@ -20,6 +20,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+	<script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/resources/javascript/emailCheck.js"></script>
+	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -31,9 +36,107 @@
     <script type="text/javascript">
     	$(function() {
 			$("#chack").on("click", function() {
-				self.location = "/user/login.jsp";
+				fncGetPassword();
+			});
+			$("a[href='#']").on("click", function() {
+				window.close();
 			});
 		});
+    	
+    	function fncGetPassword() {
+			
+    		var id = $("#userId").val();
+    		var name = $("#name").val();
+    		var rrn = $("#rrn").val();
+    		var phone2 = $("#phone2").val();
+    		var phone3 = $("#phone3").val();
+    		var phoneNo = $("#phone1").val()+"-"+phone2+"-"+phone3;
+  			var checkNo = $("#checkNo").val();
+  			var email = $("#email").val();
+  			
+  			
+  			console.log("phone2 : "+phone2+", phone3 : "+phone3);
+  			console.log("email : "+email);
+  			
+  			if(id == null || id.length < 1){
+  				swal.fire("아이디를 입력해 주세요.");
+  				return;
+  			}
+  			
+  			if(name == null || name.length < 1){
+  				swal.fire("이름을 입력해 주세요.");
+  				return;
+  			}
+  			
+  			if(rrn == null || rrn.length < 1){
+  				swal.fire("주민번호를 입력해 주세요.");
+  				return;
+  			}
+  			
+  			if(phone2 != null && phone3 != null && email != null){
+  				swal.fire("핸드폰, 이메일정보중 하나만 적어주세요.")
+  			}
+  			/*
+  			if(checkNo != 1){
+  				swal.fire("인증이 필요합니다.");
+  				return;
+  			}
+  			*/
+  			$('#myTabs a').click(function (e) {
+  			  e.preventDefault()
+  			  $(this).tab('show')
+  			})
+  			
+  			$.ajax("/userRest/json/getUserId", {
+  				
+  				type : "POST",
+  				data : JSON.stringify({
+  					name : name,
+  					rrn : rrn
+  				}),
+  				dataType : "json",
+  				contentType : "application/json",
+  				henders : {
+  					"Accept" : "application/json"
+  				},
+  				success : function(Data, status) {
+					console.log(Data.phoneNo)
+					console.log(phoneNo)
+					console.log(Data.userId)
+					
+					if(Data.userId != id){
+						swal.fire("아이디가 다릅니다.");
+						return;
+					}
+					
+					$.ajax("/userRest/json/updatePassword", {
+						
+						type : "POST",
+						data : JSON.stringify({
+							userId : id,
+							email : email
+							}),
+						contentType : "application/json",
+						henders : {
+							"Accept" : "application/json"
+						},
+						success : function(JsonData, status) {
+							console.log(JsonData)
+							
+							if(email == null || email.length < 1){
+								alert("임시 비밀번호가 핸드폰번호로 전송되었습니다.");
+							}
+
+							if(phone2.length < 1 || phone3.length < 1){
+								alert("임시 비밀번호가 이메일로 전송되었습니다.");
+							}
+							
+							window.close();
+						}
+					})
+				}
+  			})
+		}
     </script>
     
     </head>
@@ -69,15 +172,13 @@
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="select" class="col-sm-offset-1 col-sm-3 control-label">본인인증방법</label>
-		    <div class="col-sm-4">
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;핸드폰
-		      <input type="radio" class="form-radio" id="select" name="select" >&nbsp;이메일
-		    </div>
-		  </div>
+		   <ul class="nav nav-tabs" role="tablist" >
+		     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">핸드폰</a></li>
+		      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">이메일</a></li>
+		  </ul>
 		  
-		  <div class="form-group">
+		  <div class="tab-content">
+		  <div role="tabpanel" class="tab-pane active" id="home">
 		    <label for="phoneNo" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 		    <div class="col-sm-2">
 		     <select class="form-control" name="phone1" id="phone1">
@@ -98,14 +199,14 @@
 					<input type="text" class="form-control" id="phone3" name="phone3"
 						placeholder="번호">
 			</div>
-				<input type="hidden" name="phone" />
+				<input type="hidden" name="phoneNo" />
 				
 			<div class="col-sm-2">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 			</div>
 		  </div>
 		  
-		  <div class="form-group">
+		   <div role="tabpanel" class="tab-pane" id="profile">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
@@ -113,6 +214,7 @@
 			<div class="col-sm-4">
 					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
 			</div>
+		  </div>
 		  </div>
 		  
 		  <div class="form-group">

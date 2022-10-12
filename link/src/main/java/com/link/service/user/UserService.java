@@ -43,6 +43,10 @@ public interface UserService {
 
 	public void sendPasswordSMS(User user);
 	
+	public void sendPasswordEmail(User user);
+
+	public void mailCheck(String email, String cerNo);
+	
 	public Map<String, Object> getUserList(Search search) throws Exception;
 	
 	public Map<String, Object> getBlockUserList(Search search) throws Exception;

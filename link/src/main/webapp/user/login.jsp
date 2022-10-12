@@ -15,6 +15,8 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<link rel="stylesheet" href="/resources/css/login.css">
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -24,10 +26,11 @@
 	<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://accounts.google.com/gsi/client" async defer></script>
 	
+	
 	<script type="text/javascript" src="/resources/javascript/kakaoLogin.js"></script>
 	    
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
+<style>
+
     	 body >  div.container{ 
         	border: 0;
         	outline: 0;
@@ -39,24 +42,38 @@
         	outline: 0;
         }
         
-    </style>
+.btn-social-login {
+  transition: all .2s;
+  outline: 0;
+  border: 1px solid transparent;
+  padding: .5rem !important;
+  border-radius: 50%;
+  color: #fff;
+}
+.btn-social-login:focus {
+  box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+.text-dark { color: #343a40!important; }
+</style>
+	<!--  ///////////////////////// CSS ////////////////////////// -->
     
     <script type="text/javascript">
+    
   	 $(function() {
-			$("button.btn.btn-primary").on("click", function() {
+			$(".login__button").on("click", function() {
 				login(); //로그인
 			});
 			
-			$("a.btn.btn-primary.btn").on("click", function() {
+			$("#sign-up").on("click", function() {
 				self.location = "/user/addUser"	//회원가입
 			});
 			
-			$(".ID").on("click", function() {
+			$("a[href='#getId']").on("click", function() {
 				var child;
 				child = window.open("/user/getUserId", "_blank", "width = 800, height = 500");
 			});
 			
-			$(".getPassword").on("click", function() {
+			$("a[href='#getPassword']").on("click", function() {
 				var child;
 				child = window.open("/user/getPassword", "_blank", "width = 800, height = 500");
 			});
@@ -111,7 +128,7 @@
   				 }
   				 else if(Data.userID != "" && pw == Data.password){
   					 
-  					$("form").attr("method", "POST").attr("action", "/user/login").submit();
+  					$($("form")[0]).attr("method", "POST").attr("action", "/user/login").submit();
   				 }
 			}
   		 });
@@ -120,81 +137,64 @@
   	 
     </script>
 </head>
-<body>
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">Link</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->	
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-		<!--  row Start /////////////////////////////////////-->
-		<div class="row">
-		
-			<div class="col-md-6">
-					<img src="/resources/image/logo-spring.png" class="img-rounded" width="100%" />
-			</div>
-	   	 	
-	 	 	<div class="col-md-6">
-		 	 	<br/><br/>
-				
-				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
-
-			        <form class="form-horizontal">
-		  
-					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
-					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <a class="ID" >ID찾기</a>&nbsp;/ 
-					      <a class="getPassword">비밀번호찾기</a>
-					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center"> 
+  <div class="login">
+    <div class="login__content">
+      <div class="login__img">
+        <img src="https://image.freepik.com/free-vector/code-typing-concept-illustration_114360-3581.jpg" alt="user login">
+      </div>
+      <div class="login__forms">
+<!--         login form -->
+        <form class="login__register" id="login-in">
+          <h1 class="login__title">Sign In</h1>
+          <div class="login__box">
+            <i class='bx bx-user login__icon'></i>
+            <input type="text" placeholder="Username" class="login__input" name = "userId" id = "userId">
+          </div>
+          <div class="login__box">
+            <i class='bx bx-lock login__icon'></i>
+            <input type="text" placeholder="Password" class="login__input" name = "password" id = "password">
+          </div>
+          <a href="#getId" class="login__forgot">Forgot Id? </a>
+          <a href="#getPassword" class="login__forgot">Forgot Password? </a>
+          
+          <a href="#login" class="login__button">Sign In</a>
+ <div class="form-group">
+         <div class="col-sm-offset-4 col-sm-6 text-center"> 
 					       <button class="button" type="button" onclick="kakaoLogin();"><img src="/resources/image/ko/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></button>
-					       <input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
+					        <input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
 					       <input type="hidden" class="snsType" name="addType" id="addType" value=>
 					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
+          </div>
+          
+           <div class="form-group">
+		 <div class="col-sm-offset-4 col-sm-6 text-center">
 					    <div id="naver_id_login">
 						   <a id="naverIdLogin_loginButton" href="#">
 							<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="50"></a>
 							</div>
 							<input class="naver" type="hidden" id="snsUserId" name="snsUserId">
 							<input class="naverType"type="hidden" id="addType" name="addType">
-					    </div>
-					  </div> 
-					  <script type="text/javascript">
-					 
+		</div>
+		</div>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <div>
+            <span class="login__account login__account--account">Don't Have an Account?</span>
+            <span class="login__signin login__signin--signup" id="sign-up">Sign Up</span>
+          </div>
+        </form>
+       </div>
+      </div>
+     </div>
+   
+    <script type="text/javascript">
+    
 					  var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c", "http://192.168.0.183:8080/user/login.jsp");
 					  	var state = naver_id_login.getUniqState();
 					  	naver_id_login.setButton("green", 3, 50);
@@ -218,17 +218,7 @@
 						  	   
 						  	   $("form").attr("method","POST").attr("action","/user/snsLogin").submit();
 						  	  }
-					  </script>
-					</form>
-			   	 </div>
-				 
-			</div>
-			
-  	 	</div>
-  	 	<!--  row Start /////////////////////////////////////-->
-  	 	
- 	</div>
- 	<!--  화면구성 div end /////////////////////////////////////-->
+	</script>      
 
 </body>
 </html>
