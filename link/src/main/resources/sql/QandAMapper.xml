@@ -21,7 +21,7 @@
 	
 
 
-	<association property="userId" javaType="User">
+	<association property="userId" javaType="user">
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
 	</association>
 		
@@ -34,7 +34,7 @@
 	<insert id="addQandA" parameterType="qandA" >
 		INSERT INTO QANDA
 		( QANDA_NO, QANDA_TITLE, QANDA_CONTENT, QANDA_REGDATE, QANDA_IMAGE1,
-		QANDA_IMAGE2, ANSWER_CONDITION, QANDA_OPEN_CONDITION, USER_ID)
+		QANDA_IMAGE2, ANSWER_CONTENT, ANSWER_REGDATE, ANSWER_CONDITION, QANDA_OPEN_CONDITION, USER_ID)
 		
 		VALUES (SEQ_QANDA_NO.NEXTVAL, 
 				#{qandATitle:VARCHAR}, 
@@ -42,7 +42,9 @@
 				SYSDATE,
 				#{qandAImage1:VARCHAR},
 				#{qandAImage2:VARCHAR}, 
-				#{qandACondition}, 
+				#{qandAAnswerContent:VARCHAR},
+				#{qandAAnswerRegDate:DATE},
+				'0',
 				#{qandAOpenCondition}, 
 				#{userId.userId:VARCHAR} )
 		
