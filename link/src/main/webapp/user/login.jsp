@@ -30,6 +30,18 @@
 	<script type="text/javascript" src="/resources/javascript/kakaoLogin.js"></script>
 	    
 <style>
+
+    	 body >  div.container{ 
+        	border: 0;
+        	outline: 0;
+            margin-top: 10px;
+        }
+        
+        .button{
+      		border: 0;
+        	outline: 0;
+        }
+        
 .btn-social-login {
   transition: all .2s;
   outline: 0;
@@ -52,16 +64,16 @@
 				login(); //로그인
 			});
 			
-			$("a.btn.btn-primary.btn").on("click", function() {
+			$("#sign-up").on("click", function() {
 				self.location = "/user/addUser"	//회원가입
 			});
 			
-			$(".ID").on("click", function() {
+			$("a[href='#getId']").on("click", function() {
 				var child;
 				child = window.open("/user/getUserId", "_blank", "width = 800, height = 500");
 			});
 			
-			$(".getPassword").on("click", function() {
+			$("a[href='#getPassword']").on("click", function() {
 				var child;
 				child = window.open("/user/getPassword", "_blank", "width = 800, height = 500");
 			});
@@ -144,38 +156,45 @@
             <i class='bx bx-lock login__icon'></i>
             <input type="text" placeholder="Password" class="login__input" name = "password" id = "password">
           </div>
-          <a href="#" class="login__forgot">Forgot Password? </a>
-          <a href="#" class="login__forgot">Forgot Id? </a>
+          <a href="#getId" class="login__forgot">Forgot Id? </a>
+          <a href="#getPassword" class="login__forgot">Forgot Password? </a>
           
           <a href="#login" class="login__button">Sign In</a>
-          
-          <div>
-            <span class="login__account login__account--account">Don't Have an Account?</span>
-            <span class="login__signin login__signin--signup" id="sign-up">Sign Up</span>
-          </div>
-        </form>
-        
-					<!-- 
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center"> 
+ <div class="form-group">
+         <div class="col-sm-offset-4 col-sm-6 text-center"> 
 					       <button class="button" type="button" onclick="kakaoLogin();"><img src="/resources/image/ko/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></button>
-					       <input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
+					        <input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
 					       <input type="hidden" class="snsType" name="addType" id="addType" value=>
 					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
+          </div>
+          
+           <div class="form-group">
+		 <div class="col-sm-offset-4 col-sm-6 text-center">
 					    <div id="naver_id_login">
 						   <a id="naverIdLogin_loginButton" href="#">
 							<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="50"></a>
 							</div>
 							<input class="naver" type="hidden" id="snsUserId" name="snsUserId">
 							<input class="naverType"type="hidden" id="addType" name="addType">
-					    </div>
-					  </div> 
-					  <script type="text/javascript">
-					 
+		</div>
+		</div>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <div>
+            <span class="login__account login__account--account">Don't Have an Account?</span>
+            <span class="login__signin login__signin--signup" id="sign-up">Sign Up</span>
+          </div>
+        </form>
+       </div>
+      </div>
+     </div>
+   
+    <script type="text/javascript">
+    
 					  var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c", "http://192.168.0.183:8080/user/login.jsp");
 					  	var state = naver_id_login.getUniqState();
 					  	naver_id_login.setButton("green", 3, 50);
@@ -199,8 +218,7 @@
 						  	   
 						  	   $("form").attr("method","POST").attr("action","/user/snsLogin").submit();
 						  	  }
-					  </script>
-					   -->
+	</script>      
 
 </body>
 </html>

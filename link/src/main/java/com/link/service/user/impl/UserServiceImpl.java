@@ -7,6 +7,8 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.link.common.Search;
@@ -19,6 +21,9 @@ import com.link.service.user.UserService;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 	
@@ -26,8 +31,16 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("userDAOImpl")
 	private UserDAO userDAO;
 	
+	@Autowired
+	private JavaMailSender javaMailSender;
+	
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+	
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+		System.out.println("javaMailSender 생성완료");
+		this.javaMailSender =  javaMailSender;
 	}
 	
 	public UserServiceImpl() {
@@ -129,13 +142,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void sendSMS(String phoneNo, String cerNo) {
 		// TODO Auto-generated method stub
-		String api_key = "NCSLBJQF2TUBD2NO";
-		String api_secret = "Y7LH5YMNTFYTCWBHKDJ2YEJRTFOPE9EN";
+		String api_key = "NCSLGZJ3SPI5O0HY";
+		String api_secret = "TIVIL4CAH2J6QH0W2ECK5GJUP0HZOMXJ";
 		Message coolsms = new Message(api_key,api_secret);
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phoneNo);
-		params.put("from", "01099636601");
+		params.put("from", "01092367535");
 		params.put("type", "SMS");
 		params.put("text", "Link에서 보낸 인증번호["+cerNo+"]");
 		params.put("app_version", "test app 1,2");
@@ -153,13 +166,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void sendPasswordSMS(User user) {
 		// TODO Auto-generated method stub
-		String api_key = "NCSLBJQF2TUBD2NO";
-		String api_secret = "Y7LH5YMNTFYTCWBHKDJ2YEJRTFOPE9EN";
+		String api_key = "NCSLGZJ3SPI5O0HY";
+		String api_secret = "TIVIL4CAH2J6QH0W2ECK5GJUP0HZOMXJ";
 		Message coolsms = new Message(api_key,api_secret);
 		
+		String phoneNo = user.getPhone1()+user.getPhone2()+user.getPhone3();
+		System.out.println("전화번호 : "+phoneNo);
+		
 		HashMap<String, String> param = new HashMap<String, String>();
-		param.put("to",(user.getPhoneNo()));
-		param.put("from","01099636601");
+		param.put("to",phoneNo);
+		param.put("from","01092367535");
 		param.put("type","SMS");
 		param.put("text","임시비밀번호발급["+user.getPassword()+"]");
 		param.put("app_version", "test app 1,2");
@@ -171,6 +187,64 @@ public class UserServiceImpl implements UserService {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
+		}
+	}
+	
+	@Override
+	public void mailCheck(String email, String cerNo) {
+		// TODO Auto-generated method stub
+		String subject = "본인인증 인증코드 입니다.";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Link에서 보낸 인증코드["+cerNo+"]입니다.");
+		System.out.println("보낼 인증코드 내용 : "+stringBuilder);
+		
+		MimeMessage message = javaMailSender.createMimeMessage();
+		System.out.println("message값 : "+message);
+		
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setSubject(subject);
+			helper.setText(stringBuilder.toString(), true);
+			helper.setFrom("bymini1992@gmail.com");
+			helper.setTo(email);
+			
+			System.out.println("helper 값 : "+helper);
+			
+			javaMailSender.send(message);
+			
+			System.out.println("message 보내기 성공");
+		} catch (MessagingException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public void sendPasswordEmail(User user) {
+		// TODO Auto-generated method stub
+		String subject = "임시비밀번호 입니다.";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Link에서 보낸 임시비밀번호["+user.getPassword()+"] 입니다.");
+		System.out.println("보낼 내용 : "+stringBuilder);
+		
+		MimeMessage message = javaMailSender.createMimeMessage();
+		System.out.println("message 값 : "+message);
+		
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setSubject(subject);
+			helper.setText(stringBuilder.toString());
+			helper.setFrom("bymini1992@gmail.com");
+			helper.setTo(user.getEmail());
+			
+			System.out.println("helper 값 : "+helper);
+			
+			javaMailSender.send(message);
+			
+		} catch (MessagingException e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 

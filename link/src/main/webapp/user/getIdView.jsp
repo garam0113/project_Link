@@ -23,6 +23,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
 	<script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/resources/javascript/emailCheck.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -61,11 +62,11 @@
   				swal.fire("주민번호를 입력해 주세요.");
   				return;
   			}
-  			/*
+  			
   			if(checkNo != 1){
   				swal.fire("인증이 필요합니다.");
   				return;
-  			}*/
+  			}
   			
   			$('#myTabs a').click(function (e) {
   			  e.preventDefault()
@@ -88,10 +89,6 @@
 					console.log(Data.phoneNo)
 					console.log(phoneNo)
 					
-					if(Data.phoneNo != phoneNo){
-						swal.fire("핸드폰번호가 일치하지 않습니다.");
-						return;
-					}
 				}
   			})
   			$("form").attr("method", "POST").attr("action" , "/user/getUserId").submit();
@@ -165,7 +162,7 @@
 		      <input type="text" class="form-control" id="email" name="email" placeholder="변경이메일">
 		    </div>
 			<div class="col-sm-4">
-					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
+					<button type="button" id="sendEmail" class="btn ">인증번호전송</button>
 			</div>
 		  </div>
 		  </div>
