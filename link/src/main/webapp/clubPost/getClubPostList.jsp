@@ -103,6 +103,11 @@
 			function getClubPostGo(clubPostNo){
 				location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
 			}
+			
+			// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
+			function getMyHomeGo(userId){
+				location.href = "/myHome/getYourHome?userId="+userId;
+			}
 		</script>
 		
 		<style type="text/css">
@@ -181,10 +186,10 @@
 							    
 								    <div class="contains-order">
 								    	<p class="text-primary" style="width: 87%">
-								    		전체  ${ map.clubPostListCount } 건수, 현재 ${resultPage.currentPage} 페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<b>최신순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-											<b>오래된순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-											<b>좋아요 많은순</b>&nbsp;&nbsp;/&nbsp;&nbsp;
+								    		전체  ${ clubPostListCount } 건수, 현재 ${ search.currentPage } 페이지&nbsp;&nbsp;&nbsp;&nbsp;
+											<b>최신순</b>&nbsp;/&nbsp;
+											<b>오래된순</b>&nbsp;/&nbsp;
+											<b>좋아요 많은순</b>&nbsp;/&nbsp;
 											<b>내가 작성한 게시물</b>
 											<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
 											<a class="button transparent aqua" style="float: right;">등록하기</a>
@@ -217,29 +222,35 @@
 											</a>
 											
 											<div style="display: flex; width: 87%;">
-												<div style="background-color: red; width:0%; flex:1;">
-													<a href="javascript:getMyHomeGo('${ clubPostList[i].clubPostNo }')">
+												<div style="flex:1;">
+													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
 														<img src="/resources/image/uploadFiles/${ clubPostList[i].user.profileImage }" height="100" width="100">
 													</a>
 												</div>
 												<div style="flex:1;">
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
-														<p align="center" style="font-size: 15px; color: red;">${ clubPostList[i].user.nickName }</p>
+														<p align="center" style="font-size: 30px; color: red;">${ clubPostList[i].user.nickName }</p>
 													</a>
 												</div>
 												<div style="flex:1;">
-													<p align="center" style="font-size: 15px">${ clubPostList[i].clubPostHeartCount }</p>
+													<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostHeartCount }</p>
 												</div>
-												<div style="background-color: purple; flex:1;">
-													<a href="javascript:getMyHomeGo('${ clubPostList[i].clubPostNo }')">
-														<c:if test=""><img src="/resources/image/uploadFiles/no_heart.jpg" height="50" width="50"></c:if>
-														<c:if test=""><img src="/resources/image/uploadFiles/heart.jpg" height="50" width="50"></c:if>
-													</a>
+												<div style="flex:1;">
+													<!-- 변수 선언 1이면 좋아요한 게시물 0이면 좋아요 안한 게시물 -->
+													<c:set var="heart_condition" value="0"/>
+													<c:if test="${ fn:length(heartList) > 0}">
+														<c:forEach var="k" begin="0" end="${ fn:length(heartList) - 1 }" step="1">
+															<c:if test="${ clubPostList[i].clubPostNo == heartList[k].sourceNo }">
+																<c:set var="heart_condition" value="1"/>
+															</c:if>
+														</c:forEach>
+													</c:if>
+													<img src="/resources/image/uploadFiles/${ heart_condition == 1 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
 												</div>
 												
 											</div>
 											<div style="width: 87%;">
-												<p align="center" style="font-size: 15px">${ clubPostList[i].clubPostTitle }</p>
+												<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostTitle }</p>
 											</div>
 											
 											<br><br>

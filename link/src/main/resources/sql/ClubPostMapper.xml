@@ -54,6 +54,15 @@
 	
 	
 	
+	<resultMap	id="heartSelectMap" type="com.link.service.domain.Heart">
+		<result property="heartNo" 		column="heart_no"		jdbcType="NUMERIC"/>
+		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
+		<result property="source" 		column="source" 		jdbcType="VARCHAR"/>
+		<result property="sourceNo" 	column="source_no" 		jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	
+	
 	<sql id="select-list">
 		SELECT ROW_NUMBER() OVER(ORDER BY 
 										<choose>
@@ -113,6 +122,17 @@
 				<include refid="select-list"></include>
 			 ) V4
 		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
+	</select>
+	
+	
+	
+	<select id="getHeartList" parameterType="map" resultMap="heartSelectMap">
+		SELECT H.SOURCE_NO, H.USER_ID
+		FROM HEART H, ( 
+			<include refid="select-list"></include>
+		) V4
+		WHERE H.SOURCE_NO = V4.CLUB_POST_NO AND H.USER_ID = #{ clubPost.user.userId }
+		ORDER BY SOURCE_NO DESC
 	</select>
 	
 	
