@@ -65,13 +65,13 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, 
+	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId,
 		       Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+	
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
@@ -88,6 +88,7 @@ public class MyHomeController {
 		model.addAttribute("feedList", map.get("feedList"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
+		
 		
 		return "forward:/myHome/getMyHome.jsp";
 	}  

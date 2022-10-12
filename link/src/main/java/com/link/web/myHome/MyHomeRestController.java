@@ -95,8 +95,8 @@ public class MyHomeRestController {
 				 
     }
 	 
-    @RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
-    public void addFollow(@PathVariable String userId, HttpSession session, Model model) throws Exception{
+    @RequestMapping(value="/json/addFollow/{receiveId}", method=RequestMethod.GET)
+    public void addFollow(@PathVariable User receiveId, HttpSession session, Model model) throws Exception{
       
 
          
@@ -113,7 +113,7 @@ public class MyHomeRestController {
        
           // 보내는사람 id set
           user.setUserId(sendId);
-          user.setReceiveId(userId);
+          user.setReceiveId(receiveId);
      
 
           // 받는사람 정보 객체생성
@@ -122,7 +122,7 @@ public class MyHomeRestController {
           // 받는사람 정보 set
 
 
-          System.out.println("recv_user_id : " +  userId);
+          System.out.println("recv_user_id : " +  receiveId);
 
           // 서비스 실행
           myHomeService.addFollow(user);
