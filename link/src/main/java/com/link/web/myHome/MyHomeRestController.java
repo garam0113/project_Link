@@ -23,6 +23,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
+import com.link.service.domain.Heart;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 
@@ -52,7 +53,7 @@ public class MyHomeRestController {
 	
 	
 	@RequestMapping(value = "json/getFollowList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowList(@RequestBody Search search) throws Exception{
+	 public Map<String, Object> getFollowList(@RequestBody Search search, User user, HttpSession session) throws Exception{
 		 System.out.println("/myHomeRest/json/getFollowList : POST");
 		 
 		 if(search.getCurrentPage() == 0) {
@@ -62,15 +63,20 @@ public class MyHomeRestController {
 			search.setPageSize(pageSize);
 			search.setPageUnit(pageUnit);
 		 
-		 
+		 user = (User) session.getAttribute("user");
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("search",search);
-			
+		 map.put("user", user);	
+		 map.put("list",myHomeService.getFollowList(search).get("list"));
+		 
+		 
+		 
+		 
 		 return map;
 		 
 	 }
 	@RequestMapping(value = "json/getFollowerList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowerList(@RequestBody Search search) throws Exception{
+	 public Map<String, Object> getFollowerList(@RequestBody Search search,User user, HttpSession session) throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
 				 
 				 if(search.getCurrentPage() == 0) {
@@ -79,38 +85,52 @@ public class MyHomeRestController {
 					
 					search.setPageSize(pageSize);
 					search.setPageUnit(pageUnit);
-				 
+				 user = (User) session.getAttribute("user");
 				 Map<String,Object>map = myHomeService.getFollowerList(search);
-				 map.put("search", search);
+				 map.put("search",search);
+				 map.put("user", user);	
+				 map.put("list",myHomeService.getFollowList(search).get("list"));
+				 
 				 return map;
 				 
     }
 	 
-	@RequestMapping(value="/json/addFollow/{userId}", method=RequestMethod.GET)
-    public void addFollow(@PathVariable String userId, HttpSession session, Model model) throws Exception{
-		
-		try {
-			
-			System.out.println("/myHomeRest/json/addFollow : GET");
-			 System.out.println("userId : " + userId);
-			 
-			 
-			 String sendId =((User)session.getAttribute("user")).getUserId();
-			 User user = new User();
-			 User receiveId = new User();
-			 user.setUserId(sendId);
-			 receiveId.setUserId(userId);
-			 
-			 user.setReceiveId(receiveId);
-			 myHomeService.addFollow(user);
-			 
-		} catch( Exception e) {
-			e.printStackTrace();
-		}
-		 
+    @RequestMapping(value="/json/addFollow/{receiveId}", method=RequestMethod.GET)
+    public void addFollow(@PathVariable User receiveId, HttpSession session, Model model) throws Exception{
+      
+
+         
+         System.out.println("/myHomeRest/json/addFollow : GET");
+
+         // 팔로우 받는 유저 id ( 패스파라미터로 받음 )
+         // @PathVariable String userId
+          
+          // 팔로우 보내는 유저 id ( 로그인 세션에 저장되어있음 )
+          String sendId =((User)session.getAttribute("user")).getUserId();
+          System.out.println("send_user_id : " + sendId);
+          // User 객체 생성
+          User user = new User();
+       
+          // 보내는사람 id set
+          user.setUserId(sendId);
+          user.setReceiveId(receiveId);
+     
+
+          // 받는사람 정보 객체생성
+     
+          
+          // 받는사람 정보 set
+
+
+          System.out.println("recv_user_id : " +  receiveId);
+
+          // 서비스 실행
+          myHomeService.addFollow(user);
+          
+     
+       
  
-	 }
-	 
+    }
 //	 @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
 //	    public User deleteFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
 //			 

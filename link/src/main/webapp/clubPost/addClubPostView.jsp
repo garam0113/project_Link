@@ -21,9 +21,10 @@ $(function(){
 모임 번호 : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
 제목<input type="text" name="clubPostTitle" value="notnull"></br>
 내용<input type="text" name="clubPostContent"></br>
-영상1<input type="text" name="clubPostVideo1"></br>
+<!-- 영상1<input type="text" name="clubPostVideo1"></br>
 영상2<input type="text" name="clubPostVideo2"></br>
-영상3<input type="text" name="clubPostVideo3"></br>
+영상3<input type="text" name="clubPostVideo3"></br> -->
+<input type="file" name="videoName" multiple="multiple"></br>
 <!-- 이미지1<input type="text" name="image1" value="notnull"></br>
 이미지2<input type="text" name="image2"></br>
 이미지3<input type="text" name="image3"></br>
@@ -34,7 +35,7 @@ $(function(){
 이미지8<input type="text" name="image8"></br>
 이미지9<input type="text" name="image9"></br>
 이미지10<input type="text" name="image10"></br> -->
-<input type="file" name="fileName" multiple="multiple"></br>
+<input type="file" name="imageName" multiple="multiple"></br>
 <input type="button" value="등록완료">
 <input type="button" value="리스트로이동">
 </form>

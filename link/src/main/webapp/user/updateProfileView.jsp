@@ -21,6 +21,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript" charset="utf-8" src="/resources/javascript/nickNameCheck.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -33,9 +35,50 @@ body>div.container {
 <script type="text/javascript">
 	$(function() {
 		$("button[type='button']").on("click", function() {
-			$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+			fncUpdateProfile();
+		});
+		$("a[href='#']").on("click", function() {
+			history.back();
 		});
 	});
+	
+	function fncUpdateProfile() {
+		
+		var regExp2 = /\s/g;
+		var nickName = $("#nickName").val();
+		var gender = $("#gender").is(":checked");
+		var checkNickName = $("#checkNickName").val();
+		//alert(gender);
+		
+		if(nickName == null || nickName.length < 1){
+			swal.fire("닉네임을 입력해 주세요.");
+			return;
+		}
+		
+		if(gender == false){
+			swal.fire("성별 체크를 해주세요.");
+			return;
+		}
+		
+		if(nickName == null || nickName.length <1){
+			swal.fire("닉네임을 입력하셔야 합니다.");
+			return;
+		}
+		
+		if(regExp2.test(nickName)){
+			swal.fire("공백은 사용할 수 없습니다.");
+			return;
+		}
+		
+		if(checkNickName == 2){
+			swal.fire("사용중인 닉네임 입니다");
+			return;
+		}
+		
+		
+		//$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+		
+	}
 </script>
 </head>
 
@@ -60,8 +103,9 @@ body>div.container {
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="nickName" name="nickName"
 						placeholder="중복확인하세요"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
+						class="help-block"> <strong class="text-danger" id="nickNameCheck">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
 					</span>
+					<input type="hidden" id="checkNickName">
 				</div>
 			</div>
 

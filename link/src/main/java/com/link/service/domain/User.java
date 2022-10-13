@@ -2,6 +2,8 @@ package com.link.service.domain;
 
 import java.sql.Date;
 
+import oracle.sql.DATE;
+
 public class User {
 	
 	private String userId;
@@ -329,6 +331,10 @@ public class User {
 
 	public void setStopEndDateString(String stopEndDateString) {
 		this.stopEndDateString = stopEndDateString;
+		
+//		if(stopEndDateString != null) {
+//			stopEndDate.setDate(Integer.parseInt(stopEndDateString));
+//		}
 	}
 
 	@Override
