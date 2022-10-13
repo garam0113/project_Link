@@ -211,13 +211,20 @@ public class UserController {
 
 		System.out.println("/user/updateProfile : GET");
 
-		User user = new User();
+		if (userId == null || userId == "") {
 
-		user.setUserId(userId);
+			return "forward:/user/updateProfileView.jsp";
 
-		model.addAttribute("user", user);
+		} else {
 
-		return "forward:/user/updateProfileView.jsp";
+			User user = new User();
+			user.setUserId(userId);
+			User getUser = userService.getUser(user);
+			model.addAttribute("getUser", getUser);
+
+			return "forward:/user/updateProfileView.jsp";
+		}
+
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
@@ -319,7 +326,8 @@ public class UserController {
 		if (getUser != null && getUser.getNickName() != null) {
 
 			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
-
+			System.out.println("세션에 값 저장 : " +session.getAttribute("user").toString());
+			
 //			return null;
 			return "redirect:/main.jsp";
 		} else if (getUser != null && getUser.getNickName() == null) {

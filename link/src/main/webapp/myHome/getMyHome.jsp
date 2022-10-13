@@ -463,7 +463,7 @@ margin-left: 100px;
 												class="glyphicon glyphicon-home"></i> 내 모임
 										</a></li>
 										<li>
-										<a href="/myHome/updateProfile?userId=${user.userId }"> <i
+										<a href="/user/updateProfile?userId=${user.userId }"> <i
 												class="glyphicon glyphicon-user"></i> 프로필 수정
 										</a></li>
 										<li><a href="#" target="_blank"> <i
