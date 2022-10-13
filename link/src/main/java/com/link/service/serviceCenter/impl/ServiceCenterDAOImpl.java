@@ -78,9 +78,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 
 	
 	@Override
-	public List<Report> getReportList(Search search) throws Exception {
+	public Map<String, Object> getReportList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("Report_PushMapper.getReportList", search);
+		map.put("getReportList",sqlSession.selectList("Report_PushMapper.getReportList", map));
+		return map;
 	}
 	
 	

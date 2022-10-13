@@ -384,8 +384,8 @@ public class ServiceCenterController {
 	}
 	
 	@RequestMapping(value = "getReportList")
-	public String getReportList(@ModelAttribute("search") Search search, Report report, @RequestParam(value = "menu", defaultValue = "search") String menu, 
-								Model model) throws Exception {
+	public String getReportList(@ModelAttribute("search") Search search, Report report, 
+			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
 		
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 		
@@ -395,13 +395,14 @@ public class ServiceCenterController {
 		
 		search.setPageSize(pageSize);
 		
+		String userId ="user03";
 		
 		System.out.println(search);
-		Map<String, Object> map = serviceCenterService.getReportList(search, report);
+		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);

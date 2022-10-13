@@ -111,6 +111,7 @@ public class MyHomeController {
 		map.put("search", search);
 		map.put("list",myHomeService.getFollowList(search).get("list"));
 		map.put("clubList",clubService.getClubList(search).get("clubList"));
+		map.put("user", getUserId);
 		
 		
 		map = feedService.getFeedList(map);

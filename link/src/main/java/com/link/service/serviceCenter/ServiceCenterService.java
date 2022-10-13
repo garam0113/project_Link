@@ -23,7 +23,7 @@ public interface ServiceCenterService {
 	
 	public Map<String, Object> getNoticeList(Search search, Notice notice) throws Exception;
 	
-	public Map<String, Object> getReportList(Search search, Report report) throws Exception;
+	public Map<String, Object> getReportList(Search search, Report report, String userId) throws Exception;
 	
 	public Map<String, Object> getQandAList(Search search, QandA qandA , String userId) throws Exception;
 	
