@@ -24,7 +24,7 @@
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
@@ -71,7 +71,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+	<jsp:include page="/toolbar.jsp" />
 		<div class="page-header text-info">
 	      <%--  ${menu.equals("manage") ? "상품관리" : "상품 목록 조회"} --%>
 	       ${menu.equals("manage") ? "신고 리스트" : "신고 리스트2"}
@@ -147,9 +147,12 @@
 					${list.title}
 				</td>
 				<td></td>
-				
-				<td align="left" height="200">${list.reportCondition}</td>
-				
+				  <c:if test="${list.reportCondition=='1'}">
+				<td align="left" height="200">처리완료</td>
+				  </c:if>
+				   <c:if test="${list.reportCondition=='0'}">
+				<td align="left" height="200">대기중</td>
+				  </c:if>
 				<td></td>
 				<td align="left" height="200">${list.user2.userId}</td>
 				<td></td>
@@ -160,6 +163,18 @@
 					
 				<td></td>
 			
+			<if test="qandAOpenCondition == 0">
+											WHERE USER_ID = {userId.userId}
+											<if test="searchCondition != null">
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 			AND	LOWER(QANDA_TITLE) LIKE LOWER('%${searchKeyword}%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 			AND	LOWER(QANDA_CONTENT) LIKE LOWER('%${searchKeyword}%')
+													</if>
+											</if>		
+											</if>
+	
         </c:forEach>
         </tbody>
       

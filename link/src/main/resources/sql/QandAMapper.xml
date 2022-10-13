@@ -99,38 +99,53 @@
 	</delete>
 
 		<!-- SQL : SELECT LIST -->
-	<select  id="getQandAList"  parameterType="search"	resultMap="qandASelectMap">
+	<select  id="getQandAList"  parameterType="map"	resultMap="qandASelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT qanda_no , qanda_title , answer_condition , user_id , qanda_regdate
-											FROM qanda
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				LOWER(qanda_no) LIKE LOWER('%${searchKeyword}%')
+	  					FROM		(	SELECT QANDA_NO , QANDA_TITLE , ANSWER_CONDITION , USER_ID , QANDA_REGDATE
+											FROM QANDA
+											<if test ="qandA.qandAOpenCondition==0">
+											WHERE USER_ID = #{userId}
+											<if test="search.searchCondition != null">
+													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 			AND	LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				LOWER(qanda_title) LIKE LOWER('%${searchKeyword}%')
+													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 			AND	LOWER(QANDA_TITLE) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
-												</where>
+											</if>	
 											</if>
+											
+											<if test = "qandA.qandAOpenCondition!=0 and userId =='' ">
+											<if test="search.searchCondition != null">
+											 <where>
+													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 				LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
+													</if>
+													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 				LOWER(QANDA_TITLE) LIKE LOWER('%${search.searchKeyword}%')
+													</if>
+											</where>
+											</if>
+											</if>
+											
 											ORDER BY qanda_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT qanda_title , qanda_content , qanda_regdate
-						FROM qanda
+	  	FROM(	SELECT QANDA_TITLE , QANDA_CONTENT , QANDA_REGDATE
+						FROM QANDA
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			qanda_title = #{searchKeyword}
+						 		AND	QANDA_NO = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		qanda_content = #{searchKeyword}
+						 		QANDA_TITLE LIKE '%${searchKeyword}%'
 								</if>
 							</where>
 						</if> ) countTable						

@@ -105,12 +105,11 @@
 					src="/images/ct_icon_red.gif" width="3" height="3"
 					align="absmiddle" />
 				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-
-				<td class="ct_write01"><c:forEach var="i" items="${text}">
-						<img src="/images/uploadFiles/${i}" width="300" height="300"
-							align="absmiddle" />
-					</c:forEach></td>
+				<td bgcolor="D6D6D6" width="1"></td>${notice.noticeImage1}
+				${notice.noticeImage2}
+				<img src="/resources/image/uploadFiles/${notice.noticeImage1}" width="100" height="100" align="absmiddle"/>
+				<img src="/resources/image/uploadFiles/${notice.noticeImage2}" width="100" height="100" align="absmiddle"/>
+					
 			</tr>
 
 			<tr>
