@@ -75,9 +75,11 @@ body>div.container {
 			return;
 		}
 		
-		
-		//$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
-		
+		if(${user.nickName} == null){
+			$("form").attr("method", "POST").attr("action", "/user/addProfile").submit();
+		}else{
+			$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+		}
 	}
 </script>
 </head>
