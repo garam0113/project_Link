@@ -1,6 +1,7 @@
 package com.link.service.serviceCenter.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +70,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	
 	
 	@Override
-	public List<Notice> getNoticeList(Search search) throws Exception {
+	public Map<String, Object> getNoticeList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		
-		return sqlSession.selectList("NoticeMapper.getNoticeList", search);
+		map.put("getNoticeList",sqlSession.selectList("NoticeMapper.getNoticeList", map));
+		return map;
 	}
 
 	
@@ -85,13 +86,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	
 
 	@Override
-	public List<QandA> getQandAList(Search search) throws Exception {
-		List<QandA> list = sqlSession.selectList("QandAMapper.getQandAList", search);
-		for (QandA qandA : list) {
-			System.out.println("===========" + qandA);
-		}
-		
-		return sqlSession.selectList("QandAMapper.getQandAList", search);
+	public Map<String, Object> getQandAList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		map.put("getQandAList", sqlSession.selectList("QandAMapper.getQandAList", map));
+		return map;
 	}
 //==================================================================여기까지가 List
 
@@ -165,15 +163,11 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		// TODO Auto-generated method stub
 		
 		if(a == 0) {
-			System.out.println("1");
-			return sqlSession.update("Report_PushMapper.getReportList", search);
-			
+			return sqlSession.update("Report_PushMapper.getTotalCount", search);
 		}else if (a == 1) {
-			System.out.println("2");
-			return sqlSession.update("QandAMapper.getQandAList", search);
+			return sqlSession.update("QandAMapper.getTotalCount", search);
 		}else {
-			System.out.println("3");
-			return sqlSession.update("NoticeMapper.getNoticeList", search);
+			return sqlSession.update("NoticeMapper.getTotalCount", search);
 		}
 	}
 //==================================================================여기까지가 공통

@@ -1,255 +1,580 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
 
-<title>È¸¿øÁ¤º¸Á¶È¸</title>
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<!-- CDN(Content Delivery Network) È£½ºÆ® »ç¿ë -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
-		
-		//==> Ãß°¡µÈºÎºĞ : "¼öÁ¤" "È®ÀÎ"  Event ¿¬°á ¹× Ã³¸®
+
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#sgr:contains('ÇÁ·ÎÇÊ')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/getProfile?userId=${user.userId}"
-	}); 
-	$("#gg:contains('¾÷µ¥ÀÌÆ®')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
+	$(".glyphicon glyphicon-user").on("click" , function() {
+		
 		self.location = "/myHome/updateProfile?userId=${user.userId}"
 	});
-	$("#ff:contains('ÆÈ·Î¿ì¸®½ºÆ®')").on("click" , function() {
-		//$(self.location).attr("href","/user/logout");
-		self.location = "/myHome/getFollowList?userId=${user.userId}"
-	}); 
+	
+	
+ });
+ 
+/*
+	window.onload=function() {
+		var userId = $("#userId").val();
+		console.log($("#userId").val());
+		
+		$.ajax({
+			url : "/myHomeRest/json/getFollowList", // ì–´ë””ë¡œ ê°ˆê±°ë‹ˆ? // ê°ˆ ë•Œ ë°ì´í„°
+			type : "POST", // íƒ€ì…ì€ ë­˜ ì“¸ê±°ë‹ˆ?
+			datatype : "json",
+			 data		:  JSON.stringify({searchKeyword:userId}),
+			contentType : "application/json",
+			success : function(data) { // ê°”ë‹¤ì˜¨ ë‹¤ìŒ ê²°ê³¼ê°’
+					// ë‚˜ì˜¤ë©´ íŒŒì¼ì„ ì°¾ì•˜ë‹¤ëŠ” ê²ƒ
+			//	alert(data);  // [object Object],[object Object],[object Object]
+				
+			// ë°ì´í„°ë¥¼ í™•ì¸í•˜ê³  ì‹¶ì„ ë•Œ.
+			//	let str = JSON.stringify(data); // <> parse()
+			//	alert(str); 
+           console.log(data.list[0].receiveId.nickName);
+				$.each(data.list, function(index, item) { // ë°ì´í„° =item
+					var value ="<img src='/resources/image/uploadFiles/" + item.receiveId.profileImage
+					+ "' width='100' height='100'/>"
+					+ item.receiveId.nickName;
+					
+		$("#demo").append(value);
+					
+				
+				});
+			},
+			error : function() {
+				alert('error');			
+			}
+			
+		});
+		
+		
+	};
+*/
+
+
+$(function(){
+
+
+    $("#follow").on("click" , function() {
+  alert("íŒ”ë¡œìš°")
+          var userId = $(".pp").html();
+         
+          $(document).ready(function(){
+       		$.ajax({
+       			type: 'GET',   //getë°©ì‹ìœ¼ë¡œ ëª…ì‹œ
+       			url : '/myHomeRest/json/addFollow/'+userId,  //ì´ë™í•  jsp íŒŒì¼ ì£¼ì†Œ
+       			dataType:'json',   //ë¬¸ìí˜•ì‹ìœ¼ë¡œ ë°›ê¸°
+       			success: function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸° ì„±ê³µí–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+       	            //function(data)ë¥¼ ì“°ê²Œ ë˜ë©´ ì „ë‹¬ë°›ì€ ë°ì´í„°ê°€ dataì•ˆì— ë‹´ì•„ì„œ ë“¤ì–´ì˜¤ê²Œ ëœë‹¤. 
+       				//alert(data); 
+       			    console.log("userId : "+data);
+       			},
+       			error:function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸°ê°€ ì‹¤íŒ¨í–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+       				//alert('ì‹¤íŒ¨');
+       			}
+       		})
+       	});
+             
+    });
+});	
+$(function(){
+	
+	<!-- REST CONTROLLTER TEST -->
+	$(".btn_jsonTest").bind("click", function(){
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/getFeedList",
+					method : "POST",
+					data : JSON.stringify ({
+						currentPage : 1
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						swal.fire("ì—¥?");
+						
+						var value = "";
+						
+						$.each(data, function(index, item) {
+							value += item.content + " // ";
+						}); // $.each close
+						
+						$("#test").text(value);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+
+	}); // btn_jsonTest close
+	<!-- REST CONTROLLTER TEST -->
+	
+	<!-- ADD_FEED -->
+	$(".addFeed").bind("click", function(){
+		alert("í”¼ë“œ ì¶”ê°€ë²„íŠ¼");
+		$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+	});
+	<!-- ADD_FEED -->
+	
+	<!-- UPDATE_FEED -->
+	$(".btn_update").bind("click", function(){
+		alert("í”¼ë“œ ìˆ˜ì • ë²„íŠ¼");
+		$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+	});
+	<!-- UPDATE_FEED -->
+	
+	<!-- DELETE_FEED -->
+	$(".btn_delete").bind("click", function(){
+		alert("í”¼ë“œ ì‚­ì œ ë²„íŠ¼");
+		$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+	});
+	<!-- DELETE_FEED -->
+	
+	<!-- GET_FEED -->
+	$(".btn_getFeed").bind("click", function(){
+		alert("í´ë¦­í•œ ê¸€ ë²ˆí˜¸ : " + $(this).parent().find("input[name='feedNo']").val());
+		location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
+	})
+	<!-- GET_FEED -->
+	
+	<!-- ADD_FEED_HEART -->
+	$(".like:contains('ì¢‹ì•„ìš”')").bind("click", function(){
+		event.stopPropagation();
+		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì¢‹ì•„ìš”");
+		
+		var html = $(this);
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/addFeedHeart",
+					method : "POST",
+					data : JSON.stringify ({
+						feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						swal.fire("í”¼ë“œ ì¢‹ì•„ìš” ì„±ê³µ : " + data);
+						
+						$(html).parents(".row").children(".like:contains('ì¢‹ì•„ìš”')").hide();
+						$(html).parents(".row").children(".dislike:contains('ì‹œëŸ¬ìš”')").show();
+						$(html).parents(".row").children(".likeCount").text(data);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+	})
+	<!-- ADD_FEED_HEART -->
+	
+	<!-- DELETE_FEED_HEART -->
+	$(".dislike:contains('ì‹œëŸ¬ìš”')").bind("click", function(){
+		event.stopPropagation();
+		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì‹œëŸ¬ìš”");
+		
+		var html = $(this);
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/deleteFeedHeart",
+					method : "POST",
+					data : JSON.stringify ({
+						feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						swal.fire("í”¼ë“œ ì‹œëŸ¬ìš” ì„±ê³µ : " + data);
+						
+						$(html).parents(".row").children(".like:contains('ì¢‹ì•„ìš”')").show();
+						$(html).parents(".row").children(".dislike:contains('ì‹œëŸ¬ìš”')").hide();
+						$(html).parents(".row").children(".likeCount").text(data);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+	})
+	<!-- DELETE_FEED_HEART -->
+	
+})
 	
 
- });
- $(function(){
 
 
-     $(".pp").on("click" , function() {
-   
-           var userId = $(".pp").html();
-           console.log(userId);
-           alert("»ı¼º");
-           // ÀÌ°Ô¾ÈµÈ´Ù´Â°ÅÁö?¤·¤·¤·¤·
-           $(document).ready(function(){
-        		$.ajax({
-        			type: 'GET',   //get¹æ½ÄÀ¸·Î ¸í½Ã
-        			url : '/myHomeRest/json/addFollow/'+userId,  //ÀÌµ¿ÇÒ jsp ÆÄÀÏ ÁÖ¼Ò
-        			dataType:'json',   //¹®ÀÚÇü½ÄÀ¸·Î ¹Ş±â
-        			success: function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â ¼º°øÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        	            //function(data)¸¦ ¾²°Ô µÇ¸é Àü´Ş¹ŞÀº µ¥ÀÌÅÍ°¡ data¾È¿¡ ´ã¾Æ¼­ µé¾î¿À°Ô µÈ´Ù. 
-        				alert(data);   
-        			},
-        			error:function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â°¡ ½ÇÆĞÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        				alert('½ÇÆĞ');
-        			}
-        		})
-        	});
-              
-     });
- });			
-		
-		
-		
-		
-		
-	</script>
+
+</script>
+
 <style>
-.calendar {
-	margin: 0 auto;
-	width: 1000px;
-	display: flex;
+#calendar {
+	margin-left: 100px;
+	margin-top: 50px;
+	width: 700px;
+	display: inline-block;
 	justify-content: center;
 }
-</style>
 
-<style>
-.image {
+.container {
+	float: left;
+	margin-left: 300px;
+}
+
+/* Profile container */
+.profile {
+	margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+	padding: 20px 0 10px 0;
+}
+
+.profile-userpic img {
+	float: left;
 	margin: 0 auto;
-	width: 400px;
+	width: 50%;
+	height: 40%;
+	-webkit-border-radius: 50% !important;
+	-moz-border-radius: 50% !important;
+	border-radius: 50% !important;
+}
+
+.profile-usertitle {
 	text-align: center;
+	margin-top: 20px;
+	margin-right: 200px;
 }
 
-.to {
-	margin: 0;
-	width: 350px;
-	text-align: left;
+.profile-usertitle-name {
+	color: #5b9bd1;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 7px;
 }
 
-.usertext {
-	margin-right: 10px;
-	padding: 10px;
-	margin-left: -100px;
+.profile-usertitle-job {
+	text-transform: uppercase;
+	color: #5b9bd1;
+	font-size: 12px;
+	font-weight: 600;
+	margin-bottom: 15px;
 }
 
-.calendertext {
-	padding: 10px;
+.profile-userbuttons {
+	float: left;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 10px;
 }
+
+.profile-userbuttons .btn {
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 600;
+	padding: 6px 15px;
+	margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+	margin-right: 0px;
+}
+
+.profile-usermenu {
+	margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+	border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+	border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+	color: #5b9bd1;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+	margin-right: 8px;
+	font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+	background-color: #fafcfd;
+	color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+	border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+	color: #5b9bd1;
+	margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+	padding: 20px;
+	min-height: 460px;
+}
+
+.follow-section {
+	margin-left: 200px;
+	margin-top: 50px;
+	width: 500px;
+	display: inline-block;
+	justify-content: center;
+	float: left;
+}
+
+.single-comment {
+	padding-left: 0;
+}
+
+.f {
+	margin-left: 300px;
+}
+
+.comment-section {
+	margin-left: 150px;
+	margin-top: 50px;
+	width: 900px;
+	display: inline-block;
+	justify-content: center;
+    
+}
+.club{
+margin-left: 100px;
+}
+.L {
+	margin-left: 400px;
+}
+
 </style>
-
-
-
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
 
+<body class="blog masonry-style">
 
+	<jsp:include page="/toolbar.jsp" />
 
-
-
-
-	<div class="calendar">
-
-		<div class="usertext">
-			<table width="300px" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 13px;" class="to">
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-
-					<td width="104" class="ct_write">¾ÆÀÌµğ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td width="105" class="pp">${user.userId}</td>
-								<td></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-
-				<tr>
-					<td width="104" class="ct_write">ÀÌ¸§</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">${user.nickName}</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÁÖ¼Ò</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-					<c:set var ="i" value="0"></c:set>
-					<c:forEach var="list" items="${list}">
-					<c:set var="i" value="${i+1 }"></c:set>
-			
+	<main role="main">
 		
-					
-					<td width="104" class="ct_write">ÈŞ´ëÀüÈ­¹øÈ£</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					
-					<td height="26">${list[i].receiveId.nickName}</td>
-					<td height="26">${list[i].receiveId.userId}</td>
-					<td height="26">${list[i].receiveId.profileImage}</td>
-					
-		
-		             </c:forEach>
-			
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÀÌ¸ŞÀÏ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td class="ct_write01">
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-							
-							
-								
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-				</tr>
+			<div id="intro-wrap" data-height="27.778">
+				<div id="intro" class="preload darken">
+					<div class="intro-item"
+						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>MyBlog</h2>
+							<p>Write down your daily life</p>
+						</div>
+						<!-- caption -->
+					</div>
+					<!-- intro -->
+				</div>
+				<!-- intro -->
+			</div>
+			<!-- intro-wrap -->
 
-				<tr>
-					<td width="104" class="ct_write">°¡ÀÔÀÏÀÚ</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<td height="26">${club.clubTitle}</td>
-					<td height="26">${user.nickName}</td>
-					<td height="26">${user.phoneNo}</td>
-					<td height="26">${club.clubDetail}</td>
-					<td height="26">${club.clubArea}</td>
-					<td height="26">${club.clubArea}</td> 
-					<td>${feedList}</td>
+			<div id="main" class="row">
+				<div id="calendar">
 
-                 <li><a href="/myHome/getMyHome?userId=user11" id="ff">user11</a></li>
-				</tr>
-				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-					<td bgcolor="D6D6D6" width="1"></td>
-					<li><a href="#" id="ss">ÆÈ·Î¿ì</a></li>
-				</tr>
-			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 10px;">
-				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-					<td bgcolor="D6D6D6" width="1"></td>
+					<jsp:include page="/myHome/calendar.jsp" />
+				</div>
 
-					<td width="53%"></td>
-					<td align="right">
-						<table border="0" cellspacing="0" cellpadding="0">
+				<div class="container">
+					<div class="row profile">
+						<div class="col-md-3">
+							<div class="profile-sidebar">
+								<!-- SIDEBAR USERPIC -->
+								<div class="profile-userpic">
+									<img
+										src="/resources/image/uploadFiles/${user.profileImage}"
+										class="img-responsive" alt="" width="10%" height="10%">
+								</div>
+								<br> <br>
+								<!-- END SIDEBAR USERPIC -->
+								<!-- SIDEBAR USER TITLE -->
+								<div class="profile-usertitle">
+								<input type="hidden" name="userId" id="userId" value="${user.userId }">
+									<div class="profile-usertitle-name">${user.nickName }</div>
+									<div class="profile-usertitle-job">${user.profileWriting }
+									</div>
+								</div>
+								<!-- END SIDEBAR USER TITLE -->
+								<!-- SIDEBAR BUTTONS -->
+								<div class="profile-userbuttons">
+									<c:if test="${ empty user }">
+										<button type="button" class="btn btn-success btn-sm">Follow</button>
+										<button type="button" class="btn btn-danger btn-sm">Message</button>
+									</c:if>
 
-							<li><a href="#" id="sgr">ÇÁ·ÎÇÊ</a></li>
-							<li><a href="#" id="gg">¾÷µ¥ÀÌÆ®</a></li>
-							<li><a href="#" id="ff">ÆÈ·Î¿ì¸®½ºÆ®</a></li>
+									<br> <br>
 
-							<tr>
+								</div>
+								<!-- END SIDEBAR BUTTONS -->
+								<!-- SIDEBAR MENU -->
+								<div class="profile-usermenu">
+									<ul class="nav">
+										<li class="active"><a href="/club/getApprovalConditionList?userId=${user.userId}"> <i
+												class="glyphicon glyphicon-home"></i> ë‚´ ëª¨ì„
+										</a></li>
+										<li>
+										<a href="/myHome/updateProfile?userId=${user.userId }"> <i
+												class="glyphicon glyphicon-user"></i> í”„ë¡œí•„ ìˆ˜ì •
+										</a></li>
+										<li><a href="#" target="_blank"> <i
+												class="glyphicon glyphicon-ok"></i> Tasks
+										</a></li>
+										<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
+												Help
+										</a></li>
+									</ul>
+								</div>
+								<!-- END MENU -->
+							</div>
+						</div>
+						<div class="col-md-9"></div>
+					</div>
+				</div>
 
-								<!--	jQuery Event Ã³¸®·Î º¯°æ
-					
-						<a href="javascript:history.go(-1);">È®ÀÎ</a>
-						
-					-->
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+			<div class="section-Box">
+			<div class="L">My FollowList</div>
+						<c:set var = "i" value = "0" />
+		<c:forEach var = "list" items = "${list}">
+			<c:set var = "i" value = "${i + 1}" />
+			<div class="follow-section" style="margin-left:300px;">
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4>${list.userId}</h4></div>
+				</div>
+			</c:forEach>
+				
+				</div>
+				<!-- single-comment -->
+
+				<div class="comment-section">
+					<div class="f">My Feed</div>
+					<br />
+					<c:set var="i" value="0"></c:set>
+					<c:forEach var="feed" items="${feedList}">
+						<c:set var="i" value="${i + 1}"></c:set>
+
+						<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+
+							<div class="single-comment">
+								<form class="feedForm">
+									<div class="comment-author">
+
+										${feed.user.profileImage} <cite>${user.nickName }</cite>
+										<span class="says">says:</span>
+									</div>
+									<!-- comment-author -->
+									<div class="comment-meta">
+										<time datetime="2013-03-23 19:58">March 23, 2013 at
+											7:58 pm</time>
+										/ <a href="#" class="reply">Reply</a>
+									</div>
+									<!-- comment-meta -->
+									<p>${feed.content}</p>
+									<c:if test="${!empty feed.hashtag}">
+										<br />${feed.hashtag}</c:if>
+									<c:if test="${feed.checkHeart != 0}">
+										â˜…â˜…â˜…ë‚´ê°€ ì¢‹ì•„ìš” í•œ í”¼ë“œì…ë‹ˆë‹¤.â˜…â˜…â˜… ë‚˜ì¤‘ì— í•˜íŠ¸ë¡œ ë³€ê²½
+										</c:if>
+									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+										<input type="button" class="btn_update" value="ìˆ˜ì •">
+										<input type="button" class="btn_delete" value="ì‚­ì œ">
+									</c:if>
+									<input type="button" class="btn_getFeed" value="ë³´ê¸°"> <input
+										type="hidden" name="feedNo" value="${feed.feedNo}">
+
+									<section class="row section">
+										<div class="row">
+											<c:if test="${feed.checkHeart == 0}">
+												<div class="column two like" style="display: show;">
+													ì¢‹ì•„ìš”</div>
+												<div class="column two dislike" style="display: none;">
+													ì‹œëŸ¬ìš”</div>
+											</c:if>
+											<c:if test="${feed.checkHeart != 0}">
+												<div class="column two like" style="display: none;">
+													ì¢‹ì•„ìš”</div>
+												<div class="column two dislike" style="display: show;">
+													ì‹œëŸ¬ìš”</div>
+											</c:if>
+											<div class="column two likeCount">${feed.heartCount}</div>
+
+											<div class="column two comment">ëŒ“ê¸€ìˆ˜</div>
+
+											<div class="column two commentCount">
+												${feed.commentCount}</div>
+											<div class="column four last">ì‹ ê³ </div>
+										</div>
+									</section>
+								</form>
+							</div>
+
+						</c:if>
+					</c:forEach>
+
+				</div>
+				<!-- single-comment -->
+
+
+<a href="/myHome/getYourHome?userId=user33" id="zz">ìœ ì €33</a></li>
+
+
+			</div>
 		</div>
-		<div class="calendertext">
-			<jsp:include page="/myHome/calendar.jsp" />
-		</div>
-		<div>
-			<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
-			<td bgcolor="D6D6D6" width="1"></td>
+	</main>
 
-		</div>
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/beetle.js"></script>
 
-		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-6 text-center"></div>
 </body>
 
 </html>

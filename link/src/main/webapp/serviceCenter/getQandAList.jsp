@@ -24,11 +24,7 @@
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
+
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
@@ -71,7 +67,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+	<jsp:include page="/toolbar.jsp" />
 		<div class="page-header text-info">
 	      <%--  ${menu.equals("manage") ? "상품관리" : "상품 목록 조회"} --%>
 	       ${menu.equals("manage") ? "QandA 리스트22" : "QandA리스트"}
@@ -91,8 +87,8 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 					</select>
 				  </div>
 				  
@@ -136,32 +132,30 @@
         </thead>
        
 		<tbody>
-			<%-- <c:set var = "i" value = "0" /> --%>
 		
-		<c:forEach var = "list" items = "${list}">
-			<%-- <c:set var = "i" value = "${i + 1}" /> --%>
+		
+		<c:forEach var = "getQandAList" items = "${getQandAList}">
+	
 			<tr class="ct_list_pop">
-				<td align="left" height="200" id="bb">${list.qandANo}</td>
+				<td align="left" height="200" id="bb">${getQandAList.qandANo}</td>
 				
 				<td></td>
 				<td align="left" height="200" style="text-decoration:underline">
-					${list.qandATitle}
+					${getQandAList.qandATitle}
 				</td>
 	
 				<td></td>
 				<td align="left" height="200" style="text-decoration:underline">
-					${list.qandACondition}
+					${getQandAList.qandACondition}
 				</td>
-				<td align="left" height="200">${list.userId.userId}</td>
+				<td align="left" height="200">${getQandAList.userId.userId}</td>
 				
 				<td></td>
-				<td align="left" height="200">${list.qandARegDate}</td>
+				<td align="left" height="200">${getQandAList.qandARegDate}</td>
 				<td></td>
 				
-				<td align="center" height="200">
-				
-				</td>	
-					
+				<td align="center" height="200">	
+				</td>			
 				<td></td>
 			
         </c:forEach>
@@ -188,7 +182,7 @@
 									</tr>
 								</table>
 								<td width="30"></td>
-								<td background="/images/ct_btnbg02.gif" width="90"
+								<td background="" width="90"
 									class="ct_btn01" style="padding-top: 3px;">등록</td>
 							
 							<td width="30"></td>

@@ -113,18 +113,16 @@
 	<%-- 	<c:set var="text" value="${fn:split(notice.noticeImage, '*')}" ></c:set> --%>
 
 		<tr>
-			<td width="104" class="ct_write">상품이미지</td>
+			<td width="104" class="ct_write">이미지</td>
 			<td bgcolor="D6D6D6" width="1"></td>
 			<td class="ct_write01">
 				<!-- 테이블 시작 -->
 				<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td height="26">
-							<c:forEach var="i" items="${text}">
-						
-								<img src="/images/uploadFiles/${i}" width="100" height="100" align="absmiddle"/>
-							
-							</c:forEach>
+
+							<img src="C:\Users\903-16\git\link\link\src\main\webapp\resources\image\uploadFiles\"+${notice.noticeImage1} width="100" height="100" align="absmiddle"/>
+							<img src="C:\Users\903-16\git\link\link\src\main\webapp\resources\image\uploadFiles\"+${notice.noticeImage2} width="100" height="100" align="absmiddle"/>			
 						</td>
 					</tr>
 				</table>
