@@ -128,7 +128,7 @@
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		<if test="password != null and email != null">
+	   		<if test="password != null and email != null and stopEndDate == null and penaltyType == null">
 	   			password 	= #{password:VARCHAR}	,
 				email		= #{email:VARCHAR}
 			</if>
@@ -149,10 +149,14 @@
 	 			category3	= #{category3:VARCHAR}	,
 	 			profile_image	= #{profileImage:VARCHAR}	,
 	 			profile_writing	= #{profileWriting:VARCHAR}
-			</if>
+			</if> 
 			<if test="outUserState != null">
 				out_user_state	= #{outUserState:CHAR}, 
 	 			out_user_date	= SYSDATE
+			</if>
+			<if test="penaltyType != null">
+				penalty_type	= #{penaltyType:CHAR},  
+	 			stop_end_date	= #{stopEndDate:DATE}
 			</if>
 	   	</set>
 	   	WHERE user_id = #{userId}

@@ -21,13 +21,50 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 	
-	<script src="/resources/javascript/mapScript.js"></script>
-	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/map/initMap.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			$(".three:contains('À½½ÄÁ¡')").bind("click", function() {
+				
+				alert("À½½ÄÁ¡");
+				
+				showCafe();
+				
+			})
+			
+			$(".three:contains('ÁÖÀ¯¼Ò')").bind("click", function() {
+				
+				alert("ÁÖÀ¯¼Ò");
+				
+			})
+			
+			$(".three:contains('º­¾û¿ø')").bind("click", function() {
+				
+				alert("º­¾û¿ø");
+				
+			})
+			
+			$(".three:contains('³îÀÌÅÍ')").bind("click", function() {
+				
+				alert("³îÀÌÅÍ");
+				
+			})
+			
+		})
+	
+	</script>
 	
 </head>
 
@@ -49,6 +86,17 @@
 	<jsp:include page="/toolbar.jsp" />
 
 		<main role="main">
+		
+			<div id="intro-wrap" data-height="22.222">
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>The City of Dreams</h2>
+							<p>If you¡¯re any good at all, you know you can be better.</p>
+						</div><!-- caption -->					
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
 	
 			<div id="main">
 	
@@ -65,7 +113,7 @@
 							
 							<script
 								src="https://maps.googleapis.com/maps/api/js?
-								key=AIzaSyDtYM84InYYv2cSOImZRZz9mIqZFEpfL9A&callback=initMap&libraries=places&v=weekly" 
+								key=AIzaSyDtYM84InYYv2cSOImZRZz9mIqZFEpfL9A&callback=initAutocomplete&libraries=places&v=weekly" 
 								defer>
 							</script>
 								
@@ -77,7 +125,9 @@
 						
 							<section class="buffer row section">
 								<div class="column twelve" align="center">
-									<div class="column three">À½½ÄÁ¡</div>
+									<div class="column three" id="food">
+										À½½ÄÁ¡
+									</div>
 									<div class="column three">ÁÖÀ¯¼Ò</div>
 									<div class="column three">º­¾û¿ø</div>
 									<div class="column three last">³îÀÌÅÍ</div>

@@ -230,41 +230,34 @@ SELECT * from FEED ORDER BY feed_no DESC;
 
 SELECT * from FEED_COMMENT ORDER BY feed_comment_no DESC;
 
-
-
-SELECT
-*
-FROM feed f, heart h
-WHERE f.feed_no = h.source_no
-AND f.feed_no = '5' 
-AND h.user_id = 'user01';
-
-
-SELECT f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_like_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition FROM feed f WHERE feed_content LIKE '%정말%' ORDER BY feed_no DESC; 
+SELECT * FROM heart
 
 
 
-INSERT into feed_comment   VALUES (    seq_feed_comment_no.nextval,    '6',    'user01',    '2222',    0,    SYSDATE,    null,    '0',    '0', '34',    '2',    '0' , 'user01', 2    )
-
-SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_like_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = '5' AND report_condition = '0' AND delete_condition = '0' ORDER BY feed_comment_no ASC 
+SELECT c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, 
+c.feed_recomment_count, c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, 
+c.parent, c.depth, c.sequence , isLike.EXIST 
+FROM feed_comment c, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '1' AND user_id = 'user05' ) isLike 
+WHERE c.feed_comment_no = isLike.EXIST(+) 
+AND c.user_id = u.user_id 
+AND c.feed_no = 5 AND report_condition = '0' AND delete_condition = '0' 
+ORDER BY sequence ASC 
 
 
 
 
-SELECT * FROM HEART;
 
 
 
 
-SELECT 
-		c.feed_comment_no, c.feed_no, c.user_id, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
-		c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence, isLike.EXIST
-		FROM feed_comment c, (
-								SELECT
-								source_no as EXIST
-								FROM HEART
-								WHERE TRIM(source) = '1'
-								AND user_id = 'user05' ) isLike
-WHERE c.feed_comment_no = isLike.EXIST(+)
 
+
+
+SELECT c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, 
+c.feed_recomment_count, c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, 
+c.parent, c.depth, c.sequence , isLike.EXIST 
+FROM feed_comment c, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '1' AND user_id = 'user05' ) isLike 
+WHERE c.feed_comment_no = isLike.EXIST(+) 
+AND c.feed_no = 5 AND report_condition = '0' AND delete_condition = '0' 
+ORDER BY sequence ASC 
 
