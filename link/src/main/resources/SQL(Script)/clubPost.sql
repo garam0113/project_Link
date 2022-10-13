@@ -660,29 +660,30 @@ VALUES (seq_pay_no.NEXTVAL, 'user02', 2, 1, 0, 10000, SYSDATE, 0, 20, 0);
 
 
 
-UPDATE CLUB_POST SET IMAGE1 = 'flower20clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg', IMAGE6 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg', IMAGE7 = 'blue_flower.jpg', IMAGE8 = 'five_flower.jpg', IMAGE9 = 'flower.jpg', IMAGE10 = 'red_rose.png' WHERE CLUB_POST_NO = 74;
-UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg', IMAGE2 = 'green_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 71;
-UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'flower.jpg', IMAGE4 = 'red_rose.png' WHERE CLUB_POST_NO = 64;
-UPDATE CLUB_POST SET IMAGE1 = 'flower2clubPost.jpg' WHERE CLUB_POST_NO = 63;
-UPDATE CLUB_POST SET IMAGE1 = 'flower8clubPost.jpg', IMAGE2 = 'five_flower.jpg', IMAGE3 = 'orange_flower.jpg', IMAGE4 = 'pink_plower.jpg', IMAGE5 = 'black_flower.jpg' WHERE CLUB_POST_NO = 62;
-UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPost.jpg', IMAGE2 = 'red_rose.png' WHERE CLUB_POST_NO = 61;
-UPDATE CLUB_POST SET IMAGE1 = 'flower12clubPost.jpg', IMAGE2 = 'blue_flower.jpg', IMAGE3 = 'five_flower.jpg', IMAGE4 = 'flower.jpg' WHERE CLUB_POST_NO = 60;
-UPDATE CLUB_POST SET IMAGE1 = 'flower13clubPost.jpg', IMAGE2 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 59;
-UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg', IMAGE2 = 'flower.jpg', IMAGE3 = 'pngtree-purple-flower-squid-illustration-image_1448683.jpg' WHERE CLUB_POST_NO = 58;
-UPDATE CLUB_POST SET IMAGE1 = 'flower5clubPost.jpg' WHERE CLUB_POST_NO = 57;
-UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 56;
-UPDATE CLUB_POST SET IMAGE1 = 'flower14clubPostjpg.jpg' WHERE CLUB_POST_NO = 55;
-UPDATE CLUB_POST SET IMAGE1 = 'flower1clubPost.jpg' WHERE CLUB_POST_NO = 54;
-UPDATE CLUB_POST SET IMAGE1 = 'flower6clubPost.jpg' WHERE CLUB_POST_NO = 53;
-UPDATE CLUB_POST SET IMAGE1 = 'flower15clubPost.jpg' WHERE CLUB_POST_NO = 52;
-UPDATE CLUB_POST SET IMAGE1 = 'flower7clubPost.jpg' WHERE CLUB_POST_NO = 51;
-UPDATE CLUB_POST SET IMAGE1 = 'flower18clubPost.jpg' WHERE CLUB_POST_NO = 50;
-UPDATE CLUB_POST SET IMAGE1 = 'flower11clubPost.jpg' WHERE CLUB_POST_NO = 49;
-UPDATE CLUB_POST SET IMAGE1 = 'flower19clubPostjpg.jpg' WHERE CLUB_POST_NO = 48;
-UPDATE CLUB_POST SET IMAGE1 = 'flower9clubPost.jpg' WHERE CLUB_POST_NO = 29;
-UPDATE CLUB_POST SET IMAGE1 = 'flower16clubPost.jpg' WHERE CLUB_POST_NO = 27;
-UPDATE CLUB_POST SET IMAGE1 = 'flower10clubPost.jpg' WHERE CLUB_POST_NO = 26;
-UPDATE CLUB_POST SET IMAGE1 = 'flower17clubPost.jpg' WHERE CLUB_POST_NO = 25;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower1clubPost.jpg', IMAGE2 = 'user03flower2clubPost.jpg', IMAGE3 = 'user03flower3clubPost.jpg', IMAGE4 = 'user03flower4clubPost.jpg', IMAGE5 = 'user03flower5clubPost.jpg', IMAGE6 = 'user03flower6clubPost.jpg', IMAGE7 = 'user03flower7clubPost.jpg', IMAGE8 = 'user03flower8clubPost.jpg', IMAGE9 = 'user03flower9clubPost.jpg', IMAGE10 = 'user03flower10clubPost.jpg' WHERE CLUB_POST_NO = 75;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower20clubPost.jpg', IMAGE2 = 'user03flower11clubPost.jpg', IMAGE3 = 'user03flower1clubPost.jpg', IMAGE4 = 'user03flower2clubPost.jpg', IMAGE5 = 'user03flower8clubPost.jpg', IMAGE6 = 'user03flower9clubPost.jpg', IMAGE7 = 'user03flower6clubPost.jpg', IMAGE8 = 'user03flower12clubPost.jpg', IMAGE9 = 'user03flower13clubPost.jpg', IMAGE10 = 'user03flower14clubPost.jpg' WHERE CLUB_POST_NO = 74;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower11clubPost.jpg', IMAGE2 = 'user03flower6clubPost.jpg', IMAGE3 = 'user03flower5clubPost.jpg', IMAGE4 = 'user03flower6clubPost.jpg', IMAGE5 = 'user03flower17clubPost.jpg' WHERE CLUB_POST_NO = 71;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower17clubPost.jpg', IMAGE2 = 'user03flower15clubPost.jpg', IMAGE3 = 'user03flower11clubPost.jpg', IMAGE4 = 'user03flower20clubPost.jpg' WHERE CLUB_POST_NO = 64;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower2clubPost.jpg' WHERE CLUB_POST_NO = 63;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower8clubPost.jpg', IMAGE2 = 'user03flower17clubPost.jpg', IMAGE3 = 'user03flower10clubPost.jpg', IMAGE4 = 'user03flower14clubPostjpg.jpg', IMAGE5 = 'user03flower20clubPost.jpg' WHERE CLUB_POST_NO = 62;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower14clubPost.jpg', IMAGE2 = 'user03flower12clubPost.jpg' WHERE CLUB_POST_NO = 61;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower12clubPost.jpg', IMAGE2 = 'user03flower7clubPost.jpg', IMAGE3 = 'user03flower13clubPost.jpg', IMAGE4 = 'user03flower11clubPost.jpg' WHERE CLUB_POST_NO = 60;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower13clubPost.jpg', IMAGE2 = 'user03flower18clubPost.jpg' WHERE CLUB_POST_NO = 59;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower9clubPost.jpg', IMAGE2 = 'user03flower16clubPost.jpg', IMAGE3 = 'user03flower2clubPost.jpg' WHERE CLUB_POST_NO = 58;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower5clubPost.jpg' WHERE CLUB_POST_NO = 57;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower6clubPost.jpg' WHERE CLUB_POST_NO = 56;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower14clubPostjpg.jpg' WHERE CLUB_POST_NO = 55;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower1clubPost.jpg' WHERE CLUB_POST_NO = 54;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower6clubPost.jpg' WHERE CLUB_POST_NO = 53;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower15clubPost.jpg' WHERE CLUB_POST_NO = 52;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower7clubPost.jpg' WHERE CLUB_POST_NO = 51;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower18clubPost.jpg' WHERE CLUB_POST_NO = 50;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower11clubPost.jpg' WHERE CLUB_POST_NO = 49;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower19clubPostjpg.jpg' WHERE CLUB_POST_NO = 48;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower9clubPost.jpg' WHERE CLUB_POST_NO = 29;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower16clubPost.jpg' WHERE CLUB_POST_NO = 27;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower10clubPost.jpg' WHERE CLUB_POST_NO = 26;
+UPDATE CLUB_POST SET IMAGE1 = 'user03flower17clubPost.jpg' WHERE CLUB_POST_NO = 25;
 
 
 
@@ -717,35 +718,10 @@ UPDATE USERS SET PROFILE_IMAGE = 'profile_image4clubPost.jpg' WHERE USER_ID = 'u
 
 
 
-
-
-
-
-
-
-
-H.SOURCE_NO, H.USER_ID, 
-
-
-
-getHeartList() - 모임게시물에 해당 회원이 하트를 눌렀다면 가져온다
-SELECT V4.CLUB_POST_NO
-FROM HEART H, ( 
-SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC ) AS R, V3.*
-				FROM ( SELECT CP.CLUB_NO, CP.CLUB_POST_NO, CP.IMAGE1, CP.CLUB_POST_TITLE, CP.USER_ID, U.PROFILE_IMAGE, U.NICKNAME, CP.CLUB_POST_HEART_COUNT
-						FROM CLUB_POST CP, USERS U
-						WHERE CLUB_NO = ( SELECT V2.CLUB_NO
-											FROM ( SELECT ROWNUM, V1.*
-													FROM ( SELECT *
-															FROM CLUB_USER
-															WHERE USER_ID = 'user03' AND JOIN_REG_DATE IS NOT NULL
-															ORDER BY JOIN_REG_DATE DESC ) V1
-													WHERE ROWNUM = 1 ) V2 ) AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0' AND CP.USER_ID = U.USER_ID ) V3
-) V4
-WHERE H.SOURCE_NO = V4.CLUB_POST_NO AND H.USER_ID = 'user03'
-ORDER BY CLUB_POST_NO DESC
-
-
+SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_HEART_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
+FROM CLUB_POST_COMMENT
+WHERE CLUB_POST_NO = 
+ORDER BY CLUB_POST_COMMENT_NO ASC
 
 
 
