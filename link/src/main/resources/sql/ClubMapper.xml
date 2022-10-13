@@ -523,7 +523,7 @@
 		VALUES (
 			seq_participant_no.nextval ,
 			#{meetingNo} ,
-			#{user.userId}
+			#{userId}
 		)
 	</insert>
 	

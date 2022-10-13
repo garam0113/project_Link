@@ -86,8 +86,14 @@ public class ClubPostController {
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("heartList", map.get("heartList"));
+		List<Heart> list = (List<Heart>) map.get("heartList");
+		System.out.println("111"+list.size());
+		for (Heart h : list) {
+			System.out.println(h);
+		}
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		//return "forward:/clubPost/getClubPostList_backup.jsp";
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
 

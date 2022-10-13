@@ -30,7 +30,7 @@ public interface ClubService {
 		
 	public void updateApprovalCondition(ClubUser clubUser) throws Exception;
 		
-	public void deleteClubMember(int clubUserNo) throws Exception;
+	public void deleteClubMember(ClubUser clubUser) throws Exception;
 	
 	public void updateMemberRole(ClubUser clubUser) throws Exception;
 	
@@ -47,7 +47,7 @@ public interface ClubService {
 	
 	public void deleteMeeting(int meetingNo) throws Exception;
 	
-	public int addMeetingMember(Participant participant) throws Exception;
+	public void addMeetingMember(Participant participant) throws Exception;
 	
 	public void deleteMeetingMember(int participant) throws Exception;
 		

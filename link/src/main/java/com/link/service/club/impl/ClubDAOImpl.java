@@ -167,12 +167,14 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public void deleteClubMember(int clubUserNo) throws Exception {
-		sqlSession.delete("ClubMapper.deleteClubMember",clubUserNo);
+	public void deleteClubMember(ClubUser clubUser) throws Exception {
+		sqlSession.delete("ClubMapper.deleteClubMember",clubUser);
 	}
 	
 	@Override
 	public void updateMemberRole(ClubUser clubUser) throws Exception {
+		
+		System.out.println("업뎃 직책 DAO Impl 왔나?");
 		sqlSession.update("ClubMapper.updateMemberRole",clubUser);
 	}
 	
@@ -230,16 +232,18 @@ public class ClubDAOImpl implements ClubDAO {
 		sqlSession.delete("ClubMapper.deleteMeeting",meetingNo);
 	}
 	
-//	@Override
-//	public void addMeetingMember(Participant participant) throws Exception {
-//		sqlSession.insert("ClubMapper.addMeetingMember",participant);
-//	}
+	@Override
+	public void addMeetingMember(Participant participant) throws Exception {
+		
+		System.out.println("미팅참가 DAO Impl 왔나?");
+		sqlSession.insert("ClubMapper.addMeetingMember",participant);
+	}
 	
 	//JUNIT TEST
-	@Override
-	public int addMeetingMember(Participant participant) throws Exception {
-		return sqlSession.insert("ClubMapper.addMeetingMember",participant);
-	}
+//	@Override
+//	public int addMeetingMember(Participant participant) throws Exception {
+//		return sqlSession.insert("ClubMapper.addMeetingMember",participant);
+//	}
 	
 	@Override
 	public void deleteMeetingMember(int participant) throws Exception {
