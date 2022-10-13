@@ -21,7 +21,13 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	
+	 <!-- jQuery UI toolTip 사용 CSS-->
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	  <!-- jQuery UI toolTip 사용 JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -65,7 +71,26 @@
 		});
 	});
 	
+	function popup() {
+		var url = "/club/updateMemberRoleView.jsp";
+		var name = "updateMemberRoleView";
+		var option = "width = 800, height = 300, top = 100, left = 200, location = no"
+		window.open(url, name, option);
+	}
 	
+	function fncGetClubMemberList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method" , "POST").attr("action" , "/club/getClubMemberList").submit();
+	}
+	
+	$(function() {
+		$("#updateMemberRole").on("click", function() {
+			popup();
+		});
+		
+	});
+	
+ 
 	
 	</script>	
 	
@@ -139,27 +164,28 @@
             <th align="left">마지막 접속시간</th>
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
+            <th align="left">직책수정</th>
           </tr>
         </thead>
        
 		<tbody>
 		<tr>
-		<%-- ${clubList} --%>
+
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${clubMemberList}">
 		  <input type="hidden" name="clubUserNo" value="${clubUserNo}">
 			<%-- <c:set var="i" value="${ i+1 }" /> --%>
 			<tr>
 			<td align="center">${i.clubUserNo}</td>
-			  <td align="left">${i.userId}</td>
-			  <td align="left">${user.nickName}</td>
+			  <td align="left">${i.user.userId}</td>
+			  <td align="left">${clubUser.nickName}</td>
 			  <td align="left">${i.memberRole}</td>
-			  <td align="left">${i.logoutDate}</td>
+			  <td align="left">${i.user.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${i.approvalCondition}</td>
+			  <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
 			</tr>
           </c:forEach>
-        </tr>
         </tbody>
       
       </table>
@@ -168,7 +194,7 @@
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	
+ 	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
 	
 	
 </body>

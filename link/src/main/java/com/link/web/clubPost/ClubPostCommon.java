@@ -25,6 +25,8 @@ public class ClubPostCommon {
 			currentPage = search.getCurrentPage();
 		}
 		
+		search.setSearchCondition("1");
+		
 		// 모임게시물 탭 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
 		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 		String searchCondition = CommonUtil.null2str(search.getSearchCondition());

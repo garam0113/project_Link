@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
 	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
 	<link rel="stylesheet" href="/resources/css/style.css" media="screen">
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 	
 	<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="/resources/image/apple-touch-icon-76x76.png">
@@ -223,43 +222,26 @@
 </head>
 
 <body>
-	<header role="banner" class="transparent light">
-		<div class="row">
-			<div
-				class="nav-inner row-content buffer-left buffer-right even clear-after">
-				<div id="brand">
-					<h1 class="reset">
-						<!--<img src="img/logo.png" alt="logo">-->
-						<a href="../main.jsp">Beetle</a>
-					</h1>
-				</div>
-				<!-- brand -->
-				<a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-				<nav>
-					<ul class="reset" role="navigation">
-						<li class="menu-item"><a href="../main.jsp">Home</a></li>
-						<li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
-						<li class="menu-item"><a href="/">Live</a></li>
-						<li class="menu-item"><a href="/club/getClubList">Club</a></li>
-						<li class="menu-item"><a href="/myHome/getMyHome?userId=${user.userId}">MyHome</a></li>
-						<li class="menu-item"><a href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
-						<li class="menu-item"><a href="/user/login">Login</a></li>
-						<li class="menu-item"><a href="/user/addUser">Join</a></li>
-						<li class="menu-item"><a href="/user/logout?userId=${user.userId}">로그아웃</a></li>
-						<li class="menu-item"><a href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
-					</ul>
-				</nav>
-			</div>
-			<!-- row-content -->
-		</div>
-		<!-- row -->
-	</header>
+
+	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
-
+	
+		<div id="intro-wrap" data-height="22.222">
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>The City of Dreams</h2>
+							<p>If you’re any good at all, you know you can be better.</p>
+						</div><!-- caption -->					
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+		
 		<div id="main">
-
+		
 			<section class="row section">
+			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
 						<a href="/feed/getFestivalLocation.jsp">길찾기</a>

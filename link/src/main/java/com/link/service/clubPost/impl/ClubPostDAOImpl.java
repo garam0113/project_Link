@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
@@ -48,7 +47,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		for (int i = 0; i < clubUserList.size(); i++) {
 			System.out.println("모임원들 : " + clubUserList.get(i));
 			// 해당 모임의 모임원들에게 모임게시물 등록되었다고 알림
-			Report report = new Report(clubPost.getUser().getUserId() + "님이 게시물을 작성했습니다", 1, new User(clubPost.getUser().getUserId()), new User(clubUserList.get(i).getUserId()), 2, returnClubPost);
+			Report report = new Report(clubPost.getUser().getUserId() + "님이 게시물을 작성했습니다", 1, new User(clubPost.getUser().getUserId()), new User(clubUserList.get(i).getUser().getUserId()), 2, returnClubPost);
 			sqlSession.insert("Report_PushMapper.addReport", report);
 			System.out.println("알림 : " + (i+1));
 		}
@@ -61,6 +60,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public Map<String, Object> getClubPostList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostList(Map<String, Object> map) 왔다");
 		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", map));
+		map.put("heartList", sqlSession.selectList("ClubPostMapper.getHeartList", map));
 		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", map));
 		return map;
 	}// end of getClubPostList(Map<String, Object> map)

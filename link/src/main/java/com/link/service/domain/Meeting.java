@@ -6,7 +6,8 @@ public class Meeting {
 
 	private int meetingNo;
 	private int clubNo;
-	private String userId;
+//	private Club club;
+	private User user;
 	private String meetingTitle;
 	private String meetingDate;
 	private String meetingTime;
@@ -37,12 +38,20 @@ public class Meeting {
 		this.clubNo = clubNo;
 	}
 
-	public String getAddMeetingUserId() {
-		return userId;
+//	public Club getClub() {
+//		return club;
+//	}
+//
+//	public void setClub(Club club) {
+//		this.club = club;
+//	}
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setAddMeetingUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getMeetingTitle() {
@@ -119,11 +128,11 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ", addMeetingUserId=" + userId + ", meetingTitle="
-				+ meetingTitle + ",  meetingDate=" + meetingDate + ", meetingTime="
-				+ meetingTime + ", meetingPlace=" + meetingPlace + ", meetingWeather=" + meetingWeather
-				+ ", meetingRegDate=" + meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaximumMember="
-				+ meetingMaximumMember + ", meetingContent=" + meetingContent + "]";
+		return "Meeting [meetingNo=" + meetingNo + ", clubNo=" + clubNo + ",  user=" + user
+				+ ", meetingTitle=" + meetingTitle + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime
+				+ ", meetingPlace=" + meetingPlace + ", meetingWeather=" + meetingWeather + ", meetingRegDate="
+				+ meetingRegDate + ", meetingMember=" + meetingMember + ", meetingMaximumMember=" + meetingMaximumMember
+				+ ", meetingContent=" + meetingContent + "]";
 	}
 
 	

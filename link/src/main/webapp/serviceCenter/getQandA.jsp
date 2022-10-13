@@ -27,7 +27,7 @@
 		});
 
 		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateQandAView.jsp";
+			self.location = "../serviceCenter/updateQandA?qandANo="+$('tr.qandANo').find('td').text();
 		})
 
 		$("td.ct_btn01:contains('삭제')").bind("click", function() {
@@ -53,7 +53,7 @@
 					style="padding-left: 10px;">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<td width="93%" class="ct_ttl01">QandA 조회</td>
+							<td width="93%" class="ct_ttl01">QandA 조회33</td>
 							<td width="20%" align="right">&nbsp;</td>
 						</tr>
 					</table>

@@ -41,7 +41,7 @@
 		//document.detailForm.action = '/addProduct.do';
 		///////////////////////////////////////////////////
 
-		$("form").attr("method", "POST").attr("action", "/club/getClub")
+		$("form").attr("method", "POST").attr("action", "/club/addClub")
 				.submit();
 	}
 
@@ -95,7 +95,8 @@
 			<div class="form-group">
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
 				<div class="col-sm-4">
-					<select class="form-control">
+					<!-- <select class="form-control"> -->
+					<select class="form-control" id="clubCategory" name="clubCategory">
 						<option>운동</option>
   						<option>봉사활동</option>
   						<option>음식</option>

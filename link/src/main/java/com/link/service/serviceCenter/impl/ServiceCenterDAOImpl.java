@@ -143,9 +143,12 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("Report_PushMapper.addReportCount", report);
+	 
+		sqlSession.update("Report_PushMapper.handleReportCondition", report);
 		Report report2 = getReport(report.getNo());
-		sqlSession.update("Report_PushMapper.stopDate", report2); 
+		sqlSession.update("Report_PushMapper.addReportCount", report2); 
+		Report report3 = getReport(report.getNo());
+		sqlSession.update("Report_PushMapper.stopDate",report3);
 
 	}
 	

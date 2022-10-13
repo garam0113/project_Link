@@ -72,5 +72,6 @@ public interface ClubService {
 	//결제
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 
+
 	
 }

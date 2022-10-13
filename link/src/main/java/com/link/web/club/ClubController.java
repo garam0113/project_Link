@@ -1,8 +1,7 @@
 package com.link.web.club;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,11 +44,18 @@ public class ClubController {
 	int pageUnit;
 
 	@RequestMapping(value="addClub", method=RequestMethod.POST)
-	public String addClub(@ModelAttribute Club club, Model model, HttpSession httpSession) throws Exception {
+	public String addClub(@ModelAttribute Club club, Model model, HttpSession httpSession, User user) throws Exception {
 		
 		System.out.println("club/addClub : POST");
 		
-//		club.setUserId("user01");
+		user = (User) httpSession.getAttribute("user");
+		
+		System.out.println("세션에 뭐 있나? : " + user);
+		//club.setUser(user);
+		
+		club.setUser(user);
+		club.setCurrentMember(1);
+		club.setClubMaxMember(10);
 		
 		clubService.addClub(club);
 		return "forward:/club/getClub.jsp";
@@ -67,7 +73,7 @@ public class ClubController {
 	
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
@@ -77,9 +83,12 @@ public class ClubController {
 		//Model 과 View 연결
 		System.out.println("MODEL VIEW 연결 전");
 		
-		model.addAttribute("club",club);
+		session.setAttribute("club", club);
+		session.setAttribute("clubNo", clubNo);
 		
-		System.out.println("모델과 뷰 연결 되었나? "+club);
+		System.out.println("클럽 세션에 뭐 들어갔지? : "+club);
+		System.out.println("클럽 넘버 세션은? : "+clubNo);
+		
 		return "forward:/club/getClub.jsp";
 		
 	}
@@ -97,15 +106,20 @@ public class ClubController {
 		return "forward:/club/getClub.jsp";
 	}
 	
-	@RequestMapping(value="deleteClub", method = RequestMethod.GET)
-	public String deleteClub(@RequestParam(value="clubNo") int clubNo, Model model) throws Exception {
+	@RequestMapping(value="deleteClub")
+	public String deleteClub(@ModelAttribute Club club, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("deleteClub 시작");
-		System.out.println("clubNo = " + clubNo);
 		
-		clubService.deleteClub(clubNo);
+		club = (Club) session.getAttribute("club");
 		
-		return "forward:/club/getClubList.jsp";
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("club"));		
+		
+		club.setClubNo(club.getClubNo());
+		
+		clubService.deleteClub(club.getClubNo());
+		
+		return "forward:/club/getClubList";
 	}
 	
 	@RequestMapping(value="getClubList")
@@ -133,21 +147,30 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getApprovalConditionList")
-	public String getMyClubList(@ModelAttribute Search search, Model model, User user, HttpSession httpSession) throws Exception {
+	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser) throws Exception {
 		
 		System.out.println("/club/getApprovalConditionList : GET/POST");
 		
-		user = (User) httpSession.getAttribute("user");
+		user = (User) session.getAttribute("user");
+//		club = (Club) session.getAttribute("club");
 		
-		System.out.println("세션에 뭐가 있나요 : "+user);
+		session.getAttribute("clubNo");
+//		clubUser.setClubNo(club.getClubNo());
+		
+		System.out.println("유저 세션에 뭐가 있나요 : "+user);
+		System.out.println("클럽넘버는 왔나요 : "+session.getAttribute("clubNo"));
+		
+		search.setSearchKeyword(user.getUserId());
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		search.setPageUnit(pageUnit);
+//		search.setPageUnit(pageUnit);
 		
-		Map<String, Object> map = clubService.getApprovalConditionList(search);		
+		Map<String, Object> map = clubService.getApprovalConditionList(search);
+		
+		System.out.println("서치에 뭐 들어있나요 ? ? : "+search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalApprovalConditionCount")).intValue(), pageUnit, pageSize);
 		
@@ -192,32 +215,57 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="addApprovalCondition", method = RequestMethod.POST)
-	public String addApprovalCondition(@ModelAttribute ClubUser clubUser, User user, Model model, HttpSession httpSession) throws Exception {
+	public String addApprovalCondition(@ModelAttribute ClubUser clubUser, User user, Club club, Model model, HttpSession httpSession) throws Exception {
 		
 		System.out.println("/addApprovalCondition : POST");
 		
 		user = (User) httpSession.getAttribute("user");
+		club = (Club) httpSession.getAttribute("club");
+		
+		clubUser.setUser(user);
+		clubUser.setClubNo(club.getClubNo());
 		clubUser.setMemberRole("0");
 		clubUser.setApprovalCondition("0");
 		clubService.addApprovalCondition(clubUser);
-		return "forward:/club/getClub.jsp";
+		return "forward:/club/getClubList";
 	}
 	
 	@RequestMapping(value="getClubMemberList")
-	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, ClubUser clubUser, Club club, String clubNo) throws Exception {
 		
 		System.out.println("/club/getClubMemberList : GET/POST");
+		
+		clubNo = (String) session.getAttribute("clubNo");
+		user = (User) session.getAttribute("user");
+		
+		search.setSearchKeyword(clubNo);
+		
+		clubUser.setNickName(user.getNickName());
+		clubUser.setLogoutDate(null);
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
+		System.out.println(search);
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
+		
+//		List<ClubUser> list = (List<ClubUser>)  map.get("clubMemberList");
+//		for (ClubUser c : list) {
+//			System.out.println(c);
+//		}
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage : "+resultPage);
 		
+		System.out.println("유저 세션에 뭐 있지? : "+user);
+		System.out.println("클럽 번호 왔나? : "+session.getAttribute("clubNo"));
+		
+		System.out.println("유저 닉네임 어케 가져오지 : "+user.getNickName());	
+
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("search",search);
@@ -226,19 +274,34 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="addMeeting", method=RequestMethod.POST)
-	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession httpSession) throws Exception {
+	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club) throws Exception {
 		
 		System.out.println("club/addMeeting : POST ");
-	
+		
+		user = (User) session.getAttribute("user");
+		club = (Club) session.getAttribute("club");
+		
+		System.out.println("유저 세션에 뭐있나? : "+user);
+		System.out.println("클럽넘버는 잘 왔나? : "+club.getClubNo());
+
+		meeting.setUser(user);
+		meeting.setClubNo(club.getClubNo());
+		meeting.setMeetingMember(1);
+		meeting.setMeetingWeather("테스트 날씨");
 		clubService.addMeeting(meeting);
-		return "forward:club/getMeeting.jsp";
+		return "forward:/club/getMeeting.jsp";
 		
 	}
 	
 	@RequestMapping(value="getMeetingList")
-	public String getMeetingList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+	public String getMeetingList(@ModelAttribute("search") Search search, Model model, HttpSession session, Club club) throws Exception {
 		
 		System.out.println("/club/getMeetingList : GET/POST");
+		
+		session.getAttribute("clubNo");
+		System.out.println("세션에 뭐가 있나요 ?? : "+ session.getAttribute("clubNo"));
+		
+		search.setSearchKeyword((String) session.getAttribute("clubNo"));
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -251,6 +314,8 @@ public class ClubController {
 		
 		System.out.println("resultPage : "+resultPage);
 		
+		
+		search.setSearchKeyword((String) session.getAttribute("clubNo"));
 		model.addAttribute("meetingList",map.get("meetingList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
@@ -270,30 +335,62 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getMeeting", method=RequestMethod.GET)
-	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model) throws Exception {
+	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model, HttpSession session, String clubNo) throws Exception {
 	
 		System.out.println("/club/getMeeting : GET");
 				
 		//Business Logic
 		Meeting meeting = clubService.getMeeting(Integer.parseInt(meetingNo));
-		
 		//Model 과 View 연결
 		System.out.println("MODEL VIEW 연결 전 ");
 		
 		model.addAttribute("meeting",meeting);
+		session.setAttribute("meetingNo", meetingNo);
+//		session.setAttribute("clubNo", clubNo);
 		
 		System.out.println("모델과 뷰 연결 되었나? " + meeting);
+		System.out.println("겟에서 세션에 들어갔나? : meetingNo "+meetingNo);
+		System.out.println("겟에서 세션에 들어갔나? clubNo : "+ session.getAttribute("clubNo"));
 		return "forward:/club/getMeeting.jsp";
 	}
 	
 	@RequestMapping(value="updateMeeting", method=RequestMethod.POST)
-	public String updateMeeting(@ModelAttribute Meeting meeting, Model model) throws Exception {
+	public String updateMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, String meetingNo) throws Exception {
 		
 		System.out.println("club/updateMeeting : POST");
+		
+		user = (User) session.getAttribute("user");
+		clubNo = (String) session.getAttribute("clubNo");
+		meetingNo = (String) session.getAttribute("meetingNo");
+		
+		System.out.println("유저 세션 잘 왔나? : "+user);
+		System.out.println("클럽넘버 왔나? : "+clubNo);
+		
+		meeting.setMeetingNo(Integer.parseInt(meetingNo));
+		meeting.setUser(user);
+		meeting.setClubNo(Integer.parseInt(clubNo));
+		meeting.setMeetingMember(1);
+		meeting.setMeetingWeather("수정 테스트 날씨");
 		
 		//Business Logic
 		clubService.updateMeeting(meeting);
 		
-		return "forward:/club/getMeetingList.jsp";
+		return "forward:/club/getMeeting.jsp";
+	}
+	
+	@RequestMapping(value="deleteMeeting")
+	public String deleteMeeting(@ModelAttribute Meeting meeting, String meetingNo, Model model, HttpSession session) throws Exception {
+		
+		System.out.println("deleteMeeting 시작~~~~~~~~~~~~~~~~~~~");
+		
+		meetingNo = (String) session.getAttribute("meetingNo");
+		
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("meetingNo"));
+		
+		meeting.setMeetingNo(Integer.parseInt(meetingNo));
+		
+		clubService.deleteMeeting(Integer.parseInt(meetingNo));
+		
+		return "forward:/club/getMeetingList";
 	}
 }
