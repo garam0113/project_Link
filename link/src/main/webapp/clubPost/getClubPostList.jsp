@@ -245,7 +245,7 @@
 															</c:if>
 														</c:forEach>
 													</c:if>
-													<img src="/resources/image/uploadFiles/${ heart_condition == 1 ? 'user03heart.jpg' : 'user03no_heart.jpg' }" height="50" width="50">
+													<img src="/resources/image/uploadFiles/${ heart_condition == 1 ? 'heart.jpg' : 'noHeart.jpg' }" height="50" width="50">
 												</div>
 												
 											</div>
