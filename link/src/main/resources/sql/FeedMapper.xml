@@ -52,7 +52,10 @@
 			
 		<association property="user"			javaType="user">
 			<result property="userId" 			column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"			column="nickName"					jdbcType="VARCHAR" />
 		</association>
+		
 	
 	</resultMap>
 
@@ -140,7 +143,8 @@
 	</update>
 	
 
-	
+
+	<!-- 사용 -->
 	<update		id="deleteFeed"					parameterType="int">
 		UPDATE feed
 		<set>
@@ -148,6 +152,19 @@
 		</set>
 		WHERE feed_no 						= #{feedNo}
 	</update>
+	<!-- 사용 -->
+	
+	
+	
+	<!-- 사용 -->
+	<update		id="reportFeed"					parameterType="int">
+		UPDATE feed
+		<set>
+			report_condition				= '1'
+		</set>
+		WHERE feed_no 						= #{feedNo}
+	</update>
+	<!-- 사용 -->
 	
 	
 	
@@ -188,28 +205,31 @@
 	
 	
 	
+	<!-- 사용 : 댓글 수정시 -->
 	<select 	id="getFeedComment"				parameterType="int"			resultMap="feedCommentSelectMap">
 		SELECT 
-		feed_comment_no,
-		feed_no,
-		user_id,
-		feed_comment_content,
-		feed_comment_heart_count,
-		feed_recomment_count,
-		feed_comment_reg_date,
-		feed_comment_update_date,
-		report_condition,
-		delete_condition,
-		parent,
-		depth,
-		sequence
-		FROM feed_comment
-		WHERE feed_comment_no = #{feed_comment_no}
+		c.feed_comment_no,
+		c.feed_no,
+		c.user_id,
+		c.feed_comment_content,
+		c.feed_comment_heart_count,
+		c.feed_recomment_count,
+		c.feed_comment_reg_date,
+		c.feed_comment_update_date,
+		c.report_condition,
+		c.delete_condition,
+		c.parent,
+		c.depth,
+		c.sequence
+		FROM feed_comment c, users u
+		WHERE feed_comment_no 	= #{feed_comment_no}
+		AND c.user_id			= u.user_id
 	</select>
+	<!-- 사용 : 댓글 수정시 -->
 	
 	
 	
-	<!-- 사용 -->
+	<!-- 사용 : 댓글 수정시 -->
 	<update 	id="updateFeedComment"			parameterType="comment">
 		UPDATE feed_comment
 		<set>
@@ -219,16 +239,12 @@
 				<otherwise>
 					feed_comment_content			= #{commentContent},
 					feed_comment_update_date		= SYSDATE,
-					report_condition				= #{reportCondition},
-					parent							= #{parent},
-					depth							= #{depth},
-					sequence						= #{sequence}
 				</otherwise>
 			</choose>
 		</set>
-		WHERE feed_comment_no				= #{feedCommentNo}
+		WHERE feed_comment_no						= #{feedCommentNo}
 	</update>
-	<!-- 사용 -->
+	<!-- 사용 : 댓글 수정시 -->
 	
 	
 	
@@ -248,6 +264,18 @@
 		UPDATE feed_comment
 		<set>
 			delete_condition				= '1'
+		</set>
+		WHERE feed_comment_no				= #{feedCommentNo}
+	</update>
+	<!-- 사용 -->
+	
+	
+	
+	<!-- 사용 -->
+	<update		id="reportFeedComment"			parameterType="int">
+		UPDATE feed_comment
+		<set>
+			report_condition				= '1'
 		</set>
 		WHERE feed_comment_no				= #{feedCommentNo}
 	</update>
@@ -315,7 +343,7 @@
 			</when>
 			<otherwise>
 			FROM users u, feed f
-			<if test="searchKeyword != ''">
+			<if test="search.searchKeyword != ''">
 			<where>
 			u.user_id = f.user_id
 			AND f.feed_content LIKE '%${searchKeyword}%'
@@ -332,19 +360,20 @@
 	<!-- 사용 -->
 	<select 	id="getFeedCommentList"			parameterType="hashmap"		resultMap="feedCommentSelectMap">
 		SELECT 
-		c.feed_comment_no, c.feed_no, c.user_id, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
+		c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
 		c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence
 		<choose>
 			<when test="user != null">
-				, isLike.EXIST FROM feed_comment c, (
+				, isLike.EXIST FROM feed_comment c, users u, (
 														SELECT
 														source_no as EXIST
 														FROM HEART
-														WHERE TRIM(source) = '1'
-														AND user_id = #{user.userId}
+														WHERE TRIM(source) 	= '1'
+														AND user_id			= #{user.userId}
 																						) isLike
 				<where>
 				c.feed_comment_no = isLike.EXIST(+)
+				AND c.user_id						= u.user_id
 				AND c.feed_no						= #{feedNo}
 				AND report_condition				= '0'
 				AND delete_condition				= '0'
@@ -353,9 +382,10 @@
 				ORDER BY sequence ASC
 			</when>
 			<otherwise>
-			FROM feed_comment c
+			FROM feed_comment c, users u
 			WHERE report_condition				= '0'
 			AND delete_condition				= '0'
+			AND c.user_id						= u.user_id
 			AND c.feed_no						= #{feedNo}
 			ORDER BY sequence ASC
 			</otherwise>

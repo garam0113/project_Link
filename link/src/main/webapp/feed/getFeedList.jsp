@@ -201,7 +201,6 @@
 <style type="text/css">
 
 	textarea {
-		width: 100%;
 		height: 6.25em;
 		border-style: solid;
 		border-color: black;
@@ -256,7 +255,7 @@
 									프로필 사진 : ${sessionScope.user.profileImage}
 									작성자 : ${sessionScope.user.nickName}
 						
-									<textarea name="content" placeholder="오늘 하루는 어떤가요?"></textarea>
+									<textarea name="content" style="width: 500px;" placeholder="오늘 하루는 어떤가요?"></textarea>
 									<button type="button" class="addFeed">등록</button>
 
 								</c:if>
