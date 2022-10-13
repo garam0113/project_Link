@@ -28,16 +28,54 @@ $(function() {
 	
 	
  });
+ 
+/*
+	window.onload=function() {
+		var userId = $("#userId").val();
+		console.log($("#userId").val());
+		
+		$.ajax({
+			url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
+			type : "POST", // 타입은 뭘 쓸거니?
+			datatype : "json",
+			 data		:  JSON.stringify({searchKeyword:userId}),
+			contentType : "application/json",
+			success : function(data) { // 갔다온 다음 결과값
+					// 나오면 파일을 찾았다는 것
+			//	alert(data);  // [object Object],[object Object],[object Object]
+				
+			// 데이터를 확인하고 싶을 때.
+			//	let str = JSON.stringify(data); // <> parse()
+			//	alert(str); 
+           console.log(data.list[0].receiveId.nickName);
+				$.each(data.list, function(index, item) { // 데이터 =item
+					var value ="<img src='/resources/image/uploadFiles/" + item.receiveId.profileImage
+					+ "' width='100' height='100'/>"
+					+ item.receiveId.nickName;
+					
+		$("#demo").append(value);
+					
+				
+				});
+			},
+			error : function() {
+				alert('error');			
+			}
+			
+		});
+		
+		
+	};
+*/
 
 
 $(function(){
 
 
-    $(".btn btn-success btn-sm").on("click" , function() {
-
-          var userId = $(".btn btn-success btn-sm").html();
-          //console.log(userId);
-          alert("팔로우");
+    $("#follow").on("click" , function() {
+  alert("팔로우")
+          var userId = $(".pp").html();
+         
           $(document).ready(function(){
        		$.ajax({
        			type: 'GET',   //get방식으로 명시
@@ -55,8 +93,7 @@ $(function(){
        	});
              
     });
-});			
-
+});	
 $(function(){
 	
 	<!-- REST CONTROLLTER TEST -->
@@ -330,7 +367,7 @@ $(function(){
 	width: 500px;
 	display: inline-block;
 	justify-content: center;
-	
+	float: left;
 }
 
 .single-comment {
@@ -349,6 +386,13 @@ $(function(){
 	justify-content: center;
     
 }
+.club{
+margin-left: 100px;
+}
+.L {
+	margin-left: 400px;
+}
+
 </style>
 </head>
 
@@ -388,13 +432,14 @@ $(function(){
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic">
 									<img
-										src="https://m.citybreeze.co.kr/file_data/ctbreeze/2022/04/19/ac007ff0b38eec2ee299876fbc2cbca8.jpg"
-										class="img-responsive" alt="">
+										src="/resources/image/uploadFiles/${user.profileImage}"
+										class="img-responsive" alt="" width="10%" height="10%">
 								</div>
 								<br> <br>
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
+								<input type="hidden" name="userId" id="userId" value="${user.userId }">
 									<div class="profile-usertitle-name">${user.nickName }</div>
 									<div class="profile-usertitle-job">${user.profileWriting }
 									</div>
@@ -414,11 +459,11 @@ $(function(){
 								<!-- SIDEBAR MENU -->
 								<div class="profile-usermenu">
 									<ul class="nav">
-										<li class="active"><a href="/club/getClubList"> <i
+										<li class="active"><a href="/club/getApprovalConditionList?userId=${user.userId}"> <i
 												class="glyphicon glyphicon-home"></i> 내 모임
 										</a></li>
-										<li><a
-											href="/myHome/updateProfile?userId=${user.userId }"> <i
+										<li>
+										<a href="/myHome/updateProfile?userId=${user.userId }"> <i
 												class="glyphicon glyphicon-user"></i> 프로필 수정
 										</a></li>
 										<li><a href="#" target="_blank"> <i
@@ -437,75 +482,15 @@ $(function(){
 				</div>
 
 			<div class="section-Box">
-				<div class="follow-section">
-		<a href="/myHome/getYourHome?userId=user33" id="zz">유저33</a>
-				    <br />
-					<br />
-					<c:set var="i" value="0"></c:set>
-					<c:forEach var="list" items="${list}">
-						<c:set var="i" value="${i + 1}"></c:set>
-						아아 ${list.receiveId.nickName }
-					</c:forEach>
-					<c:set var="i" value="0"></c:set>
-					<c:forEach var="list" items="${list}">
-						<c:set var="i" value="${i + 1}"></c:set>
-
-							<div class="single-comment">
-								<form class="followForm">
-									<div class="comment-author">
-
-										프로필 사진 ${list.user.profileImage} <cite><a href="#">${list.user.nickName }</a></cite>
-										<span class="says">says:</span>
-									</div>
-									<!-- comment-author -->
-									<div class="comment-meta">
-										<time datetime="2013-03-23 19:58">March 23, 2013 at
-											7:58 pm</time>
-										/ <a href="#" class="reply">Reply</a>
-									</div>
-									<!-- comment-meta -->
-									<p>${list.receiveId.nickName}</p>
-									<c:if test="${!empty feed.hashtag}">
-										<br />${feed.hashtag}</c:if>
-									<c:if test="${feed.checkHeart != 0}">
-										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
-										</c:if>
-									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-										<input type="button" class="btn_update" value="수정">
-										<input type="button" class="btn_delete" value="삭제">
-									</c:if>
-									<input type="button" class="btn_getFeed" value="보기"> <input
-										type="hidden" name="feedNo" value="${feed.feedNo}">
-
-									<section class="row section">
-										<div class="row">
-											<c:if test="${feed.checkHeart == 0}">
-												<div class="column two like" style="display: show;">
-													좋아요</div>
-												<div class="column two dislike" style="display: none;">
-													시러요</div>
-											</c:if>
-											<c:if test="${feed.checkHeart != 0}">
-												<div class="column two like" style="display: none;">
-													좋아요</div>
-												<div class="column two dislike" style="display: show;">
-													시러요</div>
-											</c:if>
-											<div class="column two likeCount">${feed.heartCount}</div>
-
-											<div class="column two comment">댓글수</div>
-
-											<div class="column two commentCount">
-												${feed.commentCount}</div>
-											<div class="column four last">신고</div>
-										</div>
-									</section>
-								</form>
-							</div>
-
-					
-					</c:forEach>
-
+			<div class="L">My FollowList</div>
+						<c:set var = "i" value = "0" />
+		<c:forEach var = "list" items = "${list}">
+			<c:set var = "i" value = "${i + 1}" />
+			<div class="follow-section" style="margin-left:300px;">
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4>${list.userId}</h4></div>
+				</div>
+			</c:forEach>
+				
 				</div>
 				<!-- single-comment -->
 
@@ -522,7 +507,7 @@ $(function(){
 								<form class="feedForm">
 									<div class="comment-author">
 
-										프로필 사진 ${feed.user.profileImage} <cite><a href="#">${user.nickName }</a></cite>
+										${feed.user.profileImage} <cite>${user.nickName }</cite>
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->
@@ -578,7 +563,7 @@ $(function(){
 				<!-- single-comment -->
 
 
-
+<a href="/myHome/getYourHome?userId=user33" id="zz">유저33</a></li>
 
 
 			</div>
