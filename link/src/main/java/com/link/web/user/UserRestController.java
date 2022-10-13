@@ -69,6 +69,32 @@ public class UserRestController {
 		return userService.getUser(user);
 	}
 	
+	@RequestMapping(value = "json/updatePenalty", method = RequestMethod.POST)
+	public User updatePenalty(@RequestBody User user) throws Exception{
+		
+		System.out.println("/userRest/json/updatePenalty : POST");
+		
+		User getUser = new User();
+		
+		if(user.getPenaltyType().equals("ㅡ")) {
+			System.out.println("패널틸가 ㅡ 일 경우 : "+user.getPenaltyType());
+			user.setPenaltyType("0");
+			userService.updateUser(user);
+		}else if(user.getPenaltyType().equals("정지")) {
+			System.out.println("패널틸가 정지일 경우 : "+user.getPenaltyType());
+			user.setPenaltyType("1");
+			userService.updateUser(user);
+		}else {
+			System.out.println("패널틸가 영구정지일 경우 : "+user.getPenaltyType());
+			user.setPenaltyType("2");
+			userService.updateUser(user);
+		}
+		
+		getUser = userService.getUser(user);
+		
+		return getUser;
+	}
+	
 	@RequestMapping(value = "json/updatePassword", method = RequestMethod.POST)
 	public User updatePassword(@RequestBody User user ) throws Exception{
 		
