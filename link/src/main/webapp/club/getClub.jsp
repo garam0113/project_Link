@@ -37,11 +37,17 @@
 
 	<script type="text/javascript">
 	
+	function fncDeleteClub() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
+			.submit();
+	}
+	
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
-			alert("모임을 삭제하시겠습니까?");
-			deleteClub();
+			alert("눌리나?");
+			fncDeleteClub();
 			
 		});
 	});
@@ -81,15 +87,15 @@
 	
 		<div class="page-header">
 	       <h3 class=" text-info">모임상세조회</h3>
+	       <a href="/club/getClubMemberList">모임원리스트</a>
+	       <hr/>
+	       <a href="/club/addMeetingView.jsp">모임일정등록</a>
+	       
+	       <hr/>
+	       <a href="/club/getMeetingList">모임일정리스트</a>
 	    </div>
-	
-	
-		<div class="row">
-			<div class="col-xs-4 col-md-2"><strong>모 임 번 호</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubNo}</div>
-		</div>
 		
-		<hr/>
+		<form class="form-horizontal">
 		
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 제 목</strong></div>
@@ -134,7 +140,8 @@
 					<button type="button" class="btn btn-success">가&nbsp;입&nbsp;신&nbsp;청</button>
 					
 		    </div>
-			</div>			
+			</div>	
+			</form>		
 	</div>
 </body>
 </html>

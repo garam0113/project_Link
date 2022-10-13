@@ -84,6 +84,7 @@
 
 	<!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리 
 			:: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->
+	<!-- 
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		
 		<property name="exceptionMappings">
@@ -96,6 +97,7 @@
 		<property name="defaultErrorView"	value="/common/error.jsp" />
 		
 	</bean>
+ -->
 
 	<!-- 파일 업로드 추가 부분 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

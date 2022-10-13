@@ -42,7 +42,7 @@
 		///////////////////////////////////////////////////
 
 
-		$("form").attr("method", "POST").attr("action", "/club/getMeeting")
+		$("form").attr("method", "POST").attr("action", "/club/addMeeting")
 				.submit();
 	}
 

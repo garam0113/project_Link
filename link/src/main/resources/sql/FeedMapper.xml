@@ -89,11 +89,11 @@
 	
 	<select 	id="getFeed"					parameterType="hashmap"			resultMap="feedSelectMap">
 		SELECT 
-		f.feed_no, f.user_id, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
+		f.feed_no, f.user_id, u.profile_image, u.nickName , f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
 		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
 		<choose>
 			<when test="user != null">
-				, isLike.EXIST FROM feed f, (
+				, isLike.EXIST FROM feed f, users u, (
 												SELECT
 												source_no as EXIST
 												FROM HEART
@@ -101,11 +101,13 @@
 												AND user_id			= #{user.userId}
 																							) isLike
 			WHERE f.feed_no							= isLike.EXIST(+) 
+			AND f.user_id							= u.user_id
 			AND f.feed_no							= #{feedNo}
 			</when>
 			<otherwise>
-			FROM feed f
+			FROM feed f, users u
 			WHERE f.feed_no							= #{feedNo}
+			AND f.user_id							= u.user_id
 			</otherwise>
 		</choose>
 	</select>
@@ -250,6 +252,29 @@
 		WHERE feed_comment_no				= #{feedCommentNo}
 	</update>
 	<!-- 사용 -->
+	
+	
+	
+	<!-- 사용 -->
+	<select		id="getFeedCommentBySequence"	parameterType="hashmap"			resultMap="feedCommentSelectMap">
+		SELECT
+		feed_comment_no,
+		feed_no,
+		user_id,
+		feed_comment_content,
+		feed_comment_heart_count,
+		feed_recomment_count,
+		feed_comment_reg_date,
+		feed_comment_update_date,
+		report_condition,
+		delete_condition,
+		parent,
+		depth,
+		sequence
+		FROM feed_comment					
+		WHERE feed_no  						= #{comment.feedNo}
+		AND sequence						= #{comment.sequence}
+	</select>
 	
 	
 	
