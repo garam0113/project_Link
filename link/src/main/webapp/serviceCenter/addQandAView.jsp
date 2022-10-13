@@ -76,16 +76,21 @@
 		    </div>
 		  </div>
 
-		  <div class="form-group">
-		    <label for="qandAImage1" class="col-sm-offset-1 col-sm-3 control-label">이미지1</label>
+			<div class="col-sm-4">
+				<input multiple="multiple" type="file" name="image"
+					class="ct_input_g" style="width: 200px; height: 19px"
+					maxLength="13" />
+
+			</div>
+			<span id="helpBlock" class="help-block"> <strong
+				class="text-danger">사진은 2장까지 가능합니다.</strong>
+			</span>
+			
+			<div class="form-group">
+		    <label for="qandAOpenCondition" class="col-sm-offset-1 col-sm-3 control-label">공개여부</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="qandAImage1" name="qandAImage1" >
-		    </div>
-		  </div>	
-		    <div class="form-group">
-		    <label for="qandAImage2" class="col-sm-offset-1 col-sm-3 control-label">이미지2</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="qandAImage2" name="qandAImage2" >
+		      <input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" >나만 보기
+		      <input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1">전체 보기
 		    </div>
 		  </div>
 		  

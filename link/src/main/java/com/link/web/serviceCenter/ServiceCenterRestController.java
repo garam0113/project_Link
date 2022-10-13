@@ -2,7 +2,13 @@ package com.link.web.serviceCenter;
 
 
 
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.service.domain.Report;
@@ -45,10 +50,7 @@ public class ServiceCenterRestController {
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
 	
-	
-	
-	
-	
+
 	
 
 }//RestController 끝

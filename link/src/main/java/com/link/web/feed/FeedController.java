@@ -201,15 +201,7 @@ public class FeedController {
 	
 	///////////////////////////////////////////////////// Feed Comment /////////////////////////////////////////////////////
 	
-	// 사용 (Rest에서 이동)
-	@RequestMapping(value = "/deleteFeedComment", method = RequestMethod.POST)
-	public String deleteFeedComment(@ModelAttribute Comment comment) throws Exception {
-		
-		feedService.deleteFeedComment(comment.getFeedCommentNo());
-		
-		return "forward:/feed/getFeed";
-		
-	}
+	
 	
 	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	

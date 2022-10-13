@@ -46,7 +46,7 @@ public class ServiceCenterController {
 	@Value("#{commonProperties['pageUnit'] ?: 10}")
 	int pageUnit;
 	
-	@RequestMapping(value = "addNotice")
+	@RequestMapping(value = "addNotice" , method = RequestMethod.POST)
 	public String addNotice(@ModelAttribute Notice notice, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
 		System.out.println(notice);
 		User user = new User();																			//★ 지워야됨
@@ -54,11 +54,26 @@ public class ServiceCenterController {
 		notice.setUserId(user);																			//★
 		System.out.println("/ServiceCenter/addNotice : GET & POST");
 		
+		//파일 업로드 시작
+		int fileCount = 0;
 		
-		
-		
-		
-		
+		String root ="C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+		 
+		for(MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+			
+			if(fileCount != file.length) {
+			  notice.setNoticeImage2(files.getOriginalFilename());
+			}
+			 notice.setNoticeImage1(files.getOriginalFilename());
+			File saveFile = new File(root+ files.getOriginalFilename());
+			boolean isExists = saveFile.exists();
+			if(!isExists) {
+				files.transferTo(saveFile);
+			}
+		}
+
 		serviceCenterService.addNotice(notice);
 		
 		model.addAttribute("notice", notice);
@@ -104,30 +119,19 @@ public class ServiceCenterController {
 	public String deleteNotice(@ModelAttribute Notice notice, @RequestParam(value ="menu", defaultValue ="search") String menu, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
-		
 		System.out.println("/ServiceCenter/deleteNotice : GET & POST");
-		
-		
-		
 		serviceCenterService.deleteNotice(notice.getNoticeNo());
-		
-	
-		
 		return "forward:/serviceCenter/getNoticeList";
+		
 	}
 
 	@RequestMapping(value = "updateNotice", method = RequestMethod.GET)
 	public String updateNotice(@ModelAttribute Notice notice, Model model) throws Exception {
 		
 		System.out.println("/serviceCenter/updateNotice : GET");
-		
-
 		System.out.println(notice);
-		
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());
-		
 		model.addAttribute("notice", notice);
-		
 		return "forward:/serviceCenter/updateNoticeView.jsp";
 	}	
 	
@@ -139,39 +143,29 @@ public class ServiceCenterController {
 	public String updateNotice(@ModelAttribute Notice notice, Model model, User user) throws Exception {
 		
 		System.out.println("/serviceCenter/updateNotice : POST");
-		
-		
 		serviceCenterService.updateNotice(notice);
-		
 		System.out.println(notice);
-		
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());
-		
 		model.addAttribute("notice", notice);
-		
 		return "forward:/serviceCenter/getNotice.jsp";
 	}
 	
 	
 	@RequestMapping(value = "getNoticeList")
-	public String listNotice(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+	public String getNoticeList(@ModelAttribute("search") Search search, Notice notice, @RequestParam(value = "menu", defaultValue = "search") String menu, 
 								Model model) throws Exception {
-		
 		System.out.println("/ServiceCenter/listNotice : GET & POST");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
 		search.setPageSize(pageSize);
-		
-		
 		System.out.println(search);
-		Map<String, Object> map = serviceCenterService.getNoticeList(search);
+		Map<String, Object> map = serviceCenterService.getNoticeList(search,notice);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("getNoticeList", map.get("getNoticeList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);
@@ -182,17 +176,41 @@ public class ServiceCenterController {
 //======================================================================================여기까지가 Notice	
 	
 	
-	@RequestMapping(value = "addQandA")
+	@RequestMapping(value = "addQandA" , method = RequestMethod.POST)
 	public String addQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
 		System.out.println(qandA);
 	
-		System.out.println("/ServiceCenter/addNotice : GET& POST");
+		System.out.println("/ServiceCenter/addQandA : GET& POST");
 		
 		System.out.println(qandA);
 		User user = new User();																			//★ 지워야됨
-		user.setUserId("admin1");																		//★ 
+		user.setUserId("user03");																		//★ 
 		qandA.setUserId(user);																			//★
-	
+		
+		
+
+		System.out.println(qandA.getQandAOpenCondition()+"테스트용");
+		int fileCount = 0;
+		String root ="C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+		 
+		for(MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+			
+			if(fileCount != file.length) {
+			  qandA.setQandAImage2(files.getOriginalFilename());
+			}
+			
+			 qandA.setQandAImage1(files.getOriginalFilename());
+			 
+			File saveFile = new File(root+ files.getOriginalFilename());
+			
+			boolean isExists = saveFile.exists();
+			
+			if(!isExists) {
+				files.transferTo(saveFile);
+			}
+		}
 
 		serviceCenterService.addQandA(qandA);
 		
@@ -280,24 +298,23 @@ public class ServiceCenterController {
 	}
 	
 	@RequestMapping(value = "getQandAList")
-	public String getQandAList(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
-								Model model) throws Exception {
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,
+			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
 		
 		System.out.println("/serviceCenter/getQandAList : GET & POST");
-		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
 		search.setPageSize(pageSize);
 		
-		
-		System.out.println(search);
-		Map<String, Object> map = serviceCenterService.getQandAList(search);
+		//세션으로 이름 받아와서 넣어야됨
+		String userId ="user03";
+
+		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA , userId);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);
@@ -367,8 +384,8 @@ public class ServiceCenterController {
 	}
 	
 	@RequestMapping(value = "getReportList")
-	public String getReportList(@ModelAttribute("search") Search search, @RequestParam(value = "menu", defaultValue = "search") String menu, 
-								Model model) throws Exception {
+	public String getReportList(@ModelAttribute("search") Search search, Report report, 
+			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
 		
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 		
@@ -378,13 +395,14 @@ public class ServiceCenterController {
 		
 		search.setPageSize(pageSize);
 		
+		String userId ="user03";
 		
 		System.out.println(search);
-		Map<String, Object> map = serviceCenterService.getReportList(search);
+		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("menu", menu);

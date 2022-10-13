@@ -24,7 +24,7 @@
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
@@ -71,7 +71,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+	<jsp:include page="/toolbar.jsp" />
 		<div class="page-header text-info">
 	      <%--  ${menu.equals("manage") ? "상품관리" : "상품 목록 조회"} --%>
 	       ${menu.equals("manage") ? "신고 리스트" : "신고 리스트2"}
@@ -137,29 +137,31 @@
 		<tbody>
 		
 			<c:set var = "i" value = "0" />
-		<c:forEach var = "list" items = "${list}">
+		<c:forEach var = "getReportList" items = "${getReportList}">
 			<c:set var = "i" value = "${i + 1}" />
 			<tr class="ct_list_pop">
-				<td align="left" height="200" id="bb">${list.no}</td>
+				<td align="left" height="200" id="bb">${getReportList.no}</td>
 				
 				<td></td>
 				<td align="left" height="200" style="text-decoration:underline">
-					${list.title}
+					${getReportList.title}
 				</td>
 				<td></td>
-				
-				<td align="left" height="200">${list.reportCondition}</td>
-				
+				  <c:if test="${getReportList.reportCondition=='1'}">
+				<td align="left" height="200">처리완료</td>
+				  </c:if>
+				   <c:if test="${getReportList.reportCondition=='0'}">
+				<td align="left" height="200">대기중</td>
+				  </c:if>
 				<td></td>
-				<td align="left" height="200">${list.user2.userId}</td>
+				<td align="left" height="200">${getReportList.user2.userId}</td>
 				<td></td>
-				<td align="left" height="200">${list.regDate}</td>
+				<td align="left" height="200">${getReportList.regDate}</td>
 				<td align="center" height="200">
 				
 				</td>	
 					
-				<td></td>
-			
+				<td></td>	
         </c:forEach>
         </tbody>
       

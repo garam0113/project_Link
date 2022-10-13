@@ -1,6 +1,7 @@
 package com.link.service.serviceCenter;
 
 import java.util.List;
+import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Notice;
@@ -21,11 +22,11 @@ public interface ServiceCenterDAO {
 	
 	//==여기까지가 공지사항 Notice ==//
 	
-	public List<Notice> getNoticeList(Search search) throws Exception;
+	public Map<String, Object> getNoticeList(Map<String, Object> map) throws Exception;
 	
-	public List<Report> getReportList(Search search) throws Exception;
+	public Map<String, Object> getReportList(Map<String, Object> map) throws Exception;
 	
-	public List<QandA> getQandAList(Search search) throws Exception;
+	public Map<String, Object> getQandAList(Map<String, Object> map) throws Exception;
 	
 	//List 들
 	

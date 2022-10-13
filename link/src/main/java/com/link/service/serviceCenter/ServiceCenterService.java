@@ -21,11 +21,11 @@ public interface ServiceCenterService {
 	
 	//==여기까지가 공지사항 Notice ==//
 	
-	public Map<String, Object> getNoticeList(Search search) throws Exception;
+	public Map<String, Object> getNoticeList(Search search, Notice notice) throws Exception;
 	
-	public Map<String, Object> getReportList(Search search) throws Exception;
+	public Map<String, Object> getReportList(Search search, Report report, String userId) throws Exception;
 	
-	public Map<String, Object> getQandAList(Search search) throws Exception;
+	public Map<String, Object> getQandAList(Search search, QandA qandA , String userId) throws Exception;
 	
 	//List 들
 	
