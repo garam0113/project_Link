@@ -73,15 +73,16 @@
   				return;
   			}
   			
-  			if(phone2 != null && phone3 != null && email != null){
+  			if(phone2 == "" && phone3 == "" && email == ""){
   				swal.fire("핸드폰, 이메일정보중 하나만 적어주세요.")
+  				return;
   			}
-  			/*
+  			
   			if(checkNo != 1){
   				swal.fire("인증이 필요합니다.");
   				return;
   			}
-  			*/
+  			
   			$('#myTabs a').click(function (e) {
   			  e.preventDefault()
   			  $(this).tab('show')

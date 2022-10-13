@@ -24,11 +24,7 @@
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
+
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
@@ -48,15 +44,13 @@
 		$("td:nth-child(3)").on("click",function(){
 			self.location ="/serviceCenter/getNotice?noticeNo="+$(this).parent().find("td:eq(0)").text()
 			
-			
 		});
 		
 		$("td.ct_btn01:contains('등록')").bind("click", function() {
 			self.location = "../serviceCenter/addNoticeView.jsp";
 		})
 		
-		
-		
+	
 		
 	});
 
@@ -71,7 +65,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+		<jsp:include page="/toolbar.jsp" />
 		<div class="page-header text-info">
 	      <%--  ${menu.equals("manage") ? "상품관리" : "상품 목록 조회"} --%>
 	       ${menu.equals("manage") ? "공지사항 리스트22" : "공지사항 리스트"}
@@ -91,8 +85,8 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 					</select>
 				  </div>
 				  
@@ -135,25 +129,25 @@
         </thead>
        
 		<tbody>
-		
+			
 			<c:set var = "i" value = "0" />
-		<c:forEach var = "list" items = "${list}">
+		<c:forEach var = "getNoticeList" items = "${getNoticeList}">
 			<c:set var = "i" value = "${i + 1}" />
 			<tr class="ct_list_pop">
-				<td align="left" height="200" id="bb">${list.noticeNo}</td>
+				<td align="left" height="200" id="bb">${getNoticeList.noticeNo}</td>
 				
 				<td></td>
 				<td align="left" height="200" style="text-decoration:underline">
-					${list.noticeTitle}
+					${getNoticeList.noticeTitle}
 				</td>
 				<td></td>
 				
-				<td align="left" height="200">${list.userId.userId}</td>
+				<td align="left" height="200">${getNoticeList.userId.userId}</td>
 				
 				<td></td>
-				<td align="left" height="200">${list.noticeRegDate}</td>
+				<td align="left" height="200">${getNoticeList.noticeRegDate}</td>
 				<td></td>
-				<td align="left" height="200">${list.noticeCount}</td>
+				<td align="left" height="200">${getNoticeList.noticeCount}</td>
 				<td align="center" height="200">
 				
 				</td>	

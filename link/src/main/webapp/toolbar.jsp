@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
@@ -30,41 +30,51 @@
 		
 	</head>
 
-	<body class="page">
+</head>
 
-		<header role="banner" class="transparent light">
-			<div class="row">
-				<div class="nav-inner row-content buffer-left buffer-right even clear-after">
-					<div id="brand">
-						<h1 class="reset"><!--<img src="img/logo.png" alt="logo">--><a href="/main.jsp">Link</a></h1>
-					</div><!-- brand -->
-					<a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-					<nav>
-						<ul class="reset" role="navigation">
-							<li class="menu-item">
-								<a href="/main.jsp">Home</a>
-							</li>
-							<li class="menu-item">
-								<a href="/feed/getFeedList">Feed</a>
-							</li>
-							<li class="menu-item">
-								<a href="/">Live</a>
-							</li>
-							<li class="menu-item"><a href="/club/getClubList">Club</a></li>
-							<li class="menu-item">
-								<a href="/myHome/getMyHome?userId=${user.userId}">MyHome</a>
-							</li>
-							<li class="menu-item"><a href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
-							<c:if test="${ empty user }">
-							<li class="menu-item"><a href="/user/login">∑Œ±◊¿Œ</a></li>
-							<li class="menu-item"><a href="/user/addUser">»∏ø¯∞°¿‘</a></li>
-							</c:if>
-							<c:if test="${! empty user }">
-							<li class="menu-item"><a href="/user/logout?userId=${user.userId}">∑Œ±◊æ∆øÙ</a></li>
-							<li class="menu-item"><a href="/user/getUser?userId=${user.userId}">≥ª¡§∫∏∫∏±‚</a></li>
-							</c:if>
-						</ul>
-					</nav>
-				</div><!-- row-content -->	
-			</div><!-- row -->	
-		</header>
+<body class="page">
+
+   <header role="banner" class="transparent light">
+      <div class="row">
+         <div
+            class="nav-inner row-content buffer-left buffer-right even clear-after">
+            <div id="brand">
+               <h1 class="reset">
+                  <!--<img src="img/logo.png" alt="logo">-->
+                  <a href="/main.jsp">Link</a>
+               </h1>
+            </div>
+            <!-- brand -->
+            <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+            <nav>
+               <ul class="reset" role="navigation">
+                  <li class="menu-item"><a href="/main.jsp">Home</a></li>
+                  <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
+                  <li class="menu-item"><a href="/">Live</a></li>
+                  <li class="menu-item"><a href="/club/getClubList">Club</a></li>
+                  <li class="menu-item"><a
+                     href="/myHome/getMyHome?userId=${user.userId}">MyHome</a></li>
+                  <li class="menu-item"><a
+                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+                  <c:if test="${ empty user }">
+                     <li class="menu-item"><a href="/user/login">Î°úÍ∑∏Ïù∏</a></li>
+                     <li class="menu-item"><a href="/user/addUser">ÌöåÏõêÍ∞ÄÏûÖ</a></li>
+                  </c:if>
+                  <c:if test="${! empty user }">
+                     <li class="menu-item"><a
+                        href="/user/logout?userId=${user.userId}">Î°úÍ∑∏ÏïÑÏõÉ</a></li>
+                     <c:if test="${user.role == '0' }">
+                        <li class="menu-item"><a
+                           href="/user/getUser?userId=${user.userId}">ÎÇ¥Ï†ïÎ≥¥Î≥¥Í∏∞</a></li>
+                     </c:if>
+                     <c:if test="${user.role == '1' }">
+                        <li class="menu-item"><a href="/user/getUserList">Í¥ÄÎ¶¨ÏûêÌéòÏù¥ÏßÄ</a></li>
+                     </c:if>
+                  </c:if>
+               </ul>
+            </nav>
+         </div>
+         <!-- row-content -->
+      </div>
+      <!-- row -->
+   </header>

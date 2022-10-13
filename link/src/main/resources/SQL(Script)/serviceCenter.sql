@@ -126,7 +126,7 @@ DROP SEQUENCE seq_notice_notice_no;
 
 CREATE SEQUENCE seq_notice_notice_no   INCREMENT BY 1 START WITH 1;
 
-
+delete from notice;
 select * from notice;
 
 delete from notice where notice_no = '6';
@@ -140,6 +140,7 @@ DROP SEQUENCE seq_qanda_no;
 DROP TABLE qanda;
 CREATE SEQUENCE SEQ_QANDA_NO					INCREMENT BY 1 START WITH 1;
 
+DELETE FROM QANDA;
 
 select * from qanda;
 
@@ -150,7 +151,6 @@ select * from users;
 
 select * from report_push;
 desc report_push;
-
 select * from club_post;
 
 

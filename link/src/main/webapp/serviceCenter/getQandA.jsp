@@ -98,7 +98,7 @@
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
 
-			<c:set var="text" value="${fn:split(qandA.qandAImage1, '*')}"></c:set>
+
 
 			<tr>
 				<td width="104" class="ct_write">¿ÃπÃ¡ˆ <img
@@ -107,10 +107,8 @@
 				</td>
 				<td bgcolor="D6D6D6" width="1"></td>
 
-				<td class="ct_write01"><c:forEach var="i" items="${text}">
-						<img src="/images/uploadFiles/${i}" width="300" height="300"
-							align="absmiddle" />
-					</c:forEach></td>
+<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" width="100" height="100" align="absmiddle"/>
+<img src="/resources/image/uploadFiles/${qandA.qandAImage2}" width="100" height="100" align="absmiddle"/>
 			</tr>
 
 			<tr>

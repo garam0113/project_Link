@@ -3,8 +3,13 @@ encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/webapp/main.jsp=EUC-KR
 encoding//src/main/webapp/myHome/getFollowList.jsp=UTF-8
+<<<<<<< HEAD
 encoding//src/main/webapp/resources/css/style.css=UTF-8
 encoding//src/main/webapp/resources/summernote/summernote-lite.css=UTF-8
+=======
+encoding//src/main/webapp/myHome/getMyHome.jsp=UTF-8
+encoding//src/main/webapp/toolbar.jsp=UTF-8
+>>>>>>> refs/remotes/origin/master
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
 encoding/<project>=UTF-8

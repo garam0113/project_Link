@@ -84,7 +84,7 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 //==================================================================여기까지가 Notice	
 
 	@Override
-	public Map<String, Object> getReportList(Search search) throws Exception {
+	public Map<String, Object> getReportList(Search search, Report report) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl getReportList start]\n");
@@ -107,47 +107,39 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	}
 
 	@Override
-	public Map<String, Object> getQandAList(Search search) throws Exception {
+	public Map<String, Object> getQandAList(Search search, QandA qandA , String userId) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl getQandAList start]\n");
-
-		List<QandA> list = serviceCenterDAO.getQandAList(search);
-		
 		int a = 1 ;
-		
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
 		System.out.println("test 용입니다.");
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("list", list);
+		
+		map.put("qandA", qandA);
+		map.put("userId", userId);
+		map.put("search", search);
 		map.put("totalCount", totalCount);
 
 		System.out.println("\n[ServiceCenterServiceImpl getQandAList end]\n");
 
-		return map;
+		return serviceCenterDAO.getQandAList(map);
 
 	}
 
 	@Override
-	public Map<String, Object> getNoticeList(Search search) throws Exception {
+	public Map<String, Object> getNoticeList(Search search, Notice notice) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl getNoticetList start]\n");
-
-		List<Notice> list = serviceCenterDAO.getNoticeList(search);
 		int a = 2;
-		
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
-
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("list", list);
-		map.put("totalCount", totalCount); 
-
+		map.put("search", search);
+		map.put("notice", notice);
+		map.put("totalCount", totalCount);
 		System.out.println("\n[ServiceCenterServiceImpl getNoticeList end]\n");
-
-		return map;
+		return serviceCenterDAO.getNoticeList(map);
 	}
 
 	// ==================================================================여기까지가 List
