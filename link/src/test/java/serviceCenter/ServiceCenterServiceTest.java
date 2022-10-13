@@ -114,7 +114,7 @@ public class ServiceCenterServiceTest {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("search", search);
 		
-		map = serviceCenterService.getNoticeList(search);
+		
 		List<Notice> notice = (List<Notice>)map.get("list");
 		
 		Assert.assertEquals("내용", notice.get(1).getNoticeContent());
