@@ -51,6 +51,11 @@ public interface FeedDAO {
 	// 댓글의 순서 변경
 	public void updateFeedCommentOrder(Comment comment) throws Exception;
 	
+	// 사용 : 순서로 댓글 확인하기
+	public Comment getFeedCommentBySequence(Map<String, Object> map) throws Exception; 
+	
+	
+	
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	
 	
@@ -85,9 +90,10 @@ public interface FeedDAO {
 	 * 
 	 */
 	
+	// 사용
 	public int getRecommentCount(Map<String, Object> map) throws Exception;
 	
-
+	
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	
