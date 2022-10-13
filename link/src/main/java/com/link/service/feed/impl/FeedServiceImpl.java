@@ -91,9 +91,16 @@ public class FeedServiceImpl implements FeedService {
 		feedDAO.updateFeed(feed);
 		
 		// 하나의 댓글에 달린 대댓글 개수 세어서 넣어주기
-		int count = ((Comment) map.get("comment")).getSequence() + feedDAO.getRecommentCount(map);
 		
+		int count = ((Comment) map.get("comment")).getSequence() + feedDAO.getRecommentCount(map);
+
 		((Comment) map.get("comment")).setSequence(count);
+		
+		while(feedDAO.getFeedCommentBySequence(map).getDepth() != 0) {
+			count++;
+			((Comment) map.get("comment")).setSequence(count);
+			System.out.println("이너카운트 : " + count);
+		}
 		
 		// 댓글의 순서 변경
 		if(((Comment) map.get("comment")).getSequence() < feed.getCommentCount()) {
