@@ -84,25 +84,22 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 //==================================================================여기까지가 Notice	
 
 	@Override
-	public Map<String, Object> getReportList(Search search, Report report) throws Exception {
+	public Map<String, Object> getReportList(Search search, Report report, String userId) throws Exception {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl getReportList start]\n");
-
-		List<Report> list = serviceCenterDAO.getReportList(search);
-		
 		int a = 0;
-		
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
-
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("list", list);
+		map.put("report", report);
+		map.put("userId", userId);
+		map.put("search", search);
 		map.put("totalCount", totalCount);
 
 		System.out.println("\n[ServiceCenterServiceImpl getReportList end]\n");
 
-		return map;
+		return serviceCenterDAO.getReportList(map);
 
 	}
 
@@ -113,7 +110,6 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		System.out.println("\n[ServiceCenterServiceImpl getQandAList start]\n");
 		int a = 1 ;
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
-		System.out.println("test 용입니다.");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("qandA", qandA);

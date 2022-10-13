@@ -22,6 +22,7 @@ import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
+import com.link.service.user.UserService;
 
 @RestController
 @RequestMapping("/feedRest/*")
@@ -29,7 +30,11 @@ public class FeedRestController {
 
 	@Autowired
 	@Qualifier("feedServiceImpl")
-	private FeedService feedService; 
+	private FeedService feedService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	public FeedRestController() {
 		// TODO Auto-generated constructor stub
@@ -81,7 +86,7 @@ public class FeedRestController {
 		
 	}
 	
-	// 사용
+	
 	@RequestMapping(value = "/json/getFeedComment", method = RequestMethod.POST)
 	public Comment getFeedComment(@RequestBody Comment comment) throws Exception {
 
@@ -92,14 +97,56 @@ public class FeedRestController {
 	}
 	
 	// 사용
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
-	public Comment updateFeedComment(@RequestBody Comment comment) throws Exception {
+	public List<Comment> updateFeedComment(@RequestBody Comment comment, Search search, User user,	
+											HttpSession httpSession) throws Exception {
 		
 		feedService.updateFeedComment(comment);
 		
-		return feedService.getFeedComment(comment.getFeedCommentNo());
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
-		// 리스트로 가져와서 수정 성공시 리스트로 뿌리는 것 고려
+		System.out.println("테스트 " + comment);
+		
+		user.setUserId(comment.getUser().getUserId());
+		user = userService.getUser(user);
+		
+		System.out.println("테스트 " + user);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("comment", comment);
+		map.put("feedNo", comment.getFeedNo());
+		map.put("user", user);
+		
+		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
+				
+	}
+	
+	// 사용
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
+	public List<Comment> deleteFeedComment(@RequestBody Comment comment, Search search, User user,	
+										HttpSession httpSession) throws Exception {
+		
+		feedService.deleteFeedComment(comment.getFeedCommentNo());
+		
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
+		System.out.println("테스트 " + comment);
+		
+		user.setUserId(comment.getUser().getUserId());
+		user = userService.getUser(user);
+		
+		System.out.println("테스트 " + user);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("comment", comment);
+		map.put("feedNo", comment.getFeedNo());
+		map.put("user", user);
+		
+		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
 	}
 
@@ -135,10 +182,8 @@ public class FeedRestController {
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/getFeedCommentList", method = RequestMethod.POST)
-	public List<Comment> getFeedCommentList(@RequestBody Comment comment, Search search, User user,	
-												HttpSession httpSession) throws Exception{
+	public List<Comment> getFeedCommentList(@RequestBody Comment comment, Search search, User user) throws Exception{
 	
-		user = (User) httpSession.getAttribute("user");
 
 		// 피드 댓글 리스트
 		
@@ -150,6 +195,11 @@ public class FeedRestController {
 		
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
+		
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
+		user.setUserId(comment.getUser().getUserId());
+		user = userService.getUser(user);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
@@ -218,11 +268,16 @@ public class FeedRestController {
 
 	}
 	
+	
+	
+	///////////////////////////////////////////////////// HEART COMMENT  /////////////////////////////////////////////////////
+	
+	
+	
 	// 사용
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/addFeedCommentHeart", method = RequestMethod.POST)
-	public Comment addFeedCommentHeart(@RequestBody Comment comment, User user, Heart heart, HttpSession httpSession) throws Exception {
-		
-		user = (User) httpSession.getAttribute("user");
+	public List<Comment> addFeedCommentHeart(@RequestBody Comment comment, Search search, User user, Heart heart) throws Exception {
 		
 		// 피드 댓글 좋아요
 		
@@ -230,36 +285,46 @@ public class FeedRestController {
 		heart.setSourceNo(comment.getFeedCommentNo());
 		heart.setUserId(user.getUserId());
 		
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
 		map.put("comment", comment);
+		map.put("search", search);
+		map.put("user", comment.getUser());
+		map.put("feedNo", comment.getFeedNo());
 		
-		return feedService.addFeedCommentHeart(map);
+		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
 	}
 	
 	// 사용
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/deleteCommentHeart", method = RequestMethod.POST)
-	public Comment deleteFeedCommentHeart(@RequestBody Comment comment, User user, Heart heart, HttpSession httpSession) throws Exception {
-		
-		user = (User) httpSession.getAttribute("user");
+	public List<Comment> deleteFeedCommentHeart(@RequestBody Comment comment, Search search, User user, Heart heart) throws Exception {
 		
 		// 피드 댓글 좋아요
+		
 		heart.setSource("1");
 		heart.setSourceNo(comment.getFeedCommentNo());
 		heart.setUserId(user.getUserId());
+
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
 		map.put("comment", comment);
+		map.put("search", search);
+		map.put("user", comment.getUser());
+		map.put("feedNo", comment.getFeedNo());
 		
-		return feedService.deleteFeedCommentHeart(map);
+		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
 	}
 	
 	
 	
-	///////////////////////////////////////////////////// Report /////////////////////////////////////////////////////
+	///////////////////////////////////////////////////// REPORT /////////////////////////////////////////////////////
 		
 		
 		

@@ -104,6 +104,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT QANDA_NO , QANDA_TITLE , ANSWER_CONDITION , USER_ID , QANDA_REGDATE
 											FROM QANDA
+											
 											<if test ="qandA.qandAOpenCondition==0">
 											WHERE USER_ID = #{userId}
 											<if test="search.searchCondition != null">
@@ -116,7 +117,7 @@
 											</if>	
 											</if>
 											
-											<if test = "qandA.qandAOpenCondition!=0 and userId =='' ">
+											<if test = "qandA.qandAOpenCondition!=0 ">
 											<if test="search.searchCondition != null">
 											 <where>
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">

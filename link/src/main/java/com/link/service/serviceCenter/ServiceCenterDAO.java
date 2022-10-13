@@ -24,7 +24,7 @@ public interface ServiceCenterDAO {
 	
 	public Map<String, Object> getNoticeList(Map<String, Object> map) throws Exception;
 	
-	public List<Report> getReportList(Search search) throws Exception;
+	public Map<String, Object> getReportList(Map<String, Object> map) throws Exception;
 	
 	public Map<String, Object> getQandAList(Map<String, Object> map) throws Exception;
 	

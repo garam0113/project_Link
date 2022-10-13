@@ -64,7 +64,8 @@
 			"reportImage2":$("#reportImage2").val(),
 			"user2":$("#user2").val(),
 			"reportSource":$("#reportSource").val(),
-			"reportReason": sum
+			"reportReason": sum,
+			"type": $("#type").val()
 	
 		
 		}),
@@ -108,7 +109,7 @@
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
-		
+		   <input type="hidden" name="type" id="type" value="1">
 		  <div class="form-group">
 		    <label for="title" class="col-sm-offset-1 col-sm-3 control-label">Á¦¸ñ</label>
 		    <div class="col-sm-4">

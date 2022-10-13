@@ -20,7 +20,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 	
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/resources/javascript/mapScript.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -37,7 +36,27 @@
 	
 		$(function(){
 			
-			// 대댓글 버튼 클릭 -> 대댓글 작성 공간 생성
+			// 피드 수정
+			
+			$("#updateFeed").bind("click", function() {
+				console.log("피드 수정");
+				
+				$("form").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+			})
+			
+			
+			
+			// 피드 삭제
+			
+			$("#deleteFeed").bind("click", function() {
+				console.log("피드 삭제");
+				
+				$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			})
+			
+			
+			
+			// Reply 버튼 클릭 -> 대댓글 작성 공간 생성
 			
 			$(".btn_createRecomment").bind("click", function(){
 				
@@ -68,6 +87,9 @@
 					var sequenceValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='sequence']").val()) + 1;
 					var content = $(this).prev().val();
 					
+					var changePoint = $(this).parents(".comment");
+					var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
+					
 					$.ajax(
 							{
 								url : "/feedRest/json/addFeedComment",
@@ -88,7 +110,57 @@
 								
 								success : function(data, status) {
 									
-									$("input[name='sequence']").val($("input[name='sequence']").val() + 1);
+									var changeHtml = "";
+									
+									$.each(data, function(index, item) {
+										
+										var depth = parseInt(item.depth) * 25; 
+										
+										changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+										'<div class="comment-author">' +
+										'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+										'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+										'<span class="says">says:</span>' +
+										'</div>' +
+										'<div class="comment-meta">' +
+										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> /';
+										
+										if(item.depth < 3) {
+											changeHtml += '<a class="btn_createRecomment">Reply</a>'
+										}
+										
+										if(sessionUser == item.user.userId) {
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+										}
+										
+										if(item.heartCondition == 0) {
+											changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+										} else {
+											changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+										}
+										
+										changeHtml += '</div>' + 
+											'<p class="commentContent">' + item.commentContent + '</p>' +
+											'<div class="commentInfo">' +
+											'<input type="hidden" name="source" value="1">' +
+											'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+											'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+											'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+											'<input type="hidden" name="parent" value="' + item.parent + '">' +
+											'<input type="hidden" name="depth" value="' + item.depth + '">' +
+											'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+											'</div>' +
+											'<div class="btn_recommentCheck" style="display: none;" >' +
+											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
+											'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+											'</div>' +
+											'</div>'
+										
+									}) // $.each close 
+									
+									console.log(changeHtml);
+									$(changePoint).html(changeHtml);
 									
 								} // success end
 								
@@ -102,30 +174,16 @@
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			// 댓글 삭제
-			$(".deleteComment").bind("click", function() {
-				alert("삭제 요청 // 이 피드 번호 : " + ${feed.feedNo} + "댓글 번호 : " + $(this).parent().next().find("input[name='feedCommentNo']").val());
-				
-				$("form").attr("method", "POST").attr("action", "/feed/deleteFeedComment").submit();
-			})
-			
 			// 댓글 수정 화면 띄우기 
 			
 			$(".updateCommentView").bind("click", function() {
 
-				alert("수정화면 요청 // 이 피드 번호 : " + ${feed.feedNo} + "댓글 번호 : " + $(this).parent().next().find("input[name='feedCommentNo']").val());
-				alert("여기 html를 수정하자 : " + $(this).parent().html());
+				console.log("피드 번호 : " + ${feed.feedNo} + " 댓글 번호 : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
 				
-				var beforeComment = $(this).parent().html();
-				
-				var changePoint = $(this).parent();
-				var commentNo = $(this).parent().next().find("input[name='feedCommentNo']").val();
+				var changePoint = $(this).parent().siblings(".commentContent");
+				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
+				var depth = $(this).parent().siblings(".commentInfo").find("input[name='depth']").val();
 				
 				$.ajax (
 						
@@ -145,23 +203,22 @@
 							
 							success : function(data, status) {
 								
-								swal.fire("수정 화면 요청 성공 : " + data.commentContent + "\n" + changePoint);
+								var width = 427 - (parseInt(depth) * 50);
 								
-								var changeHtml = "<input type='text' name='commentContent' value='" + data.commentContent + "'>" +
-													"<button type='button' class='updateFeedComment'>댓글 수정</button>";
+								var changeHtml = "<textarea style='width:" + width + "px; resize:none; name='commentContent'>" + data.commentContent + "</textarea>" +
+													"<input class='button red updateFeedComment' style='float:right; display: inline-block;' value='Update Comment'>" + 
+													"<input class='button red cancel' style='float:right; display: inline-block;' value='Cancel'>";
 													
-								alert("바꿀 내용 : " + changeHtml);
 								$(changePoint).html(changeHtml);
 								
+								
+								
 								// 댓글 수정 클릭시 이벤트 걸기
-								
-								
+													
 								$(".updateFeedComment").bind("click", function(){
 									
-									alert("바꾸고 싶은 내용은 " + $(this).prev().val());
-									swal.fire("수정되었습니다.");
-									
 									var wantComment = $(this).prev().val();
+									var changePoint = $(this).parents(".comment");
 									
 									$.ajax(
 												{
@@ -181,65 +238,184 @@
 													
 													success : function(data, status) {
 														swal.fire("성공");
-													}
+														
+														var changeHtml = "";
+														
+														$.each(data, function(index, item) {
+															
+															var depth = parseInt(item.depth) * 25; 
+															
+															changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+															'<div class="comment-author">' +
+															'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+															'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+															'<span class="says">says:</span>' +
+															'</div>' +
+															'<div class="comment-meta">' +
+															'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> /';
+															
+															if(item.depth < 3) {
+																changeHtml += '<a class="btn_createRecomment">Reply</a>'
+															}
+															
+															if(sessionUser == item.user.userId) {
+																changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+																changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+															}
+															
+															if(item.heartCondition == 0) {
+																changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+															} else {
+																changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+															}
+															
+															changeHtml += '</div>' + 
+																'<p class="commentContent">' + item.commentContent + '</p>' +
+																'<div class="commentInfo">' +
+																'<input type="hidden" name="source" value="1">' +
+																'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+																'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+																'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+																'<input type="hidden" name="parent" value="' + item.parent + '">' +
+																'<input type="hidden" name="depth" value="' + item.depth + '">' +
+																'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+																'</div>' +
+																'<div class="btn_recommentCheck" style="display: none;" >' +
+																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
+																'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+																'</div>' +
+																'</div>'
+															
+														}) // $.each close 
+														
+														console.log(changeHtml);
+														$(changePoint).html(changeHtml);
+
+													} // success close
 													
-												}
-									) // ajax close;
+												} // ajax inner close
+													
+									) // updateFeedComment ajax close;
 									
-									// $(changePoint).html(beforeComment);
-									
-								}) // event close
-								
-								
+								}) // updateFeedComment event close
 								
 							} // success close
-						}
+							
+						} // updateCommentView ajax close
 						
 				) // ajax close
-			})
-		
-			// 댓글 리스트 ajax 테스트
+				
+			}) // updateCommentView event close
 			
-			$("#test").bind("click", function(){
+			
+			
+			// 댓글 삭제
+			
+			$(".deleteComment").bind("click", function() {
+				alert("[삭제 요청] 피드 번호 : " + ${feed.feedNo} + " 댓글 번호 : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				
+				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var wantComment = $(this).prev().val();
+				var changePoint = $(this).parents(".comment");
+				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
 				
 				$.ajax(
-						{
-							url : "/feedRest/json/getFeedCommentList",
-							method : "POST",
-							data : JSON.stringify ({
-								feedNo : ${feed.feedNo}
-							}),
-							contentType: 'application/json',
-							dataType : "json",
-							header : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							}, // header end
-							
-							success : function(data, status) {
+							{
+								url : "/feedRest/json/deleteFeedComment",
+								method : "POST",
+								data : JSON.stringify ({
+									feedNo : ${feed.feedNo},
+									feedCommentNo : commentNo,
+									commentContent : wantComment
+								}),
+								contentType: 'application/json',
+								dataType : "json",
+								header : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								}, // header end
 								
-								swal.fire("dz?");
-							} // success close
-							
-						} // ajax inner close
-						
-				) // ajax close
+								success : function(data, status) {
+									swal.fire("성공");
+									
+									var changeHtml = "";
+									
+									$.each(data, function(index, item) {
+										
+										var depth = parseInt(item.depth) * 25; 
+										
+										changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+										'<div class="comment-author">' +
+										'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+										'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+										'<span class="says">says:</span>' +
+										'</div>' +
+										'<div class="comment-meta">' +
+										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> /';
+										
+										if(item.depth < 3) {
+											changeHtml += '<a class="btn_createRecomment">Reply</a>'
+										}
+										
+										if(sessionUser == item.user.userId) {
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+										}
+										
+										if(item.heartCondition == 0) {
+											changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+										} else {
+											changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+										}
+										
+										changeHtml += '</div>' + 
+											'<p class="commentContent">' + item.commentContent + '</p>' +
+											'<div class="commentInfo">' +
+											'<input type="hidden" name="source" value="1">' +
+											'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+											'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+											'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+											'<input type="hidden" name="parent" value="' + item.parent + '">' +
+											'<input type="hidden" name="depth" value="' + item.depth + '">' +
+											'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+											'</div>' +
+											'<div class="btn_recommentCheck" style="display: none;" >' +
+											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
+											'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+											'</div>' +
+											'</div>'
+										
+									}) // $.each close 
+									
+									console.log(changeHtml);
+									$(changePoint).html(changeHtml);
+
+								} // success close
+								
+							} // ajax inner close
+								
+				) // deleteComment ajax close;
+				
+			}) // deleteComment event close
 			
-			}) // #test event close
 			
 			
-			
-			
+			// 좋아요 
 			
 			$(".addCommentHeart").bind("click", function(){
-				alert($(this).parent().next().find("input[name='feedCommentNo']").val() + "번 댓글 -> 조아요");
+				
+				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var changePoint = $(this).parents(".comment");
+				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
+				
+				console.log(commentNo);
 				
 				$.ajax(
 						{
 							url : "/feedRest/json/addFeedCommentHeart",
 							method : "POST",
 							data : JSON.stringify ({
-								feedCommentNo : $(this).parent().next().find("input[name='feedCommentNo']").val()
+								feedCommentNo : commentNo
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -251,6 +427,59 @@
 							success : function(data, status) {
 								
 								alert("조아요");
+								
+								var changeHtml = "";
+								
+								$.each(data, function(index, item) {
+									
+									var depth = parseInt(item.depth) * 25; 
+									
+									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+									'<div class="comment-author">' +
+									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+									'<span class="says">says:</span>' +
+									'</div>' +
+									'<div class="comment-meta">' +
+									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> /';
+									
+									if(item.depth < 3) {
+										changeHtml += '<a class="btn_createRecomment">Reply</a>'
+									}
+									
+									if(sessionUser == item.user.userId) {
+										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+									}
+									
+									if(item.heartCondition == 0) {
+										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+									} else {
+										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+									}
+									
+									changeHtml += '</div>' + 
+										'<p class="commentContent">' + item.commentContent + '</p>' +
+										'<div class="commentInfo">' +
+										'<input type="hidden" name="source" value="1">' +
+										'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+										'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+										'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+										'<input type="hidden" name="parent" value="' + item.parent + '">' +
+										'<input type="hidden" name="depth" value="' + item.depth + '">' +
+										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+										'</div>' +
+										'<div class="btn_recommentCheck" style="display: none;" >' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
+										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+										'</div>' +
+										'</div>'
+									
+								}) // $.each close 
+								
+								console.log(changeHtml);
+								$(changePoint).html(changeHtml);
+								
 							} // success close
 							
 						} // ajax inner close
@@ -261,15 +490,22 @@
 			
 			
 			
+			// 싫어요
+			
 			$(".deleteCommentHeart").bind("click", function() {
-				alert($(this).parent().next().find("input[name='feedCommentNo']").val() + "번 댓글 -> 시러요");
+				
+				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var changePoint = $(this).parents(".comment");
+				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
+				
+				console.log(commentNo);
 				
 				$.ajax(
 						{
 							url : "/feedRest/json/deleteCommentHeart",
 							method : "POST",
 							data : JSON.stringify ({
-								feedCommentNo : $(this).parent().next().find("input[name='feedCommentNo']").val()
+								feedCommentNo : commentNo
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -281,6 +517,59 @@
 							success : function(data, status) {
 								
 								alert("시러요");
+								
+								var changeHtml = "";
+								
+								$.each(data, function(index, item) {
+									
+									var depth = parseInt(item.depth) * 25; 
+									
+									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+									'<div class="comment-author">' +
+									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+									'<span class="says">says:</span>' +
+									'</div>' +
+									'<div class="comment-meta">' +
+									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> /';
+									
+									if(item.depth < 3) {
+										changeHtml += '<a class="btn_createRecomment">Reply</a>'
+									}
+									
+									if(sessionUser == item.user.userId) {
+										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+									}
+									
+									if(item.heartCondition == 0) {
+										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+									} else {
+										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+									}
+									
+									changeHtml += '</div>' + 
+										'<p class="commentContent">' + item.commentContent + '</p>' +
+										'<div class="commentInfo">' +
+										'<input type="hidden" name="source" value="1">' +
+										'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+										'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+										'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+										'<input type="hidden" name="parent" value="' + item.parent + '">' +
+										'<input type="hidden" name="depth" value="' + item.depth + '">' +
+										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+										'</div>' +
+										'<div class="btn_recommentCheck" style="display: none;" >' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
+										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+										'</div>' +
+										'</div>'
+									
+								}) // $.each close 
+								
+								console.log(changeHtml);
+								$(changePoint).html(changeHtml);
+								
 							} // success close
 							
 						} // ajax inner close
@@ -293,44 +582,6 @@
 			
 			
 			
-			/* 
-			대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기
-			대댓글 달기
-			대댓글 달기
-			
-			
-			
-			alert("댓글달기");	
-			
-			
-			
-			
-			$.ajax(
-					{
-						url : "/feedRest/json/",
-						method : "POST",
-						data : JSON.stringify ({
-							
-						}),
-						contentType: 'application/json',
-						dataType : "json",
-						header : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						}, // header end
-						
-						success : function(data, status) {
-							$(".commentList").last().append("hi<br/>");
-						
-						} // success end
-					
-					} // ajax inner close
-			
-			) // ajax close
-			
-			
-			대댓글 달기
-			대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기
 			
 			
 			
@@ -338,37 +589,22 @@
 			
 			
 			
-			<input type='hidden' name='source' value='1'>
-			<input type='hidden' name='userId' value='${sessionScope.user.userId}'>
-			<input type='hidden' name='feedNo' value='${feed.feedNo}'>
 			
 			
 			
-			 */
-			 
 			
 			
 			
-			 
 			
-			 
-			 
-			 
-			 
-			 
-			 /* 
-				대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기
-				대댓글 달기
-				대댓글 달기
-				대댓글 달기
-				대댓글 달기
-				대댓글 달기
-				대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기대댓글 달기
-				 */
-				 
-				 
-				 
-				 
+			
+			
+			
+			
+			
+			
+			
+			
+			// 댓글 달기
 			
 			$(".btn_addComment").bind("click", function(){
 				alert("!!!!");
@@ -457,10 +693,7 @@
 				
 			}); // #heart event close
 		
-			$("#update").bind("click", function() {
-				alert("update");
-				$("form").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
-			})
+			
 		
 		
 		})
@@ -468,6 +701,11 @@
 	</script>
 	
 	<style>
+	
+		img {
+			margin-top : 10px;
+			float : left;
+		}
 	
 		.row {
 		
@@ -477,6 +715,16 @@
 			margin-left:0%;
 		}
 		
+		h4 {
+			margin-top:5px;
+			margin-left:5px;
+			display: inline-block;
+		}
+		
+		nav {
+			margin-top:5%;
+			display: inline-block;
+		}
 		
 	</style>
 
@@ -490,7 +738,7 @@
 		<div id="intro" class="preload darken">					
 			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 				<div class="caption">
-					<h2>The City of Dreams</h2>
+					<h2>Feed</h2>
 					<p>If you’re any good at all, you know you can be better.</p>
 				</div><!-- caption -->					
 			</div>								
@@ -519,7 +767,15 @@
 					<div class="post-area clear-after">
 					
 						<article role="main">
-							<h4>이미지 ${feed.user.profileImage}&nbsp;${feed.user.nickName}</h4>
+							<img src="/resources/image/uploadFiles/${feed.user.profileImage}" width="50" height="50" /><h4>${feed.user.nickName}</h4>
+							
+							<nav>
+								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+									<button type="button" id="updateFeed" >수정</button>
+									<button type="button" id="deleteFeed" >삭제</button>
+								</c:if>
+							</nav>
+							
 							<h5 class="meta-post">
 								<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
 								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
@@ -574,10 +830,6 @@
 					</section>
 					<!-- 피드 좋아요 댓글수 신고 -->
 					
-					<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-						<button type="button" id="update" >수정</button>
-					</c:if>
-					
 					<form style="margin-top:50px;">
 						<!-- 댓글 관련 hidden -->
 						<input type="hidden" name="source" value="0">
@@ -604,7 +856,7 @@
 								
 									<div class="comment-author">
 										
-											<img src="http://placehold.it/60x60" class="avatar" alt="">
+											<img src="/resources/image/uploadFiles/${comment.user.profileImage}" class="avatar" alt="">
 											<cite><a href="#">${comment.user.nickName}</a></cite>
 											<span class="says">says:</span>
 										
@@ -614,12 +866,21 @@
 									
 									<div class="comment-meta">
 										<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time> / <c:if test="${comment.depth lt 3}"><a class="btn_createRecomment">Reply</a></c:if>
-										<c:if test="${sessionScope.user.userId eq comment.user.userId}"> / <a>수정버튼</a> / <a>삭제버튼</a></c:if>
+										<c:if test="${sessionScope.user.userId eq comment.user.userId}">
+											<!-- 수정 버튼 -->
+											&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
+											<!-- 수정 버튼 -->
+											
+											<!--  삭제 버튼 -->
+											&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
+											<!--  삭제 버튼 -->
+										</c:if>
+										<c:if test="${comment.heartCondition ne 0}"><img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" /></c:if>
+										<c:if test="${comment.heartCondition eq 0}"><img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px;float: right;" /></c:if>
 									</div><!-- comment-meta -->
 									
 									<p class="commentContent">${comment.commentContent}</p>
 									
-									<!-- 대댓글 관련 hidden -->
 									<!-- 대댓글 관련 hidden -->
 			
 									<div class="commentInfo">
@@ -634,10 +895,9 @@
 									</div>
 							
 									<!-- 대댓글 관련 hidden -->
-									<!-- 대댓글 관련 hidden -->
 								
 									<div class='btn_recommentCheck' style="display: none;">
-										<textarea style='width:351px; resize:none;' name='commentContent' placeholder='작성'></textarea>
+										<textarea style='width:427px; resize:none;' name='commentContent' placeholder='작성'></textarea>
 										<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">
 									</div>
 								
