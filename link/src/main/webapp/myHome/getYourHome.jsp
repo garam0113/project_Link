@@ -33,14 +33,20 @@ $(function(){
 
 
     $("#follow").on("click" , function() {
+    	
           alert("팔로우");
+    	var sendId = $("#sendId").val();
+    	var recvId = $("#recvId").val();
+    	console.log("sendId="+sendId);
+    	console.log("recvId="+recvId);
+    	
           $(document).ready(function(){
        		$.ajax({
        			type: 'GET',   //get방식으로 명시
        			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
        			data: JSON.stringify({
-       				userId: $("input[name='sendId']").val();
-       			 receiveId.userId : $("input[name=recvId]").val();
+       				userId: $("input[name='sendId']").val(),
+       			    userId : $("input[name=recvId]").val()
        			}),
        			dataType:'json',   //문자형식으로 받기
        			header : {
@@ -234,17 +240,21 @@ $(function(){
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-				<c:if test="${! empty getUser }">
-					<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
+				<c:if test="${user.receiveId.userId == getUser.userId and fn:trim(user.fbState) =='1'}">
+					<button type="button" class="btn btn-success btn-sm" id="follow">Following</button>
 			    </c:if>
+					<button type="button" class="btn btn-success btn-sm" id="follow">${user.userId}</button>
+				
+					<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
+			 
+					<button type="button" class="btn btn-danger btn-sm">Message</button>
 					<br>
 					<br>
 					
 				</div>
 				<div>
-				<input type="hidden" name="sendId" value="${sessionScope.user.userId}">
-			    <input type="hidden" name="recvId" value="${receiveId.userId}">
+				<input type="hidden" name="sendId" id="sendId" value="${sessionScope.user.userId}">
+			    <input type="hidden" name="recvId" id="recvId" value="${getUser.userId}">
 			    </div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->

@@ -237,7 +237,7 @@ width : 1400px;
 		<div class="form-group">
 			<div class="col-sm-offset-4 col-sm-6 text-center"></div>
 			
-<p id="demo"></p><br>
+<!--  <p id="demo1"></p><p id="demo2"></p> --><h4 id="demo"></h4>
 <button type="button" class="abc" value="${user.userId}">클릭</button>
 <!-- json 불러서 p태그에 넣기 -->
 <script type="text/javascript">
@@ -261,11 +261,8 @@ $(document).ready(function() {
 			//	alert(str); 
            console.log(data.list[0].receiveId.nickName);
 				$.each(data.list, function(index, item) { // 데이터 =item
-					$("#demo").append(index + " "); // index가 끝날때까지 
-					$("#demo").append(item.receiveId.userId + " ");
-					$("#demo").append(item.receiveId.nickName + " ");
-					$("#demo").append(item.receiveId.name + " ");
-					$("#demo").append(item.receiveId.profileImage + "<br>");
+					$("#demo").append(item.receiveId.profileImage+" "+item.receiveId.nickName+"<br/>");
+					//$("#demo1").append(item.receiveId.profileImage );
 					console.log(item.receiveId);
 				});
 			},

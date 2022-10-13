@@ -70,24 +70,28 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/getMyHome : GET");
 		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 	
+	    
+		map.put("user", (User)session.getAttribute("user"));
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
-		map.put("list",myHomeService.getFollowList(search).get("list"));
-		map.put("clubList",clubService.getClubList(search).get("clubList"));
+		map.put("approvalConditionList",clubService.getApprovalConditionList(search).get("approvalConditionList"));
 		
 		
 		map = feedService.getFeedList(map);
 	
-		
+		search.setSearchKeyword(userId);
+		map.put("list",myHomeService.getFollowList(search).get("list"));
 	
-		model.addAttribute("clubList",map.get("clubList"));
+		model.addAttribute("approvalConditionList",map.get("approvalConditionList"));
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
+		
 		
 		
 		return "forward:/myHome/getMyHome.jsp";
