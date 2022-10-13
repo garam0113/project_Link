@@ -326,8 +326,8 @@ margin-left: 100px;
 									<div class="comment-author">
 
 										<img
-										src="/resources/image/uploadFiles/${user.profileImage}"
-										class="img-responsive" width="100" height="100"> <cite>${user.nickName }</cite>
+										src="/resources/image/uploadFiles/${getUser.profileImage}"
+										class="img-responsive" width="100" height="100"> <cite>${getUser.nickName }</cite>
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->
