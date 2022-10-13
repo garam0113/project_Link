@@ -42,7 +42,7 @@ public interface ClubDAO {
 	
 	public List<ClubUser> getClubMemberList(Search search) throws Exception;
 	
-	public void deleteClubMember(int clubUserNo) throws Exception;
+	public void deleteClubMember(ClubUser clubUser) throws Exception;
 	
 	public void updateMemberRole(ClubUser clubUser) throws Exception;
 	
@@ -64,7 +64,7 @@ public interface ClubDAO {
 //	public void addMeetingMember(Participant participant) throws Exception;
 	
 	//JUNIT TEST
-	public int addMeetingMember(Participant participant) throws Exception;
+	public void addMeetingMember(Participant participant) throws Exception;
 	
 	public void deleteMeetingMember(int participantNo) throws Exception;
 	

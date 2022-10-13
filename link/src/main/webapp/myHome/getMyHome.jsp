@@ -511,7 +511,9 @@ margin-left: 100px;
 								<form class="feedForm">
 									<div class="comment-author">
 
-										${feed.user.profileImage} <cite>${user.nickName }</cite>
+										<img
+										src="/resources/image/uploadFiles/${user.profileImage}"
+										class="img-responsive" width="100" height="100"> <cite>${user.nickName }</cite>
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->

@@ -44,13 +44,6 @@
 			.submit();
 	}
 	
-	function fncAddMeetingMember() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember")
-			.submit();
-		
-	}
-	
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
@@ -63,7 +56,7 @@
 	$(function() {
 
 		$("a[href='#']").bind("click", function() {
-			history.go(-1);
+			self.location="/club/getMeetingList"
 		});
 	});
 	
@@ -74,16 +67,58 @@
 		});
 	});
 	
+	function fncAddMeetingMember() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember")
+			.submit();
+	}
+	
+	
 	$(function() {
-
+		
 		$("button.btn.btn-success").on("click", function() {
-			alert("신청되었습니다.");
+			alert("가입신청 되었습니다.");
 			fncAddMeetingMember();
-			
 		});
 	});
 	
 	
+	<%--	/* $(function() {
+
+			$("input[value='신청']").bind("click", function(){
+				alert("신청하였습니다.");
+				$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
+			});
+			
+			$(document).on("click", "input[value='신청']", function(){
+				alert("신청");
+				var meetingNo = $("#meetingNo").val();
+				var participantUserId = $("#userId").val();
+				
+				alert(meetingNo);
+				alert(participantUserId);
+				
+				$.ajax("/clubRest/json/addMeetingMember",
+						{
+							method : "POST" ,
+							data : JSON.stringify({
+								meetingNo : meetingNo ,
+								participantUserId : userId
+							}) ,
+							headers : 
+							{
+								"Accept" : "application/json" ,
+								"Content-Type" : "application/json"
+							},
+							dataType : "json" ,
+							success : function
+					
+						}
+						
+				)
+				
+			}); */	--%>
+
 	</script>	
 
 </head>
@@ -97,13 +132,7 @@
 	    </div>
 	
 		<form class="form-horizontal">
-	
-		<div class="row">
-			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 번 호</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingNo}</div>
-		</div>
-		
-		<hr/>
+
 		
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 제 목</strong></div>

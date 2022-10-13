@@ -31,334 +31,366 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	
+
 	@Autowired
 	@Qualifier("myHomeServiceImpl")
 	private MyHomeService myHomeService;
-	
+
 	public UserController() {
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass());
 	}
-	
+
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
-	
-	@RequestMapping(value="addUser", method = RequestMethod.GET)
-	public String addUser() throws Exception{
-		
+
+	@RequestMapping(value = "addUser", method = RequestMethod.GET)
+	public String addUser() throws Exception {
+
 		System.out.println("/user/addUser : GET");
-		
+
 		return "redirect:/user/addUserView.jsp";
 	}
-	
-	@RequestMapping(value="addUser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-		
+
+	@RequestMapping(value = "addUser", method = RequestMethod.POST)
+	public String addUser(@ModelAttribute("user") User user, HttpSession session) throws Exception {
+
 		System.out.println("/user/addUser : POST");
-		
-		userService.addUser(user);	//회원가입 정보 DB저장
-		
+
+		userService.addUser(user); // 회원가입 정보 DB저장
+
 		User getUser = userService.getUser(user);
-		
+
 		session.setAttribute("user", getUser);
-		
+
 		return "redirect:/main.jsp";
 	}
-	
-	@RequestMapping(value="addSnsUser", method = RequestMethod.POST)
-	public String addSnsUser(@ModelAttribute("user") User user) throws Exception{
-		
+
+	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
+	public String addSnsUser(@ModelAttribute("user") User user) throws Exception {
+
 		System.out.println("/user/addSnsUser : POST");
-		
+
 //		User user= new User();
 //		user.setSnsUserId(snsUserId);
 		Random rand = new Random();
 		String no = "";
-			
+
 		for (int i = 0; i < 4; i++) {
 			String ran = Integer.toString(rand.nextInt(10));
 			no += ran;
-		}	
-			user.setUserId("Link"+no);	//SNS회원 ID 임의로 생성 하여 저장
-			
-			System.out.println("User에 입력된 Data : "+user);
-			
-			userService.addUser(user);	//SNS회원 ID, 가입유형, 가입날짜 DB저장
-			
-		return "redirect:/user/updateProfile?userId="+user.getUserId();
+		}
+		user.setUserId("Link" + no); // SNS회원 ID 임의로 생성 하여 저장
+
+		System.out.println("User에 입력된 Data : " + user);
+
+		userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
+
+		return "redirect:/user/updateProfile?userId=" + user.getUserId();
 
 	}
-	
-	@RequestMapping(value="getUser", method = RequestMethod.GET)
-	public String getUser(@ModelAttribute("userId") String userId, Model model) throws Exception{
-		
+
+	@RequestMapping(value = "getUser", method = RequestMethod.GET)
+	public String getUser(@ModelAttribute("userId") String userId, Model model) throws Exception {
+
 		System.out.println("/user/getUser : GET");
-		
+
 		User user = new User();
-		
+
 		user.setUserId(userId);
 
-		
-		User getUser = userService.getUser(user);	//회원의 정보를 얻기위해 회원ID DB전송
-		
-		model.addAttribute("getUser", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
-		
+		User getUser = userService.getUser(user); // 회원의 정보를 얻기위해 회원ID DB전송
+
+		model.addAttribute("getUser", getUser); // DB에서 전송받은 회원의 정보를 Key(user)에 저장
+
 		return "forward:/user/getUser.jsp";
 	}
 
-	@RequestMapping(value="getUserId", method = RequestMethod.GET)
-	public String getUserId() throws Exception{	
-		
+	@RequestMapping(value = "getUserId", method = RequestMethod.GET)
+	public String getUserId() throws Exception {
+
 		System.out.println("/user/getUser : GET");
-		
-		return "forward:/user/getIdView.jsp";	// 화면Navigation
+
+		return "forward:/user/getIdView.jsp"; // 화면Navigation
 	}
 
-	@RequestMapping(value="getUserId", method = RequestMethod.POST)
-	public String getUserId(@ModelAttribute("user") User user, Model model) throws Exception{		
-		
+	@RequestMapping(value = "getUserId", method = RequestMethod.POST)
+	public String getUserId(@ModelAttribute("user") User user, Model model) throws Exception {
+
 		System.out.println("/user/getUser : POST");
-		
+
 		User userId = new User();
-		
-		userId = userService.getUser(user);	//DB에 저장된 회원 정보 userId 객체에 set
-		
-		System.out.println("DB에서 받은 정보 : "+userId);
-		
-		model.addAttribute("userId",userId);	//set한 회원Data model에 저장 
-		
+
+		userId = userService.getUser(user); // DB에 저장된 회원 정보 userId 객체에 set
+
+		System.out.println("DB에서 받은 정보 : " + userId);
+
+		model.addAttribute("userId", userId); // set한 회원Data model에 저장
+
 		return "forward:/user/getId.jsp";
 	}
-	
-	@RequestMapping(value="updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("userId") String userId, Model model) throws Exception{
-		
+
+	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
+	public String updateUser(@ModelAttribute("userId") String userId, Model model) throws Exception {
+
 		System.out.println("/user/updateUser : GET");
-		
-		System.out.println("입력받은 UserId : "+userId);
-		
-		if(userId == null || userId == "") {
-			
+
+		System.out.println("입력받은 UserId : " + userId);
+
+		if (userId == null || userId == "") {
+
 			return "forward:/user/updateUserView.jsp";
 
-		}else {
-			
+		} else {
+
 			User user = new User();
 			user.setUserId(userId);
 			User getUser = userService.getUser(user);
 			model.addAttribute("getUser", getUser);
-			
+
 			return "forward:/user/updateUserView.jsp";
 		}
-		
+
 	}
-	
-	@RequestMapping(value="updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception{
-		
+
+	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
+	public String updateUser(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
+
 		System.out.println("/user/updateUser : POST");
-		
-		System.out.println("화면에서 받아온 Date 값 : "+user.getStopEndDateString());
-		
-		if(user.getStopEndDateString() != "") {
-			
+
+		System.out.println("화면에서 받아온 UserDate 값 : " + user);
+
+		System.out.println("화면에서 받아온 Date 값 : " + user.getStopEndDateString());
+
+		if (user.getStopEndDateString() != "" && user.getStopEndDateString() != null) {
+
 			java.sql.Date d = java.sql.Date.valueOf(user.getStopEndDateString());
-			
+
 			user.setStopEndDate(d);
 
-		}else {
+		} else {
 			user.setStopEndDate(null);
 		}
-		
-		System.out.println("바꾼 Date 값 : "+user.getStopEndDate());
-		
-		if(user.getPenaltyType().equals("ㅡ")) {
-			user.setPenaltyType("0");
-			System.out.println("패널틸가 ㅡ 일 경우 : "+user.getPenaltyType());
-			userService.updateUser(user);
-		}else if(user.getPenaltyType().equals("정지")) {
-			user.setPenaltyType("1");
-			System.out.println("패널틸가 정지일 경우 : "+user.getPenaltyType());
-			userService.updateUser(user);
-		}else {
-			user.setPenaltyType("2");
-			System.out.println("패널틸가 영구정지일 경우 : "+user.getPenaltyType());
-			userService.updateUser(user);
+
+		System.out.println("바꾼 Date 값 : " + user.getStopEndDate());
+
+		System.out.println("회면에서 입력받은 패널티 값 : " + user.getPenaltyType());
+		if (user.getPenaltyType() != null) {
+			if (user.getPenaltyType().equals("ㅡ")) {
+				user.setPenaltyType("0");
+				System.out.println("패널틸가 ㅡ 일 경우 : " + user.getPenaltyType());
+				userService.updateUser(user);
+			} else if (user.getPenaltyType().equals("정지")) {
+				user.setPenaltyType("1");
+				System.out.println("패널틸가 정지일 경우 : " + user.getPenaltyType());
+				userService.updateUser(user);
+			} else {
+				user.setPenaltyType("2");
+				System.out.println("패널틸가 영구정지일 경우 : " + user.getPenaltyType());
+				userService.updateUser(user);
+			}
 		}
-		
-		userService.updateUser(user);	//입력받은 회원 정보를 DB에 저장
+
+		userService.updateUser(user);
 		
 		user = userService.getUser(user);
-		
-		String sessionId = ((User)session.getAttribute("user")).getUserId();
-		System.out.println("sessionId : "+sessionId);
-		if(sessionId.equals(user.getUserId())) {
+
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+		System.out.println("sessionId : " + sessionId);
+		if (sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
-		
-		return "redirect:/user/getUser?userId="+user.getUserId();
+
+		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
-	
-	@RequestMapping(value="updateProfile", method = RequestMethod.GET)
-	public String updateProfile(@ModelAttribute("userId") String userId,  Model model) throws Exception {
-		
+
+	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
+	public String updateProfile(@ModelAttribute("userId") String userId, Model model) throws Exception {
+
 		System.out.println("/user/updateProfile : GET");
-		
-		User user = new User();
-		
-		user.setUserId(userId);
-		
-		model.addAttribute("user",user);
-		
-		return "forward:/user/updateProfileView.jsp";
+
+		if (userId == null || userId == "") {
+
+			return "forward:/user/updateProfileView.jsp";
+
+		} else {
+
+			User user = new User();
+			user.setUserId(userId);
+			User getUser = userService.getUser(user);
+			model.addAttribute("getUser", getUser);
+
+			return "forward:/user/updateProfileView.jsp";
+		}
+
 	}
-	
-	@RequestMapping(value="updateProfile", method = RequestMethod.POST)
+
+	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
 	public String updateProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session) throws Exception {
-		
+
 		System.out.println("/user/updateProfile : POST");
-		
-		userService.updateUser(user);	//SNS회원 프로필 작성
-		
+
+		userService.updateUser(user); // SNS회원 프로필 작성
+
 		user = userService.getUser(user);
-		
+
 		session.setAttribute("user", user);
-		
-		String sessionId = ((User)session.getAttribute("user")).getUserId();
-		if(sessionId.equals(user.getUserId())) {
+
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+		if (sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
-		
+
+		return "forward:/myHome/getMyHome?userId=" + user.getUserId();
+	}
+
+	@RequestMapping(value = "addProfile", method = RequestMethod.POST)
+	public String addProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session) throws Exception {
+
+		System.out.println("/user/addProfile : POST");
+
+		userService.updateUser(user); // SNS회원 프로필 작성
+
+		user = userService.getUser(user);
+
+		session.setAttribute("user", user);
+
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+		if (sessionId.equals(user.getUserId())) {
+			session.setAttribute("user", user);
+		}
+
 		return "forward:/main.jsp";
 	}
-	
-	//REST
+
+	// REST
 //	@RequestMapping(value = "updatePhoneNo", method = RequestMethod.GET)
 //	public String updatePhoneNo(@ModelAttribute("user") User user, Model model) throws Exception{
 //		
 //	}
-	
+
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
-	public String getPassword() throws Exception{
-		
-		System.out.println("/user/updatePassword : GET");	//비밀번호 찾기 화면 Navigation
-		
+	public String getPassword() throws Exception {
+
+		System.out.println("/user/updatePassword : GET"); // 비밀번호 찾기 화면 Navigation
+
 		return "forward:/user/getPasswordView.jsp";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login() throws Exception{
-		
+	public String login() throws Exception {
+
 		System.out.println("/user/login : GET");
-		
-		return "redirect:/user/login.jsp";	//login 화면 Navigation
+
+		return "redirect:/user/login.jsp"; // login 화면 Navigation
 	}
-	
+
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session, Search search) throws Exception{
-		
+	public String login(@ModelAttribute("user") User user, HttpSession session, Search search) throws Exception {
+
 		System.out.println("/user/login : POST");
-		
-		Map<String, Object>  map = new HashMap<String, Object>();
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		map.put("list", myHomeService.getFollowList(search).get("list"));
-		
-		System.out.println("팔로우리스트 : "+map.get("list").toString());
-		
-		User getUser = userService.getUser(user);	//입력받은 회원ID로 회원 정보 확인
-		
+
+		System.out.println("팔로우리스트 : " + map.get("list").toString());
+
+		User getUser = userService.getUser(user); // 입력받은 회원ID로 회원 정보 확인
+
 		String userRole = getUser.getRole().trim();
-		
+
 		getUser.setRole(userRole);
-		
-		System.out.println("로그인시 받는 User 정보 : "+ getUser);
-		
-		if(getUser != null && user.getPassword().equals(getUser.getPassword())) {
-			session.setAttribute("user", getUser);	//DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
-			session.setAttribute("follow",map);
+
+		System.out.println("로그인시 받는 User 정보 : " + getUser);
+
+		if (getUser != null && user.getPassword().equals(getUser.getPassword())) {
+			session.setAttribute("user", getUser); // DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
+			session.setAttribute("follow", map);
 		}
-		
+
 		return "redirect:/main.jsp";
 	}
 
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)
-	public String snsLogin(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-		
+	public String snsLogin(@ModelAttribute("user") User user, HttpSession session) throws Exception {
+
 		System.out.println("/user/snsLogin : POST");
-		
-		User getUser = userService.getUser(user);	//SNS로그인시 snsUserId가 DB에 있는지 확인
-		System.err.println("서버로 부터 받은 Data : "+user);
-		System.out.println("getUser로 검색한 결과 : "+getUser);
-		
-		if(getUser != null && getUser.getNickName() != null ) {
-			
-			session.setAttribute("user", getUser);	//입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
+
+		User getUser = userService.getUser(user); // SNS로그인시 snsUserId가 DB에 있는지 확인
+		System.err.println("서버로 부터 받은 Data : " + user);
+		System.out.println("getUser로 검색한 결과 : " + getUser);
+
+		if (getUser != null && getUser.getNickName() != null) {
+
+			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
+			System.out.println("세션에 값 저장 : " +session.getAttribute("user").toString());
 			
 //			return null;
 			return "redirect:/main.jsp";
-		}else if(getUser != null && getUser.getNickName() == null) {
+		} else if (getUser != null && getUser.getNickName() == null) {
 //			return null;
-			return "redirect:/user/updateProfile?userId="+getUser.getUserId();
-		}else {
+			return "redirect:/user/updateProfile?userId=" + getUser.getUserId();
+		} else {
 //			return null;
 			return "forward:/user/addSnsUser";
 		}
 	}
-	
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout(@ModelAttribute("userId") String userId, HttpSession session) throws Exception{
-		
-		System.out.println("/user/logout : GET");
-		
-		userService.logout(userId);	//logout시간 저장
-		
-		session.invalidate();	//session정보 제거
-		
-		return "redirect:/main.jsp";
-	}
-	
-	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
-	public String deleteUser(@ModelAttribute("userId")String userId, @ModelAttribute("UserState") String userState) throws Exception{
-		
-		System.out.println("/user/deleteUser : GET");
-		
-		User user = new User();	// get방식으로 들어온 Data 저장을 위해 생성
-		
-		user.setUserId(userId);	//회원ID domain객체에 Set
-		user.setOutUserState(userState);	//회원상태 domain객체에 Set
-		
-		userService.updateUser(user);	//회원 정보를 DB에 저장
 
-		
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(@ModelAttribute("userId") String userId, HttpSession session) throws Exception {
+
+		System.out.println("/user/logout : GET");
+
+		userService.logout(userId); // logout시간 저장
+
+		session.invalidate(); // session정보 제거
+
 		return "redirect:/main.jsp";
 	}
-	
+
+	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
+	public String deleteUser(@ModelAttribute("userId") String userId, @ModelAttribute("UserState") String userState)
+			throws Exception {
+
+		System.out.println("/user/deleteUser : GET");
+
+		User user = new User(); // get방식으로 들어온 Data 저장을 위해 생성
+
+		user.setUserId(userId); // 회원ID domain객체에 Set
+		user.setOutUserState(userState); // 회원상태 domain객체에 Set
+
+		userService.updateUser(user); // 회원 정보를 DB에 저장
+
+		return "redirect:/main.jsp";
+	}
+
 	@RequestMapping(value = "getUserList")
-	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception{
-		
+	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception {
+
 		System.out.println("/user/getUserList : GET/POST");
-		
-		if(search.getCurrentPage() == 0) {
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
-		
+
 		Map<String, Object> map = userService.getUserList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
 		System.out.println(resultPage);
-		
+
 		model.addAttribute("list", map.get("userList"));
 		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search",search);
-		
+		model.addAttribute("search", search);
+
 		return "forward:/user/getUserList.jsp";
 	}
-	
+
 //	REST
 //	@RequestMapping(value = "checkDuplication", method = RequestMethod.GET)
 //	public String checkDuplication(@ModelAttribute("userId") String userId, Model model) throws Exception{

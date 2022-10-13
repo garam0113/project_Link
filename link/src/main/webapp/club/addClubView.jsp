@@ -61,7 +61,7 @@
 	$(function() {
 
 		$("a[href='#']").bind("click", function() {
-			$("form")[0].reset();
+			history.go(-1);
 		});
 	});
 

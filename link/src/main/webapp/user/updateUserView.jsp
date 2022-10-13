@@ -194,20 +194,27 @@ label {
 									<th><span>이름</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="name" name="name"
-										value="${getUser.name}"></td>
+										value="${getUser.name}">
+										<input type="hidden" class="form-control" id="name"
+										name="name" value="${getUser.name }">
+										</td>
 								</tr>
 								<tr>
 								<tr>
 									<th><span>성별</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="gender" name="gender"
-										value="${getUser.gender}"></td>
+										value="${getUser.gender}">
+										<input type="hidden" class="form-control" id="gender"
+										name="gender" value="${getUser.gender }"></td>
 								</tr>
 								<tr>
 									<th><span>주민번호</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="rrn" name="rrn"
-										value="${getUser.rrn}"></td>
+										value="${getUser.rrn}">
+										<input type="hidden" class="form-control" id="rrn"
+										name="rrn" value="${getUser.rrn }"></td>
 								</tr>
 								<c:if test="${user.role == '0'}">
 									<tr>
@@ -236,7 +243,8 @@ label {
 												name="email" value="${getUser.email}" placeholder="변경이메일">
 										</c:if> <input disabled="disabled" type="text" class="form-control"
 										id="email" name="email" value="${getUser.email}"
-										placeholder="변경이메일"></td>
+										placeholder="변경이메일">
+										</td>
 								</tr>
 								<tr>
 									<th><span>휴대폰 번호</span></th>
