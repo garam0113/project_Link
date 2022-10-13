@@ -110,6 +110,10 @@
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
 		   <input type="hidden" name="type" id="type" value="1">
+		   <input type="hidden" name="clubPostNo" id="clubPostNo" value="clubPostNo">
+		   <input type="hidden" name="clubPostCommentNo" id="clubPostCommentNo" value="clubPostCommentNo">
+		   <input type="hidden" name="feed" id="feed" value="feed">
+		   <input type="hidden" name="feedComment" id="feedComment" value="feedCommet">
 		  <div class="form-group">
 		    <label for="title" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 		    <div class="col-sm-4">
@@ -146,14 +150,26 @@
 		  	 <div class="form-group">
 		    <label for="user2.userId" class="col-sm-offset-1 col-sm-3 control-label">신고받는사람</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="user2" name="user2" value="user02">
+		      <input type="text" class="form-control" id="user2" name="user2" value="${user02}" readonly/>
 		    </div>
 		  </div>
 		  
 		  	<div class="form-group">
 		    <label for="reportSource" class="col-sm-offset-1 col-sm-3 control-label">신고출처</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="reportSource" name="reportSource" value="1">
+		    	<c:if test="${reportSource== '1'}">
+		      <input type="text" class="form-control" id="reportSource" name="reportSource" value="${reportSource}" readonly/>모임게시물
+		     	</c:if>
+		    	<c:if test="${reportSource=='2'}">
+		      <input type="text" class="form-control" id="reportSource" name="reportSource" value="${reportSource}" readonly/>모임게시물댓글
+		     	</c:if>
+		     	<c:if test="${reportSource=='3'}">
+		      <input type="text" class="form-control" id="reportSource" name="reportSource" value="${reportSource}" readonly/>피드
+		     	</c:if>
+		     	<c:if test="${reportSource=='4'}">
+		      <input type="text" class="form-control" id="reportSource" name="reportSource" value="${reportSource}" readonly/>피드댓글
+		     	</c:if>
+		     	
 		    </div>
 		  </div>
 		  

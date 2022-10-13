@@ -123,7 +123,7 @@ body {
         <thead>
           <tr>
             <th align="center">No</th>
-
+			
             <th align="right" >제목</th>
            	<td/>
             <th align="left">작성자</th>

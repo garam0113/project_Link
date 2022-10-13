@@ -273,3 +273,45 @@ FROM REPORT_PUSH
 WHERE USER_ID1='admin1' AND USER_ID2='user01' AND REPORT_REGDATE < TO_CHAR(REPORT_REGDATE+7,'YYYYMMDD');
 
 SELECT R.*   FROM REPORT_PUSH R      WHERE R.USER_ID1 = 'admin1' AND R.USER_ID2 = 'user01'   AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') < TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT COUNT(*) FROM( SELECT notice_title , notice_content , notice_regdate FROM notice ) countTable
+
+
+
+
+
+
+
+
+
+
+
+
+
