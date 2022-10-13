@@ -99,26 +99,34 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
-	public String addClubPost(@RequestParam List<MultipartFile> multiParFile, @ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
+	public String addClubPost(@RequestParam("imageName") List<MultipartFile> imageMultiFile, @RequestParam("videoName") List<MultipartFile> videoMultiFile, @ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
 		//clubPost.setUser((User)session.getAttribute("user"));
 		System.out.println(clubPost);
 		User user = new User("user03");
 		clubPost.setUser(user);
 		
-		System.err.println(multiParFile.size());
+		System.err.println(imageMultiFile.size());
+		System.err.println(videoMultiFile.size());
 		
-		for (int i = 0; i < multiParFile.size(); i++) {
-			multiParFile.get(i).transferTo(new File("clubPostUploadTemDir\\", multiParFile.get(i).getOriginalFilename()));
+		for (int i = 0; i < imageMultiFile.size(); i++) {
+			imageMultiFile.get(i).transferTo(new File(clubPostUploadTemDir, imageMultiFile.get(i).getOriginalFilename()));
 		}
+		for (int i = 0; i < videoMultiFile.size(); i++) {
+			videoMultiFile.get(i).transferTo(new File(clubPostUploadTemDir, videoMultiFile.get(i).getOriginalFilename()));
+		}
+		
 		int j = 0;
+		int k = 0;
 		clubPost = new ClubPost(clubPost.getClubNo(), user, clubPost.getClubPostTitle(), clubPost.getClubPostContent(),
-				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
-				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
-				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
-				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j++).getOriginalFilename(),
-				multiParFile.get(j++).getOriginalFilename(), multiParFile.get(j).getOriginalFilename());
-		System.out.println("파일 확인용 : " + clubPost);		
+				videoMultiFile.get(k++).getOriginalFilename(), videoMultiFile.get(k++).getOriginalFilename(),
+				videoMultiFile.get(k).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
+				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
+				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
+				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
+				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
+				imageMultiFile.get(j).getOriginalFilename());
+		System.out.println("파일 확인용 : " + clubPost);
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
