@@ -163,12 +163,17 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	public int getTotalCount(Search search, int a) throws Exception {
 		// TODO Auto-generated method stub
 		
+		System.out.println(search);
+		System.out.println(a);
+		
 		if(a == 0) {
-			return sqlSession.update("Report_PushMapper.getTotalCount", search);
+			return sqlSession.selectOne("Report_PushMapper.getTotalCount", search);
 		}else if (a == 1) {
-			return sqlSession.update("QandAMapper.getTotalCount", search);
+			return sqlSession.selectOne("QandAMapper.getTotalCount", search);
 		}else {
-			return sqlSession.update("NoticeMapper.getTotalCount", search);
+			int i = sqlSession.selectOne("NoticeMapper.getTotalCount", search);
+			System.out.println("여기서 count : " + i);
+			return i;
 		}
 	}
 //==================================================================여기까지가 공통

@@ -58,7 +58,7 @@
 				
 					<ul class="inline cats filter-options" style="font-size: 40px;">
 						<li data-group="advertising">
-							<a href="/club/getClubList">모임 일정</a>
+							<a href="/club/getMeetingList">모임 일정</a>
 						</li>
 						<li data-group="fun">
 							<a href="/clubPost/getClubPostList">모임 게시물</a>
@@ -69,9 +69,9 @@
 						<li data-group="infographics">
 							<a href="#">모임 채팅</a>
 						</li>
-						<%-- <li data-group="infographics">
+						<li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
+						</li>
 					</ul>
 	
 					<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
