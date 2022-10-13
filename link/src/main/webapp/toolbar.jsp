@@ -17,7 +17,7 @@
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
 		<title>Beetle - Home page</title>
 		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
-		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen"> 
+		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -26,7 +26,7 @@
 		<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="/resources/imageimg/apple-touch-icon-76x76.png">
 		<link rel="apple-touch-icon" sizes="120x120" href="/resources/imageimg/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">	
+		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">
 		
 	</head>
 
