@@ -101,7 +101,13 @@ public class FeedDAOImpl implements FeedDAO {
 		// TODO Auto-generated method stub
 		sqlSession.update("FeedMapper.updateFeedCommentOrder", comment);
 	}
-
+	
+	// 사용
+	@Override
+	public Comment getFeedCommentBySequence(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getFeedCommentBySequence", map);
+	}
 	
 	
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////

@@ -1,9 +1,14 @@
 package com.link.web.user;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.domain.User;
+import com.link.service.myHome.MyHomeService;
 import com.link.service.user.UserService;
 
 @Controller
@@ -25,6 +31,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("myHomeServiceImpl")
+	private MyHomeService myHomeService;
 	
 	public UserController() {
 		// TODO Auto-generated constructor stub
@@ -94,7 +104,7 @@ public class UserController {
 		
 		User getUser = userService.getUser(user);	//회원의 정보를 얻기위해 회원ID DB전송
 		
-		model.addAttribute("user", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
+		model.addAttribute("getUser", getUser);	//DB에서 전송받은 회원의 정보를 Key(user)에 저장
 		
 		return "forward:/user/getUser.jsp";
 	}
@@ -124,17 +134,60 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
-	public String updateUser() throws Exception{
+	public String updateUser(@ModelAttribute("userId") String userId, Model model) throws Exception{
 		
 		System.out.println("/user/updateUser : GET");
 		
-		return "forward:/user/updateUserView.jsp";
+		System.out.println("입력받은 UserId : "+userId);
+		
+		if(userId == null || userId == "") {
+			
+			return "forward:/user/updateUserView.jsp";
+
+		}else {
+			
+			User user = new User();
+			user.setUserId(userId);
+			User getUser = userService.getUser(user);
+			model.addAttribute("getUser", getUser);
+			
+			return "forward:/user/updateUserView.jsp";
+		}
+		
 	}
 	
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception{
 		
 		System.out.println("/user/updateUser : POST");
+		
+		System.out.println("화면에서 받아온 Date 값 : "+user.getStopEndDateString());
+		
+		if(user.getStopEndDateString() != "") {
+			
+			java.sql.Date d = java.sql.Date.valueOf(user.getStopEndDateString());
+			
+			user.setStopEndDate(d);
+
+		}else {
+			user.setStopEndDate(null);
+		}
+		
+		System.out.println("바꾼 Date 값 : "+user.getStopEndDate());
+		
+		if(user.getPenaltyType().equals("ㅡ")) {
+			user.setPenaltyType("0");
+			System.out.println("패널틸가 ㅡ 일 경우 : "+user.getPenaltyType());
+			userService.updateUser(user);
+		}else if(user.getPenaltyType().equals("정지")) {
+			user.setPenaltyType("1");
+			System.out.println("패널틸가 정지일 경우 : "+user.getPenaltyType());
+			userService.updateUser(user);
+		}else {
+			user.setPenaltyType("2");
+			System.out.println("패널틸가 영구정지일 경우 : "+user.getPenaltyType());
+			userService.updateUser(user);
+		}
 		
 		userService.updateUser(user);	//입력받은 회원 정보를 DB에 저장
 		
@@ -205,14 +258,27 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+	public String login(@ModelAttribute("user") User user, HttpSession session, Search search) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		
+		Map<String, Object>  map = new HashMap<String, Object>();
+		
+		map.put("list", myHomeService.getFollowList(search).get("list"));
+		
+		System.out.println("팔로우리스트 : "+map.get("list").toString());
+		
 		User getUser = userService.getUser(user);	//입력받은 회원ID로 회원 정보 확인
+		
+		String userRole = getUser.getRole().trim();
+		
+		getUser.setRole(userRole);
+		
+		System.out.println("로그인시 받는 User 정보 : "+ getUser);
 		
 		if(getUser != null && user.getPassword().equals(getUser.getPassword())) {
 			session.setAttribute("user", getUser);	//DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
+			session.setAttribute("follow",map);
 		}
 		
 		return "redirect:/main.jsp";

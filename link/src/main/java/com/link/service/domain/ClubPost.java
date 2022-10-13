@@ -42,6 +42,29 @@ public class ClubPost {
 		this.clubPostCommentNo = clubPostCommentNo;
 	}
 
+	public ClubPost(int clubNo, User user, String clubPostTitle, String clubPostContent, String clubPostVideo1,
+			String clubPostVideo2, String clubPostVideo3, String image1, String image2, String image3, String image4,
+			String image5, String image6, String image7, String image8, String image9, String image10) {
+		super();
+		this.clubNo = clubNo;
+		this.user = user;
+		this.clubPostTitle = clubPostTitle;
+		this.clubPostContent = clubPostContent;
+		this.clubPostVideo1 = clubPostVideo1;
+		this.clubPostVideo2 = clubPostVideo2;
+		this.clubPostVideo3 = clubPostVideo3;
+		this.image1 = image1;
+		this.image2 = image2;
+		this.image3 = image3;
+		this.image4 = image4;
+		this.image5 = image5;
+		this.image6 = image6;
+		this.image7 = image7;
+		this.image8 = image8;
+		this.image9 = image9;
+		this.image10 = image10;
+	}
+
 	public int getClubNo() {
 		return clubNo;
 	}

@@ -68,6 +68,11 @@
   				return;
   			}
   			
+  			if(phone2 == "" && phone3 == "" && email == ""){
+  				swal.fire("핸드폰, 이메일정보중 하나만 적어주세요.")
+  				return;
+  			}
+  			
   			$('#myTabs a').click(function (e) {
   			  e.preventDefault()
   			  $(this).tab('show')

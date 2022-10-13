@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 
@@ -23,6 +23,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 <script type="text/javascript" charset="utf-8" src="/resources/javascript/SMSCheck.js"></script>
+<script type="text/javascript" charset="utf-8" src="/resources/javascript/nickNameCheck.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -53,7 +54,7 @@ function fncAddUser() {
 	var name = $("#name").val();
 	var nickName = $("#nickName").val();
 	var checkNickName = $("#checkNickName").val();
-	var gender = $("#gender").val();
+	var gender = $("#gender").is(":checked");
 	var rrn = $("#rrn").val();
 	var phone2 = $("#phone2").val();
 	var phone3 = $("#phone3").val();
@@ -116,8 +117,8 @@ function fncAddUser() {
 		return;
 	}
 	
-	if(gender == null || gender.length < 1){
-		swal.fire("성별을 입력하셔야 합니다.");
+	if(gender == false){
+		swal.fire("성별 체크를 해주세요.");
 		return;
 	}
 	
@@ -246,46 +247,6 @@ $(function() {
 	});
 });
 
-$(function() {
-	$("#nickName").on("keyup", function() {
-		
-		
-		var nickName = $("#nickName").val();
-		console.log(nickName);
-
-		$.ajax("/userRest/json/getUser", {
-				
-			type : "POST",
-			data : JSON.stringify({ 
-				nickName : nickName
-			}),
-			dataType : "json",
-			contentType : "application/json",
-			henders : {
-				"Accept" : "application/json" 
-				
-			},
-			success : function(JSONData, status) {
-				
-				console.log("JSONData : "+JSONData.nickName);
-				
-				console.log("DB로 받은 nickName : "+JSONData.nickName);
-			
-			 
-				if(JSONData.nickName == ""){
-					$("#nickNameCheck").html("사용가능한 닉네임 입니다.");
-					$("#checkNickName").val(1);
-					console.log($("#checkNickName").val());
-				}else{
-					$("#nickNameCheck").html("사용중인 닉네임 입니다.");
-					$("#checkNickName").val(2);
-					console.log($("#checkNickName").val());
-				}
-			
-			}
-			});
-		}); 
-	});
 
 </script>
 

@@ -202,7 +202,7 @@ $(function(){
 모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</br>
 모임 게시물 제목 : ${ clubPost.getClubPost.clubPostTitle }</br>
 모임 게시물 내용 : ${ clubPost.getClubPost.clubPostContent }</br>
-모임 게시물 영상1 : ${ clubPost.getClubPost.clubPostVideo1 }</br>
+모임 게시물 영상1 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.clubPostVideo1 }"></br>
 모임 게시물 영상2 : ${ clubPost.getClubPost.clubPostVideo2 }</br>
 모임 게시물 영상3 : ${ clubPost.getClubPost.clubPostVideo3 }</br>
 모임 게시물 이미지1 : ${ clubPost.getClubPost.image1 }</br>

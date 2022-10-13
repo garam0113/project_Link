@@ -55,7 +55,7 @@ SET stop_start_date = '2022-10-01', stop_end_date = '2022-10-12'
 WHERE user_id = 'user001';
 
 UPDATE users
-SET penalty_type = '1'
+SET penalty_type = '2'
 WHERE user_id = 'user001';
 
 UPDATE users
@@ -77,6 +77,10 @@ WHERE user_id = 'user01';
 UPDATE users
 SET join_club_limit = 2
 WHERE user_id = 'user01';
+
+UPDATE users
+SET rrn = 9001212054211
+WHERE user_id = 'user03';
 
 
 
@@ -102,5 +106,4 @@ SELECT *
 								) inner_table
 				WHERE ROWNUM <= 10 )					
 		WHERE row_seq BETWEEN 1 AND 10 ;
-
 
