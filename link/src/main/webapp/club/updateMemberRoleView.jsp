@@ -35,29 +35,33 @@
     
     $(function() {
 		$("#chang").on("click", function() {
+			alert('수정');
 			fncUpdateMemberRole();
+			window.close();
 		});
 		
 		$("a[href='#']").on("click", function() {
+			alert('눌리나?');
 			window.close();
 		});
-	})
+	});
     
     function fncUpdateMemberRole() {
     	
-    	var userId = ${"#userId"}.val();
+    	var userId = $("#userId").val();
     	var memberRole = $("#memberRole").val();
+    	var clubUserNo = $("#clubUserNo").val();
     	var value = "";
     	
     		/* $("input:hidden[name='phoneNo']").val(value); */
  
 
-    	
-   			var phoneNo = $("input:hidden[name='phoneNo']").val();
-   			console.log(phoneNo);
-
  			var userId = $("#userId").val();
-  			alert(userId);
+  			alert("유저 아이디 :"+userId);
+  			alert("유저넘버는? :"+clubUserNo);
+  			
+  			/* var memberRole = #("#memberRole").val();
+  			alert(memberRole); */
 
   			$.ajax("/clubRest/json/updateMemberRole", {
 
@@ -65,6 +69,7 @@
    			type : "POST",
    			data : JSON.stringify({
    				userId : userId,
+   				clubUserNo : clubUserNo,
    				memberRole : memberRole
    			}),
    			dataType : "json",
@@ -87,9 +92,7 @@
    					},
    					success : function(JSONData, status) {
 						
-   						console.log("JSONData : "+JSONData.phoneNo);
-   						$("#phoneNo", opener.document).val(JSONData.phoneNo);
-   						
+   						console.log("수정완료");
    						window.close();
 						}
    				});
@@ -116,6 +119,8 @@
 		<form class="form-horizontal">
 		
 		<input type="hidden" id = "userId" name="userId" value="${ user.userId }">
+		<input type="text" id="clubUserNo" value="">
+		<input type="text" id="memberRole" value="">
 		
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">모임원 아이디</label>
@@ -136,7 +141,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="chang" class="btn btn-primary">확 &nbsp;인</button>
+					<button type="button" id="chang" class="btn btn-primary">수 &nbsp;정</button>
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 				</div>
 			</div>

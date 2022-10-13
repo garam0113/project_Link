@@ -22,10 +22,10 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <!-- <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet"> -->
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <!-- <script src="/javascript/bootstrap-dropdownhover.min.js"></script> -->
 	
 	 <!-- jQuery UI toolTip 사용 CSS-->
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -48,14 +48,52 @@
 		.submit();
 	}
 	
+	function fncDeleteClub() {
+		
+		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
+		.submit();
+	}
+	
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-danger").on("click", function() {
 			alert("모임을 삭제하시겠습니까?");
-			deleteClub();
-			
+			fncDeleteClub();
 		});
 	});
+	
+	
+	$(function() {
+		$("input[value='추방']").bind("click", function() {
+			alert("모임원을 추방합니다 : ");
+			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+		});
+		
+		
+		
+		$(document).on("click", "input[value='추방']", function(){
+			alert('추방');
+			var clubUserNo = $("#clubUserNo2").val();
+			alert(clubUserNo);
+			$.ajax("/clubRest/json/deleteClubMember",
+					{
+						method : "POST" ,
+						data : JSON.stringify({
+							clubUserNo : clubUserNo
+						}) ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							alert(status);
+						} // end of success  
+					}); //end of ajax
+			}); //모임원 추방
+		
+
+	
 	
 	$(function() {
 
@@ -71,26 +109,26 @@
 		});
 	});
 	
+	var openWin;
 	function popup() {
 		var url = "/club/updateMemberRoleView.jsp";
 		var name = "updateMemberRoleView";
 		var option = "width = 800, height = 300, top = 100, left = 200, location = no"
-		window.open(url, name, option);
+		openWin= window.open(url, name, option);
 	}
-	
-	function fncGetClubMemberList(currentPage) {
-		$("#currentPage").val(currentPage)
-		$("form").attr("method" , "POST").attr("action" , "/club/getClubMemberList").submit();
-	}
-	
+
 	$(function() {
 		$("#updateMemberRole").on("click", function() {
 			popup();
 		});
+		$("button:contains('전달')").on("click", function() {
+			openWin.document.getElementById("clubUserNo").value = $(this).val();
+			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
+		});
 		
 	});
 	
- 
+	});
 	
 	</script>	
 	
@@ -109,40 +147,25 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
+ 		    <div class="col-md-6 text-left">
+		    	<%-- <p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
+		    	</p> --%>
+		    </div> 
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
 				  <div class="form-group">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >수&nbsp;정</button>
+		      		<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
 					<a class="btn btn-primary btn" href="#" role="button">이&nbsp;전</a>
-					<button type="button" class="btn btn-waring"  >대&nbsp;기</button>
-					
-		  			 </div>
+					<button type="button" class="btn btn-waring"  >모&nbsp;임&nbsp;수&nbsp;정</button>
+					<button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
+		  			</div>
 				</div>	
 				  
 				</form>
@@ -165,6 +188,7 @@
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
             <th align="left">직책수정</th>
+            <th align="left">추방</th>
           </tr>
         </thead>
        
@@ -183,7 +207,10 @@
 			  <td align="left">${i.user.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${i.approvalCondition}</td>
-			  <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
+			  <!-- <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button> -->
+			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
+			  <input type="hidden" id="clubUserNo2" name="clubUserNo2" value="${i.clubUserNo}">
+			  <td align="left"><input type="button" value="추방">
 			</tr>
           </c:forEach>
         </tbody>

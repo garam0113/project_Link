@@ -84,12 +84,14 @@ public class ClubServiceImpl implements ClubService {
 	}
 	
 	@Override
-	public void deleteClubMember(int clubUserNo) throws Exception {
-		clubDAO.deleteClubMember(clubUserNo);
+	public void deleteClubMember(ClubUser clubUser) throws Exception {
+		clubDAO.deleteClubMember(clubUser);
 	}
 	
 	@Override
 	public void updateMemberRole(ClubUser clubUser) throws Exception {
+		
+		System.out.println("업데이트 직책 sevice Impl 왔나? ");
 		clubDAO.updateMemberRole(clubUser);
 	}
 	
@@ -132,16 +134,18 @@ public class ClubServiceImpl implements ClubService {
 		clubDAO.deleteMeeting(meetingNo);
 	}
 	
-//	@Override
-//	public void addMeetingMember(Participant participant) throws Exception {
-//		clubDAO.addMeetingMember(participant);
-//	}
+	@Override
+	public void addMeetingMember(Participant participant) throws Exception {
+		
+		System.out.println("미팅참가 Service Impl 왔나?? ");
+		clubDAO.addMeetingMember(participant);
+	}
 	
 	//JUNIT TEST
-	@Override
-	public int addMeetingMember(Participant participant) throws Exception {
-		return clubDAO.addMeetingMember(participant);
-	}
+//	@Override
+//	public int addMeetingMember(Participant participant) throws Exception {
+//		return clubDAO.addMeetingMember(participant);
+//	}
 	
 	@Override
 	public void deleteMeetingMember(int participant) throws Exception {
