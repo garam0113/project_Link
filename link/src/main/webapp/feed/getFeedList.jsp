@@ -230,7 +230,7 @@
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
-							<h2>The City of Dreams</h2>
+							<h2>Feed</h2>
 							<p>If you¡¯re any good at all, you know you can be better.</p>
 						</div><!-- caption -->					
 					</div>								

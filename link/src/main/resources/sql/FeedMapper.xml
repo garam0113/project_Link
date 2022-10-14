@@ -251,7 +251,10 @@
 	<update 	id="updateFeedCommentOrder"		parameterType="comment">
 		UPDATE feed_comment
 		<set>
-			sequence						= TO_NUMBER(sequence) + 1
+			<choose>
+				<when test="heartCondition == 1">sequence	= TO_NUMBER(sequence) + 1</when>
+				<when test="heartCondition == -1">sequence	= TO_NUMBER(sequence) - 1</when>
+			</choose>
 		</set>
 		WHERE sequence					&gt;= #{sequence}
 		AND feed_no							= #{feedNo}
@@ -375,7 +378,6 @@
 				c.feed_comment_no = isLike.EXIST(+)
 				AND c.user_id						= u.user_id
 				AND c.feed_no						= #{feedNo}
-				AND report_condition				= '0'
 				AND delete_condition				= '0'
 				</where>
 				
@@ -383,8 +385,7 @@
 			</when>
 			<otherwise>
 			FROM feed_comment c, users u
-			WHERE report_condition				= '0'
-			AND delete_condition				= '0'
+			WHERE delete_condition				= '0'
 			AND c.user_id						= u.user_id
 			AND c.feed_no						= #{feedNo}
 			ORDER BY sequence ASC
@@ -422,7 +423,9 @@
 				feed_update_date,
 				report_condition,
 				delete_condition
-				FROM feed			)
+				FROM feed
+				WHERE delete_condition				= '0'			
+															)
 	</select>
 	
 	
@@ -447,35 +450,10 @@
 				sequence
 				FROM feed_comment
 				WHERE feed_no				= #{feedNo}
+				AND delete_condition		= '0'
 				ORDER BY feed_comment_no ASC	)
 	</select>
 	
-	
-	
-	<select 	id="getRecommentCount"		parameterType="hashmap"		resultType="int">
-		SELECT
-		COUNT(*)
-		FROM(
-				SELECT
-				feed_comment_no,
-				feed_no,
-				user_id,
-				feed_comment_content,
-				feed_comment_heart_count,
-				feed_recomment_count,
-				feed_comment_reg_date,
-				feed_comment_update_date,
-				report_condition,
-				delete_condition,
-				parent,
-				depth,
-				sequence
-				FROM feed_comment
-				WHERE feed_no 				= #{comment.feedNo}
-				AND parent					= #{comment.parent}
-				ORDER BY feed_comment_no ASC	)
-	
-	</select>
 	
 	
 		

@@ -109,10 +109,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "getUserId", method = RequestMethod.GET)
-	public String getUserId() throws Exception {
+	public String getUserId(HttpSession session) throws Exception {
 
 		System.out.println("/user/getUser : GET");
-
+		
+		
+		
 		return "forward:/user/getIdView.jsp"; // 화면Navigation
 	}
 
@@ -133,17 +135,21 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("userId") String userId, Model model) throws Exception {
+	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/updateUser : GET");
 
 		System.out.println("입력받은 UserId : " + userId);
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("세션에 저장된 UserId : "+sessionId);
 
 		if (userId == null || userId == "") {
 
 			return "forward:/user/updateUserView.jsp";
 
-		} else {
+		} else if(sessionId == userId){
 
 			User user = new User();
 			user.setUserId(userId);
@@ -151,6 +157,8 @@ public class UserController {
 			model.addAttribute("getUser", getUser);
 
 			return "forward:/user/updateUserView.jsp";
+		}else {
+			return "redirect:/main.jsp";
 		}
 
 	}
@@ -207,24 +215,29 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
-	public String updateProfile(@ModelAttribute("userId") String userId, Model model) throws Exception {
+	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/updateProfile : GET");
-
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("세션에 저장된 UserId : "+sessionId);
+		
 		if (userId == null || userId == "") {
 
 			return "forward:/user/updateProfileView.jsp";
 
-		} else {
-
+		} else if(sessionId.equals(userId)) {
+			
 			User user = new User();
 			user.setUserId(userId);
 			User getUser = userService.getUser(user);
 			model.addAttribute("getUser", getUser);
 
 			return "forward:/user/updateProfileView.jsp";
+		}else {
+			return "redirect:/main.jsp";
 		}
-
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
@@ -288,17 +301,21 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session, Search search) throws Exception {
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
 
 		System.out.println("/user/login : POST");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("list", myHomeService.getFollowList(search).get("list"));
-
-		System.out.println("팔로우리스트 : " + map.get("list").toString());
+		
+		Search searchFoller = new Search();
 
 		User getUser = userService.getUser(user); // 입력받은 회원ID로 회원 정보 확인
+
+		searchFoller.setSearchKeyword(getUser.getUserId());
+
+		map.put("list", myHomeService.getFollowList(searchFoller).get("list"));
+
+		System.out.println("팔로우리스트 : " + map.get("list").toString());
 
 		String userRole = getUser.getRole().trim();
 
@@ -308,7 +325,7 @@ public class UserController {
 
 		if (getUser != null && user.getPassword().equals(getUser.getPassword())) {
 			session.setAttribute("user", getUser); // DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
-			session.setAttribute("follow", map);
+			session.setAttribute("follow", map.get("list"));
 		}
 
 		return "redirect:/main.jsp";
