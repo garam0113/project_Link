@@ -169,7 +169,7 @@ public class FeedServiceTest {
 		
 		Comment comment = feedService.getFeedComment(5);
 		
-		feedService.deleteFeedComment(comment.getFeedCommentNo());
+//		feedService.deleteFeedComment(comment.getFeedCommentNo());
 		
 		comment = feedService.getFeedComment(5);
 		

@@ -47,7 +47,7 @@ public interface FeedService {
 	public void updateFeedComment(Comment comment) throws Exception;
 	
 	// 피드 댓글 삭제
-	public void deleteFeedComment(int commentNo) throws Exception;
+	public void deleteFeedComment(Map<String, Object> map) throws Exception;
 	
 	
 	
