@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,13 +56,13 @@ public class FeedRestController {
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/addFeedComment", method = RequestMethod.POST)
-	public List<Comment> addFeedComment(@RequestBody Comment comment, Search search,
-											User user, HttpSession httpSession) throws Exception {
+	public List<Comment> addFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
 		
 		// 댓글 작성
-		
-		user = (User) httpSession.getAttribute("user");
 			
+		user.setUserId(comment.getUserId());
+		user = userService.getUser(user);
+		
 		comment.setUser(user);
 		
 		if(search.getCurrentPage() == 0) {
@@ -99,19 +98,14 @@ public class FeedRestController {
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
-	public List<Comment> updateFeedComment(@RequestBody Comment comment, Search search, User user,	
-											HttpSession httpSession) throws Exception {
+	public List<Comment> updateFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
 		
 		feedService.updateFeedComment(comment);
 		
 		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
-		System.out.println("테스트 " + comment);
-		
 		user.setUserId(comment.getUser().getUserId());
 		user = userService.getUser(user);
-		
-		System.out.println("테스트 " + user);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
@@ -126,25 +120,20 @@ public class FeedRestController {
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
-	public List<Comment> deleteFeedComment(@RequestBody Comment comment, Search search, User user,	
-										HttpSession httpSession) throws Exception {
+	public List<Comment> deleteFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
 		
-		feedService.deleteFeedComment(comment.getFeedCommentNo());
-		
-		comment = feedService.getFeedComment(comment.getFeedCommentNo());
-		
-		System.out.println("테스트 " + comment);
-		
-		user.setUserId(comment.getUser().getUserId());
+		user.setUserId(comment.getUserId());
 		user = userService.getUser(user);
-		
-		System.out.println("테스트 " + user);
+
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("comment", comment);
 		map.put("feedNo", comment.getFeedNo());
 		map.put("user", user);
+		
+		feedService.deleteFeedComment(map);
 		
 		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
@@ -219,22 +208,21 @@ public class FeedRestController {
 	
 	// 사용
 	@RequestMapping(value = "/json/addFeedHeart", method = RequestMethod.POST)
-	public int addFeedHeart(@RequestBody Feed feed, User user, Heart heart, HttpSession httpSession) throws Exception {
-		
-		user = (User) httpSession.getAttribute("user");
+	public int addFeedHeart(@RequestBody Heart heart, User user, Feed feed) throws Exception {
 		
 		// 피드 좋아요 추가
-		heart.setSource("0");
-		heart.setSourceNo(feed.getFeedNo());
-		heart.setUserId(user.getUserId());
 		
-		System.out.println("유저 : " + user + "\n하트 : " + heart);
+		user.setUserId(heart.getUserId());
+		user = userService.getUser(user);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
-		map.put("feed", feed);
 		map.put("user", user);
-		map.put("feedNo", feed.getFeedNo());
+		map.put("feedNo", heart.getSourceNo());
+		
+		feed = ((Feed) feedService.getFeed(map).get("feed"));
+		
+		map.put("feed", feed);
 		
 		feed = feedService.addFeedHeart(map);
 				
@@ -244,23 +232,21 @@ public class FeedRestController {
 	
 	// 사용
 	@RequestMapping(value = "/json/deleteFeedHeart", method = RequestMethod.POST)
-	public int deleteFeedHeart(@RequestBody Feed feed, User user, Heart heart, HttpSession httpSession) throws Exception {
-		
-		user = (User) httpSession.getAttribute("user");
+	public int deleteFeedHeart(@RequestBody Heart heart, User user, Feed feed) throws Exception {
 		
 		// 피드 좋아요 취소
 		
-		heart.setSource("0");
-		heart.setSourceNo(feed.getFeedNo());
-		heart.setUserId(user.getUserId());
-				
-		System.out.println("하트요" + heart);
+		user.setUserId(heart.getUserId());
+		user = userService.getUser(user);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
-		map.put("feed", feed);
 		map.put("user", user);
-		map.put("feedNo", feed.getFeedNo());
+		map.put("feedNo", heart.getSourceNo());
+		
+		feed = ((Feed) feedService.getFeed(map).get("feed"));
+		
+		map.put("feed", feed);
 		
 		feed = feedService.deleteFeedHeart(map);
 				
@@ -281,6 +267,11 @@ public class FeedRestController {
 		
 		// 피드 댓글 좋아요
 		
+		user.setUserId(comment.getUserId());
+		user = userService.getUser(user);
+		
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
+		
 		heart.setSource("1");
 		heart.setSourceNo(comment.getFeedCommentNo());
 		heart.setUserId(user.getUserId());
@@ -291,8 +282,10 @@ public class FeedRestController {
 		map.put("heart", heart);
 		map.put("comment", comment);
 		map.put("search", search);
-		map.put("user", comment.getUser());
+		map.put("user", user);
 		map.put("feedNo", comment.getFeedNo());
+		
+		feedService.addFeedCommentHeart(map);
 		
 		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
@@ -303,20 +296,27 @@ public class FeedRestController {
 	@RequestMapping(value = "/json/deleteCommentHeart", method = RequestMethod.POST)
 	public List<Comment> deleteFeedCommentHeart(@RequestBody Comment comment, Search search, User user, Heart heart) throws Exception {
 		
-		// 피드 댓글 좋아요
+		// 피드 댓글 싫어요
+		
+		user.setUserId(comment.getUserId());
+		user = userService.getUser(user);
+		
+		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
 		heart.setSource("1");
 		heart.setSourceNo(comment.getFeedCommentNo());
 		heart.setUserId(user.getUserId());
-
+		
 		comment = feedService.getFeedComment(comment.getFeedCommentNo());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
 		map.put("comment", comment);
 		map.put("search", search);
-		map.put("user", comment.getUser());
+		map.put("user", user);
 		map.put("feedNo", comment.getFeedNo());
+		
+		feedService.deleteFeedCommentHeart(map);
 		
 		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
 		
@@ -329,7 +329,7 @@ public class FeedRestController {
 		
 		
 	@RequestMapping(value = "/json/addFeedReport", method = RequestMethod.POST)
-	public Report addReport(@ModelAttribute Report report) throws Exception {
+	public Report addReport(@RequestBody Report report) throws Exception {
 		
 		feedService.addReport(report);
 		

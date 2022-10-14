@@ -2,7 +2,6 @@ package com.link.web.feed;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
-import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Report;

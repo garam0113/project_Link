@@ -81,17 +81,6 @@ public interface FeedDAO {
 	 */
 	
 	public int getTotalFeedCommentCount(Map<String, Object> map) throws Exception;
-
-	// 하나의 댓글에 달린 대댓글 개수 세기
-	
-	/*
-	 * map.put("comment")
-	 * 
-	 * 
-	 */
-	
-	// 사용
-	public int getRecommentCount(Map<String, Object> map) throws Exception;
 	
 	
 	
