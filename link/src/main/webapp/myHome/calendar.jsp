@@ -11,7 +11,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+<script type="text/javascript">
+/*window.onload=function() {
+		var clubNo = $("#meetingNo").val();
+		console.log("dd"+$("#meetingNo").val());
+		
+		$.ajax({
+			url : "/myHomeRest/json/getMeetingList", // 어디로 갈거니? // 갈 때 데이터
+			type : "POST", // 타입은 뭘 쓸거니?
+			datatype : "json",
+			 data		:  JSON.stringify({searchKeyword:clubNo}),
+			contentType : "application/json",
+			success : function(data) { // 갔다온 다음 결과값
+					// 나오면 파일을 찾았다는 것
+			//	alert(data);  // [object Object],[object Object],[object Object]
+				
+			// 데이터를 확인하고 싶을 때.
+			//	let str = JSON.stringify(data); // <> parse()
+			//	alert(str); 
+           console.log(data.list[0].meetingNo);
+				$.each(data.list, function(index, item) { // 데이터 =item
+					var value = item.meetingNo
+					          + item.meetingTitle
+				              + item.meetinDate
+				              + item.meetingContent;
 
+					
+				
+				});
+			},
+			error : function() {
+				alert('error');			
+			}
+			
+		});
+		
+		
+	};*/
+
+</script>
 </head>
 <body>
 <div id='calendar'></div>
@@ -25,6 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			center : 'title',
 			end : 'dayGridMonth,dayGridWeek,dayGridDay'
 		},
+		 events: [
+			    { // this object will be "parsed" into an Event Object
+			      title: meetingTitle, // 제목
+			      start: '2022-10-01', // 시작일자
+			
+			    }
+			  ],
+
 		titleFormat : function(date) {
 			return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
 		},
@@ -37,6 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	calendar.render();
 });
+
+
 </script>
+<input type="hidden" name="meetingNo" id="meetingNo" value="${club.clubNo}">
+
+
+
 </body>
 </html>

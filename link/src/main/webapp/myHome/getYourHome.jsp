@@ -21,38 +21,62 @@ $(function(){
     $("#follow").on("click" , function() {
     	
           alert("팔로우");
-    	var sendId = $("#sendId").val();
     	var recvId = $("#recvId").val();
-    	console.log("sendId="+sendId);
     	console.log("recvId="+recvId);
     	
           $(document).ready(function(){
+        	  if(${user.fbState=='2'} || ${user.fbState==null}){
        		$.ajax({
-       			type: 'GET',   //get방식으로 명시
-       			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
+       			type: 'POST',   //get방식으로 명시
+       			url : '/myHomeRest/json/addFollow',  //이동할 jsp 파일 주소
        			data: JSON.stringify({
-       				sendId: $("input[name='sendId']").val(),
-       			    recvId: $("input[name=recvId]").val()
+       			    userId : recvId
        			}),
        			dataType:'json',   //문자형식으로 받기
+       			contentType : "application/json",
        			header : {
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				}, // header end
        			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
        	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-       				//alert(data); 
+       				
        			   
        			},
        			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-       				alert('실패');
+       			
        			 console.log("userId : "+data);
-       			 console.log(data.userId);
+    
        			}
-       		})
+       		})}
+        	  else{
+       		$.ajax({
+     			type: 'POST',   //get방식으로 명시
+     			url : '/myHomeRest/json/deleteFollow',  //이동할 jsp 파일 주소
+     			data: JSON.stringify({
+     			    userId : recvId
+     			}),
+     			dataType:'json',   //문자형식으로 받기
+     			contentType : "application/json",
+     			header : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				}, // header end
+     			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
+     	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+     				
+     			   
+     			},
+     			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
+     			
+     			 console.log("userId : "+data);
+  
+     			}
+     		})}
        	});
              
     });
+   
 });			
 
 </script>
@@ -263,12 +287,12 @@ margin-left: 100px;
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-				<c:if test="${user.receiveId.userId == getUser.userId and fn:trim(user.fbState) =='1'}">
-					<button type="button" class="btn btn-success btn-sm" id="following">Following</button>
+				<c:if test="${ fn:trim(sessionScope.user.fbState) =='1'}">
+					<button type="button" class="btn btn-success btn-sm" id="follow">Following</button>
 			    </c:if>
-				
+				<c:if test="${(fn:trim(sessionScope.user.fbState) =='2')and empty fn:trim(sessionScope.user.fbState)} ">
 					<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
-			 
+			 </c:if>
 					<button type="button" class="btn btn-danger btn-sm">Message</button>
 					<br>
 					<br>
