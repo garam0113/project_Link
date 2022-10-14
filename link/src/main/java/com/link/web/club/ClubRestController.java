@@ -102,14 +102,21 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
-	public Club updateMemberRole(@RequestBody ClubUser clubUser, Model model) throws Exception {
+	public ClubUser updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
 		
 		System.out.println("club/json/updateMemberRole : POST");
 		
-		clubService.updateMemberRole(clubUser);
-		model.addAttribute("clubUser",clubUser);
+		user = (User) session.getAttribute("user");
+		club = (Club) session.getAttribute("club");
 		
-		return clubService.getClub(clubUser.getClubNo());
+		
+//		clubUser.setClubNo(club.getClubNo());
+		
+		System.out.println("클럽유저에 뭐 있지 ? :"+clubUser);
+		
+		clubService.updateMemberRole(clubUser);
+		
+		return null;
 	}
 	
 	@RequestMapping(value="json/deleteMeeting", method=RequestMethod.POST)
@@ -122,19 +129,26 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="json/deleteClubMember", method=RequestMethod.POST)
-	public void deleteClubMember(@RequestParam(value="clubUserNo") int clubUserNo, Model model) throws Exception {
+	public void deleteClubMember(@RequestBody ClubUser clubUser) throws Exception {
 		
 		System.out.println("deleteClubMemer 시작");
-		System.out.println("clubUserNo = : "+clubUserNo);
+		System.out.println("clubUserNo = : "+clubUser);
 		
-		clubService.deleteClubMember(clubUserNo);
-		
+		clubService.deleteClubMember(clubUser);
 	}
 	
 	@RequestMapping(value="json/addMeetingMember", method=RequestMethod.POST)
-	public void addMeetingMember(@RequestBody Participant participant, Model model) throws Exception {
+	public void addMeetingMember(@RequestBody Participant participant, HttpSession session, User user) throws Exception {
 		
 		System.out.println("addMeetingMember 시작~");
+		
+		session.getAttribute("meetingNo");
+		user = (User) session.getAttribute("user");
+		
+		System.out.println("meetingNo 잘왔나 ? : "+session.getAttribute("meetingNo"));
+		
+		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
+		participant.setParticipantUserId(user.getUserId());
 		
 		clubService.addMeetingMember(participant);
 		

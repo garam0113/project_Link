@@ -155,8 +155,8 @@ DELETE FROM meeting WHERE meeting_no = 6;
 //모임원 직책 수정
 updateMemberRole()
 UPDATE club_user
-	SET member_role = 1
-	WHERE club_user_no = 12;
+	SET member_role = 2
+	WHERE club_user_no = 53;
 
 
 //모임원 추방

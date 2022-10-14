@@ -93,6 +93,9 @@
 	       
 	       <hr/>
 	       <a href="/club/getMeetingList">모임일정리스트</a>
+	       
+	       <hr/>
+	       <a href="/clubPost/getClubPostList">모임게시물 리스트</a>
 	    </div>
 		
 		<form class="form-horizontal">

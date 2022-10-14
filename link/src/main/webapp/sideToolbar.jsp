@@ -32,11 +32,11 @@
 		});
 
 		$("#stop2").on("click", function() {
-			self.location = "/user/getUserList?searchKeyword=2"; 
+			self.location = "/user/getUserList?searchKeyword=2";
 		});
 
 		$("#stop1").on("click", function() {
-			self.location = "/user/getUserList?searchKeyword=1"; 
+			self.location = "/user/getUserList?searchKeyword=1";
 		});
 
 	});
@@ -50,7 +50,8 @@
 			<div id="intro" class="preload darken">
 				<div class="intro-item">
 					<div class="caption">
-						<h2>MyPage</h2>
+						<h2 style="
+    margin-top: 100px;">MyPage</h2>
 					</div>
 					<!-- caption -->
 				</div>
@@ -84,8 +85,8 @@
 					<li data-group="icons">회원정보수정</li>
 					<li data-group="infographics">신고내역조회</li>
 					<li data-group="lightbox">Q&A</li>
-					<li data-group="lightbox" id = "stop2">영구정지회원</li>
-					<li data-group="lightbox" id = "stop1">정지회원</li>
+					<li data-group="lightbox" id="stop2">영구정지회원</li>
+					<li data-group="lightbox" id="stop1">정지회원</li>
 				</ul>
 			</div>
 			<!-- row-content -->
@@ -93,8 +94,6 @@
 		<!-- row -->
 	</c:if>
 
-
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 </body>
