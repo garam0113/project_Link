@@ -21,9 +21,9 @@
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
-	$(".glyphicon glyphicon-user").on("click" , function() {
+	$("#yourHome").on("click" , function() {
 		
-		self.location = "/myHome/updateProfile?userId=${user.userId}"
+		self.location = "/myHome/getYourHome?userId="+$("#receiveId").val();
 	});
 	
 	
@@ -266,11 +266,13 @@ $(function(){
 /* Profile sidebar */
 .profile-sidebar {
 	padding: 20px 0 10px 0;
+	width:600px;
+	
 }
 
 .profile-userpic img {
 	float: left;
-	margin: 0 auto;
+	margin-left: 50px;
 	width: 50%;
 	height: 40%;
 	-webkit-border-radius: 50% !important;
@@ -286,7 +288,7 @@ $(function(){
 
 .profile-usertitle-name {
 	color: #5b9bd1;
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 7px;
 }
@@ -294,7 +296,7 @@ $(function(){
 .profile-usertitle-job {
 	text-transform: uppercase;
 	color: #5b9bd1;
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 15px;
 }
@@ -433,13 +435,14 @@ margin-left: 100px;
 								<div class="profile-userpic">
 									<img
 										src="/resources/image/uploadFiles/${user.profileImage}"
-										class="img-responsive" alt="" width="10%" height="10%">
+										class="img-responsive" width="100" height="100">
 								</div>
-								<br> <br>
+								
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
 								<input type="hidden" name="userId" id="userId" value="${user.userId }">
+									<br/>
 									<div class="profile-usertitle-name">${user.nickName }</div>
 									<div class="profile-usertitle-job">${user.profileWriting }
 									</div>
@@ -463,7 +466,7 @@ margin-left: 100px;
 												class="glyphicon glyphicon-home"></i> 내 모임
 										</a></li>
 										<li>
-										<a href="/myHome/updateProfile?userId=${user.userId }"> <i
+										<a href="/user/updateProfile?userId=${user.userId }"> <i
 												class="glyphicon glyphicon-user"></i> 프로필 수정
 										</a></li>
 										<li><a href="#" target="_blank"> <i
@@ -487,7 +490,8 @@ margin-left: 100px;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:300px;">
-			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4>${list.userId}</h4></div>
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 id="yourHome">${list.receiveId.nickName}</h4></div>
+					<input type="hidden" name="receiveId" id="receiveId" value="${list.receiveId.userId }">
 				</div>
 			</c:forEach>
 				
@@ -507,7 +511,9 @@ margin-left: 100px;
 								<form class="feedForm">
 									<div class="comment-author">
 
-										${feed.user.profileImage} <cite>${user.nickName }</cite>
+										<img
+										src="/resources/image/uploadFiles/${user.profileImage}"
+										class="img-responsive" width="100" height="100"> <cite>${user.nickName }</cite>
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->
@@ -563,11 +569,8 @@ margin-left: 100px;
 				<!-- single-comment -->
 
 
-<a href="/myHome/getYourHome?userId=user33" id="zz">유저33</a></li>
-
 
 			</div>
-		</div>
 	</main>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

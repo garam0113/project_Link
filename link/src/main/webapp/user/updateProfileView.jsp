@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,9 @@
 <meta charset="EUC-KR">
 
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet"
@@ -21,9 +23,13 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-<script type="text/javascript" charset="utf-8" src="/resources/javascript/nickNameCheck.js"></script>
 
+<script type="text/javascript" charset="utf-8"
+	src="/resources/javascript/nickNameCheck.js"></script>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 body>div.container {
@@ -34,10 +40,10 @@ body>div.container {
 
 <script type="text/javascript">
 	$(function() {
-		$("button[type='button']").on("click", function() {
+		$("#update").on("click", function() {
 			fncUpdateProfile();
 		});
-		$("a[href='#']").on("click", function() {
+		$("#cancel").on("click", function() {
 			history.back();
 		});
 	});
@@ -75,103 +81,139 @@ body>div.container {
 			return;
 		}
 		
-		
-		//$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
-		
+		if(${ empty getUser.nickName}){
+			$("form").attr("method", "POST").attr("action", "/user/addProfile").submit();
+		}else{
+			$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+		}
 	}
 </script>
 </head>
 
 <body>
-<div class="navbar  navbar-default">
-		<div class="container">
-			<a class="navbar-brand" href="/index.jsp">Link</a>
+	<jsp:include page="/toolbar.jsp" />
+	<c:if test="${! empty getUser.nickName }">
+		<div id="intro-wrap" data-height="27.778">
+			<div id="intro" class="preload darken">
+				<div class="intro-item"
+					style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+					<div class="caption">
+						<h2>MyBlog</h2>
+						<p>Write down your daily life</p>
+					</div>
+					<!-- caption -->
+				</div>
+				<!-- intro -->
+			</div>
+			<!-- intro -->
 		</div>
-	</div>
+	</c:if>
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
 
-		<h1 class="bg-primary text-center">프로필작성</h1>
+	<form>
+		<div class="wrap wd668">
+			<div class="container">
+			<br/>
+			<br/>
+				<div class="form_txtInput">
+					<h2 class="sub_tit_txt">프로필작성</h2>
+					<div class="join_form">
+						<table>
+							<colgroup>
+								<col width="30%" />
+								<col width="auto" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><input type="hidden" class="form-control" id="userId"
+										name="userId" value="${ getUser.userId }"></td>
+								</tr>
+								<tr>
+									<th><span>닉네임</span></th>
+									<td><input type="text" class="form-control" id="nickName"
+										name="nickName" placeholder="중복확인하세요"><span
+										id="helpBlock" class="help-block"> <strong
+											class="text-danger" id="nickNameCheck">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
+											<input type="hidden" id="checkNickName"></span></td>
+								</tr>
+								<tr>
+								<tr>
+									<th><span>성별</span></th>
+									<td><input type="radio" class="form-radio" id="gender"
+										name="gender" placeholder="성별" value="남자">&nbsp;남자 <input
+										type="radio" class="form-radio" id="gender" name="gender"
+										placeholder="성별" value="여자">&nbsp;여자</td>
+								</tr>
+								<tr>
+									<th><span>활동영역</span></th>
+									<td><select name="selectArea" id="selectArea">
+											<option selected="selected">선택해주세요</option>
+											<option>2</option>
+											<option>2</option>
+											<option>2</option>
+									</select></td>
+								</tr>
 
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-			<input type="hidden" class="form-control" id="userId" name="userId" value="${ user.userId }">
-			<div class="form-group">
-				<label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="nickName" name="nickName"
-						placeholder="중복확인하세요"> <span id="helpBlock"
-						class="help-block"> <strong class="text-danger" id="nickNameCheck">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
-					</span>
-					<input type="hidden" id="checkNickName">
+								<tr>
+									<th></th>
+									<td>
+										<div id="area1" name="area1"></div>
+										<div id="area2" name="area2"></div>
+										<div id="area1" name="area1"></div>
+								</tr>
+
+								<tr>
+									<th><span>관심카테고리</span></th>
+									<td><select name="selectCategory" id="selectCategory">
+											<option selected="selected">선택해주세요</option>
+											<option>2</option>
+											<option>2</option>
+											<option>2</option>
+									</select></td>
+								</tr>
+
+								<tr>
+									<th></th>
+									<td>
+										<div id="category1" name="category1"></div>
+										<div id="category2" name="category2"></div>
+										<div id="category3" name="category3"></div>
+								</tr>
+
+
+								<tr>
+									<th><span>프로필글</span></th>
+									<td><input type="text" class="form-control"
+										id="profileWriting" name="profileWriting" placeholder="프로필글"
+										value="${getUser.profileWriting}"></td>
+								</tr>
+								<tr>
+									<th><span>프로필사진</span></th>
+									<td><input type="file" class="form-file" id="profileImage"
+										name="profileImage" placeholder="프로필사진"
+										value="${getUser.profileWriting}"></td>
+								</tr>
+								<tr>
+									<th><span></span></th>
+									<td align="center">
+										<button type="button" class="btn btn-primary" id="update">등
+											&nbsp;록</button>
+										<button type="button" class="btn btn-primary" id="cancel">취
+											&nbsp;소</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
+				<!-- form_txtInput E -->
 			</div>
-
-			<div class="form-group">
-				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
-				<div class="col-sm-4">
-					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="성별" value="남자">&nbsp;남자
-					<input type="radio" class="form-radio" id="gender"
-						name="gender" placeholder="성별" value="여자">&nbsp;여자
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="area1"
-					class="col-sm-offset-1 col-sm-3 control-label">활동영역</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="area1"
-						name="area1" placeholder="활동영역">
-					<input type="text" class="form-control" id="area2"
-						name="area2" placeholder="활동영역">
-					<input type="text" class="form-control" id="area3"
-						name="area3" placeholder="활동영역">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="categoty1"
-					class="col-sm-offset-1 col-sm-3 control-label">관심카테고리</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="category1"
-						name="categoty1" placeholder="카테고리">
-					<input type="text" class="form-control" id="category2"
-						name="categoty2" placeholder="카테고리">
-					<input type="text" class="form-control" id="category3"
-						name="categoty3" placeholder="카테고리">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="profileWriting" class="col-sm-offset-1 col-sm-3 control-label">프로필글</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="profileWriting"
-						name="profileWriting" placeholder="프로필글">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="profileImage" class="col-sm-offset-1 col-sm-3 control-label">프로필사진</label>
-				<div class="col-sm-4">
-					<input type="file" class="form-file" id="profileImage" name="profileImage"
-						placeholder="프로필사진">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary">등 &nbsp;록</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-				</div>
-			</div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-
-	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
+			<!-- content E-->
+		</div>
+		<!-- container E -->
+	</form>
 
 </body>
 </html>

@@ -99,7 +99,7 @@
 	 
 
 	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="Integer">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT notice_title , notice_content , notice_regdate
 						FROM notice

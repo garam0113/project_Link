@@ -137,44 +137,31 @@
 		<tbody>
 		
 			<c:set var = "i" value = "0" />
-		<c:forEach var = "list" items = "${list}">
+		<c:forEach var = "getReportList" items = "${getReportList}">
 			<c:set var = "i" value = "${i + 1}" />
 			<tr class="ct_list_pop">
-				<td align="left" height="200" id="bb">${list.no}</td>
+				<td align="left" height="200" id="bb">${getReportList.no}</td>
 				
 				<td></td>
 				<td align="left" height="200" style="text-decoration:underline">
-					${list.title}
+					${getReportList.title}
 				</td>
 				<td></td>
-				  <c:if test="${list.reportCondition=='1'}">
+				  <c:if test="${getReportList.reportCondition=='1'}">
 				<td align="left" height="200">처리완료</td>
 				  </c:if>
-				   <c:if test="${list.reportCondition=='0'}">
+				   <c:if test="${getReportList.reportCondition=='0'}">
 				<td align="left" height="200">대기중</td>
 				  </c:if>
 				<td></td>
-				<td align="left" height="200">${list.user2.userId}</td>
+				<td align="left" height="200">${getReportList.user2.userId}</td>
 				<td></td>
-				<td align="left" height="200">${list.regDate}</td>
+				<td align="left" height="200">${getReportList.regDate}</td>
 				<td align="center" height="200">
 				
 				</td>	
 					
-				<td></td>
-			
-			<if test="qandAOpenCondition == 0">
-											WHERE USER_ID = {userId.userId}
-											<if test="searchCondition != null">
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 			AND	LOWER(QANDA_TITLE) LIKE LOWER('%${searchKeyword}%')
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 			AND	LOWER(QANDA_CONTENT) LIKE LOWER('%${searchKeyword}%')
-													</if>
-											</if>		
-											</if>
-	
+				<td></td>	
         </c:forEach>
         </tbody>
       

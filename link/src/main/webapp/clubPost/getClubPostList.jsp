@@ -43,7 +43,6 @@
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=3";
 				});
 				$("a:contains('검색')").bind("click", function() {
-					alert('검색');
 					$("input[name='currentPage']").val("1");
 					$("form").submit();
 				});
@@ -118,6 +117,7 @@
 				font-size: 15px;
 			}
 		</style>
+		
 	</head>
 <body class="portfolio">
 
@@ -155,7 +155,7 @@
 				
 					<ul class="inline cats filter-options" style="font-size: 40px;">
 						<li data-group="advertising">
-							<a href="/club/getClubList">모임 일정</a>
+							<a href="/club/getMeetingList">모임 일정</a>
 						</li>
 						<li data-group="fun">
 							<a href="/clubPost/getClubPostList">모임 게시물</a>
@@ -166,9 +166,9 @@
 						<li data-group="infographics">
 							<a href="#">모임 채팅</a>
 						</li>
-						<li data-group="infographics">
+						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li>
+						</li> --%>
 					</ul>
 					
 					
@@ -219,6 +219,12 @@
 										<div class="col-md-4">
 											<a href="javascript:getClubPostGo('${ clubPostList[i].clubPostNo }')">
 												<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
+												<%-- <c:if test="${ empty clubPostList[i].clubPostVideo1 }">
+													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
+												</c:if>
+												<c:if test="${ ! empty clubPostList[i].clubPostVideo1 }">
+													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="유튜브 동영상 이미지입니다." height="400" width="700">
+												</c:if> --%>
 											</a>
 											
 											<div style="display: flex; width: 87%;">
@@ -245,7 +251,7 @@
 															</c:if>
 														</c:forEach>
 													</c:if>
-													<img src="/resources/image/uploadFiles/${ heart_condition == 1 ? 'heart.jpg' : 'noHeart.jpg' }" height="50" width="50">
+													<img src="/resources/image/uploadFiles/${ heart_condition == 1 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
 												</div>
 												
 											</div>
@@ -258,6 +264,9 @@
 										</div>
 									</c:forEach>
 									
+									</c:if>
+									<c:if test="${ clubPostListCount == 0}">
+										<h4>해당되는 게시물이 없습니다.</h4>
 									</c:if>
 								</div>
 								<!-- 썸네일로 list display end -->

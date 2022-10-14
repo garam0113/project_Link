@@ -198,7 +198,7 @@ public class ClubServiceTest {
 		
 		System.out.println("\n==============================================");
 		
-		clubService.deleteClubMember(19);
+//		clubService.deleteClubMember(19);
 	}
 	
 	//@Test
