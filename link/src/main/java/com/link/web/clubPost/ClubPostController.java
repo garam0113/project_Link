@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
@@ -86,11 +87,6 @@ public class ClubPostController {
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("heartList", map.get("heartList"));
-		List<Heart> list = (List<Heart>) map.get("heartList");
-		System.out.println("111"+list.size());
-		for (Heart h : list) {
-			System.out.println(h);
-		}
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		//return "forward:/clubPost/getClubPostList_backup.jsp";
@@ -203,18 +199,50 @@ public class ClubPostController {
 	@RequestMapping(value = "addPayView", method = RequestMethod.GET)
 	public String addPayView(@ModelAttribute Pay pay, Model model, HttpSession sesstion) throws Exception {
 		System.out.println("/addPayView : GET : 모임번호를 가지고 결제화면으로 이동");
-		model.addAttribute("user", sesstion.getAttribute("user"));
+
+		int maxPay = 0;
+		pay.setClubNo(0);
+		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
+		if( pay.getClubNo() != 0 ) {
+			// 모임대표가 가입승인 클릭시
+			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
+			Club returnClub = clubServiceImpl.getClub(pay.getClubNo());
+			model.addAttribute("returnClub", returnClub);
+			
+			switch (returnClub.getClubMaxMember()) {
+			case 10: maxPay = 20000; break;
+			case 20: maxPay = 15000; break;
+			case 30: maxPay = 10000; break;
+			case 40: maxPay = 5000; break;
+			}
+		}else {
+			// 모임등록시 모임가입신청시
+			// 해당 회원의 최대 가입수까지의 최대 결제금액을 가져간다
+			User returnUser = userServiceImpl.getUser((User)sesstion.getAttribute("user"));
+			System.out.println("DB에서 가져온 user 정보 : " + returnUser);
+			model.addAttribute("user", returnUser);
+			
+			switch (returnUser.getJoinClubLimit()) {
+			case 2: maxPay = 20000; break;
+			case 4: maxPay = 15000; break;
+			case 6: maxPay = 10000; break;
+			case 8: maxPay = 5000; break;
+			}
+		}
+		pay.setMaxPay(maxPay);
 		model.addAttribute("pay", pay);
 		return "forward:/clubPost/addPayView.jsp";
 	}
 	
 	@RequestMapping(value = "addPay", method = RequestMethod.POST)
-	public String addPay(@ModelAttribute Pay pay, Search search, Model model) throws Exception {
+	public String addPay(@ModelAttribute Pay pay, Search search, Model model, HttpSession session) throws Exception {
 		System.out.println("/addPay : POST : 모임원 최대 수 수정 후 모임원 리스트 화면으로 이동 모임대표만 올 수 있다, 모임번호가 있으면 모임 상세보기, 모임번호가 없으면 모임리스트 화면으로 이동");
-		
+		System.out.println(pay);
+		pay.setUser(new User(((User)session.getAttribute("user")).getUserId()));
 		//결제추가
 		clubPostServiceImpl.addPay(pay);
-		
+
+		/*
 		if(pay.getUpdateClubMemberCount() != 0) {
 			// 모임원 업데이트 수가 있다면 모임대표가 가입신청을 클릭 후 이벤트이다 결제 후 모임원리스트 화면으로 이동
 			// 모임원 최대수 CLUB_MAX_MEMBER 증가
@@ -235,6 +263,8 @@ public class ClubPostController {
 				return "forward:/club/getClubList.jsp";
 			}
 		}
+		*/
+		return null;
 		
 	}//end of addPay
 	

@@ -16,8 +16,10 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
 		<!-- include summernote css/js -->
-		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+		<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> -->
+		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+		<script src="/resources/summernote/summernote-lite.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('#summernote').summernote({
@@ -70,7 +72,7 @@
 							<a href="#">모임 채팅</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+							<a href="/clubPost/addPayView?clubNo=${ clubNo }">결제</a>
 						</li>
 					</ul>
 	
