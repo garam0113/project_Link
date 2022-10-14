@@ -144,12 +144,7 @@ public class FeedDAOImpl implements FeedDAO {
 		return sqlSession.selectOne("FeedMapper.getTotalFeedCommentCount", map);
 	}
 	
-	// 사용
-	@Override
-	public int getRecommentCount(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("FeedMapper.getRecommentCount", map);
-	}
+	
 	
 	///////////////////////////////////////////////////// Like /////////////////////////////////////////////////////
 	

@@ -50,7 +50,8 @@
 			<div id="intro" class="preload darken">
 				<div class="intro-item">
 					<div class="caption">
-						<h2>MyPage</h2>
+						<h2 style="
+    margin-top: 100px;">MyPage</h2>
 					</div>
 					<!-- caption -->
 				</div>
@@ -93,8 +94,6 @@
 		<!-- row -->
 	</c:if>
 
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 </body>

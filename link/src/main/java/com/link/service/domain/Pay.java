@@ -12,12 +12,13 @@ public class Pay {
 	private int updateClubCount;			// 모임 추가 수
 	private int updateClubMemberCount;		// 모임원 추가 수
 	private String merchant_uid;			// 주문번호
+	private int maxPay;						// 최대결제금액
 
 	public Pay() {
 	}
 
 	public Pay(int payNo, User user, int clubNo, String payProduct, String payOption, int totalPrice, String payRegDate,
-			int updateClubCount, int updateClubMemberCount, String merchant_uid) {
+			int updateClubCount, int updateClubMemberCount, String merchant_uid, int maxPay) {
 		super();
 		this.payNo = payNo;
 		this.user = user;
@@ -29,6 +30,7 @@ public class Pay {
 		this.updateClubCount = updateClubCount;
 		this.updateClubMemberCount = updateClubMemberCount;
 		this.merchant_uid = merchant_uid;
+		this.maxPay = maxPay;
 	}
 
 	public int getPayNo() {
@@ -111,6 +113,14 @@ public class Pay {
 		this.merchant_uid = merchant_uid;
 	}
 
+	public int getMaxPay() {
+		return maxPay;
+	}
+
+	public void setMaxPay(int maxPay) {
+		this.maxPay = maxPay;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -134,6 +144,8 @@ public class Pay {
 		builder.append(updateClubMemberCount);
 		builder.append(", merchant_uid=");
 		builder.append(merchant_uid);
+		builder.append(", maxPay=");
+		builder.append(maxPay);
 		builder.append("]");
 		return builder.toString();
 	}

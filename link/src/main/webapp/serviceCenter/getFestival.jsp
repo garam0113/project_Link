@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -44,6 +47,46 @@ xhr.send('');
 <title>Insert title here</title>
 </head>
 <body>
+	<table class="table table-hover table-striped"  style="text-align-last: center;">
+				<div class="row2">
+				<thead>
+					<tr>
+						<th align="center">No</th>
+						<td />
+						<th align="center" class="content">薦鯉</th>
+						<td />
+						<th align="center"></th>
+						<td />
+						<th align="center"></th>
+						<td />
+						<th align="center" width ="100">是帖</th>
+					</tr>
+				</thead>
+				
+				<tbody>
 
+					<c:set var="i" value="0" />
+		
+						<tr class="ct_list_pop">
+							<td align="left" id="bb">しし</td>
+								
+							<td></td>
+							<td align="left" >けけ2
+								</td>
+							<td></td>
+
+							<td align="left" >けけ3</td>
+
+							<td></td>
+							<td align="left" >けけ4</td>
+							<td></td>
+							<td align="left" >けけ5</td>
+							<td align="center" >けけ6</td>
+
+							<td></td>
+			
+				</tbody>
+				
+				
 </body>
 </html>
