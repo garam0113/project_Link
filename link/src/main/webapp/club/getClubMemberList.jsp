@@ -62,18 +62,17 @@
 		});
 	});
 	
-	
 	$(function() {
-		$("input[value='추방']").bind("click", function() {
+		$("#banMember").on("click", function() {
 			alert("모임원을 추방합니다 : ");
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		});
 		
 		
 		
-		$(document).on("click", "input[value='추방']", function(){
+		$(document).on("click", "#banMember", function(){
 			alert('추방');
-			var clubUserNo = $("#clubUserNo2").val();
+			var clubUserNo = $(this).val();
 			alert(clubUserNo);
 			$.ajax("/clubRest/json/deleteClubMember",
 					{
@@ -92,6 +91,37 @@
 					}); //end of ajax
 			}); //모임원 추방
 		
+			$(function() {
+				$("#updateApprovalCondition").on("click", function() {
+					alert("모임원을 승인합니다 : ");
+					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+				});
+				
+			$(document).on("click", "#updateApprovalCondition", function(){
+				alert('승인');
+				var clubUserNo = $(this).val();
+				var approvalCondition = $(this).val();
+				alert(clubUserNo);
+				alert(approvalCondition);
+				$.ajax("/clubRest/json/updateApprovalCondition",
+						{
+							method : "POST" ,
+							data : JSON.stringify({
+								clubUserNo : clubUserNo ,
+								approvalCondition : approvalCondition
+							}) ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status) {
+								alert(status);
+							} // end of success
+					
+						}); // end of ajax
+				
+				}); // end of 승인
 
 	
 	
@@ -129,7 +159,8 @@
 	});
 	
 	});
-	
+			
+	});	
 	</script>	
 	
 </head>
@@ -189,28 +220,27 @@
             <th align="left">승인상태</th>
             <th align="left">직책수정</th>
             <th align="left">추방</th>
+            <th align="left">승인/거절</th>
           </tr>
         </thead>
        
 		<tbody>
 		<tr>
-
-		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${clubMemberList}">
-		  <input type="hidden" name="clubUserNo" value="${clubUserNo}">
-			<%-- <c:set var="i" value="${ i+1 }" /> --%>
+		  <%-- <input type="hidden" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			<tr>
 			<td align="center">${i.clubUserNo}</td>
 			  <td align="left">${i.user.userId}</td>
-			  <td align="left">${clubUser.nickName}</td>
+			  <td align="left">${i.user.nickName}</td>
 			  <td align="left">${i.memberRole}</td>
-			  <td align="left">${i.user.logoutDate}</td>
+			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${i.approvalCondition}</td>
 			  <!-- <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button> -->
 			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
-			  <input type="hidden" id="clubUserNo2" name="clubUserNo2" value="${i.clubUserNo}">
-			  <td align="left"><input type="button" value="추방">
+			  <input type="text" id="clubUserNo" name="clubUserNo" value="${i.clubUserNo}">
+			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
+			  <td align="left"><button value="${i.clubUserNo}" id="updateApprovalCondition">승인</button>
 			</tr>
           </c:forEach>
         </tbody>

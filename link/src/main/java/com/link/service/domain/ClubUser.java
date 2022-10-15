@@ -13,8 +13,8 @@ public class ClubUser {
 	private String memberRole;
 	private String approvalCondition;
 	private String joinGreeting;
-	private String nickName;
-	private Club club;
+//	private String nickName;
+//	private Club club;
 	
 
 	public ClubUser() {
@@ -97,36 +97,56 @@ public class ClubUser {
 	}
 
 
-	public String getNickName() {
-		return nickName;
-	}
-	
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-
-
-	public Club getClub() {
-		return club;
-	}
-
-
-	public void setClub(Club club) {
-		this.club = club;
-	}
-
-
 	@Override
 	public String toString() {
-		return "ClubUser [clubUserNo=" + clubUserNo + ", clubNo=" + clubNo + ", user=" + user + ", applicationRegDate="
-				+ applicationRegDate + ", joinRegDate=" + joinRegDate + ", logoutDate=" + logoutDate + ", memberRole="
-				+ memberRole + ", approvalCondition=" + approvalCondition + ", joinGreeting=" + joinGreeting
-				+ ", nickName=" + nickName + ", club=" + club + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClubUser [clubUserNo=");
+		builder.append(clubUserNo);
+		builder.append(", clubNo=");
+		builder.append(clubNo);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", applicationRegDate=");
+		builder.append(applicationRegDate);
+		builder.append(", joinRegDate=");
+		builder.append(joinRegDate);
+		builder.append(", logoutDate=");
+		builder.append(logoutDate);
+		builder.append(", memberRole=");
+		builder.append(memberRole);
+		builder.append(", approvalCondition=");
+		builder.append(approvalCondition);
+		builder.append(", joinGreeting=");
+		builder.append(joinGreeting);
+		builder.append("]");
+		return builder.toString();
 	}
 
 
-	
+
+
+
+//	public String getNickName() {
+//		return nickName;
+//	}
+//	
+//	public void setNickName(String nickName) {
+//		this.nickName = nickName;
+//	}
+//
+//
+//
+//	public Club getClub() {
+//		return club;
+//	}
+//
+//
+//	public void setClub(Club club) {
+//		this.club = club;
+//	}
+
+
+
 
 
 
