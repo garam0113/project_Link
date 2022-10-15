@@ -79,7 +79,7 @@
 					<when test="clubPost.clubNo != 0">#{ clubPost.clubNo }
 						<if test="search.order == 3">AND CP.USER_ID = #{ clubPost.user.userId }</if>
 					</when>
-				<otherwise>
+				<!-- <otherwise>
 				( SELECT V2.CLUB_NO
 					FROM ( SELECT ROWNUM, V1.*
 							FROM ( SELECT *
@@ -88,7 +88,7 @@
 									ORDER BY JOIN_REG_DATE DESC ) V1
 							WHERE ROWNUM = 1
 						 ) V2 )
-					</otherwise>
+					</otherwise> -->
 				</choose>
 				AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0' AND CP.USER_ID = U.USER_ID
 				<if test="search.searchKeyword != '' and search.searchCondition != ''">

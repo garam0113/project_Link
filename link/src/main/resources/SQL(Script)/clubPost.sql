@@ -718,10 +718,14 @@ UPDATE USERS SET PROFILE_IMAGE = 'profile_image4clubPost.jpg' WHERE USER_ID = 'u
 
 
 
-SELECT CLUB_POST_COMMENT_NO, CLUB_POST_NO, USER_ID, COMMENT_CONTENT, COMMENT_REG_DATE, COMMENT_UPDATE_DATE, COMMENT_HEART_COUNT, COMMENT_COUNT, REPORT_CONDITION, DELETE_CONDITION, PARENT, DEPTH, SEQUENCE
-FROM CLUB_POST_COMMENT
-WHERE CLUB_POST_NO = 
-ORDER BY CLUB_POST_COMMENT_NO ASC
+SELECT *
+FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+		FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+				FROM club
+				ORDER BY club_no ) inner_table
+		WHERE ROWNUM <= 10 )
+WHERE row_seq BETWEEN 1 AND 10
+
 
 
 

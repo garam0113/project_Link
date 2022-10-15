@@ -13,6 +13,7 @@ public class Pay {
 	private int updateClubMemberCount;		// 모임원 추가 수
 	private String merchant_uid;			// 주문번호
 	private int maxPay;						// 최대결제금액
+	private int payNavigation;				// 어디에서 왔는지 - 1 : 모임상세보기
 
 	public Pay() {
 	}
@@ -121,6 +122,14 @@ public class Pay {
 		this.maxPay = maxPay;
 	}
 
+	public int getPayNavigation() {
+		return payNavigation;
+	}
+
+	public void setPayNavigation(int payNavigation) {
+		this.payNavigation = payNavigation;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -146,6 +155,8 @@ public class Pay {
 		builder.append(merchant_uid);
 		builder.append(", maxPay=");
 		builder.append(maxPay);
+		builder.append(", payNavigation=");
+		builder.append(payNavigation);
 		builder.append("]");
 		return builder.toString();
 	}

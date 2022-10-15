@@ -32,7 +32,7 @@
 			});
 			$("input[value='삭제']").bind("click", function(){
 				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
 			});
 			$("input[value='리스트로이동']").bind("click", function(){
 				location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
