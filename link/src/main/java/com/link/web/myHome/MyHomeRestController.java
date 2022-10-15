@@ -67,8 +67,10 @@ public class MyHomeRestController {
 			
 			search.setPageSize(pageSize);
 			search.setPageUnit(pageUnit);
-		 
-		 user = (User) session.getAttribute("user");
+			
+			
+			String userId = ((User) session.getAttribute("user")).getUserId();
+			search.setSearchKeyword(userId);
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("search",search);
 		 map.put("user", user);	
@@ -101,7 +103,7 @@ public class MyHomeRestController {
     }
 	 
     @RequestMapping(value="/json/addFollow", method=RequestMethod.POST)
-    public void addFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
+    public Map<String, Object> addFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
       
 
          
@@ -119,25 +121,32 @@ public class MyHomeRestController {
           // 보내는사람 id set
           user.setUserId(sendId);
           user.setReceiveId(receiveId);
-     
-
+          
           // 받는사람 정보 객체생성
      
           
           // 받는사람 정보 set
 
 
-          System.out.println("recv_user_id : " +  receiveId);
+           Search search = new Search();
+  		// 받는사람 정보 set
 
-          // 서비스 실행
-          myHomeService.addFollow(user);
-          
-     
+            System.out.println("recv_user_id : " +  receiveId);
+
+            // 서비스 실행
+            myHomeService.addFollow(user);
+            
+            Map<String, Object> map = myHomeService.getFollowList(search );
+            
+            System.out.println("recv_user_id : " +  receiveId);    
+            return map;
+            
+        
        
  
     }
-    @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
-    public void deleteFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
+    @RequestMapping(value="/json/updateFollow", method=RequestMethod.POST)
+    public Map<String, Object> updateFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
       
 
          
@@ -155,19 +164,22 @@ public class MyHomeRestController {
           // 보내는사람 id set
           user.setUserId(sendId);
           user.setReceiveId(receiveId);
-     
+       
 
           // 받는사람 정보 객체생성
      
           
-          // 받는사람 정보 set
-
+          Search search = new Search();
+		// 받는사람 정보 set
 
           System.out.println("recv_user_id : " +  receiveId);
 
           // 서비스 실행
-          myHomeService.deleteFollow(user);
-			 
+          myHomeService.updateFollow(user);
+          Map<String, Object> map = myHomeService.getFollowList(search );
+          System.out.println("recv_user_id : " +  receiveId);
+          
+          return map;
 		 }
 		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
 		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{

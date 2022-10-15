@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		 events: [
 			    { // this object will be "parsed" into an Event Object
-			      title: meetingTitle, // 力格
+			      title: 'meetingTitle', // 力格
 			      start: '2022-10-01', // 矫累老磊
 			
 			    }
