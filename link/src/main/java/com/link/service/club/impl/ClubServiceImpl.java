@@ -243,12 +243,13 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Map<String, Object> getMeetingMemberList(Search search) throws Exception {
 		
+		System.out.println("일정참여자리스트 Service Impl 왔나??");
 		Map<String,Object> map = new HashMap<String, Object>();
 		
 		List<Meeting> list = clubDAO.getMeetingMemberList(search);
 		int totalMeetingMemberCount = clubDAO.getTotalMeetingMemberCount(search);
 		
-		map.put("participantList", list);
+		map.put("meetingMemberList", list);
 		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
 		
 		return map;

@@ -21,11 +21,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Bootstrap Dropdown Hover CSS -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<!-- <link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet"> -->
 
 <!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<!-- <script src="/javascript/bootstrap-dropdownhover.min.js"></script> -->
 <!-- calendar.js -->
 <script type="text/javascript" src="/javascript/calendar.js"></script>
 <!-- import.payment.js -->
@@ -48,6 +48,39 @@
 		$("input[value='취소하기']").bind("click", function(){
 			history.go(-1);
 		});
+		
+		$(".plus").bind("click", function(){
+			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
+			var updateClubCount = parseInt( $(".payProduct-club").text() );
+			var totalPrice = parseInt( $(".totalPrice").text() );
+			if( ${ pay.maxPay } === totalPrice && maxPay != 5000 ){
+				$(".result").text( "최대 모임 가입 횟수입니다" );
+			}else{
+				if( ${ pay.clubNo } === 0 ){
+					$(".payProduct-club").text( updateClubCount + 2 );
+				}else{
+					$(".payProduct-member").text( updateClubMemberCount + 10 );
+				}
+				$(".totalPrice").text( totalPrice + 5000 );
+				$(".result").text( "" );
+			}
+		});//end of plus
+		$(".minus").bind("click", function(){
+			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
+			var updateClubCount = parseInt( $(".payProduct-club").text() );
+			var totalPrice = parseInt( $(".totalPrice").text() );
+			if( totalPrice === 5000 && maxPay != 5000 ){
+				$(".result").text( "최소 결제 금액은 5000원입니다" );
+			}else{
+				if( ${ pay.clubNo } === 0 ){
+					$(".payProduct-club").text( updateClubCount - 2 );
+				}else{
+					$(".payProduct-member").text( updateClubMemberCount - 10 );
+				}
+				$(".totalPrice").text( totalPrice - 5000 );
+				$(".result").text( "" );
+			}
+		});//end of minus
 	});
 </script>
 
@@ -56,34 +89,46 @@
 		alert('여기로 오나?');
 		
 		var email = "${ user.email }";
-		var name = "${ user.name }";
 		var phoneNo = "${ user.phoneNo }";
-		var totalPrice = $("div[class='pay-totalPrice']").find("b").text();
-		var payOption = $();
-		var payProduct = $();
-		//alert(email);
-		//alert(name);
-		//alert(phoneNo);
-		//alert(totalPrice);
+		var totalPrice = $(".totalPrice").text();
+		var payProduct = ${ pay.clubNo == 0 } ? "1": "0";
+		var pg = $("input[name='payOption']:checked").attr("pg");
+		var pay_method = $("input[name='payOption']:checked").attr("pay_method");
+		var name = payProduct===0 ? "최대 모임 수 증가" : "최대 모임원 수 증가";
+		var updateClubMemberCount = $(".payProduct-member").text();
+		var updateClubCount = $(".payProduct-club").text();
+		
+		if( !updateClubMemberCount ){
+			updateClubMemberCount = 0;
+		}
+		if( !updateClubCount ){
+			updateClubCount = 0;
+		}
+		
+		$("input[name='payProduct']").val( payProduct );
+		$("input[name='totalPrice']").val( totalPrice );
+		$("input[name='updateClubMemberCount']").val( updateClubMemberCount );
+		$("input[name='updateClubCount']").val( updateClubCount );
+		$("input[name='clubNo']").val( ${ pay.clubNo } );		
 		
 		IMP.init("imp83557107"); // 가맹점 식별코드로 IMP 객체를 초기화한다
 		//IMP.init("imp36216644"); // 가맹점 식별코드로 IMP 객체를 초기화한다
 		
 		IMP.request_pay({
-			//pay_method : card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
 			//신용카드 결제
-			/*
-				pg : 'danal_tpay',
-				//pg : 'html5_inicis',
-				pay_method : 'card',
+			///*
+				pg : pg,
+				pay_method : pay_method,
 				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-				name : '추가모임수',
+				name : name,
 				amount : totalPrice,
 				customer_uid : 'your-customer-unique-id', // 필수 입력.
 				buyer_email : email,
-				buyer_name : name,
-				buyer_tel : phoneNo
-			/*/
+				buyer_name : '루피',
+				buyer_tel : ${ user.phoneNo }
+			    //buyer_addr : '서울특별시 강남구 삼성동',
+			    //buyer_postcode : '123-456'
+			//*/
 
 			//카카오페이
 			/*
@@ -129,7 +174,7 @@
 			 */
 		
 			//실시간 계좌이체
-			///*
+			/*
 			    pg : 'html5_inicis',
 			    pay_method : 'trans',
 			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
@@ -141,7 +186,7 @@
 			    buyer_addr : '서울특별시 강남구 삼성동',
 			    buyer_postcode : '123-456',
 			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
-			// */
+			*/
 
 			//무통장 입금
 				/*
@@ -166,6 +211,7 @@
     			msg += '\n결제 금액 : ' + rsp.paid_amount;
     			msg += '\n카드 승인번호 : ' + rsp.apply_num;
     			alert(msg);
+    			$("input[name='merchant_uid']").val( rsp.merchant_uid );
     			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
 			} else {
 				var msg = '결제에 실패하였습니다.';
@@ -183,29 +229,40 @@
 	
 		<input type="text" name="payProduct" value="">
 		<input type="text" name="totalPrice" value="">
-
+		<input type="text" name="merchant_uid" value="">
+		<input type="text" name="updateClubMemberCount" value="0">
+		<input type="text" name="updateClubCount" value="0">
+		<input type="text" name="clubNo" value="0">
+		<input type="text" name="maxPay" value="${ pay.maxPay }">
+		
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="pay-view">
 		
 			<div class="pay-payOption">
+				<c:choose>
+					<c:when test="${ pay.clubNo != 0 }">해당 모임의 모임원수는 ${ returnClub }</c:when>
+					<c:when test="${ pay.clubNo == 0 }">해당 회원의 모임수는 ${ user.joinClubCount }</c:when>
+				</c:choose>
 				결제방법&nbsp;&nbsp;:&nbsp;&nbsp;
-				<input type="radio" name="payOption" value="신용카드">신용카드
-				<input type="radio" name="payOption" value="카카오페이">카카오페이
-				<input type="radio" name="payOption" value="휴대폰결제">휴대폰결제
-				<input type="radio" name="payOption" value="토스페이">토스페이
+				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">신용카드
+				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">카카오페이
+				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">휴대폰결제
+				<!-- <input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">토스페이 -->
+				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">실시간 계좌이체
 			</div>
 			
 			<div class="pay-payProduct">
+			&nbsp;&nbsp;<b class="plus">+</b>
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">추가 모임원 수<b class="payProduct-member">20</b>명
-					</c:when>
-					<c:when test="${ pay.clubNo == 0 }">추가 모임 수<b class="payProduct-club">2</b>개방
-					</c:when>
+					<c:when test="${ pay.clubNo != 0 }">추가 모임원 수<b class="payProduct-member">10</b>명</c:when>
+					<c:when test="${ pay.clubNo == 0 }">추가 모임 수<b class="payProduct-club">2</b>개방</c:when>
 				</c:choose>
+			<b class="minus">-</b>
+			<b class="result"></b>
 			</div>
 			
 			<div class="pay-totalPrice">
-				총 결제금액 : <b class="totalPrice">1000</b>원
+				총 결제금액 : <b class="totalPrice">5000</b>원
 			</div>
 			
 			<div>
@@ -220,34 +277,6 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

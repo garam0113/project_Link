@@ -129,6 +129,7 @@
 	
 		<div class="page-header">
 	       <h3 class=" text-info">모임일정상세조회</h3>
+	       <a href="/club/getMeetingMemberList">미팅참여자</a>
 	    </div>
 	
 		<form class="form-horizontal">
