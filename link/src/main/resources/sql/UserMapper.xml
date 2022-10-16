@@ -69,16 +69,16 @@
 	<insert		id="addUser"		parameterType="user" >
 	 	INSERT
 		INTO users	(	
-						user_id, password, name, gender, rrn, phone_no, email, nickname, profile_writing,
+						user_id, password, name, gender, rrn, phone_no, email, nickname, profile_image,profile_writing,
 						area1, area2, area3, category1, category2, category3, add_user_date, add_user_type, sns_user_Id	
 					) 
 		VALUES		(	
 						#{userId}, #{password:VARCHAR}, #{name:VARCHAR}, #{gender:VARCHAR}, #{rrn:VARCHAR}, 
-						#{phoneNo:VARCHAR}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileWriting:VARCHAR} , 
+						#{phoneNo:VARCHAR}, #{email:VARCHAR}, #{nickName:VARCHAR}, #{profileImage:VARCHAR}, #{profileWriting:VARCHAR} , 
 						#{area1:VARCHAR} , #{area2:VARCHAR} , #{area3:VARCHAR} , #{category1:VARCHAR} , 
 						#{category2:VARCHAR} , #{category3:VARCHAR} , SYSDATE, #{addType:CHAR}, #{snsUserId:VARCHAR}
 					)
-	</insert>
+	</insert> 
 
 	<!-- <insert		id="addSnsUser"		parameterType="user" >
 	 	INSERT

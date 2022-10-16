@@ -24,6 +24,7 @@ ul{list-style:none; }
 .btn_wrap a{color: #fff; background-color: #4380ce; font-weight: bold; padding: 10px;  height: 30px; line-height: 30px; width: 168px; display: block; text-align: center; margin: 0 auto;}
 .btn_wrap a.wide{width:587px;margin: 0 0 0 20px;}
 .find_txt ul li{color:#9a9a9a;font-size:13px;text-align:center; line-height:17px; margin:0 0 20px;}
+.join_form table td input[type="radio"] {position: inherit;width: 20px;height: 20px;padding: 0;margin: 1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .form_txtInput .checkbox_wrap {position: relative;padding: 5px;text-align: right;}
 .form_txtInput .checkbox_wrap input[type="checkbox"] {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .form_txtInput .checkbox_wrap input[type="checkbox"] + label {display: inline-block; line-height:14px;position: relative;padding-left: 20px;font-size: 13px;color: #818181;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;}
