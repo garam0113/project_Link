@@ -179,10 +179,11 @@ public class ClubPostController {
 	
 	
 	
-	@RequestMapping(value = "/chatRoomList", method = RequestMethod.POST)
-	public String chatClubList() throws Exception {
+	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
+	public String chatClubList(HttpSession session, Model model) throws Exception {
 		System.out.println("/chatClubList : POST : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		return "forward:/clubPost/chatRoomList.jsp";
+		model.addAttribute("userId", ((User)session.getAttribute("user")).getUserId());
+		return "forward:/chat/index2.jsp";
 	}
 	
 	
