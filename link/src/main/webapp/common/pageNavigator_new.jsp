@@ -24,11 +24,11 @@ function YesScroll () {
 </script>
 </head>
 
-<div class="container text-center">
+<div>
 
-	<nav>
+	<nav style= "transform: translate(-900px, 0px);">
 		<!-- 크기조절 :  pagination-lg pagination-sm-->
-		<ul class="pagination">
+		<ul class="pagination" >
 
 			<!--  <<== 좌측 nav -->
 			<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
@@ -76,24 +76,3 @@ function YesScroll () {
 </div>
 
 
-
-<div class="container">
-	<nav>
-		<ul class="pager">
-			<li><a href="#">Previous</a></li>
-			<li><a href="#">Next</a></li>
-		</ul>
-	</nav>
-</div>
-
-
-<div class="container">
-	<nav>
-		<ul class="pager">
-			<li class="previous disabled"><a href="#"><span
-					aria-hidden="true">&larr;</span> Older</a></li>
-			<!-- <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>  -->
-			<li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-		</ul>
-	</nav>
-</div>

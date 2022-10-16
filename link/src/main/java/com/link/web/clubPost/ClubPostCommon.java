@@ -12,6 +12,7 @@ public class ClubPostCommon {
 	int pageUnit;
 	
 	@Value("#{commonProperties['pageSize']}")
+	static
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	

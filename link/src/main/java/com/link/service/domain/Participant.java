@@ -5,7 +5,7 @@ public class Participant {
 	//Field
 	private int participantNo;
 	private int meetingNo;
-	private String userId;
+	private User user;
 	
 	
 	public Participant() {
@@ -33,20 +33,27 @@ public class Participant {
 	}
 
 
-	public String getParticipantUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setParticipantUserId(String participantUserId) {
-		this.userId = participantUserId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Participant [participantNo=" + participantNo + ", meetingNo=" + meetingNo + ", participantUserId="
-				+ userId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Participant [participantNo=");
+		builder.append(participantNo);
+		builder.append(", meetingNo=");
+		builder.append(meetingNo);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

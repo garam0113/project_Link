@@ -92,18 +92,18 @@ public class FeedServiceImpl implements FeedService {
 		
 		// 하나의 댓글에 달린 대댓글 개수 세어서 넣어주기
 		
-		int count = ((Comment) map.get("comment")).getSequence() + feedDAO.getRecommentCount(map);
-
-		((Comment) map.get("comment")).setSequence(count);
+		int count = ((Comment) map.get("comment")).getSequence();
 		
-		while(feedDAO.getFeedCommentBySequence(map).getDepth() != 0) {
-			count++;
-			((Comment) map.get("comment")).setSequence(count);
-			System.out.println("이너카운트 : " + count);
+		if(feedDAO.getFeedCommentBySequence(map) != null) {
+			while(feedDAO.getFeedCommentBySequence(map).getDepth() != 0) {
+				count++;
+				((Comment) map.get("comment")).setSequence(count);
+			}
 		}
 		
 		// 댓글의 순서 변경
 		if(((Comment) map.get("comment")).getSequence() < feed.getCommentCount()) {
+			((Comment) map.get("comment")).setHeartCondition(1);
 			feedDAO.updateFeedCommentOrder((Comment) map.get("comment"));
 		}
 		
@@ -126,9 +126,19 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public void deleteFeedComment(int commentNo) throws Exception {
+	public void deleteFeedComment(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		feedDAO.deleteFeedComment(commentNo);
+		
+		Feed feed = feedDAO.getFeed(map);
+		feed.setCheckComment(-1);
+		feedDAO.updateFeed(feed);
+		
+		feedDAO.deleteFeedComment( ((Comment) map.get("comment")).getFeedCommentNo() );
+		
+		((Comment) map.get("comment")).setHeartCondition(-1);
+		
+		feedDAO.updateFeedCommentOrder((Comment) map.get("comment"));
+		
 	}
 	
 	

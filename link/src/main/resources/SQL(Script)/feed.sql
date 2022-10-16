@@ -247,9 +247,9 @@ ORDER BY sequence ASC
 
 
 
+SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 8 AND sequence = 0 
 
-
-
+SELECT COUNT(*) FROM ( SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 5 AND delete_condition = '0' ORDER BY feed_comment_no ASC ) 
 
 
 

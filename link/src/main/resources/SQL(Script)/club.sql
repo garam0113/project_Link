@@ -1,5 +1,7 @@
 select * from users;
 
+select * from CLUB_POST;
+
 select * from FEED;
 
 //모임등록
@@ -112,7 +114,7 @@ getMeetingmemberList()
 SELECT
 	participant_no, meeting_no, participant_user_id
 	FROM participant
-	WHERE meeting_no = 2;
+	WHERE meeting_no = 38;
 
 //모임일정 상세보기
 getMeeting()
@@ -192,6 +194,25 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 		FROM ( SELECT c.club_title , c.club_detail , c.club_category , c.current_member , c.club_max_member , c.club_area , c.club_image
 				FROM club c, club_User cU
 				WHERE c.club_no = cU.club_no and cU.user_id = 'user15' ) deep_table ) inner_table 
+
+
+
+				
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT u.nickname, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition
+				FROM users u, club_User cU
+				WHERE cU.user_id = u.user_id and cU.club_no = '2') deep_table ) inner_table
+				
+
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname
+				FROM participant p, users u, meeting m
+				WHERE p.participant_user_id = u.user_id and p.meeting_no = m.meeting_no and p.meeting_no ='38' ) deep_table ) inner_table
+		
+
+
 
 
 
