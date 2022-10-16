@@ -14,8 +14,15 @@ public class Club {
 	private int clubMaxMember;
 	private String clubCategory;
 	private String clubArea;
+	private String approvalCondition;
 	
 	
+	public String getApprovalCondition() {
+		return approvalCondition;
+	}
+	public void setApprovalCondition(String approvalCondition) {
+		this.approvalCondition = approvalCondition;
+	}
 	public int getClubNo() {
 		return clubNo;
 	}
@@ -78,11 +85,31 @@ public class Club {
 	}
 	@Override
 	public String toString() {
-		return "Club [clubNo=" + clubNo + ", user=" + user + ", clubTitle=" + clubTitle + ", clubDetail="
-				+ clubDetail + ", clubRegDate=" + clubRegDate + ", clubImage=" + clubImage + ", currentMember="
-				+ currentMember + ", clubMaxMember=" + clubMaxMember + ", clubCategory=" + clubCategory + ", clubArea="
-				+ clubArea + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Club [clubNo=");
+		builder.append(clubNo);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", clubTitle=");
+		builder.append(clubTitle);
+		builder.append(", clubDetail=");
+		builder.append(clubDetail);
+		builder.append(", clubRegDate=");
+		builder.append(clubRegDate);
+		builder.append(", clubImage=");
+		builder.append(clubImage);
+		builder.append(", currentMember=");
+		builder.append(currentMember);
+		builder.append(", clubMaxMember=");
+		builder.append(clubMaxMember);
+		builder.append(", clubCategory=");
+		builder.append(clubCategory);
+		builder.append(", clubArea=");
+		builder.append(clubArea);
+		builder.append(", approvalCondition=");
+		builder.append(approvalCondition);
+		builder.append("]");
+		return builder.toString();
 	}
-	
 	
 }

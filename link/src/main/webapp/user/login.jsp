@@ -36,7 +36,7 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 
-<script type="text/javascript" src="/resources/javascript/kakaoLogin.js"></script>
+<script type="text/javascript" src="/resources/javascript/user/kakaoLogin.js"></script>
 
 <style>
 body>div.container {

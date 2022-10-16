@@ -32,6 +32,7 @@ ul{list-style:none; }
 .btn_wrap a{color: #fff; background-color: #4380ce; font-weight: bold; padding: 10px;  height: 30px; line-height: 30px; width: 168px; display: block; text-align: center; margin: 0 auto;}
 .btn_wrap a.wide{width:587px;margin: 0 0 0 20px;}
 .find_txt ul li{color:#9a9a9a;font-size:13px;text-align:center; line-height:17px; margin:0 0 20px;}
+.join_form table td input[type="radio"] {position: inherit;width: 20px;height: 20px;padding: 0;margin: 1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .form_txtInput .checkbox_wrap {position: relative;padding: 5px;text-align: right;}
 .form_txtInput .checkbox_wrap input[type="checkbox"] {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .form_txtInput .checkbox_wrap input[type="checkbox"] + label {display: inline-block; line-height:14px;position: relative;padding-left: 20px;font-size: 13px;color: #818181;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;}
@@ -120,7 +121,7 @@ ul{list-style:none; }
       <div class="container">
         <div class="form_txtInput">
           <h2 class="sub_tit_txt">회원가입</h2>
-          <p class="exTxt">회원가입시 이메일 인증을 반드시 진행하셔야 합니다.</p>
+          <p class="exTxt">회원가입시 핸드폰 인증을 반드시 진행하셔야 합니다.</p>
           <div class="join_form">
             <table>
               <colgroup>
@@ -130,37 +131,79 @@ ul{list-style:none; }
               <tbody>
                 <tr>
                   <th><span>아이디</span></th>
-                  <td><input type="text" placeholder="ID 를 입력하세요."></td>
+                  <td><input style="height: 20px;" type="text" id="userId" name="userId" placeholder="ID 를 입력하세요.">
+                   <span><strong class="text-danger" id="userIdCheck">영어, 숫자조합 5~8자</strong>
+					</span>
+					<input type="hidden" id="checkId"></td>
                 </tr>
                 <tr>
                   <th><span>이름</span></th>
-                  <td><input type="text" placeholder=""></td>
+                  <td><input type="text"  id="name" style="height: 20px;"
+						name="name" placeholder=""></td>
+                </tr>
+                <tr>
+                  <th><span>성별</span></th>
+                  <td>
+                  <div style="display : flex;">
+                  <div style="margin-right: 10px;"><input type="radio" class="form-radio" id="gender"
+						name="gender" placeholder="남자" value="남자">남자</div>
+					<div><input type="radio" class="form-radio" id="gender"
+						name="gender" placeholder="여자" value="여자">여자</div></div></td>
+                </tr>
+                <tr>
+                  <th><span>주민번호</span></th>
+                  <td><input type="text" id="rrn" name="rrn"  style="height: 20px;"><span id="helpBlock"
+						class="help-block"> <strong class="text-danger">"
+							- " 제외 13자리입력하세요</strong></span></td>
                 </tr>
                 <tr>
                   <th><span>비밀번호</span></th>
-                  <td><input type="text" placeholder="비밀번호를 입력해주세요."></td>
+                  <td><input type="text" id="password" style="height: 20px;"
+						name="password" placeholder="비밀번호를 입력해주세요."><span id="helpBlock"
+						class="help-block"> <strong class="text-danger">영어, 숫자조합 6~12자</strong>
+					</span></td>
                 </tr>
                 <tr>
                   <th><span>비밀번호 확인</span></th>
-                  <td><input type="text" placeholder="비밀번호를 확인하세요"></td>
+                  <td><input type="text" id="password2" style="height: 20px;"
+						name="password2"  placeholder="비밀번호를 확인하세요"><span id="helpBlock"
+						class="help-block"> <strong class="text-danger">영어, 숫자조합 6~12자</strong>
+					</span></td>
                 </tr>
                 <tr class="email">
                   <th><span>이메일</span></th>
                   <td>
-                    <input type="text"  class="email" placeholder=""><span class="mar10">@</span>
-                    <input type="text"  class="email email2" placeholder="">
-                    <a href="javascript:;" class="btn_confirm">인증번호 발송</a>
-                  </td>
-                </tr>
-                <tr>
-                  <th><span>인증번호 확인</span></th>
-                  <td><input type="text" class="send_number" placeholder="10:00">
-                    <a href="javascript:;" class="btn_confirm">인증번호 발송</a>
+                    <input type="text" style="height: 20px; width: 461.59px;" class="email" placeholder="">
                   </td>
                 </tr>
                 <tr>
                   <th><span>휴대폰 번호</span></th>
-                  <td><input type="text" placeholder="ID 를 입력하세요."></td>
+                  <td>
+                  <div style="display: flex;">
+                  <div><select class="form-control" style="height: 41.99px; width: 80px; margin-right: 20px; border: 1px solid #2c2b2b17;" name="phone1" id="phone1">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
+					</select></div>
+                   <div> <input style="height:20px; width: 80px; margin-right: 20px;" type="text" id="phone2" name="phone2" class="email email2"  placeholder=""></div>
+                   <div> <input style="height:20px; width: 80px;" type="text" id="phone3" name="phone3" class="email email2" placeholder=""></div></div></td>
+                </tr>
+                <tr>
+                <th></th>
+                <td> <a href="javascript:;"  id="sendPhoneNumber" style="height: 41.99px;" class="btn_confirm">인증번호 발송</a> </td>
+                </tr>
+                <tr>
+                  <th><span>인증번호</span></th>
+                  <td><input type="text"  id="inputCertifiedNumber" style="height: 20px;"
+						name="inputCertifiedNumber" class="send_number" placeholder="10:00">
+                  </td>
+                </tr>
+                <tr>
+                <th></th>
+                <td> <a href="javascript:;" style="height: 41.99px;" id="checkBtn" class="btn_confirm">인증번호 확인</a>
+                <input type="hidden" id="checkNo"> </td>
                 </tr>
               </tbody>
             </table>
@@ -169,7 +212,7 @@ ul{list-style:none; }
           <div class="agree_wrap">
             <div class="checkbox_wrap">
               <input type="checkbox" id="news_letter" name="news_letter" class="agree_chk">
-              <label for="news_letter">[선택]뉴스레터 수신동의</label>
+              <label for="news_letter">[선택]위치정보 서비스동의</label>
             </div>
             <div class="checkbox_wrap mar27">
               <input type="checkbox" id="marketing" name="marketing" class="agree_chk">
@@ -184,7 +227,7 @@ ul{list-style:none; }
             </div>
           </div>
           <div class="btn_wrap">
-            <a href="javascript:;">다음</a>
+            <a href="#" id="">확인</a>
           </div>
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->

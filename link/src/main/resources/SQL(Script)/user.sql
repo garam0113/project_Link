@@ -9,6 +9,9 @@ WHERE sns_user_id = 'bymin1992@naver.com' and add_user_type = '1';
 DELETE users
 WHERE phone_no = '010';
 
+DELETE users
+WHERE user_id = 'Link9927';
+
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)
 VALUES ('user06', '1', SYSDATE);
