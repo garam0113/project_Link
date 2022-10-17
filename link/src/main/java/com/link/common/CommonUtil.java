@@ -30,7 +30,7 @@ public class CommonUtil {
 			return org.trim();
 	}
 
-	// String�� null�̸� nulString���� ��ȯ ==> NullPointerException ����
+	// ClubPost에서 사용
 	public static String null2str(String org) {
 		return CommonUtil.null2str(org, "");
 	}

@@ -2415,7 +2415,7 @@ section.greyish {
 input.button {
     position: relative;
     display: inline-block;
-    margin-right: 1em;
+    margin-right: -1em;
     margin-bottom: 1.34em;
     padding: 0.667em 2em;
     border-bottom: none;
@@ -2426,9 +2426,9 @@ input.button {
     color: #FFFFFF !important;
     text-decoration: none !important;
     text-transform: uppercase;
-    font-size: 0.778em !important;
+    font-size: 0.4em !important;
     font-family: 'Montserrat', sans-serif !important;
-    line-height: 1.714em !important;
+    line-height: 2em !important;
     cursor: pointer;
 }    
 

@@ -1,14 +1,12 @@
 package com.link.web.user;
 
+import java.io.File;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
@@ -45,6 +45,8 @@ public class UserController {
 	int pageSize;
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
+	@Value("#{commonProperties['uploadTempDir']}")
+	String uploadTempDir;
 
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
@@ -55,9 +57,24 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user, HttpSession session) throws Exception {
+	public String addUser(@ModelAttribute("user") User user, HttpSession session,
+			@RequestParam("profileImageFile") MultipartFile file) throws Exception {
 
 		System.out.println("/user/addUser : POST");
+
+		String sysName = "_User_";
+
+		Date dateNow = new Date(System.currentTimeMillis());
+
+		System.out.println(dateNow);
+
+		if (file != null && file.getSize() > 0) {
+
+			file.transferTo(
+					new File(uploadTempDir, user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
+			user.setProfileImage(user.getUserId() + sysName + dateNow + file.getOriginalFilename());
+
+		}
 
 		userService.addUser(user); // 회원가입 정보 DB저장
 
@@ -73,31 +90,51 @@ public class UserController {
 
 		System.out.println("/user/addSnsUser : POST");
 
+		User getUser = new User();
 //		User user= new User();
 //		user.setSnsUserId(snsUserId);
 		Random rand = new Random();
 		String no = "";
 
-		for (int i = 0; i < 4; i++) {
-			String ran = Integer.toString(rand.nextInt(10));
-			no += ran;
+		while (true) {
+
+			for (int i = 0; i < 4; i++) {
+				String ran = Integer.toString(rand.nextInt(10));
+				no += ran;
+
+			}
+			user.setUserId("Link" + no); // SNS회원 ID 임의로 생성 하여 저장
+
+			System.out.println("User에 입력된 Data : " + user);
+
+			getUser = userService.getUser(user);
+
+			if (getUser == null) {
+
+				userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
+
+				break;
+			}
 		}
-		user.setUserId("Link" + no); // SNS회원 ID 임의로 생성 하여 저장
-
-		System.out.println("User에 입력된 Data : " + user);
-
-		userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
 
 		return "redirect:/user/updateProfile?userId=" + user.getUserId();
 
 	}
 
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
-	public String getUser(@ModelAttribute("userId") String userId, Model model) throws Exception {
+	public String getUser(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/getUser : GET");
 
 		User user = new User();
+
+		System.out.println("화면에서 입력받은 회원ID : " + userId);
+
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+
+		System.out.println("sessionId = " + sessionId);
+
+		System.out.println("세선의 롤값 1과 비교 : " + ((User) session.getAttribute("user")).getRole().equals("1"));
 
 		user.setUserId(userId);
 
@@ -105,16 +142,21 @@ public class UserController {
 
 		model.addAttribute("getUser", getUser); // DB에서 전송받은 회원의 정보를 Key(user)에 저장
 
-		return "forward:/user/getUser.jsp";
+		if (userId.equals(sessionId) || ((User) session.getAttribute("user")).getRole().equals("1")) {
+
+			return "forward:/user/getUser.jsp";
+
+		} else {
+
+			return "redirect:/main.jsp";
+		}
 	}
 
 	@RequestMapping(value = "getUserId", method = RequestMethod.GET)
-	public String getUserId(HttpSession session) throws Exception {
+	public String getUserId() throws Exception {
 
 		System.out.println("/user/getUser : GET");
-		
-		
-		
+
 		return "forward:/user/getIdView.jsp"; // 화면Navigation
 	}
 
@@ -135,21 +177,22 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
+	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session)
+			throws Exception {
 
 		System.out.println("/user/updateUser : GET");
 
 		System.out.println("입력받은 UserId : " + userId);
-		
-		String sessionId = ((User)session.getAttribute("user")).getUserId();
-		
-		System.out.println("세션에 저장된 UserId : "+sessionId);
 
-		if (userId == null || userId == "") {
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+
+		System.out.println("세션에 저장된 UserId : " + sessionId);
+
+		if (userId == null || userId.equals("")) {
 
 			return "forward:/user/updateUserView.jsp";
 
-		} else if(sessionId == userId){
+		} else if (sessionId.equals(userId)) {
 
 			User user = new User();
 			user.setUserId(userId);
@@ -157,7 +200,7 @@ public class UserController {
 			model.addAttribute("getUser", getUser);
 
 			return "forward:/user/updateUserView.jsp";
-		}else {
+		} else {
 			return "redirect:/main.jsp";
 		}
 
@@ -202,7 +245,7 @@ public class UserController {
 		}
 
 		userService.updateUser(user);
-		
+
 		user = userService.getUser(user);
 
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
@@ -215,64 +258,83 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
-	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
+	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session)
+			throws Exception {
 
 		System.out.println("/user/updateProfile : GET");
-		
-		String sessionId = ((User)session.getAttribute("user")).getUserId();
-		
-		System.out.println("세션에 저장된 UserId : "+sessionId);
-		
-		if (userId == null || userId == "") {
 
-			return "forward:/user/updateProfileView.jsp";
+		System.out.println(session.getAttribute("user").toString());
 
-		} else if(sessionId.equals(userId)) {
-			
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+
+		System.out.println("세션에 저장된 UserId : " + sessionId);
+
+		if (sessionId.equals(userId)) {
+
 			User user = new User();
 			user.setUserId(userId);
 			User getUser = userService.getUser(user);
 			model.addAttribute("getUser", getUser);
 
 			return "forward:/user/updateProfileView.jsp";
-		}else {
+		} else {
 			return "redirect:/main.jsp";
 		}
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-	public String updateProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session) throws Exception {
+	public String updateProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session,
+			@RequestParam("profileImageFile") MultipartFile file) throws Exception {
 
 		System.out.println("/user/updateProfile : POST");
 
+		Date dateNow = new Date(System.currentTimeMillis());
+
+		if (file != null && file.getSize() > 0) {
+			file.transferTo(
+					new File(uploadTempDir, user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename()));
+			user.setProfileImage(user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename());
+		}
+
 		userService.updateUser(user); // SNS회원 프로필 작성
 
-		user = userService.getUser(user);
+		User getUser = userService.getUser(user);
 
-		session.setAttribute("user", user);
+		session.setAttribute("user", getUser);
+
+		System.out.println("세션에 저장된 값 : "+session.getAttribute("user").toString());
 
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
-		if (sessionId.equals(user.getUserId())) {
-			session.setAttribute("user", user);
+		if (sessionId.equals(getUser.getUserId())) {
+			System.out.println("if 문 안의 세션에 저장된 값 : "+session.getAttribute("user").toString());
 		}
 
 		return "forward:/myHome/getMyHome?userId=" + user.getUserId();
 	}
 
 	@RequestMapping(value = "addProfile", method = RequestMethod.POST)
-	public String addProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session) throws Exception {
+	public String addProfile(@ModelAttribute("user") User user, Model model, HttpSession session,
+			@RequestParam("profileImageFile") MultipartFile file) throws Exception {
 
 		System.out.println("/user/addProfile : POST");
 
+		Date dateNow = new Date(System.currentTimeMillis());
+
+		if (file != null && file.getSize() > 0) {
+			file.transferTo(
+					new File(uploadTempDir, user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename()));
+			user.setProfileImage(user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename());
+		}
+
 		userService.updateUser(user); // SNS회원 프로필 작성
 
-		user = userService.getUser(user);
+		User getUser = userService.getUser(user);
 
-		session.setAttribute("user", user);
+		session.setAttribute("user", getUser);
 
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
-		if (sessionId.equals(user.getUserId())) {
-			session.setAttribute("user", user);
+		if (sessionId.equals(getUser.getUserId())) {
+			session.setAttribute("user", getUser);
 		}
 
 		return "forward:/main.jsp";
@@ -306,7 +368,7 @@ public class UserController {
 		System.out.println("/user/login : POST");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		Search searchFoller = new Search();
 
 		User getUser = userService.getUser(user); // 입력받은 회원ID로 회원 정보 확인
@@ -343,11 +405,14 @@ public class UserController {
 		if (getUser != null && getUser.getNickName() != null) {
 
 			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
-			System.out.println("세션에 값 저장 : " +session.getAttribute("user").toString());
-			
+			System.out.println("세션에 값 저장 : " + session.getAttribute("user").toString());
+
 //			return null;
 			return "redirect:/main.jsp";
 		} else if (getUser != null && getUser.getNickName() == null) {
+
+			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
+			System.out.println("세션에 값 저장 : " + session.getAttribute("user").toString());
 //			return null;
 			return "redirect:/user/updateProfile?userId=" + getUser.getUserId();
 		} else {

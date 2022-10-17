@@ -18,7 +18,11 @@
 		<result property="clubMaxMember"	column="club_max_member"		jdbcType="NUMERIC" />
 		<result property="clubCategory"		column="club_category"			jdbcType="VARCHAR" />
 		<result property="clubArea"			column="club_area"				jdbcType="VARCHAR" />
-		<result property="clubImage"		column="club_image"				jdbcType="VARCHAR" />		
+		<result property="clubImage"		column="club_image"				jdbcType="VARCHAR" />	
+		<result property="user.nickName"		column="nickname"				jdbcType="VARCHAR" />
+		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+		<result property="approvalCondition" column="approval_condition"		jdbcType="CHAR" />
+
 	</resultMap>
 	
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
@@ -30,14 +34,16 @@
 		<result property="logoutDate"				column="logout_date"						jdbcType="DATE" />
 		<result property="memberRole"				column="member_role"						jdbcType="CHAR" />
 		<result property="approvalCondition"		column="approval_condition"					jdbcType="CHAR" />
-		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />	
+		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />
+		<result property="user.nickName"		column="nickname"						jdbcType="VARCHAR" />
+		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+			
 	</resultMap>
 	
 	<resultMap	id="meetingSelectMap"		type="meeting">
 		<result property="meetingNo"				column="meeting_no"							jdbcType="NUMERIC"/>
 		<result property="clubNo"					column="club_no"							jdbcType="NUMERIC" />
 		<result property="user.userId"			column="add_meeting_user_id"				jdbcType="VARCHAR" />
-		<!-- <result property="user.addMeetingUserId"			column="add_meeting_user_id"				jdbcType="VARCHAR" /> -->
 		<result property="meetingTitle"				column="meeting_title"						jdbcType="VARCHAR" />
 		<result property="meetingContent"			column="meeting_content"					jdbcType="VARCHAR" />
 		<result property="meetingDate"				column="meeting_date"						jdbcType="VARCHAR" />
@@ -46,13 +52,19 @@
 		<result property="meetingWeather"			column="meeting_weather"					jdbcType="VARCHAR" />
 		<result property="meetingRegDate"			column="meeting_reg_date"					jdbcType="DATE" />
 		<result property="meetingMember"			column="meeting_member"						jdbcType="NUMERIC" />
-		<result property="meetingMaximumMember"		column="meeting_maximum_member"				jdbcType="NUMERIC" />	
+		<result property="meetingMaximumMember"		column="meeting_maximum_member"				jdbcType="NUMERIC" />
+		<result property="user.nickName"		column="nickname"				jdbcType="VARCHAR" />
+		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+			
 	</resultMap>
 	
 	<resultMap 	id="participantSelectMap" 	type="participant">
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
-		<result property="clubNo"						column="club_no"								jdbcType="NUMERIC"/>
+		<result property="meeting.meetingNo"						column="meeting_no"								jdbcType="NUMERIC"/>
 		<result property="user.userId"			column="participant_user_id"					jdbcType="VARCHAR"/>
+		<result property="user.nickName"			column="nickname"					jdbcType="VARCHAR"/>
+		<result property="user.profileImage"			column="profile_image"					jdbcType="VARCHAR"/>
+		
 	</resultMap>
 	
 	<!-- 모임 등록 -->
@@ -216,13 +228,15 @@
 			SELECT rownum AS row_seq, deep_table.*
 			FROM (
 				SELECT
+				c.club_no ,
 				c.club_title ,
 				c.club_detail ,
 				c.club_category ,
 				c.current_member ,
 				c.club_max_member ,
 				c.club_area ,
-				c.club_image
+				c.club_image ,
+				cU.approval_condition
 			
 				FROM club c, club_User cU
 
@@ -362,23 +376,26 @@
 	
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
-	  	SELECT *
+	  	<!-- SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
 											FROM club_user
-											<!-- <if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				club_no = #{searchKeyword}										 				
-													</if>
-												 	<if test="searchCondition == 1 and searchKeyword !='' ">										 														 			
-										 				user_id = #{searchKeyword}
-													</if>
-												</where>
-											</if> -->
-											ORDER BY club_user_no ) inner_table ) WHERE club_no = #{searchKeyword}
-					<!-- WHERE ROWNUM &lt;= #{endRowNum} )
-					 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} -->
+											ORDER BY club_user_no ) inner_table ) WHERE club_no = #{searchKeyword} -->
+			
+			SELECT inner_table.*
+				FROM ( SELECT rownum AS row_seq, deep_table.*
+						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition
+								FROM
+								users u, club_User cU
+								 
+								<where>
+									cU.user_id = u.user_id
+									<if test="searchKeyword != null">
+										and cU.club_no = #{searchKeyword}
+									</if>
+								</where>
+								) deep_table
+							) inner_table
 		
 	 </select>
 	
@@ -514,7 +531,7 @@
 	</delete>
 	
 	<!-- 모임일정 참여신청 수정해야함-->
-	<insert id="addMeetingMember">
+	<insert id="addMeetingMember" parameterType="participant">
 		INSERT into participant		(
 			participant_no ,
 			meeting_no ,
@@ -523,7 +540,7 @@
 		VALUES (
 			seq_participant_no.nextval ,
 			#{meetingNo} ,
-			#{userId}
+			#{user.userId}
 		)
 	</insert>
 	
@@ -534,10 +551,26 @@
 	
 	<!-- 모임일정 참여인원 리스트 -->
 	<select id="getMeetingMemberList" parameterType="search" resultMap="participantSelectMap">
-		SELECT
-			*
-			FROM participant
-			WHERE meeting_no = #{searchKeyword}
+		SELECT inner_table.*
+		FROM ( 
+				SELECT rownum AS row_seq, deep_table.*
+				FROM (
+						 SELECT
+						  p.participant_no, 
+						  p.participant_user_id, 
+						  u.nickname
+						  
+						FROM participant p, users u, meeting m
+						
+						<where>
+							p.participant_user_id = u.user_id
+							and p.meeting_no = m.meeting_no
+<!-- 							and c.club_no = cU.club_no
+							and cU.user_id = u.user_id -->
+							and p.meeting_no = #{searchKeyword}
+						</where>		
+						) deep_table ) inner_table
+
 	</select>
 	
 	<select  id="getTotalMeetingMemberCount"  parameterType="search"	 resultType="int">

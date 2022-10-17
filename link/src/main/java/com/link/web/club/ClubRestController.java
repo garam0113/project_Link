@@ -134,6 +134,8 @@ public class ClubRestController {
 		System.out.println("deleteClubMemer 시작");
 		System.out.println("clubUserNo = : "+clubUser);
 		
+		clubUser.setClubUserNo(clubUser.getClubUserNo());
+		
 		clubService.deleteClubMember(clubUser);
 	}
 	
@@ -148,7 +150,7 @@ public class ClubRestController {
 		System.out.println("meetingNo 잘왔나 ? : "+session.getAttribute("meetingNo"));
 		
 		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
-		participant.setParticipantUserId(user.getUserId());
+//		participant.setUser(user.getUserId());
 		
 		clubService.addMeetingMember(participant);
 		
