@@ -16,25 +16,71 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
 		<!-- include summernote css/js -->
-		<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> -->
 		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
 		<script src="/resources/summernote/summernote-lite.js"></script>
 		<script>
-			$(document).ready(function() {
+			function textEdit(){
+			    jsonArray = [];
 				$('#summernote').summernote({
-					placeholder: '내용을 적어주세요',
-					height: 300,                 // set editor height
-					minHeight: null,             // set minimum height of editor
-					maxHeight: null,             // set maximum height of editor
-					focus: true                  // set focus to editable area after initializing summernote
-				});
-			});
+	                height : 300,
+	                minHeight : null,
+	                maxHeight : null,
+	                focus : true,
+	                lang : 'ko-KR',
+	                toolbar : [
+	  	              ["style", ["style"]],
+		              ["font", ["bold", "underline", "clear"]],
+		              ["fontname", ["fontname"]],
+		              ["para", ["ul", "ol", "paragraph"]],
+		              ["table", ["table"]],
+		              ["insert", ["link", "picture", "video"]],
+		              ["view", ["fullscreen", "codeview"]],
+		              ['highlight', ['highlight']]
+		            ],
+	                //콜백 함수
+	                callbacks : {
+	                	onImageUpload : function(files, editor, welEditable) {
+	               	 		// 파일 업로드(다중업로드를 위해 반복문 사용)
+	               	 		for (var i = files.length - 1; i >= 0; i--) {
+	                			uploadSummernoteImageFile(files[i], this);
+	                		}
+	                	}
+	                }//end of callbacks
+	            });//end of summernote
+
+				function uploadSummernoteImageFile(file, el) {
+					var data = new FormData();
+					data.append("file",file);
+						$.ajax({
+							url: '/clubPostRest/json/uploadSummernoteImageFile',
+							type: "POST",
+							enctype: 'multipart/form-data',
+							data: data,
+							cache: false,
+							contentType : false,
+							processData : false,
+							success : function(data) {
+								//alert(data.responseCode);
+								//alert(data.url);
+								$(el).summernote('editor.insertImage', data.url);
+								jsonArray.push(json["url"]);
+								jsonFn(jsonArray);
+							}
+						});
+				}//end of uploadSummernoteImageFile
+				
+				function jsonFn(jsonArray){
+					console.log(jsonArray);
+				}
+
+			};//end of textEdit
 		</script>
 		<script type="text/javascript">
 			$(function(){
+				textEdit();
+				
 				$("a:contains('등록완료')").bind("click", function(){
-					//$("form[name='addClubPost']").submit();
+					$("form[name='addClubPost']").submit();
 				});
 				$("a:contains('리스트로이동')").bind("click", function(){
 					location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
@@ -79,10 +125,8 @@
 					<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
 						모임 번호 : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
 						<input type="text" name="clubPostTitle" placeholder="제목"></br>
-						<!-- 내용<input type="text" name="clubPostContent"></br>
-						<input type="file" name="videoName" multiple="multiple"></br>
-						<input type="file" name="imageName" multiple="multiple"></br> -->
-						<div id="summernote"><p></p></div>
+						<textarea id="summernote" name="clubPostContent">
+						</textarea>
 						<a class="button transparent aqua">등록완료</a>
 						<a class="button transparent aqua">리스트로이동</a>
 					</form>

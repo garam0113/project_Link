@@ -29,17 +29,22 @@
 		
 		<script type="text/javascript">
 		$(function(){
-			$("input[value='수정']").bind("click", function(){
+			$(".clubPost-header-update").bind("click", function(){
 				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
-			$("input[value='삭제']").bind("click", function(){
+			$(".clubPost-header-delete").bind("click", function(){
 				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
+				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
+			});
+			$(".clubPost-header-report").bind("click", function(){
+				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
+				alert("유저 아이디 : " + ${ clubPost.getClubPost.user.userId });
+				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
 			});
 			$("input[value='리스트로이동']").bind("click", function(){
 				location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 			});
-			$("a:contains('하트')").bind("click", function(){
+			$(".clubPost-header-heart").bind("click", function(){
 				alert('하트');
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
@@ -201,12 +206,12 @@
 						});
 			}); // end of 댓글좋아요
 			//검색버튼 클릭시 검색 내용에 맞는 상품리스트를 display
-			function fncGetProductList() {
+			/* function fncGetProductList() {
 				document.detailForm.searchCondition.value = document.detailForm.searchCondition.value;
 				document.forms[0].elements[1].value = document.forms[0].elements[1].value;
 				$("#currentPage").val("1");
 				$("form").attr("method","post").attr("action","/product/listProduct").submit();
-			}
+			} */
 		});
 		</script>
 		
@@ -299,10 +304,6 @@
 
 					<div class="post-area clear-after">
 						<article role="main">
-	
-							<input type="button" value="수정">
-							<input type="button" value="삭제">
-							<!-- <input type="button" value="리스트로이동"> -->
 							
 							<h5><time datetime="2013-11-09">
 							<c:choose>
@@ -318,39 +319,28 @@
 								<div class="clubPost-header-heart">
 									<img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70">
 								</div>
-								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
+								<div class="clubPost-header-heartCount" style="font-size: 2rem;">${ clubPost.getClubPost.clubPostHeartCount }</div>
 								<div class="clubPost-header-update">
-									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 2rem;"></span>
+									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 4rem;"></span>
 								</div>
 								<div class="clubPost-header-delete">
-									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 2rem;"></span>
+									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 4rem;"></span>
 								</div>
 								<div class="clubPost-header-report">
-									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 2rem;"></span>
+									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 4rem;"></span>
 								</div>
 							</div>
-							<div style="background-color: blue;">
+							<div style="background-color: yellow;">
 								<h1>${ clubPost.getClubPost.clubPostTitle }</h1>
 							</div>
 							<div>
-								<p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p>
-								<p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p>
-								<p>모임 게시물 내용 : ${ clubPost.getClubPost.clubPostContent }</p>
-								<p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p>
-								<p>모임 게시물 영상1 : <%-- <iframe width="560" height="315" src="https://www.youtube.com/embed/${  clubPost.getClubPost.clubPostVideo1 }" frameborder="0" allowfullscreen></iframe> --%></p>
-								<p>모임 게시물 영상2 : ${ clubPost.getClubPost.clubPostVideo2 }</br></p>
-								<p>모임 게시물 영상3 : ${ clubPost.getClubPost.clubPostVideo3 }</br></p>
-								<p>모임 게시물 댓글 개수 : ${ clubPost.getClubPost.clubPostCommentCount }</br>
-								<p>모임 게시물 이미지1 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image1 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지2 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image2 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지3 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image3 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지4 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image4 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지5 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image5 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지6 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image6 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지7 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image7 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지8 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image8 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지9 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image9 }" height="400" width="700"></br></p>
-								<p>모임 게시물 이미지10 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image10 }" height="400" width="700"></br></p>
+								<%-- <p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p> --%>
+								<%-- <p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p> --%>
+								<p>${ clubPost.getClubPost.clubPostContent }</p>
+								<%-- <p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p> --%>
+								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
+									<p>댓글 개수 ${ clubPost.getClubPost.clubPostCommentCount } 개</br>
+								</c:if>
 							</div>
 													
 						</article>

@@ -1,7 +1,6 @@
 package com.link.web.clubPost;
 
-import java.io.File;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Search;
 import com.link.service.club.ClubService;
@@ -98,7 +96,8 @@ public class ClubPostController {
 		model.addAttribute("clubNo", clubNo);
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
-
+	
+	/*
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
 	public String addClubPost(@RequestParam("imageName") List<MultipartFile> imageMultiFile, @RequestParam("videoName") List<MultipartFile> videoMultiFile, @ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
@@ -127,6 +126,59 @@ public class ClubPostController {
 				imageMultiFile.get(j).getOriginalFilename());
 		System.out.println("파일 확인용 : " + clubPost);
 		
+		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
+		return "forward:/clubPost/getClubPost.jsp";
+	}
+	*/
+
+	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
+	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
+		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
+		// session으로 로그인한 회원 정보를 가져온다
+		clubPost.setUser(new User(((User)session.getAttribute("user")).getUserId()));
+
+		System.out.println("확인용 : " + clubPost);		
+		/*
+		// 파일명.확장자만 DB에 넣기위해 빼내자
+		String specificString = "/resources/image/temp/";
+		String content = clubPost.getClubPostContent();
+		int count = 1;
+		//while(true) {
+			int isIndex = 0;
+			// 이미지가 있다면 수행해서 다음 Image 필드에 파일명을 넣어준다
+			while(true) {
+				isIndex = content.indexOf(specificString);
+				if(isIndex == -1) {
+					break;
+				}
+				int startIndex = content.indexOf(specificString)+specificString.length();
+				int endIndexFromStartIndex = content.substring(startIndex).indexOf("\"");
+				// 파일명.확장자
+				String str = content.substring(startIndex).substring(0, endIndexFromStartIndex);
+				switch (count) {
+				case 1: clubPost.setImage1(str); break;
+				case 2: clubPost.setImage2(str);break;
+				case 3: clubPost.setImage3(str);break;
+				case 4: clubPost.setImage4(str);break;
+				case 5: clubPost.setImage5(str);break;
+				case 6: clubPost.setImage6(str);break;
+				case 7: clubPost.setImage7(str);break;
+				case 8: clubPost.setImage8(str);break;
+				case 9: clubPost.setImage9(str);break;
+				case 10: clubPost.setImage10(str);break;
+				}
+				System.out.println(count + "번째");
+				count++;
+				// 기존 문자열에서 startIndex부터 찾는다는 것은 다음 이미지를 찾을 수 있다
+				System.out.println(content = content.substring(startIndex));
+				System.out.println(clubPost);
+			}//else {
+				// 이미지 경로가 없다면 더이상 이미지가 없다는 것 while 나간다
+				//break;
+			//}
+		//}//end of while
+		*/
+			
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
@@ -181,9 +233,17 @@ public class ClubPostController {
 	
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
 	public String chatClubList(HttpSession session, Model model) throws Exception {
-		System.out.println("/chatClubList : POST : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
+		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
 		model.addAttribute("userId", ((User)session.getAttribute("user")).getUserId());
-		return "forward:/chat/index2.jsp";
+		//return "forward:/chat/chatRoomList.jsp";
+		return "forward:/chat/index3.jsp";
+	}
+	
+	@RequestMapping(value = "/chatRoom", method = RequestMethod.GET)
+	public String chatRoom(HttpSession session, Model model) throws Exception {
+		System.out.println("/chatRoom : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
+		model.addAttribute("userId", ((User)session.getAttribute("user")).getUserId());
+		return "forward:/chat/chatRoom.jsp";
 	}
 	
 	
