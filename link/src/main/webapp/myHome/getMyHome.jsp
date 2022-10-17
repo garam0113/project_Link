@@ -21,7 +21,7 @@
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
-	$("#yourHome").on("click" , function() {
+	$(".yourHome").on("click" , function() {
 		
 		self.location = "/myHome/getYourHome?userId="+$("#receiveId").val();
 	});
@@ -69,69 +69,12 @@ $(function() {
 */
 
 
-$(function(){
 
 
-    $("#follow").on("click" , function() {
-  alert("팔로우")
-          var userId = $(".pp").html();
-         
-          $(document).ready(function(){
-       		$.ajax({
-       			type: 'GET',   //get방식으로 명시
-       			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
-       			dataType:'json',   //문자형식으로 받기
-       			success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
-       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-       				//alert(data); 
-       			    console.log("userId : "+data);
-       			},
-       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-       				//alert('실패');
-       			}
-       		})
-       	});
-             
-    });
-});	
 $(function(){
 	
 	<!-- REST CONTROLLTER TEST -->
-	$(".btn_jsonTest").bind("click", function(){
-		
-		$.ajax(
-				{
-					url : "/feedRest/json/getFeedList",
-					method : "POST",
-					data : JSON.stringify ({
-						currentPage : 1
-					}),
-					contentType: 'application/json',
-					dataType : "json",
-					header : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					}, // header end
-					
-					success : function(data, status) {
-						
-						swal.fire("엥?");
-						
-						var value = "";
-						
-						$.each(data, function(index, item) {
-							value += item.content + " // ";
-						}); // $.each close
-						
-						$("#test").text(value);
-						
-					} // success close
-					
-				} // ajax inner close
-				
-		) // ajax close
 
-	}); // btn_jsonTest close
 	<!-- REST CONTROLLTER TEST -->
 	
 	<!-- ADD_FEED -->
@@ -246,9 +189,9 @@ $(function(){
 
 <style>
 #calendar {
-	margin-left: 100px;
+	margin-left: 0px;
 	margin-top: 50px;
-	width: 700px;
+	width: 800px;
 	display: inline-block;
 	justify-content: center;
 }
@@ -383,9 +326,9 @@ $(function(){
 .comment-section {
 	margin-left: 150px;
 	margin-top: 50px;
-	width: 900px;
-	display: inline-block;
-	justify-content: center;
+	width: 700px;
+	
+	
     
 }
 .club{
@@ -393,8 +336,86 @@ margin-left: 100px;
 }
 .L {
 	margin-left: 400px;
+	width:500px;
 }
 
+/* 탭 전체 스타일 */
+.tabs {
+  margin-top: 50px;
+  padding-bottom: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  display:inline-block;
+  margin-left:100px;
+  }
+
+/* 탭 스타일 */
+.tab_item1 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  width:400px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item2 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: inline-block;
+  width:400px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.tab_item1:hover {
+  opacity: 0.75;
+}
+.tab_item2:hover {
+  opacity: 0.75;
+}
+
+/* 라디오 버튼 UI삭제*/
+input[name="tab_item"] {
+  display: none;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab_content {
+  display: none;
+  padding: 40px 40px 0;
+  clear: both;
+  overflow: hidden;
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#design:checked ~ #design_content {
+  display: block;
+}
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item {
+  background-color: #333333;
+  color: #fff;
+}
 </style>
 </head>
 
@@ -490,15 +511,22 @@ margin-left: 100px;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:300px;">
-			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 id="yourHome">${list.receiveId.nickName}</h4></div>
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4></div>
 					<input type="hidden" name="receiveId" id="receiveId" value="${list.receiveId.userId }">
 				</div>
 			</c:forEach>
-				
+			
 				</div>
-				<!-- single-comment -->
-
-				<div class="comment-section">
+			
+<div class="tabs">
+    <input id="all" type="radio" name="tab_item" checked>
+    <label class="tab_item1" for="all">내가 쓴 피드</label>
+    <input id="programming" type="radio" name="tab_item">
+    <label class="tab_item2" for="programming">내 모임 게시물</label>
+    
+ 
+    <div class="tab_content" id="all_content">
+        		<div class="comment-section">
 					<div class="f">My Feed</div>
 					<br />
 					<c:set var="i" value="0"></c:set>
@@ -566,8 +594,12 @@ margin-left: 100px;
 					</c:forEach>
 
 				</div>
-				<!-- single-comment -->
+    </div>
+    <div class="tab_content" id="programming_content">
+        ${clubPostList}
+</div>
 
+  </div>
 
 
 			</div>

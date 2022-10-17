@@ -13,14 +13,14 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
 <script type="text/javascript">
 /*window.onload=function() {
-		var clubNo = $("#meetingNo").val();
+		var meetingNo = $("#meetingNo").val();
 		console.log("dd"+$("#meetingNo").val());
 		
 		$.ajax({
-			url : "/myHomeRest/json/getMeetingList", // 어디로 갈거니? // 갈 때 데이터
+			url : "/myHomeRest/json/getMeetingMemberList", // 어디로 갈거니? // 갈 때 데이터
 			type : "POST", // 타입은 뭘 쓸거니?
 			datatype : "json",
-			 data		:  JSON.stringify({searchKeyword:clubNo}),
+			 data		:  JSON.stringify({searchKeyword:userId}),
 			contentType : "application/json",
 			success : function(data) { // 갔다온 다음 결과값
 					// 나오면 파일을 찾았다는 것
@@ -31,11 +31,8 @@
 			//	alert(str); 
            console.log(data.list[0].meetingNo);
 				$.each(data.list, function(index, item) { // 데이터 =item
-					var value = item.meetingNo
-					          + item.meetingTitle
-				              + item.meetinDate
-				              + item.meetingContent;
-
+					var value = item.meetingNo;
+					      
 					
 				
 				});
@@ -65,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		 events: [
 			    { // this object will be "parsed" into an Event Object
-			      title: 'meetingTitle', // 제목
+			      title: meetingNo, // 제목
 			      start: '2022-10-01', // 시작일자
 			
 			    }
@@ -86,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </script>
-<input type="hidden" name="meetingNo" id="meetingNo" value="${club.clubNo}">
+<input type="hidden" name="meetingNo" id="meetingNo" value="${participant.meetingNo}">
 
 
 
