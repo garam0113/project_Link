@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,7 @@ import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
+import com.link.web.clubPost.ClubPostCommon;
 
 @RestController
 @RequestMapping("/myHomeRest/*")
@@ -185,40 +187,20 @@ public class MyHomeRestController {
           return null;
          
 		 }
-		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{
-			 System.out.println("/myHomeRest/json/json/getClubList : POST");
-			
-			 if(search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				search.setPageSize(pageSize);
-				search.setPageUnit(pageUnit);
+    
+    
+	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)
+	public Map<String, Object> getClubPostListMyHome(HttpSession session) throws Exception {
+		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		String userId =  ((User)session.getAttribute("user")).getUserId();
+
+		return clubPostService.getClubPostListMyHome(userId);
+	}
+	
+	
+	
 			 
-			 Map<String,Object>map = clubService.getClubList(search);
-				
-			 return map;
-	 
- }
-		@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubPostList(@RequestBody Search search, ClubPost clubPost)  throws Exception{
-			 System.out.println("/myHomeRest/json/json/getClubList : POST");
-			 
-			 if(search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				search.setPageSize(pageSize);
-				search.setPageUnit(pageUnit);
-			 
-			 Map<String,Object>map = clubPostService.getClubPostList(search, clubPost);
-				
-		
-			 return map;
-			 
-			 
-		}
 		@RequestMapping(value="json/getMeetingMemberList")
 		public Map<String, Object> getMeetingMemberList(@RequestBody Search search,User user,Participant participant,HttpSession session, Model model, HttpServletRequest request) throws Exception {
 			

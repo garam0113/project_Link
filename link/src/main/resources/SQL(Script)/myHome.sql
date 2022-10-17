@@ -20,6 +20,7 @@ select * from users;
 select * from FOLLOW_BLOCK;
 select * from users;
 select * from feed;
+select * from club_Post;
 SELECT
 	 	inner_table.* 
 	 	FROM (

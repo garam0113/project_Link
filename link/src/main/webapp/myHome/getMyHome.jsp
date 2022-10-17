@@ -70,7 +70,6 @@ $(function() {
 
 
 
-
 $(function(){
 	
 	<!-- REST CONTROLLTER TEST -->
@@ -324,7 +323,7 @@ $(function(){
 }
 
 .comment-section {
-	margin-left: 150px;
+	margin-left: 50px;
 	margin-top: 50px;
 	width: 700px;
 	
@@ -517,7 +516,7 @@ input[name="tab_item"] {
 			</c:forEach>
 			
 				</div>
-			
+		
 <div class="tabs">
     <input id="all" type="radio" name="tab_item" checked>
     <label class="tab_item1" for="all">내가 쓴 피드</label>
@@ -596,10 +595,11 @@ input[name="tab_item"] {
 				</div>
     </div>
     <div class="tab_content" id="programming_content">
-        ${clubPostList}
+     
 </div>
 
   </div>
+${clubPost}
 
 
 			</div>
