@@ -41,8 +41,7 @@
 		//document.detailForm.action = '/addProduct.do';
 		///////////////////////////////////////////////////
 
-		$("form").attr("method", "POST").attr("action", "/club/addClub")
-				.submit();
+		$("form").submit();
 	}
 
 
@@ -74,7 +73,7 @@
 	
 		<h1 class="bg-primary text-center">모 임 등 록</h1>
 		
-		<form class="form-horizontal">
+		<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
@@ -97,15 +96,15 @@
 				<div class="col-sm-4">
 					<!-- <select class="form-control"> -->
 					<select class="form-control" id="clubCategory" name="clubCategory">
-						<option>운동</option>
-  						<option>봉사활동</option>
-  						<option>음식</option>
-						<option>여행</option>
-						<option>반려동물</option>
-						<option>게임</option>
-						<option>음악/댄스</option>
-						<option>독서</option>
-						<option>기타</option>
+						<option value="운동">운동</option>
+  						<option value="봉사활동">봉사활동</option>
+  						<option value="음식">음식</option>
+						<option value="여행">여행</option>
+						<option value="반려동물">반려동물</option>
+						<option value="게임">게임</option>
+						<option value="음악/댄스">음악/댄스</option>
+						<option value="독서">독서</option>
+						<option value="기타">기타</option>
 					</select>
 				</div>			    
 			</div>			
@@ -120,7 +119,7 @@
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="form-control" id="clubImage" name="clubImage">
+					<input type="file" name="file" class="file" id="clubImage" multiple="multiple">
 				</div>		
 			</div>
 			

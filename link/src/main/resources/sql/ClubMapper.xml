@@ -116,6 +116,7 @@
 	<update id="updateClub" parameterType="club">
 		UPDATE club
 		<set>
+			user_id = #{user.userId} ,
 			club_title = #{clubTitle} ,
 			club_detail = #{clubDetail} ,
 			club_category = #{clubCategory} ,
@@ -384,7 +385,7 @@
 			
 			SELECT inner_table.*
 				FROM ( SELECT rownum AS row_seq, deep_table.*
-						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition
+						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image
 								FROM
 								users u, club_User cU
 								 
@@ -487,23 +488,36 @@
 	</select> -->
 	
 		<select  id="getMeetingList"  parameterType="search"	resultMap="meetingSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT meeting_no , club_no , meeting_title , meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member
-											FROM meeting
-											<!-- <if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				club_no = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				meeting_no = #{searchKeyword}
-													</if>
-												</where>
-											</if> -->
-											ORDER BY meeting_no ) inner_table ) WHERE club_no = #{searchKeyword}
-						<!-- WHERE ROWNUM &lt;= #{endRowNum} ) WHERE club_no = #{searchKeyword} -->
-		<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND club_no = #{searchKeyword} --> 
+	 	SELECT inner_table.*
+		FROM (
+			SELECT rownum AS row_seq, deep_table.*
+			FROM (
+				SELECT
+					m.meeting_no ,
+					m.club_no ,
+					m.meeting_title ,
+					m.meeting_date ,
+					m.meeting_time ,
+					m.meeting_place , 
+					m.meeting_weather ,
+					m.meeting_member ,
+					u.user_id
+			
+					FROM meeting m, users u
+
+					<where>
+					m.add_meeting_user_id = u.user_id
+					<if test="searchCondition == 0 and searchKeyword != '' ">
+						and m.club_no = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword != '' ">
+						and u.user_id = #{searchKeyword}
+				</if>
+				</where>
+			) deep_table
+		) inner_table
+	 	
+	 
 	 </select>
 	
 	
@@ -558,7 +572,8 @@
 						 SELECT
 						  p.participant_no, 
 						  p.participant_user_id, 
-						  u.nickname
+						  u.nickname ,
+						  u.profile_image
 						  
 						FROM participant p, users u, meeting m
 						

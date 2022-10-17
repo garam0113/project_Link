@@ -81,33 +81,75 @@
 
 </head>
 
-<body>
+<body class="portfilio">
 		
-	<div class="container">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/beetle.js"></script>
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 	
-		<div class="page-header">
-	       <h3 class=" text-info">모임상세조회</h3>
-	       <a href="/club/getClubMemberList">모임원리스트</a>
-	       <hr/>
-	       <a href="/club/addMeetingView.jsp">모임일정등록</a>
-	       
-	       <hr/>
-	       <a href="/club/getMeetingList">모임일정리스트</a>
-	       
-	       <hr/>
-	       <a href="/clubPost/getClubPostList">모임게시물 리스트</a>
-	    </div>
+	
+
+		<main role="main">
+			<div id="intro-wrap" class="full-height" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken more-button">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>Club</h2>
+							<p>For me, the camera is a sketch book, an instrument of intuition and spontaneity.</p>
+						</div><!-- caption -->	
+						<!-- <div class="photocaption">
+							<h4>A shot by <a href="http://madebyvadim.com/" target="blank" alt="Vadim Sherbakov">Vadim Sherbakov</a></h4>
+						</div>photocaption -->											
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+			
+			
+		</main>
 		
-		<form class="form-horizontal">
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<%-- <li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li> --%>
+					</ul>
+		
+		
+		
+	
+			
+			
+		<form class="form-horizontal" enctype="multipart/form-data">
 		
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 제 목</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>		
+			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
 		</div>
-			
 		
 		<hr/>
-		
+				
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>모 임 설 명</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubDetail}</div>
@@ -117,7 +159,7 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>모 임 이 미 지</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubImage}</div>
+			<img src="/resources/image/uploadFiles/${club.clubImage}" width="300" height="300" name="file" id="clubImage">
 		</div>
 		
 		<hr/>
@@ -145,6 +187,7 @@
 		    </div>
 			</div>	
 			</form>		
+			</div>
 	</div>
 </body>
 </html>
