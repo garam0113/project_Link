@@ -71,6 +71,86 @@ body {
 		});
 
 	});
+	
+	$(function()) {
+		$("#block").on("click", function() {
+			
+		})
+	})
+
+	$(function() {
+		$("td:nth-child(2)").on("mouseover", function() {
+
+			console.log($(this).text().trim());
+
+			var userId = $(this).text().trim();
+
+			$.ajax("/userRest/json/getUser", {
+
+				type : "POST",
+				data : JSON.stringify({
+					userId : userId
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(Data, status) {
+
+					console.log(Data);
+
+					var nickName = Data.nickName;
+					var profileImage = Data.profileImage;
+					var profileWriting = Data.profileWriting;
+
+					$("#ajaxImage").text(profileImage)
+					$("#ajaxNickName").text(nickName)
+					$("#ajaxWriting").text(profileWriting)
+/*
+					$(function() {
+
+						$("#dialog").dialog({
+							autoOpen : true,
+							show : {
+								effect : "blind",
+								duration : 1000
+							},
+							hide : {
+								effect : "explode",
+								duration : 1000
+							}
+						});
+
+						$("#" + userId).on("mouseover", function() {
+							$("#dialog").dialog("open");
+						});
+					});
+					*/
+				}
+			});
+		})
+
+	})
+				/*	$(function() {
+
+						$("#dialog").dialog({
+							autoOpen : false,
+							show : {
+								effect : "blind",
+								duration : 1000
+							},
+							hide : {
+								effect : "explode",
+								duration : 1000
+							}
+						});
+
+						$("#" + userId).on("mouseover", function() {
+							$("#dialog").dialog("open");
+						});
+					});
+	*/
 </script>
 
 </head>
@@ -145,16 +225,25 @@ body {
 					<c:set var="i" value="${ i+1 }" />
 					<tr>
 						<td align="center">${ i }</td>
-						<td align="left" title="Click : 회원정보 확인">${user.userId}</td>
+						<td align="left" id="${ user.userId }" title="Click : 회원정보 확인"><a>${user.userId}</a></td>
 						<td align="left">${user.nickName}</td>
 						<td align="left">${ user.reportCount }</td>
 						<td align="left">${ fn:trim(user.penaltyType) == 0 ? "-" : ""}
 							${ fn:trim(user.penaltyType) == 1 ? "정지" : ""} ${ fn:trim(user.penaltyType) == 2 ? "영구정지" : ""}</td>
 						<td align="left">${ !empty user.stopStartDate ? user.stopStartDate : ""}
 							- ${ !empty user.stopEndDate ? user.stopEndDate : ""}</td>
+						<td>
+							<div id="dialog" title="Basic dialog">
+								<div id="ajaxImage"></div>
+								<div id="ajaxNickName"></div>
+								<div id="ajaxWriting"></div>
+								<div>
+									<span><button id = "block">차단</button></span> <span><button>채팅</button></span>
+								</div>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
-
 			</tbody>
 
 		</table>

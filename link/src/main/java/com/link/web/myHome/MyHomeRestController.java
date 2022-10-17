@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Meeting;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 
@@ -62,8 +67,10 @@ public class MyHomeRestController {
 			
 			search.setPageSize(pageSize);
 			search.setPageUnit(pageUnit);
-		 
-		 user = (User) session.getAttribute("user");
+			
+			
+			String userId = ((User) session.getAttribute("user")).getUserId();
+			search.setSearchKeyword(userId);
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("search",search);
 		 map.put("user", user);	
@@ -95,13 +102,13 @@ public class MyHomeRestController {
 				 
     }
 	 
-    @RequestMapping(value="/json/addFollow/{receiveId}", method=RequestMethod.GET)
-    public void addFollow(@PathVariable User receiveId, HttpSession session, Model model) throws Exception{
+    @RequestMapping(value="/json/addFollow", method=RequestMethod.POST)
+    public Map<String, Object> addFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
       
 
          
-         System.out.println("/myHomeRest/json/addFollow : GET");
-
+         System.out.println("/myHomeRest/json/addFollow : POST");
+         System.out.println("화면에서 입력 받은 값 "+ receiveId );
          // 팔로우 받는 유저 id ( 패스파라미터로 받음 )
          // @PathVariable String userId
           
@@ -114,43 +121,66 @@ public class MyHomeRestController {
           // 보내는사람 id set
           user.setUserId(sendId);
           user.setReceiveId(receiveId);
-     
-
+          
           // 받는사람 정보 객체생성
      
           
           // 받는사람 정보 set
 
 
-          System.out.println("recv_user_id : " +  receiveId);
+           Search search = new Search();
+  		// 받는사람 정보 set
 
-          // 서비스 실행
-          myHomeService.addFollow(user);
-          
-     
+            System.out.println("recv_user_id : " +  receiveId);
+
+            // 서비스 실행
+            myHomeService.addFollow(user);
+            
+            Map<String, Object> map = myHomeService.getFollowList(search );
+            
+            System.out.println("recv_user_id : " +  receiveId);    
+            return map;
+            
+        
        
  
     }
-//	 @RequestMapping(value="/json/deleteFollow", method=RequestMethod.POST)
-//	    public User deleteFollow(@RequestBody User user, @PathVariable String userId, HttpSession session, Model model) throws Exception{
-//			 
-//			 System.out.println("/myHomeRest/json/addFollow : POST");
-//			 
-//			 Object object = session.getAttribute("login");
-//			 User sendId = (User)object;
-//			 User receiveId = myHomeService.addFollow(userId);
-//			 
-//	
-//			 user.setUserId(sendId.getUserId());
-//			 user.setReceiveId(receiveId.getUserId());
-//			 
-//			 myHomeService.deleteFollow(user);
-//			 
-//			 
-//			return user;
-			 
-			 
-		// }
+    @RequestMapping(value="/json/updateFollow", method=RequestMethod.POST)
+    public Map<String, Object> updateFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
+      
+
+         
+         System.out.println("/myHomeRest/json/addFollow : POST");
+         System.out.println("화면에서 입력 받은 값 "+ receiveId );
+         // 팔로우 받는 유저 id ( 패스파라미터로 받음 )
+         // @PathVariable String userId
+          
+          // 팔로우 보내는 유저 id ( 로그인 세션에 저장되어있음 )
+          String sendId =((User)session.getAttribute("user")).getUserId();
+          System.out.println("send_user_id : " + sendId);
+          // User 객체 생성
+          User user = new User();
+       
+          // 보내는사람 id set
+          user.setUserId(sendId);
+          user.setReceiveId(receiveId);
+       
+
+          // 받는사람 정보 객체생성
+     
+          
+          Search search = new Search();
+		// 받는사람 정보 set
+
+          System.out.println("recv_user_id : " +  receiveId);
+
+          // 서비스 실행
+          myHomeService.updateFollow(user);
+          Map<String, Object> map = myHomeService.getFollowList(search );
+          System.out.println("recv_user_id : " +  receiveId);
+          
+          return map;
+		 }
 		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
 		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{
 			 System.out.println("/myHomeRest/json/json/getClubList : POST");
@@ -185,5 +215,35 @@ public class MyHomeRestController {
 			 
 			 
 		}
+//		@RequestMapping(value="json/getMeetingList")
+//		public Map<String, Object> getMeetingList(@RequestBody Search search,User user, Club clubNo,Meeting meeting,HttpSession session, Model model, HttpServletRequest request) throws Exception {
+//			
+//			System.out.println("/club/json/getClubList : GET / POST");
+//	
+//			user = (User) session.getAttribute("user");
+//            session.getAttribute("clubNo");
+//            session.getAttribute("meeting");
+//			
+//			if(search.getCurrentPage()==0) {
+//				search.setCurrentPage(1);
+//			}
+//			search.setPageSize(pageSize);
+//			
+//			Map<String, Object> map = clubService.getMeetingList(search);
+//			
+//			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
+//			System.out.println(resultPage);
+//			search.setSearchKeyword((String) session.getAttribute("clubNo"));
+//			model.addAttribute("meetingList", map.get("meetingList"));
+//			model.addAttribute("resultPage",resultPage);
+//			model.addAttribute("search",search);
+//			model.addAttribute("get",clubNo);
+//			model.addAttribute("meeting",meeting);
+//			
+//			
+//			return  clubService.getMeetingList(search);
+//		}
+		
+		
 		
 }
