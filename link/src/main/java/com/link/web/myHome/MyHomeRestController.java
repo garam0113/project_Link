@@ -42,8 +42,14 @@ public class MyHomeRestController {
 	@Autowired
 	@Qualifier("myHomeServiceImpl")
 	private MyHomeService myHomeService;
-	private ClubService clubService;
+	
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostService;
+	
+	@Autowired
+	@Qualifier("clubServiceImpl")
+	private ClubService clubService;
 
 	public MyHomeRestController() {
 		// TODO Auto-generated constructor stub
@@ -189,13 +195,22 @@ public class MyHomeRestController {
 		 }
     
     
-	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostListMyHome(HttpSession session) throws Exception {
+	@RequestMapping(value = "/json/getClubPostListMyHome", method = RequestMethod.POST)
+	public Map<String, Object> getClubPostListMyHome(@RequestBody ClubPost clubPost ,HttpSession session) throws Exception {
 		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		String userId =  ((User)session.getAttribute("user")).getUserId();
+		System.out.println((User)session.getAttribute("user"));
+		
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 System.out.println(clubPostService);
+		 System.out.println("ddd"+ (clubPostService.getClubPostListMyHome(userId)));
+	
+		 map.put("ClubPostList",clubPostService.getClubPostListMyHome(userId).get("clubPostList"));
+		 
+		 return map;
 
-		return clubPostService.getClubPostListMyHome(userId);
+		
 	}
 	
 	

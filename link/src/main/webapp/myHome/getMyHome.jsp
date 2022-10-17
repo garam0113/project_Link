@@ -70,6 +70,9 @@ $(function() {
 
 
 
+
+
+
 $(function(){
 	
 	<!-- REST CONTROLLTER TEST -->
@@ -595,12 +598,9 @@ input[name="tab_item"] {
 				</div>
     </div>
     <div class="tab_content" id="programming_content">
-     
+     <p id="ddf"></p>
 </div>
-
   </div>
-${clubPost}
-
 
 			</div>
 	</main>
@@ -609,6 +609,39 @@ ${clubPost}
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/beetle.js"></script>
+	 
+	<script type="text/javascript">
+$(function() {
+	$(".tab_item2").on("click" , function(e) {
+		var userId = $("#userId").val(); 
+		$(".tab_item2").off(e);
+	$.ajax({
+		url : "/myHomeRest/json/getClubPostListMyHome", // 어디로 갈거니? // 갈 때 데이터
+		type : "POST", // 타입은 뭘 쓸거니?
+		datatype : "json",
+		 data		:  JSON.stringify({
+			userId : userId
+		 }),
+		 
+		contentType : "application/json",
+		success : function(data) { 
+       console.log(data.ClubPostList[1]);
+       $.each(data.ClubPostList, function(index, item) { // 데이터 =item
+			var title = item.clubPostTitle
+			var content = item.clubPostContent;
+            var 
+			 console.log(value);
+			 $("#ddf").append(value);
+		})
+		
+		}	
+	});
+});
+	 
+});	
+
+</script>
+	
 
 </body>
 
