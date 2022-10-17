@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -19,42 +19,133 @@ $(function(){
 
 
     $("#follow").on("click" , function() {
-    	
-          alert("팔로우");
-    	var sendId = $("#sendId").val();
-    	var recvId = $("#recvId").val();
-    	console.log("sendId="+sendId);
-    	console.log("recvId="+recvId);
-    	
-          $(document).ready(function(){
+    	var userId = $("#userId").val();
+    	var fbStateNo1 = '1';
+        var fbStateNo2 = '2';
+    	var fbTypeNo =   '1';
+
+    	$.ajax({
+			url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
+			type : "POST", // 타입은 뭘 쓸거니?
+			datatype : "json",
+			 data		:  JSON.stringify({searchKeyword:userId}),
+			contentType : "application/json",
+			success : function(data) {
+				
+				
+				$.each(data.list, function(index, item) { // 데이터 =item
+					var value = item.receiveId.userId;
+					var fbState = item.fbState;
+					var fbType = item.fbType;
+				var recvId = $("#recvId").val();
+			
+				
+		    	
+		 if(value == recvId && fbState == 2 ){
+		    
+		       		$.ajax({
+		       			type: 'POST',   //get방식으로 명시
+		       			url : '/myHomeRest/json/updateFollow',  //이동할 jsp 파일 주소
+		       			data: JSON.stringify({
+		       			    userId : recvId,
+		       			    fbState : fbStateNo1,
+		       			    fbType : fbTypeNo
+		       			    
+		       			}),
+		       			dataType:'json',   //문자형식으로 받기
+		       			contentType : "application/json",
+		       			header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+		       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
+		       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+		       				console.log(value);
+		    				console.log(fbState);
+		       			   
+		       			},
+		       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
+		       			
+		       			 console.log("userId : "+data);
+		    
+		       			}
+				
+					
+			})
+		 }
+		
+        	  else if(value == recvId && fbState == 1){
        		$.ajax({
-       			type: 'GET',   //get방식으로 명시
-       			url : '/myHomeRest/json/addFollow/'+userId,  //이동할 jsp 파일 주소
-       			data: JSON.stringify({
-       				sendId: $("input[name='sendId']").val(),
-       			    recvId: $("input[name=recvId]").val()
-       			}),
-       			dataType:'json',   //문자형식으로 받기
-       			header : {
+     			type: 'POST',   //get방식으로 명시
+     			url : '/myHomeRest/json/updateFollow',  //이동할 jsp 파일 주소
+     			data: JSON.stringify({
+     			    userId : recvId,
+     			    fbState : fbStateNo2,
+     			    fbType : fbTypeNo
+     		
+     			}),
+     			dataType:'json',   //문자형식으로 받기
+     			contentType : "application/json",
+     			header : {
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				}, // header end
-       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
-       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-       				//alert(data); 
-       			   
-       			},
-       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-       				alert('실패');
-       			 console.log("userId : "+data);
-       			 console.log(data.userId);
-       			}
-       		})
-       	});
+     			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
+     	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+     				console.log(value);
+    				console.log(fbState);
+     			   
+     			},
+     			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
+     			
+     			 console.log("userId : "+data);
+  
+     			}
+     		})
+     		console.log("for문 후 값 : "+value);
+			console.log("for문 후 값 : "+fbState);
+        	  
+        	  }
+				
+				
+				
+				else if(fbState == null && value == null ){
+				    	
+			       		$.ajax({
+			       			type: 'POST',   //get방식으로 명시
+			       			url : '/myHomeRest/json/addFollow',  //이동할 jsp 파일 주소
+			       			data: JSON.stringify({
+			       			    userId : $("#recvId").val(),
+			       			    fbType : fbTypeNo,
+			       			    fbState : fbStateNo1
+			       			}),
+			       			dataType:'json',   //문자형식으로 받기
+			       			contentType : "application/json",
+			       			header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+			       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
+			       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+			       				console.log(value);
+			    				console.log(fbState);
+			       			   
+			       			},
+			       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
+			       			
+			       			 console.log("userId : "+data);
+			    
+			       			}
+			       		})
+				}
+				})
+			 }
+			
+    	})
              
     });
+   
 });			
-
 </script>
 
 <style>
@@ -79,8 +170,7 @@ $(function(){
 /* Profile sidebar */
 .profile-sidebar {
 	padding: 20px 0 10px 0;
-	width:600px;
-	
+	width: 600px;
 }
 
 .profile-userpic img {
@@ -119,7 +209,6 @@ $(function(){
 	text-align: center;
 	margin-top: 10px;
 	margin-left: 100px;
-	
 }
 
 .profile-userbuttons .btn {
@@ -191,201 +280,205 @@ $(function(){
 }
 
 .f {
-    float:right;
-	width:600px;
-	height:400px;
+	float: right;
+	width: 600px;
+	height: 400px;
 	display: inline-block;
 	margin-top: 20px;
 	margin-right: 150px;
-    
 }
-.club{
-margin-left: 100px;
+
+.club {
+	margin-left: 100px;
 }
 
 .L {
-    margin-top: 20px;
+	margin-top: 20px;
 	margin-left: 400px;
-	width:600px;
-	height:400px;
+	width: 600px;
+	height: 400px;
 	display: inline-block;
 }
-.section-Box{
-    
-}
 
+.section-Box {
+	
+}
 </style>
 </head>
-	
 
-	<body class="blog masonry-style">
 
-		<jsp:include page="/toolbar.jsp" />
+<body class="blog masonry-style">
 
-		<main role="main">
-			<div id="intro-wrap" data-height="27.778">
-				<div id="intro" class="preload darken">
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>MyBlog</h2>
-							<p>Write down your daily life</p>
-						</div><!-- caption -->								
-					</div><!-- intro -->
-				</div><!-- intro -->				
-			</div><!-- intro-wrap -->
+	<jsp:include page="/toolbar.jsp" />
 
-			<div id="main" class="row">
-			<div id="calendar" >
-			
-			<jsp:include page="/myHome/calendar.jsp" />
+	<main role="main">
+		<div id="intro-wrap" data-height="27.778">
+			<div id="intro" class="preload darken">
+				<div class="intro-item"
+					style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+					<div class="caption">
+						<h2>MyBlog</h2>
+						<p>Write down your daily life</p>
+					</div>
+					<!-- caption -->
+				</div>
+				<!-- intro -->
 			</div>
-			
-<div class="container" >
-    <div class="row profile">
-		<div class="col-md-3">
-			<div class="profile-sidebar">
-				<!-- SIDEBAR USERPIC -->
-				<div class="profile-userpic">
-						<img
-										src="/resources/image/uploadFiles/${getUser.profileImage}"
-										class="img-responsive" width="100" height="100">
-				</div>
-				
-				<!-- END SIDEBAR USERPIC -->
-				<!-- SIDEBAR USER TITLE -->
-				<div class="profile-usertitle">
-					<input type="hidden" name="userId" id="userId" value="${getUser.userId }">
-									<br/>
-									<div class="profile-usertitle-name">${getUser.nickName }</div>
-									<div class="profile-usertitle-job">${getUser.profileWriting }
-									</div>
-								</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-				<div class="profile-userbuttons">
-				<c:if test="${user.receiveId.userId == getUser.userId and fn:trim(user.fbState) =='1'}">
-					<button type="button" class="btn btn-success btn-sm" id="following">Following</button>
-			    </c:if>
-				
-					<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
-			 
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
-					<br>
-					<br>
-					
-				</div>
-				<div>
-				<input type="hidden" name="sendId" id="sendId" value="${sessionScope.user.userId}">
-			    <input type="hidden" name="recvId" id="recvId" value="${getUser.userId}">
-			    </div>
-				<!-- END SIDEBAR BUTTONS -->
-				<!-- SIDEBAR MENU -->
-				<div class="profile-usermenu">
-					<ul class="nav">
-						<li class="active">
-							<a href="/club/getApprovalConditionList?userId=${getUser.userId}">
-							<i class="glyphicon glyphicon-home"></i>
-							모임 보기 </a>
-						</li>
-						
-					</ul>
-				</div>
-				<!-- END MENU -->
+			<!-- intro -->
+		</div>
+		<!-- intro-wrap -->
+
+		<div id="main" class="row">
+			<div id="calendar">
+
+				<jsp:include page="/myHome/calendar.jsp" />
 			</div>
-		</div>
-		<div class="col-md-9">
-          
-		</div>
-	</div>
-</div>
-	<div class="section-Box">
-			<div class="L" >My FollowList</div>
-						<c:set var = "i" value = "0" />
-		<c:forEach var = "list" items = "${list}">
-			<c:set var = "i" value = "${i + 1}" />
-			<div class="follow-section" style="margin-left:300px;">
-			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 id="yourHome">${list.receiveId.nickName}</h4></div>
-					<input type="hidden" name="receiveId" id="receiveId" value="${list.receiveId.userId }">
-				</div>
-			</c:forEach>
-				
-				
-				<!-- single-comment -->
 
-			
-					<div class="f">My Feed</div>
-					<br />
-					<c:set var="i" value="0"></c:set>
-					<c:forEach var="feed" items="${feedList}">
-						<c:set var="i" value="${i + 1}"></c:set>
-
-						<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
-
-							<div class="single-comment">
-								<form class="feedForm">
-									<div class="comment-author">
-
-										<img
-										src="/resources/image/uploadFiles/${getUser.profileImage}"
-										class="img-responsive" width="100" height="100"> <cite>${getUser.nickName }</cite>
-										<span class="says">says:</span>
-									</div>
-									<!-- comment-author -->
-									<div class="comment-meta">
-										<time datetime="2013-03-23 19:58">March 23, 2013 at
-											7:58 pm</time>
-										/ <a href="#" class="reply">Reply</a>
-									</div>
-									<!-- comment-meta -->
-									<p>${feed.content}</p>
-									<c:if test="${!empty feed.hashtag}">
-										<br />${feed.hashtag}</c:if>
-									<c:if test="${feed.checkHeart != 0}">
-										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
-										</c:if>
-									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-										<input type="button" class="btn_update" value="수정">
-										<input type="button" class="btn_delete" value="삭제">
-									</c:if>
-									<input type="button" class="btn_getFeed" value="보기"> <input
-										type="hidden" name="feedNo" value="${feed.feedNo}">
-
-									<section class="row section">
-										<div class="row">
-											<c:if test="${feed.checkHeart == 0}">
-												<div class="column two like" style="display: show;">
-													좋아요</div>
-												<div class="column two dislike" style="display: none;">
-													시러요</div>
-											</c:if>
-											<c:if test="${feed.checkHeart != 0}">
-												<div class="column two like" style="display: none;">
-													좋아요</div>
-												<div class="column two dislike" style="display: show;">
-													시러요</div>
-											</c:if>
-											<div class="column two likeCount">${feed.heartCount}</div>
-
-											<div class="column two comment">댓글수</div>
-
-											<div class="column two commentCount">
-												${feed.commentCount}</div>
-											<div class="column four last">신고</div>
-										</div>
-									</section>
-								</form>
+			<div class="container">
+				<div class="row profile">
+					<div class="col-md-3">
+						<div class="profile-sidebar">
+							<!-- SIDEBAR USERPIC -->
+							<div class="profile-userpic">
+								<img src="/resources/image/uploadFiles/${getUser.profileImage}"
+									class="img-responsive" width="100" height="100">
 							</div>
 
-						</c:if>
-					</c:forEach>
+							<!-- END SIDEBAR USERPIC -->
+							<!-- SIDEBAR USER TITLE -->
+							<div class="profile-usertitle">
+								<input type="hidden" name="userId" id="userId"
+									value="${getUser.userId }"> <br />
+								<div class="profile-usertitle-name">${getUser.nickName }</div>
+								<div class="profile-usertitle-job">${getUser.profileWriting }
+								</div>
+							</div>
+							<!-- END SIDEBAR USER TITLE -->
+							<!-- SIDEBAR BUTTONS -->
+							<div class="profile-userbuttons">
+								<button type="button" class="btn btn-success btn-sm" id="following">Following</button>
 
+								<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
+
+								<button type="button" class="btn btn-danger btn-sm">Message</button>
+								<br> <br>
+
+							</div>
+							<div>
+								<input type="hidden" name="sendId" id="sendId"
+									value="${sessionScope.user.userId}"> <input
+									type="hidden" name="recvId" id="recvId"
+									value="${getUser.userId}">
+							</div>
+							<!-- END SIDEBAR BUTTONS -->
+							<!-- SIDEBAR MENU -->
+							<div class="profile-usermenu">
+								<ul class="nav">
+									<li class="active"><a
+										href="/club/getApprovalConditionList?userId=${getUser.userId}">
+											<i class="glyphicon glyphicon-home"></i> 모임 보기
+									</a></li>
+
+								</ul>
+							</div>
+							<!-- END MENU -->
+						</div>
+					</div>
+					<div class="col-md-9"></div>
 				</div>
+			</div>
+			<div class="section-Box">
+				<div class="L">My FollowList</div>
+				<c:set var="i" value="0" />
+				<c:forEach var="list" items="${list}">
+					<c:set var="i" value="${i + 1}" />
+					<div class="follow-section" style="margin-left: 300px;">
+						<div style="display: inline-block;">
+							<img
+								src="/resources/image/uploadFiles/${list.receiveId.profileImage}"
+								width="100" height="100" />
+						</div>
+						<div style="float: right; margin-right: 300px;">
+							<h4 id="yourHome">${list.receiveId.nickName}</h4>
+						</div>
+						<input type="hidden" name="receiveId" id="receiveId"
+							value="${list.receiveId.userId }">
+					</div>
+				</c:forEach>
+
+
 				<!-- single-comment -->
 
 
+				<div class="f">My Feed</div>
+				<br />
+				<c:set var="i" value="0"></c:set>
+				<c:forEach var="feed" items="${feedList}">
+					<c:set var="i" value="${i + 1}"></c:set>
 
+					<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+
+						<div class="single-comment">
+							<form class="feedForm">
+								<div class="comment-author">
+
+									<img src="/resources/image/uploadFiles/${getUser.profileImage}"
+										class="img-responsive" width="100" height="100"> <cite>${getUser.nickName }</cite>
+									<span class="says">says:</span>
+								</div>
+								<!-- comment-author -->
+								<div class="comment-meta">
+									<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58
+										pm</time>
+									/ <a href="#" class="reply">Reply</a>
+								</div>
+								<!-- comment-meta -->
+								<p>${feed.content}</p>
+								<c:if test="${!empty feed.hashtag}">
+									<br />${feed.hashtag}</c:if>
+								<c:if test="${feed.checkHeart != 0}">
+										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
+										</c:if>
+								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+									<input type="button" class="btn_update" value="수정">
+									<input type="button" class="btn_delete" value="삭제">
+								</c:if>
+								<input type="button" class="btn_getFeed" value="보기"> <input
+									type="hidden" name="feedNo" value="${feed.feedNo}">
+
+								<section class="row section">
+									<div class="row">
+										<c:if test="${feed.checkHeart == 0}">
+											<div class="column two like" style="display: show;">
+												좋아요</div>
+											<div class="column two dislike" style="display: none;">
+												시러요</div>
+										</c:if>
+										<c:if test="${feed.checkHeart != 0}">
+											<div class="column two like" style="display: none;">
+												좋아요</div>
+											<div class="column two dislike" style="display: show;">
+												시러요</div>
+										</c:if>
+										<div class="column two likeCount">${feed.heartCount}</div>
+
+										<div class="column two comment">댓글수</div>
+
+										<div class="column two commentCount">
+											${feed.commentCount}</div>
+										<div class="column four last">신고</div>
+									</div>
+								</section>
+							</form>
+						</div>
+
+					</c:if>
+				</c:forEach>
 
 			</div>
+			<!-- single-comment -->
+
+		</div>
 	</main>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
@@ -396,4 +489,3 @@ margin-left: 100px;
 </body>
 
 </html>
-			
