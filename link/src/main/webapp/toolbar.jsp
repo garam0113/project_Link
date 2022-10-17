@@ -22,11 +22,6 @@
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="/resources/imageimg/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="/resources/imageimg/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="/resources/imageimg/apple-touch-icon-152x152.png">
 		
 	</head>
 
@@ -63,11 +58,11 @@
                   <c:if test="${! empty user }">
                      <li class="menu-item"><a
                         href="/user/logout?userId=${user.userId}">로그아웃</a></li>
-                     <c:if test="${user.role == '0' }">
+                     <c:if test="${fn:trim(user.role) == '0' }">
                         <li class="menu-item"><a
                            href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
                      </c:if>
-                     <c:if test="${user.role == '1' }">
+                     <c:if test="${fn:trim(user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
                      </c:if>
                   </c:if>

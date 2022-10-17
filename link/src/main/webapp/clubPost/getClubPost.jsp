@@ -14,9 +14,11 @@
 		<link rel="stylesheet" href="css/font-awesome.min.css" media="screen"> 
 		<link rel="stylesheet" href="style.css" media="screen">
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-		<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-		<![endif]-->
+		
+		<!-- 수정, 삭제, 신고 아이콘 가져올 수 있다 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
 		<link rel="icon" href="favicon.ico">
 		<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76x76.png">
@@ -32,7 +34,7 @@
 			});
 			$("input[value='삭제']").bind("click", function(){
 				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
 			});
 			$("input[value='리스트로이동']").bind("click", function(){
 				location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
@@ -208,6 +210,36 @@
 		});
 		</script>
 		
+		<style type="text/css">
+			.clubPost-header {
+				background-color: yellow;
+				display: grid;
+				grid-template-columns: 1fr 10fr 1fr 1fr 1fr 1fr 1fr;
+			}
+			.clubPost-header-profile {
+				background-color: blue;
+				width: 
+			}
+			.clubPost-header-nickName{
+				background-color: green;
+			}
+			.clubPost-header-heart{
+				background-color: orange;
+			}
+			.clubPost-header-heartCount{
+				background-color: gray;
+			}
+			.clubPost-header-update{
+				background-color: lime;
+			}
+			.clubPost-header-delete{
+				background-color: purple;
+			}
+			.clubPost-header-report{
+				background-color: aqua;
+			}
+		</style>
+		
 	</head>
 
 	<body class="single single-post">
@@ -267,30 +299,60 @@
 
 					<div class="post-area clear-after">
 						<article role="main">
-							<h5 class="meta-post"><a href="#">Travels</a>, <a href="#">World</a> - <time datetime="2013-11-09">November 9, 2013</time></h5>
-							<h1>Travelling around</h1>
-							<p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p>
-							<p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p>
-							<p>모임 게시물 제목 : ${ clubPost.getClubPost.clubPostTitle }</p>
-							<p>모임 게시물 내용 : ${ clubPost.getClubPost.clubPostContent }</p>
-							<p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p>
-							<p>모임 게시물 영상1 : <%-- <iframe width="560" height="315" src="https://www.youtube.com/embed/${  clubPost.getClubPost.clubPostVideo1 }" frameborder="0" allowfullscreen></iframe> --%></p>
-							<p>모임 게시물 영상2 : ${ clubPost.getClubPost.clubPostVideo2 }</br></p>
-							<p>모임 게시물 영상3 : ${ clubPost.getClubPost.clubPostVideo3 }</br></p>
-							<p>모임 게시물 등록날짜 : ${ clubPost.getClubPost.clubPostRegDate }</br>
-							<p>모임 게시물 수정날짜 : ${ clubPost.getClubPost.clubPostUpdateDate }</br>
-							<p>모임 게시물 좋아요 수 : ${ clubPost.getClubPost.clubPostHeartCount }</br>
-							<p>모임 게시물 댓글 개수 : ${ clubPost.getClubPost.clubPostCommentCount }</br>
-							<p>모임 게시물 이미지1 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image1 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지2 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image2 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지3 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image3 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지4 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image4 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지5 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image5 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지6 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image6 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지7 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image7 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지8 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image8 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지9 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image9 }" height="400" width="700"></br></p>
-							<p>모임 게시물 이미지10 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image10 }" height="400" width="700"></br></p>
+	
+							<input type="button" value="수정">
+							<input type="button" value="삭제">
+							<!-- <input type="button" value="리스트로이동"> -->
+							
+							<h5><time datetime="2013-11-09">
+							<c:choose>
+								<c:when test="${ !empty clubPost.getClubPost.clubPostUpdateDate }">${ clubPost.getClubPost.clubPostUpdateDate }(수정 됨)</c:when>
+								<c:otherwise>${ clubPost.getClubPost.clubPostRegDate }</c:otherwise>
+							</c:choose>
+							</time></h5>
+							
+							<div class="clubPost-header">
+								<div class="clubPost-header-profile">
+									<img src="/resources/image/uploadFiles/${ clubPost.user.profileImage }" height="70" width="70"></div>
+								<div class="clubPost-header-nickName">${ clubPost.user.nickName }</div>
+								<div class="clubPost-header-heart">
+									<img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70">
+								</div>
+								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
+								<div class="clubPost-header-update">
+									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 2rem;"></span>
+								</div>
+								<div class="clubPost-header-delete">
+									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 2rem;"></span>
+								</div>
+								<div class="clubPost-header-report">
+									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 2rem;"></span>
+								</div>
+							</div>
+							<div style="background-color: blue;">
+								<h1>${ clubPost.getClubPost.clubPostTitle }</h1>
+							</div>
+							<div>
+								<p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p>
+								<p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p>
+								<p>모임 게시물 내용 : ${ clubPost.getClubPost.clubPostContent }</p>
+								<p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p>
+								<p>모임 게시물 영상1 : <%-- <iframe width="560" height="315" src="https://www.youtube.com/embed/${  clubPost.getClubPost.clubPostVideo1 }" frameborder="0" allowfullscreen></iframe> --%></p>
+								<p>모임 게시물 영상2 : ${ clubPost.getClubPost.clubPostVideo2 }</br></p>
+								<p>모임 게시물 영상3 : ${ clubPost.getClubPost.clubPostVideo3 }</br></p>
+								<p>모임 게시물 댓글 개수 : ${ clubPost.getClubPost.clubPostCommentCount }</br>
+								<p>모임 게시물 이미지1 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image1 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지2 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image2 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지3 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image3 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지4 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image4 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지5 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image5 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지6 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image6 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지7 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image7 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지8 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image8 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지9 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image9 }" height="400" width="700"></br></p>
+								<p>모임 게시물 이미지10 : <img src="/resources/image/uploadFiles/${ clubPost.getClubPost.image10 }" height="400" width="700"></br></p>
+							</div>
+													
 						</article>
 
 					</div><!-- post-area -->

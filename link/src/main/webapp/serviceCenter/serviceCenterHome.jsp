@@ -41,10 +41,10 @@
   margin: 4px 2px;
   cursor: pointer;}
   
-.button1 {width: 50%;}
-.button2 {width: 50%;}
-.button3 {width: 15%;}
-.button4 {width: 15%;}
+.button1 {width: 75%;}
+.button2 {width: 75%;}
+.button3 {width: 23%;}
+.button4 {width: 23%;}
 body{
     width: 1300px;
 }	
@@ -102,7 +102,7 @@ body{
             <div class="card-body">
               <h3 class="card-title" align="center">공지사항</h3>
               <p class="card-text" align="center">사이트 내 공지사항을</br> 조회 할 수 있습니다.</p>
-                <button class="button button1" style= "transform: translate(50px, 0px);" >공지사항 보기</button>
+                <button class="button button1" style= "transform: translate(25px, 0px);" >공지사항 보기</button>
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@ body{
             <div class="card-body">
               <h3 class="card-title" align="center">Q&A</h3>
               <p class="card-text" align="center">사이트 내에 궁금하신 점이나</br> 의견을 남길 수 있습니다.</p>
-                <button class="button button2" style= "transform: translate(50px, -0px);">Q&A 보기</button>
+                <button class="button button2" style= "transform: translate(25px, -0px);">Q&A 보기</button>
             </div>
           </div>
         </div>
@@ -127,8 +127,8 @@ body{
               <h3 class="card-title" align="center">내 신고 및 Q&A 보기</h3>
               <p class="card-text" align="center">내 신고 및 Q&A 내역을 </br>확인할 수 있습니다.</p>
               
-               <button class="button button3" style= "transform: translate(40px, 0px);">내신고 보기</button>
-               <button class="button button4" style= "transform: translate(40px,0px);">내질문 보기</button>
+               <button class="button button3" style= "transform: translate(30px, 0px);">내신고 보기</button>
+               <button class="button button4" style= "transform: translate(70px,0px);">내질문 보기</button>
             </div>
           </div>
         </div>

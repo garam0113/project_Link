@@ -296,7 +296,7 @@ public class ClubDAOImpl implements ClubDAO {
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
 	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 왔다");
 	   sqlSession.update("ClubMapper.updateClubMember", pay);
-	   // pay.getClubNo()가 모임번호입니다
-	   return null;
+	   search.setSearchKeyword(pay.getClubNo()+"");
+	   return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}// end of updateClubMember(Pay pay, Search search)
 }

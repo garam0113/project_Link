@@ -15,6 +15,7 @@
 <meta name="description" content="The Page Description">
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -25,7 +26,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/nickNameCheck.js"></script>
+	src="/resources/javascript/user/nickNameCheck.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="/resources/javascript/user/category.js"></script>
 
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -82,9 +85,9 @@ body>div.container {
 		}
 		
 		if(${ empty getUser.nickName}){
-			$("form").attr("method", "POST").attr("action", "/user/addProfile").submit();
+			$("form").attr("method", "POST").attr("action", "/user/addProfile").attr("encType", "multipart/form-data").submit();
 		}else{
-			$("form").attr("method", "POST").attr("action", "/user/updateProfile").submit();
+			$("form").attr("method", "POST").attr("action", "/user/updateProfile").attr("encType", "multipart/form-data").submit();
 		}
 	}
 </script>
@@ -115,8 +118,7 @@ body>div.container {
 	<form>
 		<div class="wrap wd668">
 			<div class="container">
-			<br/>
-			<br/>
+				<br /> <br />
 				<div class="form_txtInput">
 					<h2 class="sub_tit_txt">프로필작성</h2>
 					<div class="join_form">
@@ -133,7 +135,7 @@ body>div.container {
 								<tr>
 									<th><span>닉네임</span></th>
 									<td><input type="text" class="form-control" id="nickName"
-										name="nickName" placeholder="중복확인하세요"><span
+										name="nickName" placeholder="중복확인하세요" value="${getUser.nickName }"><span
 										id="helpBlock" class="help-block"> <strong
 											class="text-danger" id="nickNameCheck">특수문자&nbsp;사용&nbsp;불가,&nbsp;1~10자</strong>
 											<input type="hidden" id="checkNickName"></span></td>
@@ -166,20 +168,32 @@ body>div.container {
 
 								<tr>
 									<th><span>관심카테고리</span></th>
-									<td><select name="selectCategory" id="selectCategory">
-											<option selected="selected">선택해주세요</option>
-											<option>2</option>
-											<option>2</option>
-											<option>2</option>
-									</select></td>
+									<td><div style="display: flex;">
+											<select class="form-control"
+												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17;"
+												name="categorySelect" id="categorySelcet">
+												<option value="운동">운동</option>
+												<option value="봉사활동">봉사활동</option>
+												<option value="음식">음식</option>
+												<option value="여행">여행</option>
+												<option value="반려동물">반려동물</option>
+												<option value="게임">게임</option>
+												<option value="음악/댄스">음악/댄스</option>
+												<option value="독서">독서</option>
+												<option value="기타">기타</option>
+											</select>
+											<button type="button" class="btn btn-primary"
+												id="categryClick">추가</button>
+										</div></td>
 								</tr>
 
 								<tr>
 									<th></th>
 									<td>
-										<div id="category1" name="category1"></div>
-										<div id="category2" name="category2"></div>
-										<div id="category3" name="category3"></div>
+										<div id="ca"></div> <input type="hidden" name="category1"
+										id="category1"> <input type="hidden" name="category2"
+										id="category2"> <input type="hidden" name="category3"
+										id="category3">
 								</tr>
 
 
@@ -191,9 +205,9 @@ body>div.container {
 								</tr>
 								<tr>
 									<th><span>프로필사진</span></th>
-									<td><input type="file" class="form-file" id="profileImage"
-										name="profileImage" placeholder="프로필사진"
-										value="${getUser.profileWriting}"></td>
+									<td><input type="file" class="form-file" id="profileImageFile"
+										name="profileImageFile" placeholder="프로필사진"
+										value="${getUser.profileImage}"></td>
 								</tr>
 								<tr>
 									<th><span></span></th>
