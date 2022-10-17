@@ -12,123 +12,105 @@
 	<meta name="description" content="The Page Description">
 	
 	<title>Feed</title>
-	<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/style.css" media="screen">
 	
-	<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/resources/image/apple-touch-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/resources/image/apple-touch-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/resources/image/apple-touch-icon-152x152.png">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<%-- SUMMER NOTE --%>
+	<script src="/resources/summernote/summernote-lite.js"></script>
+	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+	<%-- SUMMER NOTE --%>
 	
 	<script type="text/javascript">
-		
-	
-	
-	/* 
-	
-	
-	
-	버튼 확인
-	
-	<input type="button" id="update" value="수정">
-	<input type="button" id="delete" value="삭제"> 
-		
-	
-	
-	*/
-	
-	
 	
 	$(function(){
 		
-		<!-- REST CONTROLLTER TEST -->
-		$(".btn_jsonTest").bind("click", function(){
-			
-			$.ajax(
-					{
-						url : "/feedRest/json/getFeedList",
-						method : "POST",
-						data : JSON.stringify ({
-							currentPage : 1
-						}),
-						contentType: 'application/json',
-						dataType : "json",
-						header : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						}, // header end
-						
-						success : function(data, status) {
-							
-							swal.fire("엥?");
-							
-							var value = "";
-							
-							$.each(data, function(index, item) {
-								value += item.content + " // ";
-							}); // $.each close
-							
-							$("#test").text(value);
-							
-						} // success close
-						
-					} // ajax inner close
-					
-			) // ajax close
-
-		}); // btn_jsonTest close
-		<!-- REST CONTROLLTER TEST -->
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernote').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Font Style', ['fontname']],
+                ['style', ['bold', 'italic', 'underline']],
+                ['font', ['strikethrough']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['paragraph']],
+                ['height', ['height']],
+                ['Insert', ['picture']],
+                ['Insert', ['link']],
+                ['Misc', ['fullscreen']]
+            ],
+            
+			height: 300,                 	// 에디터 높이
+			minHeight: null,             	// 최소 높이
+			maxHeight: null,             	// 최대 높이
+			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
+			placeholder: '오늘 하루는 어떤가요?'
+		});
 		
-		<!-- ADD_FEED -->
-		$(".addFeed").bind("click", function(){
+		<%-- SUMMER NOTE WEB LOADING --%>
+		
+		<%-- GET_FEED --%>
+		$(document).on("click", ".feedForm", function(event) {
+			event.stopPropagation();
+			var feedNumber = $(this).children("input[name='feedNo']").val();
+			location.href="/feed/getFeed?feedNo=" + feedNumber;
+		})
+		<%-- GET_FEED --%>
+		
+		<%-- ADD_FEED --%>
+		$(document).on("click", ".addFeed", function(event){
+			event.stopPropagation();
 			alert("피드 추가버튼");
 			$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 		});
-		<!-- ADD_FEED -->
+		<%-- ADD_FEED --%>
 		
-		<!-- UPDATE_FEED -->
-		$(".btn_update").bind("click", function(){
-			alert("피드 수정 버튼");
-			$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+		<%-- UPDATE_FEED --%>
+		$(document).on("click", ".btn_update", function(event){
+			event.stopPropagation();
+			console.log("피드 수정 버튼");
+			console.log($(this).parent().parents(".feedForm").html())
+			
+			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 		});
-		<!-- UPDATE_FEED -->
+		<%-- UPDATE_FEED --%>
 		
-		<!-- DELETE_FEED -->
-		$(".btn_delete").bind("click", function(){
-			alert("피드 삭제 버튼");
-			$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+		<%-- DELETE_FEED --%>
+		$(document).on("click", ".btn_delete", function(event){
+			event.stopPropagation();
+			console.log("피드 삭제 버튼");
+			console.log($(this).html())
+			
+			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 		});
-		<!-- DELETE_FEED -->
+		<%-- DELETE_FEED --%>
 		
-		<!-- GET_FEED -->
-		$(".btn_getFeed").bind("click", function(){
-			alert("클릭한 글 번호 : " + $(this).parent().find("input[name='feedNo']").val());
-			location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
-		})
-		<!-- GET_FEED -->
-		
-		<!-- ADD_FEED_HEART -->
-		$(".like:contains('좋아요')").bind("click", function(){
+		<%-- ADD_FEED_HEART --%>
+		$(document).on("click", ".feedLike", function(event){
 			event.stopPropagation();
 			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
 			
 			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 			
 			$.ajax(
 					{
 						url : "/feedRest/json/addFeedHeart",
 						method : "POST",
 						data : JSON.stringify ({
-							feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+							source : 0,
+							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							userId : sessionUser
 						}),
 						contentType: 'application/json',
 						dataType : "json",
@@ -140,10 +122,9 @@
 						success : function(data, status) {
 							
 							swal.fire("피드 좋아요 성공 : " + data);
-							
-							$(html).parents(".row").children(".like:contains('좋아요')").hide();
-							$(html).parents(".row").children(".dislike:contains('시러요')").show();
+
 							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -151,21 +132,24 @@
 					
 			) // ajax close
 		})
-		<!-- ADD_FEED_HEART -->
+		<%-- ADD_FEED_HEART --%>
 		
-		<!-- DELETE_FEED_HEART -->
-		$(".dislike:contains('시러요')").bind("click", function(){
+		<%-- DELETE_FEED_HEART --%>
+		$(document).on("click", ".feedDislike", function(event){
 			event.stopPropagation();
 			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
 			
 			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 			
 			$.ajax(
 					{
 						url : "/feedRest/json/deleteFeedHeart",
 						method : "POST",
 						data : JSON.stringify ({
-							feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+							source : 0,
+							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							userId : sessionUser
 						}),
 						contentType: 'application/json',
 						dataType : "json",
@@ -178,9 +162,8 @@
 							
 							swal.fire("피드 시러요 성공 : " + data);
 							
-							$(html).parents(".row").children(".like:contains('좋아요')").show();
-							$(html).parents(".row").children(".dislike:contains('시러요')").hide();
 							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -188,7 +171,7 @@
 					
 			) // ajax close
 		})
-		<!-- DELETE_FEED_HEART -->
+		<%-- DELETE_FEED_HEART --%>
 		
 	})
 	
@@ -199,17 +182,29 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
-
-	textarea {
-		height: 6.25em;
-		border-style: solid;
-		border-color: black;
-		resize: none;
+	
+	h4 {
+			margin-top:5px;
+			margin-left:5px;
+			display: inline-block;
 	}
-
+		
 	@
 	-ms-viewport {
 		width: device-width;
+	}
+	
+	.row {
+		margin-left: 0px;
+	}
+	
+	.feedForm {
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
+	.showFeedForm {
+		border-style:dotted;
 	}
 	
 </style>
@@ -220,22 +215,14 @@
 	
 </head>
 
-<body>
+<body class="single single-post">
 
 	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
 	
-		<div id="intro-wrap" data-height="22.222">
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>Feed</h2>
-							<p>If you’re any good at all, you know you can be better.</p>
-						</div><!-- caption -->					
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+		<div id="intro-wrap" data-height="10">
+		</div><!-- intro-wrap -->
 		
 		<div id="main">
 		
@@ -247,24 +234,16 @@
 					</div>
 					
 					<div class="column six">
-						<div class="addFeedForm">
+						<div class="post-area clear-after addFeedForm">
 							<form id="addForm">
-
-								<c:if test="${!empty sessionScope.user}">
-								
-									프로필 사진 : ${sessionScope.user.profileImage}
-									작성자 : ${sessionScope.user.nickName}
-						
-									<textarea name="content" style="width: 500px;" placeholder="오늘 하루는 어떤가요?"></textarea>
-									<button type="button" class="addFeed">등록</button>
-
-								</c:if>
-
-								<!-- REST CONTROLLTER TEST -->
-								<button type="button" class="btn_jsonTest">데이터 테스트</button>
-								<p id="test">REST CONTROLLTER TEST</p>
-								<!-- REST CONTROLLTER TEST -->
-
+							
+								<article role="main">
+									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
+									<input class="plain button red addFeed" style="display: inline-block; width:150px; float:right; margin-top:10px" value="Submit">
+									
+									<textarea id="summernote" name="content"></textarea>
+								</article>
+		
 							</form>
 						</div>
 
@@ -273,51 +252,51 @@
 						<c:forEach var="feed" items="${feedList}">
 							<c:set var="i" value="${i + 1}"></c:set>
 
-							<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+							<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
 
-								<div class="showFeedForm" style="border: 1px solid gray; width: 500px; padding: 5px; margin-top: 5px;">
+								<div class="showFeedForm">
 									<form class="feedForm">
 
-										${feed.feedNo}번째글 
-										[프로필 사진 : ${feed.user.profileImage}]
-										[작성자 :	${feed.user.userId}] 
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 										
-										<br /> <br />
-										${feed.content} 
-										<br />
+										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
+											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+										</h5>
+										
+										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+											
+											<div style="display: inline-block; float: right;">
+												<%-- 수정 버튼 --%>
+												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
+												<%-- 수정 버튼 --%>
+											
+												<%-- 삭제 버튼 --%>
+												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
+												<%-- 삭제 버튼 --%>
+											</div>
+										</c:if>
+											
+										<p>${feed.content}</p>
 										
 										<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
 										
 										<br />
 
-										<c:if test="${feed.checkHeart != 0}">
-										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
-										</c:if>
-
-										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-											<input type="button" class="btn_update" value="수정">
-											<input type="button" class="btn_delete" value="삭제">
-										</c:if>
-
-										<input type="button" class="btn_getFeed" value="보기">
 										<input type="hidden" name="feedNo" value="${feed.feedNo}">
+										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
 
+										<!-- 피드 좋아요 댓글수 신고 -->
 										<section class="row section">
 											<div class="row">
-												<c:if test="${feed.checkHeart == 0}">
-													<div class="column two like" style="display: show;">
-														좋아요
-													</div>
-													<div class="column two dislike" style="display: none;">
-														시러요
+												<c:if test="${feed.checkHeart eq 0}">
+													<div class="column two">
+														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
-												<c:if test="${feed.checkHeart != 0}">
-													<div class="column two like" style="display: none;">
-														좋아요
-													</div>
-													<div class="column two dislike" style="display: show;">
-														시러요 
+												<c:if test="${feed.checkHeart ne 0}">
+													<div class="column two">
+														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
 												
@@ -331,9 +310,15 @@
 													 ${feed.commentCount}
 												</div>
 													
-												<div class="column four last">신고</div>
+												<!-- 신고 아이콘 -->
+												<div class="column four last">
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.7rem; margin-top:3px;" aria-hidden="true" ></span>
+												</div>
+												<!-- 신고 아이콘 -->
+												
 											</div>
 										</section>
+										<!-- 피드 좋아요 댓글수 신고 -->
 
 									</form>
 

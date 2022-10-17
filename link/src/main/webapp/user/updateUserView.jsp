@@ -27,7 +27,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/SMSCheck.js"></script>
+	src="/resources/javascript/user/SMSCheck.js"></script>
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -241,9 +241,10 @@ label {
 									<td><c:if test="${user.role == '0'}">
 											<input type="text" class="form-control" id="email"
 												name="email" value="${getUser.email}" placeholder="변경이메일">
-										</c:if> <input disabled="disabled" type="text" class="form-control"
+										</c:if> 
+											<c:if test="${user.role == '1'}"><input disabled="disabled" type="text" class="form-control"
 										id="email" name="email" value="${getUser.email}"
-										placeholder="변경이메일">
+										placeholder="변경이메일"></c:if>
 										</td>
 								</tr>
 								<tr>

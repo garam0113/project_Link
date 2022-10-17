@@ -30,12 +30,6 @@
 <script type="text/javascript" src="/javascript/calendar.js"></script>
 <!-- import.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<!--  ///////////////////////// CSS ////////////////////////// -->
-<style>
-	body {
-		padding-top: 50px;
-	}
-</style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <!-- import를 사용하기 위함 -->
@@ -53,13 +47,15 @@
 			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
 			var updateClubCount = parseInt( $(".payProduct-club").text() );
 			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( ${ pay.maxPay } === totalPrice && maxPay != 5000 ){
-				$(".result").text( "최대 모임 가입 횟수입니다" );
+			if( ${ pay.maxPay } === totalPrice ){
+				${ pay.clubNo }===0 ? $(".result").text( "한명당 최대로 가입 할 수 있는 모임은 10개입니다" ): $(".result").text( "하나의 모임당 최대 모임원은 50명입니다" );
 			}else{
 				if( ${ pay.clubNo } === 0 ){
 					$(".payProduct-club").text( updateClubCount + 2 );
+					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
 				}else{
 					$(".payProduct-member").text( updateClubMemberCount + 10 );
+					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) + 10 );
 				}
 				$(".totalPrice").text( totalPrice + 5000 );
 				$(".result").text( "" );
@@ -69,13 +65,15 @@
 			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
 			var updateClubCount = parseInt( $(".payProduct-club").text() );
 			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( totalPrice === 5000 && maxPay != 5000 ){
+			if( totalPrice === 5000 ){
 				$(".result").text( "최소 결제 금액은 5000원입니다" );
 			}else{
 				if( ${ pay.clubNo } === 0 ){
 					$(".payProduct-club").text( updateClubCount - 2 );
+					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
 				}else{
 					$(".payProduct-member").text( updateClubMemberCount - 10 );
+					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) - 10 );
 				}
 				$(".totalPrice").text( totalPrice - 5000 );
 				$(".result").text( "" );
@@ -233,16 +231,21 @@
 		<input type="text" name="updateClubMemberCount" value="0">
 		<input type="text" name="updateClubCount" value="0">
 		<input type="text" name="clubNo" value="0">
-		<input type="text" name="maxPay" value="${ pay.maxPay }">
+		<input type="text" value="${ pay.maxPay }">
+		<input type="text" name="payNavigation" value="${ pay.payNavigation }">
+		</br></br></br>
 		
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="pay-view">
 		
 			<div class="pay-payOption">
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">해당 모임의 모임원수는 ${ returnClub }</c:when>
-					<c:when test="${ pay.clubNo == 0 }">해당 회원의 모임수는 ${ user.joinClubCount }</c:when>
+					<c:when test="${ pay.clubNo != 0 }">결제 후 해당 모임의 총 모임원수는 <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>명</c:when>
+					<c:when test="${ pay.clubNo == 0 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when>
 				</c:choose>
+				</br></br>
+				
+				
 				결제방법&nbsp;&nbsp;:&nbsp;&nbsp;
 				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">신용카드
 				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">카카오페이
@@ -250,20 +253,24 @@
 				<!-- <input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">토스페이 -->
 				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">실시간 계좌이체
 			</div>
+			</br>
+			
 			
 			<div class="pay-payProduct">
 			&nbsp;&nbsp;<b class="plus">+</b>
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">추가 모임원 수<b class="payProduct-member">10</b>명</c:when>
-					<c:when test="${ pay.clubNo == 0 }">추가 모임 수<b class="payProduct-club">2</b>개방</c:when>
+					<c:when test="${ pay.clubNo != 0 }">추가할 모임원 수<b class="payProduct-member">10</b>명</c:when>
+					<c:when test="${ pay.clubNo == 0 }">추가할 모임 수<b class="payProduct-club">2</b>개방</c:when>
 				</c:choose>
 			<b class="minus">-</b>
 			<b class="result"></b>
 			</div>
+			</br>
 			
 			<div class="pay-totalPrice">
 				총 결제금액 : <b class="totalPrice">5000</b>원
 			</div>
+			</br>
 			
 			<div>
 				<input type="button" value="결제하기">
@@ -277,6 +284,5 @@
 </body>
 
 </html>
-
 
 
