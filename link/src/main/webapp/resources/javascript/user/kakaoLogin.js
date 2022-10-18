@@ -13,20 +13,49 @@ function kakaoLogin() {
 					console.log(kakao_account)
 					console.log(kakao_account.profile.nickname)
 					console.log(kakao_account.email)
-						var snsUserId = kakao_account.email;
-							$(".kakao").val(snsUserId)
-							$(".snsType").val(1)
+					var snsUserId = kakao_account.email;
+					$(".kakao").val(snsUserId)
+					$(".snsType").val(1)
 					console.log($(".kakao").val());
-					console.log($(".snsType").val());  
-					
-				 	$($("form")[0]).attr("method","POST").attr("action","/user/snsLogin").submit();
+					console.log($(".snsType").val());
+
+
+					$.ajax("/userRest/json/getUser", {
+						type: "POST",
+						data: JSON.stringify({
+							snsUserId: snsUserId+",",
+							addType: "1,"
+						}),
+						dataType: "json",
+						contentType: "application/json",
+						headers: {
+							"Accept": "application/json"
+						},
+						success: function(Data, status) {
+							console.log("서버로 받는 데이타 : " + Data.userId)
+							console.log("서버로 받는 데이타 : " + Data.penaltyType)
+							console.log("서버로 받는 데이타 : " + Data.stopEndDate)
+
+							if (Data.penaltyType == 2) {
+								swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
+								return;
+							} else if (Data.penaltyType == 1
+								&& Date.now() < Data.stopEndDate) {
+								swal.fire("회원은 정지대상자로 [" + Data.stopStartDateString + " ~ "
+									+ Data.stopEndDateString + "까지 로그인이 제한됩니다.");
+								return;
+							}
+
+							$($("form")[0]).attr("method", "POST").attr("action","/user/snsLogin").submit();
+						}
+					});
+					}
+					// window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
+					});
+				},
+				fail: function(error) {
+					console.log(error);
 				}
 			});
-			// window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
-		},
-		fail: function(error) {
-			console.log(error);
-		}
-	});
 
-}
+		}

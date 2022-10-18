@@ -36,7 +36,8 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 
-<script type="text/javascript" src="/resources/javascript/user/kakaoLogin.js"></script>
+<script type="text/javascript"
+	src="/resources/javascript/user/kakaoLogin.js" charset="utf-8"></script>
 
 <style>
 body>div.container {
@@ -238,9 +239,39 @@ body>div.container {
 		console.log($(".naverType").val());
 		console.log($(".naver").val());
 
-		$("form").attr("method", "POST").attr("action", "/user/snsLogin")
-				.submit();
+		$.ajax("/userRest/json/getUser", {
+			type : "POST",
+			data : JSON.stringify({
+				snsUserId : ","+snsId,
+				addType : ",2"
+			}),
+			dataType : "json",
+			contentType : "application/json",
+			headers : {
+				"Accept" : "application/json"
+			},
+			success : function(Data, status) {
+				console.log("서버로 받는 데이타 : " + Data.userId)
+				console.log("서버로 받는 데이타 : " + Data.penaltyType)
+				console.log("서버로 받는 데이타 : " + Data.stopEndDate)
+				
+				if (Data.penaltyType == 2) {
+					swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
+					return;
+				} else if (Data.penaltyType == 1
+						&& Date.now() < Data.stopEndDate) {
+					swal.fire("회원은 정지대상자로 [" + Data.stopStartDateString + " ~ "
+							+ Data.stopEndDateString + "까지 로그인이 제한됩니다.");
+					return;
+				}
+				$("form").attr("method", "POST").attr("action",
+						"/user/snsLogin").submit();
+			}
+		})
+
 	}
+	
+	
 </script>
 
 </body>
