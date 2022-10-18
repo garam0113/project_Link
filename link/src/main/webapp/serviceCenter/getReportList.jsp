@@ -66,154 +66,143 @@
 </head>
 
 <body>
-	
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/sideToolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 
-	
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	<jsp:include page="/toolbar.jsp" />
-		<div class="page-header text-info">
-	      <%--  ${menu.equals("manage") ? "상품관리" : "상품 목록 조회"} --%>
-	       ${menu.equals("manage") ? "신고 리스트" : "신고 리스트2"}
-	    </div>
-	    
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value="0"/>
-				  
-				  
-				</form>
-	    	</div>
-	    	
-		</div>
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-		
-		
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table table-striped" >
-      
-        <thead>
-          <tr>
-            <td align="center" width="1">No</td>
-            <td/>
-            <td align="center" width ="5">제목</td>
-           
-           	<td/>
-            <td align="center" width ="3">신고처리상태</td>
-            <td/>
-            <td align="center" width="2">신고대상ID</td>
-            <td/>
-            <td align="center" width="2">신고접수날짜</td>
-            
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-			<c:set var = "i" value = "0" />
-		<c:forEach var = "getReportList" items = "${getReportList}">
-			<c:set var = "i" value = "${i + 1}" />
-			<tr class="ct_list_pop">
-				<td align="left" height="200" id="bb">${getReportList.no}</td>
-				
-				<td></td>
-				<td align="left" height="200" style="text-decoration:underline">
-					${getReportList.title}
-				</td>
-				<td></td>
-				  <c:if test="${getReportList.reportCondition=='1'}">
-				<td align="left" height="200">처리완료</td>
-				  </c:if>
-				   <c:if test="${getReportList.reportCondition=='0'}">
-				<td align="left" height="200">대기중</td>
-				  </c:if>
-				<td></td>
-				<td align="left" height="200">${getReportList.user2.userId}</td>
-				<td></td>
-				<td align="left" height="200">${getReportList.regDate}</td>
-				<td align="center" height="200">
-				
-				</td>	
-					
-				<td></td>	
-        </c:forEach>
-        </tbody>
-      
-      </table>
-	  <!--  table End /////////////////////////////////////-->
-	  
-	 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
+			
+		<div class="row1">
 
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
+			<div class=" text-left">
+				<div class="col-md-3 col-sm-3 col-xs-6"> 
+									</div>
+				<p class="text-primary" style="text-align-last: end;">전체 ${resultPage.totalCount } 건수, 현재
+					${resultPage.currentPage} 페이지</p>
+			</div>
 
-							
+
+			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+				
+				<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
+					<form class="form-inline" name="detailForm">
+						
+						<div class="form-group">
+							<select class="form-control" name="searchCondition" style="vertical-align: top;">
+								<option value="0"
+									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
+								<option value="1"
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
+							</select>
+
+							<label class="sr-only" for="searchKeyword" style="vertical-align: top;">검색어</label> <input
+								type="text" class="form-control" id="searchKeyword"
+								name="searchKeyword" placeholder="검색어"
+								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+						</div>
+
+						<button type="button" class="btn btn-default" style="vertical-align: top;">검색</button>
+
+						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+						<input type="hidden" id="currentPage" name="currentPage" value="1" />
+					</form>
+				</div>
+				
+
+			</div>
+			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+			
+
+			<!--  table Start /////////////////////////////////////-->
+			<table class="table table-hover table-striped"  style="text-align-last: center;">
+				<div class="row2">
+				<thead>
+					<tr>
+						<th align="center">No</th>
+						<td />
+						<th align="center" class="content">제목</th>
+						<td />
+						<th align="center">신고처리상태</th>
+						<td />
+						<th align="center">신고대상ID</th>
+						<td />
+						<th align="center" width ="100">신고접수날짜</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<c:set var="i" value="0" />
+					<c:forEach var="getReportList" items="${getReportList}">
+						<c:set var="i" value="${i + 1}" />
+						<tr class="ct_list_pop">
+							<td align="left" id="bb">${getReportList.no}</td>
+
+							<td></td>
+							<td align="left" >
+								${getReportList.title}</td>
+							<td></td>
+							  <c:if test="${getReportList.reportCondition=='1'}">
+							<td align="left" height="200">처리완료</td>
+				 				 </c:if>
+				  				 <c:if test="${getReportList.reportCondition=='0'}">
+				<				<td align="left" height="200">대기중</td>
+							  </c:if>
+							<td></td>
+							<td align="left" >${getReportList.user2.userId}</td>
+							<td></td>
+							<td align="left" >${getReportList.regDate}</td>
+							<td align="center" ></td>
+
+							<td></td>
+					</c:forEach>
+				</tbody>
+
+			</table>
+			<!--  table End /////////////////////////////////////-->
+
+
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				style="margin-top: 10px;">
+				<tr>
+					<td width="53%"></td>
+					<td align="right">
+
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+
+
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
-										<td class="ct_write01"><input type="hidden"
-											id="Quantity" name="Quantity" value="1" /></td>
+										<td class="ct_write01"><input type="hidden" id="Quantity"
+											name="Quantity" value="1" /></td>
 									</tr>
 								</table>
 								<td width="30"></td>
-								<td background="/images/ct_btnbg02.gif" width="90"
-									class="ct_btn01" style="padding-top: 3px;">등록</td>
 							
-							<td width="30"></td>
 
-							<td width="14" height="23">
-							<td background="/images/ct_btnbg02.gif" width="90"
-								class="ct_btn01" style="padding-top: 3px;">이전</td>
+									<div class="col-md-3 col-sm-3 col-xs-6"> 
+									  <button class="add add6" style= "transform: translate(1000px, 0px);">뒤로</button>
+									</div>
+							
 
-							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
-								width="14" height="23"></td>
+							</tr>
+						</table>
 
-						</tr>
-					</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</div>
+	<!--  화면구성 div End /////////////////////////////////////-->
 
-				</td>
-			</tr>
-		</table>
-								
-	  
- 	</div>
- 	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
+
+	<!-- PageNavigation Start... -->
+	<jsp:include page="../common/pageNavigator_new.jsp" />
 	<!-- PageNavigation End... -->
-	
 </body>
 
 </html>

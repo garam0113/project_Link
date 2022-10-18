@@ -31,17 +31,22 @@ $(function(){
 			 data		:  JSON.stringify({searchKeyword:userId}),
 			contentType : "application/json",
 			success : function(data) {
-				
+				var values = null;
+				var fbStates = null;
+				var fbTypes = null;
 				
 				$.each(data.list, function(index, item) { // 데이터 =item
 					var value = item.receiveId.userId;
 					var fbState = item.fbState;
 					var fbType = item.fbType;
-				var recvId = $("#recvId").val();
+				    var recvId = $("#recvId").val();
+			        
+				    values= value;
+				    fbStates= fbState;
+				    fbTypes= fbType;
 			
-				
-		    	
-		 if(value == recvId && fbState == 2 ){
+				   
+		 if(value == recvId && fbState == null ){
 		    
 		       		$.ajax({
 		       			type: 'POST',   //get방식으로 명시
@@ -60,8 +65,7 @@ $(function(){
 						}, // header end
 		       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
 		       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-		       				console.log(value);
-		    				console.log(fbState);
+		       				
 		       			   
 		       			},
 		       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
@@ -73,8 +77,9 @@ $(function(){
 					
 			})
 		 }
+		 
 		
-        	  else if(value == recvId && fbState == 1){
+        	  else if(value == recvId && fbState == null){
        		$.ajax({
      			type: 'POST',   //get방식으로 명시
      			url : '/myHomeRest/json/updateFollow',  //이동할 jsp 파일 주소
@@ -102,22 +107,21 @@ $(function(){
   
      			}
      		})
-     		console.log("for문 후 값 : "+value);
-			console.log("for문 후 값 : "+fbState);
         	  
         	  }
+				})
+			
 				
 				
-				
-				else if(fbState == null && value == null ){
-				    	
+				       if(fbStates == null && values == null ){
+					
 			       		$.ajax({
 			       			type: 'POST',   //get방식으로 명시
 			       			url : '/myHomeRest/json/addFollow',  //이동할 jsp 파일 주소
 			       			data: JSON.stringify({
 			       			    userId : $("#recvId").val(),
-			       			    fbType : fbTypeNo,
-			       			    fbState : fbStateNo1
+			       			    fbTypes : fbTypeNo,
+			       			    fbStates : fbStateNo1
 			       			}),
 			       			dataType:'json',   //문자형식으로 받기
 			       			contentType : "application/json",
@@ -137,12 +141,9 @@ $(function(){
 			    
 			       			}
 			       		})
-				}
-				})
-			 }
-			
+			       		}
+			}	
     	})
-             
     });
    
 });			
@@ -356,11 +357,13 @@ $(function(){
 							<!-- END SIDEBAR USER TITLE -->
 							<!-- SIDEBAR BUTTONS -->
 							<div class="profile-userbuttons">
-								<button type="button" class="btn btn-success btn-sm" id="following">Following</button>
+								<button type="button" class="btn btn-success btn-sm" id="following">팔로잉</button>
 
-								<button type="button" class="btn btn-success btn-sm" id="follow">Follow</button>
+								<button type="button" class="btn btn-success btn-sm" id="follow">팔로우</button>
 
-								<button type="button" class="btn btn-danger btn-sm">Message</button>
+								<button type="button" class="btn btn-danger btn-sm">메세지</button>
+								
+								<button type="button" class="btn btn-danger btn-sm">차단</button>
 								<br> <br>
 
 							</div>

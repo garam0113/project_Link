@@ -127,6 +127,7 @@ DROP SEQUENCE seq_notice_notice_no;
 CREATE SEQUENCE seq_notice_notice_no   INCREMENT BY 1 START WITH 1;
 
 delete from notice;
+select * from users;
 select * from notice;
 
 delete from notice where notice_no = '6';
@@ -302,6 +303,40 @@ SELECT R.*   FROM REPORT_PUSH R      WHERE R.USER_ID1 = 'admin1' AND R.USER_ID2 
 
 
 SELECT COUNT(*) FROM( SELECT notice_title , notice_content , notice_regdate FROM notice ) countTable
+
+
+
+
+
+SELECT 
+* 
+FROM (	SELECT 
+		inner_table.* ,
+		ROWNUM AS row_seq 
+		FROM 		( 
+						SELECT N.NOTICE_NO , 
+						N.NOTICE_TITLE , U.USER_ID, U.NICKNAME ,
+						N.NOTICE_REGDATE , N.NOTICE_COUNT 
+						FROM NOTICE N , USERS U 
+						WHERE N.USER_ID = 'admin1'
+						AND U.USER_ID = N.USER_ID
+						ORDER BY N.notice_no ) inner_table 
+		WHERE ROWNUM <= 10 )
+WHERE row_seq BETWEEN 1 AND 10;
+
+
+SELECT * FROM ( 
+		SELECT inner_table.* , ROWNUM AS row_seq 
+			FROM ( 
+				SELECT Q.QANDA_NO , Q.QANDA_TITLE , Q.ANSWER_CONDITION , U.USER_ID , U.NICKNAME, 
+						Q.QANDA_REGDATE , Q.QANDA_OPEN_CONDITION 
+						FROM QANDA Q, USERS U WHERE Q.USER_ID=U.USER_ID ORDER BY qanda_no ) inner_table WHERE ROWNUM <= 10 ) 
+WHERE row_seq BETWEEN 1 AND 10;
+
+
+
+select * from qanda;
+
 
 
 
