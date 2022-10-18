@@ -1,10 +1,13 @@
 package com.link.web.serviceCenter;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,15 +17,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.domain.Feed;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
+import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
@@ -33,6 +37,10 @@ public class ServiceCenterController {
 	@Autowired
 	@Qualifier("ServiceCenterServiceImpl")
 	private ServiceCenterService serviceCenterService;
+	
+	@Autowired
+	@Qualifier("feedServiceImpl")
+	private FeedService feedService;
 	
 	
 	public ServiceCenterController() {
@@ -326,6 +334,36 @@ public class ServiceCenterController {
 
 
 
+	@RequestMapping(value = "addReport", method = RequestMethod.POST)
+	public String addReport(@ModelAttribute Report report, @RequestParam(value = "sourceNumber") String number,
+								User user, HttpSession httpSession, Model model) throws Exception {
+		
+		// number ->> 피드 번호, 댓글번호 etc
+		
+		user = (User) httpSession.getAttribute("user");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(report.getReportSource() == 3) {
+			map.put("feedNo", number);
+			map.put("user", user);
+			
+			report.setFeed((Feed) (feedService.getFeed(map)).get("feed") );
+			
+		} else if (report.getReportSource() == 4) {
+			report.setFeedComment(feedService.getFeedComment(Integer.parseInt(number)));
+		}
+		
+		model.addAttribute("reportSource", report.getReportSource());
+		model.addAttribute("user02", report.getUser2().getUserId());
+		model.addAttribute("report", report);
+		
+		return "forward:/serviceCenter/addReportView.jsp";
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "updateReport", method = RequestMethod.GET)
 	public String updateReport(@ModelAttribute Report report, Model model) throws Exception {
 		

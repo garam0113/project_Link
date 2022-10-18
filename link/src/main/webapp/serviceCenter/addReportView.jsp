@@ -93,8 +93,11 @@
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
 		var user2 = opener.$("input[name='user2']").val();
+		
+		var userId = opener.$("input[name='reportedId']").val();
 		$("#reportSource").val(reportSource);
 		$("#user2").val(user2);
+		$("#user2").val(userId);
 		
 	});
 	
@@ -197,7 +200,9 @@
 		  </div>
 		</form>
 		
-		
+		${report}
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>${report.feed}
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>${report.feedComment}
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	

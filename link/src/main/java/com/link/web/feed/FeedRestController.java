@@ -25,7 +25,6 @@ import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
@@ -346,14 +345,7 @@ public class FeedRestController {
 		
 		
 		
-	@RequestMapping(value = "/json/addFeedReport", method = RequestMethod.POST)
-	public Report addReport(@RequestBody Report report) throws Exception {
-		
-		feedService.addReport(report);
-		
-		return report;
 	
-	}
 	
 	
 	

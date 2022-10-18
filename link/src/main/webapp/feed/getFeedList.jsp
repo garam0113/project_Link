@@ -199,7 +199,7 @@
 		
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
-			
+		    
 			window.open("/serviceCenter/addReportView.jsp", "신고 등록", "top=100px, left=100px, height=950px, width=500px");
 			
 		}) // .report evenet close
