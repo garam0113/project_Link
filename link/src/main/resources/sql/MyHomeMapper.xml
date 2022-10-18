@@ -119,7 +119,7 @@
      
 </select>
 
-<update id="deleteFollow" parameterType="user" >
+<update id="updateFollow" parameterType="user" >
 
      UPDATE follow_block
 		   	<set>

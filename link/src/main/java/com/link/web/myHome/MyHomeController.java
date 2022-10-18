@@ -65,7 +65,7 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId,
+	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId, Club club,
 		       Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
@@ -75,23 +75,26 @@ public class MyHomeController {
 	
 	    
 		map.put("user", (User)session.getAttribute("user"));
+		map.put("clubNo", session.getAttribute("clubNo"));
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
 		map.put("approvalConditionList",clubService.getApprovalConditionList(search).get("approvalConditionList"));
 		
 		
-		map = feedService.getFeedList(map);
 	
+		map = feedService.getFeedList(map);
+		
+		
 		search.setSearchKeyword(userId);
 		map.put("list",myHomeService.getFollowList(search).get("list"));
-	
+		
+		
 		model.addAttribute("approvalConditionList",map.get("approvalConditionList"));
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
-		
 		
 		
 		return "forward:/myHome/getMyHome.jsp";

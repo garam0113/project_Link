@@ -845,8 +845,7 @@
 				</div>
 				
 				<div class="column six">
-				
-				
+
 					<!-- 피드 내용 -->
 					<div class="post-area clear-after">
 					
@@ -865,13 +864,6 @@
 								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 							</h5>
 							<p>${feed.content}</p>
-							
-							<!-- 
-							
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/-BrDlrytgm8" frameborder="0" allowfullscreen></iframe>							
-							<iframe src="http://player.vimeo.com/video/71319358" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-							
-							 -->
 							
 						</article>
 
