@@ -35,6 +35,10 @@
 	
 	</style>
 
+	<!-- ?? -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
 	
@@ -46,7 +50,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-danger").on("click", function() {
 			alert("눌리나?");
 			fncDeleteMeeting();
 			
@@ -55,14 +59,14 @@
 	
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-primary").bind("click", function() {
 			self.location="/club/getMeetingList"
 		});
 	});
 	
 	$(function() {
 
-		$("button.btn.btn-waring").on("click", function() {
+		$("button.btn.btn-warning").on("click", function() {
 			self.location="/club/updateMeetingView.jsp"
 		});
 	});
@@ -123,21 +127,61 @@
 
 </head>
 
-<body>
+<body class="blog masonry-style">
+
+	<jsp:include page="/toolbar.jsp" />
+		
+	<main role="main">
+		
+			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>MEETING</h2>
+							<p>New encounters are always fun...</p>
+						</div>
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+			
+		
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li>
+					</ul>	
+		
+		
+		
+		
+		
+		
 		
 	<div class="container">
 	
-		<div class="page-header">
-	       <h3 class=" text-info">모임일정상세조회</h3>
-	       <a href="/club/getMeetingMemberList">미팅참여자</a>
-	    </div>
-	
 		<form class="form-horizontal">
-
 		
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 제 목</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div>		
+			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div><a href="/club/getMeetingMemberList">미팅참여자</a> 		
 		</div>
 			
 		
@@ -181,14 +225,18 @@
 		
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >삭&nbsp;제</button>
-					<a class="btn btn-primary btn" href="#" role="button">이&nbsp;전</a>
-					<button type="button" class="btn btn-waring"  >수&nbsp;정</button>
 					<button type="button" class="btn btn-success"  >참&nbsp;가&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-primary" > 이&nbsp;전</button>
+					<button type="button" class="btn btn-warning"  >수&nbsp;정</button>
+		      		<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
+					
 					
 		    </div>
 			</div>		
 			</form>	
+		</div>
+		</div>
 	</div>
+	</main>
 </body>
 </html>

@@ -4,6 +4,10 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- 가능? -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
 
@@ -26,11 +30,42 @@
 	  <!-- jQuery UI toolTip 사용 JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
+ 	 
+ 	 <!-- 따로 가능?? -->
+ 	 	<meta name="description" content="The Page Description">
+		<style type="text/css">@-ms-viewport{width: device-width;}</style>
+		<title>Beetle - Home page</title>
+		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
+		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
+		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
+ 	 
+ 	 
+ 	 
  	 <style>
 		body {
 		padding-top : 70px;
 		clear: none;
 		
+		}
+		
+		header {
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    z-index: 9;
+	    padding: 0.7rem;
+	    width: 100%;
+	    /* background-color: rgba(255, 255, 255, 0.97);
+	    -webkit-box-shadow: 0 1px 0 rgb(0 0 0 / 10%);
+	    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	    box-shadow: 0 1px 0 rgb(0 0 0 / 10%); */
+		}
+		
+		header.transparent {
+    		background-color: #23242b;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+ 	   		box-shadow: none;
 		}
 		.thumbnail {
 			    display: flex;
@@ -76,14 +111,63 @@
 		});
 	});
 	
-	
-	
 	</script>	
 </head>
 
+<%-- <jsp:include page="/toolbar.jsp" /> --%>
+
+<body class="page">
+
+   <header role="banner" class="transparent light">
+      <div class="row">
+         <div
+            class="nav-inner row-content buffer-left buffer-right even clear-after">
+            <div id="brand">
+               <h1 class="reset">
+                  <!--<img src="img/logo.png" alt="logo">-->
+                  <a href="/main.jsp">Link</a>
+               </h1>
+            </div>
+            <!-- brand -->
+            <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+            <nav>
+               <ul class="reset" role="navigation">
+                  <li class="menu-item"><a href="/main.jsp">Home</a></li>
+                  <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
+                  <li class="menu-item"><a href="/">Live</a></li>
+                  <li class="menu-item"><a href="/club/getClubList">Club</a></li>
+                  <li class="menu-item"><a
+                     href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
+                  <li class="menu-item"><a
+                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+                  <c:if test="${ empty sessionScope.user }">
+                     <li class="menu-item"><a href="/user/login">로그인</a></li>
+                     <li class="menu-item"><a href="/user/addUser">회원가입</a></li>
+                  </c:if>
+                  <c:if test="${!empty sessionScope.user }">
+                     <li class="menu-item"><a
+                        href="/user/logout?userId=${user.userId}">로그아웃</a></li>
+                     <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
+                        <li class="menu-item"><a
+                           href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
+                     </c:if>
+                     <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
+                        <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
+                     </c:if>
+                  </c:if>
+               </ul>
+            </nav>
+         </div>
+         <!-- row-content -->
+      </div>
+      <!-- row -->
+   </header>
+
+
+
+
 <body class="blog masonry-style">
 
-	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
 		
@@ -137,10 +221,10 @@
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
-				</form>
+					</form>
 	    	</div>
 	    	
-		</div>
+		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
 
@@ -160,11 +244,12 @@
 				 </div>
 				</div>						
 	    	 </c:forEach>
-		</div>			
+		</div>	
+				
       
 	</div>
 	  
- 	
+ 	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
 	</main>

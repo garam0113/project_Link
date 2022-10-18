@@ -115,8 +115,8 @@
 				alert('½ÂÀÎ');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr("approvalCondition");
-				alert(clubUserNo);
-				alert(approvalCondition);
+/* 				alert(clubUserNo);
+				alert(approvalCondition); */
 				$.ajax("/clubRest/json/updateApprovalCondition",
 						{
 							method : "POST" ,
@@ -131,7 +131,7 @@
 							dataType : "json",
 							success : function(JSONData, status) {
 								alert(status);
-							} // end of success				
+							} // end of success
 						}); // end of ajax
 				refreshMemList();
 				}); // end of ½ÂÀÎ
@@ -220,8 +220,7 @@
 						</li>
 					</ul>
 	
-			</div>
-		</div>
+		
 
 	<div class="container">
 	    
@@ -292,7 +291,8 @@
  	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
  	
  	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
-	
+	</div>
+	</div>
 	</div>
 	</main>
 </body>

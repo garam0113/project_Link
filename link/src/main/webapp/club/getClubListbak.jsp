@@ -64,6 +64,48 @@
 		});
 	});
 	
+	//¹«ÇÑ ÆäÀÌÂ¡
+	var currentPage = 1;
+	$(window).scroll(function() {
+		var maxHeight = $(document).height();
+		var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+		
+		if(currentScroll >= maxHeight) {
+			
+			currentPage++;
+			
+			$("input[name='currentPage']").val(currentPage);
+			
+			var searchCondition = $("option:selected").val();
+			var searchKeyword = $("input[name='searchKeyword']").val();
+			
+			alert(searchCondiiton);
+			alert(searchKeyword);
+			
+			$.ajax({
+				url : "/clubRest/json/getClubList" ,
+				type : "post" ,
+				dataType : "json" ,
+				data : JSON.stringify({
+					currentPage : currentPage,
+					searchCondition : searchCondition,
+					searchKeyword : searchKeyword,
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function( JSONData, status) {
+					alert(status);
+					
+					console.log(JSONData.search);
+					console.log(JSONData.clubPostList);
+				}
+			});
+		}
+	});
+	
+	
 	
 	
 	</script>	
