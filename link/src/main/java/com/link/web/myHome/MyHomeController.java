@@ -101,15 +101,26 @@ public class MyHomeController {
 		return "forward:/myHome/getMyHome.jsp";
 	}  
 	@RequestMapping(value = "getYourHome" ,method=RequestMethod.GET)
-	public String getYourHome(@ModelAttribute Search search, Heart heart, String userId,
+	public String getYourHome(@ModelAttribute Search search, Heart heart, String userId, HttpSession session,
 		       Model model) throws Exception{
 		
 		System.out.println("/myHome/getYourHome : GET");
 		
+		String sessoinId = ((User)session.getAttribute("user")).getUserId();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		User getUser = new User();
+		User followUser = new User();
+		User recevieId = new User();
 		getUser.setUserId(userId);
 		User getUserId =userService.getUser(getUser);
+		recevieId.setUserId(userId);
+		followUser.setReceiveId(recevieId);
+		followUser.setUserId(sessoinId);
+		User followUserId = myHomeService.getFollow(followUser);
+		
+		System.out.println( "서버에서 받은  DATA : "+followUserId);
+		
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
@@ -128,6 +139,7 @@ public class MyHomeController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
 		model.addAttribute("getUser", getUserId);
+		model.addAttribute("followUser", followUserId);
 		
 		return "forward:/myHome/getYourHome.jsp";
 	}
@@ -219,6 +231,7 @@ public class MyHomeController {
 		return "redirect:/myHome/getMyHome?userId="+user.getUserId();
 		
 	}
+	
 	@RequestMapping(value = "getFollowList")
 	public String getFollowList(@ModelAttribute Search search, Model model) throws Exception {
 	

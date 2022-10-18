@@ -55,6 +55,14 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 		System.out.println("\n[MyHomeDAOImpl addFollow start]\n");
     	sqlSession.insert("MyHomeMapper.addFollow", user);
     }
+	
+	
+	@Override
+	public User getFollow(User user) throws Exception {
+		System.out.println("\n[MyHomeDAOImpl getFollow start]\n");
+		return (User)sqlSession.selectOne("MyHomeMapper.getFollow", user);
+	}
+
 	@Override
 	public List<User>getFollowList (Search search) throws Exception{
 		
