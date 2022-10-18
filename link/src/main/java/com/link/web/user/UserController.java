@@ -192,7 +192,7 @@ public class UserController {
 
 			return "forward:/user/updateUserView.jsp";
 
-		} else if (sessionId.equals(userId)) {
+		} else if (sessionId.equals(userId) || ((User) session.getAttribute("user")).getRole().equals("1")) {
 
 			User user = new User();
 			user.setUserId(userId);
@@ -340,12 +340,6 @@ public class UserController {
 		return "forward:/main.jsp";
 	}
 
-	// REST
-//	@RequestMapping(value = "updatePhoneNo", method = RequestMethod.GET)
-//	public String updatePhoneNo(@ModelAttribute("user") User user, Model model) throws Exception{
-//		
-//	}
-
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
 	public String getPassword() throws Exception {
 
@@ -436,7 +430,7 @@ public class UserController {
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
 	public String deleteUser(@ModelAttribute("userId") String userId, @ModelAttribute("UserState") String userState)
 			throws Exception {
-
+		
 		System.out.println("/user/deleteUser : GET");
 
 		User user = new User(); // get방식으로 들어온 Data 저장을 위해 생성
