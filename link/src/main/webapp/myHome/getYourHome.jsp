@@ -14,139 +14,305 @@
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
+	$(function() {
 
-$(function(){
+		$("#follow").on("click", function() {
+			var userId = $("#userId").val();
+			var fbStateNo1 = '1';
+			var fbStateNo2 = '2';
+			var fbTypeNo = '1';
 
+			$.ajax({
+				url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
+				type : "POST", // 타입은 뭘 쓸거니?
+				datatype : "json",
+				data : JSON.stringify({
+					searchKeyword : userId
+				}),
+				contentType : "application/json",
+				success : function(data) {
+					var values = null;
+					var fbStates = null;
+					var fbTypes = null;
 
-    $("#follow").on("click" , function() {
-    	var userId = $("#userId").val();
-    	var fbStateNo1 = '1';
-        var fbStateNo2 = '2';
-    	var fbTypeNo =   '1';
+					$.each(data.list, function(index, item) { // 데이터 =item
+						var value = item.receiveId.userId;
+						var fbState = item.fbState;
+						var fbType = item.fbType;
+						var recvId = $("#recvId").val();
 
-    	$.ajax({
-			url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
-			type : "POST", // 타입은 뭘 쓸거니?
-			datatype : "json",
-			 data		:  JSON.stringify({searchKeyword:userId}),
-			contentType : "application/json",
-			success : function(data) {
-				var values = null;
-				var fbStates = null;
-				var fbTypes = null;
-				
-				$.each(data.list, function(index, item) { // 데이터 =item
-					var value = item.receiveId.userId;
-					var fbState = item.fbState;
-					var fbType = item.fbType;
-				    var recvId = $("#recvId").val();
-			        
-				    values= value;
-				    fbStates= fbState;
-				    fbTypes= fbType;
-			
-				   
-		 if(value == recvId && fbState == null ){
-		    
-		       		$.ajax({
-		       			type: 'POST',   //get방식으로 명시
-		       			url : '/myHomeRest/json/updateFollow',  //이동할 jsp 파일 주소
-		       			data: JSON.stringify({
-		       			    userId : recvId,
-		       			    fbState : fbStateNo1,
-		       			    fbType : fbTypeNo
-		       			    
-		       			}),
-		       			dataType:'json',   //문자형식으로 받기
-		       			contentType : "application/json",
-		       			header : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						}, // header end
-		       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
-		       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-		       				
-		       			   
-		       			},
-		       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-		       			
-		       			 console.log("userId : "+data);
-		    
-		       			}
-				
-					
-			})
-		 }
-		 
-		
-        	  else if(value == recvId && fbState == null){
-       		$.ajax({
-     			type: 'POST',   //get방식으로 명시
-     			url : '/myHomeRest/json/updateFollow',  //이동할 jsp 파일 주소
-     			data: JSON.stringify({
-     			    userId : recvId,
-     			    fbState : fbStateNo2,
-     			    fbType : fbTypeNo
-     		
-     			}),
-     			dataType:'json',   //문자형식으로 받기
-     			contentType : "application/json",
-     			header : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				}, // header end
-     			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
-     	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-     				console.log(value);
-    				console.log(fbState);
-     			   
-     			},
-     			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-     			
-     			 console.log("userId : "+data);
-  
-     			}
-     		})
-        	  
-        	  }
-				})
-			
-				
-				
-				       if(fbStates == null && values == null ){
-					
-			       		$.ajax({
-			       			type: 'POST',   //get방식으로 명시
-			       			url : '/myHomeRest/json/addFollow',  //이동할 jsp 파일 주소
-			       			data: JSON.stringify({
-			       			    userId : $("#recvId").val(),
-			       			    fbTypes : fbTypeNo,
-			       			    fbStates : fbStateNo1
-			       			}),
-			       			dataType:'json',   //문자형식으로 받기
-			       			contentType : "application/json",
-			       			header : {
+						values = value;
+						fbStates = fbState;
+						fbTypes = fbType;
+
+						if (value == recvId && fbState == null) {
+
+							$.ajax({
+								type : 'POST', //get방식으로 명시
+								url : '/myHomeRest/json/updateFollow', //이동할 jsp 파일 주소
+								data : JSON.stringify({
+									userId : recvId,
+									fbState : fbStateNo1,
+									fbType : fbTypeNo
+
+								}),
+								dataType : 'json', //문자형식으로 받기
+								contentType : "application/json",
+								header : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								}, // header end
+								success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
+									//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+
+								},
+								error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
+
+									console.log("userId : " + data);
+
+								}
+
+							})
+						}
+
+						else if (value == recvId && fbState == null) {
+							$.ajax({
+								type : 'POST', //get방식으로 명시
+								url : '/myHomeRest/json/updateFollow', //이동할 jsp 파일 주소
+								data : JSON.stringify({
+									userId : recvId,
+									fbState : fbStateNo2,
+									fbType : fbTypeNo
+
+								}),
+								dataType : 'json', //문자형식으로 받기
+								contentType : "application/json",
+								header : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								}, // header end
+								success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
+									//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+									console.log(value);
+									console.log(fbState);
+
+								},
+								error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
+
+									console.log("userId : " + data);
+
+								}
+							})
+
+						}
+					})
+
+					if (fbStates == null && values == null) {
+
+						$.ajax({
+							type : 'POST', //get방식으로 명시
+							url : '/myHomeRest/json/addFollow', //이동할 jsp 파일 주소
+							data : JSON.stringify({
+								userId : $("#recvId").val(),
+								fbTypes : fbTypeNo,
+								fbStates : fbStateNo1
+							}),
+							dataType : 'json', //문자형식으로 받기
+							contentType : "application/json",
+							header : {
 								"Accept" : "application/json",
 								"Content-Type" : "application/json"
 							}, // header end
-			       			success: function(data, status){   //데이터 주고받기 성공했을 경우 실행할 결과
-			       	            //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-			       				console.log(value);
-			    				console.log(fbState);
-			       			   
-			       			},
-			       			error:function(data){   //데이터 주고받기가 실패했을 경우 실행할 결과
-			       			
-			       			 console.log("userId : "+data);
-			    
-			       			}
-			       		})
-			       		}
-			}	
-    	})
-    });
-   
-});			
+							success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
+								//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
+								console.log(value);
+								console.log(fbState);
+
+							},
+							error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
+
+								console.log("userId : " + data);
+
+							}
+						})
+					}
+				}
+			})
+		});
+
+		$("#block").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollw", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.userId);
+					console.log("서버로 받은 데이터 : " + data.fbState);
+					var fbState = "";
+					if(data.fbState == 1){
+						fbState = "2";
+					}else if(data.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.userId);
+							if(update.fbState == 1){
+								$("#block").text("차단해제");
+								}else if(update.fbState == 2){
+								$("#block").text("차단");
+								}
+						}
+					})
+				},
+				error : function(error) {
+					console.log("서버로 받은 데이터(error) : " + error);
+
+					$.ajax("/userRest/json/addBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accetp" : "application/json"
+						},
+						success : function(Data, status) {
+							console.log("서버로부터 받은 Data(error) : " + Data);
+							$("#block").text("차단해제");
+						}
+					})
+				}
+			})
+		})
+
+		$("#stopBlock").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollw", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.userId);
+					console.log("서버로 받은 데이터 : " + data.fbState);
+					var fbState = "";
+					if(data.fbState == 1){
+						fbState = "2";
+					}else if(data.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.userId);
+							if(update.fbState == 1){
+							$("#stopBlock").text("차단해제");
+							}else if(update.fbState == 2){
+							$("#stopBlock").text("차단");
+							}
+						}
+					})
+				}
+			})
+		})
+
+		$("#updateBlock").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollw", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.userId);
+					console.log("서버로 받은 데이터 : " + data.fbState);
+					var fbState = "";
+					if(data.fbState == 1){
+						fbState = "2";
+					}else if(data.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.userId);
+							if(update.fbState == 1){
+							$("#updateBlock").text("차단해제");
+							}else if(update.fbState == 2){
+							$("#updateBlock").text("차단");
+							}
+						}
+					})
+				}
+			})
+		})
+
+	});
 </script>
 
 <style>
@@ -357,13 +523,28 @@ $(function(){
 							<!-- END SIDEBAR USER TITLE -->
 							<!-- SIDEBAR BUTTONS -->
 							<div class="profile-userbuttons">
-								<button type="button" class="btn btn-success btn-sm" id="following">팔로잉</button>
+								<button type="button" class="btn btn-success btn-sm"
+									id="following">팔로잉</button>
 
 								<button type="button" class="btn btn-success btn-sm" id="follow">팔로우</button>
 
 								<button type="button" class="btn btn-danger btn-sm">메세지</button>
-								
-								<button type="button" class="btn btn-danger btn-sm">차단</button>
+
+
+								<c:if
+									test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '2'}">
+									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
+										<button type="button" class="btn btn-danger btn-sm"
+											id="stopBlock">차단해제</button>
+									</c:if>
+									<c:if test="${fn:trim(followUser.receiveId.fbState) == '2'}">
+										<button type="button" class="btn btn-danger btn-sm"
+											id="updateBlock">차단</button>
+									</c:if>
+								</c:if>
+								<c:if test="${ empty followUser }">
+									<button type="button" class="btn btn-danger btn-sm" id="block">차단</button>
+								</c:if>
 								<br> <br>
 
 							</div>
