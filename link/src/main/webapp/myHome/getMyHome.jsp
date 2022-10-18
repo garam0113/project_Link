@@ -18,6 +18,18 @@
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
+	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
+	function getClubPostGo(clubPostNo){
+		alert(clubPostNo);
+		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
+	}
+	
+	// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
+	function getMyHomeGo(userId){
+		location.href = "/myHome/getYourHome?userId="+userId;
+	}
+</script>
+<script type="text/javascript">
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
@@ -507,9 +519,16 @@ input[name="tab_item"] {
 					</div>
 				</div>
 
-			<div class="section-Box">
-			<div class="L">My FollowList</div>
-						<c:set var = "i" value = "0" />
+			<div class="tabs">
+			<input id="all" type="radio" name="tab_item" checked>
+    <label class="tab_item1" for="all">FollowList</label>
+    <input id="programming" type="radio" name="tab_item">
+    <label class="tab_item2" for="programming">FollowerList</label>
+    
+    <div class="tab_content" id="all_content">
+        		<div class="comment-section">
+        		<br />
+		<c:set var = "i" value = "0" />
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:300px;">
@@ -518,6 +537,13 @@ input[name="tab_item"] {
 				</div>
 			</c:forEach>
 			
+				</div>
+				</div>
+				  <div class="tab_content" id="programming_content">
+     <div class="col-md-4" id="cp">
+											
+</div>
+  </div>
 				</div>
 		
 <div class="tabs">
@@ -529,7 +555,6 @@ input[name="tab_item"] {
  
     <div class="tab_content" id="all_content">
         		<div class="comment-section">
-					<div class="f">My Feed</div>
 					<br />
 					<c:set var="i" value="0"></c:set>
 					<c:forEach var="feed" items="${feedList}">
@@ -598,11 +623,10 @@ input[name="tab_item"] {
 				</div>
     </div>
     <div class="tab_content" id="programming_content">
-     <p id="ddf"></p>
-     <p id="ddd"></p>
+     <div class="col-md-4" id="cp">
+											
 </div>
   </div>
-
 			</div>
 	</main>
 
@@ -628,23 +652,71 @@ $(function() {
 		success : function(data) { 
        console.log(data.ClubPostList[1]);
        $.each(data.ClubPostList, function(index, item) { // 데이터 =item
-			var title = item.clubPostTitle;
-			var video = item.clubPostVideo1;
-            var image = item.Image1;
-            var heart = item.heartCondition;
-            var profileImage = item.user.profileImage;
-            var nickName = item.nickName;
-			 console.log(title);
-			 $("#ddf").append(title);
-			 $("#ddf").append(image);
-			 $("#ddd").append(nickName);
-			 $("#ddd").append(profileImage);
-			 
+    	   console.log(item.clubPostNo);
+			var value = 
+				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='400' width='700'>"+
+			
+		"</a>"+
+		
+		"<div style='display: flex; width: 87%;'>"+
+			"<div style='flex:1;'>"+
+			"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+					"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='100' width='100'>"+
+				"</a>"+
+			"</div>"+
+			"<div style='flex:1;'>"+
+				/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
+				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+					"<p align='center' style='font-size: 30px; color: red;'>"+ item.user.nickName+ "</p>"+
+				"</a>"+
+			"</div>"+
+			"<div style='flex:1;'>"+
+				"<p align='center' style='font-size: 30px'>"+ item.clubPostHeartCount+ "</p>"+
+			"</div>"+
+		
+			
+		"</div>"+
+		"<div style='width: 87%;'>"+
+			"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
+		"</div>";
+
+			$("#cp").append(value);       
+                      
+			
 		})
 		
 		}	
 	});
 });
+	
+	$(".tab_item2").on("click" , function(e) {
+		var userId = $("#userId").val(); 
+		$(".tab_item2").off(e);
+	$.ajax({
+		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
+		type : "POST", // 타입은 뭘 쓸거니?
+		datatype : "json",
+		 data		:  JSON.stringify({
+			userId : userId
+		 }),
+		 
+		contentType : "application/json",
+		success : function(data) { 
+       console.log(data.followerList[1]);
+       $.each(data.followerList, function(index, item) { // 데이터 =item
+    	   console.log(item.clubPostNo);
+			var value = 
+			
+			
+                      
+			
+		})
+		
+		}	
+	});
+});
+	
 	 
 });	
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -216,35 +217,71 @@ public class MyHomeRestController {
 	
 	
 			 
-		@RequestMapping(value="json/getMeetingMemberList")
-		public Map<String, Object> getMeetingMemberList(@RequestBody Search search,User user,Participant participant,HttpSession session, Model model, HttpServletRequest request) throws Exception {
-			
-			System.out.println("/club/json/getClubList : GET / POST");
-	
-			user = (User) session.getAttribute("user");
-           
-			if(search.getCurrentPage()==0) {
-				search.setCurrentPage(1);
-			}
-			search.setPageSize(pageSize);
-			search.setPageUnit(pageUnit);
-			
-			String userId = ((User) session.getAttribute("user")).getUserId();
-			search.setSearchKeyword(userId);
-			Map<String, Object> map = clubService.getMeetingMemberList(search);
-			
-			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
-			System.out.println(resultPage);
-			
-			
-			model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
-			model.addAttribute("resultPage",resultPage);
-			model.addAttribute("search",search);
-			
-			
-			return  map;
+	@RequestMapping(value="/json/getMeetingList",method = RequestMethod.POST)
+	public Map<String, Object> getMeetingList(@RequestBody Search search, Model model, HttpSession session, Club club, User user) throws Exception {
+		
+		System.out.println("/club/getMeetingList : GET/POST");
+		
+		user = (User) session.getAttribute("user");
+		
+		session.getAttribute("clubNo");
+		System.out.println("세션에 뭐가 있나요 ?? : "+ session.getAttribute("clubNo"));
+		
+		search.setSearchCondition("1");
+		
+		search.setSearchKeyword((String) session.getAttribute("clubNo"));
+		search.setSearchKeyword(user.getUserId());
+		
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = clubService.getMeetingList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
+		
+		System.out.println("resultPage : "+resultPage);
+		
+		
+		search.setSearchKeyword((String) session.getAttribute("clubNo"));
+		model.addAttribute("meetingList",map.get("meetingList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search",search);
+		
+		return map;
+	}
+	@RequestMapping(value="/json/getMeetingMemberList",method = RequestMethod.POST)
+	public Map<String, Object>  getMeetingMemberList(@RequestBody Search search, Model model, HttpSession session, User user, Participant participant) throws Exception {
+		
+		System.out.println("/club/getMeetingMemberList : GET/POST");
+		
+		user = (User) session.getAttribute("user");
+		System.out.println("(일정참여자)미팅넘버 세션에 뭐 있지? : "+ session.getAttribute("meetingNo"));
+				
+		
+		search.setSearchKeyword((String) session.getAttribute("meetingNo"));
+		
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
 		}
 		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		search.setOrder(1);
+		
+		Map<String, Object>  map = clubService.getMeetingMemberList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingMemberCount")).intValue(), pageUnit, pageSize);
+		System.out.println("resultPage : "+resultPage);
 		
 		
+		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return map;
+	}
+	
+	
 }
