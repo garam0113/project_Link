@@ -88,10 +88,13 @@
 		})
 		$("button:contains('µÚ·Î')").bind("click", function(){
 			
-			history.go(-1);
+			close();
 		})
 		
-		
+		var reportSource = opener.$("input[name='reportSource']").val();
+		var user2 = opener.$("input[name='user2']").val();
+		$("#reportSource").val(reportSource);
+		$("#user2").val(user2);
 		
 	});
 	
