@@ -20,13 +20,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <!-- <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet"> -->
-    <!-- Bootstrap Dropdown Hover JS -->
-   <!-- <script src="/javascript/bootstrap-dropdownhover.min.js"></script> -->
-	
+		
 	 <!-- jQuery UI toolTip 사용 CSS-->
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	  <!-- jQuery UI toolTip 사용 JS-->
@@ -37,8 +31,23 @@
 		padding-top : 70px;
 	}
 	
+	#btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+	
+	td {
+		text-align: center;
+	}
+	
 	</style>
-
+	
+	<!-- ?? -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
 	function fncUpdateMemberRole() {
@@ -131,14 +140,14 @@
 	
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-primary").bind("click", function() {
 			history.go(-1);
 		});
 	});
 	
 	$(function() {
 
-		$("button.btn.btn-waring").on("click", function() {
+		$("button.btn.btn-warning").on("click", function() {
 			self.location="/club/updateClubView.jsp"
 		});
 	});
@@ -166,44 +175,75 @@
 	
 </head>
 
-<body>
-		
-
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
 	
-		<div class="page-header text-info">
-	       <h3>모임원리스트</h3>
-	    </div>
+	<body class="blog masonry-style">
+	
+	<!--  화면구성 div Start /////////////////////////////////////-->
+	
+	<jsp:include page="/toolbar.jsp" />
+	
+	<main role="main">
+		
+			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>CLUB MEMBER LIST</h2>
+							<p>Manage the members of the club...</p>
+						</div>
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+			
+		
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li>
+					</ul>
+	
+			</div>
+		</div>
+
+	<div class="container">
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
-	    
- 		    <div class="col-md-6 text-left">
-		    	<%-- <p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p> --%>
-		    </div> 
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
 				  
-				  <div class="form-group">
-					<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
-					<a class="btn btn-primary btn" href="#" role="button">이&nbsp;전</a>
-					<button type="button" class="btn btn-waring"  >모&nbsp;임&nbsp;수&nbsp;정</button>
-					<button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
+				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
+				  
+					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
+										
+						<button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
+						<button type="button" class="btn btn-primary">이&nbsp;전</button>
+						<button type="button" class="btn btn-warning"  >모&nbsp;임&nbsp;수&nbsp;정</button>
+						<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
+						
 		  			</div>
 				</div>	
-				  
-				</form>
-	    	</div>
 	    	
-		</div>
+	
+	
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
 		
@@ -215,7 +255,7 @@
             <th align="center">프로필사진</th>	
             <th align="left" >회원 ID</th>
             <th align="left">회원 닉네임</th>
-            <th align="left">모임직책</th>
+            <th align="left"><center>모임직책</center></th>
             <th align="left">마지막 접속시간</th>
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
@@ -228,18 +268,15 @@
 		<tbody>
 		<tr>
 		  <c:forEach var="i" items="${clubMemberList}">
-		  <%-- <input type="hidden" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			<tr>
 			<td align="center"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
-			  <td align="left">${i.user.userId}</td>
+			  <td >${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
-			  
-			  
-			  <td align="left">${i.memberRole}</td>
+			  <td align="left"><center>${i.memberRole}</center></td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
-			  <td align="left">${i.approvalCondition}</td>
-			  <!-- <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button> -->
+			  <%-- <td align="left">${i.approvalCondition}</td> --%>
+			  <td><center>${i.approvalCondition}</center></td>
 			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
 <%-- 			  <input type="text" id="clubUserNo" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
@@ -251,12 +288,13 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
- 	</div>
+
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
 	
-	
+	</div>
+	</main>
 </body>
 
 </html>

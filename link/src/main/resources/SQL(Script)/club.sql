@@ -207,9 +207,52 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 
 SELECT inner_table.*
 FROM ( SELECT rownum AS row_seq, deep_table.*
-		FROM ( SELECT p.participant_no, u.user_id, u.nickname
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date
 				FROM participant p, users u, meeting m
 				WHERE p.participant_user_id = u.user_id and p.meeting_no = m.meeting_no and p.meeting_no ='38' ) deep_table ) inner_table
+				
+				
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no, c.club_title
+				FROM participant p, users u, meeting m, club c
+				
+				WHERE p.participant_user_id = u.user_id
+				and p.meeting_no = m.meeting_no
+				and m.club_no = c.club_no
+				
+						< if test="order == 0" >
+							and p.meeting_no = #{searchKeyword}
+						</if>
+						< if test="order == 1" >
+							and u.user_id = #{searchKeyword}
+						</if>
+						
+						 ) deep_table ) inner_table
+
+				
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no
+				FROM participant p, users u, meeting m
+				
+				WHERE p.participant_user_id = u.user_id
+				and p.meeting_no = m.meeting_no
+				and u.user_id = 'user04'		
+						 ) deep_table ) inner_table						 
+						 
+						and p.meeting_no = '2'						 
+						and u.user_id = #{searchKeyword} 
+						 
+						 
+						 
+						 
+						 
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no, c.club_title, m.meeting_no
+				FROM participant p, users u, meeting m, club c
+				WHERE p.participant_user_id = u.user_id and p.meeting_no = m.meeting_no and u.user_id ='user04' ) deep_table ) inner_table				
 		
 
 SELECT inner_table.*
