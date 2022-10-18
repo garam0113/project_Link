@@ -170,11 +170,15 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 			return sqlSession.selectOne("Report_PushMapper.getTotalCount", search);
 		}else if (a == 1) {
 			return sqlSession.selectOne("QandAMapper.getTotalCount", search);
-		}else {
-			int i = sqlSession.selectOne("NoticeMapper.getTotalCount", search);
-			System.out.println("여기서 count : " + i);
-			return i;
+		}else if (a==2) {
+			return sqlSession.selectOne("NoticeMapper.getTotalCount", search);
+		}else  {  //a==3
+			return sqlSession.selectOne("QandAMapper.getTotalCount2", search);
 		}
+//		else {
+//			return sqlSession.selectOne("Report_PushMapper.getTotalCount2", search);
+			
+//		}
 	}
 //==================================================================여기까지가 공통
 

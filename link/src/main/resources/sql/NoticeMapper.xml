@@ -18,6 +18,7 @@
 	
 	<association property="userId" javaType="user">
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+	    <result property="nickName" column="nickname" jdbcType="VARCHAR" />
 	</association>
 	</resultMap>
 	
@@ -80,17 +81,16 @@
 	<select  id="getNoticeList"  parameterType="map"	resultMap="noticeSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT notice_no , notice_title , user_id ,notice_regdate , notice_count
-											FROM notice
+	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE , N.NOTICE_COUNT
+											FROM NOTICE N , USERS U
+											WHERE N.USER_ID = 'admin1' AND U.USER_ID = N.USER_ID
 											<if test="search.searchCondition != null">
-												<where>
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
-										 				LOWER(notice_no) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(notice_no) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-										 				LOWER(notice_title) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(notice_title) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
-												</where>
 											</if>
 											ORDER BY notice_no ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )

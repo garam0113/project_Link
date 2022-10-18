@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
@@ -30,7 +32,7 @@ import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
-
+@SessionAttributes("user")
 @RequestMapping("/serviceCenter/*")
 public class ServiceCenterController {
 
@@ -160,7 +162,7 @@ public class ServiceCenterController {
 	
 	
 	@RequestMapping(value = "getNoticeList")
-	public String getNoticeList(@ModelAttribute("search") Search search, Notice notice, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+	public String getNoticeList(@ModelAttribute("search") Search search, Notice notice,  
 								Model model) throws Exception {
 		System.out.println("/ServiceCenter/listNotice : GET & POST");
 		
@@ -176,7 +178,7 @@ public class ServiceCenterController {
 		model.addAttribute("getNoticeList", map.get("getNoticeList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("menu", menu);
+		
 		
 		return "forward:/serviceCenter/getNoticeList.jsp";
 	}
@@ -185,18 +187,13 @@ public class ServiceCenterController {
 	
 	
 	@RequestMapping(value = "addQandA" , method = RequestMethod.POST)
-	public String addQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
+	public String addQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file, Model model, 
+			HttpSession session) throws Exception {
 		System.out.println(qandA);
 	
 		System.out.println("/ServiceCenter/addQandA : GET& POST");
-		
-		System.out.println(qandA);
-		User user = new User();																			//★ 지워야됨
-		user.setUserId("user03");																		//★ 
-		qandA.setUserId(user);																			//★
-		
-		
-
+		User userId =(User)session.getAttribute("user");
+		qandA.setUserId(userId);
 		System.out.println(qandA.getQandAOpenCondition()+"테스트용");
 		int fileCount = 0;
 		String root ="C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
@@ -305,19 +302,38 @@ public class ServiceCenterController {
 		return "forward:/serviceCenter/getQandAList";
 	}
 	
-	@RequestMapping(value = "getQandAList")
+	@RequestMapping(value = "getQandAList/{userId}" , method = RequestMethod.GET)
 	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,
-			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
+			@RequestParam(value = "menu", defaultValue = "search") String menu, String UserId, Model model, @PathVariable String userId) throws Exception {
 		
-		System.out.println("/serviceCenter/getQandAList : GET & POST");
+		System.out.println("/serviceCenter/getQandAList :GET");
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(pageSize);
-		
-		//세션으로 이름 받아와서 넣어야됨
-		String userId ="user03";
+		search.setPageSize(pageSize);	
 
+		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA , userId);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
+		
+		model.addAttribute("getQandAList", map.get("getQandAList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		model.addAttribute("menu", menu);
+		
+		return "forward:/serviceCenter/getQandAList.jsp";
+	}
+	
+	@RequestMapping(value = "getQandAList" , method = RequestMethod.POST)
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,
+			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
+		
+		System.out.println("/serviceCenter/getQandAList : POST ");
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);	
+		String userId="";
 		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA , userId);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
