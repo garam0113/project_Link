@@ -1,6 +1,9 @@
 package com.link.web.user;
 
+import java.util.Map;
 import java.util.Random;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.Search;
 import com.link.service.domain.User;
+import com.link.service.myHome.MyHomeService;
 import com.link.service.user.UserService;
 
 @RestController
@@ -22,7 +27,11 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-
+	
+	@Autowired
+	@Qualifier("myHomeServiceImpl")
+	private MyHomeService myHomeService;
+	
 	public UserRestController() {
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass());
@@ -55,6 +64,10 @@ public class UserRestController {
 				getUser = userService.getUser(user);
 
 			}
+		}else {
+
+			getUser = userService.getUser(user);
+			
 		}
 		System.out.println("DB에서 받은 정보 : " + getUser);
 
@@ -212,5 +225,29 @@ public class UserRestController {
 
 		return numStr;
 
+	}
+	
+	@RequestMapping(value = "json/addBlock", method = RequestMethod.POST)
+	public Map<String, Object> addBlock(@RequestBody User user, HttpSession session, Search search)throws Exception{
+		
+		System.out.println("/userRest/json/addBlock : POST");
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("세션에 저장된 회원ID : "+sessionId);
+		
+		user.setUserId(sessionId);
+		
+		user.setFbType("2");
+		
+		user.setFbState("1");
+		
+		myHomeService.addFollow(user);
+		
+		search.setSearchKeyword(sessionId);
+		
+		Map<String, Object> map = myHomeService.getFollowList(search);
+		
+		return map;
 	}
 }

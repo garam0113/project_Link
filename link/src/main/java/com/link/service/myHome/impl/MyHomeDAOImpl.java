@@ -68,10 +68,10 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 		return sqlSession.selectList("MyHomeMapper.getFollowerList", search);
 	}
 	@Override
-	public void deleteFollow(User user) throws Exception{
+	public void updateFollow(User user) throws Exception{
 		
 		System.out.println("\n[MyHomeDAOImpl deleteFollow start]\n");
-		sqlSession.update("MyHomeMapper.deleteFollow", user);
+		sqlSession.update("MyHomeMapper.updateFollow", user);
 	}
 	
     public int getFollowCount(Search search) throws Exception{

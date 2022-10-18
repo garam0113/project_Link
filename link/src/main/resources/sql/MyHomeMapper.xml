@@ -38,8 +38,8 @@
      seq_follow_block_no.nextval ,
      #{userId:VARCHAR}                   ,
      #{receiveId.userId:VARCHAR}                ,
-     '1'                ,
-     '1'              
+     #{fbState:CHAR}                ,
+     #{fbType:CHAR}             
      
                       )
 
@@ -119,7 +119,7 @@
      
 </select>
 
-<update id="deleteFollow" parameterType="user" >
+<update id="updateFollow" parameterType="user" >
 
      UPDATE follow_block
 		   	<set>

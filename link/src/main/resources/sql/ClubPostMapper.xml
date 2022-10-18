@@ -109,7 +109,7 @@
 		DELETE_CONDITION, IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10)
 		VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle}, #{clubPostContent:VARCHAR},
 		#{clubPostVideo1:VARCHAR}, #{clubPostVideo2:VARCHAR}, #{clubPostVideo3:VARCHAR}, sysdate, null, 0, 0, '0', '0',
-		#{image1}, #{image2:VARCHAR}, #{image3:VARCHAR}, #{image4:VARCHAR}, #{image5:VARCHAR}, #{image6:VARCHAR},
+		#{image1:VARCHAR}, #{image2:VARCHAR}, #{image3:VARCHAR}, #{image4:VARCHAR}, #{image5:VARCHAR}, #{image6:VARCHAR},
 		#{image7:VARCHAR}, #{image8:VARCHAR}, #{image9:VARCHAR}, #{image10:VARCHAR})
 	</insert>
 	

@@ -100,10 +100,10 @@ public class MyHomeServiceImpl implements MyHomeService {
 		return map;
 	}
 	
-	public void deleteFollow(User user) throws Exception{
+	public void updateFollow(User user) throws Exception{
 		
 		System.out.println("\n[MyHomeServiceImpl deleteFollow start]\n");
-		myHomeDAO.deleteFollow(user);
+		myHomeDAO.updateFollow(user);
 		
 	}
 

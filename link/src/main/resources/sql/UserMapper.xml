@@ -101,9 +101,9 @@
 		FROM users
 		<where>
 			<if test="userId != null and userId != ''"> 
-				user_id = #{userId}
+				user_id = #{userId} 
 			</if>
-			<if test="snsUserId != null and userId == ''">
+			<if test="( snsUserId != null ) and (userId == '' or userId == null)">
 				sns_user_id = #{snsUserId} and TRIM(add_user_type) = #{addType}
 			</if>
 			<if test="nickName != null and userId == null">

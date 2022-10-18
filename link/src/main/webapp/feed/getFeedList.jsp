@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,127 +8,127 @@
 <html>
 
 <head>
+	<meta charset="EUC-KR">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
 	<title>Feed</title>
-	<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/style.css" media="screen">
 	
-	<link rel="apple-touch-icon" href="/resources/image/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/resources/image/apple-touch-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/resources/image/apple-touch-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/resources/image/apple-touch-icon-152x152.png">
-	
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 	
+	<%-- SUMMER NOTE --%>
+	<script src="/resources/summernote/summernote-lite.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+	<%-- SUMMER NOTE --%>
+	
 	<script type="text/javascript">
-		
 	
-	
-	/* 
-	
-	
-	
-	¹öÆ° È®ÀÎ
-	
-	<input type="button" id="update" value="¼öÁ¤">
-	<input type="button" id="delete" value="»èÁ¦"> 
-		
-	
-	
-	*/
-	
+	function uploadSummernoteImageFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/feedRest/json/uploadImage",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
 	
 	
 	$(function(){
 		
-		<!-- REST CONTROLLTER TEST -->
-		$(".btn_jsonTest").bind("click", function(){
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernote').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Insert', ['picture']],
+            ],
+            
+			height: 300,                 	// ì—ë””í„° ë†’ì´
+			minHeight: null,             	// ìµœì†Œ ë†’ì´
+			maxHeight: null,             	// ìµœëŒ€ ë†’ì´
+			focus: true,                 	// ì—ë””í„° ë¡œë”©í›„ í¬ì»¤ìŠ¤ë¥¼ ë§ì¶œì§€ ì—¬ë¶€
+			placeholder: 'ì˜¤ëŠ˜ í•˜ë£¨ëŠ” ì–´ë–¤ê°€ìš”?',
+			lang:'ko-KR',
 			
-			$.ajax(
-					{
-						url : "/feedRest/json/getFeedList",
-						method : "POST",
-						data : JSON.stringify ({
-							currentPage : 1
-						}),
-						contentType: 'application/json',
-						dataType : "json",
-						header : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						}, // header end
-						
-						success : function(data, status) {
-							
-							swal.fire("¿¨?");
-							
-							var value = "";
-							
-							$.each(data, function(index, item) {
-								value += item.content + " // ";
-							}); // $.each close
-							
-							$("#test").text(value);
-							
-						} // success close
-						
-					} // ajax inner close
-					
-			) // ajax close
-
-		}); // btn_jsonTest close
-		<!-- REST CONTROLLTER TEST -->
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
 		
-		<!-- ADD_FEED -->
-		$(".addFeed").bind("click", function(){
-			alert("ÇÇµå Ãß°¡¹öÆ°");
-			$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 		});
-		<!-- ADD_FEED -->
 		
-		<!-- UPDATE_FEED -->
-		$(".btn_update").bind("click", function(){
-			alert("ÇÇµå ¼öÁ¤ ¹öÆ°");
-			$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
-		});
-		<!-- UPDATE_FEED -->
+		<%-- SUMMER NOTE WEB LOADING --%>
 		
-		<!-- DELETE_FEED -->
-		$(".btn_delete").bind("click", function(){
-			alert("ÇÇµå »èÁ¦ ¹öÆ°");
-			$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
-		});
-		<!-- DELETE_FEED -->
-		
-		<!-- GET_FEED -->
-		$(".btn_getFeed").bind("click", function(){
-			alert("Å¬¸¯ÇÑ ±Û ¹øÈ£ : " + $(this).parent().find("input[name='feedNo']").val());
-			location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
-		})
-		<!-- GET_FEED -->
-		
-		<!-- ADD_FEED_HEART -->
-		$(".like:contains('ÁÁ¾Æ¿ä')").bind("click", function(){
+		<%-- GET_FEED --%>
+		$(document).on("click", ".feedForm", function(event) {
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "¹ø ±Û ÁÁ¾Æ¿ä");
+			var feedNumber = $(this).children("input[name='feedNo']").val();
+			location.href="/feed/getFeed?feedNo=" + feedNumber;
+		})
+		<%-- GET_FEED --%>
+		
+		<%-- ADD_FEED --%>
+		$(document).on("click", ".addFeed", function(event){
+			event.stopPropagation();
+			alert("í”¼ë“œ ì¶”ê°€ë²„íŠ¼");
+			$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+		});
+		<%-- ADD_FEED --%>
+		
+		<%-- UPDATE_FEED --%>
+		$(document).on("click", ".btn_update", function(event){
+			event.stopPropagation();
+			console.log("í”¼ë“œ ìˆ˜ì • ë²„íŠ¼");
+			console.log($(this).parent().parents(".feedForm").html())
+			
+			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+		});
+		<%-- UPDATE_FEED --%>
+		
+		<%-- DELETE_FEED --%>
+		$(document).on("click", ".btn_delete", function(event){
+			event.stopPropagation();
+			console.log("í”¼ë“œ ì‚­ì œ ë²„íŠ¼");
+			console.log($(this).html())
+			
+			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+		});
+		<%-- DELETE_FEED --%>
+		
+		<%-- ADD_FEED_HEART --%>
+		$(document).on("click", ".feedLike", function(event){
+			event.stopPropagation();
+			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì¢‹ì•„ìš”");
 			
 			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 			
 			$.ajax(
 					{
 						url : "/feedRest/json/addFeedHeart",
 						method : "POST",
 						data : JSON.stringify ({
-							feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+							source : 0,
+							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							userId : sessionUser
 						}),
 						contentType: 'application/json',
 						dataType : "json",
@@ -139,11 +139,10 @@
 						
 						success : function(data, status) {
 							
-							swal.fire("ÇÇµå ÁÁ¾Æ¿ä ¼º°ø : " + data);
-							
-							$(html).parents(".row").children(".like:contains('ÁÁ¾Æ¿ä')").hide();
-							$(html).parents(".row").children(".dislike:contains('½Ã·¯¿ä')").show();
+							alert("í”¼ë“œ ì¢‹ì•„ìš” ì„±ê³µ : " + data);
+
 							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -151,21 +150,24 @@
 					
 			) // ajax close
 		})
-		<!-- ADD_FEED_HEART -->
+		<%-- ADD_FEED_HEART --%>
 		
-		<!-- DELETE_FEED_HEART -->
-		$(".dislike:contains('½Ã·¯¿ä')").bind("click", function(){
+		<%-- DELETE_FEED_HEART --%>
+		$(document).on("click", ".feedDislike", function(event){
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "¹ø ±Û ½Ã·¯¿ä");
+			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì‹œëŸ¬ìš”");
 			
 			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 			
 			$.ajax(
 					{
 						url : "/feedRest/json/deleteFeedHeart",
 						method : "POST",
 						data : JSON.stringify ({
-							feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+							source : 0,
+							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							userId : sessionUser
 						}),
 						contentType: 'application/json',
 						dataType : "json",
@@ -176,11 +178,10 @@
 						
 						success : function(data, status) {
 							
-							swal.fire("ÇÇµå ½Ã·¯¿ä ¼º°ø : " + data);
+							alert("í”¼ë“œ ì‹œëŸ¬ìš” ì„±ê³µ : " + data);
 							
-							$(html).parents(".row").children(".like:contains('ÁÁ¾Æ¿ä')").show();
-							$(html).parents(".row").children(".dislike:contains('½Ã·¯¿ä')").hide();
 							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -188,7 +189,20 @@
 					
 			) // ajax close
 		})
-		<!-- DELETE_FEED_HEART -->
+		<%-- DELETE_FEED_HEART --%>
+		
+		<%-- CAROUSEL EVENT ì¹¨ë²” ë°©ì§€ --%>
+		$(document).on("click", ".carousel", function(event) {
+			event.stopPropagation();
+		})
+		<%-- CAROUSEL EVENT ì¹¨ë²” ë°©ì§€ --%>
+		
+		$(document).on("click", ".report", function(event) {
+			event.stopPropagation();
+			
+			window.open("/serviceCenter/addReportView.jsp", "ì‹ ê³  ë“±ë¡", "top=100px, left=100px, height=950px, width=500px");
+			
+		}) // .report evenet close
 		
 	})
 	
@@ -199,18 +213,39 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
-
-	textarea {
-		height: 6.25em;
-		border-style: solid;
-		border-color: black;
-		resize: none;
+	
+	h4 {
+		margin-top:5px;
+		margin-left:5px;
+		display: inline-block;
 	}
-
+		
 	@
 	-ms-viewport {
 		width: device-width;
 	}
+	
+	.row {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-left: 0px;
+	}
+	
+	.feedForm {
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
+	.showFeedForm {
+		border-style:dotted;
+	}
+	
+	.carousel-inner > .item > img {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 350px;
+	} 
 	
 </style>
 
@@ -220,7 +255,7 @@
 	
 </head>
 
-<body>
+<body class="single single-post">
 
 	<jsp:include page="/toolbar.jsp" />
 
@@ -231,7 +266,7 @@
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
 							<h2>Feed</h2>
-							<p>If you¡¯re any good at all, you know you can be better.</p>
+							<p>If youâ€™re any good at all, you know you can be better.</p>
 						</div><!-- caption -->					
 					</div>								
 				</div><!-- intro -->
@@ -243,81 +278,114 @@
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						<a href="/feed/getFestivalLocation.jsp">±æÃ£±â</a>
+						<a href="/feed/getFestivalLocation.jsp">ê¸¸ì°¾ê¸°</a>
 					</div>
 					
 					<div class="column six">
-						<div class="addFeedForm">
+						<div class="post-area clear-after addFeedForm">
 							<form id="addForm">
-
-								<c:if test="${!empty sessionScope.user}">
+							
+							<c:if test="${!empty sessionScope.user}">
+							
+								<article role="main">
+									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
+									<input class="plain button red addFeed" style="display: inline-block; width:150px; float:right; margin-top:10px" value="Submit">
+									<textarea id="summernote" name="content"></textarea>
+								</article>
 								
-									ÇÁ·ÎÇÊ »çÁø : ${sessionScope.user.profileImage}
-									ÀÛ¼ºÀÚ : ${sessionScope.user.nickName}
-						
-									<textarea name="content" style="width: 500px;" placeholder="¿À´Ã ÇÏ·ç´Â ¾î¶²°¡¿ä?"></textarea>
-									<button type="button" class="addFeed">µî·Ï</button>
-
-								</c:if>
-
-								<!-- REST CONTROLLTER TEST -->
-								<button type="button" class="btn_jsonTest">µ¥ÀÌÅÍ Å×½ºÆ®</button>
-								<p id="test">REST CONTROLLTER TEST</p>
-								<!-- REST CONTROLLTER TEST -->
-
+							</c:if>
+		
 							</form>
 						</div>
-
 
 						<c:set var="i" value="0"></c:set>
 						<c:forEach var="feed" items="${feedList}">
 							<c:set var="i" value="${i + 1}"></c:set>
 
-							<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+							<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
 
-								<div class="showFeedForm" style="border: 1px solid gray; width: 500px; padding: 5px; margin-top: 5px;">
+								<div class="showFeedForm">
 									<form class="feedForm">
 
-										${feed.feedNo}¹øÂ°±Û 
-										[ÇÁ·ÎÇÊ »çÁø : ${feed.user.profileImage}]
-										[ÀÛ¼ºÀÚ :	${feed.user.userId}] 
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 										
-										<br /> <br />
-										${feed.content} 
-										<br />
+										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
+											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+										</h5>
+										
+										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+											
+											<div style="display: inline-block; float: right;">
+												<%-- ìˆ˜ì • ë²„íŠ¼ --%>
+												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
+												<%-- ìˆ˜ì • ë²„íŠ¼ --%>
+											
+												<%-- ì‚­ì œ ë²„íŠ¼ --%>
+												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
+												<%-- ì‚­ì œ ë²„íŠ¼ --%>
+											</div>
+										</c:if>
+									
+									
+										
+										<%-- ì´ë¯¸ì§€ --%>
+										<div id="${feed.feedNo}" class="carousel slide" data-interval="false">
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner" role="listbox">
+												<div class="item active">
+													<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+												</div>
+											</div>
+
+											<!-- Controls -->
+											<a class="left carousel-control" href="#${feed.feedNo}" role="button" data-slide="prev">
+												<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+											</a>
+											
+											<a class="right carousel-control" href="#${feed.feedNo}" role="button" data-slide="next">\
+												<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+												<span class="sr-only">Next</span>
+											</a>
+										</div>
+										<%-- ì´ë¯¸ì§€ --%>
+
+
+
+										<p>${feed.content}</p>
 										
 										<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
 										
 										<br />
-
-										<c:if test="${feed.checkHeart != 0}">
-										¡Ú¡Ú¡Ú³»°¡ ÁÁ¾Æ¿ä ÇÑ ÇÇµåÀÔ´Ï´Ù.¡Ú¡Ú¡Ú ³ªÁß¿¡ ÇÏÆ®·Î º¯°æ
-										</c:if>
-
-										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-											<input type="button" class="btn_update" value="¼öÁ¤">
-											<input type="button" class="btn_delete" value="»èÁ¦">
-										</c:if>
-
-										<input type="button" class="btn_getFeed" value="º¸±â">
+										
+										<input type="hidden" name="source" value="0">
+										<input type="hidden" name="user2" value="${feed.user.userId}">
+										<input type="hidden" name="reportSource" value="3">
 										<input type="hidden" name="feedNo" value="${feed.feedNo}">
+										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+										<input type="hidden" name="openCondition" value="3">
 
+										<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 										<section class="row section">
 											<div class="row">
-												<c:if test="${feed.checkHeart == 0}">
-													<div class="column two like" style="display: show;">
-														ÁÁ¾Æ¿ä
-													</div>
-													<div class="column two dislike" style="display: none;">
-														½Ã·¯¿ä
+												<c:if test="${feed.checkHeart eq 0}">
+													<div class="column two">
+														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
-												<c:if test="${feed.checkHeart != 0}">
-													<div class="column two like" style="display: none;">
-														ÁÁ¾Æ¿ä
-													</div>
-													<div class="column two dislike" style="display: show;">
-														½Ã·¯¿ä 
+												<c:if test="${feed.checkHeart ne 0}">
+													<div class="column two">
+														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
 												
@@ -325,15 +393,21 @@
 													${feed.heartCount}
 												</div>
 												
-												<div class="column two comment">´ñ±Û¼ö</div>
+												<div class="column two comment">ëŒ“ê¸€ìˆ˜</div>
 												
 												<div class="column two commentCount">
 													 ${feed.commentCount}
 												</div>
 													
-												<div class="column four last">½Å°í</div>
+												<!-- ì‹ ê³  ì•„ì´ì½˜ -->
+												<div class="column four last report">
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.7rem; margin-top:3px;" aria-hidden="true" ></span>
+												</div>
+												<!-- ì‹ ê³  ì•„ì´ì½˜ -->
+												
 											</div>
 										</section>
+										<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 
 									</form>
 
