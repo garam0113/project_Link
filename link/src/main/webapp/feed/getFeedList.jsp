@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,29 +8,43 @@
 <html>
 
 <head>
+	<meta charset="EUC-KR">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
 	<title>Feed</title>
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-	
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-	
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	
 	<%-- SUMMER NOTE --%>
-	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/summernote-lite.js" charset="UTF-8"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
 	
 	<script type="text/javascript">
+	
+	function uploadSummernoteImageFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/feedRest/json/uploadImage",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
+	
 	
 	$(function(){
 		
@@ -38,23 +52,27 @@
 		$('#summernote').summernote({
 			toolbar: [
                 // [groupName, [list of button]]
-                ['Font Style', ['fontname']],
-                ['style', ['bold', 'italic', 'underline']],
-                ['font', ['strikethrough']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['paragraph']],
-                ['height', ['height']],
                 ['Insert', ['picture']],
-                ['Insert', ['link']],
-                ['Misc', ['fullscreen']]
             ],
             
-			height: 300,                 	// ¿¡µğÅÍ ³ôÀÌ
-			minHeight: null,             	// ÃÖ¼Ò ³ôÀÌ
-			maxHeight: null,             	// ÃÖ´ë ³ôÀÌ
-			focus: true,                 	// ¿¡µğÅÍ ·ÎµùÈÄ Æ÷Ä¿½º¸¦ ¸ÂÃâÁö ¿©ºÎ
-			placeholder: '¿À´Ã ÇÏ·ç´Â ¾î¶²°¡¿ä?'
+			height: 300,                 	// ì—ë””í„° ë†’ì´
+			minHeight: null,             	// ìµœì†Œ ë†’ì´
+			maxHeight: null,             	// ìµœëŒ€ ë†’ì´
+			focus: true,                 	// ì—ë””í„° ë¡œë”©í›„ í¬ì»¤ìŠ¤ë¥¼ ë§ì¶œì§€ ì—¬ë¶€
+			placeholder: 'ì˜¤ëŠ˜ í•˜ë£¨ëŠ” ì–´ë–¤ê°€ìš”?',
+			lang:'ko-KR',
+			
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
+		
 		});
 		
 		<%-- SUMMER NOTE WEB LOADING --%>
@@ -70,15 +88,15 @@
 		<%-- ADD_FEED --%>
 		$(document).on("click", ".addFeed", function(event){
 			event.stopPropagation();
-			alert("ÇÇµå Ãß°¡¹öÆ°");
-			$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			alert("í”¼ë“œ ì¶”ê°€ë²„íŠ¼");
+			$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 		});
 		<%-- ADD_FEED --%>
 		
 		<%-- UPDATE_FEED --%>
 		$(document).on("click", ".btn_update", function(event){
 			event.stopPropagation();
-			console.log("ÇÇµå ¼öÁ¤ ¹öÆ°");
+			console.log("í”¼ë“œ ìˆ˜ì • ë²„íŠ¼");
 			console.log($(this).parent().parents(".feedForm").html())
 			
 			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
@@ -88,7 +106,7 @@
 		<%-- DELETE_FEED --%>
 		$(document).on("click", ".btn_delete", function(event){
 			event.stopPropagation();
-			console.log("ÇÇµå »èÁ¦ ¹öÆ°");
+			console.log("í”¼ë“œ ì‚­ì œ ë²„íŠ¼");
 			console.log($(this).html())
 			
 			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
@@ -98,7 +116,7 @@
 		<%-- ADD_FEED_HEART --%>
 		$(document).on("click", ".feedLike", function(event){
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "¹ø ±Û ÁÁ¾Æ¿ä");
+			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì¢‹ì•„ìš”");
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
@@ -121,7 +139,7 @@
 						
 						success : function(data, status) {
 							
-							swal.fire("ÇÇµå ÁÁ¾Æ¿ä ¼º°ø : " + data);
+							alert("í”¼ë“œ ì¢‹ì•„ìš” ì„±ê³µ : " + data);
 
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
@@ -137,7 +155,7 @@
 		<%-- DELETE_FEED_HEART --%>
 		$(document).on("click", ".feedDislike", function(event){
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "¹ø ±Û ½Ã·¯¿ä");
+			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "ë²ˆ ê¸€ ì‹œëŸ¬ìš”");
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
@@ -160,7 +178,7 @@
 						
 						success : function(data, status) {
 							
-							swal.fire("ÇÇµå ½Ã·¯¿ä ¼º°ø : " + data);
+							alert("í”¼ë“œ ì‹œëŸ¬ìš” ì„±ê³µ : " + data);
 							
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
@@ -173,6 +191,19 @@
 		})
 		<%-- DELETE_FEED_HEART --%>
 		
+		<%-- CAROUSEL EVENT ì¹¨ë²” ë°©ì§€ --%>
+		$(document).on("click", ".carousel", function(event) {
+			event.stopPropagation();
+		})
+		<%-- CAROUSEL EVENT ì¹¨ë²” ë°©ì§€ --%>
+		
+		$(document).on("click", ".report", function(event) {
+			event.stopPropagation();
+		    
+			window.open("/serviceCenter/addReportView.jsp", "ì‹ ê³  ë“±ë¡", "top=100px, left=100px, height=950px, width=500px");
+			
+		}) // .report evenet close
+		
 	})
 	
 	
@@ -184,9 +215,9 @@
 <style type="text/css">
 	
 	h4 {
-			margin-top:5px;
-			margin-left:5px;
-			display: inline-block;
+		margin-top:5px;
+		margin-left:5px;
+		display: inline-block;
 	}
 		
 	@
@@ -195,6 +226,8 @@
 	}
 	
 	.row {
+		margin-top: 0px;
+		margin-right: 0px;
 		margin-left: 0px;
 	}
 	
@@ -206,6 +239,13 @@
 	.showFeedForm {
 		border-style:dotted;
 	}
+	
+	.carousel-inner > .item > img {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 350px;
+	} 
 	
 </style>
 
@@ -221,8 +261,16 @@
 
 	<main role="main">
 	
-		<div id="intro-wrap" data-height="10">
-		</div><!-- intro-wrap -->
+		<div id="intro-wrap" data-height="22.222">
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>Feed</h2>
+							<p>If youâ€™re any good at all, you know you can be better.</p>
+						</div><!-- caption -->					
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
 		
 		<div id="main">
 		
@@ -230,23 +278,25 @@
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						<a href="/feed/getFestivalLocation.jsp">±æÃ£±â</a>
+						<a href="/feed/getFestivalLocation.jsp">ê¸¸ì°¾ê¸°</a>
 					</div>
 					
 					<div class="column six">
 						<div class="post-area clear-after addFeedForm">
 							<form id="addForm">
 							
+							<c:if test="${!empty sessionScope.user}">
+							
 								<article role="main">
 									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
 									<input class="plain button red addFeed" style="display: inline-block; width:150px; float:right; margin-top:10px" value="Submit">
-									
 									<textarea id="summernote" name="content"></textarea>
 								</article>
+								
+							</c:if>
 		
 							</form>
 						</div>
-
 
 						<c:set var="i" value="0"></c:set>
 						<c:forEach var="feed" items="${feedList}">
@@ -267,26 +317,65 @@
 										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 											
 											<div style="display: inline-block; float: right;">
-												<%-- ¼öÁ¤ ¹öÆ° --%>
+												<%-- ìˆ˜ì • ë²„íŠ¼ --%>
 												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
-												<%-- ¼öÁ¤ ¹öÆ° --%>
+												<%-- ìˆ˜ì • ë²„íŠ¼ --%>
 											
-												<%-- »èÁ¦ ¹öÆ° --%>
+												<%-- ì‚­ì œ ë²„íŠ¼ --%>
 												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
-												<%-- »èÁ¦ ¹öÆ° --%>
+												<%-- ì‚­ì œ ë²„íŠ¼ --%>
 											</div>
 										</c:if>
+									
+									
+										
+										<%-- ì´ë¯¸ì§€ --%>
+										<div id="${feed.feedNo}" class="carousel slide" data-interval="false">
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner" role="listbox">
+												<div class="item active">
+													<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+												</div>
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+												</div>
+											</div>
+
+											<!-- Controls -->
+											<a class="left carousel-control" href="#${feed.feedNo}" role="button" data-slide="prev">
+												<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+											</a>
 											
+											<a class="right carousel-control" href="#${feed.feedNo}" role="button" data-slide="next">\
+												<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+												<span class="sr-only">Next</span>
+											</a>
+										</div>
+										<%-- ì´ë¯¸ì§€ --%>
+
+
+
 										<p>${feed.content}</p>
 										
 										<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
 										
 										<br />
-
+										
+										<input type="hidden" name="source" value="0">
+										<input type="hidden" name="user2" value="${feed.user.userId}">
+										<input type="hidden" name="reportSource" value="3">
 										<input type="hidden" name="feedNo" value="${feed.feedNo}">
 										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+										<input type="hidden" name="openCondition" value="3">
 
-										<!-- ÇÇµå ÁÁ¾Æ¿ä ´ñ±Û¼ö ½Å°í -->
+										<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 										<section class="row section">
 											<div class="row">
 												<c:if test="${feed.checkHeart eq 0}">
@@ -304,21 +393,21 @@
 													${feed.heartCount}
 												</div>
 												
-												<div class="column two comment">´ñ±Û¼ö</div>
+												<div class="column two comment">ëŒ“ê¸€ìˆ˜</div>
 												
 												<div class="column two commentCount">
 													 ${feed.commentCount}
 												</div>
 													
-												<!-- ½Å°í ¾ÆÀÌÄÜ -->
-												<div class="column four last">
+												<!-- ì‹ ê³  ì•„ì´ì½˜ -->
+												<div class="column four last report">
 													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.7rem; margin-top:3px;" aria-hidden="true" ></span>
 												</div>
-												<!-- ½Å°í ¾ÆÀÌÄÜ -->
+												<!-- ì‹ ê³  ì•„ì´ì½˜ -->
 												
 											</div>
 										</section>
-										<!-- ÇÇµå ÁÁ¾Æ¿ä ´ñ±Û¼ö ½Å°í -->
+										<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 
 									</form>
 

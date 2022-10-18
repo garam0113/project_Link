@@ -33,71 +33,79 @@
 	
 	</style>
 
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
-	
-	function fncUpdateMemberRole() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
-		alert("모임원 수정 화면")
-		.submit();
-	}
 	
 	$(function(){
 		$()
 		
 		
-	})
-	
-	$(function() {
-
-		$("button.btn.btn-primary").on("click", function() {
-			alert("모임을 삭제하시겠습니까?");
-			deleteClub();
-			
-		});
-	});
-	
-	$(function() {
-
-		$("a[href='#']").bind("click", function() {
-			history.go(-1);
-		});
-	});
-	
-	$(function() {
-
-		$("button.btn.btn-waring").on("click", function() {
-			self.location="/club/updateClubView.jsp"
-		});
-	});
-	
-	
+	})	
 	
 	</script>	
 	
 </head>
 
-<body>
+	<body class="blog masonry-style">
+	
+	<jsp:include page="/toolbar.jsp" />
 		
+	<main role="main">
+		
+			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>MEETING LIST</h2>
+							<p>the beginning of a meeting...</p>
+						</div>
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+			
+		
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li>
+					</ul>
+	
+			</div>
+		</div>
+	
+	
+	
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<div class="page-header text-info">
-	       <h3>모임일정리스트</h3>
-	       <a href="/club/addMeetingView.jsp">모임일정등록</a>
-	    </div>
+
+
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
+	    		    
+		<%--     <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
 			    
 				  <div class="form-group">
@@ -119,7 +127,7 @@
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
 				</form>
-	    	</div>
+	    	</div> --%>
 	    	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -135,6 +143,7 @@
             <th align="left">모임일정날짜</th>
             <th align="left">모임일정시간</th>
             <th align="left">모임장소</th>
+            <th align="left"> <a href="/club/addMeetingView.jsp">모임일정등록</a>
           </tr>
         </thead>
        
@@ -161,7 +170,8 @@
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
-	
+ 		<jsp:include page="../common/pageNavigator_new2.jsp"/>
+	</main>
 	
 </body>
 

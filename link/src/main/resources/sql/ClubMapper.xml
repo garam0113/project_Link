@@ -510,9 +510,9 @@
 					<if test="searchCondition == 0 and searchKeyword != '' ">
 						and m.club_no = #{searchKeyword}
 					</if>
-					<if test="searchCondition == 1 and searchKeyword != '' ">
+					<!-- <if test="searchCondition == 1 and searchKeyword != '' ">
 						and u.user_id = #{searchKeyword}
-				</if>
+					</if> -->
 				</where>
 			) deep_table
 		) inner_table
@@ -573,16 +573,28 @@
 						  p.participant_no, 
 						  p.participant_user_id, 
 						  u.nickname ,
-						  u.profile_image
+						  u.profile_image ,
+						  m.meeting_title ,
+						  m.meeting_place , 
+						  m.meeting_time ,
+						  m.meeting_date ,
+						  m.club_no ,
+						  c.club_title
 						  
-						FROM participant p, users u, meeting m
+						FROM participant p, users u, meeting m, club c
 						
 						<where>
 							p.participant_user_id = u.user_id
 							and p.meeting_no = m.meeting_no
-<!-- 							and c.club_no = cU.club_no
-							and cU.user_id = u.user_id -->
-							and p.meeting_no = #{searchKeyword}
+<!-- 							and m.club_no = c.club_no -->
+							
+							<if test="order == 0 and searchKeyword != '' ">
+								and p.meeting_no = #{searchKeyword}
+							</if>
+							
+							<if test="order == 1 and searchKeyword != '' ">
+								and u.user_id = #{searchKeyword}
+							</if>
 						</where>		
 						) deep_table ) inner_table
 

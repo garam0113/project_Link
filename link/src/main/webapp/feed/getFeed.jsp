@@ -776,6 +776,26 @@
 			
 			
 			
+			// 피드 신고
+			
+			$(document).on("click", ".report", function(event) {
+				event.stopPropagation();
+				
+				$(this).parents(".section").siblings("#feedInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				
+			}) // .report evenet close
+			
+			
+			
+			// 댓글 신고
+			
+			$(document).on("click", ".commentReport", function(event) {
+				event.stopPropagation();
+				
+				$(this).parents(".comment-meta").siblings(".commentInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				
+			}) // .report evenet close
+			
 			
 			
 			
@@ -900,7 +920,7 @@
 								
 							<!-- 신고 아이콘 -->
 							<div class="column four last">
-								<span class="glyphicon glyphicon-exclamation-sign" style="font-size:2rem" aria-hidden="true" ></span>
+								<span class="glyphicon glyphicon-exclamation-sign report" style="font-size:2rem" aria-hidden="true" ></span>
 							</div>
 							<!-- 신고 아이콘 -->
 							
@@ -910,6 +930,13 @@
 					
 					<form id="feedInfo" style="margin-top:50px;">
 						<!-- 댓글 관련 hidden -->
+						
+						<%-- 피드 신고 --%>
+						<input type="hidden" name="reportSource" value="3">
+						<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
+						<input type="hidden" name="user2" value="${feed.user.userId}">
+						<%-- 피드 신고 --%>
+						
 						<input type="hidden" name="source" value="0">
 						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
 						<input type="hidden" name="feedNo" value="${feed.feedNo}">
@@ -954,7 +981,7 @@
 											<!--  삭제 버튼 -->
 										</c:if>
 											<!--  신고 버튼 -->
-											&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+											&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>
 											<!--  신고 버튼 -->
 										<c:if test="${comment.heartCondition ne 0}"><img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" /></c:if>
 										<c:if test="${comment.heartCondition eq 0}"><img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px;float: right;" /></c:if>
@@ -964,7 +991,14 @@
 									
 									<!-- 대댓글 관련 hidden -->
 			
-									<div class="commentInfo">
+									<form class="commentInfo">
+									
+										<%-- 피드 댓글 신고 --%>
+										<input type="hidden" name="reportSource" value="4">
+										<input type="hidden" name="sourceNumber" value="${comment.feedCommentNo}">
+										<input type="hidden" name="user2" value="${comment.user.userId}">
+										<%-- 피드 댓글 신고 --%>
+									
 										<input type='hidden' name='source' value='1'>
 										<input type='hidden' name='userId' value='${sessionScope.user.userId}'>
 										<input type='hidden' name='feedNo' value='${feed.feedNo}'>
@@ -973,7 +1007,8 @@
 										<input type="hidden" name="parent" value="${comment.parent}">
 										<input type="hidden" name="depth" value="${comment.depth}">
 										<input type="hidden" name="sequence" value="${comment.sequence}">
-									</div>
+										
+									</form>
 							
 									<!-- 대댓글 관련 hidden -->
 								
