@@ -23,6 +23,7 @@
 
 	<association property="userId" javaType="user">
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="nickName" column="nickname" jdbcType="VARCHAR" />
 	</association>
 		
 	</resultMap>
@@ -102,11 +103,22 @@
 	<select  id="getQandAList"  parameterType="map"	resultMap="qandASelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT QANDA_NO , QANDA_TITLE , ANSWER_CONDITION , USER_ID , QANDA_REGDATE
-											FROM QANDA
-											
-											<if test ="qandA.qandAOpenCondition==0">
-											WHERE USER_ID = #{userId}
+	  					FROM		(	SELECT Q.QANDA_NO , Q.QANDA_TITLE , Q.ANSWER_CONDITION , U.USER_ID , U.NICKNAME, Q.QANDA_REGDATE
+	  										  , Q.QANDA_OPEN_CONDITION
+											FROM QANDA Q, USERS U
+											<if test ="userId!=''">
+											WHERE Q.USER_ID = #{userId} AND Q.USER_ID = U.USER_ID
+											<if test="search.searchCondition != null">
+													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 			AND	LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
+													</if>
+													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 			AND	LOWER(QANDA_TITLE) LIKE LOWER('%${search.searchKeyword}%')
+													</if> 		
+											</if>	
+											</if>
+											<if test ="userId==''">
+											WHERE Q.USER_ID = U.USER_ID 
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
 										 			AND	LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
@@ -114,26 +126,14 @@
 													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
 										 			AND	LOWER(QANDA_TITLE) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
-											</if>	
-											</if>
-											
-											<if test = "qandA.qandAOpenCondition!=0 ">
-											<if test="search.searchCondition != null">
-											 <where>
-													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
-										 				LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
-													</if>
-													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-										 				LOWER(QANDA_TITLE) LIKE LOWER('%${search.searchKeyword}%')
-													</if>
-											</where>
 											</if>
 											</if>
-											
 											ORDER BY qanda_no ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>
+	 
+	 
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
@@ -143,7 +143,7 @@
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 		AND	QANDA_NO = #{searchKeyword}
+						 		QANDA_NO = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
 						 		QANDA_TITLE LIKE '%${searchKeyword}%'
@@ -152,6 +152,21 @@
 						</if> ) countTable						
 	 </select>
 	 
-
+		 <select  id="getTotalCount2"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT Q.QANDA_TITLE , Q.QANDA_CONTENT , Q.QANDA_REGDATE
+						FROM QANDA Q, USERS U
+						WHERE Q.USER_ID = #{userId} AND Q.USER_ID = U.USER_ID
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 		AND	QANDA_NO = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		AND QANDA_TITLE LIKE '%${searchKeyword}%'
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
 
 </mapper>

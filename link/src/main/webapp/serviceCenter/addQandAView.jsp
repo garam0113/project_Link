@@ -57,7 +57,7 @@
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
-		
+		 <input type="hidden" id="userId" name="qandA.userId" value ="${SessionScope.user.userId}">
 		  <div class="form-group">
 		    <label for="qandATitle" class="col-sm-offset-1 col-sm-3 control-label">Á¦¸ñ</label>
 		    <div class="col-sm-4">
