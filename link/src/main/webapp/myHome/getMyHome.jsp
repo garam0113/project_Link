@@ -599,6 +599,7 @@ input[name="tab_item"] {
     </div>
     <div class="tab_content" id="programming_content">
      <p id="ddf"></p>
+     <p id="ddd"></p>
 </div>
   </div>
 
@@ -627,11 +628,18 @@ $(function() {
 		success : function(data) { 
        console.log(data.ClubPostList[1]);
        $.each(data.ClubPostList, function(index, item) { // 데이터 =item
-			var title = item.clubPostTitle
-			var content = item.clubPostContent;
-            var 
-			 console.log(value);
-			 $("#ddf").append(value);
+			var title = item.clubPostTitle;
+			var video = item.clubPostVideo1;
+            var image = item.Image1;
+            var heart = item.heartCondition;
+            var profileImage = item.user.profileImage;
+            var nickName = item.nickName;
+			 console.log(title);
+			 $("#ddf").append(title);
+			 $("#ddf").append(image);
+			 $("#ddd").append(nickName);
+			 $("#ddd").append(profileImage);
+			 
 		})
 		
 		}	

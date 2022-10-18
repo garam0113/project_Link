@@ -85,6 +85,7 @@
 	
 		<div class="page-header text-info">
 	       <h3>모임일정리스트</h3>
+	       <a href="/club/addMeetingView.jsp">모임일정등록</a>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->

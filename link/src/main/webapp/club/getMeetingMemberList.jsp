@@ -74,7 +74,7 @@
       
         <thead>
           <tr>
-            <th align="center">No</th>
+          	<th align="left">회원 프로필사진</th>
             <th align="left" >회원 아이디</th>
             <th align="left">회원 닉네임</th>
           </tr>
@@ -85,9 +85,10 @@
 		  <c:forEach var="i" items="${meetingMemberList}">
 		  <input type="hidden" name="participantNo" value="${i.participantNo}">
 			<tr>
-			<td align="center">${i.participantNo}</td>
- 			  <td align="left">${i.user.userId}</td>
+			<td align="left"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
+			  <td align="left">${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
+			  
 			  
 			</tr>
           </c:forEach>
