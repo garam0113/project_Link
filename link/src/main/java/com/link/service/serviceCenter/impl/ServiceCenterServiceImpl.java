@@ -91,14 +91,11 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		int a = 0;
 		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		map.put("report", report);
 		map.put("userId", userId);
 		map.put("search", search);
 		map.put("totalCount", totalCount);
-
 		System.out.println("\n[ServiceCenterServiceImpl getReportList end]\n");
-
 		return serviceCenterDAO.getReportList(map);
 
 	}
@@ -108,18 +105,30 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		// TODO Auto-generated method stub
 
 		System.out.println("\n[ServiceCenterServiceImpl getQandAList start]\n");
-		int a = 1 ;
-		int totalCount = serviceCenterDAO.getTotalCount(search, a); 
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("qandA", qandA);
-		map.put("userId", userId);
-		map.put("search", search);
-		map.put("totalCount", totalCount);
-
-		System.out.println("\n[ServiceCenterServiceImpl getQandAList end]\n");
-
-		return serviceCenterDAO.getQandAList(map);
+			int totalCount;
+		if(userId=="") {
+			int a = 1 ;
+			totalCount = serviceCenterDAO.getTotalCount(search, a); 
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("qandA", qandA);
+			map.put("userId", userId);
+			map.put("search", search);
+			map.put("totalCount", totalCount);	
+			System.out.println("\n[ServiceCenterServiceImpl getQandAList end]\n");
+			return serviceCenterDAO.getQandAList(map);
+		}else {
+			int a = 3;
+			totalCount = serviceCenterDAO.getTotalCount(search, a); 
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("qandA", qandA);
+			map.put("userId", userId);
+			map.put("search", search);
+			map.put("totalCount", totalCount);
+			System.out.println("\n[ServiceCenterServiceImpl getQandAList end]\n");
+			return serviceCenterDAO.getQandAList(map);
+		}
 
 	}
 

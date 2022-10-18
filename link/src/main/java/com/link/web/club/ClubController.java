@@ -392,10 +392,11 @@ public class ClubController {
 		session.getAttribute("clubNo");
 		System.out.println("세션에 뭐가 있나요 ?? : "+ session.getAttribute("clubNo"));
 		
-		search.setSearchCondition("1");
+		
 		
 		search.setSearchKeyword((String) session.getAttribute("clubNo"));
-		search.setSearchKeyword(user.getUserId());
+//		search.setSearchKeyword(user.getUserId());
+		search.setSearchCondition("0");
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);

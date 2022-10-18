@@ -179,7 +179,7 @@ thead {
 					</tr>
 				</thead>
 
-				<tbody>
+				
 
 					<c:set var="i" value="0" />
 					<c:forEach var="getNoticeList" items="${getNoticeList}">
@@ -192,7 +192,7 @@ thead {
 								${getNoticeList.noticeTitle}</td>
 							<td></td>
 
-							<td align="left" >${getNoticeList.userId.userId}</td>
+							<td align="left" >${getNoticeList.userId.nickName}</td>
 
 							<td></td>
 							<td align="left" >${getNoticeList.noticeRegDate}</td>
@@ -225,7 +225,7 @@ thead {
 									</tr>
 								</table>
 								<td width="30"></td>
-								<c:if test="${userId=='admin01'}">
+								<c:if test="${user.userId=='admin1'}">
 									<div class="col-md-3 col-sm-3 col-xs-6"> 
 									  <button class="add add5" style= "transform: translate(1000px, 0px);">µî·Ï</button>
 									</div>

@@ -49,17 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	calendar.render();
 });
 window.onload=function() {
-	var meetingNo = $("#meetingNo").val();
-	console.log(meetingNo);
+	var userId = $("#userId").val();
+	console.log(userId);
 	$.ajax({
 		url : "/myHomeRest/json/getMeetingMemberList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
-		 data		:  JSON.stringify({searchKeyword:meetingNo}),
+		 data		:  JSON.stringify({searchKeyword:userId}),
 		contentType : "application/json",
 		success : function(data) { 
-				var meetingList = data;
-				console.log(meetingList);
+				console.log(data);
 		
        				$.each(data, function(index, item) { // 데이터 =item
 				var value = item.meetingNo;
@@ -78,7 +77,7 @@ window.onload=function() {
 };
 
 </script>
-<input type="hidden" name="meetingNo" id="meetingNo" value="${participant.meetingNo}">
+<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 
 

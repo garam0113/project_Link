@@ -27,32 +27,20 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <style>
-		body {
+	body {
 		padding-top : 70px;
-		clear: none;
-		
-		}
+	}
 		.thumbnail {
-			    display: flex;
-			    height: 100%;
-			    justify-content: flex-start;
-		    	align-items: center;
-		    	flex-direction: column;
+			display: flex;
+			height : 100%;
 		}
 		
 		.thumbnail img { 
 			min-height:200px; height:150px;
 		 }     
-		 
-		 div {
-		 	clear: none;
-		 }
 	
 	</style>
-	
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
+
 	<script type="text/javascript">
 	
 	function fncUpdateMemberRole() {
@@ -81,35 +69,20 @@
 	</script>	
 </head>
 
-<body class="blog masonry-style">
-
-	<jsp:include page="/toolbar.jsp" />
-
-	<main role="main">
+<body>
 		
-			<div id="intro-wrap" data-height="27.778">
-				<div id="intro" class="preload darken">
-					<div class="intro-item"
-						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>CLUB LIST</h2>
-							<p>The meeting is waiting for you.. </p>
-						</div>
-						<!-- caption -->
-					</div>
-					<!-- intro -->
-				</div>
-				<!-- intro -->
-			</div>
-			<!-- intro-wrap -->
-			
-			
 	
-		<!--  화면구성 div Start /////////////////////////////////////-->
-		<div class="container">
+	<!--  화면구성 div Start /////////////////////////////////////-->
+	<div class="container">
+	
+		<div class="page-header text-info">
+	       <h3>모임리스트</h3>
+	       <a href="/club/addClubView.jsp">모임등록</a>      
+	       
+	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	  	  <div id="main" class="row">
+	    <div class="row">
 	    
 		    
 		    <div class="col-md-6 text-right" style="float: right;">
@@ -128,11 +101,8 @@
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <div class="form-group">
 				  <button type="button" class="btn btn-default">검색</button>
 				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  <a href="/club/addClubView.jsp">모임등록</a>
-				  </div>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -142,32 +112,59 @@
 	    	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-
-
-	<div id="main" class="row">
 		
-
-		<!-- <div class="row"> -->
-		  <c:forEach var="i" items="${clubList}">
-		  	<div class="col-xs-4 col-md-4">	
-				<div class="thumbnail" style="">
-			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p><strong>모임제목 : ${i.clubTitle}</strong></p>
-				  		<p>${i.clubArea}</p>
-				  		<p>현재인원 : ${i.currentMember}</p>
-				  		<p>최대인원 : ${i.clubMaxMember}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			  	
-				 </div>
-				</div>						
-	    	 </c:forEach>
-		</div>			
+		
+      <!--  table Start /////////////////////////////////////-->
+      <!-- <table class="table table-hover table-striped" > -->
       
-	</div>
+    <!--     <thead>
+          <tr>
+            <th align="center">No</th>
+            <th align="left" >모임 제목</th>
+            <th align="left">모임 상세설명</th>
+            <th align="left">모임 카테고리</th>
+            <th align="left">현재 가입인원 수 </th>
+            <th align="left">최대 모임원 수</th>
+            <th align="left">모임 활동영역</th>
+            <th align="left">모임 이미지</th>
+            <th align="left">가입현황리스트</th>
+          </tr>
+        </thead> -->
+       
+		<div class="row">
+		
+		<%-- ${clubList} --%>
+		  <c:set var="i" value="0" />
+		  <c:forEach var="i" items="${clubList}">
+			<div class="col-xs-4 col-md-4">
+			<div class="thumbnail" style="">
+			  <%-- <td align="center">${ i }</td> --%>
+			  <%-- <td align="left"><a href="/club/getClub?clubNo=${i.clubNo}">${i.clubNo}</a> --%>
+
+			  <img src="/resources/image/uploadFiles/${i.clubImage}" alt=".">
+			  <div class="caption">
+			  	<p>${i.clubTitle}</p>
+			  	<p>${i.clubArea}</p>
+			  	<p>현재인원 : ${i.currentMember}</p>
+			  	<p>최대인원 : ${i.clubMaxMember}</p>
+			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>
+			  	
+			  </div>
+			  </div>
+			</div>			  
+		
+        </c:forEach>
+
+        </div>
+        
+      
+      
+	  <!--  table End /////////////////////////////////////-->
 	  
- 	
+ 	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
-	</main>
+	
 	
 </body>
 

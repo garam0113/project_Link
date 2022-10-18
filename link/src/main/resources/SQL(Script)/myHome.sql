@@ -43,3 +43,46 @@ SELECT
 	 					where u.user_id = f.send_user_id
 	 					) deep_table
 	 					) inner_table;
+	 					
+SELECT
+	 	inner_table.* 
+	 	FROM (
+	 			SELECT
+	 			rownum AS row_seq						, 
+	 			deep_table.*
+	 			FROM (
+	 					SELECT
+	 					f.send_user_Id   , 
+	 					f.recv_user_id, 
+	 					f.state, 
+	 					f.type, 
+	 					u.nickname  , 
+	 					u.profile_image
+	 					
+	 					
+	 					
+	 					 
+	 					FROM users u, follow_block f
+	 					where u.user_id = f.send_user_id and f.recv_user_id = 'user04'
+	 					) deep_table
+	 					) inner_table;
+	 						 					
+	 					
+	 					
+	 					
+SELECT
+		f.send_user_Id ,
+		f.recv_user_id,
+		f.state,
+		f.type,
+		u.nickname ,
+		u.profile_image
+
+
+
+
+		FROM users u, follow_block f
+
+		WHERE	u.user_id = f.recv_user_id
+				and f.send_user_id = 'user03' and f.recv_user_id
+				='user01' and f.type = '2';

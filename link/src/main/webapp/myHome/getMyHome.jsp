@@ -426,7 +426,11 @@ input[name="tab_item"] {
 }
 
 /* 선택된 탭 스타일 */
-.tabs input:checked + .tab_item {
+.tabs input:checked + .tab_item1 {
+  background-color: #333333;
+  color: #fff;
+}
+.tabs input:checked + .tab_item2 {
   background-color: #333333;
   color: #fff;
 }
@@ -519,11 +523,11 @@ input[name="tab_item"] {
 					</div>
 				</div>
 
-			<div class="tabs">
+	<%-- 		<div class="tabs">
 			<input id="all" type="radio" name="tab_item" checked>
-    <label class="tab_item1" for="all">FollowList</label>
+    <label class="tab_item" for="all">FollowList</label>
     <input id="programming" type="radio" name="tab_item">
-    <label class="tab_item2" for="programming">FollowerList</label>
+    <label class="tab_item" id="tab2" for="programming">FollowerList</label>
     
     <div class="tab_content" id="all_content">
         		<div class="comment-section">
@@ -540,11 +544,14 @@ input[name="tab_item"] {
 				</div>
 				</div>
 				  <div class="tab_content" id="programming_content">
-     <div class="col-md-4" id="cp">
-											
+     <div class="col-md-4" id="fl">
+					 		<br />
+		
+			
+								
 </div>
   </div>
-				</div>
+				</div> --%>
 		
 <div class="tabs">
     <input id="all" type="radio" name="tab_item" checked>
@@ -632,8 +639,7 @@ input[name="tab_item"] {
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/beetle.js"></script>
+
 	 
 	<script type="text/javascript">
 $(function() {
@@ -690,26 +696,30 @@ $(function() {
 	});
 });
 	
-	$(".tab_item2").on("click" , function(e) {
+	$("#tab2").on("click" , function(e) {
 		var userId = $("#userId").val(); 
-		$(".tab_item2").off(e);
+		$("#tab2").off(e);
 	$.ajax({
 		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
 		 data		:  JSON.stringify({
-			userId : userId
+			receiveId : userId
 		 }),
 		 
 		contentType : "application/json",
 		success : function(data) { 
        console.log(data.followerList[1]);
        $.each(data.followerList, function(index, item) { // 데이터 =item
-    	   console.log(item.clubPostNo);
+    	   console.log(item);
 			var value = 
+				"<div class='follow-section' style='margin-left:300px;'>"+
+			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
+			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+		"</div>";
 			
 			
-                      
+			$("#fl").append(value);            
 			
 		})
 		

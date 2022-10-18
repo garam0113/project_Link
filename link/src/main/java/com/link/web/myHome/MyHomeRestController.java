@@ -96,17 +96,23 @@ public class MyHomeRestController {
 	 public Map<String, Object> getFollowerList(@RequestBody Search search,User user, HttpSession session) throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
 				 
+				 search.setSearchCondition("1");
 				 if(search.getCurrentPage() == 0) {
 						search.setCurrentPage(1);
 					}
 					
 					search.setPageSize(pageSize);
 					search.setPageUnit(pageUnit);
-				 user = (User) session.getAttribute("user");
+					
+					
+					String userId = ((User) session.getAttribute("user")).getUserId();
+					search.setSearchKeyword(userId);
+				 
 				 Map<String,Object>map = myHomeService.getFollowerList(search);
+				 
 				 map.put("search",search);
 				 map.put("user", user);	
-				 map.put("list",myHomeService.getFollowList(search).get("list"));
+				 map.put("followerList",myHomeService.getFollowerList(search).get("followerList"));
 				 
 				 return map;
 				 
@@ -266,6 +272,7 @@ public class MyHomeRestController {
 			search.setCurrentPage(1);
 		}
 		
+
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		search.setOrder(1);
@@ -275,7 +282,6 @@ public class MyHomeRestController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingMemberCount")).intValue(), pageUnit, pageSize);
 		System.out.println("resultPage : "+resultPage);
 		
-		
 		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
@@ -283,5 +289,20 @@ public class MyHomeRestController {
 		return map;
 	}
 	
+
+		@RequestMapping(value = "json/getFollw", method = RequestMethod.POST)
+		public User getFollow(@RequestBody User user, HttpSession session) throws Exception{
+			
+			System.out.println("/club/json/getFollew :  POST");
+			
+			String sessionId = ((User)session.getAttribute("user")).getUserId();
+			
+			user.setUserId(sessionId);
+			
+			User follwUser = myHomeService.getFollow(user);
+			
+			return follwUser;
+			
+		}
 	
 }
