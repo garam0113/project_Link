@@ -30,6 +30,14 @@
 	body {
 		padding-top : 70px;
 	}
+		.thumbnail {
+			display: flex;
+			height : 100%;
+		}
+		
+		.thumbnail img { 
+			min-height:200px; height:150px;
+		 }     
 	
 	</style>
 
@@ -76,13 +84,8 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
 		    
-		    <div class="col-md-6 text-right">
+		    <div class="col-md-6 text-right" style="float: right;">
 			    <form class="form-inline" name="detailForm">
 			    
 				  <div class="form-group">
@@ -112,9 +115,9 @@
 		
 		
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
+      <!-- <table class="table table-hover table-striped" > -->
       
-        <thead>
+    <!--     <thead>
           <tr>
             <th align="center">No</th>
             <th align="left" >모임 제목</th>
@@ -126,33 +129,36 @@
             <th align="left">모임 이미지</th>
             <th align="left">가입현황리스트</th>
           </tr>
-        </thead>
+        </thead> -->
        
-		<tbody>
-		<tr>
+		<div class="row">
+		
 		<%-- ${clubList} --%>
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${clubList}">
-		  <%-- <input type="hidden" name="clubNo" value="${clubNo}"> --%>
-			<%-- <c:set var="i" value="${ i+1 }" /> --%>
-			<tr>
+			<div class="col-xs-4 col-md-4">
+			<div class="thumbnail" style="">
 			  <%-- <td align="center">${ i }</td> --%>
-			  <td align="left"><a href="/club/getClub?clubNo=${i.clubNo}">${i.clubNo}</a>
-			  <td align="left">${i.clubTitle}</td>
-			  <td align="left">${i.clubDetail}</td>
-			  <td align="left">${i.clubCategory}</td>
-			  <td align="left">${i.currentMember}</td>
-			  <td align="left">${i.clubMaxMember}</td>
-			  <td align="left">${i.clubArea}</td>
-			  <td align="left">${i.clubImage}</td>
-			  <td align="left"><a href="/club/getApprovalConditionList">신청현황</a>	
-			  
-			</tr>
-          </c:forEach>
-        </tr>
-        </tbody>
+			  <%-- <td align="left"><a href="/club/getClub?clubNo=${i.clubNo}">${i.clubNo}</a> --%>
+
+			  <img src="/resources/image/uploadFiles/${i.clubImage}" alt=".">
+			  <div class="caption">
+			  	<p>${i.clubTitle}</p>
+			  	<p>${i.clubArea}</p>
+			  	<p>현재인원 : ${i.currentMember}</p>
+			  	<p>최대인원 : ${i.clubMaxMember}</p>
+			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>
+			  	
+			  </div>
+			  </div>
+			</div>			  
+		
+        </c:forEach>
+
+        </div>
+        
       
-      </table>
+      
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>

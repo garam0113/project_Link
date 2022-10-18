@@ -194,6 +194,8 @@ public class ClubRestController {
 		
 		System.out.println("updateApprovalCondition 시작!");
 		
+		
+		clubUser.setApprovalCondition("1");
 		clubService.updateApprovalCondition(clubUser);
 		model.addAttribute("clubUser",clubUser);
 

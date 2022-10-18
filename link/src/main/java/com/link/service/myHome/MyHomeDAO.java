@@ -22,7 +22,7 @@ public interface MyHomeDAO {
 	
 	public List<User> getFollowerList(Search search) throws Exception;
 	
-	public void deleteFollow(User user) throws Exception;
+	public void updateFollow(User user) throws Exception;
 	
 	public int getFollowCount(Search search) throws Exception;
 	

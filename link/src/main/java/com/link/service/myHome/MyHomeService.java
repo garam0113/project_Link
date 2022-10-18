@@ -22,7 +22,7 @@ public interface MyHomeService  {
 	
 	public Map<String, Object> getFollowerList(Search search) throws Exception;
 	
-	public void deleteFollow(User user) throws Exception;
+	public void updateFollow(User user) throws Exception;
 
 
 }

@@ -54,6 +54,10 @@
 		.submit();
 	}
 	
+	function refreshMemList(){
+		location.reload();
+	}
+	
 	$(function() {
 
 		$("button.btn.btn-danger").on("click", function() {
@@ -89,6 +93,7 @@
 							alert(status);
 						} // end of success  
 					}); //end of ajax
+					refreshMemList();
 			}); //모임원 추방
 		
 			$(function() {
@@ -100,7 +105,7 @@
 			$(document).on("click", "#updateApprovalCondition", function(){
 				alert('승인');
 				var clubUserNo = $(this).val();
-				var approvalCondition = $(this).val();
+				var approvalCondition = $(this).attr("approvalCondition");
 				alert(clubUserNo);
 				alert(approvalCondition);
 				$.ajax("/clubRest/json/updateApprovalCondition",
@@ -117,10 +122,9 @@
 							dataType : "json",
 							success : function(JSONData, status) {
 								alert(status);
-							} // end of success
-					
+							} // end of success				
 						}); // end of ajax
-				
+				refreshMemList();
 				}); // end of 승인
 
 	
@@ -155,11 +159,8 @@
 			openWin.document.getElementById("clubUserNo").value = $(this).val();
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
 		});
-		
 	});
-	
 	});
-			
 	});	
 	</script>	
 	
@@ -211,7 +212,7 @@
       
         <thead>
           <tr>
-            <th align="center">No</th>
+            <th align="center">프로필사진</th>	
             <th align="left" >회원 ID</th>
             <th align="left">회원 닉네임</th>
             <th align="left">모임직책</th>
@@ -229,18 +230,20 @@
 		  <c:forEach var="i" items="${clubMemberList}">
 		  <%-- <input type="hidden" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			<tr>
-			<td align="center">${i.clubUserNo}</td>
+			<td align="center"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
 			  <td align="left">${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
+			  
+			  
 			  <td align="left">${i.memberRole}</td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${i.approvalCondition}</td>
 			  <!-- <td align="left"><button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button> -->
 			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
-			  <input type="text" id="clubUserNo" name="clubUserNo" value="${i.clubUserNo}">
+<%-- 			  <input type="text" id="clubUserNo" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
-			  <td align="left"><button value="${i.clubUserNo}" id="updateApprovalCondition">승인</button>
+			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
 			</tr>
           </c:forEach>
         </tbody>

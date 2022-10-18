@@ -19,8 +19,10 @@
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
+  <link rel="stylesheet" href="/resources/demos/style.css">
   	<!--  	jQuery UI toolTip 사용 JS -->
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+  <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 		
@@ -61,6 +63,10 @@
 			history.go(-1);
 		});
 	});
+	
+	$(function(){
+		$("#datepicker").datepicker();
+	});
 
 </script>
 </head>
@@ -85,7 +91,8 @@
 			<div class="form-group">
 				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">모 임 날 짜</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="모임날짜는 필수입니다.">
+					<!-- <input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="모임날짜는 필수입니다."> -->
+					<p><input type="text" id="datepicker" name="meetingDate" placeholder="모임날짜는 필수입니다." height="150px"></p> 
 				</div>		
 			</div>
 			
