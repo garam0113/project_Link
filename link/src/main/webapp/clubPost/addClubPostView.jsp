@@ -22,7 +22,7 @@
 			function textEdit(){
 			    jsonArray = [];
 				$('#summernote').summernote({
-	                height : 300,
+	                disableResizeEditor: true,
 	                minHeight : null,
 	                maxHeight : null,
 	                focus : true,

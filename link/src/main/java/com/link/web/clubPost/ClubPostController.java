@@ -198,6 +198,7 @@ public class ClubPostController {
 			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
 			// 파일명.확장자
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			System.out.println(str);
 			clubPost.setClubPostVideo1(str);
 		}
 		
@@ -241,8 +242,40 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "updateClubPost")
-	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Heart heart, Map<String, Object> map, HttpSession session) throws Exception {
+	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
+		// session으로 로그인한 회원 정보를 가져온다
+		clubPost.setUser((User)session.getAttribute("user"));
+
+		int isIndexImage = 0;
+		int isIndexVideo = 0;
+		String specificImage = "/resources/image/temp/";
+		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
+		String specificVideo = "embed/";
+		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
+			System.out.println("이미지가 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificImage)+specificImage.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			// 파일명.확장자
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setImage1(str);
+		}
+		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
+			System.out.println("영상이 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
+				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			}
+			// 파일명.확장자
+			System.out.println("startIndex : " + startIndex + ", endIndexFromStartIndex : " + endIndexFromStartIndex);
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setClubPostVideo1(str);
+		}
+		
+		System.out.println("////////////////" + clubPost.getImage1());
+		System.out.println("////////////////" + clubPost.getClubPostVideo1());
+		
 		map.put("clubPost", clubPost);
 		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";

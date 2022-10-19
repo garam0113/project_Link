@@ -78,6 +78,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 		}
 		
 		map = clubPostDAOImpl.updateClubPost(map);
+		// 상세보기에서 하트컨디션이 1이면 빨간하트 -1이면 하얀하트를 보여준다
 		((ClubPost)map.get("getClubPost")).setHeartCondition(i);
 		
 		return map;
