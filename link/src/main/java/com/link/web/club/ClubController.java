@@ -1,10 +1,11 @@
 package com.link.web.club;
 
+import java.io.File;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
@@ -40,21 +42,28 @@ public class ClubController {
 		System.out.println(this.getClass() + " default constructor");
 	}
 	
-	@Value("#{commonProperties[pageSize]}")
+	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	@Value("#{commonProperties[pageUnit]}")
+	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
+	
+	@Value("#{commonProperties['clubUploadTempDir']}")
+	String clubUploadTempDir;
 
 	@RequestMapping(value="addClub", method=RequestMethod.POST)
-	public String addClub(@ModelAttribute Club club, Model model, HttpSession httpSession, User user, ClubUser clubUser) throws Exception {
+	//public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("clubImage") List<MultipartFile> file) throws Exception {
+	public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("file") MultipartFile file) throws Exception {
 		
 		System.out.println("club/addClub : POST");
 		
 		user = (User) httpSession.getAttribute("user");
 		
+		String sysName = "_User_";
+		
+		Date dateNow = new Date(System.currentTimeMillis());
+		
 		System.out.println("세션에 뭐 있나? : " + user);
-		//club.setUser(user);
 		
 		club.setUser(user);
 		club.setCurrentMember(1);
@@ -63,6 +72,12 @@ public class ClubController {
 		clubUser.setMemberRole("2");
 		clubUser.setApprovalCondition("2");
 		clubUser.setJoinGreeting("모임대표의 가입인사");
+		
+		if (file != null && file.getSize() > 0) {
+			
+			file.transferTo( new File(clubUploadTempDir, user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
+		}
 		
 		clubService.addClub(club);
 		clubService.addApprovalCondition(clubUser);
@@ -102,16 +117,31 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="updateClub", method=RequestMethod.POST)
-	public String updateClub(@ModelAttribute Club club, Model model)  throws Exception {
+	public String updateClub(@ModelAttribute Club club, Model model, HttpSession session, User user, ClubUser clubUser,  @RequestParam("file") MultipartFile file)  throws Exception {
 		
 		System.out.println("club/updateClub : POST");
 		
+		user = (User) session.getAttribute("user");
+		club = (Club) session.getAttribute("club");
 		//Business Logic
+		
+		String sysName = "_User_";
+		
+		Date dateNow = new Date(System.currentTimeMillis());
+		
+		club.setUser(user);
+		club.setClubNo(club.getClubNo());
+		
+		if (file != null && file.getSize() > 0) {
+			
+			file.transferTo( new File(clubUploadTempDir, user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
+		}
+
 		
 		clubService.updateClub(club);
 		
-		
-		return "forward:/club/getClub.jsp";
+		return "forward:/club/getClub";
 	}
 	
 	@RequestMapping(value="deleteClub")
@@ -127,7 +157,7 @@ public class ClubController {
 		
 		clubService.deleteClub(club.getClubNo());
 		
-		return "forward:/club/getClubList.jsp";
+		return "forward:/club/getClubList";
 	}
 	
 	@RequestMapping(value="getClubList")
@@ -283,14 +313,13 @@ public class ClubController {
 		System.out.println("(일정참여자)미팅넘버 세션에 뭐 있지? : "+ session.getAttribute("meetingNo"));
 				
 		
-		search.setSearchKeyword((String) session.getAttribute("meetingNo"));
-		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
 		}
 		
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
+		search.setSearchKeyword((String) session.getAttribute("meetingNo"));
 		
 		Map<String, Object>  map = clubService.getMeetingMemberList(search);
 		
@@ -306,12 +335,13 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="addMeeting", method=RequestMethod.POST)
-	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club) throws Exception {
+	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, Participant participant, String meetingNo) throws Exception {
 		
 		System.out.println("club/addMeeting : POST ");
 		
 		user = (User) session.getAttribute("user");
 		club = (Club) session.getAttribute("club");
+		meetingNo = (String) session.getAttribute("meetingNo");
 		
 		System.out.println("유저 세션에 뭐있나? : "+user);
 		System.out.println("클럽넘버는 잘 왔나? : "+club.getClubNo());
@@ -320,7 +350,11 @@ public class ClubController {
 		meeting.setClubNo(club.getClubNo());
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
+		
+		participant.setUser(user);
+		participant.setMeetingNo(Integer.parseInt(meetingNo));
 		clubService.addMeeting(meeting);
+		clubService.addMeetingMember(participant);
 		return "forward:/club/getMeeting.jsp";
 		
 	}
@@ -332,18 +366,14 @@ public class ClubController {
 		
 		user = (User) session.getAttribute("user");
 		meetingNo = (String) session.getAttribute("meetingNo");
-		session.getAttribute("meetingNo");
-		
 		
 		System.out.println("유저 세션에 뭐있지 : "+user);
 		System.out.println("미팅넘버 왔나? : "+session.getAttribute("meetingNo"));
 		
-//		participant.setMeetingNo( ( (Participant)session.getAttribute("meetingNo") ).getMeetingNo() );
 
-//		participant.setParticipantUserId(user.getUserId());
-//		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
-		participant.setMeetingNo(Integer.parseInt(meetingNo));
+
 		participant.setUser(user);
+		participant.setMeetingNo(Integer.parseInt(meetingNo));
 		
 		clubService.addMeetingMember(participant);
 		
@@ -352,14 +382,20 @@ public class ClubController {
 	
 	
 	@RequestMapping(value="getMeetingList")
-	public String getMeetingList(@ModelAttribute("search") Search search, Model model, HttpSession session, Club club) throws Exception {
+	public String getMeetingList(@ModelAttribute("search") Search search, Model model, HttpSession session, Club club, User user) throws Exception {
 		
 		System.out.println("/club/getMeetingList : GET/POST");
+		
+		user = (User) session.getAttribute("user");
 		
 		session.getAttribute("clubNo");
 		System.out.println("세션에 뭐가 있나요 ?? : "+ session.getAttribute("clubNo"));
 		
+		
+		
 		search.setSearchKeyword((String) session.getAttribute("clubNo"));
+//		search.setSearchKeyword(user.getUserId());
+		search.setSearchCondition("0");
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);

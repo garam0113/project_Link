@@ -56,11 +56,11 @@ CREATE TABLE heart(
 	source_no						NUMBER												NOT NULL
 );
 
-INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user01', '3', '첫글입니다#first', 'a.jpg', 'b.jpg', null, null, null, '#first', '0', '0', SYSDATE, null, '0', '0' );
-INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user02', '3', '두번째글입니다#second', 'a.jpg', 'b.jpg', null, null, null, '#second', '0', '0', SYSDATE, null, '0', '0' );
-INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user03', '3', '세번째글입니다#third', 'a.jpg', 'b.jpg', null, null, null, '#third', '0', '0', SYSDATE, null, '0', '0' );
-INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user04', '3', '네번째글입니다#fourth', 'a.jpg', 'b.jpg', null, null, null, '#fourth', '0', '0', SYSDATE, null, '0', '0' );
-INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user05', '3', '다섯번째글입니다#fifth', 'a.jpg', 'b.jpg', null, null, null, '#fifth', '3', '5', SYSDATE, null, '0', '0' );
+INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user01', '3', '첫글입니다#first', 'a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', null, '#first', '0', '0', SYSDATE, null, '0', '0' );
+INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user02', '3', '두번째글입니다#second', 'profile_image2clubPost.jpg', 'no_heart.jpg', 'user03flower11clubPost.jpg', null, null, '#second', '0', '0', SYSDATE, null, '0', '0' );
+INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user03', '3', '세번째글입니다#third', 'heart.jpg', 'user005_User_2022-10-15_cccc.jpg', 'user03flower17clubPost.jpg', null, null, '#third', '0', '0', SYSDATE, null, '0', '0' );
+INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user04', '3', '네번째글입니다#fourth', 'user03_User_2022-10-16_333.jpg', 'user03flower14clubPost.jpg','profile_image1clubPost.jpg', null, null, '#fourth', '0', '0', SYSDATE, null, '0', '0' );
+INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user05', '3', '다섯번째글입니다#fifth', 'q&a.jpg', '2018090516093218827_4.jpg', 'user03flower20clubPost.jpg', null, null, '#fifth', '3', '5', SYSDATE, null, '0', '0' );
 
 INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user01', 'first', '5', '0', SYSDATE, null, '0', '0', null,'0', '0', '0');
 INSERT INTO feed_comment VALUES ( seq_feed_comment_no.nextval, '5', 'user02', 'second', '0', '0', SYSDATE, null, '0', '0', null,'0', '0', '1');

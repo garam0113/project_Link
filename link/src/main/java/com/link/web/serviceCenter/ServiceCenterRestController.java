@@ -2,22 +2,20 @@ package com.link.web.serviceCenter;
 
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.link.common.Page;
+import com.link.common.Search;
+import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -34,6 +32,11 @@ public class ServiceCenterRestController {
 		System.out.println(this.getClass() + "default constructor");
 	}
 	
+	@Value("#{commonProperties['pageSize'] ?: 10}")
+	int pageSize;
+
+	@Value("#{commonProperties['pageUnit'] ?: 10}")
+	int pageUnit;
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
 	public String addReport(@RequestBody Report report,  Model model )throws Exception {
@@ -50,7 +53,24 @@ public class ServiceCenterRestController {
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
 	
-
+	/*
+	 * @RequestMapping(value="/json/getQandAList", method = RequestMethod.POST)
+	 * public Map<String, Object> getQandAList(@RequestBody Search search, QandA
+	 * qandA, String userId) throws Exception {
+	 * 
+	 * System.out.println("/serviceCenter/getQandAList :POST");
+	 * if(search.getCurrentPage() == 0) { search.setCurrentPage(1); }
+	 * search.setPageSize(pageSize); String userId1=""; Map<String, Object> map =
+	 * serviceCenterService.getQandAList(search, qandA , userId1);
+	 * 
+	 * Page resultPage = new Page(search.getCurrentPage(),
+	 * ((Integer)map.get("totalCount")), pageUnit, pageSize);
+	 * 
+	 * map.put("search", search); map.put("qandA", qandA); map.put("resultPage",
+	 * resultPage); map.put("userId", "userId");
+	 * 
+	 * return map; }
+	 */
 	
 
 }//RestController 끝

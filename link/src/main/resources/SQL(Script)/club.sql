@@ -152,7 +152,7 @@ DELETE FROM participant WHERE participant_no = 2;
 
 //모임일정 삭제
 deleteMeeting()
-DELETE FROM meeting WHERE meeting_no = 6;
+DELETE FROM meeting WHERE meeting_no = 66;
 
 //모임원 직책 수정
 updateMemberRole()
@@ -207,15 +207,101 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 
 SELECT inner_table.*
 FROM ( SELECT rownum AS row_seq, deep_table.*
-		FROM ( SELECT p.participant_no, u.user_id, u.nickname
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date
 				FROM participant p, users u, meeting m
 				WHERE p.participant_user_id = u.user_id and p.meeting_no = m.meeting_no and p.meeting_no ='38' ) deep_table ) inner_table
+				
+				
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no, c.club_title
+				FROM participant p, users u, meeting m, club c
+				
+				WHERE p.participant_user_id = u.user_id
+				and p.meeting_no = m.meeting_no
+				and m.club_no = c.club_no
+				
+						< if test="order == 0" >
+							and p.meeting_no = #{searchKeyword}
+						</if>
+						< if test="order == 1" >
+							and u.user_id = #{searchKeyword}
+						</if>
+						
+						 ) deep_table ) inner_table
+
+				
+SELECT inner_table.*
+FROM ( 
+		SELECT rownum AS row_seq, deep_table.*
+		FROM ( 
+				SELECT 
+				p.participant_no, 
+				u.user_id, 
+				u.nickname, 
+				u.profile_image, 
+				m.meeting_title, 
+				m.meeting_place, 
+				m.meeting_time, 
+				m.meeting_date, 
+				m.club_no, 
+				m.meeting_no
+				
+				FROM participant p, users u, meeting m
+				
+				WHERE p.participant_user_id = u.user_id
+				and p.meeting_no = m.meeting_no
+				and u.user_id = 'user04'		
+						 ) deep_table ) inner_table						 
+						 
+						and p.meeting_no = '65'
+						and u.user_id = 'user04'
+						and u.user_id = #{searchKeyword} 
+						 
+						 
+						 
+						 
+						 
+SELECT inner_table.*
+FROM ( SELECT rownum AS row_seq, deep_table.*
+		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no, c.club_title, m.meeting_no
+				FROM participant p, users u, meeting m, club c
+				WHERE p.participant_user_id = u.user_id and p.meeting_no = m.meeting_no and u.user_id ='user04' ) deep_table ) inner_table				
 		
 
+SELECT inner_table.*
+FROM (SELECT rownum AS row_seq, deep_table.*
+		FROM (SELECT 
+			m.meeting_no ,
+			m.club_no ,
+			m.meeting_title ,
+			m.meeting_date ,
+			m.meeting_time ,
+			m.meeting_place , 
+			m.meeting_weather ,
+			m.meeting_member ,
+			u.user_id
+				
+			FROM meeting m, users u
+			
+			WHERE m.add_meeting_user_id = u.user_id
+			and u.user_id = 'user01') deep_table ) inner_table
 
 
+			
+			
+			
+SELECT inner_table.*
+	FROM ( SELECT rownum AS row_seq, deep_table.*
+				FROM ( SELECT m.meeting_no , m.club_no , m.meeting_title , m.meeting_date , m.meeting_time , m.meeting_place , m.meeting_weather , m.meeting_member , u.user_id
+					FROM meeting m, users u
+					WHERE m.add_meeting_user_id = u.user_id and u.user_id = 'user01' ) deep_table ) inner_table 
 
 
+SELECT meeting
+FROM 
+
+ON DELETE CASACADE;
 
 
 

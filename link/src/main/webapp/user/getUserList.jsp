@@ -23,21 +23,20 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-<!-- Bootstrap Dropdown Hover CSS -->
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 
-
-<!-- jQuery UI toolTip 사용 CSS-->
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<!-- 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+ -->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 body {
@@ -71,86 +70,24 @@ body {
 		});
 
 	});
+	/*
+	 $(function() {
+
+	 var userId = $("td:nth-child(2)")[1].text().trim();
 	
-	$(function()) {
-		$("#block").on("click", function() {
-			
-		})
-	})
+	 console.log(userId);
 
-	$(function() {
-		$("td:nth-child(2)").on("mouseover", function() {
+	 $("#" + userId).on("click", function() {
 
-			console.log($(this).text().trim());
+	 alert("클릭");
 
-			var userId = $(this).text().trim();
+	 var recId = $(this).parent().text().trim().replace("차단");
 
-			$.ajax("/userRest/json/getUser", {
-
-				type : "POST",
-				data : JSON.stringify({
-					userId : userId
-				}),
-				dataType : "json",
-				contentType : "application/json",
-				headers : {
-					"Accept" : "application/json"
-				},
-				success : function(Data, status) {
-
-					console.log(Data);
-
-					var nickName = Data.nickName;
-					var profileImage = Data.profileImage;
-					var profileWriting = Data.profileWriting;
-
-					$("#ajaxImage").text(profileImage)
-					$("#ajaxNickName").text(nickName)
-					$("#ajaxWriting").text(profileWriting)
-/*
-					$(function() {
-
-						$("#dialog").dialog({
-							autoOpen : true,
-							show : {
-								effect : "blind",
-								duration : 1000
-							},
-							hide : {
-								effect : "explode",
-								duration : 1000
-							}
-						});
-
-						$("#" + userId).on("mouseover", function() {
-							$("#dialog").dialog("open");
-						});
-					});
-					*/
-				}
-			});
-		})
-
-	})
-				/*	$(function() {
-
-						$("#dialog").dialog({
-							autoOpen : false,
-							show : {
-								effect : "blind",
-								duration : 1000
-							},
-							hide : {
-								effect : "explode",
-								duration : 1000
-							}
-						});
-
-						$("#" + userId).on("mouseover", function() {
-							$("#dialog").dialog("open");
-						});
-					});
-	*/
+	 console.log("recId 값 : " + recId);
+	 })
+	 })
+	 */
+	
 </script>
 
 </head>
@@ -225,7 +162,8 @@ body {
 					<c:set var="i" value="${ i+1 }" />
 					<tr>
 						<td align="center">${ i }</td>
-						<td align="left" id="${ user.userId }" title="Click : 회원정보 확인"><a>${user.userId}</a></td>
+						<td align="left" id="${ user.userId }" title="Click : 회원정보 확인"><a>${user.userId}</a>
+						</td>
 						<td align="left">${user.nickName}</td>
 						<td align="left">${ user.reportCount }</td>
 						<td align="left">${ fn:trim(user.penaltyType) == 0 ? "-" : ""}
@@ -233,12 +171,13 @@ body {
 						<td align="left">${ !empty user.stopStartDate ? user.stopStartDate : ""}
 							- ${ !empty user.stopEndDate ? user.stopEndDate : ""}</td>
 						<td>
-							<div id="dialog" title="Basic dialog">
+							<div id="${user.nickName}" title="프로필보기" hidden="dia">
 								<div id="ajaxImage"></div>
 								<div id="ajaxNickName"></div>
 								<div id="ajaxWriting"></div>
 								<div>
-									<span><button id = "block">차단</button></span> <span><button>채팅</button></span>
+									<span><button>차단</button>
+										<button>팔로우</button></span> <span><button>채팅</button></span>
 								</div>
 							</div>
 						</td>

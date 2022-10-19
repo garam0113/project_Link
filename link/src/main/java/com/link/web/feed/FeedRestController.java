@@ -1,24 +1,30 @@
 package com.link.web.feed;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
@@ -51,6 +57,17 @@ public class FeedRestController {
 	
 	
 	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
+	
+	public Feed getFeed(@RequestBody Feed feed, User user) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feedNo", feed.getFeedNo());
+		map.put("user", user);
+		
+		feed = ((Feed)(feedService.getFeed(map)).get("feed"));
+		
+		return feed;
+	}
 	
 	
 	// 사용
@@ -328,15 +345,49 @@ public class FeedRestController {
 		
 		
 		
-	@RequestMapping(value = "/json/addFeedReport", method = RequestMethod.POST)
-	public Report addReport(@RequestBody Report report) throws Exception {
-		
-		feedService.addReport(report);
-		
-		return report;
 	
+	
+	
+	
+	///////////////////////////////////////////////////// UPLOAD /////////////////////////////////////////////////////
+	
+	
+	@RequestMapping(value = "/json/uploadImage", produces = "application/json; charset=utf8")
+	public String uploadImage(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) throws Exception {
+		JsonObject jsonObject = new JsonObject();
+		
+		// 외부경로 저장
+		// String fileRoot = "C:\\"; 
+		
+		// 내부경로 저장
+		String contextRoot = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\";
+		String fileRoot = contextRoot+"resources\\image\\uploadFiles\\";
+		
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		// String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		// String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + originalFileName);
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			// 파일 저장
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);
+			// contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("url", "/resources/image/uploadFiles/"+originalFileName); 
+			jsonObject.addProperty("responseCode", "success");
+				
+		} catch (Exception e) {
+			// 저장된 파일 삭제
+			FileUtils.deleteQuietly(targetFile);	
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		String jsonValue = jsonObject.toString();
+
+		System.out.println("제이슨 : " + jsonValue);
+		
+		return jsonValue;
 	}
-	
-	
 	
 }

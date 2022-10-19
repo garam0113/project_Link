@@ -171,8 +171,10 @@ public class ClubPostRestController {
 	
 	
 
-	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.GET)
+
+	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.POST)
 	public Map<String, Object> getClubPostListMyHome(HttpSession session) throws Exception {
+
 		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		String userId = ((User) session.getAttribute("user")).getUserId();

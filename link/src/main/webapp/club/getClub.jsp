@@ -11,6 +11,7 @@
 
 <title>모임상세조회</title>
 
+	<meta charset="EUC-KR">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -19,8 +20,6 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-
-   
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -33,8 +32,20 @@
 		padding-top : 70px;
 	}
 	
+	#btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+	
+	
 	</style>
-
+	
+	<!-- ?? -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
 	function fncDeleteClub() {
@@ -45,7 +56,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-danger").on("click", function() {
 			alert("눌리나?");
 			fncDeleteClub();
 			
@@ -54,7 +65,7 @@
 	
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-primary").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -81,33 +92,65 @@
 
 </head>
 
-<body>
+
+<body class="blog masonry-style">
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
+
+		<main role="main">
 		
-	<div class="container">
-	
-		<div class="page-header">
-	       <h3 class=" text-info">모임상세조회</h3>
-	       <a href="/club/getClubMemberList">모임원리스트</a>
-	       <hr/>
-	       <a href="/club/addMeetingView.jsp">모임일정등록</a>
-	       
-	       <hr/>
-	       <a href="/club/getMeetingList">모임일정리스트</a>
-	       
-	       <hr/>
-	       <a href="/clubPost/getClubPostList">모임게시물 리스트</a>
-	    </div>
-		
-		<form class="form-horizontal">
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2"><strong>모 임 제 목</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>		
-		</div>
+			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>CLUB</h2>
+							<p>Make good memories with the members...</p>
+						</div>
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
 			
 		
-		<hr/>
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li>
+					</ul>
 		
+		
+		
+	
+			
+			
+		<form class="form-horizontal" enctype="multipart/form-data">
+		
+		<div class="row">
+			<div class="col-xs-4 col-md-6"><strong>모 임 제 목</strong></div>
+ 			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
+		</div>
+		
+		<hr/>
+				
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>모 임 설 명</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubDetail}</div>
@@ -117,34 +160,38 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>모 임 이 미 지</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubImage}</div>
+			<img src="/resources/image/uploadFiles/${club.clubImage}" width="300" height="300" name="file" id="clubImage">
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>모 임 카 테 고 리</strong></div>
+	  		<div class="col-xs-4 col-md-6 "><strong>모 임 카 테 고 리</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>모 임 활 동 영 역</strong></div>
+	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
 		</div>
 		
 		
-			<div class="form-group">
+			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >삭&nbsp;제</button>
-					<a class="btn btn-primary btn" href="#" role="button">이&nbsp;전</a>
+		      		
+		      		<button type="button" class="btn btn-success">가&nbsp;입&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-primary">이&nbsp;전</button>			
 					<button type="button" class="btn btn-warning"  >수&nbsp;정</button>
-					<button type="button" class="btn btn-success">가&nbsp;입&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
 					
 		    </div>
 			</div>	
 			</form>		
+			</div>
 	</div>
+	
+		</main>
 </body>
 </html>

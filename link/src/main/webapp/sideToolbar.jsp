@@ -16,19 +16,26 @@
 		});
 
 		$("li:contains('차단리스트')").on("click", function() {
+			
 		});
 
 		$("li:contains('신고내역')").on("click", function() {
+		location.href = "/serviceCenter/getReportList"+"&userId=${sessionScope.user.userId}";
+		
 		});
 
 		$("li:contains('Q&A')").on("click", function() {
+		 self.location = "/serviceCenter/getQandAList/${sessionScope.user.userId}";
+		 
 		});
 
 		$("li:contains('회원정보수정')").on("click", function() {
+			
 			self.location = "/user/getUserList";
 		});
 
 		$("li:contains('신고내역조회')").on("click", function() {
+			
 		});
 
 		$("#stop2").on("click", function() {
@@ -48,7 +55,7 @@
 	<main role="main">
 		<div id="intro-wrap" class="topbar" data-height="13.222">
 			<div id="intro" class="preload darken">
-				<div class="intro-item">
+			<div class="intro-item">
 					<div class="caption">
 						<h2 style="
     margin-top: 100px;">MyPage</h2>

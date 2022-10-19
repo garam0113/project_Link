@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +30,10 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Meeting;
+import com.link.service.domain.Participant;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
+import com.link.web.clubPost.ClubPostCommon;
 
 @RestController
 @RequestMapping("/myHomeRest/*")
@@ -39,8 +42,14 @@ public class MyHomeRestController {
 	@Autowired
 	@Qualifier("myHomeServiceImpl")
 	private MyHomeService myHomeService;
-	private ClubService clubService;
+	
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostService;
+	
+	@Autowired
+	@Qualifier("clubServiceImpl")
+	private ClubService clubService;
 
 	public MyHomeRestController() {
 		// TODO Auto-generated constructor stub
@@ -103,7 +112,7 @@ public class MyHomeRestController {
     }
 	 
     @RequestMapping(value="/json/addFollow", method=RequestMethod.POST)
-    public Map<String, Object> addFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
+    public User addFollow(@RequestBody User receiveId,String fbState,String fbType, HttpSession session, Model model) throws Exception{
       
 
          
@@ -121,6 +130,8 @@ public class MyHomeRestController {
           // 보내는사람 id set
           user.setUserId(sendId);
           user.setReceiveId(receiveId);
+          user.setFbState(fbState);
+          user.setFbType(fbType);
           
           // 받는사람 정보 객체생성
      
@@ -128,7 +139,7 @@ public class MyHomeRestController {
           // 받는사람 정보 set
 
 
-           Search search = new Search();
+      
   		// 받는사람 정보 set
 
             System.out.println("recv_user_id : " +  receiveId);
@@ -136,17 +147,17 @@ public class MyHomeRestController {
             // 서비스 실행
             myHomeService.addFollow(user);
             
-            Map<String, Object> map = myHomeService.getFollowList(search );
+       
             
             System.out.println("recv_user_id : " +  receiveId);    
-            return map;
+
             
-        
+        return null;
        
  
     }
     @RequestMapping(value="/json/updateFollow", method=RequestMethod.POST)
-    public Map<String, Object> updateFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
+    public User updateFollow(@RequestBody User receiveId, HttpSession session, Model model) throws Exception{
       
 
          
@@ -169,81 +180,83 @@ public class MyHomeRestController {
           // 받는사람 정보 객체생성
      
           
-          Search search = new Search();
+        
 		// 받는사람 정보 set
 
           System.out.println("recv_user_id : " +  receiveId);
 
           // 서비스 실행
           myHomeService.updateFollow(user);
-          Map<String, Object> map = myHomeService.getFollowList(search );
+       
           System.out.println("recv_user_id : " +  receiveId);
           
-          return map;
+          return null;
+         
 		 }
-		@RequestMapping(value = "json/getClubList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubList(@RequestBody Search search) throws Exception{
-			 System.out.println("/myHomeRest/json/json/getClubList : POST");
+    
+    
+	@RequestMapping(value = "/json/getClubPostListMyHome", method = RequestMethod.POST)
+	public Map<String, Object> getClubPostListMyHome(@RequestBody ClubPost clubPost ,HttpSession session) throws Exception {
+		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
+		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		String userId =  ((User)session.getAttribute("user")).getUserId();
+		System.out.println((User)session.getAttribute("user"));
+		
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 System.out.println(clubPostService);
+		 System.out.println("ddd"+ (clubPostService.getClubPostListMyHome(userId)));
+	
+		 map.put("ClubPostList",clubPostService.getClubPostListMyHome(userId).get("clubPostList"));
+		 
+		 return map;
+
+		
+	}
+	
+	
+	
+			 
+		@RequestMapping(value="json/getMeetingMemberList")
+		public Map<String, Object> getMeetingMemberList(@RequestBody Search search,User user,Participant participant,HttpSession session, Model model, HttpServletRequest request) throws Exception {
 			
-			 if(search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				search.setPageSize(pageSize);
-				search.setPageUnit(pageUnit);
-			 
-			 Map<String,Object>map = clubService.getClubList(search);
-				
-			 return map;
-	 
- }
-		@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
-		 public Map<String,Object> getClubPostList(@RequestBody Search search, ClubPost clubPost)  throws Exception{
-			 System.out.println("/myHomeRest/json/json/getClubList : POST");
-			 
-			 if(search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				search.setPageSize(pageSize);
-				search.setPageUnit(pageUnit);
-			 
-			 Map<String,Object>map = clubPostService.getClubPostList(search, clubPost);
-				
-		
-			 return map;
-			 
-			 
+			System.out.println("/club/json/getClubList : GET / POST");
+	
+			user = (User) session.getAttribute("user");
+           
+			if(search.getCurrentPage()==0) {
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+			search.setPageUnit(pageUnit);
+			
+			String userId = ((User) session.getAttribute("user")).getUserId();
+			search.setSearchKeyword(userId);
+			Map<String, Object> map = clubService.getMeetingMemberList(search);
+			
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);
+			
+			
+			model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
+			model.addAttribute("resultPage",resultPage);
+			model.addAttribute("search",search);
+			
+			
+			return  map;
 		}
-//		@RequestMapping(value="json/getMeetingList")
-//		public Map<String, Object> getMeetingList(@RequestBody Search search,User user, Club clubNo,Meeting meeting,HttpSession session, Model model, HttpServletRequest request) throws Exception {
-//			
-//			System.out.println("/club/json/getClubList : GET / POST");
-//	
-//			user = (User) session.getAttribute("user");
-//            session.getAttribute("clubNo");
-//            session.getAttribute("meeting");
-//			
-//			if(search.getCurrentPage()==0) {
-//				search.setCurrentPage(1);
-//			}
-//			search.setPageSize(pageSize);
-//			
-//			Map<String, Object> map = clubService.getMeetingList(search);
-//			
-//			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalMeetingCount")).intValue(), pageUnit, pageSize);
-//			System.out.println(resultPage);
-//			search.setSearchKeyword((String) session.getAttribute("clubNo"));
-//			model.addAttribute("meetingList", map.get("meetingList"));
-//			model.addAttribute("resultPage",resultPage);
-//			model.addAttribute("search",search);
-//			model.addAttribute("get",clubNo);
-//			model.addAttribute("meeting",meeting);
-//			
-//			
-//			return  clubService.getMeetingList(search);
-//		}
 		
-		
+		@RequestMapping(value = "json/getFollw", method = RequestMethod.POST)
+		public User getFollow(@RequestBody User user, HttpSession session) throws Exception{
+			
+			System.out.println("/club/json/getFollew :  POST");
+			
+			String sessionId = ((User)session.getAttribute("user")).getUserId();
+			
+			user.setUserId(sessionId);
+			
+			User follwUser = myHomeService.getFollow(user);
+			
+			return follwUser;
+		}
 		
 }

@@ -1,8 +1,9 @@
 package com.link.web.feed;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,7 +60,7 @@ public class FeedController {
 	
 	// 사용
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public String addFeed(@ModelAttribute Feed feed, @RequestParam("image") MultipartFile[] file,
+	public String addFeed(@ModelAttribute Feed feed, MultipartFile file,
 							User user, Report report, Model model, HttpSession httpSession) throws Exception {
 		
 		// 회원 피드 등록
@@ -67,6 +68,55 @@ public class FeedController {
 		user = (User) httpSession.getAttribute("user");
 		feed.setUser(user);
 		
+		// 이미지 파싱
+		
+		Pattern pattern  =  Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+		Matcher match = pattern.matcher(feed.getContent());
+		
+		String[] fileName = new String[4];
+		
+		int count = 0;
+		while(match.find()){
+			String inputString;
+			
+			fileName[count] = match.group(count);
+			
+			if (count == 0) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
+				String[] splitBy = inputString.split("\" ");
+				feed.setImage1(splitBy[0]);
+				
+			} else if (count == 1) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length());
+				String[] splitBy = inputString.split(" ");
+				feed.setImage2(splitBy[0]);
+				
+			} else if (count == 2) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[2].substring(startPoint, fileName[count].length());
+				String[] splitBy = inputString.split(" ");
+				feed.setImage3(splitBy[0]);
+				
+			} else if (count == 3) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length());
+				String[] splitBy = inputString.split(" ");
+				feed.setImage4(splitBy[0]);
+			}
+			
+			count++;
+			
+		}
+		
+		feed.setContent(feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
+		
+		String replace = feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
+		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
+		
+		feed.setContent(replace);
+
 		// 해시태그 저장하기 시작
 		
 		StringBuilder stringBuilder = new StringBuilder();
@@ -88,18 +138,6 @@ public class FeedController {
 		feed.setHashtag(stringBuilder.toString());
 		
 		// 해시태그 저장하기 종료
-		
-		for(MultipartFile files : file) {
-			String path = "C:\\Users\\";
-			
-			File saveFile = new File(path + files.getOriginalFilename());
-			
-			boolean isExists = saveFile.exists();
-			
-			if(!isExists) {
-				files.transferTo(saveFile);
-			}
-		}
 		
 		// Report & Push
 		
@@ -233,6 +271,10 @@ public class FeedController {
 		
 		return "forward:/feed/getFeedList.jsp";
 	}
+	
+	
+	
+	///////////////////////////////////////////////////// Feed List /////////////////////////////////////////////////////
 	
 	
 	

@@ -23,12 +23,15 @@ import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Participant;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.myHome.MyHomeService;
 import com.link.service.user.UserService;
+import com.link.web.clubPost.ClubPostCommon;
 
 @Controller
 @SessionAttributes("user")
@@ -65,50 +68,59 @@ public class MyHomeController {
 	}
 	
 	@RequestMapping(value = "getMyHome")
-	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId, Club club,
+	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId,
 		       Model model,HttpSession session) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
+
 		
-		
+
+
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 	
-	    
+		
+		
 		map.put("user", (User)session.getAttribute("user"));
-		map.put("clubNo", session.getAttribute("clubNo"));
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
-		map.put("approvalConditionList",clubService.getApprovalConditionList(search).get("approvalConditionList"));
 		
-		
-	
 		map = feedService.getFeedList(map);
-		
 		
 		search.setSearchKeyword(userId);
 		map.put("list",myHomeService.getFollowList(search).get("list"));
-		
-		
-		model.addAttribute("approvalConditionList",map.get("approvalConditionList"));
+	   
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
-		
+		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
+	
 		
 		return "forward:/myHome/getMyHome.jsp";
 	}  
 	@RequestMapping(value = "getYourHome" ,method=RequestMethod.GET)
-	public String getYourHome(@ModelAttribute Search search, Heart heart, String userId,
+	public String getYourHome(@ModelAttribute Search search, Heart heart, String userId, HttpSession session,
 		       Model model) throws Exception{
 		
 		System.out.println("/myHome/getYourHome : GET");
 		
+		String sessoinId = ((User)session.getAttribute("user")).getUserId();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		User getUser = new User();
+		User followUser = new User();
+		User recevieId = new User();
 		getUser.setUserId(userId);
 		User getUserId =userService.getUser(getUser);
+		recevieId.setUserId(userId);
+		followUser.setReceiveId(recevieId);
+		followUser.setUserId(sessoinId);
+		User followUserId = myHomeService.getFollow(followUser);
+		
+		System.out.println( "서버에서 받은  DATA : "+followUserId);
+		
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
@@ -127,6 +139,7 @@ public class MyHomeController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
 		model.addAttribute("getUser", getUserId);
+		model.addAttribute("followUser", followUserId);
 		
 		return "forward:/myHome/getYourHome.jsp";
 	}
@@ -218,6 +231,7 @@ public class MyHomeController {
 		return "redirect:/myHome/getMyHome?userId="+user.getUserId();
 		
 	}
+	
 	@RequestMapping(value = "getFollowList")
 	public String getFollowList(@ModelAttribute Search search, Model model) throws Exception {
 	

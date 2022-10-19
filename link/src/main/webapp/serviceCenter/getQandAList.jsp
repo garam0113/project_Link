@@ -9,7 +9,7 @@
 <html lang="ko">
 
 <head>
-<title>공지사항 목록</title>
+<title>Q&A 목록</title>
 <meta charset="EUC-KR">
 
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -26,10 +26,10 @@
 
 
 <!-- Bootstrap Dropdown Hover CSS -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+
+
 <!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
 
 
 <!-- jQuery UI toolTip 사용 CSS-->
@@ -91,21 +91,78 @@ thead {
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 	$(function() {
-		$("td:nth-child(3)").on(
-				"click",
-				function() {
-					self.location = "/serviceCenter/getNotice?noticeNo="
-							+ $(this).parent().find("td:eq(0)").text()
+		
 
-				});
 
+<%-- 		$("td:contains('비밀 글입니다.')").bind("click", function() {
+			if (${empty user}){
+			 alert("관계자만 볼 수 있습니다."); 
+			alert($(this).parent().find("input[name='userId']").val());
+			 self.location ="/serviceCenter/getQandAList"; 
+			
+				}
+			
+			if (${!empty user}){
+				
+				if((${sessionScope.user.userId} == $(this).parent().find("input[name='userId']").val()) || (${sessionScope.user.userId}=="admin1")){
+					self.location = "/serviceCenter/getQandA?qandANo="
+						+ $(this).parent().find("td:eq(0)").text()
+					
+				}else{
+					alert("관계자만 볼 수 있습니다.");
+					self.location ="/serviceCenter/getQandAList";	
+				}
+				
+			
+				} 
+		})	 --%>
+			
+$("td:contains('비밀 글입니다.')").bind("click", function() {
+	+ $(this).parent().find("td:eq(0)").text()
+	
+})
 		$("button:contains('등록')").bind("click", function() {
-			self.location = "../serviceCenter/addNoticeView.jsp";
+			if(${empty user}){
+			alert("로그인 후 이용 가능합니다.")
+			self.location="/user/login.jsp";
+			}
+			
+			if(${!empty user }){
+				
+			self.location = "../serviceCenter/addQandAView.jsp";
+			}
 		})
 		
+		
+	
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "../serviceCenter/serviceCenterHome.jsp";
 		})
+		
+		
+<%-- 		$("button:contains('검색')").bind("click", function() {
+			
+			$.ajax({
+				
+				url : "/serviceCenterRest/json/getQandAList",
+				method : "POST",
+				data : JSON.stringify ({
+					currentPage : ($(".currentPage").val())
+				}),
+				dataType :"json",
+				contentType: "application/json",
+				success : function(JSONData, status){
+					
+					
+					alert("성공");
+				}
+				
+			})
+			
+			
+			
+		}) --%>
+		
 
 	});
 </script>
@@ -134,7 +191,7 @@ thead {
 			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 				
 				<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
-					<form class="form-inline" name="detailForm">
+					<form class="form-inline" name="detailForm" method="post">
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
@@ -153,7 +210,7 @@ thead {
 						<button type="button" class="btn btn-default" style="vertical-align: top;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-						<input type="hidden" id="currentPage" name="currentPage" value="1" />
+						<input type="hidden" class="currentPage" id="currentPage" name="currentPage" value="1" />
 					</form>
 				</div>
 				
@@ -179,7 +236,7 @@ thead {
 					</tr>
 				</thead>
 
-				<tbody>
+				
 
 					<c:set var="i" value="0" />
 					<c:forEach var="getQandAList" items="${getQandAList}">
@@ -187,16 +244,28 @@ thead {
 						<tr class="ct_list_pop">
 							<td align="left" id="bb">${getQandAList.qandANo}</td>
 
-							<td></td>
+							<td></td> 
+							<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 							<td align="left" >
-								${getQandAList.qandATitle}</td>
+								${getQandAList.qandATitle}  </td>
+							</c:if>
+							<c:if test="${getQandAList.qandAOpenCondition=='0'}">
+							<td align="left">비밀 글입니다.</td>
+				 			 </c:if>
+								
 							<td></td>
 
-							<td align="left" >${getQandAList.qandACondition}</td>
-
+							
+							<c:if test="${getQandAList.qandACondition=='1'}">
+							<td align="left" >처리완료</td>
+				 			 </c:if>
+				  			<c:if test="${getQandAList.qandACondition=='0'}">
+								<td align="left">대기중</td>
+							  </c:if>
 							<td></td>
-							<td align="left" >${getQandAList.userId.userId}</td>
-							<td></td>
+							<td align="left" >${getQandAList.userId.nickName}</td>
+								
+							<td><input type="hidden" name="userId" id="userId" value="${getQandAList.userId.userId}"></td>
 							<td align="left" >${getQandAList.qandARegDate}</td>
 							<td align="center" ></td>
 
@@ -225,11 +294,11 @@ thead {
 									</tr>
 								</table>
 								<td width="30"></td>
-								<c:if test="${userId=='admin01'}">
+							
 									<div class="col-md-3 col-sm-3 col-xs-6"> 
 									  <button class="add add5" style= "transform: translate(1000px, 0px);">등록</button>
 									</div>
-								</c:if>
+							
 									<div class="col-md-3 col-sm-3 col-xs-6"> 
 									  <button class="add add6" style= "transform: translate(1000px, 0px);">뒤로</button>
 									</div>
