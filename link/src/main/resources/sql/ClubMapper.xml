@@ -64,6 +64,11 @@
 		<result property="user.userId"			column="participant_user_id"					jdbcType="VARCHAR"/>
 		<result property="user.nickName"			column="nickname"					jdbcType="VARCHAR"/>
 		<result property="user.profileImage"			column="profile_image"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingTitle"			column="meeting_title"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingPlace"			column="meeting_place"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingTime"			column="meeting_time"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingDate"			column="meeting_date"					jdbcType="VARCHAR"/>
+		<result property="meeting.clubNo"			column="club_no"					jdbcType="NUMERIC"/>
 		
 	</resultMap>
 	
