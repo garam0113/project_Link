@@ -523,14 +523,14 @@ input[name="tab_item"] {
 					</div>
 				</div>
 
-	<%-- 		<div class="tabs">
-			<input id="all" type="radio" name="tab_item" checked>
-    <label class="tab_item" for="all">FollowList</label>
-    <input id="programming" type="radio" name="tab_item">
-    <label class="tab_item" id="tab2" for="programming">FollowerList</label>
+			<div class="tabs">
+			<input id="all-follow" type="radio" name="tab_item-follow" checked>
+    <label class="tab_item-follow" for="all-follow">FollowList</label>
+    <input id="programming-following" type="radio" name="tab_item-following">
+    <label class="tab_item-following" id="tab-follow" for="programming-following">FollowerList</label>
     
-    <div class="tab_content" id="all_content">
-        		<div class="comment-section">
+    <div class="tab_content-follow" id="all_content-follow">
+        		
         		<br />
 		<c:set var = "i" value = "0" />
 		<c:forEach var = "list" items = "${list}">
@@ -541,17 +541,19 @@ input[name="tab_item"] {
 				</div>
 			</c:forEach>
 			
+				
 				</div>
-				</div>
-				  <div class="tab_content" id="programming_content">
+				<div class="tab_content-following" id="all_content-following">
+				  <div class="following-section" style="margin-left:300px;">
      <div class="col-md-4" id="fl">
 					 		<br />
 		
 			
 								
 </div>
+</div>
   </div>
-				</div> --%>
+				</div> 
 		
 <div class="tabs">
     <input id="all" type="radio" name="tab_item" checked>
@@ -696,9 +698,9 @@ $(function() {
 	});
 });
 	
-	$("#tab2").on("click" , function(e) {
+	$("#tab-follow").on("click" , function(e) {
 		var userId = $("#userId").val(); 
-		$("#tab2").off(e);
+		$("#tab-follow").off(e);
 	$.ajax({
 		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
@@ -713,7 +715,7 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='follow-section' style='margin-left:300px;'>"+
+				"<div class='following-section' style='margin-left:300px;'>"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 		"</div>";

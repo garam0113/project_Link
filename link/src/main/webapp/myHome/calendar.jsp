@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			center : 'title',
 			end : 'dayGridMonth,dayGridWeek,dayGridDay'
 		},
+		
 		 events: [
 			    { // this object will be "parsed" into an Event Object
 			      title: 'title', // 力格
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	calendar.render();
 });
-window.onload=function() {
+ window.onload=function() {
 	var userId = $("#userId").val();
 	console.log(userId);
 	$.ajax({
@@ -58,24 +59,23 @@ window.onload=function() {
 		 data		:  JSON.stringify({searchKeyword:userId}),
 		contentType : "application/json",
 		success : function(data) { 
-				console.log(data);
-		
-       				$.each(data, function(index, item) { // 单捞磐 =item
-				var value = item.meetingNo;
-				      
 				
-			
-			});
-		},
-		error : function() {
-			alert('error');			
-		}
+				$.each(data.meetingMemberList, function(index, item) { // 单捞磐 =item
+	                
+				var title = item.user.nickName;
+				console.log(item);
+				
+				var calendarEl = document.getElementById
+					
 		
+		},
+
+		)}
 	});
 	
 	
 };
-
+ 
 </script>
 <input type="hidden" name="userId" id="userId" value="${user.userId}">
 

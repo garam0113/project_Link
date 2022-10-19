@@ -258,15 +258,13 @@ public class MyHomeRestController {
 		return map;
 	}
 	@RequestMapping(value="/json/getMeetingMemberList",method = RequestMethod.POST)
-	public Map<String, Object>  getMeetingMemberList(@RequestBody Search search, Model model, HttpSession session, User user, Participant participant) throws Exception {
+	public Map<String, Object>  getMeetingMemberList(@RequestBody Search search, Meeting meeting,Model model, HttpSession session, User user, Participant participant) throws Exception {
 		
 		System.out.println("/club/getMeetingMemberList : GET/POST");
 		
 		user = (User) session.getAttribute("user");
 		System.out.println("(일정참여자)미팅넘버 세션에 뭐 있지? : "+ session.getAttribute("meetingNo"));
 				
-		
-		search.setSearchKeyword((String) session.getAttribute("meetingNo"));
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -285,6 +283,7 @@ public class MyHomeRestController {
 		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("meeting", meeting);
 		
 		return map;
 	}
