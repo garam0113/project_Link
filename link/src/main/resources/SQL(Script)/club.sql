@@ -152,7 +152,7 @@ DELETE FROM participant WHERE participant_no = 2;
 
 //모임일정 삭제
 deleteMeeting()
-DELETE FROM meeting WHERE meeting_no = 6;
+DELETE FROM meeting WHERE meeting_no = 66;
 
 //모임원 직책 수정
 updateMemberRole()
@@ -232,8 +232,21 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 
 				
 SELECT inner_table.*
-FROM ( SELECT rownum AS row_seq, deep_table.*
-		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no
+FROM ( 
+		SELECT rownum AS row_seq, deep_table.*
+		FROM ( 
+				SELECT 
+				p.participant_no, 
+				u.user_id, 
+				u.nickname, 
+				u.profile_image, 
+				m.meeting_title, 
+				m.meeting_place, 
+				m.meeting_time, 
+				m.meeting_date, 
+				m.club_no, 
+				m.meeting_no
+				
 				FROM participant p, users u, meeting m
 				
 				WHERE p.participant_user_id = u.user_id
@@ -241,7 +254,8 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 				and u.user_id = 'user04'		
 						 ) deep_table ) inner_table						 
 						 
-						and p.meeting_no = '2'						 
+						and p.meeting_no = '65'
+						and u.user_id = 'user04'
 						and u.user_id = #{searchKeyword} 
 						 
 						 
@@ -284,7 +298,10 @@ SELECT inner_table.*
 					WHERE m.add_meeting_user_id = u.user_id and u.user_id = 'user01' ) deep_table ) inner_table 
 
 
+SELECT meeting
+FROM 
 
+ON DELETE CASACADE;
 
 
 
