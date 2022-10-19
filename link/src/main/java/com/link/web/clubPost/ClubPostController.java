@@ -1,7 +1,7 @@
 package com.link.web.clubPost;
 
-import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -141,6 +141,7 @@ public class ClubPostController {
 		/*
 		// 파일명.확장자만 DB에 넣기위해 빼내자
 		String specificString = "/resources/image/temp/";
+		String specificVideo = "<iframe frameborder=\"0\" src=\"//";
 		String content = clubPost.getClubPostContent();
 		int count = 1;
 		//while(true) {
@@ -178,21 +179,56 @@ public class ClubPostController {
 			//}
 		//}//end of while
 		*/
-			
+		int isIndexImage = 0;
+		int isIndexVideo = 0;
+		String specificImage = "/resources/image/temp/";
+		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
+		String specificVideo = "embed/";
+		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
+			System.out.println("이미지가 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificImage)+specificImage.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			// 파일명.확장자
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setImage1(str);
+		}
+		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
+			System.out.println("영상이 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			// 파일명.확장자
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			System.out.println(str);
+			clubPost.setClubPostVideo1(str);
+		}
+		
+		System.out.println("////////////////" + clubPost.getImage1());
+		System.out.println("////////////////" + clubPost.getClubPostVideo1());
+
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Map<String, Object> map, Model model, HttpSession session) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
 		
 		// search가 없으면 상세보기를 가져오고 있으면 상세보기 + 댓글리스트를 가져온다
 		map.put("search", ClubPostCommon.getSearch(search));
 		map.put("clubPost", clubPost);
 		map.put("comment", comment);
+
+		// 해당 유저아이디, 모임게시물은 source가 2이다, 모임게시물번호를 보낸다
+		// 해당 유저가 좋아요한 게시물인지 확인한다 리턴 1이면 좋아요했다 리턴 0이면 좋아요 안했다
+		heart.setSource("2");
+		heart.setSourceNo(clubPost.getClubPostNo());
+		heart.setUserId(((User)session.getAttribute("user")).getUserId());
 		
-		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
+		int heartCondition = clubPostServiceImpl.getCheckHeart(heart);
+		map = clubPostServiceImpl.getClubPost(map);
+		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
+		
+		model.addAttribute("clubPost", map);
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
 		return "forward:/clubPost/getClubPost.jsp";
 	}
@@ -206,19 +242,55 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "updateClubPost")
-	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Heart heart, Map<String, Object> map, HttpSession session) throws Exception {
+	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
+		// session으로 로그인한 회원 정보를 가져온다
+		clubPost.setUser((User)session.getAttribute("user"));
+
+		int isIndexImage = 0;
+		int isIndexVideo = 0;
+		String specificImage = "/resources/image/temp/";
+		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
+		String specificVideo = "embed/";
+		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
+			System.out.println("이미지가 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificImage)+specificImage.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			// 파일명.확장자
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setImage1(str);
+		}
+		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
+			System.out.println("영상이 있다");
+			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
+				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			}
+			// 파일명.확장자
+			System.out.println("startIndex : " + startIndex + ", endIndexFromStartIndex : " + endIndexFromStartIndex);
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setClubPostVideo1(str);
+		}
+		
+		System.out.println("////////////////" + clubPost.getImage1());
+		System.out.println("////////////////" + clubPost.getClubPostVideo1());
+		
 		map.put("clubPost", clubPost);
 		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
 	@RequestMapping(value = "deleteClubPost", method = RequestMethod.POST)
-	public String deleteClubPost(@ModelAttribute ClubPost clubPost, Search search, Model model, HttpSession session) throws Exception {
+	public String deleteClubPost(@ModelAttribute ClubPost clubPost, Search search, Model model, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/deleteClubPost : POST : 모임게시물 삭제 flag 처리, 모임게시물 리스트 가져온 후 모임게시물 리스트 화면으로 이동");
+		// 모임번호와 해당 유저아이디는 모임게시물 삭제할 때 필요하고 모임번호와 search는 모임게시물 리스트 가져올 때 필요하다
+		clubPost.setUser((User)session.getAttribute("user"));
+		map = clubPostServiceImpl.deleteClubPost(clubPost, ClubPostCommon.getSearch(search));
 		
-		clubPost.setUser(new User(clubPost.getUserId()));
-		model.addAttribute("clubPost", clubPostServiceImpl.deleteClubPost(clubPost, ClubPostCommon.getSearch(search)));
+		model.addAttribute("clubPostList", map.get("clubPostList"));
+		model.addAttribute("heartList", map.get("heartList"));
+		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -234,15 +306,16 @@ public class ClubPostController {
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
 	public String chatClubList(HttpSession session, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		model.addAttribute("userId", ((User)session.getAttribute("user")).getUserId());
-		//return "forward:/chat/chatRoomList.jsp";
-		return "forward:/chat/index3.jsp";
+		return "forward:/chat/chatRoomList.jsp";
+		//return "forward:/chat/index3.jsp";
 	}
 	
 	@RequestMapping(value = "/chatRoom", method = RequestMethod.GET)
 	public String chatRoom(HttpSession session, Model model) throws Exception {
-		System.out.println("/chatRoom : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		model.addAttribute("userId", ((User)session.getAttribute("user")).getUserId());
+		System.out.println("/chatRoom : GET : 방번호를 가지고 모임채팅방 화면으로 이동");
+		UUID roomId = UUID.randomUUID();
+		System.out.println(roomId);
+		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
 	}
 	
