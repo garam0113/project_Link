@@ -62,6 +62,7 @@
 							success : function(data) {
 								//alert(data.responseCode);
 								//alert(data.url);
+								alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
 								jsonArray.push(json["url"]);
 								jsonFn(jsonArray);
@@ -80,10 +81,10 @@
 				textEdit();
 				
 				$("a:contains('등록완료')").bind("click", function(){
-					$("form[name='addClubPost']").submit();
+					$("form").submit();
 				});
 				$("a:contains('리스트로이동')").bind("click", function(){
-					location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
 		</script>

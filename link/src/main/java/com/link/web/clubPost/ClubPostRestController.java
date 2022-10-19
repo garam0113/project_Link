@@ -115,17 +115,25 @@ public class ClubPostRestController {
 	}
 
 	@RequestMapping(value = "json/updateClubPost", method = RequestMethod.POST)
-	public int updateClubPost(@RequestBody ClubPost clubPost, Heart heart, Map<String, Object> map) throws Exception {
+	public ClubPost updateClubPost(@RequestBody ClubPost clubPost, Heart heart, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		
 		System.out.println("clubPost : " + clubPost);
 		System.out.println("heart : " + heart);
 		
+		// 파라미터를 통해 유저아이디와 모임게시물번호가 왔다
 		map.put("clubPost", clubPost);
+		// 현재는 유저아이디뿐이다
+		heart.setUserId(((User)session.getAttribute("user")).getUserId());
 		map.put("heart", heart);
+		
 		map = clubPostServiceImpl.updateClubPost(map);
+		
 		System.out.println("확인용 데이터 : " + map.get("getClubPost"));
-		return ((ClubPost)map.get("getClubPost")).getClubPostHeartCount();
+		int heartCondition = ((ClubPost)map.get("clubPost")).getHeartCondition();
+		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
+		
+		return ((ClubPost)map.get("getClubPost"));
 	}
 	
 	@RequestMapping(value="/json/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
@@ -135,8 +143,9 @@ public class ClubPostRestController {
 		
 		// 내부경로로 저장
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		//String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		String savedFileName = originalFileName;	//저장될 파일 명
 		
 		File targetFile = new File(tempDir + savedFileName);
 		try {

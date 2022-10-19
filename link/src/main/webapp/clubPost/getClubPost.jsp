@@ -30,20 +30,21 @@
 		<script type="text/javascript">
 		$(function(){
 			$(".clubPost-header-update").bind("click", function(){
+				alert("수정");
 				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
 			$(".clubPost-header-delete").bind("click", function(){
-				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
+				alert("삭제");
+				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
 			$(".clubPost-header-report").bind("click", function(){
+				alert("유저 아이디 : ${ clubPost.getClubPost.user.userId }");
 				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				alert("유저 아이디 : " + ${ clubPost.getClubPost.user.userId });
 				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
 			});
 			$("input[value='리스트로이동']").bind("click", function(){
-				location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
-			});
+				location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.getClubPost.clubNo }+"&order=0";
+			});			
 			$(".clubPost-header-heart").bind("click", function(){
 				alert('하트');
 				$.ajax( "/clubPostRest/json/updateClubPost",
@@ -59,9 +60,21 @@
 							},
 							dataType : "json",
 							success : function(JSONData, status){
-								//alert(status);
-								//alert(JSONData);
-								$("a[href='#']").text(JSONData);
+								$(".clubPost-header-heart").children().remove();
+								$(".clubPost-header-heartCount").text("");
+
+								var heartDisplay = "";
+								var heartCountDisplay = "";
+								if(JSONData.heartCondition == 1){
+									heartDisplay = "<img src='/resources/image/uploadFiles/heart.jpg' height='70' width='70'>";
+									heartCountDisplay = JSONData.clubPostHeartCount;
+								}else{
+									heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
+									heartCountDisplay = JSONData.clubPostHeartCount;
+								}
+								
+								$(".clubPost-header-heart").append( heartDisplay );
+								$(".clubPost-header-heartCount").text(heartCountDisplay);
 							}
 						});
 			}); // end of 하트
@@ -248,7 +261,7 @@
 	</head>
 
 	<body class="single single-post">
-
+	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
@@ -316,8 +329,10 @@
 								<div class="clubPost-header-profile">
 									<img src="/resources/image/uploadFiles/${ clubPost.user.profileImage }" height="70" width="70"></div>
 								<div class="clubPost-header-nickName">${ clubPost.user.nickName }</div>
-								<div class="clubPost-header-heart">
-									<img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70">
+								
+								<div class="clubPost-header-heart" style="background-color: red;">
+									<c:if test="${ clubPost.getClubPost.heartCondition == 0}"><img src="/resources/image/uploadFiles/no_heart.jpg" height="70" width="70"></c:if>
+									<c:if test="${ clubPost.getClubPost.heartCondition == 1}"><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:if>
 								</div>
 								<div class="clubPost-header-heartCount" style="font-size: 2rem;">${ clubPost.getClubPost.clubPostHeartCount }</div>
 								<div class="clubPost-header-update">

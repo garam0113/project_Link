@@ -68,10 +68,11 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> getClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
-		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost")));
+		ClubPost c = sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost"));
 		if( map.get("search") != null ) {
 			map.put("getClubPostCommentList", sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", map));
-		}		
+		}
+		map.put("getClubPost", c);
 		return map;
 	}// end of getClubPost(ClubPost clubPost)
 	
@@ -88,6 +89,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 			System.out.println("좋아요 등록");
 		}else if( ((ClubPost)map.get("clubPost")).getHeartCondition() == -1 ) {
 			// 좋아요 삭제
+			System.out.println(map.get("heart"));
 			sqlSession.delete("HeartMapper.deleteHeart", map.get("heart"));
 			System.out.println("좋아요 삭제");
 		}
@@ -99,6 +101,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".deleteClubPost(Map<String, Object> map) 왔다");
+		System.out.println(map.get("clubPost"));
 		sqlSession.update("ClubPostMapper.deleteClubPost", map.get("clubPost"));
 		return getClubPostList(map);
 	}// end of deleteClubPost(Map<String, Object> map)

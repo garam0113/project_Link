@@ -61,6 +61,7 @@
 							processData : false,
 							success : function(data) {
 								//alert(data.responseCode);
+								alert(data.url);
 								$(el).summernote('editor.insertImage', data.url);
 								jsonArray.push(json["url"]);
 								jsonFn(jsonArray);
@@ -75,16 +76,16 @@
 			};//end of textEdit
 		</script>
 		<script type="text/javascript">
-		$(function(){
-			textEdit();
-			
-			$("input[value='수정완료']").bind("click", function(){
-				$("form").submit();
+			$(function(){
+				textEdit();
+				
+				$("a:contains('수정완료')").bind("click", function(){
+					$("form").submit();
+				});
+				$("a:contains('리스트로이동')").bind("click", function(){
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
+				});
 			});
-			$("input[value='리스트로이동']").bind("click", function(){
-				location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
-			});
-		});
 		</script>
 	</head>
 
@@ -120,18 +121,14 @@
 							<a href="/clubPost/addPayView?clubNo=${ clubNo }">결제</a>
 						</li>
 					</ul>
-					
-					<input type="button" value="수정완료">
-					<input type="button" value="리스트로이동">
 	
 					<form name="updateClubPost" method="post" action="/clubPost/updateClubPost" enctype="multipart/form-data">
-						모임 게시물 등록 회원 아이디 : ${ getClubPost.clubPost.user.userId }<input type="hidden" name="userId" value="${ clubPost.clubPost.user.userId }"></br>
-						모임 게시물 번호 : ${ getClubPost.clubPost.clubPostNo }<input type="hidden" name="clubPostNo" value="${ clubPost.clubPost.clubPostNo }"></br>
+						모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }"></br>
 						모임 번호 : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
-						<input type="text" name="clubPostTitle" placeholder="제목" value="${ clubPost.clubPost.clubPostTitle }"></br>
-						<textarea id="summernote" name="clubPostContent">
+						<input type="text" name="clubPostTitle" placeholder="제목" value="${ clubPost.getClubPost.clubPostTitle }"></br>
+						<textarea id="summernote" name="clubPostContent">${ clubPost.getClubPost.clubPostContent }
 						</textarea>
-						<a class="button transparent aqua">등록완료</a>
+						<a class="button transparent aqua">수정완료</a>
 						<a class="button transparent aqua">리스트로이동</a>
 					</form>
 					
