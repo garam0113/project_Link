@@ -146,12 +146,12 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				<!-- club_no LIKE('%${searchKeyword}%') -->
-										 				club_no = #{searchKeyword}
+										 				 club_title LIKE('%${searchKeyword}%')
+										 				<!-- club_no = #{searchKeyword} -->
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
-										 				club_title = #{searchKeyword}
+										 				club_category LIKE ('%${searchKeyword}%')
+										 				<!-- club_title = #{searchKeyword} -->
 													</if>
 												</where>
 											</if>
@@ -169,10 +169,10 @@
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			club_no = #{searchKeyword}
+						 			club_title = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		club_title = #{searchKeyword}
+						 			club_category = #{searchKeyword}
 								</if>
 							</where>
 						</if> ) countTable						
@@ -315,13 +315,10 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT club_no 
 						FROM club_user
-						<if test="searchCondition != null">
 							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			club_no = #{searchKeyword}
-								</if>								
-							</where>
-						</if> ) countTable						
+
+						 			club_no = #{searchKeyword}								
+							</where> ) countTable						
 	 </select>
 	
 	
@@ -508,13 +505,10 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT participant_no 
 						FROM participant
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			participant_no = #{searchKeyword}
-								</if>								
-							</where>
-						</if> ) countTable						
+						<where> 
+							meeting_no = #{searchKeyword}
+						</where>
+			) countTable						
 	 </select>
 	 
 	 <!-- 결제입니다 -->

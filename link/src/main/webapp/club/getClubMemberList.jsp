@@ -81,12 +81,18 @@
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		});
 		
+		$(function() {
+			$("#updateApprovalCondition").on("click", function() {
+				//alert("모임원을 승인합니다 : ");
+				$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+		});
+		
 		
 		
 		$(document).on("click", "#banMember", function(){
-			alert('추방');
+			//alert('추방');
 			var clubUserNo = $(this).val();
-			alert(clubUserNo);
+			//alert(clubUserNo);
 			$.ajax("/clubRest/json/deleteClubMember",
 					{
 						method : "POST" ,
@@ -105,18 +111,14 @@
 					refreshMemList();
 			}); //모임원 추방
 		
-			$(function() {
-				$("#updateApprovalCondition").on("click", function() {
-					alert("모임원을 승인합니다 : ");
-					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
-				});
+		
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
-				alert('승인');
+				//alert('승인');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr("approvalCondition");
-/* 				alert(clubUserNo);
-				alert(approvalCondition); */
+ 				//alert(clubUserNo);
+				//alert(approvalCondition);
 				$.ajax("/clubRest/json/updateApprovalCondition",
 						{
 							method : "POST" ,
@@ -133,7 +135,7 @@
 								alert(status);
 							} // end of success
 						}); // end of ajax
-				refreshMemList();
+						refreshMemList();
 				}); // end of 승인
 
 	

@@ -345,16 +345,17 @@ public class ClubController {
 		
 		System.out.println("유저 세션에 뭐있나? : "+user);
 		System.out.println("클럽넘버는 잘 왔나? : "+club.getClubNo());
+		System.out.println("미팅세션은 ? : "+meetingNo);
 
 		meeting.setUser(user);
 		meeting.setClubNo(club.getClubNo());
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
 		
-		participant.setUser(user);
-		participant.setMeetingNo(Integer.parseInt(meetingNo));
+//		participant.setUser(user);
+//		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		clubService.addMeeting(meeting);
-		clubService.addMeetingMember(participant);
+//		clubService.addMeetingMember(participant);
 		return "forward:/club/getMeeting.jsp";
 		
 	}
@@ -435,14 +436,17 @@ public class ClubController {
 		
 		
 		//Business Logic
-		Meeting meeting = clubService.getMeeting(Integer.parseInt(meetingNo));
+		Map<String, Object> map = clubService.getMeeting(Integer.parseInt(meetingNo));
+		// 미팅정보 : meeting, 미팅의 총 참여자 수 : totalMeetingMemberCount
+		
 		//Model 과 View 연결
 		System.out.println("MODEL VIEW 연결 전 ");
 		
-		model.addAttribute("meeting",meeting);
+		model.addAttribute("meeting", map.get("meeting"));
+		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
 		session.setAttribute("meetingNo", meetingNo);
 		
-		System.out.println("모델과 뷰 연결 되었나? " + meeting);
+		System.out.println("모델과 뷰 연결 되었나? " + map.get("meeting"));
 		System.out.println("겟에서 세션에 들어갔나? :"+meetingNo);
 		return "forward:/club/getMeeting.jsp";
 	}

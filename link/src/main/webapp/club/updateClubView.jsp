@@ -84,7 +84,7 @@
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다">
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
 				</div>					
 			</div>
 			
@@ -93,7 +93,7 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)">
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}">
 				</div>		
 			</div>
 			
@@ -117,14 +117,14 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea">
+					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file">
+					<input type="file" class="file" id="clubImage" name="file" value="${club.clubImage}">
 				</div>		
 			</div>
 			

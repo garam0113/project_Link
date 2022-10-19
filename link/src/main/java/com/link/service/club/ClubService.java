@@ -41,7 +41,7 @@ public interface ClubService {
 	//JUNIT TEST
 //	public int addMeeting(Meeting meeting) throws Exception;
 		
-	public Meeting getMeeting(int meetingNo) throws Exception;
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception;
 	
 	public void updateMeeting(Meeting meeting) throws Exception;
 	
