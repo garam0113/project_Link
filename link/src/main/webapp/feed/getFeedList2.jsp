@@ -14,13 +14,15 @@
 	
 	<title>Feed</title>
 	
-	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script>
+		var $J = jQuery.noConflict();
 	</script>
 	
+	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 	
@@ -201,13 +203,10 @@
 		
 		<%-- CAROUSEL EVENT 침범 방지 --%>
 		
-		$(document).on("click", ".carousel_prev", function(event) {
-			alert("hi")
-		});
+		$J(document).on("click", ".swiper", function(event) {
+			event.stopPropagation();
+		})
 		
-		$(document).on("click", ".carousel_next", function(event) {
-			alert("bye")
-		});
 				
 		<%-- CAROUSEL EVENT 침범 방지 --%>
 		
@@ -463,6 +462,31 @@
 										</div>
 										</c:if>
 										
+										
+										
+										<!-- Slider main container -->
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide">
+    	<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+    </div>
+    <div class="swiper-slide">
+    	<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+    </div>
+    <div class="swiper-slide">
+    	<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+    </div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+</div>
 										
 										<%-- 이미지 --%>
 										

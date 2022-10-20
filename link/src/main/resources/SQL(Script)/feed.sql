@@ -95,6 +95,27 @@ SELECT * FROM USERS;
 
 
 
+
+
+
+
+SELECT * FROM FEED_COMMENT WHERE FEED_NO = 3 ORDER BY sequence ASC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
 DROP SEQUENCE seq_feed_comment_no;
 CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
