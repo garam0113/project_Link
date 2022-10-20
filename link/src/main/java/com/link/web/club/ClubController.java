@@ -140,31 +140,35 @@ public class ClubController {
 	
 	
 	@RequestMapping(value="updateClub", method=RequestMethod.POST)
-	public String updateClub(@ModelAttribute Club club, Model model, HttpSession session, User user, ClubUser clubUser,  @RequestParam("file") MultipartFile file)  throws Exception {
+	public String updateClub(@ModelAttribute Club club, Model model, HttpSession session, User user,  @RequestParam("file") MultipartFile file, String clubNo)  throws Exception {
 		
 		System.out.println("club/updateClub : POST");
 		
 		user = (User) session.getAttribute("user");
-		club = (Club) session.getAttribute("club");
+//		club = (Club) session.getAttribute("club");
 		//Business Logic
+		clubNo = (String) session.getAttribute("clubNo");
+		
+		System.out.println("유저 세션에 뭐? : "+user);
+		System.out.println("클럽 넘버는? : "+club);
+		
+//		club.setUser(user);
+		club.setClubNo(Integer.parseInt(clubNo));
 		
 		String sysName = "_User_";
 		
-		Date dateNow = new Date(System.currentTimeMillis());
-		
-		club.setUser(user);
-		club.setClubNo(club.getClubNo());
+		Date dateNow = new Date(System.currentTimeMillis());		
+
 		
 		if (file != null && file.getSize() > 0) {
 			
 			file.transferTo( new File(clubUploadTempDir, user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 			club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
-
 		
 		clubService.updateClub(club);
 		
-		return "forward:/club/getClub";
+		return "forward:/club/getClub.jsp";
 	}
 	
 	@RequestMapping(value="deleteClub")
@@ -349,6 +353,7 @@ public class ClubController {
 		System.out.println("클럽 맵에 뭐 들어있지? :"+map.get("club"));
 		System.out.println("클럽세션? : "+session.getAttribute("club"));
 
+		model.addAttribute("club",map.get("club"));
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
