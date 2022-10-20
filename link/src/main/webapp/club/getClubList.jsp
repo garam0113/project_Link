@@ -284,8 +284,9 @@
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
 			  			<p><strong>모임제목 : ${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>
-				  		<p>현재인원 : ${i.currentMember}</p>
+				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
+				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
 				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			  	
 				 </div>
 				</div>						

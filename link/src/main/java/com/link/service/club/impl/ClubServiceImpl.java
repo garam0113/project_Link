@@ -156,7 +156,8 @@ public class ClubServiceImpl implements ClubService {
 	public void addMeetingPush(Meeting meeting) throws Exception {
 		clubDAO.addMeetingPush(meeting);
 	}
-	
+
+	//getClubList bak!
 	@Override
 	public Map<String, Object> getClubList(Search search) throws Exception {
 		
@@ -169,6 +170,14 @@ public class ClubServiceImpl implements ClubService {
 		map.put("totalClubCount", new Integer(totalClubCount));
 		return map;
 	}
+	
+//	@Override
+//	public Map<String, Object> getClubList(Search search) throws Exception {
+//		
+//		System.out.println("clubList ServiceImpl까지 왔나??");
+//				
+//		return clubDAO.getClubList(search);
+//	}
 	
 //	@Override
 //	public Map<String, Object> getMyClubList(Map<String, Object> map) throws Exception {

@@ -21,6 +21,8 @@ public interface ClubDAO {
 	
 	public List<Club> getClubList(Search search) throws Exception;
 	
+//	public Map<String, Object> getClubList(Search search) throws Exception;
+	
 //	public List<Club> getClubList(Map<String, Object> map) throws Exception;
 	
 	//GetMyClubList

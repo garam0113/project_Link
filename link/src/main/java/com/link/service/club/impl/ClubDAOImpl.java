@@ -83,13 +83,28 @@ public class ClubDAOImpl implements ClubDAO {
 //	}
 	
 	
-	
+	//getClubList bak!
 	@Override
 	public List<Club> getClubList(Search search) throws Exception {
 		
 		System.out.println("모임리스트 DAOImpl까지 왔나??");
 		return sqlSession.selectList("ClubMapper.getClubList",search);
 	}
+	
+//	@Override
+//	public Map<String, Object> getClubList(Search search) throws Exception {
+//		
+//		System.out.println("모임리스트 DAOImpl까지 왔나??");
+//		
+//		sqlSession.selectList("ClubMapper.getClubList",search);
+//		
+//		int totalClubMemberCount = sqlSession.selectOne("ClubMapper.getTotalClubMemberCount", new Search(search+"") );
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("search", search);
+//		map.put("totalClubMemberCount", totalClubMemberCount);
+//		
+//		return map;
+//	}
 	
 //	@Override
 //	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception {

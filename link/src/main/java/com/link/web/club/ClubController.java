@@ -160,6 +160,7 @@ public class ClubController {
 		return "forward:/club/getClubList";
 	}
 	
+	//clubList bak!
 	@RequestMapping(value="getClubList")
 	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 		
@@ -183,6 +184,32 @@ public class ClubController {
 		
 		return "forward:/club/getClubList.jsp";
 	}
+	
+//	@RequestMapping(value="getClubList")
+//	public String getClubList(@ModelAttribute("search") Search search, Model model) throws Exception {
+//		
+//		System.out.println("/club/getClubList : GET/POST");
+//		
+//		if(search.getCurrentPage()==0) {
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		
+//		Map<String, Object> map = clubService.getClubList(search);
+//		
+//		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);
+//		
+//		
+//		System.out.println("resultPage : "+resultPage);
+//		
+//		model.addAttribute("clubList",map.get("clubList"));
+//		model.addAttribute("resultPage", resultPage);
+//		model.addAttribute("search",search);
+//		
+//		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
+//		
+//		return "forward:/club/getClubList.jsp";
+//	}
 	
 	@RequestMapping(value="getApprovalConditionList")
 	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser) throws Exception {
