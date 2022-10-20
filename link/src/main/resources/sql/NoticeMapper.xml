@@ -34,16 +34,17 @@
 					SYSDATE, 
 					#{noticeCount},
 					#{clubNo},
-					#{userId.userId} )
+					#{userId.userId:VARCHAR} )
 
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getNotice"	parameterType="int"	resultMap="noticeSelectMap">
 	SELECT
-	N.NOTICE_NO , N.NOTICE_TITLE , N.NOTICE_CONTENT , N.NOTICE_IMAGE1 , N.NOTICE_IMAGE2, N.NOTICE_REGDATE, N.NOTICE_COUNT, N.CLUB_NO, USER_ID
-	FROM NOTICE N 
-	WHERE n.notice_no = #{notice_no}
+	N.NOTICE_NO , N.NOTICE_TITLE , N.NOTICE_CONTENT , N.NOTICE_IMAGE1 , 
+	N.NOTICE_IMAGE2, N.NOTICE_REGDATE, N.NOTICE_COUNT, N.CLUB_NO, U.USER_ID, U.NICKNAME
+	FROM NOTICE N , USERS U
+	WHERE n.notice_no = #{notice_no} AND U.USER_ID = N.USER_ID AND U.USER_ID = 'admin1'
 
 	 </select>
 	 
@@ -81,7 +82,7 @@
 	<select  id="getNoticeList"  parameterType="map"	resultMap="noticeSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE , N.NOTICE_COUNT
+	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE, N.NOTICE_COUNT
 											FROM NOTICE N , USERS U
 											WHERE N.USER_ID = 'admin1' AND U.USER_ID = N.USER_ID
 											<if test="search.searchCondition != null">
@@ -92,7 +93,7 @@
 										 			AND	LOWER(notice_title) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 											</if>
-											ORDER BY notice_no ) inner_table
+											ORDER BY NOTICE_NO DESC) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>
@@ -101,15 +102,15 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="Integer">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT notice_title , notice_content , notice_regdate
-						FROM notice
+	  	FROM(	SELECT NOTICE_TITLE , NOTICE_CONTENT , NOTICE_REGDATE
+						FROM NOTICE
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 		AND	notice_no = #{searchKeyword}
+						 		AND	NOTICE_NO = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		notice_title LIKE '%${searchKeyword}%'
+						 		NOTICE_TITLE LIKE '%${searchKeyword}%'
 								</if>
 							</where>
 						</if> ) countTable						

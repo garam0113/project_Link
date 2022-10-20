@@ -1,5 +1,6 @@
 package com.link.web.clubPost;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -331,8 +332,13 @@ public class ClubPostController {
 		System.out.println("/addPayView : GET : 모임번호를 가지고 결제화면으로 이동");
 
 		int maxPay = 0;
-		//pay.setPayNavigation(1);
-		pay.setClubNo(0);
+		// 모임번호 + navigation이 1이면 모임 상세보기로 간다
+		// 모임번호만 있으면 모임원리스트로 간다
+		// 둘 다 없으면 모임리스트로 간다
+		
+		// pay.setPayNavigation(1);
+		 pay.setClubNo(0);
+		// 둘 다 없으면 모임원리스트로 간다
 		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
 		if( pay.getClubNo() != 0 ) {
 			// 모임대표가 가입승인 클릭시
@@ -390,8 +396,8 @@ public class ClubPostController {
 				return "forward:/club/getClub.jsp";
 			}else {
 				// 모임리스트
-				// getClubList.jsp 에서 에러난다
-				model.addAttribute("clubList", clubServiceImpl.getClubList(ClubPostCommon.getSearch(search)));
+				Map<String, Object> map = clubServiceImpl.getClubList(ClubPostCommon.getSearch(search));
+				model.addAttribute("clubList", map.get("clubList"));
 				return "forward:/club/getClubList.jsp";
 			}
 		}

@@ -8,7 +8,7 @@ public class QandA {
 	private String qandATitle;			//Q&A 제목
 	private String qandAContent;		//Q&A 내용
 	private User userId;				//Q&A 이용자
-	private String qandARegDate;		//Q&A 등록날짜
+	private Date qandARegDate;		//Q&A 등록날짜
 	private String qandAImage1;			//Q&A 이미지1
 	private String qandAImage2;			//Q&A 이미지2
 	private int qandACondition;			//Q&A 진행상황
@@ -44,10 +44,10 @@ public class QandA {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
-	public String getQandARegDate() {
+	public Date getQandARegDate() {
 		return qandARegDate;
 	}
-	public void setQandARegDate(String qandARegDate) {
+	public void setQandARegDate(Date qandARegDate) {
 		this.qandARegDate = qandARegDate;
 	}
 	public String getQandAImage1() {

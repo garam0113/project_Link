@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
+<<<<<<< HEAD
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+>>>>>>> refs/remotes/origin/master
 
 <!DOCTYPE html>
 <html>
@@ -8,13 +13,11 @@
 <title>신고 등록</title>
 
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript"></script>
 
 
@@ -30,30 +33,61 @@
 		
 		
 		if(title == null || title.length <1){
-				alert("제목은 반드시 입력하셔야 합니다.");
+          	Swal.fire({
+                icon: 'error',
+                title: '신고 제목은 필수입니다.',
+            });
 				return;
 			}
 		if(content == null || content.length <1){
-				alert("내용은 반드시 입력하셔야 합니다.");
+			Swal.fire({
+                icon: 'error',
+                title: '신고 내용은 필수입니다.',
+                text: '가능한 상세히 적어주세요.',
+            });
 				return;
 			}
 				
 		if(checkbox==0){
-			alert("신고사유 하나는 선택해주세요");
+			Swal.fire({
+                icon: 'error',
+                title: '신고 사유는 필수입니다.',
+                text: '1개 이상 클릭해주세요.',
+            });
 			return;
 		}
 		
-		var sum = 0;
+
+		
+			
 	
+						
+	  Swal.fire({
+          title: '정말로 신고하시겠습니까?',
+          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '신고',
+          cancelButtonText: '취소'
+      }).then((result) => {
+          if (result.isConfirmed) {
+             AddReport()
+          }
+      })
+ }
+ 
+	function AddReport(){	
+		
+		var sum = 0;
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+		
 		for(var i =0 ; i<checkbox; i++){
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);
-		}
-			
-	alert(sum);			
-						
-		
-						
+			alert(sum);		
+		}	
 	 	$.ajax({
 		url  : "/serviceCenterRest/json/addReport",
 		contentType: 'application/json',
@@ -81,15 +115,19 @@
 	
 
 	$(function(){
-
-		$("button:contains('등록')").bind("click", function(){
 		
-			fncAddReport();
+  		
+		$("button:contains('등록')").bind("click", function(){
+			fncAddReport()
 			
 		})
+
+		
 		$("button:contains('뒤로')").bind("click", function(){
 			
-			close();
+			self.close();
+			<%-- self.close() 하고 window.close() 둘 다 크롬에서 되는지 확인해보기.
+			부모창 없어서 나 혼자로는 못 끔 --%>
 		})
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
@@ -129,6 +167,7 @@ textarea {
     background-color: white; 
   	color: black; 
   	border: 2px solid #f44336;
+  	border-radius : 13px;
 }
 .add5:hover {
    background-color: #f44336;
@@ -138,6 +177,7 @@ textarea {
     background-color: white; 
   	color: black; 
   	border: 2px solid #0a6bdf;
+  	border-radius : 13px;
 }
 .add6:hover {
    background-color: #0a6bdf;
@@ -199,19 +239,19 @@ textarea {
 						class="col-sm-offset-1 col-sm-offset-1  control-label">신고
 						출처 </label>
 					
-					<c:if test="${reportSource.slice(1,2)== '1'}"> 
+					<c:if test="${reportSource== '1'}"> 
 						<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     		 <input type="hidden" name="reportSource" value="1">
 					</c:if> 
-					<c:if test="${reportSource.slice(1,2)=='2'}"> 
+					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
 		     		 <input type="hidden" name="reportSource" value="2">
 					</c:if>
-					<c:if test="${reportSource.slice(1,2)=='3'}">
+					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
 		     		 <input type="hidden" name="reportSource" value="3">
 					</c:if>
-					<c:if test="${reportSource.slice(1,2)=='4'}">
+					<c:if test="${reportSource=='4'}">
 						<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
 		     		 <input type="hidden" name="reportSource" value="4">
 					</c:if>

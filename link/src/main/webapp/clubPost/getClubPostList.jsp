@@ -85,10 +85,22 @@
 							},
 							success : function( JSONData, status ) {
 								alert(status);
+								//console.log(JSONData.clubPostList);
+								//console.log(JSONData.clubPostList.length);
+
+								$.each( JSONData, function( item, el ) {
+									console.log( item );
+									console.log( el );
+									//var check = (JSONData.clubPostList.clubPostVideo1 == null)? false: true
+											
+									var display = "";
+									
+									console.log( display );
+									$(".col-md-4").append( display );
+								});
 								
-								console.log(JSONData.search);
-								console.log(JSONData.clubPostListCount);
-								console.log(JSONData.clubPostList);
+								$("input[name='order']").val( JSONData.search.order );
+								
 							}// end of success
 						});// end of ajax				
 					}// end of if			

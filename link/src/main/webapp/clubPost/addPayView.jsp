@@ -238,20 +238,19 @@
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="pay-view">
 		
-			<div class="pay-payOption">
-				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">결제 후 해당 모임의 총 모임원수는 <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>명</c:when>
-					<c:when test="${ pay.clubNo == 0 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when>
-				</c:choose>
-				</br></br>
-				
-				
+			<div class="pay-payOption">				
 				결제방법&nbsp;&nbsp;:&nbsp;&nbsp;
 				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">신용카드
 				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">카카오페이
 				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">휴대폰결제
 				<!-- <input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">토스페이 -->
 				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">실시간 계좌이체
+				</br></br>
+
+				<c:choose>
+					<c:when test="${ pay.clubNo != 0 }">결제 후 해당 모임의 총 모임원수는 <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>명</c:when>
+					<c:when test="${ pay.clubNo == 0 || pay.payNavigation == 1 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when>
+				</c:choose>
 			</div>
 			</br>
 			

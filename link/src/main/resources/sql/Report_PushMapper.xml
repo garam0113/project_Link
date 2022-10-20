@@ -129,7 +129,7 @@
 
 	 <!-- SQL : SELECT ONE -->
 	 <select id="getReport" parameterType="int" resultMap="Report_PushSelectMap" >
-		SELECT R.*, U.REPORT_COUNT , U.STOP_START_DATE , U.STOP_END_DATE
+		SELECT R.*, U.REPORT_COUNT , U.STOP_START_DATE , U.STOP_END_DATE 
         FROM REPORT_PUSH R, USERS U
         WHERE R.user_id2 = U.USER_ID AND NO = #{no}
 	 </select>
@@ -227,9 +227,10 @@
 	<select  id="getReportList"  parameterType="map"	resultMap="Report_PushSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT NO , TITLE , USER_ID2 , REPORT_CONDITION , REPORT_REGDATE
-											FROM REPORT_PUSH
+	  					FROM		(	SELECT R.NO , R.TITLE , R.USER_ID2 , R.REPORT_CONDITION , R.REPORT_REGDATE
+											FROM REPORT_PUSH R
 											WHERE TYPE = 1
+											<if test="userId==''"></if>
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
 										 			AND	LOWER(NO) LIKE LOWER('%${search.searchKeyword}%')
@@ -238,7 +239,20 @@
 										 			AND	LOWER(TITLE) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 											</if>
-											ORDER BY NO ) inner_table
+											
+											<if test="userId!=''">
+											AND R.USER_ID1= #{userId}
+											<if test="search.searchCondition != null">
+													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 			AND	LOWER(NO) LIKE LOWER('%${search.searchKeyword}%')
+													</if>
+													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 			AND	LOWER(TITLE) LIKE LOWER('%${search.searchKeyword}%')
+													</if>
+											</if>
+											
+											</if>
+											ORDER BY NO DESC) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>
@@ -248,15 +262,31 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT TITLE , CONTENT , REPORT_REGDATE
 						FROM REPORT_PUSH
+						WHERE TYPE = 1
 						<if test="searchCondition != null">
-							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			TITLE = #{searchKeyword}
+						 		AND	TITLE = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 			CONTENT = #{searchKeyword}
+						 		AND	CONTENT = #{searchKeyword}
 								</if>
-							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	  <select  id="getTotalCount2"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT R.TITLE , R.CONTENT , R.REPORT_REGDATE
+						FROM REPORT_PUSH R
+						WHERE R.USER_ID1 = #{userId} AND TYPE =1
+						<if test="searchCondition != null">
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 		AND	TITLE = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		AND	CONTENT = #{searchKeyword}
+								</if>
+						</if> ) countTable						
+	 </select>
+	  
+	 
 </mapper>
