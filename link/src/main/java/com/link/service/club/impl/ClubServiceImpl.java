@@ -13,6 +13,7 @@ import com.link.common.Search;
 import com.link.service.club.ClubDAO;
 import com.link.service.club.ClubService;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
@@ -54,7 +55,9 @@ public class ClubServiceImpl implements ClubService {
 	
 	
 	@Override
-	public Club getClub(int clubNo) throws Exception {
+	public Map<String, Object> getClub(int clubNo) throws Exception {
+		
+		System.out.println("getClub ServiceImpl 오나??");
 		return clubDAO.getClub(clubNo);
 	}
 	
@@ -290,5 +293,14 @@ public class ClubServiceImpl implements ClubService {
 	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
 	   return clubDAO.updateClubMember(pay, search);
 	}	
+	
+	//모임원 직책?
+	@Override
+	public ClubUser getClubMember(ClubPost clubPost) throws Exception {
+	   // 모임 게시물 상세보기에서 모임원의 직책 필요
+	   return clubDAO.getClubMember(clubPost);
+	}
+
+	
 	
 }

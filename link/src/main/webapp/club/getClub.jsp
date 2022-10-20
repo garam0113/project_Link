@@ -221,7 +221,7 @@
 				
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>모 임 설 명</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubDetail}</div>
+			<div class="col-xs-8 col-md-8">${club.clubDetail}</div>
 		</div>
 
 		<hr/>
@@ -236,6 +236,11 @@
 		<div class="row">
 	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-s-4 col-md-6 "><strong>모임원 수</strong></div>
+			<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
 		</div>
 		
 		

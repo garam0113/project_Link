@@ -172,7 +172,7 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="json/deleteMeetingMember", method=RequestMethod.POST)
-	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo, Model model) throws Exception {
+	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo) throws Exception {
 		
 		System.out.println("deleteMeetingMember 시작~");
 		System.out.println("participantNo = : "+participantNo);
