@@ -29,20 +29,31 @@
 		
 		<script type="text/javascript">
 		$(function(){
+			<%-- 모임 게시물 수정 --%>
 			$(".clubPost-header-update").bind("click", function(){
 				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
+			
+			<%-- 모임 게시물 삭제 --%>
 			$(".clubPost-header-delete").bind("click", function(){
-				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				if(confirm("정말 삭제하시겠습니까?")){
+					$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				}
 			});
+			
+			<%-- 모임 게시물 신고 --%>
 			$(".clubPost-header-report").bind("click", function(){
-				//alert("유저 아이디 : ${ clubPost.getClubPost.user.userId }");
-				//alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
+				alert("유저 아이디 : ${ clubPost.getClubPost.user.userId }");
+				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
 				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
 			});
+
+			<%-- 모임 게시물 리스트로 이동 --%>
 			$("input[value='리스트로이동']").bind("click", function(){
 				location.href = "/clubPost/getClubPostList?clubNo="+${ clubPost.getClubPost.clubNo }+"&order=0";
 			});			
+
+			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
 			$(".clubPost-header-heart").bind("click", function(){
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
@@ -75,6 +86,8 @@
 							}
 						});
 			}); // end of 하트
+
+			<%-- 모임 게시물 댓글리스트 가져온다 --%>
 			$(document).on("click", "b:contains('댓글 수')", function(){
 				alert("댓글 수");
 				var clubPostCommentNo = $(this).attr("clubPostCommentNo");
@@ -119,57 +132,14 @@
 							} // end of success
 						}); // end of ajax
 			}); // end of 댓글 수
-			$(document).on("click", "button", function(){
-				alert("button");
-				var text = $(this).prev().html();
-				var inputText = "<input type='text' value='"+text+"'><input type='button' value='수정완료'>";
-				$(this).parent().prepend(inputText);
-			});
-			$(document).on("click", "input[value='수정완료']", function(){
-				alert("수정완료");
-				var commentContent = $("input[type='text']").val();
-				$.ajax( "/clubPostRest/json/updateClubPostComment",
-						{
-							method : "POST",
-							data : JSON.stringify({
-										clubPostCommentNo : 3,
-										commentContent : commentContent
-									}),
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							dataType : "json",
-							success : function(JSONData, status){
-								alert(status);
-							} // end of success
-						}); // end of ajax
-			}); // end of 수정완료
-			$(document).on("click", "input[value='삭제']", function(){
-				alert("삭제");
-				var clubPostCommentNo = $(this).attr("class");
-				alert(clubPostCommentNo);
-				$.ajax( "/clubPostRest/json/deleteClubPostComment",
-						{
-							method : "POST",
-							data : JSON.stringify({
-										clubPostCommentNo : clubPostCommentNo
-									}),
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							dataType : "json",
-							success : function(JSONData, status){
-								alert(status);
-							} // end of success
-						}); // end of ajax
-			}); // end of 삭제
-			$(document).on("click", "input[value='등록']", function(){
-				alert("등록");
-				var inputText = "<input type='text' value=''><input type='button' value='등록완료'>";
-				$(this).parent().prepend(inputText);
+
+			<%-- 해당 댓글을 등록할 수 있는 입력텍스트 보여진다 --%>
+			$(document).on("click", ".reply.add", function(){
+				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
+				$(this).parent().parent().parent().children("div:eq(1)").removeAttr("style");
 			}); // end of 등록
+
+			<%-- 해당 댓글을 등록한다 --%>
 			$(document).on("click", "input[value='등록완료']", function(){
 				alert("등록완료");
 				var commentContent = $("input[type='text']").val();
@@ -193,6 +163,65 @@
 							} // end of success
 						}); // end of ajax
 			}); // end of 등록완료
+			
+			<%-- 등록 또는 수정을 취소한다 --%>
+			$(document).on("click", "input[value='취소']", function(){
+				$(this).parent().parent().attr("style", "display: none");
+			});
+
+			<%-- 해당 댓글을 수정할 수 있는 입력텍스트 보여진다 --%>
+			$(document).on("click", ".reply.update", function(){
+				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
+				$(this).parent().parent().parent().children("div:eq(1)").removeAttr("style");
+				var content = $(this).parent().parent().children("p").text();
+				$(this).parent().parent().parent().find("textarea").val(content );
+			});
+
+			<%-- 해당 댓글을 수정한다 --%>
+			$(document).on("click", "input[value='수정완료']", function(){
+				alert("수정완료");
+				var commentContent = $("input[type='text']").val();
+				$.ajax( "/clubPostRest/json/updateClubPostComment",
+						{
+							method : "POST",
+							data : JSON.stringify({
+										clubPostCommentNo : 3,
+										commentContent : commentContent
+									}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								alert(status);
+							} // end of success
+						}); // end of ajax
+			}); // end of 수정완료
+
+			<%-- 해당 댓글을 삭제한다 --%>
+			$(document).on("click", "input[value='삭제']", function(){
+				alert("삭제");
+				var clubPostCommentNo = $(this).attr("class");
+				alert(clubPostCommentNo);
+				$.ajax( "/clubPostRest/json/deleteClubPostComment",
+						{
+							method : "POST",
+							data : JSON.stringify({
+										clubPostCommentNo : clubPostCommentNo
+									}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								alert(status);
+							} // end of success
+						}); // end of ajax
+			}); // end of 삭제
+
+			<%-- 해당 댓글을 좋아요 또는 좋아요 취소한다 --%>
 			$(document).on("click", "a:contains('댓글좋아요')", function(){
 				alert('댓글좋아요');
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
@@ -215,52 +244,56 @@
 							}
 						});
 			}); // end of 댓글좋아요
+
+			<%-- 프로필사진 클릭시 해당유저 마이홈피로 이동 --%>
 			$(document).on("click", ".clubPost-header-profile", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
-			});//end of 프로필사진 클릭시 해당유저 마이홈피로 이동
+			});//end of 마이홈피 이동
+
+			<%-- 닉네임 클릭시 해당유저 마이홈피로 이동 --%>
 			$(document).on("click", ".clubPost-header-nickName", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
-			});//end of 닉네임 클릭시 해당유저 마이홈피로 이동
+			});//end of 마이홈피 이동
 		});
 		</script>
 		
 		<style type="text/css">
 			.clubPost-header {
-				background-color: yellow;
+				/* background-color: yellow; */
 				display: grid;
 				grid-template-columns: 2fr 5fr 1fr 1fr 1fr 1fr 1fr;
 			}
 			.clubPost-header-profile {
-				background-color: blue;
+				/* background-color: blue; */
 			}
 			.clubPost-header-space{
-				background-color: black;
+				/* background-color: black; */
 			}
 			.clubPost-header-heart{
-				background-color: orange;
+				/* background-color: orange; */
 			}
 			.clubPost-header-heartCount{
-				background-color: gray;
+				/* background-color: gray; */
 				font-size: 3rem;
 			}
 			.clubPost-header-update{
-				background-color: lime;
+				/* background-color: lime; */
 				font-size: 3rem;
 			}
 			.clubPost-header-delete{
-				background-color: purple;
+				/* background-color: purple; */
 				font-size: 3rem;
 			}
 			.clubPost-header-report{
-				background-color: aqua;
+				/* background-color: aqua; */
 				font-size: 3rem;
 			}
 			.clubPost-header-nickName{
-				background-color: green;
+				/* background-color: green; */
 				font-size: 2rem;
 			}
 			.clubPost-body-title{
-				background-color: yellow;
+				/* background-color: yellow; */
 			}
 		</style>
 		
@@ -299,7 +332,8 @@
 			</div><!-- intro-wrap -->
 
 			<div id="main" class="row">
-				<div class="row-content buffer-left buffer-right buffer-bottom">
+				<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
+				<!-- <div class="row-content buffer-left buffer-right buffer-bottom"> -->
 				
 				
 				
@@ -332,43 +366,46 @@
 							</time></h5>
 							
 							<div class="clubPost-header">
+								<%-- 게시물 등록 회원 프로필 사진 --%>
 								<div class="clubPost-header-profile" userId = "${ clubPost.getClubPost.user.userId }">
 									<img src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }" height="110" width="110"></div>
 								
 								<div class="clubPost-header-space"></div>
 								
+								<%-- 해당 회원이 좋아요한 여부에 따라 하트색 변화 --%>
 								<div class="clubPost-header-heart">
 									<c:choose>
 										<c:when test="${ clubPost.getClubPost.heartCondition == 0}"><img src="/resources/image/uploadFiles/no_heart.jpg" height="70" width="70"></c:when>
 										<c:otherwise><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:otherwise>
 									</c:choose>
 								</div>
+								<%-- 게시물 좋아요 수 --%>
 								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
+								<%-- 게시물 수정 --%>
 								<div class="clubPost-header-update">
 									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
 								</div>
+								<%-- 게시물 삭제 --%>
 								<div class="clubPost-header-delete">
 									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
 								</div>
+								<%-- 게시물 신고 --%>
 								<div class="clubPost-header-report">
 									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 								</div>
 							</div>
 							
+							<%-- 게시물 등록 회원 닉네임 --%>
 							<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
 							
 							<div class="clubPost-body">
 								<div class="clubPost-body-title">
-									<h1>${ clubPost.getClubPost.clubPostTitle }</h1>
+									<h1>제목 : ${ clubPost.getClubPost.clubPostTitle }</h1>
 								</div>
 								<div class="clubPost-body-content">
-									<%-- <p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p> --%>
 									<%-- <p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p> --%>
-									<p>${ clubPost.getClubPost.clubPostContent }</p>
 									<%-- <p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p> --%>
-									<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
-										<p>댓글 개수 ${ clubPost.getClubPost.clubPostCommentCount } 개</br>
-									</c:if>
+									<p>내용 : ${ clubPost.getClubPost.clubPostContent }</p>
 								</div>
 							</div>
 													
@@ -391,45 +428,146 @@
 					
 					
 					
-					<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
-					//////////////////////////////////////////////////////////////////////</br>
-					모임 게시물 댓글 리스트</br>
-					<div add="add" clubPostNo="${ clubPost.getClubPost.clubPostNo }">
-					<!-- <input type="button" value="등록"> -->
-					<a href="###"><img alt="" src="abcd.jpg">댓글좋아요</a></br>
-					</div>
-					<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
-					<c:if test="${ clubPost.getClubPostCommentList[i].parent == clubPost.getClubPost.clubPostNo }">
-					<nav class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
-					댓글 내용 : <div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
-					${ clubPost.getClubPostCommentList[i].commentContent }</div>
-					<c:if test="${ user.userId == clubPost.getClubPostCommentList[i].user.userId }">
-					<button class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">수정</button>
-					</c:if></br>
-					<%-- 모임 게시물 번호 : ${ clubPost.getClubPostCommentList[i].clubPostNo }</br>
-					모임 게시물 댓글 번호 : ${ clubPost.getClubPostCommentList[i].clubPostCommentNo }</br>
-					모임 게시물 댓글 등록 회원 아이디 : ${ clubPost.getClubPostCommentList[i].user.userId }</br> --%>
-					모임 게시물 댓글 등록 회원 닉네임 : ${ clubPost.getClubPostCommentList[i].user.nickName }</br>
-					댓글 등록날짜 : ${ clubPost.getClubPostCommentList[i].commentRegDate }</br>
-					<%-- 댓글 수정날짜 : ${ clubPost.getClubPostCommentList[i].commentUpdateDate }</br> --%>
-					댓글 좋아요 수 : ${ clubPost.getClubPostCommentList[i].commentHeartCount }</br>
-					<%-- 신고여부 : ${ clubPost.getClubPostCommentList[i].reportCondition }</br>
-					삭제여부 : ${ clubPost.getClubPostCommentList[i].deleteCondition }</br> --%>
-					댓글 부모번호 : ${ clubPost.getClubPostCommentList[i].parent }</br>
-					댓글 깊이 : ${ clubPost.getClubPostCommentList[i].depth }</br>
-					댓글 순서 : ${ clubPost.getClubPostCommentList[i].sequence }</br>
-					<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPost.getClubPostCommentList[i].clubPostCommentNo }&depth=0">댓글 수 : ${ clubPost.getClubPostCommentList[i].commentCount }</a></br> --%>
-					<c:if test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
-					<div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
-						<b style="color : red;" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }"
-						clubPostNo="${ clubPost.getClubPostCommentList[i].clubPostNo }">
-						댓글 수 ${ clubPost.getClubPostCommentList[i].commentCount }</b></br>
-					</div>
-					</c:if>
-					</nav>
-					</c:if>
-					</c:forEach>
-					</c:if>
+				<%-- 	<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }"></br></br>
+						<div add="add" clubPostNo="${ clubPost.getClubPost.clubPostNo }">
+							<a href="###"><img alt="" src="abcd.jpg">댓글좋아요</a></br>
+						</div>
+						<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
+							<c:if test="${ clubPost.getClubPostCommentList[i].parent == clubPost.getClubPost.clubPostNo }">
+								<nav class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+									댓글 내용 : <div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+									${ clubPost.getClubPostCommentList[i].commentContent }</div>
+									<c:if test="${ user.userId == clubPost.getClubPostCommentList[i].user.userId }">
+									<button class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">수정</button>
+									</c:if></br>
+									모임 게시물 번호 : ${ clubPost.getClubPostCommentList[i].clubPostNo }</br>
+									모임 게시물 댓글 번호 : ${ clubPost.getClubPostCommentList[i].clubPostCommentNo }</br>
+									모임 게시물 댓글 등록 회원 아이디 : ${ clubPost.getClubPostCommentList[i].user.userId }</br>
+									모임 게시물 댓글 등록 회원 닉네임 : ${ clubPost.getClubPostCommentList[i].user.nickName }</br>
+									댓글 등록날짜 : ${ clubPost.getClubPostCommentList[i].commentRegDate }</br>
+									댓글 수정날짜 : ${ clubPost.getClubPostCommentList[i].commentUpdateDate }</br>
+									댓글 좋아요 수 : ${ clubPost.getClubPostCommentList[i].commentHeartCount }</br>
+									신고여부 : ${ clubPost.getClubPostCommentList[i].reportCondition }</br>
+									삭제여부 : ${ clubPost.getClubPostCommentList[i].deleteCondition }</br>
+									댓글 부모번호 : ${ clubPost.getClubPostCommentList[i].parent }</br>
+									댓글 깊이 : ${ clubPost.getClubPostCommentList[i].depth }</br>
+									댓글 순서 : ${ clubPost.getClubPostCommentList[i].sequence }</br>
+									<a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPost.getClubPostCommentList[i].clubPostCommentNo }&depth=0">댓글 수 : ${ clubPost.getClubPostCommentList[i].commentCount }</a></br>
+									<c:if test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
+										<div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+											<b style="color : red;" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }"
+											clubPostNo="${ clubPost.getClubPostCommentList[i].clubPostNo }">
+											댓글 수 ${ clubPost.getClubPostCommentList[i].commentCount }</b></br>
+										</div>
+									</c:if>
+								</nav>
+							</c:if>
+						</c:forEach>
+					</c:if> --%>
+					
+					
+					
+					
+					
+					<div class="comment-section">
+						<h3 id="comments">
+							<c:choose>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 ${ clubPost.getClubPost.clubPostCommentCount }개</c:when>
+							</c:choose>
+						</h3>
+						<ul class="comment-list plain">
+							<%-- 해당 게시물에 댓글이 있을때만 for문을 돈다 --%>
+							<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
+								<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">									
+									<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
+										<li class="comment">
+											<div class="single-comment">
+												<div class="comment-author">
+													<cite><a href="#"><img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].user.profileImage }" class="avatar" alt=""></a></cite>
+													<cite><a href="#">${ clubPost.getClubPostCommentList[i].user.nickName }</a></cite>
+													<span class="says">says:
+													 ${ sessionScope.clubUser.memberRole }</span>
+												</div><!-- comment-author -->
+												<div class="comment-meta" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+													<c:choose>
+														<c:when test="${ empty clubPost.getClubPostCommentList[i].commentUpdateDate }"><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentRegDate }</time></c:when>
+														<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(수정됨)</time></c:otherwise>
+													</c:choose>
+													<%-- 해당 댓글의 댓글 등록 --%>
+													 / <a class="reply add">
+													 	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size: 20px;"></span>
+													 </a>
+													 <%-- 해당 댓글 수정 --%>
+													 <a class="reply update">
+													 	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId }">
+													 		/ <span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 20px;"></span>
+													 	</c:if>
+													 </a>
+													 <%-- 해당 댓글 삭제 --%>
+													 <a href="#" class="reply delete">
+													 <%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
+													 <%-- <c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId && clubPost.getClubPost.user.userId == sessionScope.user.userId
+													 	&& sessionScope.clubUser.memberRole == 2 && sessionScope.user.role == 'admin' }"></c:if> --%>
+													  / <span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 20px;"></span>
+													  </a>
+													 <%-- 해당 댓글 신고 --%>
+													  <a href="#" class="reply report">
+													  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
+													  		 / <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 20px;"></span>
+													  	</c:if>
+													  </a>
+												</div><!-- comment-meta -->
+												<p>${ clubPost.getClubPostCommentList[i].commentContent }</p>
+												<c:choose>
+													<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
+														<div class="comment-author">
+															<cite><a href="#">댓글 ${ clubPost.getClubPostCommentList[i].commentCount }개</a><cite>
+														</div>
+													</c:when>
+												</c:choose>
+											</div><!-- single-comment -->
+											
+											<div id="post-comment" class="clear-after-comment-add" commentTextArea="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" style="display: none;">
+												<!-- <h3 id="reply-title">댓글 작성란</h3> -->
+												<form class="comment-form">
+													<textarea class="plain buffer" placeholder="댓글작성란"></textarea>
+													<input class="plain button red add" value="저장" style="height: 30px; width: 60px;">
+													<input class="plain button red cancle" value="취소" style="height: 30px; width: 60px;">
+												</form>						
+											</div><!-- post-comment -->	
+											
+											<%-- 대댓글리스트 --%>
+												<%-- <ul class="children plain">
+														<li class="comment">
+															<div class="single-comment">
+																<div class="comment-author">
+																	<img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[k].user.profileImage }" class="avatar" alt="">
+																	<cite><a href="#">${ clubPost.getClubPostCommentList[k].user.nickName }</a></cite>
+																	<span class="says">says:</span>
+																</div><!-- comment-author -->
+																<div class="comment-meta">
+																	<c:choose>
+																		<c:when test="${ empty clubPost.getClubPostCommentList[k].commentUpdateDate }"><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[k].commentRegDate }</time></c:when>
+																		<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[k].commentUpdateDate }(수정됨)</time></c:otherwise>
+																	</c:choose>
+																	/ <a href="#" class="reply">댓글등록</a>
+																</div><!-- comment-meta -->
+																<p>${ clubPost.getClubPostCommentList[k].commentContent }</p>
+																	<c:choose>
+																		<c:when test="${ clubPost.getClubPostCommentList[k].commentCount > 0 }"><h3 id="comments">댓글 ${ clubPost.getClubPostCommentList[k].commentCount }개</h3></c:when>
+																	</c:choose>
+															</div><!-- single-comment -->
+														</li>
+													</ul> --%>
+											<%-- 대댓글 for문 --%>
+									
+										</li>
+									</c:if>
+								</c:forEach>
+							</c:if>
+							<%--댓글 for문 --%>
+						</ul>
+					</div><!-- comment-section -->	
 					
 					
 					
@@ -437,9 +575,13 @@
 					
 
 					<%-- <div class="comment-section">
-						<h3 id="comments">19 Comments</h3>
-						<ul class="comment-list plain">
-							<li class="comment">
+						<h3 id="comments">
+							<c:choose>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 ${ clubPost.getClubPost.clubPostCommentCount } 개</c:when>
+							</c:choose>
+						</h3>
+						<ul class="comment-list plain" style="background-color: aqua;">
+							<li class="comment" style="background-color: red;">
 								<div class="single-comment">
 									<div class="comment-author">
 										<img src="http://placehold.it/60x60" class="avatar" alt="">
@@ -449,7 +591,7 @@
 									<div class="comment-meta">
 										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
 									</div><!-- comment-meta -->
-									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+									<p>111</p>
 								</div><!-- single-comment -->
 								<ul class="children plain">
 									<li class="comment">
@@ -462,7 +604,7 @@
 											<div class="comment-meta">
 												<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
 											</div><!-- comment-meta -->
-											<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+											<p>222</p>
 										</div><!-- single-comment -->
 										<ul class="children plain">
 											<li class="comment">
@@ -475,12 +617,12 @@
 													<div class="comment-meta">
 														<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
 													</div><!-- comment-meta -->
-													<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+													<p>333</p>
 												</div><!-- single-comment -->
 											</li>
 										</ul>										
 									</li>
-								</ul>								
+								</ul>
 							</li>
 							<li class="comment">
 								<div class="single-comment">
@@ -492,7 +634,7 @@
 									<div class="comment-meta">
 										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
 									</div><!-- comment-meta -->
-									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+									<p>444</p>
 								</div><!-- single-comment -->
 							</li>	
 							<li class="comment">
@@ -505,7 +647,7 @@
 									<div class="comment-meta">
 										<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58 pm</time> / <a href="#" class="reply">Reply</a>
 									</div><!-- comment-meta -->
-									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+									<p>555</p>
 								</div><!-- single-comment -->
 							</li>													
 						</ul>
