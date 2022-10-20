@@ -21,6 +21,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -228,6 +229,9 @@ public class ClubPostController {
 		int heartCondition = clubPostServiceImpl.getCheckHeart(heart);
 		map = clubPostServiceImpl.getClubPost(map);
 		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
+		
+		clubPost.setUser((User)session.getAttribute("user"));
+		//session.setAttribute("clubUser", clubPostServiceImpl.getClubMember(clubPost));
 		
 		model.addAttribute("clubPost", map);
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
