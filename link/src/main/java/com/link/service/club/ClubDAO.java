@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
@@ -14,12 +15,13 @@ public interface ClubDAO {
 
 	public void addClub(Club club) throws Exception;
 	
-//	//JUNIT TEST
-//	public int addClub(Club club) throws Exception;
+//	public Club getClub(int clubNo) throws Exception;
 	
-	public Club getClub(int clubNo) throws Exception;
+	public Map<String, Object> getClub(int clubNo) throws Exception;
 	
 	public List<Club> getClubList(Search search) throws Exception;
+	
+//	public Map<String, Object> getClubList(Search search) throws Exception;
 	
 //	public List<Club> getClubList(Map<String, Object> map) throws Exception;
 	
@@ -92,4 +94,7 @@ public interface ClubDAO {
 	//결제
 	public List <ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	
+	
+	//모임원 직책??
+	public ClubUser getClubMember(ClubPost clubPost) throws Exception;
 }

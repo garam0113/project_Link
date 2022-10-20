@@ -37,6 +37,7 @@
 		<result property="joinGreeting"				column="join_greeting"						jdbcType="VARCHAR" />
 		<result property="user.nickName"		column="nickname"						jdbcType="VARCHAR" />
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
+		<result property="club.clubMaxMember"		column="club_max_member"				jdbcType="NUMERIC" />
 			
 	</resultMap>
 	
@@ -296,12 +297,13 @@
 			
 			SELECT inner_table.*
 				FROM ( SELECT rownum AS row_seq, deep_table.*
-						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image
+						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image, c.club_max_member
 								FROM
-								users u, club_User cU
+								users u, club_User cU, club c
 								 
 								<where>
 									cU.user_id = u.user_id
+									and cU.club_no = c.club_no
 									<if test="searchKeyword != null">
 										and cU.club_no = #{searchKeyword}
 									</if>
@@ -389,7 +391,7 @@
 	
 		<select  id="getMeetingList"  parameterType="search"	resultMap="meetingSelectMap">
 	 	SELECT inner_table.*
-		FROM (
+		FROM 
 			SELECT rownum AS row_seq, deep_table.*
 			FROM (
 				SELECT
@@ -414,6 +416,7 @@
 						and u.user_id = #{searchKeyword}
 					</if> -->
 				</where>
+				ORDER BY m.meeting_date ASC
 			) deep_table
 		) inner_table
 	 	
@@ -522,6 +525,16 @@
       	club_no = #{ clubNo }
       </where>
    </update>
+	
+	
+	<!-- 모임원 직책 -->
+	
+	<select id="getClubMember" parameterType="clubPost" resultMap="clubUserSelectMap">
+	   SELECT *
+	   FROM CLUB_USER
+	   WHERE USER_ID = #{ user.userId } AND CLUB_NO = #{ clubNo }
+	</select>
+	
 	
 	
 </mapper>

@@ -21,9 +21,13 @@
 	$(function() {
 
 		$("td.ct_btn01:contains('이전')").bind("click", function() {
-
-			history.go(-1);
-
+			
+			if(${empty sessionScope.user.userId}){
+				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			}
+			if(${!empty sessionScope.user.userId}){
+				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
+			}
 		});
 
 		$("td.ct_btn01:contains('수정')").bind("click", function() {

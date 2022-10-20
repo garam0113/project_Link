@@ -8,17 +8,19 @@
 <html>
 
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
 	<title>Feed</title>
 	
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 	<script src="https://code.jquery.com/jquery.js"></script>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script>
+	</script>
+	
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 	
@@ -26,6 +28,11 @@
 	<script src="/resources/summernote/summernote-lite.js" charset="UTF-8"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
+	
+	<%-- SWIPER API --%>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+	<%-- SWIPER API --%>
 	
 	<script type="text/javascript">
 	
@@ -52,12 +59,12 @@
 		$('#summernote').summernote({
 			toolbar: [
                 // [groupName, [list of button]]
-                ['Insert', ['picture']],
+                ['Insert', ['picture', 'video']],
             ],
             
-			height: 300,                 	// 에디터 높이
-			minHeight: null,             	// 최소 높이
-			maxHeight: null,             	// 최대 높이
+			height: 200,                 	// 에디터 높이
+			minHeight: 200,             	// 최소 높이
+			maxHeight: 200,             	// 최대 높이
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
 			placeholder: '오늘 하루는 어떤가요?',
 			lang:'ko-KR',
@@ -109,7 +116,8 @@
 			console.log("피드 삭제 버튼");
 			console.log($(this).html())
 			
-			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			$(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 		});
 		<%-- DELETE_FEED --%>
 		
@@ -142,7 +150,7 @@
 							alert("피드 좋아요 성공 : " + data);
 
 							$(html).parents(".row").children(".likeCount").text(data);
-							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
+							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -181,7 +189,7 @@
 							alert("피드 시러요 성공 : " + data);
 							
 							$(html).parents(".row").children(".likeCount").text(data);
-							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
+							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -192,17 +200,25 @@
 		<%-- DELETE_FEED_HEART --%>
 		
 		<%-- CAROUSEL EVENT 침범 방지 --%>
-		$(document).on("click", ".carousel", function(event) {
-			event.stopPropagation();
-		})
+		
+		$(document).on("click", ".carousel_prev", function(event) {
+			alert("hi")
+		});
+		
+		$(document).on("click", ".carousel_next", function(event) {
+			alert("bye")
+		});
+				
 		<%-- CAROUSEL EVENT 침범 방지 --%>
 		
+		<%-- CALL REPORT --%>
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 		    
-			window.open("/serviceCenter/addReportView.jsp", "신고 등록", "top=100px, left=100px, height=950px, width=500px");
+			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
 			
 		}) // .report evenet close
+		<%-- CALL REPORT --%>
 		
 	})
 	
@@ -218,6 +234,11 @@
 		margin-top:5px;
 		margin-left:5px;
 		display: inline-block;
+		color: white !important;
+	}
+	
+	h5.meta-post {
+		margin-bottom:13px !important;
 	}
 		
 	@
@@ -232,12 +253,15 @@
 	}
 	
 	.feedForm {
-		margin-top: 50px;
-		margin-bottom: 50px;
+		border-style:solid !important;
+		border-color:#241B12 !important;
+		border-width:1;
 	}
 	
-	.showFeedForm {
-		border-style:dotted;
+	article {
+		border-style:solid !important;
+		border-color:#241B12 !important;
+		border-width:1 !important;
 	}
 	
 	.carousel-inner > .item > img {
@@ -247,6 +271,63 @@
 		height: 350px;
 	} 
 	
+	.carousel-control.left, .carousel-control.right {
+    	background-image: none
+	}
+	
+	input.button.red.addFeed {
+		display: inline-block;
+		width:75px;
+		height:35px;
+		float:right;
+		margin-top:14px;
+		margin-right:3px;
+		font-size: 0.5em !important;
+	}
+	
+	section.row.section {
+		background-color: black;
+	}
+	
+	div.feedContent {
+		margin-left: 60px;
+		color: white !important;
+	}
+	
+	.glyphicon-exclamation-sign:before {
+	
+		margin-left: 0px;
+	}
+	
+	/* 하트 아이콘 CSS */
+	div.column.two {
+		margin-left: 30px;
+		margin-right: 0px;
+	}
+	/* 하트 아이콘 CSS */
+	
+	/* 신고 아이콘 CSS */
+	div.column.four.last.report {
+		width: 40px;
+		margin-left: 20px;
+	}
+	/* 신고 아이콘 CSS */
+	
+	#carouselExampleSlidesOnly {
+		margin-top:10px
+	}
+	
+	.note-toolbar {
+		background-color: grey !important;
+	}
+	
+	.note-btn {
+		background-color: grey !important;
+	}
+	
+	section.row.section {
+		
+	}
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -261,9 +342,9 @@
 
 	<main role="main">
 	
-		<div id="intro-wrap" data-height="22.222">
+		<div id="intro-wrap" data-height="15">
 				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
 						<div class="caption">
 							<h2>Feed</h2>
 							<p>If you’re any good at all, you know you can be better.</p>
@@ -278,7 +359,13 @@
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						<a href="/feed/getFestivalLocation.jsp">길찾기</a>
+						<a href="http://localhost:5005/" onclick="window.open(this.href, '_blank', 'width=600, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">길찾기</a>
+						
+						<form id="searchForm" method="POST" action="/feed/getFeedList">
+							<%-- 검색 --%>
+							<input type="text" placeholder="검색" name="searchKeyword" value="">
+							<%-- 검색 --%>
+						</form>
 					</div>
 					
 					<div class="column six">
@@ -288,13 +375,15 @@
 							<c:if test="${!empty sessionScope.user}">
 							
 								<article role="main">
-									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
-									<input class="plain button red addFeed" style="display: inline-block; width:150px; float:right; margin-top:10px" value="Submit">
+									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-bottom:2px; margin-left:10px;" /><h4 style="color:white; vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
+									<input class="plain button red addFeed" value="Submit">
 									<textarea id="summernote" name="content"></textarea>
 								</article>
 								
 							</c:if>
 		
+							<input type="hidden" name="openCondition" value="3">
+							
 							</form>
 						</div>
 
@@ -307,7 +396,7 @@
 								<div class="showFeedForm">
 									<form class="feedForm">
 
-										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-left:10px" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 										
 										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
@@ -322,55 +411,78 @@
 												<%-- 수정 버튼 --%>
 											
 												<%-- 삭제 버튼 --%>
-												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
+												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" style="margin-right:5px"></span>
 												<%-- 삭제 버튼 --%>
 											</div>
 										</c:if>
 									
-									
+										<div class="feedContent">${feed.content}</div>
 										
 										<%-- 이미지 --%>
-										<div id="${feed.feedNo}" class="carousel slide" data-interval="false">
+										<c:if test="${!empty feed.image1}">
+										<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+											<ol class="carousel-indicators">
+												<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+												<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+												<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+												<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+											</ol>
+										
 											<!-- Wrapper for slides -->
 											<div class="carousel-inner" role="listbox">
 												<div class="item active">
 													<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
 												</div>
-												<div class="item">
-													<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
-												</div>
-												<div class="item">
-													<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-												</div>
-												<div class="item">
-													<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
-												</div>
+												
+												<c:if test="${!empty feed.image2}">
+													<div class="item">
+														<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+													</div>
+														<c:if test="${!empty feed.image3}">
+															<div class="item">
+																<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+															</div>
+															<c:if test="${!empty feed.image4}">
+																<div class="item">
+																	<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																</div>
+															</c:if>
+														</c:if>														
+												</c:if>
 											</div>
 
 											<!-- Controls -->
-											<a class="left carousel-control" href="#${feed.feedNo}" role="button" data-slide="prev">
+											<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
 												<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 												<span class="sr-only">Previous</span>
 											</a>
-											
-											<a class="right carousel-control" href="#${feed.feedNo}" role="button" data-slide="next">\
+											<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
 												<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 												<span class="sr-only">Next</span>
 											</a>
 										</div>
+										</c:if>
+										
+										
 										<%-- 이미지 --%>
-
-
-
-										<p>${feed.content}</p>
+										
+										<%-- 영상 --%>
+										<c:if test="${!empty feed.video}">
+											<iframe width="640" height="360" src="https://${feed.video}" ></iframe>
+										</c:if>
+										<%-- 영상 --%>
 										
 										<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
 										
 										<br />
 										
-										<input type="hidden" name="source" value="0">
-										<input type="hidden" name="user2" value="${feed.user.userId}">
+										<%-- 피드 댓글 신고 --%>
 										<input type="hidden" name="reportSource" value="3">
+										<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
+										<input type="hidden" name="user2" value="${feed.user.userId}">
+										<%-- 피드 댓글 신고 --%>
+										
+										<input type="hidden" name="source" value="0">
 										<input type="hidden" name="feedNo" value="${feed.feedNo}">
 										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
 										<input type="hidden" name="openCondition" value="3">
@@ -380,12 +492,12 @@
 											<div class="row">
 												<c:if test="${feed.checkHeart eq 0}">
 													<div class="column two">
-														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+														<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
 												<c:if test="${feed.checkHeart ne 0}">
 													<div class="column two">
-														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+														<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 													</div>
 												</c:if>
 												
@@ -393,7 +505,9 @@
 													${feed.heartCount}
 												</div>
 												
-												<div class="column two comment">댓글수</div>
+												<div class="column two comment">
+													<img src="/resources/image/uploadFiles/comments.jpg" width="30" height="30" style="margin-top : 0px;" />
+												</div>
 												
 												<div class="column two commentCount">
 													 ${feed.commentCount}
@@ -420,7 +534,9 @@
 					</div>
 
 					<div class="column three"></div>
-
+					
+					<input type="hidden" name="currentPage" value="1">
+					
 				</div>
 
 			</section>

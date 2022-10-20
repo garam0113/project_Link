@@ -67,7 +67,7 @@
 
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
-
+				<input type="hidden" name="userId" id="userId" value="${user.userId}">
 			<div class="form-group">
 				<label for="noticeTitle"
 					class="col-sm-offset-1 col-sm-3 control-label">Á¦¸ñ</label>

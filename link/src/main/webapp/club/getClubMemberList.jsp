@@ -171,8 +171,9 @@
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
 		});
 	});
+		});
 	});
-	});	
+	
 	</script>	
 	
 </head>
@@ -231,6 +232,7 @@
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
 				  
+				  ${totalClubMemberCount}/${club.clubMaxMember}
 				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
 				  
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
