@@ -3,7 +3,7 @@
 // INSERT NOTICE    =  =  = addNotice()
 
 	INSERT INTO NOTICE( NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE1, NOTICE_IMAGE2, NOTICE_REGDATE, NOTICE_COUNT, CLUB_NO, USER_ID)
-	VALUES (seq_notice_notice_no.nextval, '공지사항ss', '내용ss', 'abc.jpg', 'cdf.jpg' , SYSDATE, '1' , null, 'admin1');
+	VALUES (seq_notice_notice_no.nextval, '공지사항ss', '내용ss', 'abc.jpg', 'cdf.jpg' , TO_CHAR(SYSDATE,'YY-MM-DD'),'1' , null, 'admin1');
 
 
 // DELETE NOTICE  = = = deleteNotice()
@@ -73,21 +73,29 @@
 	 WHERE QANDA_NO = '3';
 		
 
-
-
-SELECT * FROM QANDA;
+DELETE report_push WHERE no='147';
 
 SELECT * FROM QANDA;
 
+SELECT * FROM report_push;
+
+
+
+	SELECT
+	N.NOTICE_NO , N.NOTICE_TITLE , N.NOTICE_CONTENT , N.NOTICE_IMAGE1 , 
+	N.NOTICE_IMAGE2, N.NOTICE_REGDATE, N.NOTICE_COUNT, N.CLUB_NO, U.USER_ID, U.NICKNAME
+	FROM NOTICE N , USERS U
+	WHERE n.notice_no = 76 AND U.USER_ID= N.USER_ID AND U.USER_ID = 'admin1';
 
 
 
 
 
-
-
-
-
+SELECT
+TO_CHAR(
+SYSDATE, 'YYYY-MM-DD')
+FROM NOTICE N
+WHERE n.notice_no = 41;
 
 
 
@@ -188,7 +196,7 @@ CREATE TABLE REPORT_PUSH (
 INSERT INTO report_push
 ( no, title, content, report_source, club_post_no, club_post_comment_no, feed_no, feed_comment_no, live_no, user_id1,
  user_id2, report_regdate, report_image1, report_image2, type, report_reason, report_condition)
-VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , NULL , NULL , NULL , NULL, 'admin1' , 'user01' , SYSDATE, NULL , NULL ,
+VALUES (seq_report_push_no.nextval, '신고', '신고합니다' , NULL , NULL , NULL , NULL , NULL , NULL, 'user08' , 'user01' , SYSDATE, NULL , NULL ,
   '1' , '1' , '0'); 
 
 DROP SEQUENCE seq_report_push_no;
@@ -270,7 +278,7 @@ SET CLUB_POST_NO = '30'
 WHERE No='45';
 
 SELECT *
-FROM REPORT_PUSH
+FROM REPORT_PUSH;
 WHERE USER_ID1='admin1' AND USER_ID2='user01' AND REPORT_REGDATE < TO_CHAR(REPORT_REGDATE+7,'YYYYMMDD');
 
 SELECT R.*   FROM REPORT_PUSH R      WHERE R.USER_ID1 = 'admin1' AND R.USER_ID2 = 'user01'   AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') < TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')
@@ -279,7 +287,8 @@ SELECT R.*   FROM REPORT_PUSH R      WHERE R.USER_ID1 = 'admin1' AND R.USER_ID2 
 
 
 
-
+INSERT REPORT_PUSH
+INTO 
 
 
 
