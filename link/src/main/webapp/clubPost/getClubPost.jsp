@@ -215,13 +215,12 @@
 							}
 						});
 			}); // end of 댓글좋아요
-			//검색버튼 클릭시 검색 내용에 맞는 상품리스트를 display
-			/* function fncGetProductList() {
-				document.detailForm.searchCondition.value = document.detailForm.searchCondition.value;
-				document.forms[0].elements[1].value = document.forms[0].elements[1].value;
-				$("#currentPage").val("1");
-				$("form").attr("method","post").attr("action","/product/listProduct").submit();
-			} */
+			$(document).on("click", ".clubPost-header-profile", function(){
+				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
+			});//end of 프로필사진 클릭시 해당유저 마이홈피로 이동
+			$(document).on("click", ".clubPost-header-nickName", function(){
+				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
+			});//end of 닉네임 클릭시 해당유저 마이홈피로 이동
 		});
 		</script>
 		
@@ -229,29 +228,39 @@
 			.clubPost-header {
 				background-color: yellow;
 				display: grid;
-				grid-template-columns: 3fr 7fr 1fr 1fr 1fr 1fr 1fr;
+				grid-template-columns: 2fr 5fr 1fr 1fr 1fr 1fr 1fr;
 			}
 			.clubPost-header-profile {
 				background-color: blue;
-				width: 
 			}
-			.clubPost-header-nickName{
-				background-color: green;
+			.clubPost-header-space{
+				background-color: black;
 			}
 			.clubPost-header-heart{
 				background-color: orange;
 			}
 			.clubPost-header-heartCount{
 				background-color: gray;
+				font-size: 3rem;
 			}
 			.clubPost-header-update{
 				background-color: lime;
+				font-size: 3rem;
 			}
 			.clubPost-header-delete{
 				background-color: purple;
+				font-size: 3rem;
 			}
 			.clubPost-header-report{
 				background-color: aqua;
+				font-size: 3rem;
+			}
+			.clubPost-header-nickName{
+				background-color: green;
+				font-size: 2rem;
+			}
+			.clubPost-body-title{
+				background-color: yellow;
 			}
 		</style>
 		
@@ -323,36 +332,44 @@
 							</time></h5>
 							
 							<div class="clubPost-header">
-								<div class="clubPost-header-profile">
-									<img src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }" height="100" width="100"></div>
-								<div class="clubPost-header-nickName">${ clubPost.user.nickName }</div>
+								<div class="clubPost-header-profile" userId = "${ clubPost.getClubPost.user.userId }">
+									<img src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }" height="110" width="110"></div>
 								
-								<div class="clubPost-header-heart" style="background-color: red;">
-									<c:if test="${ clubPost.getClubPost.heartCondition == 0}"><img src="/resources/image/uploadFiles/no_heart.jpg" height="70" width="70"></c:if>
-									<c:if test="${ clubPost.getClubPost.heartCondition == 1}"><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:if>
+								<div class="clubPost-header-space"></div>
+								
+								<div class="clubPost-header-heart">
+									<c:choose>
+										<c:when test="${ clubPost.getClubPost.heartCondition == 0}"><img src="/resources/image/uploadFiles/no_heart.jpg" height="70" width="70"></c:when>
+										<c:otherwise><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:otherwise>
+									</c:choose>
 								</div>
-								<div class="clubPost-header-heartCount" style="font-size: 3rem;">${ clubPost.getClubPost.clubPostHeartCount }</div>
+								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
 								<div class="clubPost-header-update">
-									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 4rem;"></span>
+									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
 								</div>
 								<div class="clubPost-header-delete">
-									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 4rem;"></span>
+									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
 								</div>
 								<div class="clubPost-header-report">
-									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 4rem;"></span>
+									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 								</div>
 							</div>
-							<div style="background-color: yellow;">
-								<h1>${ clubPost.getClubPost.clubPostTitle }</h1>
-							</div>
-							<div>
-								<%-- <p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p> --%>
-								<%-- <p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p> --%>
-								<p>${ clubPost.getClubPost.clubPostContent }</p>
-								<%-- <p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p> --%>
-								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
-									<p>댓글 개수 ${ clubPost.getClubPost.clubPostCommentCount } 개</br>
-								</c:if>
+							
+							<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
+							
+							<div class="clubPost-body">
+								<div class="clubPost-body-title">
+									<h1>${ clubPost.getClubPost.clubPostTitle }</h1>
+								</div>
+								<div class="clubPost-body-content">
+									<%-- <p>모임 게시물 등록 회원 아이디 : ${ clubPost.getClubPost.user.userId }</p> --%>
+									<%-- <p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p> --%>
+									<p>${ clubPost.getClubPost.clubPostContent }</p>
+									<%-- <p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p> --%>
+									<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
+										<p>댓글 개수 ${ clubPost.getClubPost.clubPostCommentCount } 개</br>
+									</c:if>
+								</div>
 							</div>
 													
 						</article>
