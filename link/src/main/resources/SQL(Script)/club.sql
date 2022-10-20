@@ -150,9 +150,13 @@ UPDATE meeting
 deleteMeetingMember()
 DELETE FROM participant WHERE participant_no = 2;
 
+DELETE FROM participant WHERE participant_user_id = 'user14';
+
+SELECT * FROM participant;
+
 //모임일정 삭제
 deleteMeeting()
-DELETE FROM meeting WHERE meeting_no = 66;
+DELETE FROM meeting WHERE meeting_member = 1;
 
 //모임원 직책 수정
 updateMemberRole()
@@ -298,10 +302,34 @@ SELECT inner_table.*
 					WHERE m.add_meeting_user_id = u.user_id and u.user_id = 'user01' ) deep_table ) inner_table 
 
 
-SELECT meeting
-FROM 
+	SELECT COUNT(*)
+	  	FROM(	SELECT participant_no 
+						FROM participant
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			participant_no = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable		
 
-ON DELETE CASACADE;
+	SELECT count(*)
+	FROM ( SELECT
+			participant_no
+			FROM participant
+			WHERE meeting_no = 84
+	) countTable
+	
+SELECT * FROM participant;
+
+
+	SELECT COUNT(*)
+	  	FROM(	SELECT club_no 
+						FROM club_user
+						WHERE club_no = #{searchKeyword}								
+			) countTable			
+
+
 
 
 

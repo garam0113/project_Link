@@ -97,12 +97,19 @@
 		.submit();
 	}
 	
-	$(function(){
-		$()
-		
-		
-	})
+	function fncGetClubList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
+	}
 	
+	//============================== 검색 이벤트 처리 ====================
+	$(function(){
+		$("button.btn.btn-default").on("click", function() {
+			fncGetClubList(1);
+		});	
+	});
+	
+	//========== 가입현황 처리 ================
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
@@ -110,6 +117,48 @@
 			
 		});
 	});
+	
+	
+	//무한 페이징
+	var currentPage = 1;
+	$(window).scroll(function() {
+		var maxHeight = $(document).height();
+		var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+		
+		if(currentScroll >= maxHeight) {
+			
+			currentPage++;
+			
+			$("input[name='currentPage']").val(currentPage);
+			
+			var searchCondition = $("option:selected").val();
+			var searchKeyword = $("input[name='searchKeyword']").val();
+			
+			alert(searchCondiiton);
+			alert(searchKeyword);
+			
+			$.ajax({
+				url : "/clubRest/json/getClubList" ,
+				type : "post" ,
+				dataType : "json" ,
+				data : JSON.stringify({
+					currentPage : currentPage,
+					searchCondition : searchCondition,
+					searchKeyword : searchKeyword
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function( JSONData, status) {
+					alert(status);
+					
+					console.log(JSONData.search);
+					console.log(JSONData.clubPostList);
+				} // end of success
+			}); // end of ajax
+		} // end of if
+	}); // end of scroll
 	
 	</script>	
 </head>
@@ -229,9 +278,6 @@
 
 
 	<div id="main" class="row">
-		
-
-		<!-- <div class="row"> -->
 		  <c:forEach var="i" items="${clubList}">
 		  	<div class="col-xs-4 col-md-4">	
 				<div class="thumbnail" style="">
@@ -251,6 +297,8 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
+ 	
+ 	<jsp:include page="../common/pageNavigator_new2.jsp"/>
  	
 	</main>
 	

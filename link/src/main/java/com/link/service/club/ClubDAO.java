@@ -21,6 +21,8 @@ public interface ClubDAO {
 	
 	public List<Club> getClubList(Search search) throws Exception;
 	
+//	public List<Club> getClubList(Map<String, Object> map) throws Exception;
+	
 	//GetMyClubList
 //	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception;
 	
@@ -55,7 +57,7 @@ public interface ClubDAO {
 	
 	public List<Meeting> getMeetingList(Search search) throws Exception;
 	
-	public Meeting getMeeting(int meetingNo) throws Exception;
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception;
 	
 	public void updateMeeting(Meeting meeting) throws Exception;
 	

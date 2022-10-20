@@ -1,5 +1,6 @@
 package com.link.service.club.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -210,9 +211,16 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 	
 	@Override
-	public Meeting getMeeting(int meetingNo) throws Exception {
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception {
 		System.out.println("getMeeting DAOImpl 오나??");
-		return sqlSession.selectOne("ClubMapper.getMeeting",meetingNo);
+		// 미팅번호로 미팅 도메인객체 받아온다
+		Meeting meeting = sqlSession.selectOne("ClubMapper.getMeeting",meetingNo);
+		// 미팅번호로 총 참여자 수 받아온다
+		int totalMeetingMemberCount = sqlSession.selectOne("ClubMapper.getTotalMeetingMemberCount", new Search(meetingNo+""));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("meeting", meeting);
+		map.put("totalMeetingMemberCount", totalMeetingMemberCount);
+		return map; 
 	}
 	
 	@Override
