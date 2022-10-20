@@ -51,25 +51,21 @@ public class ClubRestController {
 
 
 	@RequestMapping(value="json/getClubList")
-	public Map<String, Object> getClubList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
+	public Map<String, Object> getClubList(@RequestBody Search search,Map<String, Object> map, HttpSession session, Club club) throws Exception {
 		
 		System.out.println("/club/json/getClubList : GET / POST");
 		
-		if(search.getCurrentPage()==0) {
-			search.setCurrentPage(1);
-		}
+		System.out.println(search);
+		System.out.println(club);
+		
+		club.setUser((User) session.getAttribute("user"));
 		search.setPageSize(pageSize);
+		map.put("search", search);
 		
-		Map<String, Object> map = clubService.getClubList(search);
+		System.out.println("서치에 뭐 들어갔나요? : "+map.get("search"));
 		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage",resultPage);
-		model.addAttribute("search",search);
-		
-		return map;
+		return clubService.getClubList(search);		
+						
 	}
 	
 	@RequestMapping(value="json/getClubMemberList")
@@ -101,23 +97,42 @@ public class ClubRestController {
 		return clubService.getClubMemberList(search);
 	}
 	
+//	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
+//	public ClubUser updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
+//		
+//		System.out.println("club/json/updateMemberRole : POST");
+//		
+//		user = (User) session.getAttribute("user");
+//		club = (Club) session.getAttribute("club");
+//		
+//		
+////		clubUser.setClubNo(club.getClubNo());
+//		
+//		System.out.println("클럽유저에 뭐 있지 ? :"+clubUser);
+//		
+//		clubService.updateMemberRole(clubUser);
+//		
+//		return (ClubUser) clubService.getClubMemberList(search);
+//	}
+	
 	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
-	public ClubUser updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
+	public void updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
 		
 		System.out.println("club/json/updateMemberRole : POST");
 		
-		user = (User) session.getAttribute("user");
-		club = (Club) session.getAttribute("club");
+//		user = (User) session.getAttribute("user");
+//		club = (Club) session.getAttribute("club");
+//		
 		
-		
-//		clubUser.setClubNo(club.getClubNo());
+		clubUser.setClubUserNo(clubUser.getClubUserNo());
 		
 		System.out.println("클럽유저에 뭐 있지 ? :"+clubUser);
 		
 		clubService.updateMemberRole(clubUser);
-		
-		return null;
 	}
+	
+	
+	
 	
 	@RequestMapping(value="json/deleteMeeting", method=RequestMethod.POST)
 	public void deleteMeeting(@RequestParam(value="meetingNo") int meetingNo, Model model) throws Exception {
@@ -149,7 +164,7 @@ public class ClubRestController {
 		
 		System.out.println("meetingNo 잘왔나 ? : "+session.getAttribute("meetingNo"));
 		
-		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
+//		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 //		participant.setUser(user.getUserId());
 		
 		clubService.addMeetingMember(participant);

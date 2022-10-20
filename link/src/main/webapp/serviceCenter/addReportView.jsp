@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
+<<<<<<< HEAD
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+>>>>>>> refs/remotes/origin/master
 
 <!DOCTYPE html>
 <html>
@@ -128,8 +132,11 @@
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
 		var user2 = opener.$("input[name='user2']").val();
+		
+		var userId = opener.$("input[name='reportedId']").val();
 		$("#reportSource").val(reportSource);
 		$("#user2").val(user2);
+		$("#user2").val(userId);
 		
 	});
 	
@@ -207,6 +214,9 @@ textarea {
 
 				</div>
 
+ 	
+	<!--  화면구성 div end /////////////////////////////////////-->
+
 			</div>
 			</br>
 			<div class="form-group">
@@ -220,7 +230,6 @@ textarea {
 			</br>
 			<div class="form-group">
 
-	
 					<label for="text" class="col-sm-offset-1 col-sm-3 control-label">신고받는
 						ID </label> 
 						<input type="text" class="" id="user2"

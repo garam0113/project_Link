@@ -1,5 +1,6 @@
 package com.link.service.club.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,8 +117,7 @@ public class ClubServiceImpl implements ClubService {
 //	}
 	
 	@Override
-	public Meeting getMeeting(int meetingNo) throws Exception {
-		
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception {		
 		System.out.println("getMeeting ServiceImpl 오나??");
 		return clubDAO.getMeeting(meetingNo);
 	}
@@ -253,7 +253,26 @@ public class ClubServiceImpl implements ClubService {
 		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
 		
 		return map;
-	}	
+	}
+	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<Map<String, Object>> getCalendarList(Map<String, Object> map) throws Exception {
+//		
+//		System.out.println("일정참여자리스트 Service Impl 왔나??");
+//		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		
+//		map.put("listMap", listMap);
+//		map.put("club", listMap)
+//
+//		int totalMeetingMemberCount = clubDAO.getTotalMeetingMemberCount(search);
+//		
+//		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
+//		
+//		return (List<Map<String, Object>>) map;
+//	}
 	
 	//결제
 	@Override

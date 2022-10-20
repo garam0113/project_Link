@@ -60,10 +60,15 @@
 	
 	<resultMap 	id="participantSelectMap" 	type="participant">
 		<result property="participantNo"				column="participant_no"							jdbcType="NUMERIC"/>
-		<result property="meeting.meetingNo"						column="meeting_no"								jdbcType="NUMERIC"/>
+		<result property="meetingNo"						column="meeting_no"								jdbcType="NUMERIC"/>
 		<result property="user.userId"			column="participant_user_id"					jdbcType="VARCHAR"/>
 		<result property="user.nickName"			column="nickname"					jdbcType="VARCHAR"/>
 		<result property="user.profileImage"			column="profile_image"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingTitle"			column="meeting_title"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingPlace"			column="meeting_place"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingTime"			column="meeting_time"					jdbcType="VARCHAR"/>
+		<result property="meeting.meetingDate"			column="meeting_date"					jdbcType="VARCHAR"/>
+		<result property="meeting.clubNo"			column="club_no"					jdbcType="NUMERIC"/>
 		
 	</resultMap>
 	
@@ -141,41 +146,19 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				<!-- club_no LIKE('%${searchKeyword}%') -->
-										 				club_no = #{searchKeyword}
+										 				 club_title LIKE('%${searchKeyword}%')
+										 				<!-- club_no = #{searchKeyword} -->
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				<!-- club_title LIKE ('%${searchKeyword}%') -->
-										 				club_title = #{searchKeyword}
+										 				club_category LIKE ('%${searchKeyword}%')
+										 				<!-- club_title = #{searchKeyword} -->
 													</if>
 												</where>
 											</if>
 											ORDER BY club_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
-	 
-	 
-	 <!--  	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
-											FROM club
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				club_no = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_title = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY club_no ) inner_table
-						) 
-	 </select> -->
-	
-	 	  	 	     	 
+	 </select> 	  	 	     	 
 	 
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
@@ -186,42 +169,15 @@
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			club_no = #{searchKeyword}
+						 			club_title = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		club_title = #{searchKeyword}
+						 			club_category = #{searchKeyword}
 								</if>
 							</where>
 						</if> ) countTable						
 	 </select>
 
-		<!-- <select id="getMyClubList" parameterType="search" resultMap="clubUserSelectMap">
-		SELECT 
-			club_user_no, club_no, user_id, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
-			FROM club_user
-			WHERE user_id = #{searchKeyword}	
-	
-		</select> -->
-	
-<!--  	<select  id="getApprovalConditionList"  parameterType="search"	resultMap="clubUserSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT club_user_no , club_no , user_id , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
-											FROM club_user
-											 <if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				club_user_no = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY club_no ) inner_table ) WHERE user_id = #{searchKeyword}
-		 				WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} AND user_id = #{searchKeyword}
-	 </select> -->
 	 
 	<select id="getApprovalConditionList" parameterType="search" resultMap="clubSelectMap">
 	SELECT inner_table.*
@@ -326,46 +282,6 @@
 		WHERE club_user_no = #{clubUserNo}
 	</update>
 	
-<!--  가입신청현황 리스트
-	<select id="getApprovalConditionList" parameterType="search" resultMap="clubUserSelectMap">
-		SELECT
-			
-		
-	</select>
-
-	
-	 수정해야함
-	<select id="getTotalApprovalConditionCount" parameterType="search" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM (
-				SELECT
-				*
-				FROM club_user
-		)
-	</select> -->
-	
-	<!-- 모임원 리스트 -->
-	<!-- <select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
-	<select id="getClubMemberList" parameterType="search" resultMap="clubUserSelectMap">
-		SELECT
-			club_user_no ,
-			user_id ,
-			club_no ,
-			application_reg_date ,
-			join_reg_date ,
-			logout_date ,
-			member_role ,
-			approval_condition ,
-			join_greeting 
-		FROM club_user
-		WHERE club_no = #{searchKeyword}
-			
-	</select> -->
-	
-	
-	
-	
 	
 	<!-- 모임게시물 등록할 때 해당 모임의 모임원들에게 게시물 등록되었다고 알림. 해당 모임의 모임원들 찾는 Query -->
 	<select id="getClubMemberListToClubPost" parameterType="clubPost" resultMap="clubUserSelectMap">
@@ -377,11 +293,6 @@
 	
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
-	  	<!-- SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT club_user_no , user_id , club_no , application_reg_date , join_reg_date, logout_date, member_role, approval_condition, join_greeting
-											FROM club_user
-											ORDER BY club_user_no ) inner_table ) WHERE club_no = #{searchKeyword} -->
 			
 			SELECT inner_table.*
 				FROM ( SELECT rownum AS row_seq, deep_table.*
@@ -404,13 +315,10 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT club_no 
 						FROM club_user
-						<if test="searchCondition != null">
 							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			club_no = #{searchKeyword}
-								</if>								
-							</where>
-						</if> ) countTable						
+
+						 			club_no = #{searchKeyword}								
+							</where> ) countTable						
 	 </select>
 	
 	
@@ -479,14 +387,6 @@
 		WHERE meeting_no = #{meetingNo}
 	</update>
 	
-	<!-- 모임일정 리스트 -->
-<!-- 	<select id="getMeetingList" parameterType="search" resultMap="meetingSelectMap">
-		SELECT
-			meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
-			FROM meeting
-			WHERE club_no = #{searchKeyword}
-	</select> -->
-	
 		<select  id="getMeetingList"  parameterType="search"	resultMap="meetingSelectMap">
 	 	SELECT inner_table.*
 		FROM (
@@ -510,9 +410,9 @@
 					<if test="searchCondition == 0 and searchKeyword != '' ">
 						and m.club_no = #{searchKeyword}
 					</if>
-					<if test="searchCondition == 1 and searchKeyword != '' ">
+					<!-- <if test="searchCondition == 1 and searchKeyword != '' ">
 						and u.user_id = #{searchKeyword}
-				</if>
+					</if> -->
 				</where>
 			) deep_table
 		) inner_table
@@ -573,16 +473,29 @@
 						  p.participant_no, 
 						  p.participant_user_id, 
 						  u.nickname ,
-						  u.profile_image
+						  u.profile_image ,
+						  m.meeting_title ,
+						  m.meeting_place , 
+						  m.meeting_time ,
+						  m.meeting_date ,
+						  m.club_no ,
+						  m.meeting_no
+						  
 						  
 						FROM participant p, users u, meeting m
 						
 						<where>
 							p.participant_user_id = u.user_id
 							and p.meeting_no = m.meeting_no
-<!-- 							and c.club_no = cU.club_no
-							and cU.user_id = u.user_id -->
-							and p.meeting_no = #{searchKeyword}
+<!-- 							and m.club_no = c.club_no -->
+							
+							<if test="order == 0 and searchKeyword != '' ">
+								and p.meeting_no = #{searchKeyword}
+							</if>
+							
+							<if test="order == 1 and searchKeyword != '' ">
+								and u.user_id = #{searchKeyword}
+							</if>
 						</where>		
 						) deep_table ) inner_table
 
@@ -592,13 +505,10 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT participant_no 
 						FROM participant
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			participant_no = #{searchKeyword}
-								</if>								
-							</where>
-						</if> ) countTable						
+						<where> 
+							meeting_no = #{searchKeyword}
+						</where>
+			) countTable						
 	 </select>
 	 
 	 <!-- 결제입니다 -->

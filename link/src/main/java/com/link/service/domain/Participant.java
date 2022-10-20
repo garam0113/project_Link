@@ -6,6 +6,7 @@ public class Participant {
 	private int participantNo;
 	private int meetingNo;
 	private User user;
+	private Meeting meeting;
 	
 	
 	public Participant() {
@@ -15,6 +16,16 @@ public class Participant {
 
 	public int getParticipantNo() {
 		return participantNo;
+	}
+
+
+	public Meeting getMeeting() {
+		return meeting;
+	}
+
+
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
 	}
 
 
@@ -52,9 +63,14 @@ public class Participant {
 		builder.append(meetingNo);
 		builder.append(", user=");
 		builder.append(user);
+		builder.append(", meeting=");
+		builder.append(meeting);
 		builder.append("]");
 		return builder.toString();
 	}
+
+
+	
 	
 	
 
