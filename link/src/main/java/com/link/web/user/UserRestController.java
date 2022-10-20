@@ -228,7 +228,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value = "json/addBlock", method = RequestMethod.POST)
-	public Map<String, Object> addBlock(@RequestBody User user, HttpSession session, Search search)throws Exception{
+	public User addBlock(@RequestBody User user, HttpSession session, Search search)throws Exception{
 		
 		System.out.println("/userRest/json/addBlock : POST");
 		
@@ -244,10 +244,27 @@ public class UserRestController {
 		
 		myHomeService.addFollow(user);
 		
-		search.setSearchKeyword(sessionId);
+		User getUser = myHomeService.getFollow(user);
 		
-		Map<String, Object> map = myHomeService.getFollowList(search);
+		return getUser;
+	}
+	
+	@RequestMapping(value = "json/updateBlock", method = RequestMethod.POST)
+	public User updateBlock(@RequestBody User user, HttpSession session) throws Exception{
 		
-		return map;
+		System.out.println("/userRest/json/updateBlock : POST");
+		
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		user.setUserId(sessionId);
+		
+		System.out.println("입력받은 회원정보 : "+user);
+		
+		myHomeService.updateFollow(user);
+		
+		User getUser = myHomeService.getFollow(user);
+		
+		return getUser;
+		
 	}
 }

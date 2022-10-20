@@ -71,6 +71,13 @@ public class MyHomeServiceImpl implements MyHomeService {
 	}
 	
 	@Override
+	public User getFollow(User user) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("\n[MyHomeServiceImpl getFollow start]\n");
+		return myHomeDAO.getFollow(user);
+	}
+
+	@Override
 	public Map<String, Object> getFollowList (Search search) throws Exception{
 		
 		System.out.println("\n[MyHomeServiceImpl getFollowList start]\n");

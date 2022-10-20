@@ -17,6 +17,11 @@ public class Search {
 		
 	}
 
+	public Search(String searchKeyword) {
+		super();
+		this.searchKeyword = searchKeyword;
+	}
+
 	// ClubPost에서 사용
 	public Search(int currentPage, String searchCondition, String searchKeyword, int pageSize, int order) {
 		super();

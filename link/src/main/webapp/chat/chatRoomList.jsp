@@ -11,7 +11,10 @@
 		<script type="text/javascript">
 			$(function(){
 				$(document).on("click", ".button.transparent.aqua", function(){
-					alert("div");
+					location.href = "/clubPost/chatRoom";
+				});
+				$(".addChatRoom").bind("click", function() {
+					alert('a');
 					location.href = "/clubPost/chatRoom";
 				});
 			});
@@ -23,7 +26,9 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	<br><br><br><br><br>
-	
+						
+		<button class="addChatRoom">채팅방 생성</button>
+		
 		<a class="button transparent aqua">
 		<div style="height: 100px; font-size: 2rem;">
 		첫번째 채팅방
@@ -31,10 +36,6 @@
 		<a class="button transparent aqua">
 		<div style="height: 100px; font-size: 2rem;">
 		두번째 채팅방
-		</div></a>
-		<a class="button transparent aqua">
-		<div style="height: 100px; font-size: 2rem;">
-		세번째 채팅방
 		</div></a>
 	
 </body>

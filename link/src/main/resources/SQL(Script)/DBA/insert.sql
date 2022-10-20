@@ -87,7 +87,7 @@ VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333',
 
 
 INSERT INTO CLUB (CLUB_NO, USER_ID, CLUB_TITLE, CLUB_DETAIL, CLUB_REG_DATE, CURRENT_MEMBER, CLUB_MAX_MEMBER, 
-CLUB_CATEGORY, CLUB_AREA, CLUB_IMAGE) VALUES (seq_club_no.NEXTVAL, 'user02', 'CLUB1TITLE', 'CLUB1DETAIL', sysdate, 1, 10, '운동', '서울시 동작구', 'flower14clubPost.jpg');
+CLUB_CATEGORY, CLUB_AREA, CLUB_IMAGE) VALUES (2, 'user03', 'CLUB1TITLE', 'CLUB1DETAIL', sysdate, 1, 10, '운동', '서울시 동작구', 'heart.jpg');
 
 INSERT INTO club (club_no, user_id, club_title, club_detail, club_reg_date, current_member, club_max_member, club_category, club_area, club_image)
 VALUES (seq_club_no.nextval, 'user01', 'testClub', 'testDetail', sysdate, 1, 10, '봉사활동', '서울시 강남구', 'b.jpg');
