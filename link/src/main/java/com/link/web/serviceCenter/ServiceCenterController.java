@@ -136,9 +136,27 @@ public class ServiceCenterController {
 
 	
 	@RequestMapping(value = "updateNotice", method = RequestMethod.POST)
-	public String updateNotice(@ModelAttribute Notice notice, Model model, User user) throws Exception {
+	public String updateNotice(@ModelAttribute Notice notice, Model model, User user, @RequestParam("image") MultipartFile[] file) throws Exception {
 		
 		System.out.println("/serviceCenter/updateNotice : POST");
+		int fileCount = 0;
+		
+		String root ="C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+		 
+		for(MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+			
+			if(fileCount != file.length) {
+			  notice.setNoticeImage2(files.getOriginalFilename());
+			}
+			 notice.setNoticeImage1(files.getOriginalFilename());
+			File saveFile = new File(root+ files.getOriginalFilename());
+			boolean isExists = saveFile.exists();
+			if(!isExists) {
+				files.transferTo(saveFile);
+			}
+		}
 		serviceCenterService.updateNotice(notice);
 		System.out.println(notice);
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());

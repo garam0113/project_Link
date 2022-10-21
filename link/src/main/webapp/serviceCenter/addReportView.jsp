@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
-<<<<<<< HEAD
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-=======
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
->>>>>>> refs/remotes/origin/master
+
 
 <!DOCTYPE html>
 <html>
