@@ -76,11 +76,11 @@
 	});
 	
 	//추방 그냥 컨트롤러
-	/* $(function() {
+	 $(function() {
 		$("#banMember").on("click", function() {
 			alert("모임원을 추방합니다 : ");
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
-		}); */
+		}); 
 		
 		$(function() {
 			$("#updateApprovalCondition").on("click", function() {
@@ -90,7 +90,7 @@
 		
 		
 			//추방 그냥 컨트롤러	
-		/* $(document).on("click", "#banMember", function(){
+		 $(document).on("click", "#banMember", function(){
 			//alert('추방');
 			var clubUserNo = $(this).val();
 			//alert(clubUserNo);
@@ -110,9 +110,9 @@
 						} // end of success  
 					}); //end of ajax
 					refreshMemList();
-			}); //모임원 추방 */
+			}); //모임원 추방 
 			
-			$(function() {
+	/* 		$(function() {
 				$("#banMember").on("click", function(e){
 					var clubUserNo = $(this).val();
 					$("banMember").off(e);
@@ -156,16 +156,8 @@
 						refreshMemList();
 				}); //모임원 추방
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
+			 */
+
 		
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
@@ -221,16 +213,16 @@
 		$("#updateMemberRole").on("click", function() {
 			popup();
 		});
+		
 		$("button:contains('전달')").on("click", function() {
 			openWin.document.getElementById("clubUserNo").value = $(this).val();
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
 		});
 	});
+	
 		});
-	});
-	
-	</script>	
-	
+	 });
+	</script>
 </head>
 
 	
@@ -277,7 +269,7 @@
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
 						</li> --%>
 					</ul>
-	
+
 		
 
 	<div class="container">
