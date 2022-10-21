@@ -152,12 +152,12 @@ body>div.container {
 			swal.fire("핸드폰번호를 제대로 입력해주세요.");
 			return;
 		}
-		/*
+		
 		 if (checkNo != 1) {
 		 swal.fire("핸드폰인증이 필요합니다.");
 		 return;
 		 }
-		 */
+		 
 		if (email == null || email.length < 1) {
 			swal.fire("이메일을 입력하셔야 합니다.");
 			return;

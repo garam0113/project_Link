@@ -18,7 +18,7 @@ public interface MyHomeService  {
 	
 	public void addFollow(User user) throws Exception;
 
-	public User getFollow(User user) throws Exception;
+	public Map<String, Object> getFollow(User user) throws Exception;
 	
 	public Map<String, Object> getFollowList(Search search) throws Exception;
 	
