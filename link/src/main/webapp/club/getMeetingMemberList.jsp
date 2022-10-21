@@ -27,16 +27,84 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <style>
-	body {
-		padding-top : 70px;
+ 	 
+	.club-wrap {
+			width : 100%;
+			margin: 10px auto;
+			position: relative;
+	}
+	
+	.club-wrap img {
+			width: 100%;
+			vertical-align: middle;
+			filter: brightness(1.1);
+	}
+	
+	.club-text {
+			
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 100%;
+			transform: translate(-50%, -50%);
+			font-size: 20px;
+			text-align: center;
+			
+	}
+	
+	.h2-color {
+		color: yellow;
+	}
+	
+	.p-color {
+		color: yellow;
 	}
 	
 	</style>
 
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
 	
 
+	$(function() {
+		
+		$("#deleteParticipant").on("click", function() {
+			alert("모임일정 참가를 취소합니다.");
+			$("form").attr("method", "POST").attr("action", "/club/deleteMeetingMember").submit();
+		});
+		
+		$(document).on("click", "#deleteParticipant", function() {
+			
+			var participantNo = $(this).val();
+			var userId = $(this).attr("userId");
+			
+			$.ajax("/clubRest/json/deleteMeetingMember" ,
+					{
+						method : "POST" ,
+						data : JSON.stringify({
+							participantNo : participantNo ,
+							userId : userId
+						}) ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"							
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							alert(status);
+						} // end of success
+				
+					}); // end of ajax		
+				}); // end of 신청취소
+			
+		});
+	
+	
+	
+	
 	
 	$(function() {
 
@@ -45,12 +113,6 @@
 		});
 	});
 	
-	$(function() {
-
-		$("button.btn.btn-waring").on("click", function() {
-			self.location="/club/updateClubView.jsp"
-		});
-	});
 	
 	
 	
@@ -58,28 +120,76 @@
 	
 </head>
 
-<body>
+<body class="blog masonry-style">
 		
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+
+		<main role="main">
+			<div id="intro-wrap" data-height="17.35"><!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">					
+					<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
+					<div class="intro-item">
+					
+						<div class="club-wrap">
+						
+							<div class="club-image">
+							<img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage">
+							</div>
+							
+							<div class="club-text">
+							<h2 class="h2-color">Meeting Member List</h2>
+							<p class="p-color">Make good memories with the members...</p>
+							</div>							
+						</div>
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
+			
+		
+			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">모임 일정</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">모임 게시물</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">모임원</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/chatRoomList">모임 채팅</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
+						</li>
+					</ul>
 	
-		<div class="page-header text-info">
-	       <h3>모임일정참여자리스트</h3>
-	    </div>
-	    
-	  <form class="form-horizontal">  
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-          	<th align="left">회원 프로필사진</th>
-            <th align="left" >회원 아이디</th>
-            <th align="left">회원 닉네임</th>
-          </tr>
-        </thead>
-       
+	
+	
+	
+			    
+			  <form class="form-horizontal">  
+		      <!--  table Start /////////////////////////////////////-->
+		      <table class="table table-hover table-striped" >
+		      
+		        <thead>
+		          <tr>
+		          	<th align="left">회원 프로필사진</th>
+		            <th align="left" >회원 아이디</th>
+		            <th align="left">회원 닉네임</th>
+		          </tr>
+		        </thead>
+		       
 		<tbody>
 		<tr>
 		  <c:forEach var="i" items="${meetingMemberList}">
@@ -100,6 +210,7 @@
 	  
 		<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
+					<button type="button" class="btn btn-default" id="deleteParticipant">신&nbsp;청&nbsp;취&nbsp;소</button>
 					<a class="btn btn-primary btn" href="#" role="button">닫&nbsp;기</a>					
 		    </div>
 			</div>		
@@ -108,8 +219,8 @@
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
-	
-	
+	</div>
+	</main>
 </body>
 
 </html>

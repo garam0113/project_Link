@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="../javascript/calendar.js"></script>
+	<script type="text/javascript" src="../javascript/calendar.js"></script>
 
 	
 	<script type="text/javascript">
@@ -36,8 +36,12 @@
 		});
 
 		$("button:contains('µÚ·Î')").bind("click", function(){
-			
-			history.go(-1);
+			if(${empty sessionScope.user.userId}){
+				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			}
+			if(${!empty sessionScope.user.userId}){
+				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
+			}
 		})
 		
 		

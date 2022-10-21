@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
@@ -16,8 +17,11 @@ public interface ClubService {
 	
 //	//JUNIT TEST
 //	public int addClub(Club club) throws Exception;
-				
-	public Club getClub(int clubNo) throws Exception;
+	
+	//getClub bak
+//	public Club getClub(int clubNo) throws Exception;
+	
+	public Map<String, Object> getClub(int clubNo) throws Exception;
 
 	public void deleteClub(int clubNo) throws Exception;
 	
@@ -41,7 +45,7 @@ public interface ClubService {
 	//JUNIT TEST
 //	public int addMeeting(Meeting meeting) throws Exception;
 		
-	public Meeting getMeeting(int meetingNo) throws Exception;
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception;
 	
 	public void updateMeeting(Meeting meeting) throws Exception;
 	
@@ -72,6 +76,7 @@ public interface ClubService {
 	//결제
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 
-
+	//모임원 직책?
+	public ClubUser getClubMember(ClubPost clubPost) throws Exception;
 	
 }

@@ -107,7 +107,7 @@
 	 	INSERT INTO CLUB_POST (CLUB_POST_NO, CLUB_NO, USER_ID, CLUB_POST_TITLE, CLUB_POST_CONTENT, CLUB_POST_VIDEO1, CLUB_POST_VIDEO2, 
 		CLUB_POST_VIDEO3, CLUB_POST_REG_DATE, CLUB_POST_UPDATE_DATE, CLUB_POST_HEART_COUNT, CLUB_POST_COMMENT_COUNT, REPORT_CONDITION,
 		DELETE_CONDITION, IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMAGE9, IMAGE10)
-		VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle}, #{clubPostContent:VARCHAR},
+		VALUES (seq_club_post_no.NEXTVAL, #{clubNo}, #{user.userId}, #{clubPostTitle:VARCHAR}, #{clubPostContent:VARCHAR},
 		#{clubPostVideo1:VARCHAR}, #{clubPostVideo2:VARCHAR}, #{clubPostVideo3:VARCHAR}, sysdate, null, 0, 0, '0', '0',
 		#{image1:VARCHAR}, #{image2:VARCHAR}, #{image3:VARCHAR}, #{image4:VARCHAR}, #{image5:VARCHAR}, #{image6:VARCHAR},
 		#{image7:VARCHAR}, #{image8:VARCHAR}, #{image9:VARCHAR}, #{image10:VARCHAR})
@@ -175,7 +175,7 @@
 			<when test="clubPost.clubPostCommentNo != 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
 			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>
-				CLUB_POST_TITLE = #{ clubPost.clubPostTitle }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },
+				CLUB_POST_TITLE = #{ clubPost.clubPostTitle:VARCHAR }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent:VARCHAR }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },
 				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR }, IMAGE2 = #{ clubPost.image2:VARCHAR }, IMAGE3 = #{ clubPost.image3:VARCHAR },
 				IMAGE4 = #{ clubPost.image4:VARCHAR }, IMAGE5 = #{ clubPost.image5:VARCHAR }, IMAGE6 = #{ clubPost.image6:VARCHAR }, IMAGE7 = #{ clubPost.image7:VARCHAR }, IMAGE8 = #{ clubPost.image8:VARCHAR },
 				IMAGE9 = #{ clubPost.image9:VARCHAR }, IMAGE10 = #{ clubPost.image10:VARCHAR }

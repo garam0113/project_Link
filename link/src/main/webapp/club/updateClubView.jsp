@@ -19,6 +19,10 @@
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
+  
+  <!-- addMeetingCss -->
+  <link rel="stylesheet" href="/resources/css/addUser.css">
+  
   	<!--  	jQuery UI toolTip 사용 JS -->
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -66,7 +70,7 @@
 	$(function() {
 
 		$("a[href='#']").bind("click", function() {
-			history.go(-1);
+			window.close();
 		});
 	});
 
@@ -84,7 +88,7 @@
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다">
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
 				</div>					
 			</div>
 			
@@ -93,7 +97,7 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)">
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}">
 				</div>		
 			</div>
 			
@@ -117,14 +121,14 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea">
+					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file">
+					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
 				</div>		
 			</div>
 			

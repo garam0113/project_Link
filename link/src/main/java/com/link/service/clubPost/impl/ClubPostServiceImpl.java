@@ -12,6 +12,7 @@ import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -56,23 +57,32 @@ public class ClubPostServiceImpl implements ClubPostService {
 		
 		Heart heart = (Heart)map.get("heart");
 		ClubPost clubPost = (ClubPost)map.get("clubPost");
+		int i = 0;
 		
 		if(heart != null) {
 			// heart가 null이 아니라며 즉, restController에서 왔다면 즉, 하트를 클릭했다면 수행
 			
-			heart.setUserId(clubPost.getUserId());
 			heart.setSource("2");
 			heart.setSourceNo(clubPost.getClubPostNo());
 
-			clubPost.setHeartCondition((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
-
-			System.out.println("수정된 heart : " + heart + "수정된 clubPost : " + clubPost);
+			// 해당 유저가 좋아요한 게시물인지 확인한다 리턴 1이면 좋아요했다 리턴 0이면 좋아요 안했다
+			// i = 1이면 좋아요를 수행한다 i = -1이면 좋아요취소를 수행한다
+			i = ((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
+			// 좋아요를 수행하면 하트컨디션 = 1 좋아요취소를 수행하면 하트컨디션 = -1
+			System.out.println("//////////////////" + i);
+			((ClubPost)map.get("clubPost")).setHeartCondition(i);
 			
 			map.put("heart", heart);
-			map.put("clubPost", clubPost);			
+			map.put("clubPost", clubPost);
+
+			System.out.println("수정된 heart : " + map.get("heart") + "수정된 clubPost : " + map.get("clubPost"));
 		}
 		
-		return clubPostDAOImpl.updateClubPost(map);
+		map = clubPostDAOImpl.updateClubPost(map);
+		// 상세보기에서 하트컨디션이 1이면 빨간하트 -1이면 하얀하트를 보여준다
+		((ClubPost)map.get("getClubPost")).setHeartCondition(i);
+		
+		return map;
 	}// end of updateClubPost(Map<String, Object> map)
 
 	@Override
@@ -83,6 +93,12 @@ public class ClubPostServiceImpl implements ClubPostService {
 		map.put("search", search);
 		return clubPostDAOImpl.deleteClubPost(map);
 	}// end of deleteClubPost(ClubPost clubPost, Search search)
+
+	@Override
+	public int getCheckHeart(Heart heart) throws Exception {
+		System.out.println(getClass() + ".getCheckHeart(Heart heart) 도착");
+		return clubPostDAOImpl.getHeart(heart);
+	}
 
 	/*
 	@Override

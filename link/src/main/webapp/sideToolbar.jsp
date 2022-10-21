@@ -19,13 +19,13 @@
 			
 		});
 
-		$("li:contains('신고내역')").on("click", function() {
-		location.href = "/serviceCenter/getReportList"+"&userId=${sessionScope.user.userId}";
+		$("li:contains('내 신고내역')").on("click", function() {
+			$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
 		
 		});
 
-		$("li:contains('Q&A')").on("click", function() {
-		 self.location = "/serviceCenter/getQandAList/${sessionScope.user.userId}";
+		$("li:contains('내 Q&A')").on("click", function() {
+			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
 		 
 		});
 
@@ -35,9 +35,13 @@
 		});
 
 		$("li:contains('신고내역조회')").on("click", function() {
-			
+			location.href = "/serviceCenter/getReportList";
 		});
-
+		
+		$("li:contains('관리자 Q&A')").on("click", function() {
+			location.href = "/serviceCenter/getQandAList";
+			 
+		});
 		$("#stop2").on("click", function() {
 			self.location = "/user/getUserList?searchKeyword=2";
 		});
@@ -68,7 +72,8 @@
 		<!-- intro-wrap -->
 	</main>
 	<!-- main -->
-
+<form>
+<input type="hidden" class="currentPage" id="currentPage" name="currentPage" value="1" />
 	<c:if test="${ user.role == '0' }">
 		<div id="main" class="row">
 			<div class="row-content buffer clear-after">
@@ -76,8 +81,8 @@
 					<li data-group="advertising">내정보보기</li>
 					<li data-group="fun">내정보수정</li>
 					<li data-group="icons">차단리스트</li>
-					<li data-group="infographics">신고내역</li>
-					<li data-group="lightbox">Q&A</li>
+					<li data-group="infographics">내 신고내역</li>
+					<li data-group="lightbox">내 Q&A</li>
 				</ul>
 			</div>
 			<!-- row-content -->
@@ -91,7 +96,7 @@
 				<ul class="inline cats filter-options">
 					<li data-group="icons">회원정보수정</li>
 					<li data-group="infographics">신고내역조회</li>
-					<li data-group="lightbox">Q&A</li>
+					<li data-group="lightbox">관리자 Q&A</li>
 					<li data-group="lightbox" id="stop2">영구정지회원</li>
 					<li data-group="lightbox" id="stop1">정지회원</li>
 				</ul>
@@ -100,7 +105,7 @@
 		</div>
 		<!-- row -->
 	</c:if>
-
+</form>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 </body>

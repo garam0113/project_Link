@@ -1,12 +1,14 @@
 package com.link.web.feed;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -352,42 +354,29 @@ public class FeedRestController {
 	///////////////////////////////////////////////////// UPLOAD /////////////////////////////////////////////////////
 	
 	
-	@RequestMapping(value = "/json/uploadImage", produces = "application/json; charset=utf8")
+	@RequestMapping(value = "/json/uploadImage", produces = "application/json; charset=utf-8")
 	public String uploadImage(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) throws Exception {
 		JsonObject jsonObject = new JsonObject();
 		
-		// 외부경로 저장
-		// String fileRoot = "C:\\"; 
-		
-		// 내부경로 저장
-		String contextRoot = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\";
-		String fileRoot = contextRoot+"resources\\image\\uploadFiles\\";
-		
+		// 내부경로로 저장
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-		// String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		// String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		//String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		String savedFileName = originalFileName;	//저장될 파일 명
 		
-		File targetFile = new File(fileRoot + originalFileName);
-		
+		File targetFile = new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
-			// 파일 저장
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);
-			// contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("url", "/resources/image/uploadFiles/"+originalFileName); 
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			jsonObject.addProperty("url", "/resources/image/uploadFiles/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
-		} catch (Exception e) {
-			// 저장된 파일 삭제
-			FileUtils.deleteQuietly(targetFile);	
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		String jsonValue = jsonObject.toString();
-
-		System.out.println("제이슨 : " + jsonValue);
-		
-		return jsonValue;
+		return jsonObject.toString();
 	}
 	
 }

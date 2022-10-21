@@ -85,10 +85,22 @@
 							},
 							success : function( JSONData, status ) {
 								alert(status);
+								//console.log(JSONData.clubPostList);
+								//console.log(JSONData.clubPostList.length);
+
+								$.each( JSONData, function( item, el ) {
+									console.log( item );
+									console.log( el );
+									//var check = (JSONData.clubPostList.clubPostVideo1 == null)? false: true
+											
+									var display = "";
+									
+									console.log( display );
+									$(".col-md-4").append( display );
+								});
 								
-								console.log(JSONData.search);
-								console.log(JSONData.clubPostListCount);
-								console.log(JSONData.clubPostList);
+								$("input[name='order']").val( JSONData.search.order );
+								
 							}// end of success
 						});// end of ajax				
 					}// end of if			
@@ -99,8 +111,8 @@
 			});// end of function()
 			
 			//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
-			function getClubPostGo(clubPostNo){
-				location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
+			function getClubPostGo(clubNo, clubPostNo){
+				location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
 			}
 			
 			// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
@@ -178,8 +190,6 @@
 					
 							<!--  화면구성 div Start /////////////////////////////////////-->
 						<div class="column nine">
-						
-						
 							    
 							    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 							    <div class="contains-search">
@@ -217,14 +227,13 @@
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
 										<div class="col-md-4">
-											<a href="javascript:getClubPostGo('${ clubPostList[i].clubPostNo }')">
-												<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
-												<%-- <c:if test="${ empty clubPostList[i].clubPostVideo1 }">
-													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
+											<a href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
+												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
+													<img src="/resources/image/temp/${ clubPostList[i].image1 }" height="400" width="700">
 												</c:if>
 												<c:if test="${ ! empty clubPostList[i].clubPostVideo1 }">
 													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="유튜브 동영상 이미지입니다." height="400" width="700">
-												</c:if> --%>
+												</c:if>
 											</a>
 											
 											<div style="display: flex; width: 87%;">

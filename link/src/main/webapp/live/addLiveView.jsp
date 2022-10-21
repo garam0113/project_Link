@@ -3,22 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript">
-function hasGetUserMedia() {
-	  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-	            navigator.mozGetUserMedia || navigator.msGetUserMedia);
-	}
-
-	if (hasGetUserMedia()) {
-	  // Good to go!
-	} else {
-	  alert('getUserMedia() is not supported in your browser');
-	}
-</script>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Make LiveRoom</title>
 </head>
 <body>
 
+	<div id = "start-page">
+		<h2 class="test">Live</h2>
+		<input id="roomName" type="text" placeholder="roomName" />
+		<button id="join">Join</button>		
+	</div>
+	<div id="video-page">
+		<video id="user-video"></video>
+		<video id="peer-video"></video>
+	</div>
+	
+	 <script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 </body>
+
+
 </html>
