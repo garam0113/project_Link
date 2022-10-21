@@ -111,8 +111,8 @@
 			});// end of function()
 			
 			//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
-			function getClubPostGo(clubPostNo){
-				location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
+			function getClubPostGo(clubNo, clubPostNo){
+				location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
 			}
 			
 			// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
@@ -227,7 +227,7 @@
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
 										<div class="col-md-4">
-											<a href="javascript:getClubPostGo('${ clubPostList[i].clubPostNo }')">
+											<a href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
 													<img src="/resources/image/temp/${ clubPostList[i].image1 }" height="400" width="700">
 												</c:if>

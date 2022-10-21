@@ -132,11 +132,139 @@
 							} // end of success
 						}); // end of ajax
 			}); // end of 댓글 수
+			
+			<%-- 해당 게시물에 댓글 등록 --%>
+			$(document).on("click", "input[value='댓글 등록하기']", function(){
+				alert('a');
+				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
+				var userId = '${ sessionScope.user.userId }';
+				var commentContent = $(this).parent().children().val();
+				
+				$.ajax( "/clubPostRest/json/addClubPostComment",
+						{
+							method : "POST",
+							dataType : "JSON",
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							data : JSON.stringify({
+								clubPostNo : clubPostNo,
+								userId : userId,
+								commentContent : commentContent
+							}),
+							success : function(JSONData, status) {
+								alert(status);
+								//alert(JSONData);
+								//alert(JSONData.user.userId);
+								//alert(JSONData.user.profileImage);
+								//alert(JSONData.user.nickName);
+								alert(JSONData.clubPostCommentNo);
+								//alert(JSONData.commentContent);
+								//alert(JSONData.commentRegDate);
+								//alert(JSONData.commentCount);
+								//alert(JSONData.commentHeartCount);
+								//alert(JSONData.heartCondition);
+								
+								//alert(JSONData);
+								//alert(JSONData.heart.size());
+								alert(JSONData.heart.length);
+								for (var i = 0; i < JSONData.heart.length; i++) {
+									alert(JSONData.heart[i].sourceNo);
+									alert(JSONData.heart[i].userId);
+								}
+								const Hlength = parseInt(JSONData.heart.length) - 1;
+								alert(Hlength);
+								
+								var display = "<li class='comment'>"
+												+"<div class='single-comment' commentNo='"+JSONData.clubPostCommentNo+"'>"
+													+"<div class='comment-author'>"
+													+"<cite><a href='#'><img src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' class='avatar' alt=''></a></cite>"
+													+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
+													+"<span class='says'>says:</span>"
+													+"</div>"
+													
+													
+													
+
+													+"<div class='comment-meta'>"
+														
+														+"<div class='comment body'>"
+														+"<div class='comment-heart-"+JSONData.clubPostCommentNo+"'>"
+																+"<a class='reply heartCondition'>"
+																+"<c:set var='commentHeart' value='0'></c:set>"
+																+"<c:forEach var='m' begin='0' end='1' step='1'>"
+																+"<c:if test='"+JSONData.heart[+"m"+] == JSONData.clubPostCommentNo+"'>"
+																+"<span><img src='/resources/image/uploadFiles/heart.jpg' height='40' width='40'></span>"
+																		+"<c:set var='commentHeart' value='1'></c:set>"
+																	+"</c:if>"
+																+"</c:forEach>"
+																+"<c:if test='${ commentHeart == 0 }'><span><img src='/resources/image/uploadFiles/no_heart.jpg' height='40' width='40'></span></c:if>"
+																+"</a>"
+															+"</div>"
+															+"<div>"
+															<%-- 해당 댓글의 좋아요 수 --%>
+															 +"<span class='commentHeartCount"+JSONData.clubPostCommentNo+"' style='font-size: 30px;'>"+JSONData.commentHeartCount+"</span>"
+																
+																<%-- 해당 댓글의 댓글 등록 --%>
+															 +"<a class='reply add'>"
+																 +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-plus-sign' aria-hidden='true' style='font-size: 25px;'></span>"
+															 +"</a>"
+																 <%-- 해당 댓글 수정 --%>
+															 +"<a class='reply update'>"
+																 +"<c:if test='"+JSONData.user.userId + " == " + ${ sessionScope.user.userId }"'>"
+																	 +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-paperclip updateCommentView' aria-hidden='true' style='font-size: 25px;'></span>"
+																 +"</c:if>"
+															 +"</a>"
+																 <%-- 해당 댓글 삭제 --%>
+															 +"<a href='#' class='reply delete'>"
+																 <%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
+																 +"<c:if test='"++"${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId || clubPost.getClubPost.user.userId == sessionScope.user.userId || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }'>"
+																	 +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash deleteComment' aria-hidden='true' style='font-size: 25px;'></span>"
+																 +"</c:if>"
+															 +"</a>"
+																 <%-- 해당 댓글 신고 --%>
+																  <a href="#" class="reply report">
+																  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
+																  		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 25px;"></span>
+																  	</c:if>
+																  </a>
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															+"</div>"
+														+"</div>"
+													+"</div>"
+												+"</div>"
+												+"<div id='post-comment' class='clear-after-comment-add' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+													+"<form class='comment-form'>"
+													+"<textarea class='plain buffer' placeholder='댓글작성란'></textarea>"
+													+"<input class='plain button red add' value='저장' style='height: 30px; width: 60px;'>"
+													+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
+													+"</form>"						
+												+"</div>"
+											+"</li>";
+								
+								$(".comment-list.plain").append( display );
+							}// end of success
+					
+				});// end of ajax
+			}); // end of 등록
 
 			<%-- 해당 댓글을 등록할 수 있는 입력텍스트 보여진다 --%>
 			$(document).on("click", ".reply.add", function(){
 				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
-				$(this).parent().parent().parent().children("div:eq(1)").removeAttr("style");
+				$(this).parent().parent().parent().parent().parent().children("div:eq(1)").removeAttr("style");
 			}); // end of 등록
 
 			<%-- 해당 댓글을 등록한다 --%>
@@ -164,7 +292,7 @@
 						}); // end of ajax
 			}); // end of 등록완료
 			
-			<%-- 등록 또는 수정을 취소한다 --%>
+			<%-- 댓글 등록 또는 수정을 취소한다 --%>
 			$(document).on("click", "input[value='취소']", function(){
 				$(this).parent().parent().attr("style", "display: none");
 			});
@@ -172,9 +300,9 @@
 			<%-- 해당 댓글을 수정할 수 있는 입력텍스트 보여진다 --%>
 			$(document).on("click", ".reply.update", function(){
 				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
-				$(this).parent().parent().parent().children("div:eq(1)").removeAttr("style");
-				var content = $(this).parent().parent().children("p").text();
-				$(this).parent().parent().parent().find("textarea").val(content );
+				$(this).parent().parent().parent().parent().parent().children("div:eq(1)").removeAttr("style");
+				var content = $(this).parent().parent().parent().parent().children("p").text();
+				$(this).parent().parent().parent().parent().parent().find("textarea").val(content );
 			});
 
 			<%-- 해당 댓글을 수정한다 --%>
@@ -200,9 +328,9 @@
 			}); // end of 수정완료
 
 			<%-- 해당 댓글을 삭제한다 --%>
-			$(document).on("click", "input[value='삭제']", function(){
+			$(document).on("click", ".glyphicon.glyphicon-trash.deleteComment", function(){
 				alert("삭제");
-				var clubPostCommentNo = $(this).attr("class");
+				var clubPostCommentNo = $(this).parent().parent().parent().parent().parent().attr("commentNo");
 				alert(clubPostCommentNo);
 				$.ajax( "/clubPostRest/json/deleteClubPostComment",
 						{
@@ -217,20 +345,29 @@
 							dataType : "json",
 							success : function(JSONData, status){
 								alert(status);
+								var attrClass = $(this).parent().parent().parent().parent().parent().attr("class");
+								alert( attrClass );
+								$(this).parent().parent().parent().parent().parent().remove();
 							} // end of success
 						}); // end of ajax
 			}); // end of 삭제
 
 			<%-- 해당 댓글을 좋아요 또는 좋아요 취소한다 --%>
-			$(document).on("click", "a:contains('댓글좋아요')", function(){
-				alert('댓글좋아요');
+			$(document).on("click", ".reply.heartCondition", function(){
+				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
+				//alert( clubPostCommentNo );
+				var commentHeartCountClassName = $(this).parent().parent().parent().parent().find("span:eq(2)").attr("class");
+				//alert( commentHeartCountClassName );
+				var heartImageClassName = $(this).parent().parent().parent().parent().find("div:eq(3)").attr("class");
+				//alert( heartImageClassName );
+				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
 						{
 							method : "POST",
 							data : JSON.stringify({
-										clubPostCommentNo : 9,
+										clubPostCommentNo : clubPostCommentNo,
 										heartCondition : 1,
-										userId : "user03"
+										userId : '${ sessionScope.user.userId }'
 									}),
 							headers : {
 								"Accept" : "application/json",
@@ -239,8 +376,21 @@
 							dataType : "json",
 							success : function(JSONData, status){
 								//alert(status);
-								//alert(JSONData);
-								$("a[href='###']").text(JSONData);
+								//alert(JSONData.heartCondition);
+								//alert(JSONData.commentHeartCount);
+
+								$("."+heartImageClassName).children().empty();
+								$("."+commentHeartCountClassName).text("");
+
+								var heartDisplay = "";
+								if(JSONData.heartCondition == 1){
+									heartDisplay = "<a class='reply heartCondition'><span><img src='/resources/image/uploadFiles/heart.jpg' height='40' width='40'></span></a>";
+								}else{
+									heartDisplay = "<a class='reply heartCondition'><span><img src='/resources/image/uploadFiles/no_heart.jpg' height='40' width='40'></span></a>";
+								}
+								
+								$("."+heartImageClassName).append( heartDisplay );
+								$("."+commentHeartCountClassName).text( JSONData.commentHeartCount );
 							}
 						});
 			}); // end of 댓글좋아요
@@ -294,6 +444,13 @@
 			}
 			.clubPost-body-title{
 				/* background-color: yellow; */
+			}
+			.comment.body {
+				display: grid;
+				grid-template-columns: 1fr 13fr;
+			}
+			.comment.heart {
+				float: right;
 			}
 		</style>
 		
@@ -379,20 +536,30 @@
 										<c:otherwise><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:otherwise>
 									</c:choose>
 								</div>
+								
 								<%-- 게시물 좋아요 수 --%>
 								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
+								
 								<%-- 게시물 수정 --%>
-								<div class="clubPost-header-update">
-									<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
-								</div>
-								<%-- 게시물 삭제 --%>
-								<div class="clubPost-header-delete">
-									<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
-								</div>
-								<%-- 게시물 신고 --%>
-								<div class="clubPost-header-report">
-									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-								</div>
+								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId }">
+									<div class="clubPost-header-update">
+										<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
+									</div>
+								</c:if>
+								
+								<%-- 해당 게시물 작성자 또는 해당 모임대표 또는 관리자 게시물 삭제 가능 --%>
+								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }">
+									<div class="clubPost-header-delete">
+										<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
+									</div>
+								</c:if>
+								
+								<%-- 해당 게시물 작성자 이외의 회원 신고 가능 --%>
+								<c:if test="${ clubPost.getClubPost.user.userId != sessionScope.user.userId }">
+									<div class="clubPost-header-report">
+										<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									</div>
+								</c:if>
 							</div>
 							
 							<%-- 게시물 등록 회원 닉네임 --%>
@@ -418,8 +585,8 @@
 					<div id="post-comment" class="clear-after">
 						<h3 id="reply-title">댓글 작성란</h3>
 						<form class="comment-form">
-							<textarea class="plain buffer" placeholder=""></textarea>
-							<input class="plain button red" type="submit" value="댓글 등록하기">
+							<textarea class="plain buffer" placeholder="댓글 등록란"></textarea>
+							<input class="plain button red" value="댓글 등록하기" style="width: 100px;">
 						</form>						
 					</div><!-- post-comment -->	
 					
@@ -481,47 +648,71 @@
 								<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">									
 									<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
 										<li class="comment">
-											<div class="single-comment">
+											<div class="single-comment" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
 												<div class="comment-author">
 													<cite><a href="#"><img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].user.profileImage }" class="avatar" alt=""></a></cite>
 													<cite><a href="#">${ clubPost.getClubPostCommentList[i].user.nickName }</a></cite>
-													<span class="says">says:
-													 ${ sessionScope.clubUser.memberRole }</span>
+													<span class="says">says:</span>
 												</div><!-- comment-author -->
-												<div class="comment-meta" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+												<div class="comment-meta">
 													<c:choose>
 														<c:when test="${ empty clubPost.getClubPostCommentList[i].commentUpdateDate }"><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentRegDate }</time></c:when>
 														<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(수정됨)</time></c:otherwise>
 													</c:choose>
-													<%-- 해당 댓글의 댓글 등록 --%>
-													 / <a class="reply add">
-													 	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size: 20px;"></span>
-													 </a>
-													 <%-- 해당 댓글 수정 --%>
-													 <a class="reply update">
-													 	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId }">
-													 		/ <span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 20px;"></span>
-													 	</c:if>
-													 </a>
-													 <%-- 해당 댓글 삭제 --%>
-													 <a href="#" class="reply delete">
-													 <%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
-													 <%-- <c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId && clubPost.getClubPost.user.userId == sessionScope.user.userId
-													 	&& sessionScope.clubUser.memberRole == 2 && sessionScope.user.role == 'admin' }"></c:if> --%>
-													  / <span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 20px;"></span>
-													  </a>
-													 <%-- 해당 댓글 신고 --%>
-													  <a href="#" class="reply report">
-													  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
-													  		 / <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 20px;"></span>
-													  	</c:if>
-													  </a>
+													
+													<%-- 해당 댓글의 해당 유저의 좋아요 여부에 따라 이미지 변한다 --%>
+													<div class="comment body">
+														<div class="comment-heart-${ i }">
+														 	<a class="reply heartCondition">
+															 	<c:set var="commentHeart" value="0"></c:set>
+															 		<c:forEach var="m" begin="0" end="${ fn:length(clubPost.commentHeartList) - 1 }" step="1">
+															 			<!-- 하트리스트에 소스번호와 해당 댓글 번호가 같다면 빨간하트 -->
+															 			<c:if test="${ clubPost.commentHeartList[m].sourceNo == clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+															 				<span><img src="/resources/image/uploadFiles/heart.jpg" height="40" width="40"></span>
+															 				<c:set var="commentHeart" value="1"></c:set>
+															 			</c:if>
+															 		</c:forEach>
+															 	<c:if test="${ commentHeart == 0 }"><span><img src="/resources/image/uploadFiles/no_heart.jpg" height="40" width="40"></span></c:if>
+															 </a>
+														 </div>
+														 <div>
+															<%-- 해당 댓글의 좋아요 수 --%>
+															 <span class="commentHeartCount${ i }" style="font-size: 30px;">${ clubPost.getClubPostCommentList[i].commentHeartCount }</span>
+															
+															<%-- 해당 댓글의 댓글 등록 --%>
+															 <a class="reply add">
+															 	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size: 25px;"></span>
+															 </a>
+															 <%-- 해당 댓글 수정 --%>
+															 <a class="reply update">
+															 	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId }">
+															 		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 25px;"></span>
+															 	</c:if>
+															 </a>
+															 <%-- 해당 댓글 삭제 --%>
+															 <a href="#" class="reply delete">
+															 <%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
+															 <c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId || clubPost.getClubPost.user.userId == sessionScope.user.userId
+															 || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }">
+															  	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true" style="font-size: 25px;"></span>
+															  </c:if>
+															  </a>
+															 <%-- 해당 댓글 신고 --%>
+															  <a href="#" class="reply report">
+															  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
+															  		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 25px;"></span>
+															  	</c:if>
+															  </a>
+														 </div>
+													 </div>
 												</div><!-- comment-meta -->
 												<p>${ clubPost.getClubPostCommentList[i].commentContent }</p>
 												<c:choose>
 													<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
 														<div class="comment-author">
-															<cite><a href="#">댓글 ${ clubPost.getClubPostCommentList[i].commentCount }개</a><cite>
+															<cite>
+																<a class="123">댓글 ${ clubPost.getClubPostCommentList[i].commentCount }개</a>
+															<cite>
 														</div>
 													</c:when>
 												</c:choose>

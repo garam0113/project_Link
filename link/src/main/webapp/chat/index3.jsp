@@ -27,7 +27,7 @@
 <script>
 //소켓서버에 접속시킨다.
 var socket = io.connect("http://localhost:3000/clubchat", { // clubchat 네임스페이스
-	cors: { origin: "http://localhost:8080" },
+	cors: { origin: "*" },
 	path: '/socket.io'
 	/* query: {
 		userId : ${ sessionScope.user.userId },
