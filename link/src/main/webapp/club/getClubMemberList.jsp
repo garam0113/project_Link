@@ -75,11 +75,12 @@
 		});
 	});
 	
-	$(function() {
+	//추방 그냥 컨트롤러
+	/* $(function() {
 		$("#banMember").on("click", function() {
 			alert("모임원을 추방합니다 : ");
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
-		});
+		}); */
 		
 		$(function() {
 			$("#updateApprovalCondition").on("click", function() {
@@ -88,8 +89,8 @@
 		});
 		
 		
-		
-		$(document).on("click", "#banMember", function(){
+			//추방 그냥 컨트롤러	
+		/* $(document).on("click", "#banMember", function(){
 			//alert('추방');
 			var clubUserNo = $(this).val();
 			//alert(clubUserNo);
@@ -109,7 +110,61 @@
 						} // end of success  
 					}); //end of ajax
 					refreshMemList();
-			}); //모임원 추방
+			}); //모임원 추방 */
+			
+			$(function() {
+				$("#banMember").on("click", function(e){
+					var clubUserNo = $(this).val();
+					$("banMember").off(e);
+				$.ajax({
+					url : "/clubRest/json/deleteClubMember",
+					type : "POST",
+					datatype : "json"
+					data : JSON.stringify({
+						clubUserNo : clubUserNo
+					}),
+					
+					contentType : "application/json",
+					success : function(data) {
+						console.log(data.clubMemberList)
+						
+					}
+					
+				})
+					
+				})
+			})
+			$(document).on("click", "#banMember", function(){
+				//alert('추방');
+				var clubUserNo = $(this).val();
+				//alert(clubUserNo);
+				$.ajax("/clubRest/json/deleteClubMember",
+						{
+							method : "POST" ,
+							data : JSON.stringify({
+								clubUserNo : clubUserNo
+							}) ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								alert(status);
+							} // end of success  
+						}); //end of ajax
+						refreshMemList();
+				}); //모임원 추방
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		
 		
 				
