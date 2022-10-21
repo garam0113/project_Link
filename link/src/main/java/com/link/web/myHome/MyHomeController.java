@@ -1,5 +1,6 @@
 package com.link.web.myHome;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.club.ClubDAO;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
@@ -73,9 +76,14 @@ public class MyHomeController {
 		
 		System.out.println("/myHome/getMyHome : GET");
 
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
 		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 
-
+        search.setSearchCondition("1");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 	
@@ -105,10 +113,18 @@ public class MyHomeController {
 		       Model model) throws Exception{
 		
 		System.out.println("/myHome/getYourHome : GET");
+		 search.setSearchCondition("2");
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
 		String sessoinId = ((User)session.getAttribute("user")).getUserId();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		User getUser = new User();
 		User followUser = new User();
 		User recevieId = new User();
@@ -117,10 +133,9 @@ public class MyHomeController {
 		recevieId.setUserId(userId);
 		followUser.setReceiveId(recevieId);
 		followUser.setUserId(sessoinId);
-		User followUserId = myHomeService.getFollow(followUser);
+		Map<String, Object> followUserId = myHomeService.getFollow(followUser);
 		
-		System.out.println( "서버에서 받은  DATA : "+followUserId);
-		
+		search.setSearchKeyword(userId);
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
@@ -131,6 +146,8 @@ public class MyHomeController {
 		
 		map = feedService.getFeedList(map);
 	
+		System.out.println( "서버에서 받은  DATA : "+followUserId);
+		System.out.println( "팔로우  DATA : "+followUserId.get("followUser"));
 		
 	
 		model.addAttribute("clubList",map.get("clubList"));
@@ -139,7 +156,10 @@ public class MyHomeController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
 		model.addAttribute("getUser", getUserId);
-		model.addAttribute("followUser", followUserId);
+		model.addAttribute("block", followUserId.get("block"));
+		model.addAttribute("followUser", followUserId.get("follow"));
+		
+		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
 		
 		return "forward:/myHome/getYourHome.jsp";
 	}
@@ -275,6 +295,12 @@ public class MyHomeController {
 		
 		return "forward:/myHome/getFollowerList.jsp";
 	}
+	
+	
+	
+	
+	
+	
 }
 
 

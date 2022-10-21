@@ -35,55 +35,12 @@ $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
 	$(".yourHome").on("click" , function() {
 		
-		self.location = "/myHome/getYourHome?userId="+$("#receiveId").val();
+		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 	});
 	
 	
  });
  
-/*
-	window.onload=function() {
-		var userId = $("#userId").val();
-		console.log($("#userId").val());
-		
-		$.ajax({
-			url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
-			type : "POST", // 타입은 뭘 쓸거니?
-			datatype : "json",
-			 data		:  JSON.stringify({searchKeyword:userId}),
-			contentType : "application/json",
-			success : function(data) { // 갔다온 다음 결과값
-					// 나오면 파일을 찾았다는 것
-			//	alert(data);  // [object Object],[object Object],[object Object]
-				
-			// 데이터를 확인하고 싶을 때.
-			//	let str = JSON.stringify(data); // <> parse()
-			//	alert(str); 
-           console.log(data.list[0].receiveId.nickName);
-				$.each(data.list, function(index, item) { // 데이터 =item
-					var value ="<img src='/resources/image/uploadFiles/" + item.receiveId.profileImage
-					+ "' width='100' height='100'/>"
-					+ item.receiveId.nickName;
-					
-		$("#demo").append(value);
-					
-				
-				});
-			},
-			error : function() {
-				alert('error');			
-			}
-			
-		});
-		
-		
-	};
-*/
-
-
-
-
-
 
 $(function(){
 	
@@ -328,6 +285,14 @@ $(function(){
 	justify-content: center;
 	float: left;
 }
+.following-section {
+	margin-left: 200px;
+	margin-top: 50px;
+	width: 500px;
+	display: inline-block;
+	justify-content: center;
+	float: left;
+}
 
 .single-comment {
 	padding-left: 0;
@@ -352,16 +317,34 @@ margin-left: 100px;
 	margin-left: 400px;
 	width:500px;
 }
+.tab{
+display: block;
+}
 
 /* 탭 전체 스타일 */
-.tabs {
+.tabs1 {
   margin-top: 50px;
-  padding-bottom: 40px;
+  margin-bottom: 100px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  display:inline-block;
+  margin-left:300px;
+  float: left;
+  height:800px;
+  }
+  .tabs2 {
+  margin-top: 50px;
+  margin-bottom: 100px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 800px;
   display:inline-block;
-  margin-left:100px;
+  margin-left:200px;
+  height:800px;
+  
+  
+  
   }
 
 /* 탭 스타일 */
@@ -381,6 +364,38 @@ margin-left: 100px;
   font-weight: bold;
   transition: all 0.2s ease;
 }
+.tab_item-following {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: inline-block;
+  width:200px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item-follow {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  width:200px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
 .tab_item2 {
   width: calc(100%/3);
   height: 50px;
@@ -403,24 +418,48 @@ margin-left: 100px;
 .tab_item2:hover {
   opacity: 0.75;
 }
+}
+.tab_item-follow:hover {
+  opacity: 0.75;
+}
+}
+.tab_item-following:hover {
+  opacity: 0.75;
+}
 
 /* 라디오 버튼 UI삭제*/
 input[name="tab_item"] {
+  display: none;
+}
+input[name="tab_item-follow"] {
   display: none;
 }
 
 /* 탭 컨텐츠 스타일 */
 .tab_content {
   display: none;
-  padding: 40px 40px 0;
+  padding: 0px 40px 0;
   clear: both;
   overflow: hidden;
+}
+.tab_content-follow {
+  display: none;
+  padding: 0px 40px 0;
+  clear: both;
+  overflow: hidden;
+
+  
 }
 
 
 /* 선택 된 탭 콘텐츠를 표시 */
 #all:checked ~ #all_content,
 #programming:checked ~ #programming_content,
+#design:checked ~ #design_content {
+  display: block;
+}
+#all-follow:checked ~ #all-follow_content,
+#programming-follow:checked ~ #programming-follow_content,
 #design:checked ~ #design_content {
   display: block;
 }
@@ -434,6 +473,9 @@ input[name="tab_item"] {
   background-color: #333333;
   color: #fff;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 </style>
 </head>
 
@@ -445,7 +487,7 @@ input[name="tab_item"] {
 	<main role="main">
 		
 			<div id="intro-wrap" data-height="27.778">
-				<div id="intro" class="preload darken">
+				<div id="intro" class="preload">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -522,29 +564,29 @@ input[name="tab_item"] {
 						<div class="col-md-9"></div>
 					</div>
 				</div>
-
-			<div class="tabs">
+<div class="tab">
+			<div class="tabs1">
 			<input id="all-follow" type="radio" name="tab_item-follow" checked>
     <label class="tab_item-follow" for="all-follow">FollowList</label>
-    <input id="programming-following" type="radio" name="tab_item-following">
-    <label class="tab_item-following" id="tab-follow" for="programming-following">FollowerList</label>
+    <input id="programming-follow" type="radio" name="tab_item-follow">
+    <label class="tab_item-following" for="programming-follow">FollowerList</label>
     
-    <div class="tab_content-follow" id="all_content-follow">
+    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
         		
         		<br />
 		<c:set var = "i" value = "0" />
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
-			<div class="follow-section" style="margin-left:300px;">
-			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4></div>
-					<input type="hidden" name="receiveId" id="receiveId" value="${list.receiveId.userId }">
+			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			</div>
+					
 				</div>
 			</c:forEach>
 			
 				
 				</div>
-				<div class="tab_content-following" id="all_content-following">
-				  <div class="following-section" style="margin-left:300px;">
+				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
      <div class="col-md-4" id="fl">
 					 		<br />
 		
@@ -553,17 +595,17 @@ input[name="tab_item"] {
 </div>
 </div>
   </div>
-				</div> 
+			
 		
-<div class="tabs">
+<div class="tabs2">
     <input id="all" type="radio" name="tab_item" checked>
     <label class="tab_item1" for="all">내가 쓴 피드</label>
     <input id="programming" type="radio" name="tab_item">
     <label class="tab_item2" for="programming">내 모임 게시물</label>
     
  
-    <div class="tab_content" id="all_content">
-        		<div class="comment-section">
+    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left:-30px;">
+        		<div class="comment-section" style="margin-left:-50px; width:720px; " >
 					<br />
 					<c:set var="i" value="0"></c:set>
 					<c:forEach var="feed" items="${feedList}">
@@ -631,17 +673,21 @@ input[name="tab_item"] {
 
 				</div>
     </div>
-    <div class="tab_content" id="programming_content">
+    <div class="tab_content" id="programming_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left : 10px;">
+    
+    <br/>
      <div class="col-md-4" id="cp">
 											
 </div>
+
   </div>
 			</div>
+		</div>
 	</main>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+    
 	 
 	<script type="text/javascript">
 $(function() {
@@ -698,9 +744,9 @@ $(function() {
 	});
 });
 	
-	$("#tab-follow").on("click" , function(e) {
+	$(".tab_item-following").on("click" , function(e) {
 		var userId = $("#userId").val(); 
-		$("#tab-follow").off(e);
+		$(".tab_item-following").off(e);
 	$.ajax({
 		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
@@ -715,7 +761,7 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:300px;'>"+
+				"<div class='following-section' style='margin-left:50px;' id="+item.userId+">"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 		"</div>";

@@ -21,16 +21,15 @@
 <script>
 
   window.onload=function() {
-	var calendarId = $("#CalendarId").val();
 	var result_var = null;	
-	
-	console.log(calendarId);
+	var youCalendarId = $("#youCalendarId").val();
+	console.log(youCalendarId);
 	
 	$.ajax({
 		url : "/myHomeRest/json/getMeetList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
-		 data		:  JSON.stringify({searchKeyword:calendarId}),
+		 data		:  JSON.stringify({searchKeyword:youCalendarId}),
 		contentType : "application/json",
 		success : function(JSONData, status) { 
 			   	
@@ -65,7 +64,7 @@
 		
 		},
 		error : function(){
-		
+			
 			var calendarEl = document.getElementById('calendar');
 		    var calendar = new FullCalendar.Calendar(calendarEl, {
 		      initialView: 'dayGridMonth',
@@ -82,8 +81,6 @@
 			
 			
 		}
-			
-		
 	});
 
   };
@@ -93,8 +90,8 @@
 
  
 </script>
-<input type="hidden" name="CalendarId" id="CalendarId" value="${user.userId}">
 
+<input type="hidden" name="youCalendarId" id="youCalendarId" value="${getUser.userId}">
 
 
 
