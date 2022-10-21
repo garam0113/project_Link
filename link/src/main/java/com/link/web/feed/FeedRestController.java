@@ -364,7 +364,7 @@ public class FeedRestController {
 		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 		String savedFileName = originalFileName;	//저장될 파일 명
 		
-		File targetFile = new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);
+		File targetFile = new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
