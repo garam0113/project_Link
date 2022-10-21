@@ -1,10 +1,13 @@
 package com.link.web.user;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -228,7 +231,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value = "json/addBlock", method = RequestMethod.POST)
-	public User addBlock(@RequestBody User user, HttpSession session, Search search)throws Exception{
+	public Map<String, Object> addBlock(@RequestBody User user, HttpSession session, Search search)throws Exception{
 		
 		System.out.println("/userRest/json/addBlock : POST");
 		
@@ -244,13 +247,14 @@ public class UserRestController {
 		
 		myHomeService.addFollow(user);
 		
-		User getUser = myHomeService.getFollow(user);
+		Map<String, Object> getUser = myHomeService.getFollow(user);
+
 		
 		return getUser;
 	}
 	
 	@RequestMapping(value = "json/updateBlock", method = RequestMethod.POST)
-	public User updateBlock(@RequestBody User user, HttpSession session) throws Exception{
+	public Map<String, Object>  updateBlock(@RequestBody User user, HttpSession session) throws Exception{
 		
 		System.out.println("/userRest/json/updateBlock : POST");
 		
@@ -262,7 +266,7 @@ public class UserRestController {
 		
 		myHomeService.updateFollow(user);
 		
-		User getUser = myHomeService.getFollow(user);
+		Map<String, Object> getUser = myHomeService.getFollow(user);
 		
 		return getUser;
 		

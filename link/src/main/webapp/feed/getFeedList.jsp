@@ -17,7 +17,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
 	
@@ -26,6 +26,10 @@
 	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
+	
+	<%-- ALERT --%>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<%-- ALERT --%>
 	
 	<script type="text/javascript">
 	
@@ -52,22 +56,62 @@
 		<%-- 무한 스크롤 --%>
 		
 		$(window).scroll(function() {
+			console.log(($("#pageFlag").val()));
+			if($("#pageFlag").val() == "true") {
 			
-			if((Math.ceil($(window).scrollTop() + $(window).height())) == $(document).height()) {
-				
-				alert("무한 스크롤");
-				
-				var maxHeight = $(document).height();
-				var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
-				var currentPage = parseInt($("#currentPage").val()) + 1;
-				
-				$.ajax(
-						
-				
-				
-				) // ajax close
-				
-			} // if close
+				if((Math.ceil($(window).scrollTop() + $(window).height())) >= ( $(document).height() )) {
+					
+					console.log("무한 스크롤");
+					
+					var maxHeight = $(document).height();
+					var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+					
+					var sessionUser = $("#userId").val();
+					
+					$.ajax(
+							{
+								url : "/feedRest/json/getFeedList",
+								method : "POST",
+								data : JSON.stringify ({
+									userId : sessionUser,
+									currentPage : parseInt($("#currentPage").val()) + 1
+								}),
+								contentType: 'application/json',
+								dataType : "json",
+								header : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								}, // header end
+								
+								success : function(data, status) {
+									
+									var addHtml = "<p>";
+									
+									$.each(data, function(index, item) {
+										
+										console.log("무한 스크롤 정보 성공" + item.content + "\n");
+										
+										addHtml += item.content + "\n"
+										
+									}) // each close
+									
+									addHtml += "</p>"
+									$(addHtml).appendTo($("div.six:last"));
+									$("#currentPage").val( parseInt($("#currentPage").val()) + 1 );
+									
+									if(addHtml == "<p></p>") {
+										$("#pageFlag").val(false);
+									}
+									
+								} // success close
+								
+							} // ajax inner close
+							
+					) // ajax close
+					
+				} // scroll if close
+			
+			} // pageFlag close;
 		
 		}); // window scroll event close
 		
@@ -137,10 +181,22 @@
 			console.log("피드 삭제 버튼");
 			console.log( $(this).parent().parents(".feedForm").html());
 			
-			if(confirm) {
-				// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
-				$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
-			}
+			Swal.fire({
+				  title: '글을 삭제하시겠습니까???',
+				  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.value) {
+		       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
+					// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+					$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+				}
+			})
 		});
 		<%-- DELETE_FEED --%>
 		
@@ -222,22 +278,11 @@
 		})
 		<%-- DELETE_FEED_HEART --%>
 		
-<<<<<<< HEAD
-		<%-- CAROUSEL EVENT 침범 방지 --%>
-		
-		$J(document).on("click", ".swiper", function(event) {
-			event.stopPropagation();
-		})
-		
-				
-		<%-- CAROUSEL EVENT 침범 방지 --%>
-=======
 		<%-- CAROUSEL 침범 방지 --%>
 		$(document).on("click", ".carousel-control", function(event) {
 			event.stopPropagation();
 		})
 		<%-- CAROUSEL 침범 방지 --%>
->>>>>>> refs/remotes/origin/master
 		
 		<%-- CALL REPORT --%>
 		$(document).on("click", ".report", function(event) {
@@ -283,13 +328,13 @@
 	.feedForm {
 		border-style:solid !important;
 		border-color:#241B12 !important;
-		border-width:1;
+		border-width:2;
 	}
 	
 	article {
 		border-style:solid !important;
 		border-color:#241B12 !important;
-		border-width:1 !important;
+		border-width:2 !important;
 	}
 	
 	.carousel-inner > .item > img {
@@ -314,11 +359,11 @@
 	}
 	
 	section.row.section {
-		background-color: #111010;
+		background-color: black;
 	}
 	
 	body.single-post {
-		background-color: #111010 !important;
+		background-color: black !important;
 	}
 	
 	div.feedContent {
@@ -378,9 +423,11 @@
 		margin-left:10px;
 	}
 	
+	/* SUMMERNOTE FONT-COLOR */
 	.note-editable p {
 		color: white;
 	}
+	/* SUMMERNOTE FONT-COLOR */
 	
 	/* 좋아요 글자색 */
 	.likeCount {
@@ -395,6 +442,7 @@
 	form.feedForm section.section {
 		height: 35px;
 	}
+	
 	
 </style>
 
@@ -542,40 +590,7 @@
 											</a>
 										</div>
 										</c:if>
-										
-										
-										
-										<!-- Slider main container -->
-<div class="swiper">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
-    <!-- Slides -->
-    <div class="swiper-slide">
-    	<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
-    </div>
-    <div class="swiper-slide">
-    	<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
-    </div>
-    <div class="swiper-slide">
-    	<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-    </div>
-  </div>
-  <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
-
-  <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-
-</div>
-										
 										<%-- 이미지 --%>
-										
-										<%-- 영상 --%>
-										<c:if test="${!empty feed.video}">
-											<iframe width="640" height="360" src="https://${feed.video}" ></iframe>
-										</c:if>
-										<%-- 영상 --%>
 										
 										<c:if test="${!empty feed.hashtag}">
 											<div class="hashtagContent">
@@ -591,7 +606,7 @@
 										
 										<input type="hidden" name="source" value="0">
 										<input type="hidden" name="feedNo" value="${feed.feedNo}">
-										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+										<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
 										<input type="hidden" name="openCondition" value="3">
 
 										<!-- 피드 좋아요 댓글수 신고 -->
@@ -599,12 +614,12 @@
 											<div class="row">
 												<c:if test="${feed.checkHeart eq 0}">
 													<div class="column two">
-														<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+														<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" aria-hidden="true"/>
 													</div>
 												</c:if>
 												<c:if test="${feed.checkHeart ne 0}">
 													<div class="column two">
-														<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+														<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" aria-hidden="true"/>
 													</div>
 												</c:if>
 												
@@ -613,7 +628,7 @@
 												</div>
 												
 												<div class="column two comment">
-													<img src="/resources/image/uploadFiles/comments.jpg" width="25" height="25" style="margin-top : 4px;" />
+													<img src="/resources/image/uploadFiles/comments.jpg" width="25" height="25" style="margin-top : 4px;" aria-hidden="true"/>
 												</div>
 												
 												<div class="column two commentCount">
@@ -622,7 +637,7 @@
 													
 												<!-- 신고 아이콘 -->
 												<div class="column four last report">
-													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.7rem; margin-top:3px;" aria-hidden="true" ></span>
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.5rem; margin-top:3px;" aria-hidden="true" ></span>
 												</div>
 												<!-- 신고 아이콘 -->
 												
@@ -643,7 +658,8 @@
 					<div class="column three"></div>
 					
 					<%-- 현재 페이지 --%>
-					<input type="hidden" name="currentPage" value="${resultPage.currentPage}">
+					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
+					<input type="hidden" id="pageFlag" value=true>
 					<%-- 현재 페이지 --%>
 					
 				</div>

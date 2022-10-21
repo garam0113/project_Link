@@ -42,12 +42,12 @@
 	$(function() {
 
 		$("button:contains('등록')").bind("click", function() {
-		alert(1);
+	
 			fncAddNotice();
 		});
 
 		$("button:contains('뒤로')").bind("click", function() {
-		alert(22);
+
 		location.href = "/serviceCenter/getNoticeList";
 		})
 

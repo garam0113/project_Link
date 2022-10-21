@@ -174,21 +174,23 @@ public class ClubController {
 		
 		clubService.updateClub(club);
 		
-		return "forward:/club/getClub.jsp";
+		return "forward:/club/getClubList";
 	}
 	
 	@RequestMapping(value="deleteClub")
-	public String deleteClub(@ModelAttribute Club club, Model model, HttpSession session) throws Exception {
+	public String deleteClub(@ModelAttribute Club club, Model model, HttpSession session, String clubNo) throws Exception {
 		
 		System.out.println("deleteClub 시작");
 		
 		club = (Club) session.getAttribute("club");
 		
-		System.out.println("세션에 뭐 있지 : "+session.getAttribute("club"));		
+		clubNo = (String) session.getAttribute("clubNo");
 		
-		club.setClubNo(club.getClubNo());
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));		
 		
-		clubService.deleteClub(club.getClubNo());
+//		club.setClubNo(Integer.parseInt(clubNo));
+		
+		clubService.deleteClub(Integer.parseInt(clubNo));
 		
 		return "forward:/club/getClubList";
 	}

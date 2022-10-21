@@ -41,7 +41,7 @@
 
 	$(function() {
 
-		$("button:contains('등록')").bind("click", function() {
+		$("button:contains('수정')").bind("click", function() {
 		alert(1);
 			fncAddNotice();
 		});
@@ -172,7 +172,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(0px, 0px);">등록</button>
+						style="transform: translate(0px, 0px);">수정</button>
 					<button class="custom-btn btn-13"
 						style="transform: translate(0px, 0px);">뒤로</button>
 				</div>

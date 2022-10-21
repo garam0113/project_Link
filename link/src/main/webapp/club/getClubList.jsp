@@ -117,6 +117,9 @@
     color: #333;
 }
 		 
+		 #pageNav {
+		 	float: center;
+		 }
 		 
 		 
 	
@@ -342,8 +345,8 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 	<jsp:include page="../common/pageNavigator_new2.jsp"/>
+
+ 	<jsp:include page="../common/pageNavigator_new2.jsp" />
  	
 	</main>
 	

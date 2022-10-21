@@ -121,8 +121,8 @@
 	$(function() {
 
 		$("button.btn.btn-warning").on("click", function() {
-			popup();
-			//self.location="/club/updateClubView.jsp"
+			//popup();
+			self.location="/club/updateClubView.jsp"
 		});
 	});
 	
@@ -202,9 +202,9 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList">모임 채팅</a>
 						</li>
-						<li data-group="infographics">
+						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li>
+						</li> --%>
 					</ul>
 		
 		

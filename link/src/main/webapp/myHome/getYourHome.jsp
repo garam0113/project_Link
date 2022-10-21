@@ -18,133 +18,187 @@
 
 		$("#follow").on("click", function() {
 			var userId = $("#userId").val();
-			var fbStateNo1 = '1';
-			var fbStateNo2 = '2';
-			var fbTypeNo = '1';
+			console.log("전달받은 회원 Id : " + userId);
 
-			$.ajax({
-				url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
-				type : "POST", // 타입은 뭘 쓸거니?
-				datatype : "json",
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
 				data : JSON.stringify({
-					searchKeyword : userId
+					receiveId : userId,
+					fbType : "1"
 				}),
+				dataType : "json",
 				contentType : "application/json",
-				success : function(data) {
-					var values = null;
-					var fbStates = null;
-					var fbTypes = null;
-
-					$.each(data.list, function(index, item) { // 데이터 =item
-						var value = item.receiveId.userId;
-						var fbState = item.fbState;
-						var fbType = item.fbType;
-						var recvId = $("#recvId").val();
-
-						values = value;
-						fbStates = fbState;
-						fbTypes = fbType;
-
-						if (value == recvId && fbState == null) {
-
-							$.ajax({
-								type : 'POST', //get방식으로 명시
-								url : '/myHomeRest/json/updateFollow', //이동할 jsp 파일 주소
-								data : JSON.stringify({
-									userId : recvId,
-									fbState : fbStateNo1,
-									fbType : fbTypeNo
-
-								}),
-								dataType : 'json', //문자형식으로 받기
-								contentType : "application/json",
-								header : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								}, // header end
-								success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
-									//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-
-								},
-								error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
-
-									console.log("userId : " + data);
-
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log(data.follow);
+				if(data.follow != null ){
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+								$("#follow").text("팔로잉");
+								}else if(update.follow.fbState == 2){
+								$("#follow").text("팔로우");
 								}
-
-							})
-						}
-
-						else if (value == recvId && fbState == null) {
-							$.ajax({
-								type : 'POST', //get방식으로 명시
-								url : '/myHomeRest/json/updateFollow', //이동할 jsp 파일 주소
-								data : JSON.stringify({
-									userId : recvId,
-									fbState : fbStateNo2,
-									fbType : fbTypeNo
-
-								}),
-								dataType : 'json', //문자형식으로 받기
-								contentType : "application/json",
-								header : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								}, // header end
-								success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
-									//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-									console.log(value);
-									console.log(fbState);
-
-								},
-								error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
-
-									console.log("userId : " + data);
-
-								}
-							})
-
 						}
 					})
+					}else if(data.follow ==null){
+						console.log("서버로 받은 데이터(error) : " + data.follow);
 
-					if (fbStates == null && values == null) {
-
-						$.ajax({
-							type : 'POST', //get방식으로 명시
-							url : '/myHomeRest/json/addFollow', //이동할 jsp 파일 주소
+						$.ajax("/myHomeRest/json/addFollow", {
+							type : "POST",
 							data : JSON.stringify({
-								userId : $("#recvId").val(),
-								fbTypes : fbTypeNo,
-								fbStates : fbStateNo1
+								receiveId : userId
 							}),
-							dataType : 'json', //문자형식으로 받기
+							dataType : "json",
 							contentType : "application/json",
-							header : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							}, // header end
-							success : function(data, status) { //데이터 주고받기 성공했을 경우 실행할 결과
-								//function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다. 
-								console.log(value);
-								console.log(fbState);
-
+							headers : {
+								"Accetp" : "application/json"
 							},
-							error : function(data) { //데이터 주고받기가 실패했을 경우 실행할 결과
-
-								console.log("userId : " + data);
-
+							success : function(Data, status) {
+								console.log("서버로부터 받은 Data(error) : " + Data);
+								$("#follow").text("팔로잉");
 							}
 						})
+					} 
+				}
+				
+			})
+		})
+
+		 $("#following").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "1"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
 					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+							$("#following").text("팔로잉");
+							}else if(update.follow.fbState == 2){
+							$("#following").text("팔로우");
+							}
+						}
+					})
 				}
 			})
-		});
+		}) 
+
+		 $("#updateFollow").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "1"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+							$("#updateFollow").text("팔로잉");
+							}else if(update.follow.fbState == 2){
+							$("#updateFollow").text("팔로우");
+							}
+						}
+					})
+				}
+			})
+		})
+
 
 		$("#block").on("click", function() {
 			var userId = $("#userId").val();
 			console.log("전달받은 회원 Id : " + userId);
 
-			$.ajax("/myHomeRest/json/getFollw", {
+			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
 				data : JSON.stringify({
 					receiveId : userId,
@@ -156,12 +210,15 @@
 					"Accept" : "application/json"
 				},
 				success : function(data, status) {
-					console.log("서버로 받은 데이터 : " + data.userId);
-					console.log("서버로 받은 데이터 : " + data.fbState);
+					console.log(data);
+					console.log(data.block);
+					if(data.block != null ){
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
 					var fbState = "";
-					if(data.fbState == 1){
+					if(data.block.fbState == 1){
 						fbState = "2";
-					}else if(data.fbState == 2){
+					}else if(data.block.fbState == 2){
 						fbState = "1";
 					}
 					
@@ -179,34 +236,35 @@
 							"Accept" : "application/json"
 						},
 						success : function(update, status) {
-							console.log("서버로 받은 데이터(정상) : " + update.userId);
-							if(update.fbState == 1){
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
 								$("#block").text("차단해제");
-								}else if(update.fbState == 2){
+								}else if(update.block.fbState == 2){
 								$("#block").text("차단");
 								}
 						}
 					})
-				},
-				error : function(error) {
-					console.log("서버로 받은 데이터(error) : " + error);
+					}else if(data.block ==null){
+						console.log("서버로 받은 데이터(error) : " + data.block);
 
-					$.ajax("/userRest/json/addBlock", {
-						type : "POST",
-						data : JSON.stringify({
-							receiveId : userId
-						}),
-						dataType : "json",
-						contentType : "application/json",
-						headers : {
-							"Accetp" : "application/json"
-						},
-						success : function(Data, status) {
-							console.log("서버로부터 받은 Data(error) : " + Data);
-							$("#block").text("차단해제");
-						}
-					})
+						$.ajax("/userRest/json/addBlock", {
+							type : "POST",
+							data : JSON.stringify({
+								receiveId : userId
+							}),
+							dataType : "json",
+							contentType : "application/json",
+							headers : {
+								"Accetp" : "application/json"
+							},
+							success : function(Data, status) {
+								console.log("서버로부터 받은 Data(error) : " + Data);
+								$("#block").text("차단해제");
+							}
+						})
+					}
 				}
+				
 			})
 		})
 
@@ -214,7 +272,7 @@
 			var userId = $("#userId").val();
 			console.log("전달받은 회원 Id : " + userId);
 
-			$.ajax("/myHomeRest/json/getFollw", {
+			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
 				data : JSON.stringify({
 					receiveId : userId,
@@ -226,12 +284,13 @@
 					"Accept" : "application/json"
 				},
 				success : function(data, status) {
-					console.log("서버로 받은 데이터 : " + data.userId);
-					console.log("서버로 받은 데이터 : " + data.fbState);
+					console.log(data);
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
 					var fbState = "";
-					if(data.fbState == 1){
+					if(data.block.fbState == 1){
 						fbState = "2";
-					}else if(data.fbState == 2){
+					}else if(data.block.fbState == 2){
 						fbState = "1";
 					}
 					
@@ -249,10 +308,10 @@
 							"Accept" : "application/json"
 						},
 						success : function(update, status) {
-							console.log("서버로 받은 데이터(정상) : " + update.userId);
-							if(update.fbState == 1){
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
 							$("#stopBlock").text("차단해제");
-							}else if(update.fbState == 2){
+							}else if(update.block.fbState == 2){
 							$("#stopBlock").text("차단");
 							}
 						}
@@ -265,7 +324,7 @@
 			var userId = $("#userId").val();
 			console.log("전달받은 회원 Id : " + userId);
 
-			$.ajax("/myHomeRest/json/getFollw", {
+			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
 				data : JSON.stringify({
 					receiveId : userId,
@@ -277,12 +336,12 @@
 					"Accept" : "application/json"
 				},
 				success : function(data, status) {
-					console.log("서버로 받은 데이터 : " + data.userId);
-					console.log("서버로 받은 데이터 : " + data.fbState);
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
 					var fbState = "";
-					if(data.fbState == 1){
+					if(data.block.fbState == 1){
 						fbState = "2";
-					}else if(data.fbState == 2){
+					}else if(data.block.fbState == 2){
 						fbState = "1";
 					}
 					
@@ -300,10 +359,10 @@
 							"Accept" : "application/json"
 						},
 						success : function(update, status) {
-							console.log("서버로 받은 데이터(정상) : " + update.userId);
-							if(update.fbState == 1){
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
 							$("#updateBlock").text("차단해제");
-							}else if(update.fbState == 2){
+							}else if(update.block.fbState == 2){
 							$("#updateBlock").text("차단");
 							}
 						}
@@ -313,13 +372,152 @@
 		})
 
 	});
+	
+	function getClubPostGo(clubPostNo){
+		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
+	}
+	
+	// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
+	function getMyHomeGo(userId){
+		location.href = "/myHome/getYourHome?userId="+userId;
+	}
+
+
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
+	$(".yourHome").on("click" , function() {
+		
+		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+	});
+	
+	
+ });
+ 
+
+$(function(){
+	
+	<!-- REST CONTROLLTER TEST -->
+
+	<!-- REST CONTROLLTER TEST -->
+	
+	<!-- ADD_FEED -->
+	$(".addFeed").bind("click", function(){
+		alert("피드 추가버튼");
+		$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+	});
+	<!-- ADD_FEED -->
+	
+	<!-- UPDATE_FEED -->
+	$(".btn_update").bind("click", function(){
+		alert("피드 수정 버튼");
+		$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+	});
+	<!-- UPDATE_FEED -->
+	
+	<!-- DELETE_FEED -->
+	$(".btn_delete").bind("click", function(){
+		alert("피드 삭제 버튼");
+		$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+	});
+	<!-- DELETE_FEED -->
+	
+	<!-- GET_FEED -->
+	$(".btn_getFeed").bind("click", function(){
+		alert("클릭한 글 번호 : " + $(this).parent().find("input[name='feedNo']").val());
+		location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
+	})
+	<!-- GET_FEED -->
+	
+	<!-- ADD_FEED_HEART -->
+	$(".like:contains('좋아요')").bind("click", function(){
+		event.stopPropagation();
+		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
+		
+		var html = $(this);
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/addFeedHeart",
+					method : "POST",
+					data : JSON.stringify ({
+						feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						swal.fire("피드 좋아요 성공 : " + data);
+						
+						$(html).parents(".row").children(".like:contains('좋아요')").hide();
+						$(html).parents(".row").children(".dislike:contains('시러요')").show();
+						$(html).parents(".row").children(".likeCount").text(data);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+	})
+	<!-- ADD_FEED_HEART -->
+	
+	<!-- DELETE_FEED_HEART -->
+	$(".dislike:contains('시러요')").bind("click", function(){
+		event.stopPropagation();
+		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
+		
+		var html = $(this);
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/deleteFeedHeart",
+					method : "POST",
+					data : JSON.stringify ({
+						feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						swal.fire("피드 시러요 성공 : " + data);
+						
+						$(html).parents(".row").children(".like:contains('좋아요')").show();
+						$(html).parents(".row").children(".dislike:contains('시러요')").hide();
+						$(html).parents(".row").children(".likeCount").text(data);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+	})
+	<!-- DELETE_FEED_HEART -->
+	
+})
+	
+
+	
+	
+	
+	
+	
+	
 </script>
 
 <style>
 #calendar {
-	margin-left: 100px;
+	margin-left: 0px;
 	margin-top: 50px;
-	width: 700px;
+	width: 800px;
 	display: inline-block;
 	justify-content: center;
 }
@@ -337,7 +535,8 @@
 /* Profile sidebar */
 .profile-sidebar {
 	padding: 20px 0 10px 0;
-	width: 600px;
+	width:600px;
+	
 }
 
 .profile-userpic img {
@@ -375,7 +574,7 @@
 	float: left;
 	text-align: center;
 	margin-top: 10px;
-	margin-left: 100px;
+	margin-left: 10px;
 }
 
 .profile-userbuttons .btn {
@@ -441,108 +640,280 @@
 	justify-content: center;
 	float: left;
 }
+.following-section {
+	margin-left: 200px;
+	margin-top: 50px;
+	width: 500px;
+	display: inline-block;
+	justify-content: center;
+	float: left;
+}
 
 .single-comment {
 	padding-left: 0;
 }
 
 .f {
-	float: right;
-	width: 600px;
-	height: 400px;
-	display: inline-block;
-	margin-top: 20px;
-	margin-right: 150px;
+	margin-left: 300px;
 }
 
-.club {
-	margin-left: 100px;
-}
-
-.L {
-	margin-top: 20px;
-	margin-left: 400px;
-	width: 600px;
-	height: 400px;
-	display: inline-block;
-}
-
-.section-Box {
+.comment-section {
+	margin-left: 50px;
+	margin-top: 50px;
+	width: 700px;
 	
+	
+    
+}
+.club{
+margin-left: 100px;
+}
+.L {
+	margin-left: 400px;
+	width:500px;
+}
+.tab{
+display: block;
+}
+
+/* 탭 전체 스타일 */
+.tabs1 {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  display:inline-block;
+  margin-left:300px;
+  float: left;
+  height:800px;
+  }
+  .tabs2 {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  display:inline-block;
+  margin-left:200px;
+  height:800px;
+  
+  
+  
+  }
+
+/* 탭 스타일 */
+.tab_item1 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  width:400px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item-following {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: inline-block;
+  width:200px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item-follow {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  width:200px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.tab_item2 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: inline-block;
+  width:400px;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.tab_item1:hover {
+  opacity: 0.75;
+}
+.tab_item2:hover {
+  opacity: 0.75;
+}
+}
+.tab_item-follow:hover {
+  opacity: 0.75;
+}
+}
+.tab_item-following:hover {
+  opacity: 0.75;
+}
+
+/* 라디오 버튼 UI삭제*/
+input[name="tab_item"] {
+  display: none;
+}
+input[name="tab_item-follow"] {
+  display: none;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab_content {
+  display: none;
+  padding: 0px 40px 0;
+  clear: both;
+  overflow: hidden;
+}
+.tab_content-follow {
+  display: none;
+  padding: 0px 40px 0;
+  clear: both;
+  overflow: hidden;
+
+  
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#design:checked ~ #design_content {
+  display: block;
+}
+#all-follow:checked ~ #all-follow_content,
+#programming-follow:checked ~ #programming-follow_content,
+#design:checked ~ #design_content {
+  display: block;
+}
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item1 {
+  background-color: #333333;
+  color: #fff;
+}
+.tabs input:checked + .tab_item2 {
+  background-color: #333333;
+  color: #fff;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 </style>
 </head>
-
 
 <body class="blog masonry-style">
 
 	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
-		<div id="intro-wrap" data-height="27.778">
-			<div id="intro" class="preload darken">
-				<div class="intro-item"
-					style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-					<div class="caption">
-						<h2>MyBlog</h2>
-						<p>Write down your daily life</p>
+		
+			<div id="intro-wrap" data-height="27.778">
+				<div id="intro" class="preload">
+					<div class="intro-item"
+						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
+						<div class="caption">
+							<h2>MyBlog</h2>
+							<p>Write down your daily life</p>
+						</div>
+						<!-- caption -->
 					</div>
-					<!-- caption -->
+					<!-- intro -->
 				</div>
 				<!-- intro -->
 			</div>
-			<!-- intro -->
-		</div>
-		<!-- intro-wrap -->
+			<!-- intro-wrap -->
 
-		<div id="main" class="row">
-			<div id="calendar">
+			<div id="main" class="row">
+				<div id="calendar">
 
-				<jsp:include page="/myHome/calendar.jsp" />
-			</div>
+					<jsp:include page="/myHome/youCalendar.jsp" />
+				</div>
 
-			<div class="container">
-				<div class="row profile">
-					<div class="col-md-3">
-						<div class="profile-sidebar">
-							<!-- SIDEBAR USERPIC -->
-							<div class="profile-userpic">
-								<img src="/resources/image/uploadFiles/${getUser.profileImage}"
-									class="img-responsive" width="100" height="100">
-							</div>
-
-							<!-- END SIDEBAR USERPIC -->
-							<!-- SIDEBAR USER TITLE -->
-							<div class="profile-usertitle">
-								<input type="hidden" name="userId" id="userId"
-									value="${getUser.userId }"> <br />
-								<div class="profile-usertitle-name">${getUser.nickName }</div>
-								<div class="profile-usertitle-job">${getUser.profileWriting }
+				<div class="container">
+					<div class="row profile">
+						<div class="col-md-3">
+							<div class="profile-sidebar">
+								<!-- SIDEBAR USERPIC -->
+								<div class="profile-userpic">
+									<img
+										src="/resources/image/uploadFiles/${getUser.profileImage}"
+										class="img-responsive" width="100" height="100">
 								</div>
-							</div>
-							<!-- END SIDEBAR USER TITLE -->
-							<!-- SIDEBAR BUTTONS -->
-							<div class="profile-userbuttons">
-								<button type="button" class="btn btn-success btn-sm"
-									id="following">팔로잉</button>
-
-								<button type="button" class="btn btn-success btn-sm" id="follow">팔로우</button>
-
-								<button type="button" class="btn btn-danger btn-sm">메세지</button>
+								
+								<!-- END SIDEBAR USERPIC -->
+								<!-- SIDEBAR USER TITLE -->
+								<div class="profile-usertitle">
+								<input type="hidden" name="userId" id="userId" value="${getUser.userId }">
+								<input type="hidden" name="yuserId" id="yuserId" value="${getUser.userId }">
+									<br/>
+									<div class="profile-usertitle-name">${getUser.nickName }</div>
+									<div class="profile-usertitle-job">${getUser.profileWriting }
+									</div>
+								</div>
+								<!-- END SIDEBAR USER TITLE -->
+								<!-- SIDEBAR BUTTONS -->
+								<div class="profile-userbuttons">
+							
+								 <c:if test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '1'}">
+									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
+										<button type="button" class="btn btn-danger btn-sm"
+											id="following">팔로잉</button>
+									</c:if>
+									<c:if test="${fn:trim(followUser.receiveId.fbState) == '2'}">
+										<button type="button" class="btn btn-danger btn-sm"
+											id="updateFollow">팔로우</button>
+									</c:if>
+								</c:if> 
+								<c:if test="${ empty followUser }">
+									<button type="button" class="btn btn-danger btn-sm" id="follow">팔로우</button>
+								</c:if>
 
 
 								<c:if
-									test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '2'}">
-									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
+									test="${block.receiveId.userId == getUser.userId and fn:trim(block.receiveId.fbType) == '2'}">
+									<c:if test="${fn:trim(block.receiveId.fbState) == '1'}">
 										<button type="button" class="btn btn-danger btn-sm"
 											id="stopBlock">차단해제</button>
 									</c:if>
-									<c:if test="${fn:trim(followUser.receiveId.fbState) == '2'}">
+									<c:if test="${fn:trim(block.receiveId.fbState) == '2'}">
 										<button type="button" class="btn btn-danger btn-sm"
 											id="updateBlock">차단</button>
 									</c:if>
 								</c:if>
-								<c:if test="${ empty followUser }">
+								<c:if test="${ empty block }">
 									<button type="button" class="btn btn-danger btn-sm" id="block">차단</button>
 								</c:if>
 								<br> <br>
@@ -554,122 +925,250 @@
 									type="hidden" name="recvId" id="recvId"
 									value="${getUser.userId}">
 							</div>
-							<!-- END SIDEBAR BUTTONS -->
-							<!-- SIDEBAR MENU -->
-							<div class="profile-usermenu">
-								<ul class="nav">
-									<li class="active"><a
-										href="/club/getApprovalConditionList?userId=${getUser.userId}">
-											<i class="glyphicon glyphicon-home"></i> 모임 보기
-									</a></li>
-
-								</ul>
+								<!-- END SIDEBAR BUTTONS -->
+								<!-- SIDEBAR MENU -->
+								<div class="profile-usermenu">
+									<ul class="nav">
+										<li class="active"><a href="/club/getApprovalConditionList?userId=${getUser.userId}"> <i
+												class="glyphicon glyphicon-home"></i> 내 모임
+										</a></li>
+										<li>
+										<a href="/user/updateProfile?userId=${getUser.userId }"> <i
+												class="glyphicon glyphicon-user"></i> 프로필 수정
+										</a></li>
+										<li><a href="#" target="_blank"> <i
+												class="glyphicon glyphicon-ok"></i> Tasks
+										</a></li>
+										<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
+												Help
+										</a></li>
+									</ul>
+								</div>
+								<!-- END MENU -->
 							</div>
-							<!-- END MENU -->
 						</div>
+						<div class="col-md-9"></div>
 					</div>
-					<div class="col-md-9"></div>
 				</div>
+<div class="tab">
+			<div class="tabs1">
+			<input id="all-follow" type="radio" name="tab_item-follow" checked>
+    <label class="tab_item-follow" for="all-follow">FollowList</label>
+    <input id="programming-follow" type="radio" name="tab_item-follow">
+    <label class="tab_item-following" for="programming-follow">FollowerList</label>
+    
+    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+        		
+        		<br />
+		<c:set var = "i" value = "0" />
+		<c:forEach var = "list" items = "${list}">
+			<c:set var = "i" value = "${i + 1}" />
+			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
+			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
-			<div class="section-Box">
-				<div class="L">My FollowList</div>
-				<c:set var="i" value="0" />
-				<c:forEach var="list" items="${list}">
-					<c:set var="i" value="${i + 1}" />
-					<div class="follow-section" style="margin-left: 300px;">
-						<div style="display: inline-block;">
-							<img
-								src="/resources/image/uploadFiles/${list.receiveId.profileImage}"
-								width="100" height="100" />
-						</div>
-						<div style="float: right; margin-right: 300px;">
-							<h4 id="yourHome">${list.receiveId.nickName}</h4>
-						</div>
-						<input type="hidden" name="receiveId" id="receiveId"
-							value="${list.receiveId.userId }">
-					</div>
-				</c:forEach>
+				
+				</div>
+			</c:forEach>
+			
+				
+				</div>
+				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+     <div class="col-md-4" id="fl">
+					 		<br />
+		
+			
+								
+</div>
+</div>
+  </div>
+			
+		
+<div class="tabs2">
+    <input id="all" type="radio" name="tab_item" checked>
+    <label class="tab_item1" for="all">내가 쓴 피드</label>
+    <input id="programming" type="radio" name="tab_item">
+    <label class="tab_item2" for="programming">내 모임 게시물</label>
+    
+ 
+    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left:-30px;">
+        		<div class="comment-section" style="margin-left:-50px; width:720px; " >
+					<br />
+					<c:set var="i" value="0"></c:set>
+					<c:forEach var="feed" items="${feedList}">
+						<c:set var="i" value="${i + 1}"></c:set>
 
+						<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
 
-				<!-- single-comment -->
+							<div class="single-comment">
+								<form class="feedForm">
+									<div class="comment-author">
 
-
-				<div class="f">My Feed</div>
-				<br />
-				<c:set var="i" value="0"></c:set>
-				<c:forEach var="feed" items="${feedList}">
-					<c:set var="i" value="${i + 1}"></c:set>
-
-					<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
-
-						<div class="single-comment">
-							<form class="feedForm">
-								<div class="comment-author">
-
-									<img src="/resources/image/uploadFiles/${getUser.profileImage}"
+										<img
+										src="/resources/image/uploadFiles/${getUser.profileImage}"
 										class="img-responsive" width="100" height="100"> <cite>${getUser.nickName }</cite>
-									<span class="says">says:</span>
-								</div>
-								<!-- comment-author -->
-								<div class="comment-meta">
-									<time datetime="2013-03-23 19:58">March 23, 2013 at 7:58
-										pm</time>
-									/ <a href="#" class="reply">Reply</a>
-								</div>
-								<!-- comment-meta -->
-								<p>${feed.content}</p>
-								<c:if test="${!empty feed.hashtag}">
-									<br />${feed.hashtag}</c:if>
-								<c:if test="${feed.checkHeart != 0}">
+										<span class="says">says:</span>
+									</div>
+									<!-- comment-author -->
+									<div class="comment-meta">
+										<time datetime="2013-03-23 19:58">March 23, 2013 at
+											7:58 pm</time>
+										/ <a href="#" class="reply">Reply</a>
+									</div>
+									<!-- comment-meta -->
+									<p>${feed.content}</p>
+									<c:if test="${!empty feed.hashtag}">
+										<br />${feed.hashtag}</c:if>
+									<c:if test="${feed.checkHeart != 0}">
 										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
 										</c:if>
-								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-									<input type="button" class="btn_update" value="수정">
-									<input type="button" class="btn_delete" value="삭제">
-								</c:if>
-								<input type="button" class="btn_getFeed" value="보기"> <input
-									type="hidden" name="feedNo" value="${feed.feedNo}">
+									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+										<input type="button" class="btn_update" value="수정">
+										<input type="button" class="btn_delete" value="삭제">
+									</c:if>
+									<input type="button" class="btn_getFeed" value="보기"> <input
+										type="hidden" name="feedNo" value="${feed.feedNo}">
 
-								<section class="row section">
-									<div class="row">
-										<c:if test="${feed.checkHeart == 0}">
-											<div class="column two like" style="display: show;">
-												좋아요</div>
-											<div class="column two dislike" style="display: none;">
-												시러요</div>
-										</c:if>
-										<c:if test="${feed.checkHeart != 0}">
-											<div class="column two like" style="display: none;">
-												좋아요</div>
-											<div class="column two dislike" style="display: show;">
-												시러요</div>
-										</c:if>
-										<div class="column two likeCount">${feed.heartCount}</div>
+									<section class="row section">
+										<div class="row">
+											<c:if test="${feed.checkHeart == 0}">
+												<div class="column two like" style="display: show;">
+													좋아요</div>
+												<div class="column two dislike" style="display: none;">
+													시러요</div>
+											</c:if>
+											<c:if test="${feed.checkHeart != 0}">
+												<div class="column two like" style="display: none;">
+													좋아요</div>
+												<div class="column two dislike" style="display: show;">
+													시러요</div>
+											</c:if>
+											<div class="column two likeCount">${feed.heartCount}</div>
 
-										<div class="column two comment">댓글수</div>
+											<div class="column two comment">댓글수</div>
 
-										<div class="column two commentCount">
-											${feed.commentCount}</div>
-										<div class="column four last">신고</div>
-									</div>
-								</section>
-							</form>
-						</div>
+											<div class="column two commentCount">
+												${feed.commentCount}</div>
+											<div class="column four last">신고</div>
+										</div>
+									</section>
+								</form>
+							</div>
 
-					</c:if>
-				</c:forEach>
+						</c:if>
+					</c:forEach>
 
+				</div>
+    </div>
+    <div class="tab_content" id="programming_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left : 10px;">
+    
+    <br/>
+     <div class="col-md-4" id="cp">
+											
+</div>
+
+  </div>
 			</div>
-			<!-- single-comment -->
-
 		</div>
+		
 	</main>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/beetle.js"></script>
+    
+	 
+	<script type="text/javascript">
+$(function() {
+	$(".tab_item2").on("click" , function(e) {
+		var userId = $("#yuserId").val();
+		console.log(userId);
+		$(".tab_item2").off(e);
+	$.ajax({
+		url : "/myHomeRest/json/getClubPostList", // 어디로 갈거니? // 갈 때 데이터
+		type : "POST", // 타입은 뭘 쓸거니?
+		datatype : "json",
+		 data		:  JSON.stringify({
+			userId : userId
+		 }),
+		 
+		contentType : "application/json",
+		success : function(data, status) {
+			
+       console.log(data.ClubPostList);
+       $.each(data.ClubPostList, function(index, item) { // 데이터 =item
+    	   console.log(item.clubPostNo);
+			var value = 
+				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='400' width='700'>"+
+			
+		"</a>"+
+		
+		"<div style='display: flex; width: 87%;'>"+
+			"<div style='flex:1;'>"+
+			"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+					"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='100' width='100'>"+
+				"</a>"+
+			"</div>"+
+			"<div style='flex:1;'>"+
+				/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
+				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+					"<p align='center' style='font-size: 30px; color: red;'>"+ item.user.nickName+ "</p>"+
+				"</a>"+
+			"</div>"+
+			"<div style='flex:1;'>"+
+				"<p align='center' style='font-size: 30px'>"+ item.clubPostHeartCount+ "</p>"+
+			"</div>"+
+		
+			
+		"</div>"+
+		"<div style='width: 87%;'>"+
+			"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
+		"</div>";
+
+			$("#cp").append(value);       
+                      
+			
+		})
+		
+		}	
+	});
+});
+	
+	$(".tab_item-following").on("click" , function(e) {
+		var userId = $("#yuserId").val(); 
+		$(".tab_item-following").off(e);
+	$.ajax({
+		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
+		type : "POST", // 타입은 뭘 쓸거니?
+		datatype : "json",
+		 data		:  JSON.stringify({
+			receiveId : userId
+		 }),
+		 
+		contentType : "application/json",
+		success : function(data) { 
+       console.log(data.followerList[1]);
+       $.each(data.followerList, function(index, item) { // 데이터 =item
+    	   console.log(item);
+			var value = 
+				"<div class='following-section' style='margin-left:50px;' id="+item.userId+">"+
+			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
+			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+		"</div>";
+			
+			
+			$("#fl").append(value);            
+			
+		})
+		
+		}	
+	});
+});
+	
+	 
+});	
+
+</script>
+	
 
 </body>
-
 </html>

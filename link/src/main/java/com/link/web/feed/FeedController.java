@@ -68,12 +68,15 @@ public class FeedController {
 		user = (User) httpSession.getAttribute("user");
 		feed.setUser(user);
 		
+		String originalContent = feed.getContent();
 		// 이미지 파싱
 		
 		Pattern pattern  =  Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
 		Matcher match = pattern.matcher(feed.getContent());
 		
 		String[] fileName = new String[4];
+		
+		System.out.println("이미지 커트 전 : " + feed.getContent());
 		
 		int count = 0;
 		while(match.find()){
@@ -119,6 +122,8 @@ public class FeedController {
 		
 		// 영상 등록
 		
+		System.out.println("영상커트 : " + feed.getContent());
+		
 		if((feed.getContent()).contains("src=\"")) {
 			int startPoint = feed.getContent().indexOf("src=\"") + 7;
 			String inputString = feed.getContent().substring(startPoint, feed.getContent().length());
@@ -127,8 +132,10 @@ public class FeedController {
 			
 			System.out.println(splitBy[0]);
 			
-			int lastPoint = feed.getContent().lastIndexOf("\">");
-			feed.setContent(feed.getContent().substring(lastPoint + 2, feed.getContent().length()));
+			int lastPoint = feed.getContent().lastIndexOf("\">") + 2;
+			String videoString = feed.getContent().substring(feed.getContent().indexOf("<iframe"), lastPoint);
+			
+			feed.setContent(feed.getContent().replaceAll(videoString, " "));
 		}
 
 		// 해시태그 저장하기 시작
@@ -154,6 +161,8 @@ public class FeedController {
 		// 해시태그 저장하기 종료
 		
 		// Report & Push
+		
+		feed.setContent(originalContent);
 		
 		feedService.addFeed(feed);
 		

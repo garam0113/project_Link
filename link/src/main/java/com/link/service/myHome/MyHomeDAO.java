@@ -18,7 +18,7 @@ public interface MyHomeDAO {
 	
     public void addFollow(User user) throws Exception;
 
-    public User getFollow(User user) throws Exception;
+    public List<User> getFollow(User user) throws Exception;
 	
 	public List<User> getFollowList(Search search) throws Exception;
 	
