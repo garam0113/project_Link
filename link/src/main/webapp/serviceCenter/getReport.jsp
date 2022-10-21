@@ -152,6 +152,14 @@
 
 		    </div>
 		  	</tr>
+		 <tr>
+				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+			</tr>
+			<tr>
+				<td width="104" class="ct_write">신고한 ID</td>
+				<td bgcolor="D6D6D6" width="1"></td>
+				<td class="ct_write01">${report.user1.userId}</td>
+			</tr>
 			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
@@ -169,6 +177,20 @@
 				<td class="ct_write01">${report.user2.reportCount}</td>
 			</tr>
 			<tr>
+			<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+			</tr>
+				<tr>
+				<td width="104" class="ct_write">신고출처</td>
+				<td bgcolor="D6D6D6" width="1"></td>
+				<td class="ct_write01">
+				<c:if test="${report.reportSource=='0'}">실험중</c:if>
+				<c:if test="${report.reportSource=='1'}">모임게시물</c:if>
+				<c:if test="${report.reportSource=='2'}">모임게시물댓글</c:if>
+				<c:if test="${report.reportSource=='3'}">피드</c:if>
+				<c:if test="${report.reportSource=='4'}">피드댓글</c:if>
+				</td>
+			</tr>
+			<tr>
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
 			<tr/><tr/>
@@ -181,7 +203,7 @@
 				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 			</tr>
 			<tr>
-				<td width="104" class="ct_write">신고처리날짜d</td>
+				<td width="104" class="ct_write">신고처리날짜</td>
 				<td bgcolor="D6D6D6" width="1"></td>
 				<td class="ct_write01">${report.user2.stopStartDate}</td>
 			</tr>

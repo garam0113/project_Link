@@ -181,7 +181,7 @@
 		
 		<div class="row">
 			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 제 목</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div><a href="/club/getMeetingMemberList">미팅참여자</a> 		
+			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
 		</div>
 			
 		
@@ -216,7 +216,7 @@
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(일정참여자)</a></div>
 			<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
 			
 		</div>
@@ -227,11 +227,7 @@
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 				
-					<%-- <c:if test=""> --%>				
 					<button type="button" class="btn btn-success"  >참&nbsp;가&nbsp;신&nbsp;청</button>
-					<%-- </c:if> --%>
-					<button type="button" class="btn btn-default">신&nbsp;청&nbsp;취&nbsp;소</button>
-					
 					<button type="button" class="btn btn-primary" > 이&nbsp;전</button>
 					<button type="button" class="btn btn-warning"  >수&nbsp;정</button>
 		      		<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>

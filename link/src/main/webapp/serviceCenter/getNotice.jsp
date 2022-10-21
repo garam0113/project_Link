@@ -1,193 +1,137 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 
-<%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
-<html>
+
+<html lang="ko">
 
 <head>
+<title>공지사항 조회</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title></title>
-</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"> <%-- 자바스크립트 시작 --%>
 	$(function() {
 
-		$("td.ct_btn01:contains('이전')").bind("click", function() {
-
-			history.go(-1);
-
-		});
-
-		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateNotice?noticeNo="+$('tr.noticeNo').find('td').text();
+		$("button:contains('뒤로')").bind("click", function() {
+			self.location = "/serviceCenter/getNoticeList";
 		})
 
-		$("td.ct_btn01:contains('삭제')").bind("click", function() {
+		$("button:contains('수정')").bind("click", function() {
+			self.location = "/serviceCenter/updateNotice?noticeNo="+$('#noticeNo').val();
+		})
+
+		$("button:contains('삭제')").bind("click", function() {
 			
 			alert($('tr.noticeNo').find('td').text());
 			
-		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('tr.noticeNo').find('td').text(); 
+		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('#noticeNo').val(); 
 		})
 
 	});
 </script>
+<style> <%-- CSS 시작 --%>
+textarea { <%-- textarea 사이즈 변경 제한 --%>
+	resize: none;
+}
 
-<body bgcolor="#ffffff" text="#000000">
+</style>
 
-	<form>
-
-		<table width="100%" height="37" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr>
-				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-					width="15" height="37"></td>
-				<td background="/images/ct_ttl_img02.gif" width="100%"
-					style="padding-left: 10px;">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="93%" class="ct_ttl01">공지사항 조회</td>
-							<td width="20%" align="right">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-					width="12" height="37" /></td>
-			</tr>
-		</table>
-
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 13px;">
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">상품번호 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr class ="noticeNo">
-							<td width="105"><input type="hidden" name="noticeNo" id="noticeNo"value="${notice.noticeNo}">
-								${notice.noticeNo}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">제목 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeTitle}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-
-			<c:set var="text" value="${fn:split(notice.noticeImage1, '*')}"></c:set>
-
-			<tr>
-				<td width="104" class="ct_write">이미지 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>${notice.noticeImage1}
-				${notice.noticeImage2}
-				<img src="/resources/image/uploadFiles/${notice.noticeImage1}" width="100" height="100" align="absmiddle"/>
-				<img src="/resources/image/uploadFiles/${notice.noticeImage2}" width="100" height="100" align="absmiddle"/>
-					
-			</tr>
-
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-
-			<tr>
-				<td width="104" class="ct_write">내용 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeContent}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">작성일자</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeRegDate}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">WoW</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01"><fmt:formatNumber type="number"
-						maxFractionDigits="3" value="${notice.noticeCount}" /></td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
+</head>
+<%-- 테이블 시작 --%>
+<jsp:include page="/toolbar.jsp" />
+<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+  <h2>공지사항 상세보기</h2>
+</div>
 	
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-		</table>
+		<div class="container" style="margin-top: 37px;">
+			<!--  table Start /////////////////////////////////////-->
+			<table>
+				<div class="row2">
+				<thead>
+				</thead>
+				</div>
+				</tbody>
+					 <tr class = "body" id ="body" >
+						<th style="text-align-last: center;"></th>
+						<td align="left">${notice.noticeNo}번 공지사항
+						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
+						</td>
+					</tr>
+					<tr class = "content" id ="content">
+						<th style="text-align-last: center;">제목</th>
+						<td>		
+						<textarea class="text" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}"  
+						style="width: 900px; height:40px;" readonly >${notice.noticeTitle}</textarea>
+						</td> 
+					</tr>
+					<tr>
+						<th></th>
+						<td align="left" name ="noticeRegDate" id="noticeRegDate">${notice.noticeRegDate }</td>
+						<td align="left" style="transform: translateX(-370px);">${notice.userId.nickName}</td>
+						
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td>
+						<textarea class="text" id="noticeContent" name="noticeContent" value="${notice.noticeContent}"  
+						style="width: 900px; size:400px;" readonly >${notice.noticeContent}</textarea>
+						</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">첨부파일</th>
+						<c:if test="${notice.noticeImage1 == null && notice.noticeImage2 ==null }">
+							<td>첨부파일 없음</td>
+						</c:if>
+						<td><c:if test="${notice.noticeImage1 != null }">
+						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
+						
+						</c:if>
+						<c:if test="${notice.noticeImage2 != null }">
+						<img src="/resources/image/uploadFiles/${notice.noticeImage2}" 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
+						
+						</c:if>
+						</td>
+						
+						
+					</tr>
+					<tr >
+						<th style="text-align-last: center;"></th>
+					</tr>
+			</table>
+			<!--  table End /////////////////////////////////////-->
+	
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
+		
+						
+									<div> 
+									<c:if test="${user.userId=='admin1'}">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									   수정</button> 
+									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									   삭제</button> 
+									</c:if>
+									<button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
+									뒤로</button>
+									</div>
+				
+			</div>
 
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-
-							
-								<table border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td class="ct_write01"><input type="hidden"
-											id="Quantity" name="Quantity" value="1" /></td>
-									</tr>
-								</table>
-							<td width="30"></td>
-							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">수정</td>
-							
-							<td width="30"></td>
-
-							<td background="/images/ct_btnbg02.gif" class="ct_btn01"
-								style="padding-top: 3px;">삭제</td>
-								
-							<td width="14" height="23">
-							<td background="/images/ct_btnbg02.gif" width="90"
-								class="ct_btn01" style="padding-top: 3px;">이전</td>
-
-							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
-								width="14" height="23"></td>
-
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
-	</form>
 
 </body>
 

@@ -36,8 +36,12 @@
 		});
 
 		$("button:contains('µÚ·Î')").bind("click", function(){
-			
-			history.go(-1);
+			if(${empty sessionScope.user.userId}){
+				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			}
+			if(${!empty sessionScope.user.userId}){
+				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
+			}
 		})
 		
 		

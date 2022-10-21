@@ -21,6 +21,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -229,6 +230,9 @@ public class ClubPostController {
 		map = clubPostServiceImpl.getClubPost(map);
 		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
 		
+		clubPost.setUser((User)session.getAttribute("user"));
+		//session.setAttribute("clubUser", clubPostServiceImpl.getClubMember(clubPost));
+		
 		model.addAttribute("clubPost", map);
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
 		return "forward:/clubPost/getClubPost.jsp";
@@ -337,13 +341,14 @@ public class ClubPostController {
 		// 둘 다 없으면 모임리스트로 간다
 		
 		// pay.setPayNavigation(1);
-		 pay.setClubNo(0);
+		// pay.setClubNo(0);
 		// 둘 다 없으면 모임원리스트로 간다
 		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
 		if( pay.getClubNo() != 0 ) {
 			// 모임대표가 가입승인 클릭시
 			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
-			Club returnClub = clubServiceImpl.getClub(pay.getClubNo());
+			Map<String, Object> map = clubServiceImpl.getClub(pay.getClubNo());
+			Club returnClub = (Club)map.get("club");
 			returnClub.setClubMaxMember(returnClub.getClubMaxMember());
 			model.addAttribute("returnClub", returnClub);
 			

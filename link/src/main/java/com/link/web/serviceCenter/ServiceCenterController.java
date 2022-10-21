@@ -32,7 +32,6 @@ import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
-@SessionAttributes("user")
 @RequestMapping("/serviceCenter/*")
 public class ServiceCenterController {
 
@@ -59,9 +58,6 @@ public class ServiceCenterController {
 	@RequestMapping(value = "addNotice" , method = RequestMethod.POST)
 	public String addNotice(@ModelAttribute Notice notice, @RequestParam("image") MultipartFile[] file, Model model) throws Exception {
 		System.out.println(notice);
-		User user = new User();																			//★ 지워야됨
-		user.setUserId("admin1");																		//★ 
-		notice.setUserId(user);																			//★
 		System.out.println("/ServiceCenter/addNotice : GET & POST");
 		
 		//파일 업로드 시작
@@ -95,38 +91,28 @@ public class ServiceCenterController {
 		
 	
 	@RequestMapping(value = "getNotice")
-	public String getNotice(@ModelAttribute Notice notice, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+	public String getNotice(@ModelAttribute Notice notice, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
 		
 		System.out.println("/ServiceCenter/getNotice : GET & POST");
 		
-		User user = new User();																			//★ 지워야됨
-		user.setUserId("admin1");																		//★ 
-		notice.setUserId(user);
-		
+	
 		serviceCenterService.getCount(notice.getNoticeNo());
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());
 		
 		model.addAttribute("notice", notice);
-		model.addAttribute("menu", menu);
+
+
+		String	URI = "forward:/serviceCenter/getNotice.jsp";   //지워야됨
 		
-		String URI = null;
-		
-		if(menu.equals("manage")) {
-			URI = "forward:/serviceCenter/updateNotice";
-		} else if (menu.equals("search")) {
-			URI = "forward:/serviceCenter/getNotice.jsp";
-		} else {
-			URI = "forward:/serviceCenter/getNotice.jsp";   //지워야됨
-		}
 		
 		return URI;
 	}
 	
 	
 	@RequestMapping(value = "deleteNotice")
-	public String deleteNotice(@ModelAttribute Notice notice, @RequestParam(value ="menu", defaultValue ="search") String menu, 
+	public String deleteNotice(@ModelAttribute Notice notice, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
 		System.out.println("/ServiceCenter/deleteNotice : GET & POST");
@@ -225,7 +211,7 @@ public class ServiceCenterController {
 	}
 
 
-	@RequestMapping(value = "getQandA")
+	@RequestMapping(value = "getQandA", method = RequestMethod.GET)
 	public String getQandA(@ModelAttribute QandA qandA, @RequestParam(value = "menu", defaultValue = "search") String menu, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
@@ -302,49 +288,55 @@ public class ServiceCenterController {
 		return "forward:/serviceCenter/getQandAList";
 	}
 	
-	@RequestMapping(value = "getQandAList/{userId}" , method = RequestMethod.GET)
-	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,
-			@RequestParam(value = "menu", defaultValue = "search") String menu, String UserId, Model model, @PathVariable String userId) throws Exception {
+	@RequestMapping(value = "getQandAList" , method = RequestMethod.GET)
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,  Model model) throws Exception {
+			System.out.println("/serviceCenter/getQandAList : GET ");
+			if(search.getOrder()==0) {
+			search.setOrder(2);
+			}
+			if(search.getCurrentPage() == 0) {
+				search.setCurrentPage(1);
+			}
+									
+			search.setPageSize(pageSize);
+			Map<String, Object> map = serviceCenterService.getQandAList(search, qandA);
 		
-		System.out.println("/serviceCenter/getQandAList :GET");
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);	
-
-		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA , userId);
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
+			model.addAttribute("getQandAList", map.get("getQandAList"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
 		
-		model.addAttribute("getQandAList", map.get("getQandAList"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		model.addAttribute("menu", menu);
-		
-		return "forward:/serviceCenter/getQandAList.jsp";
+			return "forward:/serviceCenter/getQandAList.jsp";
 	}
 	
 	@RequestMapping(value = "getQandAList" , method = RequestMethod.POST)
 	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,
-			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
+		 String UserId, Model model, HttpSession httpSession ) throws Exception {
+		System.out.println("/serviceCenter/getQandAList :POST");
+
+		if(search.getOrder()==0) {
+		search.setOrder(3);
+		}
+		User userId = (User)httpSession.getAttribute("user");
+		search.setUserId(userId.getUserId());
 		
-		System.out.println("/serviceCenter/getQandAList : POST ");
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);	
-		String userId="";
-		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA , userId);
+		search.setPageSize(pageUnit);
+		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
 		
 		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("menu", menu);
 		
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
+	
 	
 // 여기까지가 QandA 끝 ====================================================================
 
@@ -412,7 +404,7 @@ public class ServiceCenterController {
 	}
 	
 	@RequestMapping(value = "getReport")
-	public String getReport(@ModelAttribute Report report, @RequestParam(value = "menu", defaultValue = "search") String menu, 
+	public String getReport(@ModelAttribute Report report, 
 								 Model model , HttpServletResponse response) throws Exception {
 		
 		
@@ -422,24 +414,16 @@ public class ServiceCenterController {
 		report = serviceCenterService.getReport(report.getNo());
 		
 		model.addAttribute("report", report);
-		model.addAttribute("menu", menu);
 		
-		String URI = null;
-		
-		if(menu.equals("manage")) {
-			URI = "forward:/serviceCenter/updateReport";  //매니저일경우
-		} else if (menu.equals("search")) {
-			URI = "forward:/serviceCenter/getReport.jsp"; //회원일경우
-		} else {
-			URI = "forward:/serviceCenter/getReport.jsp"; 
-		}
+		String URI =  "forward:/serviceCenter/getReport.jsp"; 
+
 		
 		return URI;
 	}
 	
-	@RequestMapping(value = "getReportList")
+	@RequestMapping(value = "getReportList/{userId}", method = RequestMethod.POST)
 	public String getReportList(@ModelAttribute("search") Search search, Report report, 
-			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model) throws Exception {
+			 Model model, @PathVariable String userId) throws Exception {
 		
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 		
@@ -449,7 +433,31 @@ public class ServiceCenterController {
 		
 		search.setPageSize(pageSize);
 		
-		String userId ="user03";
+		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")), pageUnit, pageSize);
+		
+		model.addAttribute("getReportList", map.get("getReportList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+	
+		
+		return "forward:/serviceCenter/getReportList.jsp";
+	}
+	
+	@RequestMapping(value = "getReportList" , method = RequestMethod.GET)
+	public String getReportList(@ModelAttribute("search") Search search, Report report, 
+			Model model) throws Exception {
+		
+		System.out.println("/serviceCenter/getReportList : GET & POST");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		
+		String userId ="";
 		
 		System.out.println(search);
 		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
@@ -459,7 +467,7 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("menu", menu);
+	
 		
 		return "forward:/serviceCenter/getReportList.jsp";
 	}
