@@ -66,7 +66,7 @@
 	$(function() {
 
 		$("a[href='#']").bind("click", function() {
-			history.go(-1);
+			window.close();
 		});
 	});
 
@@ -124,7 +124,7 @@
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file" value="${club.clubImage}">
+					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
 				</div>		
 			</div>
 			

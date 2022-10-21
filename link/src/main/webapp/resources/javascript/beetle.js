@@ -179,7 +179,7 @@ jQuery(document).ready(function ($) {
     }
 
 
-   
+
     /* Fixed header if there's no Big slider */
 
     if (!pxWrapper.length) {

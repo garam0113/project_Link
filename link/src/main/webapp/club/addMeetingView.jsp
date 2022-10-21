@@ -16,7 +16,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
@@ -29,7 +28,10 @@
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
-		
+  
+  <!-- 타임피커 -->
+  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
     
 	<script type="text/javascript">
@@ -80,6 +82,21 @@
 		$("#datepicker").datepicker();
 	});
 	
+	
+	$(document).ready(function(){
+		$("#timepicker").timepicker({
+			timeFormat: 'HH:mm' ,
+			interval: 30,
+			startTime: '00:00' ,
+			dynamic: false,
+			dropdown: true,
+			scrollbar: true
+		});
+	});
+	
+	
+	
+	
 	var openWin;
 	function popup() {
 		var url = "/club/searchPlace.jsp";
@@ -128,33 +145,33 @@
 						<tbody>
 							<tr>
 								<th><span>모 임 일 정 제 목</span></th>
-								<td><input style="height: 40px;" type="text" id="meetingTitle" name="meetingTitle" placeholder="모임일정제목은 필수입니다.">
+								<td><input style="height: 40px;" type="text" id="meetingTitle" name="meetingTitle" placeholder="모임일정제목은 필수입니다." autocomplete='off'>
 								</td>
 							</tr>
 							
 							<tr>
 								<th><span>모 임 날 짜</span></th>
-								<td><input type="text" id="datepicker" name="meetingDate" placeholder="모임날짜는 필수입니다." style="height: 40px"></td>
+								<td><input type="text" id="datepicker" name="meetingDate" placeholder="모임날짜는 필수입니다." style="height: 40px" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
 								<th><span>모 임 시 간</span></th>
-								<td><input type="text" id="meetingTime" name="meetingTime" placeholder="모임시간은 필수입니다." style="height: 40px"></td>
+								<td><input type="text" class="timepicker" id="timepicker" name="meetingTime" placeholder="모임시간은 필수입니다." style="height: 40px" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
 								<th><span>일 정 내 용</span></th>
-								<td><input type="text" id="meetingContent" name="meetingContent" placeholder="일정내용은 필수입니다." style="height: 40px"></td>
+								<td><input type="text" id="meetingContent" name="meetingContent" placeholder="일정내용은 필수입니다." style="height: 40px" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
 								<th><span>정 원</span>
-								<td><input type="text" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="모임일정 정원을 입력하세요"></td>
+								<td><input type="text" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="모임일정 정원을 입력하세요" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
 								<th><span>모 임 장 소</span></th>
-								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다."></td>
+								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다." autocomplete='off'></td>
 								
 							<tr>
 								<th></th>

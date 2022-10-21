@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;

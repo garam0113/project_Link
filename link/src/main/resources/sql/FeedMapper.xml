@@ -317,44 +317,57 @@
 	
 	<!--========================================사용========================================-->
 	<select 	id="getFeedList"			parameterType="hashmap"		resultMap="feedSelectMap">
-		SELECT 
-		f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
-		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
-		<choose>
-			<when test="user != null">
-				, isLike.EXIST FROM users u, feed f, (
-												SELECT
-												source_no as EXIST
-												FROM HEART
-												WHERE TRIM(source)		= '0'
-												AND user_id			= #{user.userId}
-																							) isLike
-				<where>
-				u.user_id = f.user_id
-				AND f.feed_no = isLike.EXIST(+)
-				</where>
-				<if test="search.searchKeyword != ''">
-					AND f.feed_content LIKE '%${search.searchKeyword}%'
-				</if>
-				
-				<!-- 마이홈페이지 유무 -->
-				<if test="myHome == 1">
-					AND f.user_id		= #{user.userId}
-				</if>
-				
-				ORDER BY feed_no DESC
-			</when>
-			<otherwise>
-			FROM users u, feed f
-			<if test="search.searchKeyword != ''">
-			<where>
-			u.user_id = f.user_id
-			AND f.feed_content LIKE '%${searchKeyword}%'
-			</where>
-			</if>
-			ORDER BY feed_no DESC
-			</otherwise>
-		</choose>
+		SELECT
+		inner_table.*
+		FROM (
+			SELECT
+			rownum AS row_seq,
+			deep_table.*
+			FROM (
+					SELECT 
+					f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
+					f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
+					<choose>
+						<when test="user != null">
+							, isLike.EXIST FROM users u, feed f, (
+															SELECT
+															source_no as EXIST
+															FROM HEART
+															WHERE TRIM(source)		= '0'
+															AND user_id				= #{user.userId}
+																										) isLike
+							<where>
+							u.user_id = f.user_id
+							AND f.feed_no = isLike.EXIST(+)
+							AND f.feed_open_condition	=	'3'
+							AND f.report_condition		=	'0'
+							AND f.delete_condition		=	'0'
+							</where>
+							<if test="search.searchKeyword != null">
+								AND f.feed_content LIKE '%${search.searchKeyword}%'
+							</if>
+							
+							<!-- 마이홈페이지 유무 -->
+							<if test="myHome == 1">
+								AND f.user_id		= #{user.userId}		
+							</if>
+							ORDER BY feed_no DESC
+						</when>
+						<otherwise>
+						FROM users u, feed f
+						WHERE u.user_id = f.user_id
+						AND f.feed_open_condition	=	'3'
+						AND f.report_condition		=	'0'
+						AND f.delete_condition		=	'0'
+						<if test="search.searchKeyword != null">
+							AND f.feed_content LIKE '%${search.searchKeyword}%'
+						</if>
+						ORDER BY feed_no DESC
+						</otherwise>
+					</choose>
+												) deep_table
+			WHERE ROWNUM &lt;= #{search.endRowNum} 					) inner_table
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	<!--========================================사용========================================-->
 	
@@ -424,7 +437,8 @@
 				report_condition,
 				delete_condition
 				FROM feed
-				WHERE delete_condition				= '0'			
+				WHERE delete_condition				= '0'
+				AND report_condition				= '0'			
 															)
 	</select>
 	

@@ -5,8 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,16 +22,14 @@
 	<script src="/resources/javascript/beetle.js"></script>
 	
 	<%-- SUMMER NOTE --%>
-	<script src="/resources/summernote/summernote-lite.js" charset="UTF-8"></script>
+	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
 	
-	<%-- SWIPER API --%>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<%-- SWIPER API --%>
-	
 	<script type="text/javascript">
+	
+	
 	
 	function uploadSummernoteImageFile(file, el) {
 		data = new FormData();
@@ -49,8 +47,33 @@
 		});
 	}
 	
-	
 	$(function(){
+		
+		<%-- 무한 스크롤 --%>
+		
+		$(window).scroll(function() {
+			
+			if((Math.ceil($(window).scrollTop() + $(window).height())) == $(document).height()) {
+				
+				alert("무한 스크롤");
+				
+				var maxHeight = $(document).height();
+				var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+				var currentPage = parseInt($("#currentPage").val()) + 1;
+				
+				$.ajax(
+						
+				
+				
+				) // ajax close
+				
+			} // if close
+		
+		}); // window scroll event close
+		
+		<%-- 무한 스크롤 --%>
+		
+		
 		
 		<%-- SUMMER NOTE WEB LOADING --%>
 		$('#summernote').summernote({
@@ -65,6 +88,7 @@
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
 			placeholder: '오늘 하루는 어떤가요?',
 			lang:'ko-KR',
+			
 			
 			callbacks : { 
             	onImageUpload : function(files, editor, welEditable) {
@@ -111,10 +135,12 @@
 		$(document).on("click", ".btn_delete", function(event){
 			event.stopPropagation();
 			console.log("피드 삭제 버튼");
-			console.log($(this).html())
+			console.log( $(this).parent().parents(".feedForm").html());
 			
-			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
-			$(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			if(confirm) {
+				// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+				$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			}
 		});
 		<%-- DELETE_FEED --%>
 		
@@ -196,6 +222,7 @@
 		})
 		<%-- DELETE_FEED_HEART --%>
 		
+<<<<<<< HEAD
 		<%-- CAROUSEL EVENT 침범 방지 --%>
 		
 		$J(document).on("click", ".swiper", function(event) {
@@ -204,6 +231,13 @@
 		
 				
 		<%-- CAROUSEL EVENT 침범 방지 --%>
+=======
+		<%-- CAROUSEL 침범 방지 --%>
+		$(document).on("click", ".carousel-control", function(event) {
+			event.stopPropagation();
+		})
+		<%-- CAROUSEL 침범 방지 --%>
+>>>>>>> refs/remotes/origin/master
 		
 		<%-- CALL REPORT --%>
 		$(document).on("click", ".report", function(event) {
@@ -274,13 +308,17 @@
 		width:75px;
 		height:35px;
 		float:right;
-		margin-top:14px;
-		margin-right:3px;
+		margin-top:18px;
+		margin-right:18px;
 		font-size: 0.5em !important;
 	}
 	
 	section.row.section {
-		background-color: black;
+		background-color: #111010;
+	}
+	
+	body.single-post {
+		background-color: #111010 !important;
 	}
 	
 	div.feedContent {
@@ -307,10 +345,6 @@
 	}
 	/* 신고 아이콘 CSS */
 	
-	#carouselExampleSlidesOnly {
-		margin-top:10px
-	}
-	
 	.note-toolbar {
 		background-color: grey !important;
 	}
@@ -319,9 +353,49 @@
 		background-color: grey !important;
 	}
 	
-	section.row.section {
-		
+	.hashtagContent {
+		color: white;
+		margin-right: 5px;
+		margin-bottom: 25px;
+		margin-left: 5px;
 	}
+
+	.carousel {
+		margin-bottom: 25px;
+	}
+	
+	.feedContent {
+		margin-bottom: 25px;
+	}
+	
+	.sessionProfileImage {
+		vertical-align: sub !important; 
+		display: inline-block !important; 
+		width:50px; 
+		height:50px;
+		margin-top:10px; 
+		margin-bottom:10px; 
+		margin-left:10px;
+	}
+	
+	.note-editable p {
+		color: white;
+	}
+	
+	/* 좋아요 글자색 */
+	.likeCount {
+		color: white;
+	}
+	
+	/* 좋아요 글자색 */
+	.commentCount {
+		color: white;
+	}
+	
+	form.feedForm section.section {
+		height: 35px;
+	}
+	
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -355,11 +429,14 @@
 					<div class="column three">
 						<a href="http://localhost:5005/" onclick="window.open(this.href, '_blank', 'width=600, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">길찾기</a>
 						
-						<form id="searchForm" method="POST" action="/feed/getFeedList">
-							<%-- 검색 --%>
-							<input type="text" placeholder="검색" name="searchKeyword" value="">
-							<%-- 검색 --%>
+						<%-- 검색 --%>
+						<form id="searchForm" method="POST" action="/feed/getFeedList" accept-charset="euc-kr">
+							
+							<input type="text" style="width:200px" placeholder="검색" name="searchKeyword" value="">
+							
 						</form>
+						<%-- 검색 --%>
+						
 					</div>
 					
 					<div class="column six">
@@ -369,7 +446,7 @@
 							<c:if test="${!empty sessionScope.user}">
 							
 								<article role="main">
-									<img src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-bottom:2px; margin-left:10px;" /><h4 style="color:white; vertical-align: text-bottom;">${sessionScope.user.nickName}</h4>
+									<img class="sessionProfileImage" src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" /><h4 style="vertical-align: top;">${sessionScope.user.nickName}</h4>
 									<input class="plain button red addFeed" value="Submit">
 									<textarea id="summernote" name="content"></textarea>
 								</article>
@@ -390,7 +467,7 @@
 								<div class="showFeedForm">
 									<form class="feedForm">
 
-										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-left:10px" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-top:20px; margin-left:10px" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 										
 										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
@@ -399,27 +476,36 @@
 										
 										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 											
-											<div style="display: inline-block; float: right;">
+											<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">
 												<%-- 수정 버튼 --%>
 												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
 												<%-- 수정 버튼 --%>
 											
 												<%-- 삭제 버튼 --%>
-												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" style="margin-right:5px"></span>
+												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>
 												<%-- 삭제 버튼 --%>
 											</div>
 										</c:if>
 									
-										<div class="feedContent">${feed.content}</div>
+										<div class="feedContent">
+											${feed.content}
+										</div>
 										
 										<%-- 이미지 --%>
 										<c:if test="${!empty feed.image1}">
 										<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
 											<ol class="carousel-indicators">
 												<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-												<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-												<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-												<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+												
+												<c:if test="${!empty feed.image2}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+												</c:if>
+												<c:if test="${!empty feed.image3}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+												</c:if>
+												<c:if test="${!empty feed.image4}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+												</c:if>
 											</ol>
 										
 											<!-- Wrapper for slides -->
@@ -491,9 +577,11 @@
 										</c:if>
 										<%-- 영상 --%>
 										
-										<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
-										
-										<br />
+										<c:if test="${!empty feed.hashtag}">
+											<div class="hashtagContent">
+												${feed.hashtag}
+											</div>
+										</c:if>
 										
 										<%-- 피드 댓글 신고 --%>
 										<input type="hidden" name="reportSource" value="3">
@@ -507,7 +595,7 @@
 										<input type="hidden" name="openCondition" value="3">
 
 										<!-- 피드 좋아요 댓글수 신고 -->
-										<section class="row section">
+										<section class="row section lastBar">
 											<div class="row">
 												<c:if test="${feed.checkHeart eq 0}">
 													<div class="column two">
@@ -525,7 +613,7 @@
 												</div>
 												
 												<div class="column two comment">
-													<img src="/resources/image/uploadFiles/comments.jpg" width="30" height="30" style="margin-top : 0px;" />
+													<img src="/resources/image/uploadFiles/comments.jpg" width="25" height="25" style="margin-top : 4px;" />
 												</div>
 												
 												<div class="column two commentCount">
@@ -554,7 +642,9 @@
 
 					<div class="column three"></div>
 					
-					<input type="hidden" name="currentPage" value="1">
+					<%-- 현재 페이지 --%>
+					<input type="hidden" name="currentPage" value="${resultPage.currentPage}">
+					<%-- 현재 페이지 --%>
 					
 				</div>
 

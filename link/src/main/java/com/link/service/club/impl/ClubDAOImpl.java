@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.link.common.Search;
 import com.link.service.club.ClubDAO;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
@@ -68,12 +69,28 @@ public class ClubDAOImpl implements ClubDAO {
 //		return sqlSession.insert("ClubMapper.addClub",club);
 //	}
 
+	//getClub bak!
+//	@Override
+//	public Club getClub(int clubNo) throws Exception {
+//		
+//		System.out.println("getClub DAOImpl 왔나? ");
+//		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
+//	}
 	
 	@Override
-	public Club getClub(int clubNo) throws Exception {
+	public Map<String, Object> getClub(int clubNo) throws Exception {
 		
 		System.out.println("getClub DAOImpl 왔나? ");
-		return sqlSession.selectOne("ClubMapper.getClub",clubNo);
+		
+		Club club = sqlSession.selectOne("ClubMapper.getClub", clubNo);
+		
+		int totalClubMemberCount = sqlSession.selectOne("ClubMapper.getTotalClubMemberCount", new Search(clubNo+""));
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("club", club);
+		map.put("totalClubMemberCount", totalClubMemberCount);
+		
+		return map;
 	}
 	
 
@@ -83,13 +100,28 @@ public class ClubDAOImpl implements ClubDAO {
 //	}
 	
 	
-	
+	//getClubList bak!
 	@Override
 	public List<Club> getClubList(Search search) throws Exception {
 		
 		System.out.println("모임리스트 DAOImpl까지 왔나??");
 		return sqlSession.selectList("ClubMapper.getClubList",search);
 	}
+	
+//	@Override
+//	public Map<String, Object> getClubList(Search search) throws Exception {
+//		
+//		System.out.println("모임리스트 DAOImpl까지 왔나??");
+//		
+//		sqlSession.selectList("ClubMapper.getClubList",search);
+//		
+//		int totalClubMemberCount = sqlSession.selectOne("ClubMapper.getTotalClubMemberCount", new Search(search+"") );
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("search", search);
+//		map.put("totalClubMemberCount", totalClubMemberCount);
+//		
+//		return map;
+//	}
 	
 //	@Override
 //	public List<ClubUser> getMyClubList(Map<String, Object> map) throws Exception {
@@ -307,4 +339,13 @@ public class ClubDAOImpl implements ClubDAO {
 	   search.setSearchKeyword(pay.getClubNo()+"");
 	   return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}// end of updateClubMember(Pay pay, Search search)
+	
+	//모임원 직책??
+	@Override
+	public ClubUser getClubMember(ClubPost clubPost) throws Exception {
+	   // 모임 게시물 상세보기에서 모임원의 직책 필요
+	   return sqlSession.selectOne("ClubMapper.getClubMember", clubPost);
+	}
+
+	
 }
