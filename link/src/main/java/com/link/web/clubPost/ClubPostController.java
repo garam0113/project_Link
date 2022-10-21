@@ -197,7 +197,10 @@ public class ClubPostController {
 		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
 			System.out.println("영상이 있다");
 			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
-			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
+				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			}
 			// 파일명.확장자
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
 			System.out.println(str);
