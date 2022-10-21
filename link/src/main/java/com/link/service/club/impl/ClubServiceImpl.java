@@ -1,5 +1,6 @@
 package com.link.service.club.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.link.common.Search;
 import com.link.service.club.ClubDAO;
 import com.link.service.club.ClubService;
 import com.link.service.domain.Club;
+import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
@@ -53,7 +55,9 @@ public class ClubServiceImpl implements ClubService {
 	
 	
 	@Override
-	public Club getClub(int clubNo) throws Exception {
+	public Map<String, Object> getClub(int clubNo) throws Exception {
+		
+		System.out.println("getClub ServiceImpl 오나??");
 		return clubDAO.getClub(clubNo);
 	}
 	
@@ -116,8 +120,7 @@ public class ClubServiceImpl implements ClubService {
 //	}
 	
 	@Override
-	public Meeting getMeeting(int meetingNo) throws Exception {
-		
+	public Map<String, Object> getMeeting(int meetingNo) throws Exception {		
 		System.out.println("getMeeting ServiceImpl 오나??");
 		return clubDAO.getMeeting(meetingNo);
 	}
@@ -156,7 +159,8 @@ public class ClubServiceImpl implements ClubService {
 	public void addMeetingPush(Meeting meeting) throws Exception {
 		clubDAO.addMeetingPush(meeting);
 	}
-	
+
+	//getClubList bak!
 	@Override
 	public Map<String, Object> getClubList(Search search) throws Exception {
 		
@@ -169,6 +173,14 @@ public class ClubServiceImpl implements ClubService {
 		map.put("totalClubCount", new Integer(totalClubCount));
 		return map;
 	}
+	
+//	@Override
+//	public Map<String, Object> getClubList(Search search) throws Exception {
+//		
+//		System.out.println("clubList ServiceImpl까지 왔나??");
+//				
+//		return clubDAO.getClubList(search);
+//	}
 	
 //	@Override
 //	public Map<String, Object> getMyClubList(Map<String, Object> map) throws Exception {
@@ -253,7 +265,26 @@ public class ClubServiceImpl implements ClubService {
 		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
 		
 		return map;
-	}	
+	}
+	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<Map<String, Object>> getCalendarList(Map<String, Object> map) throws Exception {
+//		
+//		System.out.println("일정참여자리스트 Service Impl 왔나??");
+//		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		
+//		map.put("listMap", listMap);
+//		map.put("club", listMap)
+//
+//		int totalMeetingMemberCount = clubDAO.getTotalMeetingMemberCount(search);
+//		
+//		map.put("totalMeetingMemberCount",totalMeetingMemberCount);
+//		
+//		return (List<Map<String, Object>>) map;
+//	}
 	
 	//결제
 	@Override
@@ -262,5 +293,14 @@ public class ClubServiceImpl implements ClubService {
 	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
 	   return clubDAO.updateClubMember(pay, search);
 	}	
+	
+	//모임원 직책?
+	@Override
+	public ClubUser getClubMember(ClubPost clubPost) throws Exception {
+	   // 모임 게시물 상세보기에서 모임원의 직책 필요
+	   return clubDAO.getClubMember(clubPost);
+	}
+
+	
 	
 }

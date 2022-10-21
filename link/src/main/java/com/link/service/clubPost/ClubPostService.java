@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -27,6 +28,9 @@ public interface ClubPostService {
 	
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(ClubPost clubPost, Search search) throws Exception;
+	
+	// 상세보기에서 좋아요 여부
+	public int getCheckHeart(Heart heart) throws Exception;
 	
 	
 	

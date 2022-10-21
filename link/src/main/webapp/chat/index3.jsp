@@ -26,19 +26,29 @@
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script>
 //소켓서버에 접속시킨다.
-var socket = io.connect("http://localhost:3000",{
-	cors: { origin: "http://localhost:8080" }
+var socket = io.connect("http://localhost:3000/clubchat", { // clubchat 네임스페이스
+	cors: { origin: "*" },
+	path: '/socket.io'
+	/* query: {
+		userId : ${ sessionScope.user.userId },
+		profileImage : ${ sessionScope.user.profileImage },
+		nickName : ${ sessionScope.user.nickName }
+	} */
 });
+
+
 
 //사용자 참가
 socket.on('join', data => {
-    $('#chatLog').append('<li>' + data.username + '님이 방에 들어왔어유!</li>');
+    $('#chatLog').append('<li>' + data.username + '님이 입장하셨습니다</li>');
 });
 
 //사용자 종료
 socket.on('leave', data => {
-    $('#chatLog').append('<li>' + data.username + '님이 방에서 나갔어유!</li>');
+    $('#chatLog').append('<li>' + data.username + '님이 나가셨습니다</li>');
 });
+
+
 
 //server message 라는 이벤트명으로 대기
 socket.on('server message', function(data){

@@ -76,7 +76,7 @@
 			<div class="form-group">
 				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 일 정 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" placeholder="${meeting.meetingTitle}">
+					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" value="${meeting.meetingTitle}">
 				</div>						
 			</div>
 			
@@ -85,35 +85,35 @@
 			<div class="form-group">
 				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">모 임 날 짜</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="${meeting.meetingDate}">
+					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" value="${meeting.meetingDate}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">모 임 시 간</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" placeholder="${meeting.meetingTime}">
+					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" value="${meeting.meetingTime}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">모 임 장 소</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" placeholder="${meeting.meetingPlace}">
+					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" value="${meeting.meetingPlace}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
 				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">일 정 내 용</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingContent" name="meetingContent" placeholder="${meeting.meetingContent}">
+					<input type="text" class="form-control" id="meetingContent" name="meetingContent" value="${meeting.meetingContent}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> 정 원</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="${meeting.meetingMaximumMember}">
+					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" value="${meeting.meetingMaximumMember}">
 				</div>		
 			</div>
 			

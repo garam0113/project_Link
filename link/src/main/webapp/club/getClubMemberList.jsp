@@ -81,12 +81,18 @@
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		});
 		
+		$(function() {
+			$("#updateApprovalCondition").on("click", function() {
+				//alert("모임원을 승인합니다 : ");
+				$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+		});
+		
 		
 		
 		$(document).on("click", "#banMember", function(){
-			alert('추방');
+			//alert('추방');
 			var clubUserNo = $(this).val();
-			alert(clubUserNo);
+			//alert(clubUserNo);
 			$.ajax("/clubRest/json/deleteClubMember",
 					{
 						method : "POST" ,
@@ -105,18 +111,14 @@
 					refreshMemList();
 			}); //모임원 추방
 		
-			$(function() {
-				$("#updateApprovalCondition").on("click", function() {
-					alert("모임원을 승인합니다 : ");
-					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
-				});
+		
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
-				alert('승인');
+				//alert('승인');
 				var clubUserNo = $(this).val();
-				var approvalCondition = $(this).attr("approvalCondition");
-				alert(clubUserNo);
-				alert(approvalCondition);
+				var approvalCondition = $(this).attr('approvalCondition');
+ 				//alert(clubUserNo);
+				//alert(approvalCondition);
 				$.ajax("/clubRest/json/updateApprovalCondition",
 						{
 							method : "POST" ,
@@ -131,9 +133,9 @@
 							dataType : "json",
 							success : function(JSONData, status) {
 								alert(status);
-							} // end of success				
+							} // end of success
 						}); // end of ajax
-				refreshMemList();
+						refreshMemList();
 				}); // end of 승인
 
 	
@@ -169,8 +171,9 @@
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
 		});
 	});
+		});
 	});
-	});	
+	
 	</script>	
 	
 </head>
@@ -220,8 +223,7 @@
 						</li>
 					</ul>
 	
-			</div>
-		</div>
+		
 
 	<div class="container">
 	    
@@ -238,7 +240,6 @@
 						<button type="button" class="btn btn-primary">이&nbsp;전</button>
 						<button type="button" class="btn btn-warning"  >모&nbsp;임&nbsp;수&nbsp;정</button>
 						<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
-						
 		  			</div>
 				</div>	
 	    	
@@ -255,13 +256,14 @@
             <th align="center">프로필사진</th>	
             <th align="left" >회원 ID</th>
             <th align="left">회원 닉네임</th>
-            <th align="left"><center>모임직책</center></th>
+            <th align="left">모임직책</th>
             <th align="left">마지막 접속시간</th>
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
             <th align="left">직책수정</th>
             <th align="left">추방</th>
             <th align="left">승인/거절</th>
+            <th align="left">Max</th>
           </tr>
         </thead>
        
@@ -275,12 +277,12 @@
 			  <td align="left"><center>${i.memberRole}</center></td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
-			  <%-- <td align="left">${i.approvalCondition}</td> --%>
-			  <td><center>${i.approvalCondition}</center></td>
+			  <td align="center">${i.approvalCondition}</td>
+			  <%-- <td><center>${i.approvalCondition}</center></td> --%>
 			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
-<%-- 			  <input type="text" id="clubUserNo" name="clubUserNo" value="${i.clubUserNo}"> --%>
 			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
 			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
+			  <td>${i.club.clubMaxMember}</td>
 			</tr>
           </c:forEach>
         </tbody>
@@ -292,7 +294,8 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
-	
+	</div>
+	</div>
 	</div>
 	</main>
 </body>

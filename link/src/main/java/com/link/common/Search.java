@@ -17,6 +17,11 @@ public class Search {
 		
 	}
 
+	public Search(String searchKeyword) {
+		super();
+		this.searchKeyword = searchKeyword;
+	}
+
 	// ClubPost에서 사용
 	public Search(int currentPage, String searchCondition, String searchKeyword, int pageSize, int order) {
 		super();
@@ -78,13 +83,6 @@ public class Search {
 		return getCurrentPage() * getPageSize();
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Search : [currentPage] = " + currentPage + ", [order] = " + order +", [SearchCondition] = " + searchCondition 
-				+ ", [SearchKeyword] = " + searchKeyword + ", [pageSize] = " + pageSize
-				+ ", [startRowNum] = " + startRowNum + ", [endRowNum] = " + endRowNum;
-	}
 
 	public String getUserId() {
 		return userId;
@@ -93,4 +91,34 @@ public class Search {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Search [currentPage=");
+		builder.append(currentPage);
+		builder.append(", searchCondition=");
+		builder.append(searchCondition);
+		builder.append(", searchKeyword=");
+		builder.append(searchKeyword);
+		builder.append(", pageUnit=");
+		builder.append(pageUnit);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", startRowNum=");
+		builder.append(startRowNum);
+		builder.append(", endRowNum=");
+		builder.append(endRowNum);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
+	
+	
 }

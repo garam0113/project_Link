@@ -96,19 +96,66 @@ SELECT
 
 //모임원 리스트
 getClubMemberList()
-SELECT 
-	club_user_no, user_id, club_no, application_reg_date, join_reg_date, logout_date, member_role, approval_condition, join_greeting
-	FROM club_user
-	WHERE club_no = 2;
+SELECT inner_table.*
+				FROM ( SELECT rownum AS row_seq, deep_table.*
+						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image, c.club_max_member
+								FROM
+								users u, club_User cU, club c
+								WHERE cU.user_id = u.user_id
+										and cU.club_no = c.club_no
+										and cU.club_no = 103
+										) deep_table
+							) inner_table
+									
+									
+									
+										and cU.club_no = #{searchKeyword}
+
+
 	
 
 //모임일정 리스트
-getMeetingList()
-SELECT
-	meeting_no, club_no, meeting_title, meeting_date, meeting_time, meeting_place, meeting_weather, meeting_member, meeting_maximum_member
-	FROM meeting
-	WHERE club_no=2;
-
+SELECT inner_table.*
+		FROM (
+			SELECT rownum AS row_seq, deep_table.*
+			FROM (
+				SELECT
+					m.meeting_no ,
+					m.club_no ,
+					m.meeting_title ,
+					m.meeting_date ,
+					m.meeting_time ,
+					m.meeting_place , 
+					m.meeting_weather ,
+					m.meeting_member ,
+					u.user_id
+			
+					FROM meeting m, users u
+					
+					WHERE
+						m.add_meeting_user_id = u.user_id
+						and m.club_no = 103
+						
+						ORDER BY m.meeting_date ASC
+							) deep_table
+		) inner_table
+		
+		
+		
+		SELECT inner_table.*
+		FROM     SELECT rownum AS row_seq, deep_table.*    FROM (     SELECT      m.meeting_no ,      m.club_no ,      m.meeting_title ,      m.meeting_date ,      m.meeting_time ,      m.meeting_place ,       m.meeting_weather ,      m.meeting_member ,      u.user_id          FROM meeting m, users u        WHERE m.add_meeting_user_id = u.user_id      and m.club_no = ?          ) deep_table   ) inner_table
+						
+					
+					<if test="searchCondition == 0 and searchKeyword != '' ">
+						and m.club_no = #{searchKeyword}
+					</if>
+					<!-- <if test="searchCondition == 1 and searchKeyword != '' ">
+						and u.user_id = #{searchKeyword}
+					</if> -->
+			) deep_table
+		) inner_table
+		
+		
 //모임일정 참여자 리스트(조인해야함)
 getMeetingmemberList()
 SELECT
@@ -148,11 +195,18 @@ UPDATE meeting
 
 //모임일정 참여신청 취소
 deleteMeetingMember()
-DELETE FROM participant WHERE participant_no = 2;
+DELETE FROM participant WHERE participant_no = 108;
+
+
+DELETE FROM participant 
+WHERE participant_user_id = 'user15';
+
+
+SELECT * FROM participant;
 
 //모임일정 삭제
 deleteMeeting()
-DELETE FROM meeting WHERE meeting_no = 6;
+DELETE FROM meeting WHERE meeting_member = 1;
 
 //모임원 직책 수정
 updateMemberRole()
@@ -232,8 +286,21 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 
 				
 SELECT inner_table.*
-FROM ( SELECT rownum AS row_seq, deep_table.*
-		FROM ( SELECT p.participant_no, u.user_id, u.nickname, u.profile_image, m.meeting_title, m.meeting_place, m.meeting_time, m.meeting_date, m.club_no
+FROM ( 
+		SELECT rownum AS row_seq, deep_table.*
+		FROM ( 
+				SELECT 
+				p.participant_no, 
+				u.user_id, 
+				u.nickname, 
+				u.profile_image, 
+				m.meeting_title, 
+				m.meeting_place, 
+				m.meeting_time, 
+				m.meeting_date, 
+				m.club_no, 
+				m.meeting_no
+				
 				FROM participant p, users u, meeting m
 				
 				WHERE p.participant_user_id = u.user_id
@@ -241,7 +308,8 @@ FROM ( SELECT rownum AS row_seq, deep_table.*
 				and u.user_id = 'user04'		
 						 ) deep_table ) inner_table						 
 						 
-						and p.meeting_no = '2'						 
+						and p.meeting_no = '65'
+						and u.user_id = 'user04'
 						and u.user_id = #{searchKeyword} 
 						 
 						 
@@ -283,6 +351,33 @@ SELECT inner_table.*
 					FROM meeting m, users u
 					WHERE m.add_meeting_user_id = u.user_id and u.user_id = 'user01' ) deep_table ) inner_table 
 
+
+	SELECT COUNT(*)
+	  	FROM(	SELECT participant_no 
+						FROM participant
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			participant_no = #{searchKeyword}
+								</if>								
+							</where>
+						</if> ) countTable		
+
+	SELECT count(*)
+	FROM ( SELECT
+			participant_no
+			FROM participant
+			WHERE meeting_no = 84
+	) countTable
+	
+SELECT * FROM participant;
+
+
+	SELECT COUNT(*)
+	  	FROM(	SELECT club_no 
+						FROM club_user
+						WHERE club_no = #{searchKeyword}								
+			) countTable			
 
 
 

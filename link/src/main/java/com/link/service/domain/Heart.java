@@ -10,6 +10,13 @@ public class Heart {
 	public Heart() {
 	}
 
+	public Heart(String userId, String source, int sourceNo) {
+		super();
+		this.userId = userId;
+		this.source = source;
+		this.sourceNo = sourceNo;
+	}
+
 	public Heart(int heartNo, String userId, String source, int sourceNo) {
 		super();
 		this.heartNo = heartNo;
