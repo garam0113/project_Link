@@ -219,6 +219,7 @@ public class ClubPostController {
 		map.put("search", ClubPostCommon.getSearch(search));
 		map.put("clubPost", clubPost);
 		comment.setUser((User)session.getAttribute("user"));
+		comment.setClubPostNo(clubPost.getClubPostNo());
 		map.put("comment", comment);
 
 		// 해당 유저아이디, 모임게시물은 source가 2이다, 모임게시물번호를 보낸다
@@ -234,6 +235,8 @@ public class ClubPostController {
 		clubPost.setUser((User)session.getAttribute("user"));
 		System.out.println(clubPost.getClubNo() + ", " + clubPost.getUser());
 		session.setAttribute("clubUser", clubServiceImpl.getClubMember(clubPost));
+		
+		System.out.println("//////////////////////////////////////////////" + map.get("commentHeartList"));
 		
 		model.addAttribute("clubPost", map);
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList

@@ -159,7 +159,7 @@
 								//alert(JSONData.user.userId);
 								//alert(JSONData.user.profileImage);
 								//alert(JSONData.user.nickName);
-								alert(JSONData.clubPostCommentNo);
+								//alert(JSONData.clubPostCommentNo);
 								//alert(JSONData.commentContent);
 								//alert(JSONData.commentRegDate);
 								//alert(JSONData.commentCount);
@@ -168,13 +168,13 @@
 								
 								//alert(JSONData);
 								//alert(JSONData.heart.size());
-								alert(JSONData.heart.length);
+								//alert(JSONData.heart.length);
 								for (var i = 0; i < JSONData.heart.length; i++) {
-									alert(JSONData.heart[i].sourceNo);
-									alert(JSONData.heart[i].userId);
+									//alert(JSONData.heart[i].sourceNo);
+									//alert(JSONData.heart[i].userId);
 								}
-								const Hlength = parseInt(JSONData.heart.length) - 1;
-								alert(Hlength);
+								const length = parseInt(JSONData.heart.length) - 1;
+								//alert(length);
 								
 								var display = "<li class='comment'>"
 												+"<div class='single-comment' commentNo='"+JSONData.clubPostCommentNo+"'>"
@@ -193,12 +193,14 @@
 														+"<div class='comment-heart-"+JSONData.clubPostCommentNo+"'>"
 																+"<a class='reply heartCondition'>"
 																+"<c:set var='commentHeart' value='0'></c:set>"
-																+"<c:forEach var='m' begin='0' end='1' step='1'>"
-																+"<c:if test='"+JSONData.heart[+"m"+] == JSONData.clubPostCommentNo+"'>"
-																+"<span><img src='/resources/image/uploadFiles/heart.jpg' height='40' width='40'></span>"
-																		+"<c:set var='commentHeart' value='1'></c:set>"
-																	+"</c:if>"
-																+"</c:forEach>"
+																<%--for (var num = 0; num < JSONData.heart.length; num++) {--%>																	
+																	<%--+"<c:forEach var='m' begin='0' end="+length+" step='1'>"--%>
+																	+"<c:if test='false'>"
+																	+"<span><img src='/resources/image/uploadFiles/heart.jpg' height='40' width='40'>+"</span>"
+																			+"<c:set var='commentHeart' value='1'></c:set>"
+																		+"</c:if>"
+																	<%--}--%>
+																<%--+"</c:forEach>"--%>
 																+"<c:if test='${ commentHeart == 0 }'><span><img src='/resources/image/uploadFiles/no_heart.jpg' height='40' width='40'></span></c:if>"
 																+"</a>"
 															+"</div>"
@@ -219,32 +221,30 @@
 																 <%-- 해당 댓글 삭제 --%>
 															 +"<a href='#' class='reply delete'>"
 																 <%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
-																 +"<c:if test='"++"${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId || clubPost.getClubPost.user.userId == sessionScope.user.userId || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }'>"
+																 <%--+"<c:if test="+JSONData.user.userId+" == "+${ sessionScope.user.userId }" || "+${ clubPost.getClubPost.user.userId }+" == "+${ sessionScope.user.userId }+" || fn:trim("+${ sessionScope.clubUser.memberRole }+") == '2' || "+${ sessionScope.user.role }+" == '1'>"--%>
+																 <%--+"<c:if test='"+JSONData.user.userId+" == "+${ sessionScope.user.userId }+"'>"--%>
 																	 +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash deleteComment' aria-hidden='true' style='font-size: 25px;'></span>"
-																 +"</c:if>"
+																 <%--+"</c:if>"--%>
 															 +"</a>"
 																 <%-- 해당 댓글 신고 --%>
-																  <a href="#" class="reply report">
-																  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
-																  		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 25px;"></span>
-																  	</c:if>
-																  </a>
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
+															 	+"<a href='#' class='reply report'>"
+															 		+"<c:if test='"+JSONData.user.userId+" != "+${ sessionScope.user.userId }+"'>"
+															 			+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' style='font-size: 25px;'></span>"
+															 		+"</c:if>"
+															 	+"</a>"
 															+"</div>"
 														+"</div>"
 													+"</div>"
+													+"<p>"+JSONData.commentContent+"</p>"
+													+"<c:if test='"+JSONData.commentCount+">0'>"
+														<%--+"<c:when test='"+JSONData.commentCount+">0'>"--%>
+															+"<div class='comment-author'>"
+																+"<cite>"
+																	+"<a class='123'>댓글 "+JSONData.commentCount+"개</a>"
+																+"<cite>"
+															+"</div>"
+														<%--+"</c:when>"--%>
+													+"</c:if>"
 												+"</div>"
 												+"<div id='post-comment' class='clear-after-comment-add' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form'>"
@@ -332,11 +332,14 @@
 				alert("삭제");
 				var clubPostCommentNo = $(this).parent().parent().parent().parent().parent().attr("commentNo");
 				alert(clubPostCommentNo);
-				$.ajax( "/clubPostRest/json/deleteClubPostComment",
+				var attrClass = $(this).parent().parent().parent().parent().parent().attr("class");
+				alert( attrClass );
+				/* $.ajax( "/clubPostRest/json/deleteClubPostComment",
 						{
 							method : "POST",
 							data : JSON.stringify({
-										clubPostCommentNo : clubPostCommentNo
+										clubPostCommentNo : clubPostCommentNo,
+										clubPostNo : ${ clubPost.getClubPost.clubPostNo }
 									}),
 							headers : {
 								"Accept" : "application/json",
@@ -349,7 +352,7 @@
 								alert( attrClass );
 								$(this).parent().parent().parent().parent().parent().remove();
 							} // end of success
-						}); // end of ajax
+						}); // end of ajax */
 			}); // end of 삭제
 
 			<%-- 해당 댓글을 좋아요 또는 좋아요 취소한다 --%>
@@ -665,6 +668,7 @@
 														<div class="comment-heart-${ i }">
 														 	<a class="reply heartCondition">
 															 	<c:set var="commentHeart" value="0"></c:set>
+															 		<c:if test="${ fn:length(clubPost.commentHeartList) > 0 }">
 															 		<c:forEach var="m" begin="0" end="${ fn:length(clubPost.commentHeartList) - 1 }" step="1">
 															 			<!-- 하트리스트에 소스번호와 해당 댓글 번호가 같다면 빨간하트 -->
 															 			<c:if test="${ clubPost.commentHeartList[m].sourceNo == clubPost.getClubPostCommentList[i].clubPostCommentNo }">
@@ -672,6 +676,7 @@
 															 				<c:set var="commentHeart" value="1"></c:set>
 															 			</c:if>
 															 		</c:forEach>
+															 		</c:if>
 															 	<c:if test="${ commentHeart == 0 }"><span><img src="/resources/image/uploadFiles/no_heart.jpg" height="40" width="40"></span></c:if>
 															 </a>
 														 </div>

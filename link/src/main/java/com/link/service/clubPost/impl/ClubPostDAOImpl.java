@@ -72,8 +72,10 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		ClubPost c = sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost"));
 		if( map.get("search") != null ) {
 			map.put("getClubPostCommentList", sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", map));
+			//System.out.println("DAO에서 map.get('comment') : " + map.get("comment"));
 			map.put("commentHeartList", sqlSession.selectList("ClubPostCommentMapper.getCommentHeartList", map));
-		}
+			//System.out.println("DAO에서 map.get('commentHeartList') : " + map.get("commentHeartList"));
+		}		
 		map.put("getClubPost", c);
 		return map;
 	}// end of getClubPost(ClubPost clubPost)
