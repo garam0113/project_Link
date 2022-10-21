@@ -121,8 +121,8 @@
 	$(function() {
 
 		$("button.btn.btn-warning").on("click", function() {
-			popup();
-			//self.location="/club/updateClubView.jsp"
+			//popup();
+			self.location="/club/updateClubView.jsp"
 		});
 	});
 	

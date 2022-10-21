@@ -18,11 +18,11 @@
 	
    
    <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
   
-   <!-- updateClubCss -->
+  <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css">
-    
+  
   	<!--  	jQuery UI toolTip 사용 JS -->
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -30,11 +30,9 @@
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	
-	  	  body>div.container {
-			border: 3px solid #D6CDB7;
-			margin-top: 10px;
-		}          
+	  body {
+            padding-top : 50px;
+        }            
         
     </style>
     
@@ -80,156 +78,15 @@
 </head>
 
 <body>
-
-	<form>
-		<div class="wrap wd668">	
-			<div class="container">
-				<div class="form_txtInput">
-					<h2 class="sub_tit_txt">모 임 수 정</h2>
-					<p class="exTxt">모임을 수정하세요...</p>
-					
-					<div class="join_form">
-		
-					<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
-		
-		
-				<table>
-					<colgroup>
-						<col width="30%" />
-						<col width="auto" />
-					</colgroup>
-				
-					<tbody>
-						<tr>
-							<th><span>모 임 제 목</span></th>
-							<td><input style="height: 40px;" type="text" id="clubTitle" name="clubTitle" value="${club.clubTitle}" autocomplete='off'>
-							</td>
-						</tr>
-						
-						<tr>
-							<th><span>모 임 설 명</span></th>
-							<td><input type="text" id="clubDetail" name="clubDetail" value="${club.clubDetail}" autocomplete='off'>
-							</td>
-						</tr>
-						
-						<tr>
-							<th><span>모임카테고리</span></th>
-							<td><select class="form-control" id="clubCategory" name="clubCategory">
-								<option value="운동">운동</option>
-		  						<option value="봉사활동">봉사활동</option>
-		  						<option value="음식">음식</option>
-								<option value="여행">여행</option>
-								<option value="반려동물">반려동물</option>
-								<option value="게임">게임</option>
-								<option value="음악/댄스">음악/댄스</option>
-								<option value="독서">독서</option>
-								<option value="기타">기타</option>
-							</select>
-							</td>
-						</tr>
-						
-						<tr>
-							<th><span>활 동 영 역</span></th>
-							<td><input type="text" id="clubArea" name="clubArea" value="${club.clubArea}" autocomplete='off'>
-							</td>
-						</tr>
-						
-						<tr>
-							<th><span>모임이미지</span></th>
-							<td><input type="file" class="file" id="clubImage" name="file" multiple="multiple">
-							</td>
-						</tr>		
-						
-					
-					</tbody>
-				
-				</table>
-				</div>
-				</div>
-				</div>
-				
-				</div>
-				</form>			
-			<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-						<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    	</div>
-			</div>
 	
-</body>
-</html>
-				
-				
-				
-				
-				<%-- <div class="form-group">
-					<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목${club}</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
-					</div>					
-				</div>
-			
-			
+	<div class="container">
+	
+		<h1 class="bg-primary text-center">모 임 수 정</h1>
+		
+		<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
 		
 			<div class="form-group">
-				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
-				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}">
-				</div>		
-			</div>
-			
-			<div class="form-group">
-				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
-				<div class="col-sm-4">
-					<select class="form-control" id="clubCategory" name="clubCategory">
-						<option value="운동">운동</option>
-  						<option value="봉사활동">봉사활동</option>
-  						<option value="음식">음식</option>
-						<option value="여행">여행</option>
-						<option value="반려동물">반려동물</option>
-						<option value="게임">게임</option>
-						<option value="음악/댄스">음악/댄스</option>
-						<option value="독서">독서</option>
-						<option value="기타">기타</option>
-					</select>
-				</div>			    
-			</div>			
-			
-			<div class="form-group">
-				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}">
-				</div>		
-			</div>			
-			
-			<div class="form-group">
-				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
-				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
-				</div>		
-			</div> --%>
-			
-			
-			
-		<!-- 	<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-			</div>
-		</form>	
-		</div>
-		
-</body>
-</html> -->
-
-
-
-	<%-- 	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
-		
-			<div class="form-group">
-				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목${club}</label>
+				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
 				</div>					
@@ -274,19 +131,17 @@
 					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
 				</div>		
 			</div>
- --%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			
+			
+			
+			<div class="form-group">
+				<div class="col-sm-offset-4  col-sm-4 text-center">
+		      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
+					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		    </div>
+			</div>
+		</form>	
+		</div>
+		
+</body>
+</html>
