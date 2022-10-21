@@ -23,11 +23,11 @@
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 <script>
 //소켓서버에 접속시킨다.
-var socket = io.connect("http://localhost:3000/clubchat", { // clubchat 네임스페이스
-	cors: { origin: "http://localhost:8080" },
+var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+	cors: { origin: "*" },
 	path: '/socket.io',
 	query: {
 		userId : '${ user.userId }',

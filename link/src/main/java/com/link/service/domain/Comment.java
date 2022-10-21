@@ -1,5 +1,7 @@
 package com.link.service.domain;
 
+import java.util.List;
+
 public class Comment {
 	
 	private int feedNo;						// 피드번호
@@ -22,6 +24,7 @@ public class Comment {
 	private int heartCondition;				// 좋아요 여부
 	private int currentPage;
 	private String userId;					// 삭제한 유저 아이디
+	private List<Heart> heart;			// 하트리스트
 	
 	public Comment() {
 	}
@@ -186,6 +189,14 @@ public class Comment {
 		this.userId = userId;
 	}
 
+	public List<Heart> getHeart() {
+		return heart;
+	}
+
+	public void setHeart(List<Heart> heart) {
+		this.heart = heart;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -229,6 +240,8 @@ public class Comment {
 		builder.append(currentPage);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", heart=");
+		builder.append(heart);
 		builder.append("]");
 		return builder.toString();
 	}

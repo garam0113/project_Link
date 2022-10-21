@@ -27,7 +27,7 @@
 <script>
 //소켓서버에 접속시킨다.
 var socket = io.connect("http://localhost:3000",{
-	cors: { origin: "http://localhost:8080" }
+	cors: { origin: "*" }
 });
 
 //사용자 참가
