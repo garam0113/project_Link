@@ -8,52 +8,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="EUC-KR">
-	<script src="https://code.jquery.com/jquery.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="The Page Description">
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
 	
 	<%-- SUMMER NOTE --%>
 	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
 	
 	<script type="text/javascript">
 	
-		$(function(){
-			
-			<%-- SUMMER NOTE WEB LOADING --%>
-			$('#summernote').summernote({
-				toolbar: [
-	                // [groupName, [list of button]]
-	                ['Font Style', ['fontname']],
-	                ['style', ['bold', 'italic', 'underline']],
-	                ['font', ['strikethrough']],
-	                ['fontsize', ['fontsize']],
-	                ['color', ['color']],
-	                ['para', ['paragraph']],
-	                ['height', ['height']],
-	                ['Insert', ['picture']],
-	                ['Insert', ['link']],
-	                ['Misc', ['fullscreen']]
-	            ],
-	            
-				height: 300,                 // 에디터 높이
-				minHeight: null,             // 최소 높이
-				maxHeight: null,             // 최대 높이
-				focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		          
-			});
-			
-			$('#summernote').summernote('insertText', '${feed.content}');
-			<%-- SUMMER NOTE WEB LOADING --%>
-			
-			
-			
-			$(".btn_update").bind("click", function() {
-				alert("수정하기");
-				$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
-			})
+	function uploadSummernoteImageFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/feedRest/json/uploadImage",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
+	
+	$(function(){
 		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernote').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Insert', ['picture', 'video']],
+            ],
+            
+            disableResizeEditor: true,
+			height: 600,                 // 에디터 높이
+			minHeight: null,             // 최소 높이
+			maxHeight: null,             // 최대 높이
+			focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			lang : 'ko-KR',
+			lang:'ko-KR',
+	        
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// 파일 업로드(다중업로드를 위해 반복문 사용)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
+		
+		});
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		
+		
+		
+		$(".btn_update").bind("click", function() {
+			alert("수정하기");
+			$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 		})
+	
+	})
 	
 	</script>
 
@@ -73,13 +100,11 @@
 
 	<jsp:include page="/toolbar.jsp" />			
 
-
-	<div id="intro-wrap" data-height="22.222">
+	<div id="intro-wrap" data-height="12.222">
 		<div id="intro" class="preload darken">					
 			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 				<div class="caption">
 					<h2>Feed</h2>
-					<p>If you’re any good at all, you know you can be better.</p>
 				</div><!-- caption -->					
 			</div>								
 		</div><!-- intro -->
@@ -107,7 +132,7 @@
 								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 							</h5>
 							
-							<textarea id="summernote" name="content"></textarea>
+							<textarea id="summernote" name="content">${feed.content}</textarea>
 							<input class="plain button red btn_update" style="width:150px; float:right; margin-top:10px" value="Submit">
 						</article>
 
