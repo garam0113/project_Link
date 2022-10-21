@@ -139,6 +139,11 @@ SELECT inner_table.*
 						ORDER BY m.meeting_date ASC
 							) deep_table
 		) inner_table
+		
+		
+		
+		SELECT inner_table.*
+		FROM     SELECT rownum AS row_seq, deep_table.*    FROM (     SELECT      m.meeting_no ,      m.club_no ,      m.meeting_title ,      m.meeting_date ,      m.meeting_time ,      m.meeting_place ,       m.meeting_weather ,      m.meeting_member ,      u.user_id          FROM meeting m, users u        WHERE m.add_meeting_user_id = u.user_id      and m.club_no = ?          ) deep_table   ) inner_table
 						
 					
 					<if test="searchCondition == 0 and searchKeyword != '' ">

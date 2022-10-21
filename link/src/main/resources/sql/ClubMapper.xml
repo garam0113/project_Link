@@ -122,7 +122,7 @@
 	<update id="updateClub" parameterType="club">
 		UPDATE club
 		<set>
-			user_id = #{user.userId} ,
+<!--  			user_id = #{user.userId} , -->
 			club_title = #{clubTitle} ,
 			club_detail = #{clubDetail} ,
 			club_category = #{clubCategory} ,
@@ -391,7 +391,7 @@
 	
 		<select  id="getMeetingList"  parameterType="search"	resultMap="meetingSelectMap">
 	 	SELECT inner_table.*
-		FROM 
+		FROM (
 			SELECT rownum AS row_seq, deep_table.*
 			FROM (
 				SELECT
@@ -409,14 +409,9 @@
 
 					<where>
 					m.add_meeting_user_id = u.user_id
-					<if test="searchCondition == 0 and searchKeyword != '' ">
-						and m.club_no = #{searchKeyword}
-					</if>
-					<!-- <if test="searchCondition == 1 and searchKeyword != '' ">
-						and u.user_id = #{searchKeyword}
-					</if> -->
-				</where>
-				ORDER BY m.meeting_date ASC
+					and m.club_no = #{searchKeyword}					
+					</where>					
+				 ORDER BY m.meeting_date
 			) deep_table
 		) inner_table
 	 	

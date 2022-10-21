@@ -17,7 +17,7 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
@@ -33,10 +33,23 @@
 		})
 
 		$("button:contains('삭제')").bind("click", function() {
+			 Swal.fire({
+		          title: '정말로 삭제하시겠습니까?',
+		          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+		          icon: 'warning',
+		          showCancelButton: true,
+		          confirmButtonColor: '#3085d6',
+		          cancelButtonColor: '#d33',
+		          confirmButtonText: '삭제',
+		          cancelButtonText: '취소'
+		      }).then((result) => {
+		          if (result.isConfirmed) {
+		        	  self.location = "../serviceCenter/deleteNotice?noticeNo="+$('#noticeNo').val(); 
+		          }
+		      })	
 			
-			alert($('tr.noticeNo').find('td').text());
 			
-		 	self.location = "../serviceCenter/deleteNotice?noticeNo="+$('#noticeNo').val(); 
+		 	
 		})
 
 	});
@@ -46,6 +59,57 @@ textarea { <%-- textarea 사이즈 변경 제한 --%>
 	resize: none;
 }
 
+.custom-btn {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none !important;
+  box-shadow:none !important;
+  outline: none;
+}
+.btn-13 {
+  background-color: #1528d7;
+background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #2491b7;
+  background-image: linear-gradient(315deg, #2491b7 0%, #2491b7 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover {
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
 </style>
 
 </head>

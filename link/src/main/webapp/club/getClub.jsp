@@ -109,7 +109,8 @@
 		});
 	});
 	
-	var openWin;
+	//ÆË¾÷ ¶ç¿ì±â
+	 var openWin;
 	function popup() {
 		var url = "/club/updateClubView.jsp";
 		var name = "updateClubView";
@@ -121,6 +122,7 @@
 
 		$("button.btn.btn-warning").on("click", function() {
 			popup();
+			//self.location="/club/updateClubView.jsp"
 		});
 	});
 	
