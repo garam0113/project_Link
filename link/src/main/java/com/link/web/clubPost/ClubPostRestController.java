@@ -245,9 +245,9 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "json/updateClubPostComment", method = RequestMethod.POST)
-	public int updateClubPostComment(@RequestBody Comment comment, Heart heart) throws Exception {
+	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart) throws Exception {
 		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 해당 모임게시물 댓글 상세보기 가져온다");
-		return ((Comment)clubPostServiceImpl.updateClubPostComment(comment, heart)).getCommentHeartCount();
+		return clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	@RequestMapping(value = "json/deleteClubPostComment", method = RequestMethod.POST)

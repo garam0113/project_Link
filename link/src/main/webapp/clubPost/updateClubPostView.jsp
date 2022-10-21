@@ -62,7 +62,7 @@
 							success : function(data) {
 								//alert(data.responseCode);
 								//alert(data.url);
-								//alert("업로드 하였습니다");
+								alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
 								jsonArray.push(json["url"]);
 								jsonFn(jsonArray);

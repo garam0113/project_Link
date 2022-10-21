@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -19,16 +20,30 @@
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  
+  <!-- addMeetingCss -->
+  <link rel="stylesheet" href="/resources/css/addUser.css">
+  
+  
   	<!--  	jQuery UI toolTip 사용 JS -->
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+  
+  <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
+	
+	
 	<style>
-	  body {
-            padding-top : 50px;
-        }            
+	  body>div.container {
+			border: 3px solid #D6CDB7;
+			margin-top: 10px;
+		}       
         
     </style>
     
@@ -68,17 +83,20 @@
 </head>
 
 <body>
-	
-	<div class="container">
-	
-		<h1 class="bg-primary text-center">모 임 등 록</h1>
+	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
+		<div class="wrap wd668">
+			<div class="container">
+				<div class="form_txtInput">
+					<h2 class="sub_tit_txt">모 임 등 록</h2>
+					<p class="exTxt">새로운 모임을 등록해보세요...</p>
+					<div class="join_form">
 		
-		<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
+		<!-- <form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data"> -->
 		
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다">
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다" style="width:300px;">
 				</div>					
 			</div>
 			
@@ -87,15 +105,15 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)">
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)" style="width:300px;">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
+				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label" >모임카테고리</label>
 				<div class="col-sm-4">
 					<!-- <select class="form-control"> -->
-					<select class="form-control" id="clubCategory" name="clubCategory">
+					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px;">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -112,7 +130,7 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea">
+					<input type="text" class="form-control" id="clubArea" name="clubArea" style="width:300px;">
 				</div>		
 			</div>			
 			
@@ -131,8 +149,13 @@
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 			</div>
-		</form>	
+			</div>
 		</div>
+		</div>
+		</div>	
+			
+		</form>	
+		
 		
 </body>
 </html>

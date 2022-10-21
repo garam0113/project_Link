@@ -504,7 +504,13 @@
 	  	FROM(	SELECT participant_no 
 						FROM participant
 						<where> 
-							meeting_no = #{searchKeyword}
+							<if test="order == 0 and searchKeyword != '' ">
+								meeting_no = #{searchKeyword}
+							</if>
+							
+							<if test="order == 1 and searchKeyword != '' ">
+								participant_user_id = #{searchKeyword}
+							</if>
 						</where>
 			) countTable						
 	 </select>

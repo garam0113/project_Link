@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -117,7 +118,7 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, Club clubS) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
@@ -131,7 +132,8 @@ public class ClubController {
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		session.setAttribute("clubNo", clubNo);
 		
-		System.out.println("클럽 세션에 뭐 들어갔지? : "+map.get("club"));
+		System.out.println("클럽 맵에 뭐 들어갔지? : "+map.get("club"));
+
 		System.out.println("클럽 넘버 세션은? : "+clubNo);
 		
 		return "forward:/club/getClub.jsp";
@@ -145,15 +147,19 @@ public class ClubController {
 		System.out.println("club/updateClub : POST");
 		
 		user = (User) session.getAttribute("user");
-//		club = (Club) session.getAttribute("club");
 		//Business Logic
 		clubNo = (String) session.getAttribute("clubNo");
+		
+		Map<String, Object> map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		System.out.println("유저 세션에 뭐? : "+user);
 		System.out.println("클럽 넘버는? : "+club);
 		
 //		club.setUser(user);
 		club.setClubNo(Integer.parseInt(clubNo));
+		
+		model.addAttribute("club", map.get("club"));
+		System.out.println("클럽 맵에 뭐 있지? : "+ map.get("club"));
 		
 		String sysName = "_User_";
 		
@@ -168,21 +174,23 @@ public class ClubController {
 		
 		clubService.updateClub(club);
 		
-		return "forward:/club/getClub.jsp";
+		return "forward:/club/getClubList";
 	}
 	
 	@RequestMapping(value="deleteClub")
-	public String deleteClub(@ModelAttribute Club club, Model model, HttpSession session) throws Exception {
+	public String deleteClub(@ModelAttribute Club club, Model model, HttpSession session, String clubNo) throws Exception {
 		
 		System.out.println("deleteClub 시작");
 		
 		club = (Club) session.getAttribute("club");
 		
-		System.out.println("세션에 뭐 있지 : "+session.getAttribute("club"));		
+		clubNo = (String) session.getAttribute("clubNo");
 		
-		club.setClubNo(club.getClubNo());
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));		
 		
-		clubService.deleteClub(club.getClubNo());
+//		club.setClubNo(Integer.parseInt(clubNo));
+		
+		clubService.deleteClub(Integer.parseInt(clubNo));
 		
 		return "forward:/club/getClubList";
 	}
@@ -418,7 +426,7 @@ public class ClubController {
 //		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		clubService.addMeeting(meeting);
 //		clubService.addMeetingMember(participant);
-		return "forward:/club/getMeeting.jsp";
+		return "forward:/club/getMeetingList";
 		
 	}
 	
