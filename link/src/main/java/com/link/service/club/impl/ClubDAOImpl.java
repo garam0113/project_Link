@@ -260,10 +260,6 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("updateMeeting DAOImpl 오나 ?? ");
 		
-//		meeting.setMeetingNo(24);
-//		meeting.setClubNo(2);
-//		meeting.setAddMeetingUserId("user01");
-		
 		sqlSession.update("ClubMapper.updateMeeting",meeting);
 	}
 	

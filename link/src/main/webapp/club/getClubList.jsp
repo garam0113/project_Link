@@ -43,7 +43,7 @@
  	 
  	 <style>
 		body {
-		    background-color: #333;
+		    /* background-color: #333; */
 		    color: #333;
 		    font-size: 1.125em;
 		    font-size: 15px;
@@ -55,7 +55,7 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    background-color: #333333;
+		    /* background-color: #333333; */
 		}
 		
 		header {
@@ -158,9 +158,26 @@
 		});
 	});
 	
+	var openWin;
+	function popup() {
+		var url = "/club/getClub?clubNo=${club.clubNo}";
+		var name = "getClub";
+		var option = "width = 1000, height = 500, top = 100, left = 200, location = no"
+		openWin = window.open(url, name, option);
+		
+	}
+	
+	$(function() {
+		$("button,btn.btn-success").on("click", function() {
+			//alert('하이');
+			popup();
+		})
+	})
+	
+	
 	$(function() {
 		
-		$("button.btn.btn-success").on("click", function() {
+		$("button.btn.btn-default").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -311,7 +328,7 @@
 				  
 				  <div class="form-group">
 				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  <button type="button" class="btn btn-success">모임등록</button>
+				  <button type="button" class="btn btn-default">모임등록</button>
 				  </div>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->

@@ -46,6 +46,10 @@
 		});
 	});
     
+    function refreshMemList(){
+    	location.reload();
+    }
+    
     function fncUpdateMemberRole() {
     	
     	var userId = $("#userId").val();
@@ -96,7 +100,7 @@
    						window.close();
 						}
    				});
-				
+				refreshMemList();
 			}
     	});
   			

@@ -2,6 +2,7 @@ package com.link.web.club;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,6 +139,13 @@ public class ClubController {
 		
 		return "forward:/club/getClub.jsp";
 		
+	}
+	
+	@RequestMapping(value = "updateClubView", method = RequestMethod.GET)
+	public String updateClubView(@RequestParam int clubNo, Model model ) throws Exception {
+		Map<String, Object> map = clubService.getClub(clubNo);
+		model.addAttribute("club", map.get("club"));
+		return "forward:/club/updateClubView.jsp";
 	}
 	
 	
@@ -334,42 +342,59 @@ public class ClubController {
 	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, ClubUser clubUser, Club club, String clubNo) throws Exception {
 		
 		System.out.println("/club/getClubMemberList : GET/POST");
-		System.out.println("서치는? :"+search);
 		
 		clubNo = (String) session.getAttribute("clubNo");
-		user = (User) session.getAttribute("user");
+		user = (User) session.getAttribute("user"); 
 		
 		search.setSearchKeyword(clubNo);
 		
-		if(search.getCurrentPage()==0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		search.setPageUnit(pageUnit);
-		
-		System.out.println(search);
+//		if(search.getCurrentPage()==0) {
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
-		System.out.println("resultPage : "+resultPage);
+//		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
+//		System.out.println("resultPage : "+resultPage);
 		
 		System.out.println("유저 세션에 뭐 있지? : "+user);
 		System.out.println("클럽 번호 왔나? : "+session.getAttribute("clubNo"));
 		System.out.println("총 클럽원은? : "+map.get("totalClubMemberCount"));
 		System.out.println("유저 닉네임 어케 가져오지 : "+user.getNickName());
-		System.out.println("클럽 맵에 뭐 들어있지? :"+map.get("club"));
-		System.out.println("클럽세션? : "+session.getAttribute("club"));
 
 		model.addAttribute("club",map.get("club"));
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
-		model.addAttribute("resultPage",resultPage);
+//		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
-		//클럽최대인원 수 가져오는거 가능?
-//		model.addAttribute("club",map.get("club"));
 		model.addAttribute("search",search);
 		
-
+		System.out.println("리스트 맵에 뭐있지? :"+map.get("clubMemberList"));
+		
+//		System.out.println("if문 시작전!");
+//		if(clubUser.getMemberRole()=="0") {
+//			clubUser.setMemberRole("모임원");
+//		} else if(clubUser.getMemberRole()=="1") {
+//			clubUser.setMemberRole("모임부대표");
+//		} else {
+//			clubUser.setMemberRole("모임대표");
+//		}
+//		HashMap<String, Object> hm = new HashMap<>();
+//		hm.put("0", "모임원");
+//		hm.put("1", "모임부대표");
+//		hm.put("2", "모임대표");
+//		
+//		System.out.println("[변경 전] : "+hm);
+//		
+//		hm.replace("hm", map.get("clubMemberList")) {
+//			if("hm".contains("0")) {
+//				return "모임원";
+//			}
+//			return "모임부대표";
+//		}
+		
+		
 		return "forward:/club/getClubMemberList.jsp";
 	}
 	
@@ -521,6 +546,17 @@ public class ClubController {
 		return "forward:/club/getMeeting.jsp";
 	}
 	
+	@RequestMapping(value="updateMeetingView", method=RequestMethod.GET)
+	public String updateMeetingView(@RequestParam int meetingNo, Model model ) throws Exception {
+		
+		Map<String, Object> map = clubService.getMeeting(meetingNo);
+		model.addAttribute("meeting", map.get("meeting"));
+		
+		
+		return "forward:/club/updateMeetingView.jsp";
+	}
+	
+	
 	@RequestMapping(value="updateMeeting", method=RequestMethod.POST)
 	public String updateMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, String meetingNo) throws Exception {
 		
@@ -542,7 +578,7 @@ public class ClubController {
 		//Business Logic
 		clubService.updateMeeting(meeting);
 		
-		return "forward:/club/getMeeting.jsp";
+		return "forward:/club/getMeetingList";
 	}
 	
 	@RequestMapping(value="deleteMeeting")

@@ -90,7 +90,7 @@
 		
 		
 			//추방 그냥 컨트롤러	
-		 $(document).on("click", "#banMember", function(){
+			$(document).on("click", "#banMember", function(){
 			//alert('추방');
 			var clubUserNo = $(this).val();
 			//alert(clubUserNo);
@@ -111,8 +111,10 @@
 					}); //end of ajax
 					refreshMemList();
 			}); //모임원 추방 
+		
 			
-	/* 		$(function() {
+			
+			/* $(function() {
 				$("#banMember").on("click", function(e){
 					var clubUserNo = $(this).val();
 					$("banMember").off(e);
@@ -126,37 +128,15 @@
 					
 					contentType : "application/json",
 					success : function(data) {
-						console.log(data.clubMemberList)
+						console.log(data.clubMemberList);
 						
 					}
 					
 				})
 					
 				})
-			})
-			$(document).on("click", "#banMember", function(){
-				//alert('추방');
-				var clubUserNo = $(this).val();
-				//alert(clubUserNo);
-				$.ajax("/clubRest/json/deleteClubMember",
-						{
-							method : "POST" ,
-							data : JSON.stringify({
-								clubUserNo : clubUserNo
-							}) ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							dataType : "json",
-							success : function(JSONData, status){
-								alert(status);
-							} // end of success  
-						}); //end of ajax
-						refreshMemList();
-				}); //모임원 추방
+			}) */
 			
-			 */
 
 		
 				
@@ -321,7 +301,7 @@
 			<td align="center"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
 			  <td >${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
-			  <td align="left"><center>${i.memberRole}</center></td>
+			  <td align="center">${i.memberRole}</td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="center">${i.approvalCondition}</td>
@@ -330,6 +310,9 @@
 			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
 			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
 			  <td>${i.club.clubMaxMember}</td>
+			  <c:if test="${i.memberRole}== 0">
+			  	모임원
+			  </c:if>
 			</tr>
           </c:forEach>
         </tbody>
