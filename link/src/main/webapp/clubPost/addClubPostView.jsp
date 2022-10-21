@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
 		<script src="js/plugins.js"></script>
@@ -22,7 +22,7 @@
 			function textEdit(){
 			    jsonArray = [];
 				$('#summernote').summernote({
-	                height : 300,
+	                disableResizeEditor: true,
 	                minHeight : null,
 	                maxHeight : null,
 	                focus : true,
@@ -37,10 +37,10 @@
 		              ["view", ["fullscreen", "codeview"]],
 		              ['highlight', ['highlight']]
 		            ],
-	                //Äİ¹é ÇÔ¼ö
+	                //ì½œë°± í•¨ìˆ˜
 	                callbacks : {
 	                	onImageUpload : function(files, editor, welEditable) {
-	               	 		// ÆÄÀÏ ¾÷·Îµå(´ÙÁß¾÷·Îµå¸¦ À§ÇØ ¹İº¹¹® »ç¿ë)
+	               	 		// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
 	               	 		for (var i = files.length - 1; i >= 0; i--) {
 	                			uploadSummernoteImageFile(files[i], this);
 	                		}
@@ -62,6 +62,7 @@
 							success : function(data) {
 								//alert(data.responseCode);
 								//alert(data.url);
+								alert("ì—…ë¡œë“œ í•˜ì˜€ìŠµë‹ˆë‹¤");
 								$(el).summernote('editor.insertImage', data.url);
 								jsonArray.push(json["url"]);
 								jsonFn(jsonArray);
@@ -79,11 +80,12 @@
 			$(function(){
 				textEdit();
 				
-				$("a:contains('µî·Ï¿Ï·á')").bind("click", function(){
-					$("form[name='addClubPost']").submit();
+				$("a:contains('ë“±ë¡ì™„ë£Œ')").bind("click", function(){
+					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+					$("form").attr("accept-charset", "EUC-KR").submit();
 				});
-				$("a:contains('¸®½ºÆ®·ÎÀÌµ¿')").bind("click", function(){
-					location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
+				$("a:contains('ë¦¬ìŠ¤íŠ¸ë¡œì´ë™')").bind("click", function(){
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
 		</script>
@@ -106,29 +108,29 @@
 				
 					<ul class="inline cats filter-options" style="font-size: 40px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">¸ğÀÓ ÀÏÁ¤</a>
+							<a href="/club/getMeetingList">ëª¨ì„ ì¼ì •</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">¸ğÀÓ °Ô½Ã¹°</a>
+							<a href="/clubPost/getClubPostList">ëª¨ì„ ê²Œì‹œë¬¼</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">¸ğÀÓ¿ø</a>
+							<a href="/club/getClubMemberList">ëª¨ì„ì›</a>
 						</li>
 						<li data-group="infographics">
-							<a href="#">¸ğÀÓ Ã¤ÆÃ</a>
+							<a href="#">ëª¨ì„ ì±„íŒ…</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubNo }">°áÁ¦</a>
+							<a href="/clubPost/addPayView?clubNo=${ clubNo }">ê²°ì œ</a>
 						</li>
 					</ul>
 	
 					<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
-						¸ğÀÓ ¹øÈ£ : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
-						<input type="text" name="clubPostTitle" placeholder="Á¦¸ñ"></br>
+						ëª¨ì„ ë²ˆí˜¸ : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
+						<input type="text" name="clubPostTitle" placeholder="ì œëª©"></br>
 						<textarea id="summernote" name="clubPostContent">
 						</textarea>
-						<a class="button transparent aqua">µî·Ï¿Ï·á</a>
-						<a class="button transparent aqua">¸®½ºÆ®·ÎÀÌµ¿</a>
+						<a class="button transparent aqua">ë“±ë¡ì™„ë£Œ</a>
+						<a class="button transparent aqua">ë¦¬ìŠ¤íŠ¸ë¡œì´ë™</a>
 					</form>
 					
 				</div><!-- row-content -->

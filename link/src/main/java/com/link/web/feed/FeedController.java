@@ -116,6 +116,20 @@ public class FeedController {
 		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
 		
 		feed.setContent(replace);
+		
+		// 영상 등록
+		
+		if((feed.getContent()).contains("src=\"")) {
+			int startPoint = feed.getContent().indexOf("src=\"") + 7;
+			String inputString = feed.getContent().substring(startPoint, feed.getContent().length());
+			String[] splitBy = inputString.split("\" ");
+			feed.setVideo(splitBy[0]);
+			
+			System.out.println(splitBy[0]);
+			
+			int lastPoint = feed.getContent().lastIndexOf("\">");
+			feed.setContent(feed.getContent().substring(lastPoint + 2, feed.getContent().length()));
+		}
 
 		// 해시태그 저장하기 시작
 		

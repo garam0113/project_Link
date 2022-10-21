@@ -94,8 +94,8 @@
 
 	<delete id="deleteQandA" parameterType="int">
 		DELETE
-		FROM qanda
-		WHERE qanda_no = #{qanda_no}
+		FROM QANDA
+		WHERE QANDA_NO = #{qanda_no}
 
 	</delete>
 
@@ -106,8 +106,8 @@
 	  					FROM		(	SELECT Q.QANDA_NO , Q.QANDA_TITLE , Q.ANSWER_CONDITION , U.USER_ID , U.NICKNAME, Q.QANDA_REGDATE
 	  										  , Q.QANDA_OPEN_CONDITION
 											FROM QANDA Q, USERS U
-											<if test ="userId!=''">
-											WHERE Q.USER_ID = #{userId} AND Q.USER_ID = U.USER_ID
+											<if test ="search.order==3">
+											WHERE Q.USER_ID = #{search.userId} AND Q.USER_ID = U.USER_ID
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
 										 			AND	LOWER(QANDA_NO) LIKE LOWER('%${search.searchKeyword}%')
@@ -117,7 +117,7 @@
 													</if> 		
 											</if>	
 											</if>
-											<if test ="userId==''">
+											<if test ="search.order==2">
 											WHERE Q.USER_ID = U.USER_ID 
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
@@ -128,7 +128,7 @@
 													</if>
 											</if>
 											</if>
-											ORDER BY qanda_no ) inner_table
+											ORDER BY QANDA_NO DESC) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>

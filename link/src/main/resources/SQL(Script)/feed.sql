@@ -95,6 +95,27 @@ SELECT * FROM USERS;
 
 
 
+
+
+
+
+SELECT * FROM FEED_COMMENT WHERE FEED_NO = 3 ORDER BY sequence ASC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
 DROP SEQUENCE seq_feed_comment_no;
 CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
@@ -246,18 +267,4 @@ ORDER BY sequence ASC
 
 
 
-
-SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 8 AND sequence = 0 
-
-SELECT COUNT(*) FROM ( SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 5 AND delete_condition = '0' ORDER BY feed_comment_no ASC ) 
-
-
-
-SELECT c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, 
-c.feed_recomment_count, c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, 
-c.parent, c.depth, c.sequence , isLike.EXIST 
-FROM feed_comment c, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '1' AND user_id = 'user05' ) isLike 
-WHERE c.feed_comment_no = isLike.EXIST(+) 
-AND c.feed_no = 5 AND report_condition = '0' AND delete_condition = '0' 
-ORDER BY sequence ASC 
-
+SELECT inner_table.* FROM ( SELECT rownum AS row_seq, deep_table.* FROM ( SELECT f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition , isLike.EXIST FROM users u, feed f, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '0' AND user_id = 'user05' ) isLike WHERE u.user_id = f.user_id AND f.feed_no = isLike.EXIST(+) AND f.feed_open_condition = '3' AND f.report_condition = '0' AND f.delete_condition = '0' ORDER BY feed_no DESC ) deep_table WHERE ROWNUM <= 10 ) inner_table WHERE row_seq BETWEEN 1 AND 10 

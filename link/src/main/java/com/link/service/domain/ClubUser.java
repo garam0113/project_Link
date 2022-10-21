@@ -14,8 +14,18 @@ public class ClubUser {
 	private String approvalCondition;
 	private String joinGreeting;
 //	private String nickName;
-//	private Club club;
+	private Club club;
 	
+
+	public Club getClub() {
+		return club;
+	}
+
+
+	public void setClub(Club club) {
+		this.club = club;
+	}
+
 
 	public ClubUser() {
 		// TODO Auto-generated constructor stub
@@ -118,36 +128,11 @@ public class ClubUser {
 		builder.append(approvalCondition);
 		builder.append(", joinGreeting=");
 		builder.append(joinGreeting);
+		builder.append(", club=");
+		builder.append(club);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
-
-
-
-//	public String getNickName() {
-//		return nickName;
-//	}
-//	
-//	public void setNickName(String nickName) {
-//		this.nickName = nickName;
-//	}
-//
-//
-//
-//	public Club getClub() {
-//		return club;
-//	}
-//
-//
-//	public void setClub(Club club) {
-//		this.club = club;
-//	}
-
-
-
-
 
 
 

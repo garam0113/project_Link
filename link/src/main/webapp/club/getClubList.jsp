@@ -43,9 +43,19 @@
  	 
  	 <style>
 		body {
-		padding-top : 70px;
-		clear: none;
+		    background-color: #333;
+		    color: #333;
+		    font-size: 1.125em;
+		    font-size: 15px;
+		    font-family: 'Open Sans', sans-serif;
+		    line-height: 0;
+		}
 		
+		#main {
+		    position: relative;
+		    z-index: 10;
+		    overflow: hidden;
+		    background-color: #333333;
 		}
 		
 		header {
@@ -68,20 +78,47 @@
  	   		box-shadow: none;
 		}
 		.thumbnail {
-			    display: flex;
-			    height: 100%;
-			    justify-content: flex-start;
-		    	align-items: center;
-		    	flex-direction: column;
-		}
+			    display: block;
+			    padding: 0px;
+			    margin-bottom: 20px;
+			    line-height: 1;
+			    background-color: #f5c7f4;
+			    /* border: 1px solid #ddd; */
+			    border-radius: 4px;
+			    -webkit-transition: border .2s ease-in-out;
+			    -o-transition: border .2s ease-in-out;
+			    transition: border .2s ease-in-out;
+			}
 		
 		.thumbnail img { 
-			min-height:200px; height:150px;
+			min-height:200px;
+			height:100px;
+		    width: 250px;
 		 }     
 		 
 		 div {
 		 	clear: none;
 		 }
+		 
+		 .club-cT {
+		 		font-size: 
+		 }
+		 
+		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 0em;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 0.333em;
+    -moz-border-radius: 0.333em;
+    border-radius: 0.333em;
+    color: #333;
+}
+		 
+		 
+		 
 	
 	</style>
 	
@@ -97,12 +134,19 @@
 		.submit();
 	}
 	
-	$(function(){
-		$()
-		
-		
-	})
+	function fncGetClubList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
+	}
 	
+	//============================== 검색 이벤트 처리 ====================
+	$(function(){
+		$("button.btn.btn-default").on("click", function() {
+			fncGetClubList(1);
+		});	
+	});
+	
+	//========== 가입현황 처리 ================
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
@@ -110,6 +154,55 @@
 			
 		});
 	});
+	
+	$(function() {
+		
+		$("button.btn.btn-success").on("click", function() {
+			self.location="/club/addClubView.jsp"
+		});
+	});
+	
+	
+	//무한 페이징
+	var currentPage = 1;
+	$(window).scroll(function() {
+		var maxHeight = $(document).height();
+		var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+		
+		if(currentScroll >= maxHeight) {
+			
+			currentPage++;
+			
+			$("input[name='currentPage']").val(currentPage);
+			
+			var searchCondition = $("option:selected").val();
+			var searchKeyword = $("input[name='searchKeyword']").val();
+			
+			alert(searchCondiiton);
+			alert(searchKeyword);
+			
+			$.ajax({
+				url : "/clubRest/json/getClubList" ,
+				type : "post" ,
+				dataType : "json" ,
+				data : JSON.stringify({
+					currentPage : currentPage,
+					searchCondition : searchCondition,
+					searchKeyword : searchKeyword
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function( JSONData, status) {
+					alert(status);
+					
+					console.log(JSONData.search);
+					console.log(JSONData.clubPostList);
+				} // end of success
+			}); // end of ajax
+		} // end of if
+	}); // end of scroll
 	
 	</script>	
 </head>
@@ -210,12 +303,12 @@
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+	    			 <button type="button" class="btn btn-default">검색</button>
 				  </div>
 				  
 				  <div class="form-group">
-				  <button type="button" class="btn btn-default">검색</button>
 				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  <a href="/club/addClubView.jsp">모임등록</a>
+				  <button type="button" class="btn btn-success">모임등록</button>
 				  </div>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -229,17 +322,15 @@
 
 
 	<div id="main" class="row">
-		
-
-		<!-- <div class="row"> -->
 		  <c:forEach var="i" items="${clubList}">
-		  	<div class="col-xs-4 col-md-4">	
+		  	<div class="col-xs-4 col-md-3">	
 				<div class="thumbnail" style="">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p><strong>모임제목 : ${i.clubTitle}</strong></p>
+			  			<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>
-				  		<p>현재인원 : ${i.currentMember}</p>
+				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
+				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
 				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			  	
 				 </div>
 				</div>						
@@ -251,6 +342,8 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
+ 	
+ 	<jsp:include page="../common/pageNavigator_new2.jsp"/>
  	
 	</main>
 	

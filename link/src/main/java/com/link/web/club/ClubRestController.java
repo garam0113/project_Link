@@ -97,23 +97,42 @@ public class ClubRestController {
 		return clubService.getClubMemberList(search);
 	}
 	
+//	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
+//	public ClubUser updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
+//		
+//		System.out.println("club/json/updateMemberRole : POST");
+//		
+//		user = (User) session.getAttribute("user");
+//		club = (Club) session.getAttribute("club");
+//		
+//		
+////		clubUser.setClubNo(club.getClubNo());
+//		
+//		System.out.println("클럽유저에 뭐 있지 ? :"+clubUser);
+//		
+//		clubService.updateMemberRole(clubUser);
+//		
+//		return (ClubUser) clubService.getClubMemberList(search);
+//	}
+	
 	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
-	public ClubUser updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
+	public void updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
 		
 		System.out.println("club/json/updateMemberRole : POST");
 		
-		user = (User) session.getAttribute("user");
-		club = (Club) session.getAttribute("club");
+//		user = (User) session.getAttribute("user");
+//		club = (Club) session.getAttribute("club");
+//		
 		
-		
-//		clubUser.setClubNo(club.getClubNo());
+		clubUser.setClubUserNo(clubUser.getClubUserNo());
 		
 		System.out.println("클럽유저에 뭐 있지 ? :"+clubUser);
 		
 		clubService.updateMemberRole(clubUser);
-		
-		return null;
 	}
+	
+	
+	
 	
 	@RequestMapping(value="json/deleteMeeting", method=RequestMethod.POST)
 	public void deleteMeeting(@RequestParam(value="meetingNo") int meetingNo, Model model) throws Exception {
@@ -153,7 +172,7 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="json/deleteMeetingMember", method=RequestMethod.POST)
-	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo, Model model) throws Exception {
+	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo) throws Exception {
 		
 		System.out.println("deleteMeetingMember 시작~");
 		System.out.println("participantNo = : "+participantNo);

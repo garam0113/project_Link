@@ -39,10 +39,10 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		$()
-		
-		
-	})	
+		$("button.btn.btn-primary").on("click", function(){
+			self.location="/club/addMeetingView.jsp"
+		});
+	});
 	
 	</script>	
 	
@@ -99,6 +99,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
+		<button type="button" class="btn btn-primary" style="float:right;">일정등록</button>
 
 
 	    
@@ -143,7 +144,6 @@
             <th align="left">모임일정날짜</th>
             <th align="left">모임일정시간</th>
             <th align="left">모임장소</th>
-            <th align="left"> <a href="/club/addMeetingView.jsp">모임일정등록</a>
           </tr>
         </thead>
        
@@ -169,8 +169,9 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 		<jsp:include page="../common/pageNavigator_new2.jsp"/>
+ 		<div class="pageNavi" style="float:left;">
+ 		<jsp:include page="../common/pageNavigator_new2.jsp" />
+ 		</div>
 	</main>
 	
 </body>

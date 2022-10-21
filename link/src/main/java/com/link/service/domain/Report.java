@@ -13,7 +13,7 @@ public class Report{
 	private User user2;					// 받은 사람
 	private int reportReason;			// 신고 사유
 	private int reportCondition;		// 신고 진행상황
-	private String regDate;				// 등록 날짜
+	private Date regDate;				// 등록 날짜
 	private String reportImage1;		// 신고 이미지1
 	private String reportImage2;		// 신고 이미지2
 	private int type;					// 신고/알림 타입
@@ -51,7 +51,7 @@ public class Report{
 	}
 
 	public Report(int no, String title, String content, int reportSource, User user1, User user2, int reportReason,
-			int reportCondition, String regDate, String handleDate, String reportImage1, String reportImage2, int type,
+			int reportCondition, Date regDate, String handleDate, String reportImage1, String reportImage2, int type,
 			ClubPost clubPost, Comment clubPostComment, Feed feed, Comment feedComment, Live live) {
 		super();
 		this.no = no;
@@ -154,12 +154,12 @@ public class Report{
 	}
 
 
-	public String getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
 
 
-	public void setRegDate(String regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 
