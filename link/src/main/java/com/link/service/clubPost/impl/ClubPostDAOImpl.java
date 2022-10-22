@@ -61,7 +61,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public Map<String, Object> getClubPostList(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPostList(Map<String, Object> map) 왔다");
 		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", map));
-		map.put("heartList", sqlSession.selectList("ClubPostMapper.getHeartList", map));
 		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", map));
 		return map;
 	}// end of getClubPostList(Map<String, Object> map)
@@ -69,12 +68,11 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> getClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".getClubPost(ClubPost clubPost) 왔다");
-		ClubPost c = sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost"));
+		map.put("getClubPost", sqlSession.selectOne("ClubPostMapper.getClubPost", map.get("clubPost")));
 		if( map.get("search") != null ) {
 			map.put("getClubPostCommentList", sqlSession.selectList("ClubPostCommentMapper.getClubPostCommentList", map));
-			map.put("commentHeartList", sqlSession.selectList("ClubPostCommentMapper.getCommentHeartList", map));
+			//map.put("commentHeartList", sqlSession.selectList("ClubPostCommentMapper.getCommentHeartList", map));
 		}
-		map.put("getClubPost", c);
 		return map;
 	}// end of getClubPost(ClubPost clubPost)
 	
@@ -159,7 +157,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println("//////////////" + map.get("comment"));
 
 		List<Heart> list = sqlSession.selectList("ClubPostCommentMapper.getCommentHeartList", map);
-		comment.setHeart(list);
+		//comment.setHeart(list);
 		
 		return comment;
 	}// end of addClubPostComment(Comment comment)

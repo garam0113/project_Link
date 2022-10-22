@@ -23,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
@@ -42,6 +45,10 @@ public class ServiceCenterController {
 	@Autowired
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
+
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
+	ClubPostService clubPostServiceImpl;
 	
 	
 	public ServiceCenterController() {
@@ -362,15 +369,22 @@ public class ServiceCenterController {
 
 	@RequestMapping(value = "addReport", method = RequestMethod.POST)
 	public String addReport(@ModelAttribute Report report, @RequestParam(value = "sourceNumber") String number,
-								User user, HttpSession httpSession, Model model) throws Exception {
+								User user, Map<String, Object> map, ClubPost clubPost, Comment comment, HttpSession httpSession, Model model) throws Exception {
 		
 		// number ->> 피드 번호, 댓글번호 etc
 		
 		user = (User) httpSession.getAttribute("user");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		if(report.getReportSource() == 3) {
+		if(report.getReportSource() == 1) {
+			// 모임 게시물 신고
+			clubPost.setUser(user);
+			System.out.println("모임 게시물 신고 : " + clubPost);
+			map.put("clubPost", clubPost);
+			report.setClubPost((ClubPost)clubPostServiceImpl.getClubPost(map).get("clubPost"));
+		}else if(report.getReportSource() == 2) {
+			// 모임 게시물 댓글 신고
+			report.setClubPostComment(clubPostServiceImpl.getClubPostComment(comment));
+		}else if(report.getReportSource() == 3) {
 			map.put("feedNo", number);
 			map.put("user", user);
 			

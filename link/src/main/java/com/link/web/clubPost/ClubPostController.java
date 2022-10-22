@@ -21,7 +21,6 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
-import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -72,22 +71,38 @@ public class ClubPostController {
 	@RequestMapping(value = "getClubPostList")
 	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPostList : GET,POST : 모임 상세보기에서 모임게시물 탭 클릭시 session에 있는 모임번호로 해당 모임의 모임게시물리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
-		// question : clubNo와 order가 잘 들어온다 왜? RequestParam도 들어오고 Search, ClubPost에도 들어오나?
-		// 모임 상세보기에서 모임게시물 탭 클릭시 session에 있는 모임번호로 해당 모임의 모임게시물리스트 가져온다
 
-		// session으로 로그인한 회원 정보를 가져온다
-		clubPost.setUser(new User(((User)session.getAttribute("user")).getUserId()));
 		
-		// Club 상세보기에서 모임번호를 session으로 가져온다
+
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+		
+		// 로그인한 회원 정보를 가져온다
+		clubPost.setUser((User)session.getAttribute("user"));
+		
+		// club 상세보기에서 모임번호를 session으로 가져온다 어떤 모임의 게시물인지 알기위해 필요하다
 		clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
+
+		// meta 데이터인 pageSize = 10 화면에 게시물이 10개 나온다
+		search.setPageSize(pageSize);
+		// order = 0 최신순, currentPage = 1, searchCondition = 1 게시물 내용
 		search = ClubPostCommon.getSearch(search);
+		
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		
 		
 		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
-		model.addAttribute("heartList", map.get("heartList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		
+		
+		
 		//return "forward:/clubPost/getClubPostList_backup.jsp";
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
@@ -197,7 +212,10 @@ public class ClubPostController {
 		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
 			System.out.println("영상이 있다");
 			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
-			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
+				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			}
 			// 파일명.확장자
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
 			System.out.println(str);
@@ -215,35 +233,65 @@ public class ClubPostController {
 	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
 		
-		// search가 없으면 상세보기를 가져오고 있으면 상세보기 + 댓글리스트를 가져온다
+		
+		
+		System.out.println("모임번호 : " + clubPost.getClubNo() + ", 모임게시물번호 : " + clubPost.getClubPostNo());
+
+		
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+		
+		// search가 없으면 상세보기만 가져오고 있으면 상세보기 + 댓글리스트를 가져온다
 		map.put("search", ClubPostCommon.getSearch(search));
+		
+		// 로그인한 회원의 모임 직책을 알기위해 모임번호가 필요하다
+		clubPost.setClubNo(clubPost.getClubNo());
+		// 로그인한 회원의 좋아요 여부 알기위해 회원 아이디 필요하다
+		clubPost.setUser((User)session.getAttribute("user"));
 		map.put("clubPost", clubPost);
+		
+		// 로그인한 회원이 해당 게시물에 좋아요 여부 알기위해 로그인한 회원의 아이디 필요하다
 		comment.setUser((User)session.getAttribute("user"));
+		// 해당 게시물의 댓글리스트만 가져오기 위해 필요하다
+		comment.setClubPostNo(clubPost.getClubPostNo());
 		map.put("comment", comment);
 
-		// 해당 유저아이디, 모임게시물은 source가 2이다, 모임게시물번호를 보낸다
-		// 해당 유저가 좋아요한 게시물인지 확인한다 리턴 1이면 좋아요했다 리턴 0이면 좋아요 안했다
-		heart.setSource("2");
-		heart.setSourceNo(clubPost.getClubPostNo());
-		heart.setUserId(((User)session.getAttribute("user")).getUserId());
 		
-		int heartCondition = clubPostServiceImpl.getCheckHeart(heart);
-		map = clubPostServiceImpl.getClubPost(map);
-		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
 		
-		clubPost.setUser((User)session.getAttribute("user"));
-		System.out.println(clubPost.getClubNo() + ", " + clubPost.getUser());
-		session.setAttribute("clubUser", clubServiceImpl.getClubMember(clubPost));
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+
 		
-		model.addAttribute("clubPost", map);
-		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList
+		
+		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
+		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList, 좋아요 여부 : getClubPost.heartCondition, 모임 직책 : getClubPost.clubRole
+		
+		
+		
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
 	@RequestMapping(value = "updateClubPostView", method = RequestMethod.POST)
-	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map) throws Exception {
+	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, HttpSession session, Map<String, Object> map) throws Exception {
 		System.out.println("/updateClubPostView : POST : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
+
+		
+		
+		System.out.println("" + clubPost);
+		
+		
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		// 로그인한 회원의 
+		clubPost.setUser((User)session.getAttribute("user"));
+		
+		// 모임 상세보기에서 search, clubPost, comment를 보내기 때문에 getCLubPost의 매개변수가 map이다
 		map.put("clubPost", clubPost);
+
+		
+		
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		return "forward:/clubPost/updateClubPostView.jsp";
 	}

@@ -11,9 +11,6 @@
 	<resultMap	id="clubPostSelectMap" type="com.link.service.domain.ClubPost">
 		<result property="clubNo" 					column="club_no" 					jdbcType="NUMERIC"/>
 		<result property="clubPostNo"				column="club_post_no" 				jdbcType="NUMERIC"/>
-		<result property="user.userId" 				column="user_id" 					jdbcType="VARCHAR"/>
-		<result property="user.nickName" 			column="nickname"					jdbcType="VARCHAR"/>
-		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR"/>
 		<result property="clubPostTitle" 			column="club_post_title" 			jdbcType="VARCHAR"/>
 		<result property="clubPostContent" 			column="club_post_content" 			jdbcType="VARCHAR"/>
 		<result property="clubPostVideo1" 			column="club_post_video1" 			jdbcType="VARCHAR"/>
@@ -23,6 +20,8 @@
 		<result property="clubPostUpdateDate" 		column="club_post_update_date" 		jdbcType="VARCHAR"/>
 		<result property="clubPostHeartCount" 		column="club_post_heart_count" 		jdbcType="NUMERIC"/>
 		<result property="clubPostCommentCount" 	column="club_post_comment_count" 	jdbcType="NUMERIC"/>
+		<result property="heartCondition"		 	column="heart_condition"		 	jdbcType="NUMERIC"/>
+		<result property="clubRole" 				column="club_role"					jdbcType="VARCHAR"/>
 		<result property="image1" 					column="image1" 					jdbcType="VARCHAR"/>
 		<result property="image2" 					column="image2" 					jdbcType="VARCHAR"/>
 		<result property="image3" 					column="image3" 					jdbcType="VARCHAR"/>
@@ -33,14 +32,17 @@
 		<result property="image8" 					column="image8" 					jdbcType="VARCHAR"/>
 		<result property="image9" 					column="image9" 					jdbcType="VARCHAR"/>
 		<result property="image10" 					column="image10" 					jdbcType="VARCHAR"/>
+		
+		<association property="user"				javaType="user">
+			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
+		</association>
 	</resultMap>
 	
 
 	
 	<resultMap	id="paySelectMap" type="com.link.service.domain.Pay">
-		<result property="user.userId" 				column="USER_ID" 					jdbcType="VARCHAR"/>
-		<result property="user.nickName" 			column="NICKNAME"					jdbcType="VARCHAR"/>
-		<result property="user.profileImage"		column="PROFILE_IMAGE"				jdbcType="VARCHAR"/>
 		<result property="payNo" 					column="PAY_NO" 					jdbcType="NUMERIC"/>
 		<result property="clubNo" 					column="CLUB_NO" 					jdbcType="NUMERIC"/>
 		<result property="payProduct" 				column="PAY_PRODUCT" 				jdbcType="VARCHAR"/>
@@ -50,18 +52,23 @@
 		<result property="updateClubCount" 			column="UPDATE_CLUB_COUNT" 			jdbcType="NUMERIC"/>
 		<result property="updateClubMemberCount" 	column="UPDATE_CLUB_MEMBER_COUNT" 	jdbcType="NUMERIC"/>
 		<result property="merchant_uid" 			column="MERCHANT_UID" 				jdbcType="NUMERIC"/>
+		
+		<association property="user"				javaType="user">
+			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
+		</association>
 	</resultMap>
 	
 	
 	
-	<resultMap	id="heartSelectMap" type="com.link.service.domain.Heart">
-		<result property="heartNo" 		column="heart_no"		jdbcType="NUMERIC"/>
-		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
-		<result property="source" 		column="source" 		jdbcType="VARCHAR"/>
-		<result property="sourceNo" 	column="source_no" 		jdbcType="NUMERIC"/>
-	</resultMap>
 	
 	
+	<!-- /////////////////////////////////////////////////////////////// CLUBPOST /////////////////////////////////////////////////////////////// -->
+	
+
+
+
 	
 	<sql id="select-list">
 		SELECT ROW_NUMBER() OVER(ORDER BY 
@@ -71,33 +78,25 @@
 										<otherwise>
 											CLUB_POST_NO DESC
 										</otherwise>
-										</choose> ) AS R, V3.*
-		FROM ( SELECT CP.CLUB_NO, CP.CLUB_POST_NO, CP.IMAGE1, CP.CLUB_POST_VIDEO1, CP.CLUB_POST_TITLE, CP.USER_ID, U.PROFILE_IMAGE, U.NICKNAME, CP.CLUB_POST_HEART_COUNT
-				FROM CLUB_POST CP, USERS U
-				WHERE CLUB_NO = 
+										</choose> ) AS R, V2.*
+		FROM ( SELECT CP.CLUB_NO, CP.CLUB_POST_NO, CP.IMAGE1, CP.CLUB_POST_VIDEO1, CP.CLUB_POST_TITLE, CP.USER_ID, U.PROFILE_IMAGE, U.NICKNAME, CP.CLUB_POST_HEART_COUNT, HEART_CONDITION
+				FROM CLUB_POST CP, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
+												FROM HEART
+												WHERE TRIM(SOURCE) = '2' AND USER_ID = #{ clubPost.user.userId } ) V1
+				WHERE HEART_CONDITION (+) = CP.CLUB_POST_NO AND CP.USER_ID = U.USER_ID AND CLUB_NO = 
 				<choose>
 					<when test="clubPost.clubNo != 0">#{ clubPost.clubNo }
 						<if test="search.order == 3">AND CP.USER_ID = #{ clubPost.user.userId }</if>
 					</when>
-				<!-- <otherwise>
-				( SELECT V2.CLUB_NO
-					FROM ( SELECT ROWNUM, V1.*
-							FROM ( SELECT *
-									FROM CLUB_USER
-									WHERE USER_ID = #{ clubPost.user.userId } AND JOIN_REG_DATE IS NOT NULL
-									ORDER BY JOIN_REG_DATE DESC ) V1
-							WHERE ROWNUM = 1
-						 ) V2 )
-					</otherwise> -->
 				</choose>
-				AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0' AND CP.USER_ID = U.USER_ID
+				AND REPORT_CONDITION = '0' AND DELETE_CONDITION = '0'
 				<if test="search.searchKeyword != '' and search.searchCondition != ''">
 					<choose>
 						<when test="search.searchCondition == 0">AND CP.USER_ID LIKE '%'||#{search.searchKeyword}||'%'</when>
 						<when test="search.searchCondition == 1">AND CLUB_POST_CONTENT LIKE '%'||#{search.searchKeyword}||'%'</when>
 					</choose>
 				</if>
-		) V3
+		) V2
 	</sql>
 	
 
@@ -117,22 +116,11 @@
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
 	<select id="getClubPostList" parameterType="map" resultMap="clubPostSelectMap">
-		SELECT V4.*
+		SELECT V3.*
 		FROM ( 
 				<include refid="select-list"></include>
-			 ) V4
+			 ) V3
 		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
-	</select>
-	
-	
-	
-	<select id="getHeartList" parameterType="map" resultMap="heartSelectMap">
-		SELECT H.SOURCE_NO, H.USER_ID
-		FROM HEART H, ( 
-			<include refid="select-list"></include>
-		) V4
-		WHERE H.SOURCE_NO = V4.CLUB_POST_NO AND H.USER_ID = #{ clubPost.user.userId }
-		ORDER BY SOURCE_NO DESC
 	</select>
 	
 	
@@ -147,10 +135,6 @@
 			 ) V3
 	</select>
 	
-
-	
-	
-	
 	
 	
 	<!-- 모임게시물 상세보기 -->
@@ -158,9 +142,13 @@
 		SELECT CP.CLUB_POST_NO, CP.CLUB_NO, CP.USER_ID, U.PROFILE_IMAGE, U.NICKNAME, CP.CLUB_POST_TITLE, CP.CLUB_POST_CONTENT,
 		CP.CLUB_POST_VIDEO1, CP.CLUB_POST_VIDEO2, CP.CLUB_POST_VIDEO3, CP.CLUB_POST_REG_DATE, CP.CLUB_POST_UPDATE_DATE,
 		CP.CLUB_POST_HEART_COUNT, CP.CLUB_POST_COMMENT_COUNT, CP.IMAGE1, CP.IMAGE2, CP.IMAGE3, CP.IMAGE4, CP.IMAGE5, CP.IMAGE6,
-		CP.IMAGE7, CP.IMAGE8, CP.IMAGE9, CP.IMAGE10
-		FROM CLUB_POST CP, USERS U
-		WHERE CP.USER_ID = U.USER_ID AND CP.CLUB_POST_NO = #{ clubPostNo }
+		CP.IMAGE7, CP.IMAGE8, CP.IMAGE9, CP.IMAGE10, HEART_CONDITION, CLUB_ROLE
+		FROM CLUB_POST CP, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
+										FROM HEART
+										WHERE TRIM(SOURCE) = '2' AND USER_ID = #{ user.userId } ) V1, ( SELECT member_role AS CLUB_ROLE, USER_ID
+																										FROM CLUB_USER 
+																										WHERE USER_ID = #{ user.userId } AND CLUB_NO = #{ clubNo } ) V2
+		WHERE CP.USER_ID = U.USER_ID AND HEART_CONDITION (+) = CP.CLUB_POST_NO AND V2.USER_ID (+) = U.USER_ID AND CP.CLUB_POST_NO = #{ clubPostNo }
 	</select>
 	
 	
@@ -199,10 +187,9 @@
 	
 	
 	
+		
 	
-	
-	
-	
+	<!-- /////////////////////////////////////////////////////////////// MYHOME /////////////////////////////////////////////////////////////// -->
 	
 	
 	
@@ -225,6 +212,14 @@
 	
 	
 	
+	
+	
+	<!-- /////////////////////////////////////////////////////////////// PAY /////////////////////////////////////////////////////////////// -->
+
+	
+	
+	
+	
 	<!-- 결제추가 -->
 	<insert id="addPay" parameterType="pay">
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
@@ -239,6 +234,7 @@
 		PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID
 		FROM PAY
 		WHERE USER_ID = #{ userId }
+		ORDER BY PAY_REG_DATE DESC
 	</select>
 	
 	
