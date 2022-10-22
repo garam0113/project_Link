@@ -11,9 +11,6 @@
 	<resultMap id="clubPostCommentSelectMap" type="com.link.service.domain.Comment">
 		<result property="clubPostCommentNo"		column="club_post_comment_no" 		jdbcType="NUMERIC"/>
 		<result property="clubPostNo"				column="club_post_no" 				jdbcType="NUMERIC"/>
-		<result property="user.userId" 				column="user_id" 					jdbcType="VARCHAR"/>
-		<result property="user.nickName"			column="nickname" 					jdbcType="VARCHAR"/>
-		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR"/>
 		<result property="commentContent" 			column="comment_content" 			jdbcType="VARCHAR"/>
 		<result property="commentRegDate" 			column="comment_reg_date" 			jdbcType="DATE"/>
 		<result property="commentUpdateDate" 		column="comment_update_date" 		jdbcType="DATE"/>
@@ -21,26 +18,27 @@
 		<result property="commentCount" 			column="comment_count" 				jdbcType="NUMERIC"/>
 		<result property="reportCondition" 			column="report_condition" 			jdbcType="VARCHAR"/>
 		<result property="deleteCondition" 			column="delete_condition" 			jdbcType="VARCHAR"/>
+		<result property="heartCondition"		 	column="HEART_CONDITION"		 	jdbcType="NUMERIC"/>
 		<result property="parent" 					column="parent" 					jdbcType="NUMERIC"/>
 		<result property="depth" 					column="depth" 						jdbcType="NUMERIC"/>
 		<result property="sequence" 				column="sequence" 					jdbcType="NUMERIC"/>
-	</resultMap>
-	
-	
-	
-	<resultMap	id="heartSelectMap" type="com.link.service.domain.Heart">
-		<result property="heartNo" 		column="heart_no"		jdbcType="NUMERIC"/>
-		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
-		<result property="source" 		column="source" 		jdbcType="VARCHAR"/>
-		<result property="sourceNo" 	column="source_no" 		jdbcType="NUMERIC"/>
+		
+		<association property="user"				javaType="user">
+			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
+		</association>
 	</resultMap>
 	
 	
 	
 	<sql id="select-list">
-		SELECT C.CLUB_POST_COMMENT_NO, C.CLUB_POST_NO, C.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, C.COMMENT_CONTENT, C.COMMENT_REG_DATE, C.COMMENT_UPDATE_DATE, C.COMMENT_HEART_COUNT, C.COMMENT_COUNT, C.REPORT_CONDITION, C.DELETE_CONDITION, C.PARENT, C.DEPTH, C.SEQUENCE
-		FROM CLUB_POST_COMMENT C, USERS U
-		WHERE C.USER_ID = U.USER_ID AND C.CLUB_POST_NO = #{ comment.clubPostNo } AND C.DELETE_CONDITION = 0
+		SELECT C.CLUB_POST_COMMENT_NO, C.CLUB_POST_NO, C.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, C.COMMENT_CONTENT, C.COMMENT_REG_DATE, C.COMMENT_UPDATE_DATE, C.COMMENT_HEART_COUNT, C.COMMENT_COUNT,
+		C.REPORT_CONDITION, C.DELETE_CONDITION, C.PARENT, C.DEPTH, C.SEQUENCE, HEART_CONDITION
+		FROM CLUB_POST_COMMENT C, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
+												FROM HEART
+												WHERE TRIM(SOURCE) = '3' AND USER_ID = #{ comment.user.userId } ) V1
+		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.CLUB_POST_NO = #{ comment.clubPostNo } AND C.DELETE_CONDITION = 0
 		<choose>
 			<when test="comment.clubPostCommentNo != 0">AND C.PARENT = #{ comment.clubPostCommentNo }</when>
 		</choose>
@@ -58,17 +56,6 @@
 					 <!-- ) V2 -->
 			 <!-- ) V3 -->
 		<!-- WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize } -->
-	</select>
-	
-	
-	
-	<select id="getCommentHeartList" parameterType="map" resultMap="heartSelectMap">
-		SELECT H.SOURCE_NO, H.USER_ID
-		FROM HEART H, ( 
-			<include refid="select-list"></include>
-		) V4
-		WHERE H.SOURCE_NO = V4.CLUB_POST_COMMENT_NO AND H.USER_ID = #{ comment.user.userId } AND H.SOURCE = 3
-		ORDER BY SOURCE_NO ASC
 	</select>
 	
 	
@@ -96,9 +83,11 @@
 	<!-- 특정 댓글을 가져온다 -->	
 	<select id="getClubPostComment" parameterType="comment" resultMap="clubPostCommentSelectMap">
 		SELECT C.CLUB_POST_COMMENT_NO, C.CLUB_POST_NO, C.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, C.COMMENT_CONTENT, C.COMMENT_REG_DATE, C.COMMENT_UPDATE_DATE, C.COMMENT_HEART_COUNT, C.COMMENT_COUNT,
-		C.REPORT_CONDITION, C.DELETE_CONDITION, C.PARENT, C.DEPTH, C.SEQUENCE
-		FROM CLUB_POST_COMMENT C, USERS U
-		WHERE C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0
+		C.REPORT_CONDITION, C.DELETE_CONDITION, C.PARENT, C.DEPTH, C.SEQUENCE, HEART_CONDITION
+		FROM CLUB_POST_COMMENT C, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
+												FROM HEART
+												WHERE TRIM(SOURCE) = '3' AND USER_ID = #{ user.userId } ) V1
+		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0
 		<choose>
 			<when test="clubPostCommentNo != 0">AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</when>
 			<when test="clubPostCommentNo == 0">AND C.CLUB_POST_NO = #{ clubPostNo } AND C.PARENT = #{ clubPostNo }</when>

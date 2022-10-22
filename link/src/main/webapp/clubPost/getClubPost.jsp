@@ -31,7 +31,7 @@
 		$(function(){
 			<%-- 모임 게시물 수정 --%>
 			$(".clubPost-header-update").bind("click", function(){
-				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
 			
 			<%-- 모임 게시물 삭제 --%>
@@ -43,9 +43,8 @@
 			
 			<%-- 모임 게시물 신고 --%>
 			$(".clubPost-header-report").bind("click", function(){
-				alert("유저 아이디 : ${ clubPost.getClubPost.user.userId }");
-				alert("모임 게시물 번호 : " + ${ clubPost.getClubPost.clubPostNo });
-				//$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&userId="+${ user.userId }).submit();
+				event.stopPropagation();
+				$("form[name='clubPostReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
 			});
 
 			<%-- 모임 게시물 리스트로 이동 --%>
@@ -55,6 +54,7 @@
 
 			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
 			$(".clubPost-header-heart").bind("click", function(){
+				alert('a');
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
 							method : "POST",
@@ -397,6 +397,14 @@
 							}
 						});
 			}); // end of 댓글좋아요
+			
+			<%-- 모임 게시물 댓글 신고 --%>
+			$(document).on("click", ".commentReport", function(event) {
+				event.stopPropagation();
+				
+				$(this).parents(".comment-meta").siblings(".commentInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				
+			}) // .report evenet close
 
 			<%-- 프로필사진 클릭시 해당유저 마이홈피로 이동 --%>
 			$(document).on("click", ".clubPost-header-profile", function(){
@@ -464,6 +472,21 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+	<form name="clubPostReport" method="post" action="/serviceCenter/addReport">
+		<%-- 모임게시물 신고 --%>
+		<input type="hidden" name="reportSource" value="1">
+		<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
+		<input type="hidden" name="user" value="${ clubPost.getClubPost.user }">
+		<%-- 모임게시물 신고 --%>
+	</form>
+	
+	<form action="">
+		<%-- 모임게시물 댓글 신고 --%>
+		<input type="hidden" name="reportSource" value="2">
+		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
+		<input type="hidden" name="user2" value="${ clubPost.getClubPost.user.userId }">
+		<%-- 모임게시물 댓글 신고 --%>
+	</form>
 
 		<main role="main">
 			<div id="intro-wrap">
@@ -534,10 +557,12 @@
 								
 								<%-- 해당 회원이 좋아요한 여부에 따라 하트색 변화 --%>
 								<div class="clubPost-header-heart">
+									<a>
 									<c:choose>
 										<c:when test="${ clubPost.getClubPost.heartCondition == 0}"><img src="/resources/image/uploadFiles/no_heart.jpg" height="70" width="70"></c:when>
 										<c:otherwise><img src="/resources/image/uploadFiles/heart.jpg" height="70" width="70"></c:otherwise>
 									</c:choose>
+									</a>
 								</div>
 								
 								<%-- 게시물 좋아요 수 --%>
@@ -546,12 +571,14 @@
 								<%-- 게시물 수정 --%>
 								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId }">
 									<div class="clubPost-header-update">
-										<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
+										<a>
+											<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
+										</a>
 									</div>
 								</c:if>
 								
 								<%-- 해당 게시물 작성자 또는 해당 모임대표 또는 관리자 게시물 삭제 가능 --%>
-								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }">
+								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId || clubPost.getClubPost.clubRole == '2' || sessionScope.user.role == '1' }">
 									<div class="clubPost-header-delete">
 										<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
 									</div>
@@ -667,17 +694,8 @@
 													<div class="comment body">
 														<div class="comment-heart-${ i }">
 														 	<a class="reply heartCondition">
-															 	<c:set var="commentHeart" value="0"></c:set>
-															 		<c:if test="${ fn:length(clubPost.commentHeartList) > 0 }">
-															 		<c:forEach var="m" begin="0" end="${ fn:length(clubPost.commentHeartList) - 1 }" step="1">
-															 			<!-- 하트리스트에 소스번호와 해당 댓글 번호가 같다면 빨간하트 -->
-															 			<c:if test="${ clubPost.commentHeartList[m].sourceNo == clubPost.getClubPostCommentList[i].clubPostCommentNo }">
-															 				<span><img src="/resources/image/uploadFiles/heart.jpg" height="40" width="40"></span>
-															 				<c:set var="commentHeart" value="1"></c:set>
-															 			</c:if>
-															 		</c:forEach>
-															 		</c:if>
-															 	<c:if test="${ commentHeart == 0 }"><span><img src="/resources/image/uploadFiles/no_heart.jpg" height="40" width="40"></span></c:if>
+													 			<!-- 하트컨디션이 댓글번호면 좋아요/0이면 좋아요 안했다 -->
+													 			<img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="40" width="40">
 															 </a>
 														 </div>
 														 <div>

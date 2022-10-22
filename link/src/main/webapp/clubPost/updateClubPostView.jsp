@@ -125,10 +125,10 @@
 					</ul>
 	
 					<form name="updateClubPost" method="post" action="/clubPost/updateClubPost" enctype="multipart/form-data">
-						모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }"></br>
+						모임 게시물 번호 : ${ getClubPost.clubPostNo }<input type="hidden" name="clubPostNo" value="${ getClubPost.clubPostNo }"></br>
 						모임 번호 : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
-						<input type="text" name="clubPostTitle" placeholder="제목" value="${ clubPost.getClubPost.clubPostTitle }"></br>
-						<textarea id="summernote" name="clubPostContent">${ clubPost.getClubPost.clubPostContent }
+						<input type="text" name="clubPostTitle" placeholder="제목" value="${ getClubPost.clubPostTitle }"></br>
+						<textarea id="summernote" name="clubPostContent">${ getClubPost.clubPostContent }
 						</textarea>
 						<a class="button transparent aqua">수정완료</a>
 						<a class="button transparent aqua">리스트로이동</a>

@@ -31,6 +31,7 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
@@ -165,16 +166,37 @@ public class ClubPostRestController {
 
 
 
+		
+///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
+
+
+
+	
+	
+	@RequestMapping(value = "/json/getPayList", method = RequestMethod.POST)
+	public List<Pay> getPayList(HttpSession session) throws Exception {
+		System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
+		return clubPostServiceImpl.getPayList((User)session.getAttribute("user"));
+	}
+	
+	@RequestMapping(value = "/json/getPay", method = RequestMethod.POST)
+	public Pay getPay(@RequestBody Pay pay) throws Exception {
+		System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
+		return clubPostServiceImpl.getPay(pay);
+	}
+
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	
 	
 
-
 	@RequestMapping(value = "getClubPostListMyHome", method = RequestMethod.POST)
 	public Map<String, Object> getClubPostListMyHome(HttpSession session) throws Exception {
-
 		System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		String userId = ((User) session.getAttribute("user")).getUserId();
