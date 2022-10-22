@@ -76,16 +76,16 @@
 			$("form").attr("method", "POST").attr("action", "/club/deleteMeetingMember").submit();
 		});
 		
-		$(document).on("click", "#deleteParticipant", function() {
+	/* 	$(document).on("click", "#deleteParticipant", function() {
 			
-			var participantNo = $(this).val();
+			var meetingNo = $(this).val();
 			var userId = $(this).attr("userId");
 			
 			$.ajax("/clubRest/json/deleteMeetingMember" ,
 					{
 						method : "POST" ,
 						data : JSON.stringify({
-							participantNo : participantNo ,
+							meetingNo : meetingNo ,
 							userId : userId
 						}) ,
 						headers : {
@@ -100,10 +100,10 @@
 					}); // end of ajax		
 				}); // end of 신청취소
 			
+		}); */
+	
+	
 		});
-	
-	
-	
 	
 	
 	$(function() {
@@ -169,9 +169,9 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList">모임 채팅</a>
 						</li>
-						<li data-group="infographics">
+						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li>
+						</li> --%>
 					</ul>
 	
 	
@@ -195,7 +195,9 @@
 		  <c:forEach var="i" items="${meetingMemberList}">
 		  <input type="hidden" name="participantNo" value="${i.participantNo}">
 			<tr>
-			<td align="left"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
+			<td align="left">
+			<a href="/myHome/getYourHome?userId=${i.user.userId}"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></a>
+			</td>
 			  <td align="left">${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
 			  
