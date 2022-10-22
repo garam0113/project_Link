@@ -368,32 +368,7 @@ public class ClubController {
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 //		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
-		model.addAttribute("search",search);
-		
-		System.out.println("리스트 맵에 뭐있지? :"+map.get("clubMemberList"));
-		
-//		System.out.println("if문 시작전!");
-//		if(clubUser.getMemberRole()=="0") {
-//			clubUser.setMemberRole("모임원");
-//		} else if(clubUser.getMemberRole()=="1") {
-//			clubUser.setMemberRole("모임부대표");
-//		} else {
-//			clubUser.setMemberRole("모임대표");
-//		}
-//		HashMap<String, Object> hm = new HashMap<>();
-//		hm.put("0", "모임원");
-//		hm.put("1", "모임부대표");
-//		hm.put("2", "모임대표");
-//		
-//		System.out.println("[변경 전] : "+hm);
-//		
-//		hm.replace("hm", map.get("clubMemberList")) {
-//			if("hm".contains("0")) {
-//				return "모임원";
-//			}
-//			return "모임부대표";
-//		}
-		
+		model.addAttribute("search",search);		
 		
 		return "forward:/club/getClubMemberList.jsp";
 	}
@@ -405,7 +380,7 @@ public class ClubController {
 		
 		user = (User) session.getAttribute("user");
 		System.out.println("(일정참여자)미팅넘버 세션에 뭐 있지? : "+ session.getAttribute("meetingNo"));
-				
+		System.out.println("(일정참여자) 유저 세션의 아이디는? : "+user.getUserId());
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -593,6 +568,26 @@ public class ClubController {
 		meeting.setMeetingNo(Integer.parseInt(meetingNo));
 		
 		clubService.deleteMeeting(Integer.parseInt(meetingNo));
+		
+		return "forward:/club/getMeetingList";
+	}
+	
+	@RequestMapping(value="deleteMeetingMember", method=RequestMethod.POST)
+	public String deleteMeeting(@ModelAttribute Participant participant, HttpSession session, User user, String meetingNo) throws Exception {
+		
+		System.out.println("deleteMeetingMember 시작~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~");
+		
+		user = (User) session.getAttribute("user");
+		meetingNo = (String) session.getAttribute("meetingNo");
+		
+		System.out.println("유저 세션 잘왔나? : "+user);
+		System.out.println("미팅 넘버는 ? : "+meetingNo);
+		
+		participant.setMeetingNo(Integer.parseInt(meetingNo));
+		participant.setUser(user);
+		
+		
+		clubService.deleteMeetingMember(participant);
 		
 		return "forward:/club/getMeetingList";
 	}

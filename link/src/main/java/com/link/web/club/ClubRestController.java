@@ -170,12 +170,20 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="/json/deleteMeetingMember", method=RequestMethod.POST)
-	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo) throws Exception {
+	public void deleteMeetingMember(@RequestBody Participant participant, HttpSession session, User user, String meetingNo) throws Exception {
 		
 		System.out.println("deleteMeetingMember 시작~");
-		System.out.println("participantNo = : "+participantNo);
 		
-		clubService.deleteMeetingMember(participantNo);
+		user = (User) session.getAttribute("user");
+		meetingNo = (String) session.getAttribute("meetingNo");
+		
+		System.out.println("유저 세션 들왔나? : "+user);
+		System.out.println("미팅 넘버는 ? : "+meetingNo);
+		
+		participant.setMeetingNo(Integer.parseInt(meetingNo));
+		participant.setUser(user);
+		
+		clubService.deleteMeetingMember(participant);
 		
 	}
 	

@@ -71,6 +71,15 @@
 	    box-shadow: 0 1px 0 rgb(0 0 0 / 10%); */
 		}
 		
+		.darkover {
+    	position: static;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+ 	   background: rgba(0,0,0,0.35);
+		}
+		
 		header.transparent {
     		background-color: #23242b;
 		    -webkit-box-shadow: none;
@@ -82,8 +91,8 @@
 			    padding: 0px;
 			    margin-bottom: 20px;
 			    line-height: 1;
-			    background-color: #f5c7f4;
-			    /* border: 1px solid #ddd; */
+			    background-color: #fbfbfb;
+			    border: 1px solid #5F0080;
 			    border-radius: 4px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
@@ -98,6 +107,11 @@
 		 
 		 div {
 		 	clear: none;
+		 }
+		 
+		 .btn {
+		 	background-color: #BD76FF;
+		 	color: #fbfbfb;
 		 }
 		 
 		 .club-cT {
@@ -167,12 +181,12 @@
 		
 	}
 	
-	$(function() {
+/* 	$(function() {
 		$("button,btn.btn-success").on("click", function() {
 			//alert('하이');
 			popup();
 		})
-	})
+	}) */
 	
 	
 	$(function() {
@@ -351,7 +365,7 @@
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			  	
+				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button">모임보기</a></p>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>

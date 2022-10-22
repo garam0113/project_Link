@@ -1,10 +1,24 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ page import = "java.net.URLEncoder" %>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- <%
+	String userId = (String)session.getAttribute("user");
 
+	if(userId == null) {
+		String message = "먼저 로그인 하신 후 사용 가능합니다.";
+		message = URLEncoder.encode(message, "utf-8");
+
+		response.sendRedirect("/user/login.jsp?message = "+message);
+	} else{
+
+	}
+
+%>
+ --%>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -43,6 +57,7 @@
 			self.location="/club/addMeetingView.jsp"
 		});
 	});
+	
 	
 	</script>	
 	

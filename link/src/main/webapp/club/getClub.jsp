@@ -38,6 +38,10 @@
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
 	}
+	a {
+    	color: #bd76ff;
+    	text-decoration: underline;
+	}
 	
 	.darkover {
     position: sticky;

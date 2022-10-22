@@ -3,7 +3,8 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 
@@ -40,6 +41,17 @@
 	
 	td {
 		text-align: center;
+		font-size: medium;
+		vertical-align: middle;
+	}
+	
+	.darkover {
+	    position: static;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    background: rgba(0,0,0,0.35);
 	}
 	
 	</style>
@@ -65,6 +77,11 @@
 	
 	function refreshMemList(){
 		location.reload();
+	}
+	
+	//닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
+	function getMyHomeGo(userId){
+		location.href = "/myHome/getYourHome?userId="+userId;
 	}
 	
 	$(function() {
@@ -197,6 +214,7 @@
 		$("button:contains('전달')").on("click", function() {
 			openWin.document.getElementById("clubUserNo").value = $(this).val();
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
+			openWin.document.getElementById("userId").value = $(this).attr("userId");
 		});
 	});
 	
@@ -298,21 +316,24 @@
 		<tr>
 		  <c:forEach var="i" items="${clubMemberList}">
 			<tr>
-			<td align="center"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></td>
+			<td align="center">
+			<a href="/myHome/getYourHome?userId=${i.user.userId}"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></a>
+			<%-- <img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"> --%>
+			
+			</td>
+			
 			  <td >${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
-			  <td align="center">${i.memberRole}</td>
+			  <%-- <td align="center">${i.memberRole}</td> --%>
+			  <td align="left">${ fn:trim(i.memberRole) == 0 ? "모임원" : ""} ${ fn:trim(i.memberRole) == 1 ? "모임부대표" : ""} ${fn:trim(i.memberRole) == 2 ? "모임대표" : ""}</td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
-			  <td align="center">${i.approvalCondition}</td>
-			  <%-- <td><center>${i.approvalCondition}</center></td> --%>
-			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}">전달</button>
+			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "승인완료" : ""}</td> 
+<%-- 			  <td align="center">${i.approvalCondition}</td> --%>
+			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button>
 			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
 			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
 			  <td>${i.club.clubMaxMember}</td>
-			  <c:if test="${i.memberRole}== 0">
-			  	모임원
-			  </c:if>
 			</tr>
           </c:forEach>
         </tbody>
