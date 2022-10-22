@@ -14,8 +14,6 @@
 	
 	<title>Feed</title>
 	
-	<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -236,7 +234,7 @@
 							alert("피드 좋아요 성공 : " + data);
 
 							$(html).parents(".row").children(".likeCount").text(data);
-							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -275,7 +273,7 @@
 							alert("피드 시러요 성공 : " + data);
 							
 							$(html).parents(".row").children(".likeCount").text(data);
-							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
+							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />');
 							
 						} // success close
 						
@@ -310,6 +308,145 @@
 
 <style type="text/css">
 
+	/* FONT */
+
+
+
+	/* FONT */
+	
+
+	/* SUMMERNOTE */
+	
+	.note-toolbar {
+		border: 2px solid rgba(171,148,233,1);
+		color: rgba(171,148,233,1) !important;
+	}
+		
+	.note-btn {
+		border: 2px solid rgba(171,148,233,1);
+		color: rgba(171,148,233,1) !important;
+	}
+	
+	.note-editing-area {
+		border: 2px solid rgba(171,148,233,1);
+		color: rgba(171,148,233,1) !important;
+	}
+
+	/* SUMMERNOTE */
+
+	/* FEED BORDER */
+	.showFeedForm {
+		border: 2px solid rgba(171,148,233,1);
+		color: rgba(171,148,233,1) !important;
+	}
+	
+	/* FEED BORDER */
+
+
+
+
+	
+	h4 {
+		margin-top:5px;
+		margin-left:5px;
+		display: inline-block;
+	}
+	
+	h5.meta-post {
+		margin-bottom:13px !important;
+		color:rgba(171,148,233,1) !important;
+	}
+		
+	@
+	-ms-viewport {
+		width: device-width;
+	}
+	
+	.row {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-left: 0px;
+	}
+	
+	
+	
+	article {
+		border-style:solid !important;
+		border-color:#241B12 !important;
+		border-width:2 !important;
+	}
+	
+	.carousel-inner > .item > img {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 350px;
+	} 
+	
+	.carousel-control.left, .carousel-control.right {
+    	background-image: none
+	}
+	
+	input.button.purple.addFeed {
+		display: inline-block;
+		width:75px;
+		height:35px;
+		float:right;
+		margin-top:18px;
+		margin-right:0px;
+		font-size: 0.5em !important;
+	}
+	
+	div.feedContent {
+		margin-left: 60px;
+		color: white !important;
+	}
+	
+	.glyphicon-exclamation-sign:before {
+	
+		margin-left: 0px;
+	}
+	
+	/* 하트 아이콘 CSS */
+	div.column.two {
+		margin-left: 30px;
+		margin-right: 0px;
+	}
+	/* 하트 아이콘 CSS */
+	
+	/* 신고 아이콘 CSS */
+	div.column.four.last.report {
+		width: 40px;
+		margin-left: 20px;
+	}
+	/* 신고 아이콘 CSS */
+	
+	
+	
+	.hashtagContent {
+		margin-right: 5px;
+		margin-bottom: 25px;
+		margin-left: 5px;
+	}
+
+	.carousel {
+		margin-bottom: 25px;
+	}
+	
+	.feedContent {
+		margin-bottom: 25px;
+	}
+	
+	.sessionProfileImage {
+		vertical-align: sub !important; 
+		display: inline-block !important; 
+		width:50px; 
+		height:50px;
+		margin-top:10px; 
+		margin-bottom:10px; 
+		margin-left:10px;
+	}
+	
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -318,7 +455,7 @@
 	
 </head>
 
-<body>
+<body class="single single-post">
 
 	<jsp:include page="/toolbar.jsp" />
 
@@ -338,13 +475,10 @@
 		<div id="main">
 		
 			<section class="row section">
-			<div class="container">
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						<a href="http://localhost:5005/" onclick="window.open(this.href, '_blank', 'width=600, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">장소검색</a>
-						
-						<button class="plain button purple">장소검색</button>
+						<a href="http://localhost:5005/" onclick="window.open(this.href, '_blank', 'width=600, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">길찾기</a>
 						
 						<%-- 검색 --%>
 						<form id="searchForm" method="POST" action="/feed/getFeedList" accept-charset="euc-kr">
@@ -367,7 +501,7 @@
 									
 									<input class="plain button purple addFeed" value="Submit">
 									
-									<textarea id="summernote" name="fullContent"></textarea>
+									<textarea id="summernote" name="content"></textarea>
 								</article>
 								
 							</c:if>
@@ -386,7 +520,7 @@
 								<div class="showFeedForm">
 									<form class="feedForm">
 
-										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px; margin-top:20px; margin-left:10px" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 										
 										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
@@ -408,61 +542,60 @@
 									
 										<div class="feedContent">
 											${feed.content}
-											
-											<%-- 이미지 --%>
-											<c:if test="${!empty feed.image1}">
-											<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
-												<ol class="carousel-indicators">
-													<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-													
-													<c:if test="${!empty feed.image2}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-													</c:if>
-													<c:if test="${!empty feed.image3}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-													</c:if>
-													<c:if test="${!empty feed.image4}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
-													</c:if>
-												</ol>
-											
-												<!-- Wrapper for slides -->
-												<div class="carousel-inner" role="listbox">
-													<div class="item active">
-														<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
-													</div>
-													
-													<c:if test="${!empty feed.image2}">
-														<div class="item">
-															<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
-														</div>
-															<c:if test="${!empty feed.image3}">
-																<div class="item">
-																	<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-																</div>
-																<c:if test="${!empty feed.image4}">
-																	<div class="item">
-																		<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
-																	</div>
-																</c:if>
-															</c:if>														
-													</c:if>
-												</div>
-	
-												<!-- Controls -->
-												<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
-													<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-													<span class="sr-only">Previous</span>
-												</a>
-												<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
-													<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-													<span class="sr-only">Next</span>
-												</a>
-											</div>
-											</c:if>
-											<%-- 이미지 --%>
-											
 										</div>
+										
+										<%-- 이미지 --%>
+										<c:if test="${!empty feed.image1}">
+										<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+											<ol class="carousel-indicators">
+												<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+												
+												<c:if test="${!empty feed.image2}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+												</c:if>
+												<c:if test="${!empty feed.image3}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+												</c:if>
+												<c:if test="${!empty feed.image4}">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+												</c:if>
+											</ol>
+										
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner" role="listbox">
+												<div class="item active">
+													<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+												</div>
+												
+												<c:if test="${!empty feed.image2}">
+													<div class="item">
+														<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+													</div>
+														<c:if test="${!empty feed.image3}">
+															<div class="item">
+																<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+															</div>
+															<c:if test="${!empty feed.image4}">
+																<div class="item">
+																	<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																</div>
+															</c:if>
+														</c:if>														
+												</c:if>
+											</div>
+
+											<!-- Controls -->
+											<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
+												<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+											</a>
+											<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
+												<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+												<span class="sr-only">Next</span>
+											</a>
+										</div>
+										</c:if>
+										<%-- 이미지 --%>
 										
 										<c:if test="${!empty feed.hashtag}">
 											<div class="hashtagContent">
@@ -484,48 +617,34 @@
 										<!-- 피드 좋아요 댓글수 신고 -->
 										<section class="row section lastBar">
 											<div class="row">
-												<%-- 여백 --%>
-												<div class="col-xs-1"></div>
-												<%-- 여백 --%>
-											
 												<c:if test="${feed.checkHeart eq 0}">
-													<div class="col-xs-2">
-														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
+													<div class="column two">
+														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" aria-hidden="true"/>
 													</div>
 												</c:if>
 												<c:if test="${feed.checkHeart ne 0}">
-													<div class="col-xs-2">
-														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
+													<div class="column two">
+														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" aria-hidden="true"/>
 													</div>
 												</c:if>
 												
-												<div class="col-xs-1 likeCount">
+												<div class="column two likeCount">
 													${feed.heartCount}
 												</div>
 												
-												<div class="col-xs-1">
+												<div class="column two comment">
+													<img src="/resources/image/uploadFiles/comments.jpg" width="25" height="25" style="margin-top : 4px;" aria-hidden="true"/>
 												</div>
 												
-												<div class="col-xs-2 comment">
-													<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
-												</div>
-												
-												<div class="col-xs-1 commentCount">
+												<div class="column two commentCount">
 													 ${feed.commentCount}
-												</div>
-												
-												<div class="col-xs-1">
 												</div>
 													
 												<!-- 신고 아이콘 -->
-												<div class="col-xs-2 report">
-													<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
+												<div class="column four last report">
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size:1.5rem; margin-top:3px;" aria-hidden="true" ></span>
 												</div>
 												<!-- 신고 아이콘 -->
-												
-												<%-- 여백 --%>
-												<div class="col-xs-1"></div>
-												<%-- 여백 --%>
 												
 											</div>
 										</section>
@@ -550,7 +669,6 @@
 					
 				</div>
 
-			</div>
 			</section>
 
 		</div>

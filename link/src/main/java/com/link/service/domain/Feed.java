@@ -24,6 +24,7 @@ public class Feed {
 	private int checkMyHome;		// 1	: myHome 호출
 	private int checkComment;
 	private int currentPage;
+	private String fullContent;
 	
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -189,29 +190,61 @@ public class Feed {
 		this.currentPage = currentPage;
 	}
 
+	public String getFullContent() {
+		return fullContent;
+	}
+
+	public void setFullContent(String fullContent) {
+		this.fullContent = fullContent;
+	}
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "Feed [feedNo : " + feedNo + "] "
-				+ "[user : " + user + "] "
-				+ "[openCondition : " + openCondition + "] "
-				+ "[content : " + content + "] "
-				+ "[image1 : " + image1 + "] "
-				+ "[image2 : " + image2 + "] "
-				+ "[image3 : " + image3 + "] "
-				+ "[image4 : " + image4 + "] "
-				+ "[video : " + video + "] "
-				+ "[hashtag : " + hashtag + "] "
-				+ "[heartCount : " + heartCount + "] "
-				+ "[commentCount : " + commentCount + "] "
-				+ "[regDate : " + regDate + "] "
-				+ "[updateDate : " + updateDate + "] "
-				+ "[reportCondition : " + reportCondition + "] "
-				+ "[deleteCondition : " + deleteCondition + "] "
-				+ "[checkHeart : " + checkHeart + "] "
-				+ "[checkMyHome : " + checkMyHome + "] "
-				+ "[checkComment : " + checkComment + "] "
-				+ "[currentPage : " + currentPage + "] ";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Feed [feedNo=");
+		builder.append(feedNo);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", openCondition=");
+		builder.append(openCondition);
+		builder.append(", content=");
+		builder.append(content);
+		builder.append(", image1=");
+		builder.append(image1);
+		builder.append(", image2=");
+		builder.append(image2);
+		builder.append(", image3=");
+		builder.append(image3);
+		builder.append(", image4=");
+		builder.append(image4);
+		builder.append(", video=");
+		builder.append(video);
+		builder.append(", hashtag=");
+		builder.append(hashtag);
+		builder.append(", heartCount=");
+		builder.append(heartCount);
+		builder.append(", commentCount=");
+		builder.append(commentCount);
+		builder.append(", regDate=");
+		builder.append(regDate);
+		builder.append(", updateDate=");
+		builder.append(updateDate);
+		builder.append(", reportCondition=");
+		builder.append(reportCondition);
+		builder.append(", deleteCondition=");
+		builder.append(deleteCondition);
+		builder.append(", checkHeart=");
+		builder.append(checkHeart);
+		builder.append(", checkMyHome=");
+		builder.append(checkMyHome);
+		builder.append(", checkComment=");
+		builder.append(checkComment);
+		builder.append(", currentPage=");
+		builder.append(currentPage);
+		builder.append(", fullContent=");
+		builder.append(fullContent);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
