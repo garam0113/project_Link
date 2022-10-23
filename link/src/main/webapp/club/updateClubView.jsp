@@ -70,7 +70,8 @@
 	$(function() {
 
 		$("a[href='#']").bind("click", function() {
-			window.close();
+			//window.close();
+			history.go(-1);
 		});
 	});
 
@@ -79,16 +80,21 @@
 
 <body>
 	
-	<div class="container">
-	
-		<h1 class="bg-primary text-center">모 임 수 정</h1>
+	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
+		<div class="wrap wd668">
+			<div class="container">
+				<div class="form_txtInput">
+					<h2 class="sub_tit_txt">모 임 수 정</h2>
+					<p class="exTxt">모임을 수정해보세요...</p>
+					<div class="join_form">
+			
 		
-		<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
+		
 		
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}" style="width:300px" autocomplete='off'>
 				</div>					
 			</div>
 			
@@ -97,14 +103,14 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}">
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}" style="width:300px" autocomplete='off'>
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
 				<div class="col-sm-4">
-					<select class="form-control" id="clubCategory" name="clubCategory">
+					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -121,7 +127,7 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}">
+					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}" style="width:300px" autocomplete='off'>
 				</div>		
 			</div>			
 			
@@ -140,8 +146,11 @@
 					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 			</div>
-		</form>	
+			</div>
 		</div>
+		</div>
+		</div>
+	</form>	
 		
 </body>
 </html>

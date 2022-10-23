@@ -172,7 +172,6 @@
 							<tr>
 								<th><span>모 임 장 소</span></th>
 								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다." autocomplete='off'></td>
-								
 							<tr>
 								<th></th>
 								<td><button type="button" class="btn btn-default" id="searchPlace">장소검색</button></td>

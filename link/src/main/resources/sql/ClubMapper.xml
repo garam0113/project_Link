@@ -308,6 +308,7 @@
 										and cU.club_no = #{searchKeyword}
 									</if>
 								</where>
+								ORDER BY cU.member_role DESC
 								) deep_table
 							) inner_table
 		
@@ -457,8 +458,10 @@
 	</insert>
 	
 	<!-- 모임일정 참여신청 취소 -->
-	<delete id="deleteMeetingMember">
-		DELETE FROM participant WHERE participant_no = #{participantNo}
+	<delete id="deleteMeetingMember" parameterType= "participant">
+		DELETE
+		FROM participant
+		WHERE meeting_no = #{meetingNo} AND participant_user_id = #{user.userId}
 	</delete>
 	
 	<!-- 모임일정 참여인원 리스트 -->
@@ -504,7 +507,13 @@
 	  	FROM(	SELECT participant_no 
 						FROM participant
 						<where> 
-							meeting_no = #{searchKeyword}
+							<if test="order == 0 and searchKeyword != '' ">
+								meeting_no = #{searchKeyword}
+							</if>
+							
+							<if test="order == 1 and searchKeyword != '' ">
+								participant_user_id = #{searchKeyword}
+							</if>
 						</where>
 			) countTable						
 	 </select>
@@ -522,13 +531,6 @@
    </update>
 	
 	
-	<!-- 모임원 직책 -->
-	
-	<select id="getClubMember" parameterType="clubPost" resultMap="clubUserSelectMap">
-	   SELECT *
-	   FROM CLUB_USER
-	   WHERE USER_ID = #{ user.userId } AND CLUB_NO = #{ clubNo }
-	</select>
 	
 	
 	

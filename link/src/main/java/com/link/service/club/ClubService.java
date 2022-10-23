@@ -53,7 +53,7 @@ public interface ClubService {
 	
 	public void addMeetingMember(Participant participant) throws Exception;
 	
-	public void deleteMeetingMember(int participant) throws Exception;
+	public void deleteMeetingMember(Participant participant) throws Exception;
 		
 	public void addMeetingPush(Meeting meeting) throws Exception;
 	
@@ -76,7 +76,5 @@ public interface ClubService {
 	//결제
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 
-	//모임원 직책?
-	public ClubUser getClubMember(ClubPost clubPost) throws Exception;
 	
 }

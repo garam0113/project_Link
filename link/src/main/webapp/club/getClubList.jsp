@@ -43,7 +43,7 @@
  	 
  	 <style>
 		body {
-		    background-color: #333;
+		    /* background-color: #333; */
 		    color: #333;
 		    font-size: 1.125em;
 		    font-size: 15px;
@@ -55,7 +55,7 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    background-color: #333333;
+		    /* background-color: #333333; */
 		}
 		
 		header {
@@ -71,6 +71,15 @@
 	    box-shadow: 0 1px 0 rgb(0 0 0 / 10%); */
 		}
 		
+		.darkover {
+    	position: static;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+ 	   background: rgba(0,0,0,0.35);
+		}
+		
 		header.transparent {
     		background-color: #23242b;
 		    -webkit-box-shadow: none;
@@ -82,8 +91,8 @@
 			    padding: 0px;
 			    margin-bottom: 20px;
 			    line-height: 1;
-			    background-color: #f5c7f4;
-			    /* border: 1px solid #ddd; */
+			    background-color: #fbfbfb;
+			    border: 1px solid #5F0080;
 			    border-radius: 4px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
@@ -98,6 +107,11 @@
 		 
 		 div {
 		 	clear: none;
+		 }
+		 
+		 .btn {
+		 	background-color: #BD76FF;
+		 	color: #fbfbfb;
 		 }
 		 
 		 .club-cT {
@@ -117,6 +131,9 @@
     color: #333;
 }
 		 
+		 #pageNav {
+		 	float: center;
+		 }
 		 
 		 
 	
@@ -155,9 +172,26 @@
 		});
 	});
 	
+	var openWin;
+	function popup() {
+		var url = "/club/getClub?clubNo=${club.clubNo}";
+		var name = "getClub";
+		var option = "width = 1000, height = 500, top = 100, left = 200, location = no"
+		openWin = window.open(url, name, option);
+		
+	}
+	
+/* 	$(function() {
+		$("button,btn.btn-success").on("click", function() {
+			//alert('하이');
+			popup();
+		})
+	}) */
+	
+	
 	$(function() {
 		
-		$("button.btn.btn-success").on("click", function() {
+		$("button.btn.btn-default").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -308,7 +342,7 @@
 				  
 				  <div class="form-group">
 				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  <button type="button" class="btn btn-success">모임등록</button>
+				  <button type="button" class="btn btn-default">모임등록</button>
 				  </div>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -331,7 +365,7 @@
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			  	
+				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button">모임보기</a></p>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>
@@ -342,8 +376,8 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 	<jsp:include page="../common/pageNavigator_new2.jsp"/>
+
+ 	<jsp:include page="../common/pageNavigator_new2.jsp" />
  	
 	</main>
 	
