@@ -68,21 +68,21 @@ public class FeedController {
 		user = (User) httpSession.getAttribute("user");
 		feed.setUser(user);
 		
-		String originalContent = feed.getContent();
+		String originalContent = feed.getFullContent();
 		// 이미지 파싱
 		
 		Pattern pattern  =  Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-		Matcher match = pattern.matcher(feed.getContent());
+		Matcher match = pattern.matcher(feed.getFullContent());
 		
 		String[] fileName = new String[4];
 		
-		System.out.println("이미지 커트 전 : " + feed.getContent());
+		System.out.println("이미지 커트 전 : " + feed.getFullContent());
 		
 		int count = 0;
 		while(match.find()){
 			String inputString;
 			
-			fileName[count] = match.group(count);
+			fileName[count] = match.group();
 			
 			if (count == 0) {
 				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
@@ -92,19 +92,19 @@ public class FeedController {
 				
 			} else if (count == 1) {
 				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
-				inputString = fileName[count].substring(startPoint, fileName[count].length());
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
 				String[] splitBy = inputString.split(" ");
 				feed.setImage2(splitBy[0]);
 				
 			} else if (count == 2) {
 				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
-				inputString = fileName[2].substring(startPoint, fileName[count].length());
+				inputString = fileName[2].substring(startPoint, fileName[count].length() - 2);
 				String[] splitBy = inputString.split(" ");
 				feed.setImage3(splitBy[0]);
 				
 			} else if (count == 3) {
 				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
-				inputString = fileName[count].substring(startPoint, fileName[count].length());
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
 				String[] splitBy = inputString.split(" ");
 				feed.setImage4(splitBy[0]);
 			}
@@ -113,7 +113,7 @@ public class FeedController {
 			
 		}
 		
-		feed.setContent(feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
+		feed.setContent(feed.getFullContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
 		
 		String replace = feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
 		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
@@ -161,8 +161,6 @@ public class FeedController {
 		// 해시태그 저장하기 종료
 		
 		// Report & Push
-		
-		feed.setContent(originalContent);
 		
 		feedService.addFeed(feed);
 		
@@ -224,8 +222,104 @@ public class FeedController {
 	
 	// 사용
 	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
-	public String updateFeed(@ModelAttribute Feed feed, Search search, 
+	public String updateFeed(@ModelAttribute Feed feed, MultipartFile file, Search search, 
 								User user, Heart heart, Model model) throws Exception {
+		
+		String originalContent = feed.getFullContent();
+		// 이미지 파싱
+		
+		System.out.println("테스트 : " + feed.getFullContent());
+		
+		Pattern pattern  =  Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+		Matcher match = pattern.matcher(feed.getFullContent());
+		
+		String[] fileName = new String[4];
+		
+		System.out.println("이미지 커트 전 : " + feed.getContent());
+		
+		int count = 0;
+		while(match.find()){
+			String inputString;
+			
+			fileName[count] = match.group();
+			
+			if (count == 0) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
+				String[] splitBy = inputString.split("\" ");
+				feed.setImage1(splitBy[0]);
+				
+			} else if (count == 1) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
+				String[] splitBy = inputString.split(" ");
+				feed.setImage2(splitBy[0]);
+				
+			} else if (count == 2) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[2].substring(startPoint, fileName[count].length() - 2);
+				String[] splitBy = inputString.split(" ");
+				feed.setImage3(splitBy[0]);
+				
+			} else if (count == 3) {
+				int startPoint = fileName[count].indexOf("uploadFiles/") + 12;
+				inputString = fileName[count].substring(startPoint, fileName[count].length() - 2);
+				String[] splitBy = inputString.split(" ");
+				feed.setImage4(splitBy[0]);
+			}
+			
+			count++;
+			
+		}
+		
+		feed.setContent(feed.getFullContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
+		
+		String replace = feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
+		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
+		
+		feed.setContent(replace);
+		
+		// 영상 등록
+		
+		System.out.println("영상커트 : " + feed.getContent());
+		
+		if((feed.getContent()).contains("src=\"")) {
+			int startPoint = feed.getContent().indexOf("src=\"") + 7;
+			String inputString = feed.getContent().substring(startPoint, feed.getContent().length());
+			String[] splitBy = inputString.split("\" ");
+			feed.setVideo(splitBy[0]);
+			
+			System.out.println(splitBy[0]);
+			
+			int lastPoint = feed.getContent().lastIndexOf("\">") + 2;
+			String videoString = feed.getContent().substring(feed.getContent().indexOf("<iframe"), lastPoint);
+			
+			feed.setContent(feed.getContent().replaceAll(videoString, " "));
+		}
+
+		// 해시태그 저장하기 시작
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		String[] hashtag = feed.getContent().split("#"); 
+		
+		for(int i = 1 ; i < hashtag.length ; i++) {
+			
+			if(hashtag[i].contains(" ")) {
+				// 공백 체크
+				int index = hashtag[i].indexOf(" ");
+				
+				hashtag[i] = hashtag[i].substring(0, index);
+			}
+			
+			stringBuilder.append("#").append(hashtag[i]);
+			
+		}
+		
+		feed.setHashtag(stringBuilder.toString());
+		
+		// 해시태그 저장하기 종료
+		
+		// Report & Push
 		
 		feedService.updateFeed(feed);
 		

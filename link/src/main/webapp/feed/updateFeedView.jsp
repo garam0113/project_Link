@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=EUC_KR" %>
+<%@ page pageEncoding="EUC_KR"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,11 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<meta charset="EUC_KR">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
@@ -51,16 +53,16 @@
             ],
             
             disableResizeEditor: true,
-			height: 600,                 // ì—ë””í„° ë†’ì´
-			minHeight: null,             // ìµœì†Œ ë†’ì´
-			maxHeight: null,             // ìµœëŒ€ ë†’ì´
-			focus: true,                  // ì—ë””í„° ë¡œë”©í›„ í¬ì»¤ìŠ¤ë¥¼ ë§žì¶œì§€ ì—¬ë¶€
+			height: 600,                 // ¿¡µðÅÍ ³ôÀÌ
+			minHeight: null,             // ÃÖ¼Ò ³ôÀÌ
+			maxHeight: null,             // ÃÖ´ë ³ôÀÌ
+			focus: true,                  // ¿¡µðÅÍ ·ÎµùÈÄ Æ÷Ä¿½º¸¦ ¸ÂÃâÁö ¿©ºÎ
 			lang : 'ko-KR',
 			lang:'ko-KR',
 	        
 			callbacks : { 
             	onImageUpload : function(files, editor, welEditable) {
-           			// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
+           			// ÆÄÀÏ ¾÷·Îµå(´ÙÁß¾÷·Îµå¸¦ À§ÇØ ¹Ýº¹¹® »ç¿ë)
 					for (var i = files.length - 1; i >= 0; i--) {
 			            uploadSummernoteImageFile(files[i],
 			            this);
@@ -76,8 +78,8 @@
 		
 		
 		$(".btn_update").bind("click", function() {
-			alert("ìˆ˜ì •í•˜ê¸°");
-			$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+			alert("¼öÁ¤ÇÏ±â");
+			$("form").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
 		})
 	
 	})
@@ -85,11 +87,58 @@
 	</script>
 
 	<style>
+
+		/* SUMMERNOTE */
+	
+		.note-toolbar {
+			border: 2px solid rgba(171,148,233,1);
+			color: rgba(171,148,233,1) !important;
+		}
+			
+		.note-btn {
+			border: 2px solid rgba(171,148,233,1);
+			color: rgba(171,148,233,1) !important;
+		}
+		
+		.note-editing-area {
+			border: 2px solid rgba(171,148,233,1);
+			color: rgba(171,148,233,1) !important;
+		}
+	
+		/* SUMMERNOTE */
+		
+		/* FEED ADD BUTTON */
+	
+		input.button.purple.btn_update {
+			display: inline-block !important;
+			width:75px !important;
+			height:35px;
+			margin-top:18px;
+			margin-right:0px;
+			float: right;
+			font-size: 0.5em !important;
+		}
+		
+		/* FEED ADD BUTTON */
+		
+		/* FEED TIME */
+		
+		h5.meta-post {
+			margin-bottom:13px !important;
+			color:rgba(171,148,233,1) !important;
+			display: inline-block;
+			vertical-align: text-bottom !important;
+		}
+		
+		/* FEED TIME */
+		
+		/* FEED USER NAME */
 		
 		h4 {
-			margin-top:5px;
-			margin-left:5px;
 			display: inline-block;
+			vertical-align: text-bottom !important;
+			margin-top:5px !important;
+			margin-left:5px; 
 		}
 		
 	</style>
@@ -115,36 +164,40 @@
 			<div class="row-content buffer even clear-after">
 			
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">ê¸¸ì°¾ê¸°</a>
+					<a href="/feed/getFestivalLocation.jsp">±æÃ£±â</a>
 				</div>
 				
 				<div class="column six">
 				
-				
-					<!-- í”¼ë“œ ë‚´ìš© -->
-					<div class="post-area clear-after">
+					<form id="feedInfo">
 					
-						<article role="main">
-							<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
-							
-							<h5 class="meta-post">
-								<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
-							</h5>
-							
-							<textarea id="summernote" name="content">${feed.content}</textarea>
-							<input class="plain button red btn_update" style="width:150px; float:right; margin-top:10px" value="Submit">
-						</article>
-
-					</div>
+						<!-- ÇÇµå ³»¿ë -->
+						<div class="post-area clear-after">
+						
+							<article role="main">
+								<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" />
+								<h4>${feed.user.nickName}</h4>
+	
+								<input class="plain button purple btn_update" value="submit">
+								
+								<h5 class="meta-post">
+									<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+									<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+								</h5>
+								
+								<textarea id="summernote" name="fullContent">${feed.fullContent}</textarea>
+								
+							</article>
+	
+						</div>
 					
-					<form id="feedInfo" style="margin-top:50px;">
-						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
+						<!-- ´ñ±Û °ü·Ã hidden -->
 						<input type="hidden" name="source" value="0">
+						<input type="hidden" name="openCondition" value="3">
 						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
 						<input type="hidden" name="feedNo" value="${feed.feedNo}">
 						
-						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
+						<!-- ´ñ±Û °ü·Ã hidden -->
 					</form>
 					
 				</div>

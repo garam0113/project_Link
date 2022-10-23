@@ -15,6 +15,8 @@
 	
 	<title>Feed</title>
 	
+	<link href="/resources/css/feed/getFeed.css" rel="stylesheet">
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
@@ -828,58 +830,7 @@
 	
 	<style>
 	
-		h5.meta-post {
-			margin-bottom:13px !important;
-		}
-			
-		@
-		-ms-viewport {
-			width: device-width;
-		}
-	
-		img {
-			margin-top : 10px;
-			float : left;
-		}
-	
-		.row {
 		
-			margin-top:0%;
-			margin-right:0%;
-			margin-bottom:0%;
-			margin-left:0%;
-		}
-		
-		h4 {
-			margin-top:5px;
-			margin-left:5px;
-			display: inline-block;
-			color: white !important;
-		}
-		
-		/* 좋아요 글자색 */
-		.likeCount {
-			color: white;
-		}
-		
-		/* 좋아요 글자색 */
-		.commentCount {
-			color: white;
-		}
-		
-		section.row.section {
-			background-color: black;
-		}
-		
-		body.single-post {
-			background-color: black !important;
-		}
-		
-		/* SUMMERNOTE FONT-COLOR */
-		article p {
-			color: white !important;
-		}
-		/* SUMMERNOTE FONT-COLOR */
 		
 	</style>
 
@@ -901,6 +852,9 @@
 	</div><!-- intro-wrap -->
 	
 	<div id="main">
+	
+		<div class="container">
+		
 		<section class="row section">
 			<div class="row-content buffer even clear-after">
 			
@@ -939,6 +893,8 @@
 								<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
 								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 							</h5>
+							
+							<div class="feedContent">
 							
 							<%-- 이미지 --%>
 								<c:if test="${!empty feed.image1}">
@@ -996,6 +952,8 @@
 								<%-- 이미지 --%>
 													
 								<p>${feed.content}</p>
+								
+								</div>
 							
 						</article>
 
@@ -1009,32 +967,50 @@
 					<!-- 피드 좋아요 댓글수 신고 -->
 					<section class="row section">
 						<div class="row">
+						
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
+							
 							<c:if test="${feed.checkHeart eq 0}">
-								<div class="column two">
-									<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+								<div class="col-xs-2">
+									<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 								</div>
 							</c:if>
 							<c:if test="${feed.checkHeart ne 0}">
-								<div class="column two">
-									<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
+								<div class="col-xs-2">
+									<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 								</div>
 							</c:if>
 							
-							<div class="column two likeCount">
+							<div class="col-xs-1 likeCount">
 								${feed.heartCount}
 							</div>
 							
-							<div class="column two comment">댓글수</div>
+							<div class="col-xs-1">
+							</div>
 							
-							<div class="column two commentCount">
+							<div class="col-xs-2 comment">
+								<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
+							</div>
+							
+							<div class="col-xs-1 commentCount">
 								 ${feed.commentCount}
 							</div>
+							
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
 								
 							<!-- 신고 아이콘 -->
-							<div class="column four last">
-								<span class="glyphicon glyphicon-exclamation-sign report" style="font-size:2rem" aria-hidden="true" ></span>
+							<div class="col-xs-2 report">
+								<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
 							</div>
 							<!-- 신고 아이콘 -->
+							
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
 							
 						</div>
 					</section>
@@ -1131,7 +1107,7 @@
 									<!-- 대댓글 관련 hidden -->
 								
 									<div class='btn_recommentCheck' style="display: none;">
-										<textarea style='width:427px; resize:none;' name='commentContent' placeholder='작성'></textarea>
+										<textarea name='commentContent' placeholder='작성'></textarea>
 										<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">
 									</div>
 								
@@ -1150,6 +1126,7 @@
 			</div>
 		</section>
 		
+		</div>
 	</div>
 	
 </body>
