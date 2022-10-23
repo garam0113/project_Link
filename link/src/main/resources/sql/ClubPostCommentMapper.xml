@@ -70,10 +70,11 @@
 	
 	
 	<!-- 가장 최신 모임게시물 댓글 번호 가져온다 -->
-	<select id="getClubPostCommentNo" resultType="int">
+	<select id="getClubPostCommentNo" parameterType="comment" resultType="int">
 		SELECT V1.CLUB_POST_COMMENT_NO
 		FROM ( SELECT *
 				FROM CLUB_POST_COMMENT C
+				WHERE USER_ID = #{ user.userId }
 				ORDER BY COMMENT_REG_DATE DESC ) V1
 		WHERE ROWNUM = 1
 	</select>
@@ -87,11 +88,11 @@
 		FROM CLUB_POST_COMMENT C, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
 												FROM HEART
 												WHERE TRIM(SOURCE) = '3' AND USER_ID = #{ user.userId } ) V1
-		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0
-		<choose>
-			<when test="clubPostCommentNo != 0">AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</when>
-			<when test="clubPostCommentNo == 0">AND C.CLUB_POST_NO = #{ clubPostNo } AND C.PARENT = #{ clubPostNo }</when>
-		</choose>
+		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0 AND C.REPORT_CONDITION = 0 AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+		<!-- <choose>
+			<when test="depth != 0">AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</when>
+			<when test="depth == 0">AND C.CLUB_POST_NO = #{ clubPostNo } AND C.PARENT = #{ clubPostNo }</when>
+		</choose> -->
 	</select>
 	
 	
@@ -103,10 +104,15 @@
 		<choose>
 			<when test="heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
 			<when test="heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
+			<when test="deleteCondition == 1">COMMENT_COUNT = COMMENT_COUNT - 1</when>
+			<when test="deleteCondition == -1">COMMENT_COUNT = COMMENT_COUNT + 1</when>
 			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
 		</choose>
-		WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+		<choose>
+			<when test="deleteCondition == 1">WHERE CLUB_POST_COMMENT_NO = #{ parent }</when>
+			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
+		</choose>
 	</update>
 	
 	

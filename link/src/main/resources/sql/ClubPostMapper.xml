@@ -34,7 +34,7 @@
 		<result property="image10" 					column="image10" 					jdbcType="VARCHAR"/>
 		
 		<association property="user"				javaType="user">
-			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="userId"				column="user_id"		 			jdbcType="VARCHAR" />
 			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
 			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
 		</association>
@@ -140,7 +140,8 @@
 	<!-- 모임게시물 상세보기 -->
 	<select id="getClubPost" parameterType="clubPost" resultMap="clubPostSelectMap">
 		SELECT CP.CLUB_POST_NO, CP.CLUB_NO, CP.USER_ID, U.PROFILE_IMAGE, U.NICKNAME, CP.CLUB_POST_TITLE, CP.CLUB_POST_CONTENT,
-		CP.CLUB_POST_VIDEO1, CP.CLUB_POST_VIDEO2, CP.CLUB_POST_VIDEO3, CP.CLUB_POST_REG_DATE, CP.CLUB_POST_UPDATE_DATE,
+		CP.CLUB_POST_VIDEO1, CP.CLUB_POST_VIDEO2, CP.CLUB_POST_VIDEO3, TO_CHAR(CP.CLUB_POST_REG_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS CLUB_POST_REG_DATE,
+		TO_CHAR(CP.CLUB_POST_UPDATE_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS CLUB_POST_UPDATE_DATE,
 		CP.CLUB_POST_HEART_COUNT, CP.CLUB_POST_COMMENT_COUNT, CP.IMAGE1, CP.IMAGE2, CP.IMAGE3, CP.IMAGE4, CP.IMAGE5, CP.IMAGE6,
 		CP.IMAGE7, CP.IMAGE8, CP.IMAGE9, CP.IMAGE10, HEART_CONDITION, CLUB_ROLE
 		FROM CLUB_POST CP, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
@@ -160,7 +161,8 @@
 		<choose>
 			<when test="clubPost.heartCondition == 1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT + 1</when>
 			<when test="clubPost.heartCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
-			<when test="clubPost.clubPostCommentNo != 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
+			<when test="clubPost.clubPostCommentNo > 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
+			<when test="clubPost.clubPostCommentNo == -1">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT - 1</when>
 			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
 			<otherwise>
 				CLUB_POST_TITLE = #{ clubPost.clubPostTitle:VARCHAR }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent:VARCHAR }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },
@@ -181,8 +183,8 @@
 	
 	
 	
-	<select id="getCurrval" parameterType="clubPost" resultType="clubPost">
-		SELECT ROWNUM, seq_club_post_no.currval AS clubPostNo FROM CLUB_POST WHERE ROWNUM = 1
+	<select id="getCurrval" parameterType="clubPost" resultMap="clubPostSelectMap">
+		SELECT ROWNUM, seq_club_post_no.currval AS CLUB_POST_NO, CLUB_NO, USER_ID FROM CLUB_POST WHERE USER_ID = #{ user.userId } AND ROWNUM = 1
 	</select>
 	
 	
