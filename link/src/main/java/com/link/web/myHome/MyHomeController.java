@@ -123,7 +123,7 @@ public class MyHomeController {
 		
 		String sessoinId = ((User)session.getAttribute("user")).getUserId();
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+
 		
 		User getUser = new User();
 		User followUser = new User();
@@ -133,36 +133,55 @@ public class MyHomeController {
 		recevieId.setUserId(userId);
 		followUser.setReceiveId(recevieId);
 		followUser.setUserId(sessoinId);
+		
+	    Search search2 = new Search();
+		
+		search2.setSearchKeyword(userId);
+		
+		
 		Map<String, Object> followUserId = myHomeService.getFollow(followUser);
 		
-		search.setSearchKeyword(userId);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+
+	
+		map.put("list",myHomeService.getFollowList(search2).get("list"));
+		System.out.println("////////////////////////////////////////////////////////////////"+map.get("list"));
+		
+		System.out.println("/////////////////////////////////userId"+ userId);
 	    map.put("heart", heart);
 		map.put("myHome", 1);
 		map.put("search", search);
-		map.put("list",myHomeService.getFollowList(search).get("list"));
-		map.put("clubList",clubService.getClubList(search).get("clubList"));
 		map.put("user", getUserId);
+		map.put("search2", search2);
+		
+		Map<String, Object> map2 = feedService.getFeedList(map);
 		
 		
-		map = feedService.getFeedList(map);
-	
 		System.out.println( "서버에서 받은  DATA : "+followUserId);
 		System.out.println( "팔로우  DATA : "+followUserId.get("followUser"));
 		
+		System.out.println("////////////////////////////////////////////////////////////////"+map.get("list"));
+		
 	
-		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("search", search);
-		model.addAttribute("feedList", map.get("feedList"));
+		model.addAttribute("search2", search2);
+		model.addAttribute("feedList", map2.get("feedList"));
+		model.addAttribute("totalFeedCount", map2.get("totalFeedCount"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
 		model.addAttribute("getUser", getUserId);
 		model.addAttribute("block", followUserId.get("block"));
 		model.addAttribute("followUser", followUserId.get("follow"));
-		
-		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
+		System.out.println("세션아이디"+sessoinId);
+		System.out.println("유저아이디"+userId);
+	
 		
 		return "forward:/myHome/getYourHome.jsp";
 	}
+	
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)
 	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession session) throws Exception{
 		
