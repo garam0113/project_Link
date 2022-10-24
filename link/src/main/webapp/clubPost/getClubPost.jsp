@@ -204,8 +204,6 @@
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
 				
-				alert( depth );
-				
 				if( depth == 0 ){
 					//alert("0이다");
 				}else if( depth > 0){
@@ -338,7 +336,7 @@
 												+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-update'>"
 													+"<textarea class='plain buffer'></textarea>"
-													+"<input class='plain button red add' value='수정완료' style='height: 30px; width: 90px;'>"
+													+"<input class='plain button red update' value='수정완료' style='height: 30px; width: 90px;'>"
 													+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
 													+"</form>"						
 												+"</div>"
@@ -758,7 +756,7 @@
 							<li class="comment">
 								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 									<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
-										<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
+										<c:if test="${ clubPost.getClubPostCommentList[i].depth == 0 }">
 											<div class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="1" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">
 												<div class="comment-author">
 													<cite><a href="#"><img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].user.profileImage }" class="avatar" alt=""></a></cite>
@@ -838,7 +836,7 @@
 												
 												<form class="comment-form-update">
 													<textarea class="plain buffer"></textarea>
-													<input class="plain button red add${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="수정완료" style="height: 30px; width: 90px;">
+													<input class="plain button red update" value="수정완료" style="height: 30px; width: 90px;">
 													<input class="plain button red cancle" value="취소" style="height: 30px; width: 60px;">
 												</form>
 												

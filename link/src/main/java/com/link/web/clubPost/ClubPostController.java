@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -391,6 +392,8 @@ public class ClubPostController {
 	
 	
 	
+	
+	
 	@RequestMapping(value = "addPayView", method = RequestMethod.GET)
 	public String addPayView(@ModelAttribute Pay pay, Model model, HttpSession sesstion) throws Exception {
 		System.out.println("/addPayView : GET : 모임번호를 가지고 결제화면으로 이동");
@@ -467,6 +470,20 @@ public class ClubPostController {
 			}
 		}
 	}//end of addPay
+
+	@RequestMapping(value = "getPayList", method = RequestMethod.POST)
+	public String getPayList(HttpSession session, Model model) throws Exception {
+	System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
+	model.addAttribute("payList", clubPostServiceImpl.getPayList((User)session.getAttribute("user")));
+	return "";
+	}
+	
+	@RequestMapping(value = "getPay", method = RequestMethod.POST)
+	public String getPay(@ModelAttribute Pay pay, Model model) throws Exception {
+	System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
+	model.addAttribute("pay", clubPostServiceImpl.getPay(pay));
+	return "";
+	}
 	
 	
 	
