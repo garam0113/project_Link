@@ -69,6 +69,11 @@
     bottom: 0;
 	}
 	
+	element.style {
+	
+		margin-right: 40px !important;
+	}
+	
 	
 	
 	</style>
@@ -79,7 +84,7 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		$("button.btn.btn-primary").on("click", function(){
+		$("button.btn.btn-addMeeting").on("click", function(){
 			self.location="/club/addMeetingView.jsp"
 		});
 	});
@@ -140,7 +145,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<button type="button" class="btn btn-primary" style="float:right;">일정등록</button>
+		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#BD76FF; color:#fbfbfb">일정등록</button>
 
 
 	    

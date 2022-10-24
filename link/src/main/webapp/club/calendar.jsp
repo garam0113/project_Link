@@ -38,13 +38,14 @@
 				  console.log(result_val);
 		 
 				$.each(JSONData, function(index, item) { // 데이터 =item
-				       
+				    
+					//alert(item);
 					console.log(item);
                     result_val.push(item);                      
 				
 				});
 			    
-				var calendarEl = document.getElementById('calendar');
+			 	var calendarEl = document.getElementById('calendar');
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
 			      initialView: 'dayGridMonth',
 			      headerToolbar: {
@@ -54,13 +55,65 @@
 			      },
 			      
 			      events:  result_val
-			    	 
+			    
+			    
+			    });
+			  
+			    calendar.render();
+		
+		}, 
+		
+		
+			/* 	var calendarEl = document.getElementById('calendar');
+			    var calendar = new FullCalendar.Calendar(calendarEl, {
+			      initialView: 'dayGridMonth',
+			      headerToolbar: {
+			        left: 'prev,next today',
+			        center: 'title',
+			        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+			      },
+			      
+			      events:  result_val
+			    
 			    
 			    });
 			  
 			    calendar.render();
 		
 		},
+		
+		customButtons: {
+			add_event: {
+				text: '일정추가',
+				click: function(){
+					$('#writeModal').show();
+					
+					$("#frm").submit(function() {
+						$.ajax({
+							url: "/club/addMeetingView.jsp" ,
+							type: "post" ,
+							dataType : "json" ,
+							data: $(this).serializeArray(),
+							success:function(res){
+								calendar.addEvent({
+									title: res.title ,
+									start: res.startDay,
+									end: res.endDay,
+									allDay: true
+								});
+								alert('일정이 추가되었습니다!');
+							},
+							error: function(xhr, status, error) {
+								alert(status+","+error);
+							}
+						});
+					});
+				}
+				
+			}
+		}
+ */		
+		
 		error : function(){
 		
 			var calendarEl = document.getElementById('calendar');
@@ -79,17 +132,18 @@
 			
 			
 		}
-			
 		
 	});
-
+		
   };
+	
 
 
 	 
 
  
 </script>
+
 <input type="hidden" name="CalendarId" id="CalendarId" value="${club.clubNo}">
 
 
