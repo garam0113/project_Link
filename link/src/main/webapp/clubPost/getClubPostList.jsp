@@ -25,22 +25,20 @@
 		
 		<script type="text/javascript">
 			$(function() {
-				$("a.button.transparent.aqua:contains('등록하기')").bind("click", function() {
-					//swal.fire("아이디를 입력하셔야 합니다.");
-					//self.location = "/clubPost/addClubPostView?clubNo=2";
-					location.href = "/clubPost/addClubPostView?clubNo=2";
+				$("a:contains('등록하기')").bind("click", function() {
+					location.href = "/clubPost/addClubPostView?clubNo="+${ clubNo };
 				});
 				$("b:contains('최신순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=0";
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 				$("b:contains('오래된순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=1";
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=1";
 				});
 				$("b:contains('좋아요 많은순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=2";
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=2";
 				});
 				$("b:contains('내가 작성한 게시물')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=3";
+					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=3";
 				});
 				$("a:contains('검색')").bind("click", function() {
 					$("input[name='currentPage']").val("1");
@@ -229,7 +227,7 @@
 										<div class="col-md-4">
 											<a href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
-													<img src="/resources/image/temp/${ clubPostList[i].image1 }" height="400" width="700">
+													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
 												</c:if>
 												<c:if test="${ ! empty clubPostList[i].clubPostVideo1 }">
 													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="영상 썸네일입니다." height="400" width="700">

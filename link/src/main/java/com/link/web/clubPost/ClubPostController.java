@@ -82,7 +82,8 @@ public class ClubPostController {
 		clubPost.setUser((User)session.getAttribute("user"));
 		
 		// club 상세보기에서 모임번호를 session으로 가져온다 어떤 모임의 게시물인지 알기위해 필요하다
-		clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
+		//clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
+		clubPost.setClubNo(1);
 
 		// meta 데이터인 pageSize = 10 화면에 게시물이 10개 나온다
 		search.setPageSize(pageSize);
@@ -96,6 +97,8 @@ public class ClubPostController {
 		
 		
 		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
+		model.addAttribute("clubNo", 1);
+		//model.addAttribute("clubNo", Integer.parseInt((String)session.getAttribute("clubNo")));
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
@@ -110,6 +113,13 @@ public class ClubPostController {
 	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
 	public String addClubPostView(@RequestParam int clubNo, Model model) throws Exception {
 		System.out.println("/addClubPostView : GET : 모임번호 갖고 모임게시물 등록 화면으로 이동");
+		
+		
+		
+		System.out.println("모임 번호 : " + clubNo);
+		
+		
+		
 		model.addAttribute("clubNo", clubNo);
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
@@ -152,7 +162,7 @@ public class ClubPostController {
 	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
 		// session으로 로그인한 회원 정보를 가져온다
-		clubPost.setUser(new User(((User)session.getAttribute("user")).getUserId()));
+		clubPost.setUser((User)session.getAttribute("user"));
 
 		System.out.println("확인용 : " + clubPost);		
 		/*
@@ -198,7 +208,7 @@ public class ClubPostController {
 		*/
 		int isIndexImage = 0;
 		int isIndexVideo = 0;
-		String specificImage = "/resources/image/temp/";
+		String specificImage = "/resources/image/uploadFiles/";
 		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
 		String specificVideo = "embed/";
 		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
@@ -304,7 +314,7 @@ public class ClubPostController {
 
 		int isIndexImage = 0;
 		int isIndexVideo = 0;
-		String specificImage = "/resources/image/temp/";
+		String specificImage = "/resources/image/uploadFiles/";
 		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
 		String specificVideo = "embed/";
 		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
@@ -328,7 +338,7 @@ public class ClubPostController {
 			clubPost.setClubPostVideo1(str);
 		}
 		
-		System.out.println("////////////////" + clubPost.getImage1());
+		System.out.println("////////////////" + clubPost.getImage1() + ", " + clubPost.getUser());
 		System.out.println("////////////////" + clubPost.getClubPostVideo1());
 		
 		map.put("clubPost", clubPost);

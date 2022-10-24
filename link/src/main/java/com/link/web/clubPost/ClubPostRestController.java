@@ -119,22 +119,31 @@ public class ClubPostRestController {
 	public ClubPost updateClubPost(@RequestBody ClubPost clubPost, Heart heart, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 특정 모임게시물에 좋아요, 좋아요 수");
 		
-		System.out.println("clubPost : " + clubPost);
-		System.out.println("heart : " + heart);
 		
-		// 파라미터를 통해 유저아이디와 모임게시물번호가 왔다
-		map.put("clubPost", clubPost);
-		// 현재는 유저아이디뿐이다
+		
+		System.out.println("모임번호 : " + clubPost.getClubNo() + ", 모임게시물번호 : " + clubPost.getClubPostNo());
+		
+		
+
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+
+		// 좋아요 등록/삭제 를 위해 userId가 필요하다
 		heart.setUserId(((User)session.getAttribute("user")).getUserId());
 		map.put("heart", heart);
+		// 상세보기 가져올때 좋아요여부와 모임직책을 가져오기 위해 user.userId가 필요하다
+		clubPost.setUser((User)session.getAttribute("user"));
+		map.put("clubPost", clubPost);
 		
-		map = clubPostServiceImpl.updateClubPost(map);
 		
-		System.out.println("확인용 데이터 : " + map.get("getClubPost"));
-		int heartCondition = ((ClubPost)map.get("clubPost")).getHeartCondition();
-		((ClubPost)map.get("getClubPost")).setHeartCondition(heartCondition);
 		
-		return ((ClubPost)map.get("getClubPost"));
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		
+		
+		// ServiceImpl에서 좋아요인지 좋아요 취소인지 구분해 DAOImpl에 보낸준다
+		return ((ClubPost)clubPostServiceImpl.updateClubPost(map).get("getClubPost"));
 	}
 	
 	@RequestMapping(value="/json/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
@@ -152,7 +161,7 @@ public class ClubPostRestController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/resources/image/temp/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("url", "/resources/image/uploadFiles/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
@@ -167,7 +176,7 @@ public class ClubPostRestController {
 
 
 		
-///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
+///////////////////////////////////////////////////////////////////////////////////// Pay /////////////////////////////////////////////////////////////////////////////////////	
 
 
 
@@ -240,7 +249,26 @@ public class ClubPostRestController {
 	@RequestMapping(value = "json/addClubPostComment", method = RequestMethod.POST)
 	public Comment addClubPostComment(@RequestBody Comment comment, HttpSession session) throws Exception {
 		System.out.println("/addClubPostComment : POST : 모임게시물 댓글 등록, 모임게시물 작성자에게 알림, 해당 모임게시물 댓글 가져온다");
+		
+		
+		
+		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent());
+		
+		
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+
+		// 댓글 등록 하기위해 필요하다 user.userId
 		comment.setUser((User) session.getAttribute("user"));
+		
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		
+		
 		return clubPostServiceImpl.addClubPostComment(comment);
 	}
 	
@@ -267,15 +295,54 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "json/updateClubPostComment", method = RequestMethod.POST)
-	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart) throws Exception {
+	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart, HttpSession session) throws Exception {
 		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 해당 모임게시물 댓글 상세보기 가져온다");
+		
+		
+		
+		// heartCondition이 0이면 댓글 수정, 1이면 좋아요
+		System.out.println("clubPostCommentNo : " + comment.getClubPostCommentNo() + ", heartCondition : " + comment.getHeartCondition());
+		
+		
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+		
+		// 로그인한 회원의 좋아요 여부를 알기위해 필요하다
+		comment.setUser((User)session.getAttribute("user"));
+		
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		// 좋아요 또는 좋아요 취소
 		return clubPostServiceImpl.updateClubPostComment(comment, heart);
 	}
 	
 	@RequestMapping(value = "json/deleteClubPostComment", method = RequestMethod.POST)
 	public Map<String, Object> deleteClubPostComment(@RequestBody Comment comment, HttpSession session) throws Exception {
 		System.out.println("/deleteClubPostComment : POST : 모임게시물 댓글 삭제, 해당 모임게시물 댓글 리스트 가져온다");
+		
+		
+		
+		// 댓글개수를 수정하기 위해 게시물번호 필요하다
+		System.out.println("clubPostCommentNo : " + comment.getClubPostCommentNo() + ", clubPostNo : " + comment.getHeartCondition());
+		
+		
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+		
+		// 삭제한 회원의 아이디를 delete_user_id에 입력하기위해 필요하다
 		comment.setUser((User) session.getAttribute("user"));
+		
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		// 댓글 삭제
 		return clubPostServiceImpl.deleteClubPostComment(comment);
 	}
 	
