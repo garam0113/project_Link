@@ -17,16 +17,6 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
-<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	
-	
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-	
 <script type="text/javascript">
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
@@ -66,12 +56,9 @@ $(function(){
 	<!-- ADD_FEED -->
 	
 	<!-- UPDATE_FEED -->
-	$(document).on("click", ".btn_update", function(event){
-		event.stopPropagation();
-		console.log("피드 수정 버튼");
-		console.log($(this).parents(".feedForm").html())
-		
-		$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+	$(".btn_update").bind("click", function(){
+		alert("피드 수정 버튼");
+		$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 	});
 	<!-- UPDATE_FEED -->
 	
@@ -564,7 +551,7 @@ input[name="tab_item-follow"] {
 												class="glyphicon glyphicon-user"></i> 프로필 수정
 										</a></li>
 										<li><a href="#" target="_blank"> <i
-												class="glyphicon glyphicon-ok"></i> Tasks
+												class="glyphicon glyphicon-ok"></i> 결제내역
 										</a></li>
 										<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
 												Help
@@ -636,31 +623,25 @@ input[name="tab_item-follow"] {
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->
-									
+									<div class="comment-meta">
 										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
 											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 										</h5>
-									
+										
+									</div>
 									<!-- comment-meta -->
 									<p>${feed.content}</p>
 									<c:if test="${!empty feed.hashtag}">
 										<br />${feed.hashtag}</c:if>
 									<c:if test="${feed.checkHeart != 0}">
-									<div class="col-xs-2">
-														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
-													</div>
+										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
 										</c:if>
-											<c:if test="${feed.checkHeart ne 0}">
-													<div class="col-xs-2">
-														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
-													</div>
-												</c:if>
 									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-										<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
-										<input type="button" class="glyphicon glyphicon-trash btn_delete" value="삭제">
+										<input type="button" class="btn_update" value="수정">
+										<input type="button" class="btn_delete" value="삭제">
 									</c:if>
-									<input type="button" class= "btn_getFeed" value="보기"> <input
+									<input type="button" class="btn_getFeed" value="보기"> <input
 										type="hidden" name="feedNo" value="${feed.feedNo}">
 
 									<section class="row section">
