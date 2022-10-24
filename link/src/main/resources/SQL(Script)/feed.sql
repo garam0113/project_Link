@@ -84,10 +84,15 @@ SELECT * FROM FEED ORDER BY feed_no DESC;
 
 SELECT * FROM FEED_COMMENT ORDER BY sequence ASC;
 
+SELECT * FROM FEED_COMMENT WHERE feed_no = 37 ORDER BY sequence ASC;
+
 SELECT * FROM HEART;
 
 
 SELECT * FROM USERS;
+INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
+	area1, area2, area3, category1, category2, category3, add_user_date)
+VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 
 
@@ -250,15 +255,11 @@ SELECT * FROM heart
 
 
 
-SELECT c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, 
-c.feed_recomment_count, c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, 
-c.parent, c.depth, c.sequence , isLike.EXIST 
-FROM feed_comment c, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '1' AND user_id = 'user05' ) isLike 
-WHERE c.feed_comment_no = isLike.EXIST(+) 
-AND c.user_id = u.user_id 
-AND c.feed_no = 5 AND report_condition = '0' AND delete_condition = '0' 
-ORDER BY sequence ASC 
-
+SELECT
+COUNT(*)
+FROM FEED_COMMENT
+WHERE feed_no	= 18
+AND parent		= 101 
 
 
 

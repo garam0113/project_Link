@@ -1,5 +1,7 @@
 package clubPost;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -280,7 +282,7 @@ public class ClubPostServiceTest {
 		System.out.println("///////////////////////////////////////////");
 	}
 	
-	@Test
+	//@Test
 	public void pay() throws Exception {
 		Pay pay = new Pay();
 		pay.setPayNo(21);
@@ -291,7 +293,15 @@ public class ClubPostServiceTest {
 		clubPostServiceImpl.getPayList(user);
 	}
 	
-	
+	@Test
+	public void Date() throws Exception {
+		String from = "2019-09-02 08:10:55";
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date to = transFormat.parse(from);		
+		System.out.println("//////////////////////////////" + to);		
+		String day = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(to);
+		System.out.println(day);
+	}
 	
 	
 	

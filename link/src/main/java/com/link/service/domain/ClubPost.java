@@ -43,6 +43,13 @@ public class ClubPost {
 		this.clubPostCommentNo = clubPostCommentNo;
 	}
 
+	public ClubPost(int clubPostNo, int clubPostCommentNo, User user) {
+		super();
+		this.clubPostNo = clubPostNo;
+		this.clubPostCommentNo = clubPostCommentNo;
+		this.user = user;
+	}
+
 	public ClubPost(int clubNo, User user, String clubPostTitle, String clubPostContent, String clubPostVideo1,
 			String clubPostVideo2, String clubPostVideo3, String image1, String image2, String image3, String image4,
 			String image5, String image6, String image7, String image8, String image9, String image10) {

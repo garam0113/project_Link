@@ -96,7 +96,9 @@
 	article > nav {
 
 		float:right !important;
-
+		margin-right: 5px;
+   		margin-top: 5px;
+			
 	}
 
 
@@ -105,8 +107,8 @@
 	/* FEED TIME */
 	
 	h5.meta-post {
-		margin-bottom:13px !important;
 		color:rgba(171,148,233,1) !important;
+		display: inline;
 	}
 	
 	/* FEED TIME */
@@ -139,8 +141,19 @@
 
 	/* FEED CONTENT FONT COLOR */
 
+	/* 피드 댓글 달기 버튼 */
 
+	input.button.purple {
+		display: flex;
+		margin-right: 0px !important;
 
+		width: 75px;
+		height: 35px;
+		font-size: 0.5em !important;
+		background-color: #5F0080 !important;
+	}
+
+	/* 피드 댓글 달기 버튼 */
 
 
 

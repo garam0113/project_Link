@@ -12,7 +12,6 @@ import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
-import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -55,34 +54,22 @@ public class ClubPostServiceImpl implements ClubPostService {
 	public Map<String, Object> updateClubPost(Map<String, Object> map) throws Exception {
 		System.out.println(getClass() + ".updateClubPost(Map<String, Object> map) 도착");
 		
-		Heart heart = (Heart)map.get("heart");
-		ClubPost clubPost = (ClubPost)map.get("clubPost");
-		int i = 0;
-		
-		if(heart != null) {
+		if((Heart)map.get("heart") != null) {
 			// heart가 null이 아니라며 즉, restController에서 왔다면 즉, 하트를 클릭했다면 수행
 			
-			heart.setSource("2");
-			heart.setSourceNo(clubPost.getClubPostNo());
-
-			// 해당 유저가 좋아요한 게시물인지 확인한다 리턴 1이면 좋아요했다 리턴 0이면 좋아요 안했다
-			// i = 1이면 좋아요를 수행한다 i = -1이면 좋아요취소를 수행한다
-			i = ((clubPostDAOImpl.getHeart(heart) == 0) ? 1: -1);
-			// 좋아요를 수행하면 하트컨디션 = 1 좋아요취소를 수행하면 하트컨디션 = -1
-			System.out.println("//////////////////" + i);
-			((ClubPost)map.get("clubPost")).setHeartCondition(i);
+			// heart 테이블에서 모임게시물은 source 2번이다
+			((Heart)map.get("heart")).setSource("2");
 			
-			map.put("heart", heart);
-			map.put("clubPost", clubPost);
+			// heart 테이블에 모임게시물 고유번호를 입력한다
+			((Heart)map.get("heart")).setSourceNo(((ClubPost)map.get("clubPost")).getClubPostNo());
 
-			System.out.println("수정된 heart : " + map.get("heart") + "수정된 clubPost : " + map.get("clubPost"));
+			// heartCondition = 1이면 좋아요 수행, -1이면 좋아요 취소 수행한다
+			((ClubPost)map.get("clubPost")).setHeartCondition(((clubPostDAOImpl.getHeart((Heart)map.get("heart")) == 0) ? 1: -1));
+			
+			System.out.println("게시물 좋아요 또는 좋아요 취소를 위한 데이터 : heart : " + map.get("heart") + ", 하트컨디션 : " + ((ClubPost)map.get("clubPost")).getHeartCondition());
 		}
 		
-		map = clubPostDAOImpl.updateClubPost(map);
-		// 상세보기에서 하트컨디션이 1이면 빨간하트 -1이면 하얀하트를 보여준다
-		((ClubPost)map.get("getClubPost")).setHeartCondition(i);
-		
-		return map;
+		return clubPostDAOImpl.updateClubPost(map);
 	}// end of updateClubPost(Map<String, Object> map)
 
 	@Override
@@ -100,29 +87,31 @@ public class ClubPostServiceImpl implements ClubPostService {
 		return clubPostDAOImpl.getHeart(heart);
 	}
 
-	/*
-	@Override
-	public int updateClubPostLike(ClubPost clubPost, Heart heart) throws Exception {
-		System.out.println(getClass() + ".updateClubPostLike(Heart heart) 도착");
-		heart.setUserId(clubPost.getUser().getUserId());
-		return clubPostDAOImpl.updateClubPostLike(clubPost, heart);
-	}// end of updateClubPostLike(Heart heart)
-	*/
 	
 	
 	
 	
+///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 
 
 	
-
 	@Override
 	public Map<String, Object> getClubPostListMyHome(String userId) throws Exception {
 		System.out.println(getClass() + ".getClubPostListMyHome(String userId) 도착");
 		return clubPostDAOImpl.getClubPostListMyHome(userId);
 	}// end of getClubPostListMyHome(String userId)
+
+	
+	
+	
+	
+///////////////////////////////////////////////////////////////////////////////////// Pay /////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
 
 	@Override
 	public void addPay(Pay pay) throws Exception {
@@ -146,6 +135,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 	
 	
 	
+///////////////////////////////////////////////////////////////////////////////////// ClubPostComment /////////////////////////////////////////////////////////////////////////////////////	
+	
 	
 	
 	
@@ -154,18 +145,27 @@ public class ClubPostServiceImpl implements ClubPostService {
 	public Comment addClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".addClubPostComment(Comment comment) 도착");
 		if(comment.getClubPostCommentNo() == 0) {
+			// 게시물의 댓글
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("comment", comment);
-			// 댓글번호가 없을 때
+
 			List<Comment> c = (List<Comment>) clubPostDAOImpl.getClubPostCommentList(map);
+			// 게시물 댓글 개수
 			comment.setSequence(c.size());
+			// 게시물의 댓글이니 깊이는 0이다
 			comment.setDepth(0);
+			// 게시물의 댓글이니 부모번호는 게시물번호이다
 			comment.setParent(comment.getClubPostNo());
 		}else {
-			// 댓글번호가 있을 때
+			// 댓글의 댓글
+			
 			Comment c = clubPostDAOImpl.getClubPostComment(comment);
+			// 댓글의 댓글 개수
 			comment.setSequence(c.getCommentCount());
+			// 댓글의 댓글이니 깊이는 1이다
 			comment.setDepth(1);
+			// 댓글의 댓글이니 부모번호는 댓글번호이다
 			comment.setParent(comment.getClubPostCommentNo());
 		}
 		return clubPostDAOImpl.addClubPostComment(comment);
@@ -195,7 +195,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 		if(comment.getHeartCondition() == 1) {
 			// heart가 null이 아니라며 즉, 하트를 클릭했다면 수행
 			
-			heart.setUserId(comment.getUserId());
+			heart.setUserId(comment.getUser().getUserId());
 			heart.setSource("3");
 			heart.setSourceNo(comment.getClubPostCommentNo());
 
@@ -215,22 +215,17 @@ public class ClubPostServiceImpl implements ClubPostService {
 		System.out.println(getClass() + ".deleteClubPostComment(Comment comment) 도착");
 		return clubPostDAOImpl.deleteClubPostComment(comment);
 	}// end of deleteClubPostComment(Comment comment)
-
-	/*
-	@Override
-	public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception {
-		System.out.println(getClass() + ".updateClubPostCommentHeart(Comment comment) 도착");
-		return clubPostDAOImpl.updateClubPostCommentHeart(comment, heart);
-	}// end of updateClubPostCommentHeart(Comment comment)
-	*/
 	
 	
 	
 	
+	
+///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	
 
+	
 	@Override
 	public Map<String, Object> addClubNotice(Search search, Notice notice) throws Exception {
 		System.out.println(getClass() + ".addClubNotice(Search search, Notice notice) 도착");
