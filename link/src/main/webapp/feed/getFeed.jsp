@@ -136,7 +136,7 @@
 								console.log(changeHtml);
 								$(changePoint).html(changeHtml);
 								$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
-								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1)
+								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
 							} // success end
 						} // ajax inner close
@@ -198,6 +198,8 @@
 				console.log($(this).parents().siblings(".commentInfo").find("input[name='sequence']").val())
 				console.log($(this).prev().val())
 				
+				console.log($(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']").val());
+				
 				var feedNumber = parseInt($(this).parents().siblings(".commentInfo").find("input[name='feedNo']").val())
 				var parentValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='feedCommentNo']").val())
 				var depthValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='depth']").val()) + 1;
@@ -206,6 +208,8 @@
 				
 				var changePoint = $(this).parents(".comment");
 				var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
+				
+				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
 				
 				$.ajax(
 						{
@@ -281,6 +285,7 @@
 								
 								console.log(changeHtml);
 								$(changePoint).html(changeHtml);
+								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
 							} // success end
 							
@@ -875,6 +880,7 @@
 					<div class="post-area clear-after">
 					
 						<article role="main">
+							
 							<img src="/resources/image/uploadFiles/${feed.user.profileImage}" width="50" height="50" /><h4>${feed.user.nickName}</h4>
 							
 							<nav>
@@ -1033,7 +1039,7 @@
 						<input type="hidden" name="depth" value="0">
 						<input type="hidden" name="sequence" value="${feed.commentCount}">
 						<textarea style="width:476px; height:80px; resize:none;" name="commentContent" placeholder="´ñ±ÛÀÛ¼º"></textarea>
-						<input class="plain button red btn_addComment" style="float:right;" value="Submit Comment">
+						<input class="plain button purple btn_addComment" style="float:right;" value="Submit">
 						<!-- ´ñ±Û °ü·Ã hidden -->
 					</form>
 					

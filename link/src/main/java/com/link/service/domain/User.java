@@ -2,8 +2,6 @@ package com.link.service.domain;
 
 import java.sql.Date;
 
-import oracle.sql.DATE;
-
 public class User {
 	
 	private String userId;
@@ -11,6 +9,8 @@ public class User {
 	private String password;
 	private String name;
 	private String rrn;
+	private String rrn1;
+	private String rrn2;
 	private String gender;
 	private String phoneNo;
 	private String email;
@@ -79,11 +79,28 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getRrn1() {
+		return rrn1;
+	}
+	public void setRrn1(String rrn1) {
+		this.rrn1 = rrn1;
+	}
+	public String getRrn2() {
+		return rrn2;
+	}
+	public void setRrn2(String rrn2) {
+		this.rrn2 = rrn2;
+	}
 	public String getRrn() {
 		return rrn;
 	}
 	public void setRrn(String rrn) {
 		this.rrn = rrn;
+		
+		if(rrn != null && rrn.length() != 0) {
+			rrn1 = rrn.split("-")[0];
+			rrn2 = rrn.split("-")[1];
+		}
 	}
 	public String getGender() {
 		return gender;

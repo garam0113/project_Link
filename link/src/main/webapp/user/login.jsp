@@ -171,16 +171,16 @@ body>div.container {
 				<h1 class="login__title">Sign In</h1>
 				<div class="login__box">
 					<i class='bx bx-user login__icon'></i> <input type="text"
-						placeholder="Username" class="login__input" name="userId"
+						placeholder="Username" class="login__input" name="userId" style="font-size: initial;"
 						id="userId">
 				</div>
 				<div class="login__box">
 					<i class='bx bx-lock login__icon'></i> <input type="password"
-						placeholder="Password" class="login__input" name="password"
+						placeholder="Password" class="login__input" name="password" style="font-size: initial;"
 						id="password">
 				</div>
-				<a href="#getId" class="login__forgot">Forgot Id? </a> <a
-					href="#getPassword" class="login__forgot">Forgot Password? </a> <a
+				<a href="#getId" class="login__forgot" style="font-size: small;">Forgot Id? </a> <a
+					href="#getPassword" class="login__forgot" style="font-size: small;">Forgot Password? </a> <a
 					href="#login" class="login__button">Sign In</a>
 				<div class="form-group">
 					<div class="col-sm-offset-4 col-sm-6 text-center">
@@ -207,8 +207,8 @@ body>div.container {
 				</div>
 				<br /> <br /> <br /> <br /> <br /> <br />
 				<div>
-					<span class="login__account login__account--account">Don't
-						Have an Account?</span> <span class="login__signin login__signin--signup"
+					<span class="login__account login__account--account" style="font-size: small;">Don't
+						Have an Account?</span> <span class="login__signin login__signin--signup" style="font-size: small;"
 						id="sign-up">Sign Up</span>
 				</div>
 			</form>

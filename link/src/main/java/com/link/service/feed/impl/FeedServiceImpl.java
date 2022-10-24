@@ -91,14 +91,25 @@ public class FeedServiceImpl implements FeedService {
 		feedDAO.updateFeed(feed);
 		
 		// 하나의 댓글에 달린 대댓글 개수 세어서 넣어주기
-		
+		// 댓글 달릴곳의 위치
 		int count = ((Comment) map.get("comment")).getSequence();
+		Comment originalComment = (Comment) map.get("comment");
 		
 		if(feedDAO.getFeedCommentBySequence(map) != null) {
-			while(feedDAO.getFeedCommentBySequence(map).getDepth() != 0) {
-				count++;
-				((Comment) map.get("comment")).setSequence(count);
+			
+			// 자식 댓글 개수는
+			int children = feedDAO.getChildrenCommentCount(map);
+			
+			for(int i = 0 ; i < children ; i++) {
+				Comment comment = feedDAO.getFeedCommentBySequence(map);
+				comment.setCurrentPage(1);
+				map.put("comment", comment);
+				
+				comment.setSequence(comment.getSequence() + feedDAO.getChildrenCommentCount(map) + 1);
+				map.put("comment", comment);
+				
 			}
+			
 		}
 		
 		// 댓글의 순서 변경
@@ -107,7 +118,8 @@ public class FeedServiceImpl implements FeedService {
 			feedDAO.updateFeedCommentOrder((Comment) map.get("comment"));
 		}
 		
-		feedDAO.addFeedComment((Comment) map.get("comment"));
+		originalComment.setSequence(((Comment) map.get("comment")).getSequence());
+		feedDAO.addFeedComment((originalComment));
 		
 		feedDAO.addPush(null);
 		

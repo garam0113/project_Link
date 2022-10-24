@@ -1,7 +1,14 @@
 $(function smsCheck() {
 	
+	var phone2 = $("#phone2").val();
+	var phone3 = $("#phone3").val();
+	
+	console.log(phone2);
+	console.log(phone3);
+	
 	$("#sendPhoneNumber").on("click", function() {
 		let phoneNo = $("#phone1").val()+$("#phone2").val()+$("#phone3").val();
+
 		swal.fire("인증번호 발송 완료!");
 		
 		$.ajax({
