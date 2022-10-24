@@ -137,7 +137,7 @@ public class MyHomeController {
 	    Search search2 = new Search();
 		
 		search2.setSearchKeyword(userId);
-		
+	    search.setOrder(1);
 		
 		Map<String, Object> followUserId = myHomeService.getFollow(followUser);
 		

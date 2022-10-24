@@ -85,7 +85,7 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center" style="background-color:#BD76FF; color:#fbfbfb; width:700px; margin-left: 166px;">모 임 가 입 신 청</h1>
+		<h1 class="bg-primary text-center" style="background-color:#ffffff; border-color:#BD76FF; color:#BD76FF; width:700px; margin-left: 166px;">모 임 가 입 신 청</h1>
 		
 		<form class="form-horizontal">
 		
@@ -99,7 +99,7 @@
 			<div class="form-group">
 				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> 가 입 인 사</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="joinGreeting" name="joinGreeting" placeholder="가입인사는 필수입니다.">
+					<input type="text" class="form-control" id="joinGreeting" name="joinGreeting" placeholder="가입인사는 필수입니다." style="border-color: #BD76FF;">
 				</div>		
 			</div>
 			
@@ -107,8 +107,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-apply" style="background-color: #BD76FF; color:#fbfbfb;">신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel" style="background-color: #BD76FF; color:#fbfbfb;">취&nbsp;소</button>
+		      		<button type="button" class="btn btn-apply" style="background-color: #fbfbfb; color:#BD76FF; border-color: #BD76FF;">신&nbsp;청</button>
+					<button type="button" class="btn btn-cancel" style="background-color: #fbfbfb; color:#BD76FF; border-color: #BD76FF;">취&nbsp;소</button>
 		    </div>
 			</div>
 		</form>	
