@@ -255,7 +255,7 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getApprovalConditionList")
-	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser) throws Exception {
+	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser, String userId) throws Exception {
 		
 		System.out.println("/club/getApprovalConditionList : GET/POST");
 		
@@ -267,8 +267,13 @@ public class ClubController {
 		
 		System.out.println("유저 세션에 뭐가 있나요 : "+user);
 		System.out.println("클럽넘버는 왔나요 : "+session.getAttribute("clubNo"));
+		System.out.println("유저 아이디는 뭐지? : "+userId);
 		
-		search.setSearchKeyword(user.getUserId());
+		if(search.getOrder()==0) {
+			search.setSearchKeyword(user.getUserId());
+		}else {
+			search.setSearchKeyword(userId);
+		}
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
