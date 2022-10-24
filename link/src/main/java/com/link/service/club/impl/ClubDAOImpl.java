@@ -260,10 +260,6 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("updateMeeting DAOImpl 오나 ?? ");
 		
-//		meeting.setMeetingNo(24);
-//		meeting.setClubNo(2);
-//		meeting.setAddMeetingUserId("user01");
-		
 		sqlSession.update("ClubMapper.updateMeeting",meeting);
 	}
 	
@@ -286,7 +282,7 @@ public class ClubDAOImpl implements ClubDAO {
 //	}
 	
 	@Override
-	public void deleteMeetingMember(int participant) throws Exception {
+	public void deleteMeetingMember(Participant participant) throws Exception {
 		sqlSession.delete("ClubMapper.deleteMeetingMember",participant);
 	}
 	
@@ -340,12 +336,7 @@ public class ClubDAOImpl implements ClubDAO {
 	   return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}// end of updateClubMember(Pay pay, Search search)
 	
-	//모임원 직책??
-	@Override
-	public ClubUser getClubMember(ClubPost clubPost) throws Exception {
-	   // 모임 게시물 상세보기에서 모임원의 직책 필요
-	   return sqlSession.selectOne("ClubMapper.getClubMember", clubPost);
-	}
+	
 
 	
 }

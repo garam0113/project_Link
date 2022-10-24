@@ -27,16 +27,16 @@
 	<!-- ToolBar End /////////////////////////////////////-->
 	<br><br><br><br><br>
 						
-		<button class="addChatRoom">채팅방 생성</button>
+		<!-- <button class="addChatRoom">채팅방 생성</button> -->
 		
 		<a class="button transparent aqua">
 		<div style="height: 100px; font-size: 2rem;">
-		첫번째 채팅방
+		채팅방
 		</div></a>
-		<a class="button transparent aqua">
+		<!-- <a class="button transparent aqua">
 		<div style="height: 100px; font-size: 2rem;">
 		두번째 채팅방
-		</div></a>
+		</div></a> -->
 	
 </body>
 </html>

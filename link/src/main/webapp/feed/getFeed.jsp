@@ -10,25 +10,29 @@
 <head>
 	<meta charset="EUC-KR">
 	
-	<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/style.css" media="screen">
-	<link rel="stylesheet" href="/resources/css/mapStyle.css"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="The Page Description">
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+	<title>Feed</title>
 	
-	<script src="https://code.jquery.com/jquery.js"></script>
+	<link href="/resources/css/feed/getFeed.css" rel="stylesheet">
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<%-- SUMMER NOTE --%>
+	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+	<%-- SUMMER NOTE --%>
+	
+	<%-- ALERT --%>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<%-- ALERT --%>
 	
 	<script type="text/javascript">
 
@@ -93,7 +97,7 @@
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 									
-									if(item.depth < 3) {
+									if(item.depth < 2) {
 										changeHtml += '<a class="btn_createRecomment">Reply</a>'
 									}
 									
@@ -239,7 +243,7 @@
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 									
-									if(item.depth < 3) {
+									if(item.depth < 2) {
 										changeHtml += '<a class="btn_createRecomment">Reply</a>'
 									}
 									
@@ -369,7 +373,7 @@
 															'<div class="comment-meta">' +
 															'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 															
-															if(item.depth < 3) {
+															if(item.depth < 2) {
 																changeHtml += '<a class="btn_createRecomment">Reply</a>'
 															}
 															
@@ -474,7 +478,7 @@
 										'<div class="comment-meta">' +
 										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 										
-										if(item.depth < 3) {
+										if(item.depth < 2) {
 											changeHtml += '<a class="btn_createRecomment">Reply</a>'
 										}
 										
@@ -571,7 +575,7 @@
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 									
-									if(item.depth < 3) {
+									if(item.depth < 2) {
 										changeHtml += '<a class="btn_createRecomment">Reply</a>'
 									}
 									
@@ -666,7 +670,7 @@
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
 									
-									if(item.depth < 3) {
+									if(item.depth < 2) {
 										changeHtml += '<a class="btn_createRecomment">Reply</a>'
 									}
 									
@@ -826,29 +830,7 @@
 	
 	<style>
 	
-		img {
-			margin-top : 10px;
-			float : left;
-		}
-	
-		.row {
 		
-			margin-top:0%;
-			margin-right:0%;
-			margin-bottom:0%;
-			margin-left:0%;
-		}
-		
-		h4 {
-			margin-top:5px;
-			margin-left:5px;
-			display: inline-block;
-		}
-		
-		nav {
-			margin-top:5%;
-			display: inline-block;
-		}
 		
 	</style>
 
@@ -858,7 +840,7 @@
 
 	<jsp:include page="/toolbar.jsp" />
 	
-	<div id="intro-wrap" data-height="22.222">
+	<div id="intro-wrap" data-height="12.222">
 		<div id="intro" class="preload darken">					
 			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 				<div class="caption">
@@ -870,6 +852,9 @@
 	</div><!-- intro-wrap -->
 	
 	<div id="main">
+	
+		<div class="container">
+		
 		<section class="row section">
 			<div class="row-content buffer even clear-after">
 			
@@ -894,8 +879,13 @@
 							
 							<nav>
 								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-									<button type="button" id="updateFeed" >수정</button>
-									<button type="button" id="deleteFeed" >삭제</button>
+									<%-- 수정 버튼 --%>
+									<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
+									<%-- 수정 버튼 --%>
+								
+									<%-- 삭제 버튼 --%>
+									<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
+									<%-- 삭제 버튼 --%>
 								</c:if>
 							</nav>
 							
@@ -904,13 +894,66 @@
 								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 							</h5>
 							
-							<%-- 영상 --%>
-							<c:if test="${!empty feed.video}">
-								<iframe width="640" height="360" src="https://${feed.video}" ></iframe>
-							</c:if>
-							<%-- 영상 --%>
+							<div class="feedContent">
+							
+							<%-- 이미지 --%>
+								<c:if test="${!empty feed.image1}">
+								<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+									<ol class="carousel-indicators">
+										<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
 										
-							<p>${feed.content}</p>
+										<c:if test="${!empty feed.image2}">
+											<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+										</c:if>
+										<c:if test="${!empty feed.image3}">
+											<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+										</c:if>
+										<c:if test="${!empty feed.image4}">
+											<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+										</c:if>
+									</ol>
+								
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner" role="listbox">
+										<div class="item active">
+											<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+										</div>
+										
+										<c:if test="${!empty feed.image2}">
+											<div class="item">
+												<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+											</div>
+												<c:if test="${!empty feed.image3}">
+													<div class="item">
+														<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+													</div>
+													<c:if test="${!empty feed.image4}">
+														<div class="item">
+															<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+														</div>
+													</c:if>
+												</c:if>														
+										</c:if>
+									</div>
+	
+									<!-- Controls -->
+									<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
+										<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
+										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+								</c:if>
+								
+								
+								<%-- 이미지 --%>
+													
+								<p>${feed.content}</p>
+								
+								</div>
 							
 						</article>
 
@@ -924,32 +967,50 @@
 					<!-- 피드 좋아요 댓글수 신고 -->
 					<section class="row section">
 						<div class="row">
+						
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
+							
 							<c:if test="${feed.checkHeart eq 0}">
-								<div class="column two">
+								<div class="col-xs-2">
 									<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 								</div>
 							</c:if>
 							<c:if test="${feed.checkHeart ne 0}">
-								<div class="column two">
+								<div class="col-xs-2">
 									<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
 								</div>
 							</c:if>
 							
-							<div class="column two likeCount">
+							<div class="col-xs-1 likeCount">
 								${feed.heartCount}
 							</div>
 							
-							<div class="column two comment">댓글수</div>
+							<div class="col-xs-1">
+							</div>
 							
-							<div class="column two commentCount">
+							<div class="col-xs-2 comment">
+								<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
+							</div>
+							
+							<div class="col-xs-1 commentCount">
 								 ${feed.commentCount}
 							</div>
+							
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
 								
 							<!-- 신고 아이콘 -->
-							<div class="column four last">
-								<span class="glyphicon glyphicon-exclamation-sign report" style="font-size:2rem" aria-hidden="true" ></span>
+							<div class="col-xs-2 report">
+								<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
 							</div>
 							<!-- 신고 아이콘 -->
+							
+							<%-- 여백 --%>
+							<div class="col-xs-1"></div>
+							<%-- 여백 --%>
 							
 						</div>
 					</section>
@@ -1046,7 +1107,7 @@
 									<!-- 대댓글 관련 hidden -->
 								
 									<div class='btn_recommentCheck' style="display: none;">
-										<textarea style='width:427px; resize:none;' name='commentContent' placeholder='작성'></textarea>
+										<textarea name='commentContent' placeholder='작성'></textarea>
 										<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">
 									</div>
 								
@@ -1065,6 +1126,7 @@
 			</div>
 		</section>
 		
+		</div>
 	</div>
 	
 </body>

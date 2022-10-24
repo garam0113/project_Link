@@ -1,20 +1,21 @@
 
 DROP TABLE FEED 					CASCADE CONSTRAINTS;
 DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
-DROP TABLE HEART					CASCADE CONSTRAINTS;
+
 
 DROP SEQUENCE seq_feed_no;
 DROP SEQUENCE seq_feed_comment_no;
-DROP SEQUENCE seq_heart_no;
+
 
 CREATE SEQUENCE seq_feed_no						INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_heart_no					INCREMENT BY 1 START WITH 1;
+
 
 CREATE TABLE FEED (
 	feed_no							NUMBER												NOT NULL,
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	feed_open_condition				CHAR(3)												NOT NULL,
+	feed_full_content				VARCHAR2(1680),
 	feed_content					VARCHAR2(840),
 	feed_image1						VARCHAR2(100),
 	feed_image2						VARCHAR2(100),
@@ -49,12 +50,7 @@ CREATE TABLE feed_comment (
 	PRIMARY KEY(feed_comment_no)
 );
 
-CREATE TABLE heart(
-	heart_no						NUMBER												NOT NULL,
-	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	source							CHAR(3)												NOT NULL,
-	source_no						NUMBER												NOT NULL
-);
+
 
 INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user01', '3', '첫글입니다#first', 'a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', null, '#first', '0', '0', SYSDATE, null, '0', '0' );
 INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user02', '3', '두번째글입니다#second', 'profile_image2clubPost.jpg', 'no_heart.jpg', 'user03flower11clubPost.jpg', null, null, '#second', '0', '0', SYSDATE, null, '0', '0' );
@@ -96,22 +92,21 @@ SELECT * FROM USERS;
 
 
 
+======================================================================================================================================
+
+DROP TABLE HEART					CASCADE CONSTRAINTS;
+DROP SEQUENCE seq_heart_no;
+CREATE SEQUENCE seq_heart_no					INCREMENT BY 1 START WITH 1;
 
 
+CREATE TABLE heart(
+	heart_no						NUMBER												NOT NULL,
+	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
+	source							CHAR(3)												NOT NULL,
+	source_no						NUMBER												NOT NULL
+);
 
-SELECT * FROM FEED_COMMENT WHERE FEED_NO = 3 ORDER BY sequence ASC;
-
-
-
-
-
-
-
-
-
-
-
-
+======================================================================================================================================
 
 
 

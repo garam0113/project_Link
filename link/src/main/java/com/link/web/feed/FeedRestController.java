@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -370,7 +369,7 @@ public class FeedRestController {
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
 			jsonObject.addProperty("url", "/resources/image/uploadFiles/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
-				
+			
 		} catch (IOException e) {
 			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");

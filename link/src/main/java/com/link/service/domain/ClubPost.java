@@ -15,11 +15,12 @@ public class ClubPost {
 	private String clubPostVideo3;			// 영상3 선택
 	private String clubPostRegDate;			// 등록날짜
 	private String clubPostUpdateDate;		// 수정날짜
-	private int heartCondition;				// 좋아요하다/좋아요취소하다
 	private int clubPostHeartCount;			// 좋아요 수 (default 0)
 	private int clubPostCommentCount;		// 댓글 수  (default 0)
 	private int reportCondition;			// 신고여부
 	private int deleteCondition;			// 삭제여부
+	private int heartCondition;				// 좋아요하다/좋아요취소하다
+	private String clubRole;				// 모임직책
 	private String userId;					// 삭제한 회원 아이디
 	private String nickName;				// 삭제한 회원 닉네임
 	private String image1;					// 이미지1 필수1개
@@ -40,6 +41,13 @@ public class ClubPost {
 		super();
 		this.clubPostNo = clubPostNo;
 		this.clubPostCommentNo = clubPostCommentNo;
+	}
+
+	public ClubPost(int clubPostNo, int clubPostCommentNo, User user) {
+		super();
+		this.clubPostNo = clubPostNo;
+		this.clubPostCommentNo = clubPostCommentNo;
+		this.user = user;
 	}
 
 	public ClubPost(int clubNo, User user, String clubPostTitle, String clubPostContent, String clubPostVideo1,
@@ -153,14 +161,6 @@ public class ClubPost {
 		this.clubPostUpdateDate = clubPostUpdateDate;
 	}
 
-	public int getHeartCondition() {
-		return heartCondition;
-	}
-
-	public void setHeartCondition(int heartCondition) {
-		this.heartCondition = heartCondition;
-	}
-
 	public int getClubPostHeartCount() {
 		return clubPostHeartCount;
 	}
@@ -191,6 +191,22 @@ public class ClubPost {
 
 	public void setDeleteCondition(int deleteCondition) {
 		this.deleteCondition = deleteCondition;
+	}
+
+	public int getHeartCondition() {
+		return heartCondition;
+	}
+
+	public void setHeartCondition(int heartCondition) {
+		this.heartCondition = heartCondition;
+	}
+
+	public String getClubRole() {
+		return clubRole;
+	}
+
+	public void setClubRole(String clubRole) {
+		this.clubRole = clubRole;
 	}
 
 	public String getUserId() {
@@ -314,8 +330,6 @@ public class ClubPost {
 		builder.append(clubPostRegDate);
 		builder.append(", clubPostUpdateDate=");
 		builder.append(clubPostUpdateDate);
-		builder.append(", heartCondition=");
-		builder.append(heartCondition);
 		builder.append(", clubPostHeartCount=");
 		builder.append(clubPostHeartCount);
 		builder.append(", clubPostCommentCount=");
@@ -324,6 +338,10 @@ public class ClubPost {
 		builder.append(reportCondition);
 		builder.append(", deleteCondition=");
 		builder.append(deleteCondition);
+		builder.append(", heartCondition=");
+		builder.append(heartCondition);
+		builder.append(", clubRole=");
+		builder.append(clubRole);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", nickName=");

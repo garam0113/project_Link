@@ -64,7 +64,7 @@
 		f.recv_user_id,
 		f.state,
 		f.type,
-		u.nickname ,
+		u.nickname , 
 		u.profile_image
 
 
@@ -75,6 +75,10 @@
 		<where>
 			u.user_id = f.recv_user_id
 			<if test="(userId !=null and receiveId.userId != null) and (fbType == 2)">
+				and f.send_user_id = #{userId} and f.recv_user_id
+				=#{receiveId.userId} and TRIM(f.type) = #{fbType}
+			</if> 
+			<if test="(userId !=null and receiveId.userId != null) and (fbType == 1)">
 				and f.send_user_id = #{userId} and f.recv_user_id
 				=#{receiveId.userId} and TRIM(f.type) = #{fbType}
 			</if> 
@@ -109,8 +113,11 @@
 
 		<where>
 			u.user_id = f.recv_user_id
-			<if test="searchKeyword !=null ">
-				and f.send_user_id = #{searchKeyword}
+			<if test="searchKeyword !=null and searchCondition ==1">
+				and f.send_user_id = #{searchKeyword} and TRIM(f.type)='1' and TRIM(f.state)='1'
+			</if>
+			<if test="searchKeyword !=null and searchCondition ==2">
+				and f.send_user_id = #{searchKeyword} and TRIM(f.type)='1' and TRIM(f.state)='1'
 			</if>
 		</where>
 
@@ -147,7 +154,10 @@
 		<where>
 			u.user_id = f.send_user_id
 			<if test="searchKeyword !=null ">
-				and f.recv_user_id = #{searchKeyword}
+				and f.recv_user_id = #{searchKeyword} 
+			</if>
+			<if test="searchKeyword !=null ">
+				and f.recv_user_id = #{searchKeyword} 
 			</if>
 		</where>
 
@@ -167,8 +177,14 @@
 			type = #{fbType:CHAR}
 
 		</set>
-		WHERE send_user_id = #{userId} and recv_user_id = #{receiveId.userId}
-
+		<where>
+		<if test="(userId !=null and receiveId.userId != null) and (fbType == 2)">
+		 send_user_id = #{userId} and recv_user_id = #{receiveId.userId} and TRIM(type) = '2'
+		 </if>
+		 <if test="(userId !=null and receiveId.userId != null) and (fbType == 1)">
+		 send_user_id = #{userId} and recv_user_id = #{receiveId.userId} and TRIM(type) = '1'
+		 </if>
+        </where>
 	</update>
 
 

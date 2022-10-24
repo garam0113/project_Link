@@ -58,9 +58,9 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 	
 	
 	@Override
-	public User getFollow(User user) throws Exception {
+	public List<User> getFollow(User user) throws Exception {
 		System.out.println("\n[MyHomeDAOImpl getFollow start]\n");
-		return (User)sqlSession.selectOne("MyHomeMapper.getFollow", user);
+		return sqlSession.selectList("MyHomeMapper.getFollow", user);
 	}
 
 	@Override

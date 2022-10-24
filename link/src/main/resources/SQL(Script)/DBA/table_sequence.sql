@@ -25,8 +25,6 @@ VIEWER				뷰어
 DROP TABLE USERS					CASCADE CONSTRAINTS;
 DROP TABLE CLUB_POST				CASCADE CONSTRAINTS;
 DROP TABLE CLUB_POST_COMMENT		CASCADE CONSTRAINTS;
-DROP TABLE CLUB_CHAT				CASCADE CONSTRAINTS;
-DROP TABLE CHAT						CASCADE CONSTRAINTS;
 DROP TABLE PAY						CASCADE CONSTRAINTS;
 DROP TABLE FEED 					CASCADE CONSTRAINTS;
 DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
@@ -39,16 +37,11 @@ DROP TABLE CLUB_USER				CASCADE CONSTRAINTS;
 DROP TABLE MEETING					CASCADE CONSTRAINTS;
 DROP TABLE PARTICIPANT				CASCADE CONSTRAINTS;
 DROP TABLE FOLLOW_BLOCK				CASCADE CONSTRAINTS;
-DROP TABLE LIVE						CASCADE CONSTRAINTS;
-DROP TABLE LIVE_CHAT				CASCADE CONSTRAINTS;
-DROP TABLE VIEWER					CASCADE CONSTRAINTS;
 
 
 
 DROP SEQUENCE seq_club_post_no;
 DROP SEQUENCE seq_club_post_comment_no;
-DROP SEQUENCE seq_club_chat_no;
-DROP SEQUENCE seq_chat_no;
 DROP SEQUENCE seq_pay_no;
 DROP SEQUENCE seq_feed_no;
 DROP SEQUENCE seq_feed_comment_no;
@@ -61,9 +54,6 @@ DROP SEQUENCE seq_club_user_no;
 DROP SEQUENCE seq_meeting_no;
 DROP SEQUENCE seq_participant_no;
 DROP SEQUENCE seq_follow_block_no;
-DROP SEQUENCE seq_live_chat_no;
-DROP SEQUENCE seq_live_no;
-DROP SEQUENCE seq_viewer_no;
 
 
 
@@ -82,8 +72,6 @@ DROP SEQUENCE seq_viewer_no;
 
 CREATE SEQUENCE seq_club_post_no				INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_club_post_comment_no		INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_club_chat_no				INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_chat_no						INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_pay_no						INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_feed_no						INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
@@ -96,9 +84,6 @@ CREATE SEQUENCE seq_club_user_no				INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_meeting_no					INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_participant_no				INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_FOLLOW_BLOCK_NO				INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_live_chat_no				INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_live_no						INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_viewer_no					INCREMENT BY 1 START WITH 1;
 
 
 
@@ -224,8 +209,8 @@ CREATE TABLE CLUB_POST (
 	IMAGE9							VARCHAR2(100),
 	IMAGE10							VARCHAR2(100),
 	CLUB_POST_UPDATE_DATE			DATE,
-	REPORT_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
-	DELETE_CONDIRION				CHAR(3)					DEFAULT 0					NOT NULL,
+	REPORT_CONDITION				CHAR(3)					DEFAULT 0					NOT NULL,
+	DELETE_CONDITION				CHAR(3)					DEFAULT 0					NOT NULL,
 	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
 	CLUB_POST_HEART_COUNT			NUMBER(20)				DEFAULT 0					NOT NULL,
 	PRIMARY KEY(club_post_no)
@@ -247,6 +232,7 @@ CREATE TABLE CLUB_POST_COMMENT (
 	SEQUENCE						NUMBER(20)											NOT NULL,
 	DELETE_USER_ID					VARCHAR2(20)													REFERENCES users(user_id),
 	COMMENT_HEART_COUNT				NUMBER(20)				DEFAULT 0					NOT NULL,
+	COMMENT_COUNT					NUMBER(20)				DEFAULT 0					NOT NULL,
 	PRIMARY KEY(club_post_comment_no)
 );
 
@@ -270,76 +256,44 @@ CREATE TABLE PAY (
 );
 
 
-
-CREATE TABLE CLUB_CHAT (
-	CLUB_CHAT_NO					NUMBER(20)											NOT NULL,
-	ROOM_NO							NUMBER(20)											NOT NULL,
-	CLUB_NO							NUMBER(20)											NOT NULL	REFERENCES club(club_no),
-	SEND_USER_ID					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	RECV_USER_ID					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	SEND_DATE						DATE												NOT NULL,
-	RECV_DATE						DATE,
-	CHAT_CONTENT					VARCHAR2(500)										NOT NULL,
-	FILE_NAME						VARCHAR2(100),
-	RECV_CHK						CHAR(3)					DEFAULT '0'					NOT NULL,
-	PRIMARY KEY(club_chat_no)
-);
-
-
-
-CREATE TABLE CHAT (
-	CHAT_NO							NUMBER												NOT NULL,
-	ROOM_NO							NUMBER												NOT NULL,
-	SEND_USER_ID					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	RECV_USER_ID					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	SEND_DATE						DATE												NOT NULL,
-	RECV_DATE						DATE,
-	CHAT_CONTENT					VARCHAR2(1000),
-	FILE_NAME						VARCHAR2(100),
-	RECV_CHK						NUMBER					DEFAULT 0					NOT NULL,
-	PRIMARY KEY(chat_no)
-);
-
-
-
 CREATE TABLE FEED (
-	feed_no							NUMBER												NOT NULL,
-	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	feed_open_condition				CHAR(3)												NOT NULL,
-	feed_content					VARCHAR2(840),
-	feed_image1						VARCHAR2(100),
-	feed_image2						VARCHAR2(100),
-	feed_image3						VARCHAR2(100),
-	feed_image4						VARCHAR2(100),
-	feed_video						VARCHAR2(100),
-	hashtag							VARCHAR2(840),
-	feed_heart_count				NUMBER												NOT NULL,
-	feed_comment_count				NUMBER												NOT NULL,
-	feed_reg_date					DATE												NOT NULL,
-	feed_update_date				DATE,
-	report_condition				CHAR(3)												NOT NULL,
-	delete_condition				CHAR(3)												NOT NULL,
-	PRIMARY KEY(feed_no)
+   feed_no                     NUMBER                                    NOT NULL,
+   user_id                     VARCHAR2(20)                              NOT NULL   REFERENCES users(user_id),
+   feed_open_condition            CHAR(3)                                    NOT NULL,
+   feed_full_content            VARCHAR2(1680),
+   feed_content               VARCHAR2(840),
+   feed_image1                  VARCHAR2(100),
+   feed_image2                  VARCHAR2(100),
+   feed_image3                  VARCHAR2(100),
+   feed_image4                  VARCHAR2(100),
+   feed_video                  VARCHAR2(100),
+   hashtag                     VARCHAR2(840),
+   feed_heart_count            NUMBER                                    NOT NULL,
+   feed_comment_count            NUMBER                                    NOT NULL,
+   feed_reg_date               DATE                                    NOT NULL,
+   feed_update_date            DATE,
+   report_condition            CHAR(3)                                    NOT NULL,
+   delete_condition            CHAR(3)                                    NOT NULL,
+   PRIMARY KEY(feed_no)
 );
-
 
 
 CREATE TABLE feed_comment (
-	feed_comment_no					NUMBER												NOT NULL,
-	feed_no							NUMBER												NOT NULL,
-	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	feed_comment_content			VARCHAR2(210)										NOT NULL,
-	feed_comment_heart_count		NUMBER												NOT NULL,
-	feed_recomment_count			NUMBER												NOT NULL,
-	feed_comment_reg_date			DATE												NOT NULL,
-	feed_comment_update_date		DATE,
-	report_condition				CHAR(3)												NOT NULL,
-	delete_condition				CHAR(3)												NOT NULL,
-	delete_user_id					VARCHAR2(20)													REFERENCES users(user_id),
-	parent							NUMBER												NOT NULL,
-	depth							NUMBER												NOT NULL,
-	sequence						NUMBER												NOT NULL,
-	PRIMARY KEY(feed_comment_no)
+   feed_comment_no               NUMBER                                    NOT NULL,
+   feed_no                     NUMBER                                    NOT NULL,
+   user_id                     VARCHAR2(20)                              NOT NULL   REFERENCES users(user_id),
+   feed_comment_content         VARCHAR2(210)                              NOT NULL,
+   feed_comment_heart_count      NUMBER                                    NOT NULL,
+   feed_recomment_count         NUMBER                                    NOT NULL,
+   feed_comment_reg_date         DATE                                    NOT NULL,
+   feed_comment_update_date      DATE,
+   report_condition            CHAR(3)                                    NOT NULL,
+   delete_condition            CHAR(3)                                    NOT NULL,
+   delete_user_id               VARCHAR2(20)                                       REFERENCES users(user_id),
+   parent                     NUMBER                                    NOT NULL,
+   depth                     NUMBER                                    NOT NULL,
+   sequence                  NUMBER                                    NOT NULL,
+   PRIMARY KEY(feed_comment_no)
 );
 
 
@@ -384,59 +338,21 @@ CREATE TABLE QANDA (
 );
 
 
-
-CREATE TABLE live(
-	live_no							NUMBER(20)											NOT NULL,
-	live_user_id					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	live_title						VARCHAR2(100)										NOT NULL,
-	open_condition					CHAR(3)					DEFAULT	'0',
-	password						VARCHAR2(10),
-	viewer_count					NUMBER(20)				DEFAULT	'0',
-	out_condition					CHAR(3)					DEFAULT	'0',
-	live_state_date					DATE												NOT NULL,
-	live_end_date					DATE,
-	PRIMARY	KEY(live_no)
-);
-
-
-
-CREATE TABLE live_chat (
-	chat_no							NUMBER(20)											NOT NULL,
-	live_no							NUMBER(20)											NOT NULL	REFERENCES live(live_no),
-	send_user_id					VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	chat_content					VARCHAR2(1000)										NOT NULL,
-	PRIMARY	KEY(chat_no)
-);
-
-
-
-CREATE TABLE viewer (
-	viewer_no						NUMBER(20)											NOT NULL,
-	chat_no							NUMBER(20)											NOT NULL	REFERENCES live_chat(chat_no),
-	viewer_ID						VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	PRIMARY	KEY(viewer_no)
-);
-
-
-
-HANDLE_DATE 없애자
-
 CREATE TABLE REPORT_PUSH (
 	NO								NUMBER(20)											NOT NULL,
 	CONTENT							VARCHAR2(2000)										NOT NULL,
 	REPORT_SOURCE 					CHAR(3)												NOT NULL,
 	CLUB_POST_NO					NUMBER(20)														REFERENCES club_post(club_post_no),
 	CLUB_POST_COMMENT_NO			NUMBER(20)														REFERENCES club_post_comment(club_post_comment_no),
-	CHAT_NO							NUMBER(20)														REFERENCES chat(chat_no),
+	CHAT_NO							NUMBER(20),
 	FEED_NO							NUMBER(20)														REFERENCES feed(feed_no),
 	FEED_COMMENT_NO					NUMBER(20)														REFERENCES feed_comment(feed_comment_no),
-	LIVE_NO							NUMBER(20)														REFERENCES live(live_no),
+	LIVE_NO							NUMBER(20),
 	USER_ID1						VARCHAR2(20)													REFERENCES users(user_id),
 	USER_ID2						VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	REPORT_REGDATE					DATE												NOT NULL,
 	REPORT_IMAGE1					VARCHAR2(100),
 	REPORT_IMAGE2					VARCHAR2(100),
-	HANDLE_DATE						DATE,
 	TYPE							CHAR(3)												NOT NULL,
 	REPORT_REASON					CHAR(3),
 	REPORT_CONDITION				CHAR(3)					DEFAULT '0'					NOT NULL,

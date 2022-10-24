@@ -151,7 +151,7 @@ public class ClubServiceImpl implements ClubService {
 //	}
 	
 	@Override
-	public void deleteMeetingMember(int participant) throws Exception {
+	public void deleteMeetingMember(Participant participant) throws Exception {
 		clubDAO.deleteMeetingMember(participant);
 	}
 	
@@ -294,12 +294,6 @@ public class ClubServiceImpl implements ClubService {
 	   return clubDAO.updateClubMember(pay, search);
 	}	
 	
-	//모임원 직책?
-	@Override
-	public ClubUser getClubMember(ClubPost clubPost) throws Exception {
-	   // 모임 게시물 상세보기에서 모임원의 직책 필요
-	   return clubDAO.getClubMember(clubPost);
-	}
 
 	
 	

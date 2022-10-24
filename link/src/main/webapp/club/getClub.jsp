@@ -38,6 +38,10 @@
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
 	}
+	a {
+    	color: #bd76ff;
+    	text-decoration: underline;
+	}
 	
 	.darkover {
     position: sticky;
@@ -122,7 +126,14 @@
 
 		$("button.btn.btn-warning").on("click", function() {
 			//popup();
-			self.location="/club/updateClubView.jsp"
+			//self.location="/club/updateClubView.jsp"
+			self.location="/club/updateClubView?clubNo="+${ club.clubNo };
+			// ${club.clubTitle} 모임 제목
+			// ${club.clubDetail} 모임 설명
+			// ${club.clubCategory} 모임 카테고리
+			// ${club.clubArea} 모임 활동영역
+			// ${club.clubMaxMember} 모임 최대 인원수
+			// ${club.clubImage} 모임 대표 이미지
 		});
 	});
 	
@@ -202,9 +213,9 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList">모임 채팅</a>
 						</li>
-						<li data-group="infographics">
+						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li>
+						</li> --%>
 					</ul>
 		
 		
@@ -239,6 +250,8 @@
 	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
 			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
 		</div>
+		
+		<hr/>
 		
 		<div class="row">
 			<div class="col-s-4 col-md-6 "><strong>모임원 수</strong></div>
