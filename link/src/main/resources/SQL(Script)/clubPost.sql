@@ -722,10 +722,7 @@ UPDATE USERS SET PROFILE_IMAGE = 'profile_image4clubPost.jpg' WHERE USER_ID = 'u
 
 
 
-
-select comment_count from club_post;
-desc club_post;
-
+select * from report_push where type = 1
 
 
 
