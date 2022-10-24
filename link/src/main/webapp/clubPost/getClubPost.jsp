@@ -204,6 +204,8 @@
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
 				
+				alert( depth );
+				
 				if( depth == 0 ){
 					//alert("0ÀÌ´Ù");
 				}else if( depth > 0){
