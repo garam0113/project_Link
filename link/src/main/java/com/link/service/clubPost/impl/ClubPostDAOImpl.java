@@ -169,14 +169,16 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 모임게시물 댓글 개수 증가
 		map.put("comment", comment);
-		if( comment.getClubPostCommentNo() != 0 ) {
+		if( comment.getDepth() != 0 ) {
 			// 부모번호의 댓글개수를 증가시킨다
 			System.out.println("댓글개수 증가 : " + comment);
-			//sqlSession.update("ClubPostCommentMapper.updateClubPostComment", comment);
+			comment.setDeleteCondition("-1");
+			sqlSession.update("ClubPostCommentMapper.updateClubPostComment", comment);
 		}else {
 			// 게시물의 댓글개수 증가
 			returnClubPost.setClubPostCommentNo(comment.getClubPostCommentNo());
 			map.put("clubPost", returnClubPost);
+			System.out.println(map.get(""));
 			sqlSession.update("ClubPostMapper.updateClubPost", map);
 			System.out.println("모임게시물 댓글 개수 증가");
 		}

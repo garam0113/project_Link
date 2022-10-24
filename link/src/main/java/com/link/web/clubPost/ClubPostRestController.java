@@ -252,7 +252,7 @@ public class ClubPostRestController {
 		
 		
 		
-		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent() + ", 댓글번호 : " + comment.getFeedCommentNo());
+		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent() + ", 댓글번호 : " + comment.getClubPostCommentNo());
 		
 		
 		

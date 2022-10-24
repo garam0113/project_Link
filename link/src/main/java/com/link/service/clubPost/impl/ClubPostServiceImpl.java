@@ -168,6 +168,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 			// 댓글의 댓글이니 부모번호는 댓글번호이다
 			comment.setParent(comment.getClubPostCommentNo());
 		}
+		
+		System.out.println("댓글인지 대댓글인지 : " + comment);
 		return clubPostDAOImpl.addClubPostComment(comment);
 	}// end of addClubPostComment(Comment comment)
 
