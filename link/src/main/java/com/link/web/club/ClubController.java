@@ -119,7 +119,7 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, Club clubS) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		

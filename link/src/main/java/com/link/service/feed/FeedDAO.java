@@ -53,7 +53,9 @@ public interface FeedDAO {
 	
 	// 사용 : 순서로 댓글 확인하기
 	public Comment getFeedCommentBySequence(Map<String, Object> map) throws Exception; 
-	
+
+	// 사용 : 자식 댓글 개수
+	public int getChildrenCommentCount(Map<String, Object> map) throws Exception;
 	
 	
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////

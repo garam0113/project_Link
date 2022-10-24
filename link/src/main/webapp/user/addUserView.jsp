@@ -29,6 +29,8 @@
 	src="/resources/javascript/user/nickNameCheck.js"></script>
 <script type="text/javascript" charset="utf-8"
 	src="/resources/javascript/user/category.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="/resources/javascript/user/image.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -44,14 +46,16 @@ body>div.container {
 			fncAddUser();
 		});
 	});
+
 	function fncAddUser() {
 
+		var num = /^[0-9]*$/;
 		var regExp = /^[a-z0-9_]{4,20}$/;
 		var regExp2 = /\s/g;
 		var regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 		var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		var regRrn = /^([0-9]{6})-?([0-9]{7})$/;
-		;
+		
 		var id = $("#userId").val();
 		var checkId = $("#checkId").val();
 		var pw = $("#password").val();
@@ -59,8 +63,9 @@ body>div.container {
 		var name = $("#name").val();
 		var nickName = $("#nickName").val();
 		var checkNickName = $("#checkNickName").val();
-		var gender = $("#gender").is(":checked");
-		var rrn = $("#rrn").val();
+		var gender = $(".radiog").is(":checked");
+		var rrn1 = $("#rrn1").val();
+		var rrn2 = $("#rrn2").val();
 		var phone2 = $("#phone2").val();
 		var phone3 = $("#phone3").val();
 		var checkNo = $("#checkNo").val();
@@ -94,7 +99,7 @@ body>div.container {
 			return;
 		}
 
-		if (!regExp.test(pw)) {
+		if (!regExp.test(pw) && num.test(pw)) {
 			swal.fire("비밀번호는 영어, 숫자조합 6~12자 입니다.");
 			return;
 		}
@@ -129,16 +134,20 @@ body>div.container {
 			return;
 		}
 
-		if (rrn == null || rrn.length < 1) {
+		var value = "";
+		if (rrn1 != "" && rrn2 != "") {
+			value = rrn1 + "-" + rrn2;
+		} else if (rrn1 != "" || rrn2 != "") {
 			swal.fire("주민번호를 입력하셔야 합니다.");
 			return;
 		}
+		$("input:hidden[name='rrn']").val(value);
 
-		if (regRrn.test(rrn)) {
-			swal.fire("주민등록번호 형식에 어긋납니다.");
+		if(!regRrn.test($("input:hidden[name='rrn']").val())){
+			swal.fire("주민번호를 제대로 입력해 주세요.");
 			return;
 		}
-
+		
 		var value = "";
 		if (phone2 != "" && phone3 != "") {
 			value = $("#phone1").val() + "-" + phone2 + "-" + phone3;
@@ -152,12 +161,12 @@ body>div.container {
 			swal.fire("핸드폰번호를 제대로 입력해주세요.");
 			return;
 		}
-		
-		 if (checkNo != 1) {
-		 swal.fire("핸드폰인증이 필요합니다.");
-		 return;
-		 }
-		 
+
+		if (checkNo != 1) {
+			swal.fire("핸드폰인증이 필요합니다.");
+			return;
+		}
+
 		if (email == null || email.length < 1) {
 			swal.fire("이메일을 입력하셔야 합니다.");
 			return;
@@ -265,22 +274,32 @@ body>div.container {
 									<td>
 										<div style="display: flex;">
 											<div style="margin-right: 10px;">
-												<input type="radio" class="form-radio" id="gender"
-													name="gender" placeholder="남자" value="남자">남자
+												<input type="radio" class="radiog" id="gender" name="gender"
+													placeholder="남자" value="남자">남자
 											</div>
 											<div>
-												<input type="radio" class="form-radio" id="gender"
-													name="gender" placeholder="여자" value="여자">여자
+												<input type="radio" class="radiog" id="gender" name="gender"
+													placeholder="여자" value="여자">여자
 											</div>
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<th><span>주민번호</span></th>
-									<td><input type="text" id="rrn" name="rrn"
-										style="height: 40px;"><span id="helpBlock"
-										class="help-block"> <strong class="text-danger">"
-												- " 제외 13자리입력하세요</strong></span></td>
+									<td>
+										<div style="display: flex;">
+											<div>
+												<input
+													style="height: 40px; width: 150px; margin-right: 20px;"
+													type="text" id="rrn1" name="rrn1" class="rrn1">
+											</div>
+											<div>
+												<input style="height: 40px; width: 150px;" type="text"
+													id="rrn2" name="rrn2" class="rrn2">
+											</div>
+											<input type="hidden" id="rrn" name="rrn" class="rrn">
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<th><span>비밀번호</span></th>
@@ -330,9 +349,10 @@ body>div.container {
 												<input
 													style="height: 40px; width: 80px; margin-right: 20px;"
 													type="text" id="phone3" name="phone3" class="phone3"
-													placeholder=""><a href="#" id="sendPhoneNumber"
-													style="height: 40px; margin-top: 0;" class="btn_confirm">인증번호
-													발송</a>
+													placeholder="">
+												<button type="button" id="sendPhoneNumber"
+													style="height: 40px; width: 100px; background-color: #d9edf7; border-style: hidden;">인증번호
+													발송</button>
 											</div>
 											<input type="hidden" name="phoneNo" />
 										</div>
@@ -346,10 +366,13 @@ body>div.container {
 									<th><span>인증번호</span></th>
 									<td><div style="display: flex;">
 											<input type="text" id="inputCertifiedNumber"
-												style="height: 40px;" name="inputCertifiedNumber"
-												class="send_number" placeholder="10:00"><a href="#"
-												style="height: 40px;" id="checkBtn" class="btn_confirm">인증번호
-												확인</a> <input type="hidden" id="checkNo">
+												style="height: 40px; margin-right: 20px;"
+												name="inputCertifiedNumber" class="send_number"
+												placeholder="10:00">
+											<button type="button"
+												style="height: 40px; width: 100px; background-color: #d9edf7; border-style: hidden;"
+												id="checkBtn" class="btn_confirm">인증번호 확인</button>
+											<input type="hidden" id="checkNo">
 										</div></td>
 								</tr>
 								<tr>
@@ -396,7 +419,8 @@ body>div.container {
 												<option value="독서">독서</option>
 												<option value="기타">기타</option>
 											</select>
-											<button type="button" class="btn btn-primary"
+											<button type="button"
+												style="width: 60px; background-color: #d9edf7; border-style: hidden;"
 												id="categryClick">추가</button>
 										</div>
 									</td>
@@ -418,14 +442,16 @@ body>div.container {
 								</tr>
 								<tr>
 									<th>프로필사진</th>
-									<td><input type="file" style="height: 40px;"
+									<td><input type="file" onchange="setThumbnail(event);" style="display: none;"
 										class="form-file" id="profileImageFile"
-										name="profileImageFile" placeholder="프로필사진"></td>
+										name="profileImageFile" 
+										 />
+										<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width:300px;"/></button>
+										</td>
 								</tr>
-							</tbody>
+							</tbody> 
 						</table>
 						<div class="exform_txt">
-							<span>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</span>
 						</div>
 					</div>
 					<!-- join_form E  -->
