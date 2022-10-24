@@ -42,10 +42,10 @@
 			});
 			
 			<%-- 모임 게시물 신고 --%>
-			/* $(".clubPost-header-report").bind("click", function(){
+			$(".clubPost-header-report").bind("click", function(){
 				event.stopPropagation();
 				$("form[name='clubPostReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
-			}); */
+			});
 
 			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
 			$(".clubPost-header-heart").bind("click", function(){
@@ -125,6 +125,19 @@
 							} // end of success
 						}); // end of ajax
 			}); // end of 댓글 수 */
+			
+			<%-- 게시물의 댓글을 등록할 수 있는 textarea 보여진다 --%>
+			$("input[value='댓글등록']").bind("click", function(){
+				$(this).parent().next().removeAttr("style");
+				$(this).parent().attr("style", "display: none");
+			});
+			
+			<%-- 게시물의 댓글을 등록할 수 있는 textarea 보여진다 --%>
+			$("input[value='취소하기']").bind("click", function(){
+				$(this).prev().prev().val("");
+				$(this).parent().parent().prev().removeAttr("style");
+				$(this).parent().parent().attr("style", "display: none");
+			});
 
 			<%-- 해당 댓글을 등록할 수 있는 입력텍스트 보여진다 --%>
 			$(document).on("click", ".reply.add", function(){
@@ -145,6 +158,10 @@
 				//alert('댓글등록');
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var commentContent = $(this).parent().children().val();
+				
+				$(this).prev().val("");
+				$(this).parent().parent().prev().removeAttr("style");
+				$(this).parent().parent().attr("style", "display: none");
 				
 				$.ajax( "/clubPostRest/json/addClubPostComment",
 						{
@@ -181,6 +198,8 @@
 								//}
 								//const length = parseInt(JSONData.heart.length) - 1;
 								//alert(length);
+								var booleanCheck = (JSONData.user.userId == '${ sessionScope.user.userId }');
+								alert( booleanCheck );
 								
 								var display = "<li class='comment'>"
 												+"<div class='single-comment' commentNo='"+JSONData.clubPostCommentNo+"'>"
@@ -220,7 +239,7 @@
 															 +"</a>"
 																 <%-- 해당 댓글 수정 --%>
 															 +"<a class='reply update'>"
-																 +"<c:if test='"+JSONData.user.userId + " == " + ${ sessionScope.user.userId }"'>"
+																 +"<c:if test='"+booleanCheck+"'>"
 																	 +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-paperclip updateCommentView' aria-hidden='true' style='font-size: 25px;'></span>"
 																 +"</c:if>"
 															 +"</a>"
@@ -252,7 +271,7 @@
 														<%--+"</c:when>"--%>
 													+"</c:if>"
 												+"</div>"
-												+"<div id='post-comment' class='clear-after-comment-add' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+												+"<div class='clear-after-comment-add' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form'>"
 													+"<textarea class='plain buffer' placeholder='댓글작성란'></textarea>"
 													+"<input class='plain button red add' value='저장' style='height: 30px; width: 60px;'>"
@@ -380,12 +399,18 @@
 			}); // end of 댓글좋아요
 			
 			<%-- 모임 게시물 댓글 신고 --%>
-			/* $(document).on("click", ".commentReport", function(event) {
+			$(document).on("click", ".reply.report", function(event) {
+				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
+				var revUserId = $(this).parent().parent().parent().parent().attr("revUserId");
+				
+				$("#sourceNumber").val( clubPostCommentNo );
+				$("#revUserId").val( revUserId );
+				
 				event.stopPropagation();
 				
-				$(this).parents(".comment-meta").siblings(".commentInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				$("form[name='commentReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
 				
-			}) // .report evenet close */
+			}) // .report evenet close
 
 			<%-- 프로필사진 클릭시 해당유저 마이홈피로 이동 --%>
 			$(document).on("click", ".clubPost-header-profile", function(){
@@ -456,16 +481,16 @@
 	<form name="clubPostReport" method="post" action="/serviceCenter/addReport">
 		<%-- 모임게시물 신고 --%>
 		<input type="hidden" name="reportSource" value="1">
-		<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
-		<input type="hidden" name="user" value="${ clubPost.getClubPost.user }">
+		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
+		<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
 		<%-- 모임게시물 신고 --%>
 	</form>
 	
-	<form action="">
+	<form name="commentReport" method="post" action="/serviceCenter/addReport">
 		<%-- 모임게시물 댓글 신고 --%>
 		<input type="hidden" name="reportSource" value="2">
-		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
-		<input type="hidden" name="user2" value="${ clubPost.getClubPost.user.userId }">
+		<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
+		<input type="hidden" name="userId" id="revUserId" value="">
 		<%-- 모임게시물 댓글 신고 --%>
 	</form>
 
@@ -589,12 +614,15 @@
 					</div><!-- post-area -->
 					
 					
-					
-					<div id="post-comment" class="clear-after">
+					<div>
+						<input class="plain button red" value="댓글등록" style="width: 75px;">
+					</div>
+					<div id="post-comment" class="clear-after" style="display: none;">
 						<h3 id="reply-title">댓글 작성란</h3>
 						<form class="comment-form">
 							<textarea class="plain buffer" placeholder="댓글 등록란"></textarea>
 							<input class="plain button red" value="댓글 등록하기" style="width: 100px;">
+							<input class="plain button red" value="취소하기" style="width: 75px;">
 						</form>						
 					</div><!-- post-comment -->	
 					
@@ -656,7 +684,7 @@
 								<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">									
 									<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
 										<li class="comment">
-											<div class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+											<div class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">
 												<div class="comment-author">
 													<cite><a href="#"><img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].user.profileImage }" class="avatar" alt=""></a></cite>
 													<cite><a href="#">${ clubPost.getClubPostCommentList[i].user.nickName }</a></cite>
