@@ -271,6 +271,7 @@ public class ClubController {
 		
 		if(search.getOrder()==0) {
 			search.setSearchKeyword(user.getUserId());
+//			search.setSearchKeyword(userId);
 		}else {
 			search.setSearchKeyword(userId);
 		}
