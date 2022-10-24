@@ -64,8 +64,6 @@ $(function(){
 		$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 	});
 	<!-- ADD_FEED -->
-	
-	<!-- UPDATE_FEED -->
 	$(document).on("click", ".btn_update", function(event){
 		event.stopPropagation();
 		console.log("피드 수정 버튼");
@@ -73,14 +71,31 @@ $(function(){
 		
 		$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 	});
-	<!-- UPDATE_FEED -->
 	
-	<!-- DELETE_FEED -->
-	$(".btn_delete").bind("click", function(){
-		alert("피드 삭제 버튼");
-		$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+	
+	<!-- UPDATE_FEED -->
+	$(document).on("click", ".btn_delete", function(event){
+		event.stopPropagation();
+		console.log("피드 삭제 버튼");
+		console.log( $(this).parents(".feedForm").html());
+		
+		Swal.fire({
+			  title: '글을 삭제하시겠습니까?',
+			  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.value) {
+	       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
+				// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+				$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			}
+		})
 	});
-	<!-- DELETE_FEED -->
 	
 	<!-- GET_FEED -->
 	$(".btn_getFeed").bind("click", function(){
@@ -658,7 +673,7 @@ input[name="tab_item-follow"] {
 												</c:if>
 									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 										<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
-										<input type="button" class="glyphicon glyphicon-trash btn_delete" value="삭제">
+										<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
 									</c:if>
 									<input type="button" class= "btn_getFeed" value="보기"> <input
 										type="hidden" name="feedNo" value="${feed.feedNo}">
