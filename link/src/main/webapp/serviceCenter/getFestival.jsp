@@ -35,7 +35,9 @@ $.ajax({
     dataType: 'json',
     success: function(data){
         
-		document.write(data);	
+		document.write(data.response.header.resultCode);
+    	//document.write(data.response.body);
+		
         }
     
 });
