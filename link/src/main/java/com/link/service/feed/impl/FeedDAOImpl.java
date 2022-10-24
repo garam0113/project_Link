@@ -109,6 +109,11 @@ public class FeedDAOImpl implements FeedDAO {
 		return sqlSession.selectOne("FeedMapper.getFeedCommentBySequence", map);
 	}
 	
+	@Override
+	public int getChildrenCommentCount(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getChildrenCommentCount", map);
+	}
 	
 	///////////////////////////////////////////////////// List /////////////////////////////////////////////////////
 	

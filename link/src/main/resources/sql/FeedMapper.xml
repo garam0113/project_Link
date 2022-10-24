@@ -311,6 +311,22 @@
 		AND sequence						= #{comment.sequence}
 	</select>
 	
+	<select		id="getChildrenCommentCount"	parameterType="hashmap"		resultType="int">
+	SELECT
+	COUNT(*)
+	FROM feed_comment
+	WHERE feed_no			=	#{feedNo}
+	<choose>
+		<when test="comment.currentPage == 0">
+		AND parent			=	#{comment.parent}	
+		</when>
+		<when test="comment.currentPage == 1">
+		AND parent			=	#{comment.feedCommentNo}	
+		</when>
+	</choose>
+	
+	</select>
+	
 	
 	
 	<!--========================================List========================================-->

@@ -1,7 +1,5 @@
 package com.link.service.domain;
 
-import java.util.List;
-
 public class Comment {
 	
 	private int feedNo;						// 피드번호
