@@ -100,7 +100,6 @@ public class FeedServiceImpl implements FeedService {
 			// 자식 댓글 개수는
 			int children = feedDAO.getChildrenCommentCount(map);
 			
-			System.out.println("자식의 개수 : " + children);
 			for(int i = 0 ; i < children ; i++) {
 				Comment comment = feedDAO.getFeedCommentBySequence(map);
 				comment.setCurrentPage(1);
