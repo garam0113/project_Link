@@ -37,16 +37,16 @@ $(function() {
 		}	
 	});
 });
-$(".tab_item-follow").on("click" , function(e) {
-		var userId = $("#userId").val();
+window.onload=function() {
+		
 		console.log(userId);
-		$(".tab_item-follow").off(e);
+		
 	$.ajax({
 		url : "/myHomeRest/json/getFollowList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
 		 data		:  JSON.stringify({
-			searchKeyword : userId
+		 
 			
 		 }),
 		 
@@ -56,7 +56,7 @@ $(".tab_item-follow").on("click" , function(e) {
        $.each(data.list, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='follow-section' style='margin-left:50px;' id='"+item.userId+"'>"+
+				"<div class='follow-section' style='margin-left:50px;' id='"+item.receiveId.userId+"'>"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 		"</div>";
@@ -74,7 +74,7 @@ $(".tab_item-follow").on("click" , function(e) {
 		
 		}	
 	});
-});
+};
 
 	
 	 
