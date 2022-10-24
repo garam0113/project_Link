@@ -111,7 +111,7 @@
 			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
 		</choose>
 		<choose>
-			<when test="deleteCondition == 1">WHERE CLUB_POST_COMMENT_NO = #{ parent }</when>
+			<when test="deleteCondition == 1 or deleteCondition == -1">WHERE CLUB_POST_COMMENT_NO = #{ parent }</when>
 			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
 		</choose>
 	</update>

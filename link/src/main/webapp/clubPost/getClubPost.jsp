@@ -204,10 +204,28 @@
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
 				
-				alert( clubPostNo );
-				alert( commentContent );
-				alert( depth );
-				alert( clubPostCommentNo );
+				if( depth == 0 ){
+					//alert("0이다");
+				}else if( depth > 0){
+					//alert("0보다크다");
+				}else{
+					//alert("???");
+					depth = 0;
+				}
+				
+				if( clubPostCommentNo == 0 ){
+					//alert("0이다");
+				}else if( clubPostCommentNo > 0){
+					//alert("0보다크다");
+				}else{
+					//alert("???");
+					clubPostCommentNo = 0;
+				}
+				
+				//alert( clubPostNo );
+				//alert( commentContent );
+				alert( "depth : " + depth );
+				//alert( clubPostCommentNo );
 
 				$(this).prev().val("");
 				$(this).parent().parent().attr("style", "display: none");
@@ -227,25 +245,25 @@
 							}),
 							success : function(JSONData, status) {
 								alert(status);
-								alert(JSONData);
-								alert(JSONData.user.userId);
-								alert(JSONData.user.profileImage);
-								alert(JSONData.user.nickName);
-								alert(JSONData.clubPostCommentNo);
-								alert(JSONData.commentContent);
-								alert(JSONData.commentRegDate);
-								alert(JSONData.commentUpdateDate);
-								alert(JSONData.commentCount);
-								alert(JSONData.commentHeartCount);
-								alert(JSONData.heartCondition);
+								//alert(JSONData);
+								//alert(JSONData.user.userId);
+								//alert(JSONData.user.profileImage);
+								//alert(JSONData.user.nickName);
+								//alert(JSONData.clubPostCommentNo);
+								//alert(JSONData.commentContent);
+								//alert(JSONData.commentRegDate);
+								//alert(JSONData.commentUpdateDate);
+								//alert(JSONData.commentCount);
+								//alert(JSONData.commentHeartCount);
+								//alert(JSONData.heartCondition);
 								
 								//alert(JSONData);
 								
 								var display = "";
 									
-								if( depth = 1){
+								if( depth == 1){
 									display += "<li class='recomment'>";
-								}else if( depth != 1 ){
+								}else if( depth == 0 ){
 									display += "<li class='comment'>";
 								}
 								
@@ -323,14 +341,15 @@
 													+"</form>"						
 												+"</div>"
 											+"</li>";
-								
-								if( depth == 1){
-									alert( "여기로 와야한다" );
-									$(".children.plain"+clubPostCommentNo).append( display );
-								}else if( depth != 1 ){
+											
+								if( depth != 1){
 									alert( depth );
 									$(".comment-list.plain").append( display );
+								}else if( depth == 1 ){
+									alert( "여기로 와야한다" );
+									$(".children.plain"+clubPostCommentNo).append( display );
 								}
+								//alert( display );
 							}// end of success
 					
 				});// end of ajax
@@ -790,7 +809,7 @@
 													 </div>
 												</div><!-- comment-meta -->
 												<p>${ clubPost.getClubPostCommentList[i].commentContent }</p>
-												<div class="comment-author-commentCount" style="background-color: red;">${ clubPost.getClubPostCommentList[i].commentCount }
+												<div class="comment-author">
 												<c:choose>
 													<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
 															<cite>
