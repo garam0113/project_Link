@@ -204,7 +204,7 @@
 						and cU.user_id = #{searchKeyword}
 					</if>
 					<if test="searchKeyword != null and order == 1">
-						and cU.user_id = #{searchKeyword}
+						and cU.user_id = #{userId}
 					</if>
 				</where>
 				

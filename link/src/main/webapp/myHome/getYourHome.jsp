@@ -934,7 +934,7 @@ input[name="tab_item-follow"] {
 								<!-- SIDEBAR MENU -->
 								<div class="profile-usermenu">
 									<ul class="nav">
-										<li class="active"><a href="/club/getApprovalConditionList?userId=${getUser.userId}"> <i
+										<li class="active"><a href="/club/getApprovalConditionList?userId=${getUser.userId}&order=1"> <i
 												class="glyphicon glyphicon-home"></i> 내 모임
 										</a></li>
 										<li>
