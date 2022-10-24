@@ -23,8 +23,8 @@
 			    jsonArray = [];
 				$('#summernote').summernote({
 	                disableResizeEditor: true,
-	                minHeight : null,
-	                maxHeight : null,
+	                minHeight : 400,
+	                maxHeight : 700,
 	                focus : true,
 	                lang : 'ko-KR',
 	                toolbar : [
