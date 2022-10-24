@@ -136,7 +136,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		
 		// 모임게시물 댓글 등록
-		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);		
+		sqlSession.insert("ClubPostCommentMapper.addClubPostComment", comment);
 		
 		// 가장 최근 모임게시물 댓글번호 가져온다
 		comment.setClubPostCommentNo(sqlSession.selectOne("ClubPostCommentMapper.getClubPostCommentNo", comment));
@@ -169,11 +169,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 모임게시물 댓글 개수 증가
 		map.put("comment", comment);
-		// clubPost.clubPostCommentNo != 0 댓글개수를 증가시킨다
-		returnClubPost.setClubPostCommentNo(comment.getClubPostCommentNo());
-		map.put("clubPost", returnClubPost);
-		sqlSession.insert("ClubPostMapper.updateClubPost", map);
-		System.out.println("모임게시물 댓글 개수 증가");
+		if( comment.getClubPostCommentNo() != 0 ) {
+			// 부모번호의 댓글개수를 증가시킨다
+			System.out.println("댓글개수 증가 : " + comment);
+			//sqlSession.update("ClubPostCommentMapper.updateClubPostComment", comment);
+		}else {
+			// 게시물의 댓글개수 증가
+			returnClubPost.setClubPostCommentNo(comment.getClubPostCommentNo());
+			map.put("clubPost", returnClubPost);
+			sqlSession.update("ClubPostMapper.updateClubPost", map);
+			System.out.println("모임게시물 댓글 개수 증가");
+		}
 		
 		
 		
