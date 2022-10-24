@@ -1,10 +1,14 @@
 package com.link.web.club;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,7 +54,7 @@ public class ClubRestController {
 	int pageUnit;
 
 
-	@RequestMapping(value="json/getClubList")
+	@RequestMapping(value="/json/getClubList")
 	public Map<String, Object> getClubList(@RequestBody Search search,Map<String, Object> map, HttpSession session, Club club) throws Exception {
 		
 		System.out.println("/club/json/getClubList : GET / POST");
@@ -68,9 +72,9 @@ public class ClubRestController {
 						
 	}
 	
-	@RequestMapping(value="json/getClubMemberList")
+	@RequestMapping(value="/json/getClubMemberList")
 //	public Map<String, Object> getClubMemberList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
-		public Map<String, Object> getClubMemberList(@RequestBody Search search, ClubUser clubUser, Club club, Map<String, Object> map, HttpSession session, User user, String clubNo) throws Exception {
+		public Map<String, Object> getClubMemberList(@RequestBody Search search, ClubUser clubUser, Club club, HttpSession session, User user, String clubNo) throws Exception {
 		
 		System.out.println("/club/json/getClubMemberList : GET / POST");
 		
@@ -82,19 +86,15 @@ public class ClubRestController {
 		System.out.println("유저 세션에 뭐 있나(REST) : "+user);
 		System.out.println("클럽 넘버세션은 ? REST : "+clubNo);
 		
+		search.setSearchKeyword(clubNo);
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(search.getCurrentPage()==0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
+		System.out.println("레스트 클럽멤버다~ : "+clubService.getClubMemberList(search));
 		
+
+		return map;
 		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalClubMemberCount")).intValue(), pageUnit, pageSize);
-		System.out.println("resultPage = " +resultPage);
-		
-		
-		
-		return clubService.getClubMemberList(search);
+
 	}
 	
 //	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
@@ -115,7 +115,7 @@ public class ClubRestController {
 //		return (ClubUser) clubService.getClubMemberList(search);
 //	}
 	
-	@RequestMapping(value="json/updateMemberRole", method=RequestMethod.POST)
+	@RequestMapping(value="/json/updateMemberRole", method=RequestMethod.POST)
 	public void updateMemberRole(@RequestBody ClubUser clubUser, Search search, HttpSession session, User user, Club club) throws Exception {
 		
 		System.out.println("club/json/updateMemberRole : POST");
@@ -134,7 +134,7 @@ public class ClubRestController {
 	
 	
 	
-	@RequestMapping(value="json/deleteMeeting", method=RequestMethod.POST)
+	@RequestMapping(value="/json/deleteMeeting", method=RequestMethod.POST)
 	public void deleteMeeting(@RequestParam(value="meetingNo") int meetingNo, Model model) throws Exception {
 		
 		System.out.println("deleteMeeting 시작");
@@ -143,7 +143,7 @@ public class ClubRestController {
 		clubService.deleteMeeting(meetingNo);
 	}
 	
-	@RequestMapping(value="json/deleteClubMember", method=RequestMethod.POST)
+	@RequestMapping(value="/json/deleteClubMember", method=RequestMethod.POST)
 	public void deleteClubMember(@RequestBody ClubUser clubUser) throws Exception {
 		
 		System.out.println("deleteClubMemer 시작");
@@ -154,7 +154,7 @@ public class ClubRestController {
 		clubService.deleteClubMember(clubUser);
 	}
 	
-	@RequestMapping(value="json/addMeetingMember", method=RequestMethod.POST)
+	@RequestMapping(value="/json/addMeetingMember", method=RequestMethod.POST)
 	public void addMeetingMember(@RequestBody Participant participant, HttpSession session, User user) throws Exception {
 		
 		System.out.println("addMeetingMember 시작~");
@@ -171,40 +171,26 @@ public class ClubRestController {
 		
 	}
 	
-	@RequestMapping(value="json/deleteMeetingMember", method=RequestMethod.POST)
-	public void deleteMeetingMember(@RequestParam(value="participantNo") int participantNo) throws Exception {
+	@RequestMapping(value="/json/deleteMeetingMember", method=RequestMethod.POST)
+	public void deleteMeetingMember(@RequestBody Participant participant, HttpSession session, User user, String meetingNo) throws Exception {
 		
 		System.out.println("deleteMeetingMember 시작~");
-		System.out.println("participantNo = : "+participantNo);
 		
-		clubService.deleteMeetingMember(participantNo);
+		user = (User) session.getAttribute("user");
+		meetingNo = (String) session.getAttribute("meetingNo");
+		
+		System.out.println("유저 세션 들왔나? : "+user);
+		System.out.println("미팅 넘버는 ? : "+meetingNo);
+		
+		participant.setMeetingNo(Integer.parseInt(meetingNo));
+		participant.setUser(user);
+		
+		clubService.deleteMeetingMember(participant);
 		
 	}
 	
-	//가입신청현황 리스트 --> GetMyClubList와 병합
-//	@RequestMapping(value="json/getApprovalConditionList")
-//	public Map<String, Object> getApprovalConditionList(@RequestBody Search search, Model model, HttpServletRequest request) throws Exception {
-//		
-//		System.out.println("getApprovalConditionList 시작!");
-//		
-//		if(search.getCurrentPage()==0) {
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		
-//		Map<String, Object> map = clubService.getApprovalConditionList(search);
-//		
-//		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")). intValue(), pageUnit, pageSize);
-//		System.out.println(resultPage);
-//		
-//		model.addAttribute("ApprovalConditionList", map.get("ApprovalConditionList"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
-//		
-//		return map;
-//	}
 	
-	@RequestMapping(value="json/updateApprovalCondition", method=RequestMethod.POST)
+	@RequestMapping(value="/json/updateApprovalCondition", method=RequestMethod.POST)
 	public ClubUser updateApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
 		
 		System.out.println("updateApprovalCondition 시작!");
@@ -218,7 +204,7 @@ public class ClubRestController {
 		return null;
 	}
 	
-	@RequestMapping(value="json/deleteApprovalCondition", method=RequestMethod.POST)
+	@RequestMapping(value="/json/deleteApprovalCondition", method=RequestMethod.POST)
 	public ClubUser deleteApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
 		
 		System.out.println("deleteApprovalCondition 시작 ! ");
@@ -227,6 +213,53 @@ public class ClubRestController {
 		model.addAttribute("clubUser", clubUser);
 		
 		return null;
-		
 	}
+	
+	
+	@RequestMapping(value="/json/getMeetList",method = RequestMethod.POST)
+	public List<Map<String, Object>>  getMeetList(@RequestBody Search search, Meeting meeting,Model model, HttpSession session, User user,String userId, Club club, String clubNo) throws Exception {
+		
+		System.out.println("/club/getMeetingList : GET/POST");
+		user = (User) session.getAttribute("user");
+		clubNo = (String) session.getAttribute("clubNo");
+		
+		System.out.println("(일정참여자)미팅넘버 세션에 뭐 있지? : "+ session.getAttribute("meetingNo"));
+		System.out.println("미팅리스트 클럽 넘버 세션은 ? : "+clubNo);
+		
+//		search.setOrder(0);
+		search.setSearchKeyword(clubNo);
+		
+//		Map<String, Object>  map = clubService.getMeetingMemberList(search);
+		Map<String, Object>  map = clubService.getMeetingList(search);
+		
+		Map<String, Object> map1 = null;
+		
+		List<Map<String, Object>> meetingList = new ArrayList<>();
+		
+//		for (int i = 0; i < ((List<Participant>)map.get("meetingMemberList")).size(); i++) {
+		for (int i = 0; i < ((List<Meeting>)map.get("meetingList")).size(); i++) {
+			
+			map1 = new HashMap<>();
+			
+//			map1.put("title", ((List<Participant>)map.get("meetingMemberList")).get(i).getMeeting().getMeetingTitle());
+			map1.put("title", ((List<Meeting>)map.get("meetingList")).get(i).getMeetingTitle());
+//			map1.put("start", ((List<Participant>)map.get("meetingMemberList")).get(i).getMeeting().getMeetingDate());
+			map1.put("start", ((List<Meeting>)map.get("meetingList")).get(i).getMeetingDate());
+//          map1.put("backgroundColor", "rgb(0, 185, 186)");
+			map1.put("backgroundColor", "rgb(178, 118, 255)");
+			meetingList.add(map1);
+		}
+		//System.out.println("이응이응이응"+ map1.get("title").toString());
+		//System.out.println("이응이응이응"+ map1.get("start").toString());
+			
+			
+		
+		
+       System.out.println(meetingList.toString());	
+		
+		return meetingList;
+
+	}
+	
+	
 }

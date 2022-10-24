@@ -1,20 +1,21 @@
 
 DROP TABLE FEED 					CASCADE CONSTRAINTS;
 DROP TABLE FEED_COMMENT				CASCADE CONSTRAINTS;
-DROP TABLE HEART					CASCADE CONSTRAINTS;
+
 
 DROP SEQUENCE seq_feed_no;
 DROP SEQUENCE seq_feed_comment_no;
-DROP SEQUENCE seq_heart_no;
+
 
 CREATE SEQUENCE seq_feed_no						INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_feed_comment_no				INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_heart_no					INCREMENT BY 1 START WITH 1;
+
 
 CREATE TABLE FEED (
 	feed_no							NUMBER												NOT NULL,
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	feed_open_condition				CHAR(3)												NOT NULL,
+	feed_full_content				VARCHAR2(1680),
 	feed_content					VARCHAR2(840),
 	feed_image1						VARCHAR2(100),
 	feed_image2						VARCHAR2(100),
@@ -49,12 +50,7 @@ CREATE TABLE feed_comment (
 	PRIMARY KEY(feed_comment_no)
 );
 
-CREATE TABLE heart(
-	heart_no						NUMBER												NOT NULL,
-	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
-	source							CHAR(3)												NOT NULL,
-	source_no						NUMBER												NOT NULL
-);
+
 
 INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user01', '3', '첫글입니다#first', 'a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', null, '#first', '0', '0', SYSDATE, null, '0', '0' );
 INSERT INTO feed VALUES ( seq_feed_no.nextval, 'user02', '3', '두번째글입니다#second', 'profile_image2clubPost.jpg', 'no_heart.jpg', 'user03flower11clubPost.jpg', null, null, '#second', '0', '0', SYSDATE, null, '0', '0' );
@@ -88,30 +84,34 @@ SELECT * FROM FEED ORDER BY feed_no DESC;
 
 SELECT * FROM FEED_COMMENT ORDER BY sequence ASC;
 
+SELECT * FROM FEED_COMMENT WHERE feed_no = 37 ORDER BY sequence ASC;
+
 SELECT * FROM HEART;
 
 
 SELECT * FROM USERS;
+INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
+	area1, area2, area3, category1, category2, category3, add_user_date)
+VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 
 
 
+======================================================================================================================================
+
+DROP TABLE HEART					CASCADE CONSTRAINTS;
+DROP SEQUENCE seq_heart_no;
+CREATE SEQUENCE seq_heart_no					INCREMENT BY 1 START WITH 1;
 
 
+CREATE TABLE heart(
+	heart_no						NUMBER												NOT NULL,
+	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
+	source							CHAR(3)												NOT NULL,
+	source_no						NUMBER												NOT NULL
+);
 
-SELECT * FROM FEED_COMMENT WHERE FEED_NO = 3 ORDER BY sequence ASC;
-
-
-
-
-
-
-
-
-
-
-
-
+======================================================================================================================================
 
 
 
@@ -255,15 +255,11 @@ SELECT * FROM heart
 
 
 
-SELECT c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, 
-c.feed_recomment_count, c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, 
-c.parent, c.depth, c.sequence , isLike.EXIST 
-FROM feed_comment c, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '1' AND user_id = 'user05' ) isLike 
-WHERE c.feed_comment_no = isLike.EXIST(+) 
-AND c.user_id = u.user_id 
-AND c.feed_no = 5 AND report_condition = '0' AND delete_condition = '0' 
-ORDER BY sequence ASC 
-
+SELECT
+COUNT(*)
+FROM FEED_COMMENT
+WHERE feed_no	= 18
+AND parent		= 101 
 
 
 

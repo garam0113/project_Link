@@ -70,7 +70,7 @@ public interface ClubDAO {
 	//JUNIT TEST
 	public void addMeetingMember(Participant participant) throws Exception;
 	
-	public void deleteMeetingMember(int participantNo) throws Exception;
+	public void deleteMeetingMember(Participant participant) throws Exception;
 	
 	public List<Meeting> getMeetingMemberList(Search search) throws Exception;
 	
@@ -95,6 +95,4 @@ public interface ClubDAO {
 	public List <ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	
 	
-	//모임원 직책??
-	public ClubUser getClubMember(ClubPost clubPost) throws Exception;
 }

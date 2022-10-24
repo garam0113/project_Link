@@ -11,6 +11,7 @@
 	<resultMap	id="feedSelectMap"			type="feed">
 		<result property="feedNo"			column="feed_no"					jdbcType="NUMERIC" />
 		<result property="openCondition"	column="feed_open_condition"		jdbcType="VARCHAR" />
+		<result property="fullContent"		column="feed_full_content"			jdbcType="VARCHAR" />
 		<result property="content"			column="feed_content"				jdbcType="VARCHAR" />
 		<result property="image1"			column="feed_image1"				jdbcType="VARCHAR" />
 		<result property="image2"			column="feed_image2"				jdbcType="VARCHAR" />
@@ -73,6 +74,7 @@
 			seq_feed_no.nextval,
 			#{user.userId:VARCHAR},
 			#{openCondition:VARCHAR},
+			#{fullContent:VARCHAR},
 			#{content:VARCHAR},
 			#{image1:VARCHAR},
 			#{image2:VARCHAR},
@@ -92,8 +94,9 @@
 	
 	<select 	id="getFeed"					parameterType="hashmap"			resultMap="feedSelectMap">
 		SELECT 
-		f.feed_no, f.user_id, u.profile_image, u.nickName , f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
-		f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
+		f.feed_no, f.user_id, u.profile_image, u.nickName , f.feed_open_condition, f.feed_full_content, f.feed_content, 
+		f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+		f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
 		<choose>
 			<when test="user != null">
 				, isLike.EXIST FROM feed f, users u, (
@@ -127,6 +130,7 @@
 				<when test="checkComment == -1">feed_comment_count = feed_comment_count - 1</when>
 				<otherwise>
 					feed_open_condition				= #{openCondition:VARCHAR},
+					feed_full_content				= #{fullContent:VARCHAR},
 					feed_content					= #{content:VARCHAR},
 					feed_image1						= #{image1:VARCHAR},
 					feed_image2						= #{image2:VARCHAR},
@@ -307,6 +311,22 @@
 		AND sequence						= #{comment.sequence}
 	</select>
 	
+	<select		id="getChildrenCommentCount"	parameterType="hashmap"		resultType="int">
+	SELECT
+	COUNT(*)
+	FROM feed_comment
+	WHERE feed_no			=	#{feedNo}
+	<choose>
+		<when test="comment.currentPage == 0">
+		AND parent			=	#{comment.parent}	
+		</when>
+		<when test="comment.currentPage == 1">
+		AND parent			=	#{comment.feedCommentNo}	
+		</when>
+	</choose>
+	
+	</select>
+	
 	
 	
 	<!--========================================List========================================-->
@@ -325,8 +345,9 @@
 			deep_table.*
 			FROM (
 					SELECT 
-					f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video,
-					f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
+					f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_full_content, f.feed_content, 
+					f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+					f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition
 					<choose>
 						<when test="user != null">
 							, isLike.EXIST FROM users u, feed f, (
@@ -423,6 +444,7 @@
 	  			feed_no,
 				user_id,
 				feed_open_condition,
+				feed_full_content,
 				feed_content,
 				feed_image1,
 				feed_image2,

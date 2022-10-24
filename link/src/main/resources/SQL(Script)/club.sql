@@ -195,7 +195,10 @@ UPDATE meeting
 
 //모임일정 참여신청 취소
 deleteMeetingMember()
-DELETE FROM participant WHERE participant_no = 108;
+DELETE FROM participant
+WHERE meeting_no = 103 AND participant_user_id = 'user15';
+
+SELECT * FROM participant;
 
 
 DELETE FROM participant 

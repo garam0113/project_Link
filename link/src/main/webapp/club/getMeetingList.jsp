@@ -1,10 +1,24 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ page import = "java.net.URLEncoder" %>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- <%
+	String userId = (String)session.getAttribute("user");
 
+	if(userId == null) {
+		String message = "먼저 로그인 하신 후 사용 가능합니다.";
+		message = URLEncoder.encode(message, "utf-8");
+
+		response.sendRedirect("/user/login.jsp?message = "+message);
+	} else{
+
+	}
+
+%>
+ --%>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -31,6 +45,32 @@
 		padding-top : 70px;
 	}
 	
+	.darkover {
+    position: sticky !important ;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.35);
+	}
+	
+	#calendar {
+	margin-left: 0px;
+	margin-top: 50px;
+	width: 1100px;
+	display: inline-block;
+	justify-content: center;
+	}
+	
+	.fc .fc-scroller-liquid-absolute {
+    /* position: static !important; */
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+	}
+	
+	
+	
 	</style>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
@@ -43,6 +83,7 @@
 			self.location="/club/addMeetingView.jsp"
 		});
 	});
+	
 	
 	</script>	
 	
@@ -104,32 +145,10 @@
 
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
-	    		    
-		<%--     <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임일정이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임일정내용</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
-	    	</div> --%>
-	    	
+	    <div class="row" id="calendar">
+	    
+	    	<jsp:include page="/club/calendar.jsp"/>	    		    
+	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		

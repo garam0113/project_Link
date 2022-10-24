@@ -67,7 +67,8 @@
 	$(function() {
 
 		$("button.btn.btn-warning").on("click", function() {
-			self.location="/club/updateMeetingView.jsp"
+			//self.location="/club/updateMeetingView.jsp"
+			self.location="/club/updateMeetingView?meetingNo="+${meeting.meetingNo};
 		});
 	});
 	
@@ -164,9 +165,9 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList">모임 채팅</a>
 						</li>
-						<li data-group="infographics">
+						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li>
+						</li> --%>
 					</ul>	
 		
 		
@@ -180,7 +181,7 @@
 		<form class="form-horizontal">
 		
 		<div class="row">
-			<div class="col-xs-4 col-md-2"><strong>모 임 일 정 제 목</strong></div>
+			<div class="col-xs-4 col-md-2"><strong>일정제목</strong></div>
 			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
 		</div>
 			
@@ -188,35 +189,35 @@
 		<hr/>		
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일 정 날 짜 </strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>일정날짜 </strong></div>
 			<div class="col-xs-8 col-md-4">${meeting.meetingDate}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일 정 시 간</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>일정시간</strong></div>
 			<div class="col-xs-8 col-md-4">${meeting.meetingTime}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일 정 활 동 영 역</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
 			<div class="col-xs-8 col-md-4">${meeting.meetingPlace}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>모 임 일 정 설 명</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>일정설명</strong></div>
 			<div class="col-xs-8 col-md-4">${meeting.meetingContent}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(일정참여자)</a></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여현황)</a></div>
 			<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
 			
 		</div>
