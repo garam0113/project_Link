@@ -437,7 +437,7 @@ public class ClubPostController {
 		}
 		pay.setMaxPay(maxPay);
 		model.addAttribute("pay", pay);
-		return "forward:/clubPost/addPayView.jsp";
+		return "forward:/pay/addPayView.jsp";
 	}
 	
 	@RequestMapping(value = "addPay", method = RequestMethod.POST)
@@ -473,16 +473,16 @@ public class ClubPostController {
 
 	@RequestMapping(value = "getPayList", method = RequestMethod.POST)
 	public String getPayList(HttpSession session, Model model) throws Exception {
-	System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
-	model.addAttribute("payList", clubPostServiceImpl.getPayList((User)session.getAttribute("user")));
-	return "";
+		System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
+		model.addAttribute("payList", clubPostServiceImpl.getPayList((User)session.getAttribute("user")));
+		return "forward:/pay/getPayList.jsp";
 	}
 	
 	@RequestMapping(value = "getPay", method = RequestMethod.POST)
 	public String getPay(@ModelAttribute Pay pay, Model model) throws Exception {
-	System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
-	model.addAttribute("pay", clubPostServiceImpl.getPay(pay));
-	return "";
+		System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
+		model.addAttribute("pay", clubPostServiceImpl.getPay(pay));
+		return "forward:/pay/getPay.jsp";
 	}
 	
 	
