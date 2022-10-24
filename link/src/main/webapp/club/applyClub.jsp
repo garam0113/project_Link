@@ -28,7 +28,23 @@
 	<style>
 	  body {
             padding-top : 50px;
-        }            
+        }
+        
+        
+                    
+        element.style {
+    	margin-top: 100px !important;
+		}
+		
+		
+		.h1, .h2, .h3, h1, h2, h3 {
+ 		   margin-top: 20px;
+		   margin-bottom: 50px;
+		}
+		
+        
+        
+        
         
     </style>
     
@@ -49,7 +65,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-apply").on("click", function() {
 			
 			fncAddApprovalCondition();
 		});
@@ -57,7 +73,7 @@
 
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -69,7 +85,7 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">모 임 가 입 신 청</h1>
+		<h1 class="bg-primary text-center" style="background-color:#BD76FF; color:#fbfbfb; width:700px; margin-left: 166px;">모 임 가 입 신 청</h1>
 		
 		<form class="form-horizontal">
 		
@@ -91,8 +107,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >신 &nbsp;청</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      		<button type="button" class="btn btn-apply" style="background-color: #BD76FF; color:#fbfbfb;">신&nbsp;청</button>
+					<button type="button" class="btn btn-cancel" style="background-color: #BD76FF; color:#fbfbfb;">취&nbsp;소</button>
 		    </div>
 			</div>
 		</form>	
