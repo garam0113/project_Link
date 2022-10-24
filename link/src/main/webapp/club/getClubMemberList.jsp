@@ -37,7 +37,10 @@
 		border-bottom-left-radius: 10px;
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
-	}
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #ffffff;
+		}    
 	
 	td {
 		text-align: center;
@@ -86,7 +89,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-danger").on("click", function() {
+		$("button.btn.btn-delete").on("click", function() {
 			alert("모임을 삭제하시겠습니까?");
 			fncDeleteClub();
 		});
@@ -186,14 +189,14 @@
 	
 	$(function() {
 
-		$("button.btn.btn-primary").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
 	
 	$(function() {
 
-		$("button.btn.btn-warning").on("click", function() {
+		$("button.btn.btn-update").on("click", function() {
 			self.location="/club/updateClubView.jsp"
 		});
 	});
@@ -281,10 +284,10 @@
 				  
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
 										
-						<button type="button" class="btn btn-success btn" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
-						<button type="button" class="btn btn-primary">이&nbsp;전</button>
-						<button type="button" class="btn btn-warning"  >모&nbsp;임&nbsp;수&nbsp;정</button>
-						<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
+						<button type="button" class="btn btn-updateMemberRole" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
+						<button type="button" class="btn btn-cancel">이&nbsp;전</button>
+						<button type="button" class="btn btn-update"  >모&nbsp;임&nbsp;수&nbsp;정</button>
+						<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 		  			</div>
 				</div>	
 	    	

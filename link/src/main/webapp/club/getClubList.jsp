@@ -110,13 +110,15 @@
 		 }
 		 
 		 .btn {
-		 	background-color: #BD76FF;
-		 	color: #fbfbfb;
+		 	background-color: #fbfbfb;
+		 	color: #BD76FF;
+		 	border-color: #BD76FF;
 		 }
 		 
 		 .club-cT {
 		 		font-size: 
 		 }
+		
 		 
 /* 		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
     display: block;
@@ -175,7 +177,7 @@
 	//========== 가입현황 처리 ================
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-myList").on("click", function() {
 			self.location="/club/getApprovalConditionList"
 			
 		});
@@ -200,7 +202,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-default").on("click", function() {
+		$("button.btn.btn-addMeeting").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -336,7 +338,7 @@
 			    <form class="form-inline" name="detailForm">
 			    
 				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
+				    <select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option>
 					</select>
@@ -345,10 +347,10 @@
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-	    			 <button type="button" class="btn btn-search">검색</button>
-	    			  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  	<button type="button" class="btn btn-default">모임등록</button>
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
+	    			<button type="button" class="btn btn-search">검색</button>
+	    			<button type="button" class="btn btn-myList">가입현황리스트</button>
+				  	<button type="button" class="btn btn-addMeeting">모임등록</button>
 				  </div>
 				  
 				  <!-- <div class="form-group">
@@ -376,7 +378,7 @@
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button">모임보기</a></p>			  	
+				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</a></p>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>

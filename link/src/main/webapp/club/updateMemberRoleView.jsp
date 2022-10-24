@@ -35,18 +35,30 @@
         	width: 160%;
         	height: 34px;
         }
+        
+        #btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #ffffff;
+		}    
+        
+        
+        
     </style>
     
     <script type="text/javascript">
     
     $(function() {
 		$("#change").on("click", function() {
-			alert('수정');
 			fncUpdateMemberRole();
 			window.close();
 		});
 		
-		$("a[href='#']").on("click", function() {
+		$("button.btn-cancel").on("click", function() {
 			//alert('눌리나?');
 			window.close();
 		});
@@ -134,24 +146,24 @@
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">모임원 아이디</label>
 				<div class="col-sm-2">
-					<input type="text" id="userId" value="" style="height:34px; width: 160%;">
+					<input type="text" id="userId" value="" style="height:34px; width: 160%; border-color:#BD76FF; border-width: thin;">
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">직책</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="memberRole" id="memberRole">
+					<select class="form-control" name="memberRole" id="memberRole" style="border-color:#BD76FF;">
 						<option value="1">모임부대표</option>
 						<option value="0">모임원</option>
 					</select>
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="change" class="btn btn-primary">수 &nbsp;정</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+					<button type="button" id="change" class="btn btn-update">수 &nbsp;정</button>
+					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
 				</div>
 			</div>
 		</form>

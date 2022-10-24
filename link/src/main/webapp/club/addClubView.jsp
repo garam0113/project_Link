@@ -44,7 +44,17 @@
 	  body>div.container {
 			border: 3px solid #D6CDB7;
 			margin-top: 10px;
-		}       
+		}
+
+		#btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #ffffff;
+		}    
         
     </style>
     
@@ -63,7 +73,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-addClub").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			fncAddClub();
 		});
@@ -75,7 +85,7 @@
 
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -160,7 +170,7 @@
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다" style="width:300px;">
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" placeholder="모임제목은 필수입니다" style="width:300px; border-color: #BD76FF;">
 				</div>					
 			</div>
 			
@@ -169,7 +179,8 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)" style="width:300px;">
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" placeholder="모임설명은 필수입니다. (최대 500자)" style="width:300px;
+					border-color: #BD76FF;">
 				</div>		
 			</div>
 			
@@ -177,7 +188,7 @@
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label" >모임카테고리</label>
 				<div class="col-sm-4">
 					<!-- <select class="form-control"> -->
-					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px;">
+					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px; border-color: #BD76FF;">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -195,7 +206,7 @@
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
 <!-- 					<input type="text" class="form-control" id="clubArea" name="clubArea" style="width:300px;"> -->
-					<select class="form-control" id="clubArea" name="clubArea" style="width:300px;">
+					<select class="form-control" id="clubArea" name="clubArea" style="width:300px; border-color: #BD76FF;" >
 						<option value="강남구">강남구</option>
 						<option value="강동구">강동구</option>
 						<option value="강북구">강북구</option>
@@ -239,10 +250,10 @@
 			
 			
 			
-			<div class="form-group">
+			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      		<button type="button" class="btn btn-addClub">등 &nbsp;록</button>
+					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
 		    </div>
 			</div>
 			</div>
