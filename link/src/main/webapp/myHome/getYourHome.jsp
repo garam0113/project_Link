@@ -386,8 +386,13 @@
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
 	$(".yourHome").on("click" , function() {
-		
-		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+		var userId = $("#sendId").val(); 
+		if($(this).parent().parent().attr("id")==userId){
+			self.location = "/myHome/getMyHome?userId="+$(this).parent().parent().attr("id");
+			
+		}else{
+			self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+		}
 	});
 	
 	
@@ -887,7 +892,7 @@ input[name="tab_item-follow"] {
 								<!-- SIDEBAR BUTTONS -->
 								<div class="profile-userbuttons">
 							
-								 <c:if test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '1'}">
+								  <c:if test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '1'}">
 									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
 										<button type="button" class="btn btn-danger btn-sm"
 											id="following">팔로잉</button>
@@ -924,7 +929,7 @@ input[name="tab_item-follow"] {
 									value="${sessionScope.user.userId}"> <input
 									type="hidden" name="recvId" id="recvId"
 									value="${getUser.userId}">
-							</div>
+							</div> 
 								<!-- END SIDEBAR BUTTONS -->
 								<!-- SIDEBAR MENU -->
 								<div class="profile-usermenu">
@@ -961,14 +966,17 @@ input[name="tab_item-follow"] {
         		
         		<br />
 		<c:set var = "i" value = "0" />
+		
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
-			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
+		 	<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
 			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
 				
 				</div>
+			
 			</c:forEach>
+		
 			
 				
 				</div>
@@ -1141,7 +1149,7 @@ $(function() {
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
 		 data		:  JSON.stringify({
-			receiveId : userId
+			 searchKeyword : userId
 		 }),
 		 
 		contentType : "application/json",

@@ -74,6 +74,27 @@
 			history.go(-1);
 		});
 	});
+	
+	function setThumbnail(event) {
+		var fileInput = document.getElementById("clubImage");
+		var file = fileInput.files[0];
+		var reader = new FileReader();
+
+		reader.onload = function(event) {
+			$("#imga").attr("src", event.target.result);
+		};
+		
+		console.log(file);
+		reader.readAsDataURL(file);
+		
+	} 
+
+	$(function() {
+		$(".image").on("click", function() {
+			$("#clubImage").click();		
+		})
+	})
+	
 
 </script>
 </head>
@@ -134,7 +155,8 @@
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
+					<input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
+					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/${club.clubImage}" style="height: 300px; width: 300px;"></button>
 				</div>		
 			</div>
 			

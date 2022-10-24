@@ -79,17 +79,18 @@
 			
 			
 		}
-			
 		
 	});
-
+		
   };
+	
 
 
 	 
 
  
 </script>
+
 <input type="hidden" name="CalendarId" id="CalendarId" value="${club.clubNo}">
 
 

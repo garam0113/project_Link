@@ -52,7 +52,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-addMeeting").on("click", function() {
 			
 			fncAddMeeting();
 		});
@@ -60,7 +60,7 @@
 
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -191,8 +191,8 @@
 				
 				<div class="form-group">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
-			      		<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
-						<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			      		<button type="button" class="btn btn-addMeeting" style="background-color:#BD76FF; color:#fbfbfb">등 &nbsp;록</button>
+						<button type="button" class="btn btn-cancel" role="button" style="background-color:#BD76FF; color:#fbfbfb">취&nbsp;소</button>
 			    	</div>
 				</div>
 					

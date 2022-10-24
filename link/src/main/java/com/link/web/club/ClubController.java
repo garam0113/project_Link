@@ -72,7 +72,7 @@ public class ClubController {
 		club.setClubMaxMember(10);
 		clubUser.setUser(user);
 		clubUser.setMemberRole("2");
-		clubUser.setApprovalCondition("2");
+		clubUser.setApprovalCondition("1");
 		clubUser.setJoinGreeting("모임대표의 가입인사");
 		
 		if (file != null && file.getSize() > 0) {

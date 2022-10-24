@@ -37,7 +37,7 @@ $(function() {
 		
 		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 	});
-	
+   
 	
  });
  
@@ -745,14 +745,16 @@ $(function() {
 });
 	
 	$(".tab_item-following").on("click" , function(e) {
-		var userId = $("#userId").val(); 
+		var userId = $("#userId").val();
+		console.log(userId);
 		$(".tab_item-following").off(e);
 	$.ajax({
 		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
 		 data		:  JSON.stringify({
-			receiveId : userId
+			searchKeyword : userId
+			
 		 }),
 		 
 		contentType : "application/json",
@@ -761,13 +763,19 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:50px;' id="+item.userId+">"+
+				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"'>"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
-			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			
 			
-			$("#fl").append(value);            
+			 $("#fl").append(value);     
+			
+			 $(".yourHome2").on("click" , function() {
+					
+					self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+				});
+				
 			
 		})
 		
