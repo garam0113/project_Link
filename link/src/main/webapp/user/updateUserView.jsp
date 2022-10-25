@@ -194,27 +194,26 @@ label {
 									<th><span>이름</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="name" name="name"
-										value="${getUser.name}">
-										<input type="hidden" class="form-control" id="name"
-										name="name" value="${getUser.name }">
-										</td>
+										value="${getUser.name}"> <input type="hidden"
+										class="form-control" id="name" name="name"
+										value="${getUser.name }"></td>
 								</tr>
 								<tr>
 								<tr>
 									<th><span>성별</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="gender" name="gender"
-										value="${getUser.gender}">
-										<input type="hidden" class="form-control" id="gender"
-										name="gender" value="${getUser.gender }"></td>
+										value="${getUser.gender}"> <input type="hidden"
+										class="form-control" id="gender" name="gender"
+										value="${getUser.gender }"></td>
 								</tr>
 								<tr>
 									<th><span>주민번호</span></th>
 									<td><input disabled="disabled" type="text"
 										class="form-control" id="rrn" name="rrn"
-										value="${getUser.rrn}">
-										<input type="hidden" class="form-control" id="rrn"
-										name="rrn" value="${getUser.rrn }"></td>
+										value="${getUser.rrn}"> <input type="hidden"
+										class="form-control" id="rrn" name="rrn"
+										value="${getUser.rrn }"></td>
 								</tr>
 								<c:if test="${user.role == '0'}">
 									<tr>
@@ -241,26 +240,30 @@ label {
 									<td><c:if test="${user.role == '0'}">
 											<input type="text" class="form-control" id="email"
 												name="email" value="${getUser.email}" placeholder="변경이메일">
-										</c:if> 
-											<c:if test="${user.role == '1'}"><input disabled="disabled" type="text" class="form-control"
-										id="email" name="email" value="${getUser.email}"
-										placeholder="변경이메일"></c:if>
-										</td>
+										</c:if> <c:if test="${user.role == '1'}">
+											<input disabled="disabled" type="text" class="form-control"
+												id="email" name="email" value="${getUser.email}"
+												placeholder="변경이메일">
+										</c:if></td>
 								</tr>
 								<tr>
 									<th><span>휴대폰 번호</span></th>
-									<td><input disabled="disabled" type="text"
-										class="form-control" id="phoneNo" name="phoneNo"
-										value="${ getUser.phoneNo }"> <c:if
-											test="${user.role == '0'}">
-											<button type="button" class="btn btn-primary btn"
-												id="phoneChange">변&nbsp;경</button>
-										</c:if></td>
+									<td>
+										<div style="display: flex;">
+											<input disabled="disabled" type="text" class="form-control"
+												id="phoneNo" name="phoneNo" value="${ getUser.phoneNo }">
+											<c:if test="${user.role == '0'}">
+												<button type="button" class="btn"
+													style="background-color: #5F0080; color: white; height: 20px; margin-left: 20px;"
+													id="phoneChange">변&nbsp;경</button>
+											</c:if>
+										</div>
+									</td>
 								</tr>
 								<c:if test="${user.role == '1'}">
 									<tr>
 										<th><span>정지상태</span></th>
-										<td><select name="penaltyType" id="penaltyType">
+										<td><select name="penaltyType" id="penaltyType" style=" border-color: #00000038;">
 												<option selected="selected">선택해주세요</option>
 												<option>ㅡ</option>
 												<option>정지</option>
@@ -278,9 +281,11 @@ label {
 								<tr>
 									<th><span></span></th>
 									<td align="center">
-										<button type="button" class="btn btn-primary" id="update">수
+										<button type="button" class="btn"
+											style="background-color: #5F0080; color: white;"update">수
 											&nbsp;정</button>
-										<button type="button" class="btn btn-primary" id="cancel">취
+										<button type="button" class="btn"
+											style="background-color: #5F0080; color: white;"cancel">취
 											&nbsp;소</button>
 									</td>
 								</tr>

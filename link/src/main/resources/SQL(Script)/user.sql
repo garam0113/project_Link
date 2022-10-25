@@ -10,7 +10,7 @@ DELETE users
 WHERE phone_no = '010';
 
 DELETE users
-WHERE user_id = 'Link9927';
+WHERE user_id = 'user06';
 
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)
@@ -31,7 +31,7 @@ WHERE user_id = '';
 
 UPDATE users
 SET out_user_state = '0'
-WHERE user_id = 'user01';
+WHERE user_id = 'user03';
 
 UPDATE users
 SET out_user_date = SYSDATE

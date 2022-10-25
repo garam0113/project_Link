@@ -55,7 +55,7 @@ body>div.container {
 		var regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 		var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		var regRrn = /^([0-9]{6})-?([0-9]{7})$/;
-		
+
 		var id = $("#userId").val();
 		var checkId = $("#checkId").val();
 		var pw = $("#password").val();
@@ -134,20 +134,20 @@ body>div.container {
 			return;
 		}
 
-		var value = "";
+		var rrn = "";
 		if (rrn1 != "" && rrn2 != "") {
-			value = rrn1 + "-" + rrn2;
+			rrn = rrn1 + "-" + rrn2;
 		} else if (rrn1 != "" || rrn2 != "") {
 			swal.fire("주민번호를 입력하셔야 합니다.");
 			return;
 		}
-		$("input:hidden[name='rrn']").val(value);
+		$("input:hidden[name='rrn']").val(rrn);
 
-		if(!regRrn.test($("input:hidden[name='rrn']").val())){
+		if (!regRrn.test($("input:hidden[name='rrn']").val())) {
 			swal.fire("주민번호를 제대로 입력해 주세요.");
 			return;
 		}
-		
+
 		var value = "";
 		if (phone2 != "" && phone3 != "") {
 			value = $("#phone1").val() + "-" + phone2 + "-" + phone3;
@@ -177,8 +177,32 @@ body>div.container {
 			return;
 		}
 
-		$("form").attr("method", "POST").attr("action", "/user/addUser").attr(
-				"encType", "multipart/form-data").submit();
+		console.log(rrn);
+		$.ajax("/userRest/json/getUser", {
+			method : "POST",
+			data : JSON.stringify({
+				name : name,
+				rrn : rrn,
+				outUserState : '0'
+			}),
+			dataType : "json",
+			contentType : "application/json",
+			henders : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
+				console.log(JSONData);
+				if (JSONData.userId != "") {
+					swal.fire("이미가입된 회원입니다.");
+				} else {
+					$("form").attr("method", "POST").attr("action",
+							"/user/addUser").attr("encType",
+							"multipart/form-data").submit();
+				}
+			}
+		});
+
 	}
 
 	$(function() {
@@ -188,14 +212,6 @@ body>div.container {
 			console.log($("#userId").val());
 
 			var input = $("#userId").val();
-			/*
-			if(input == null){
-				alert("asdf");
-				console.log(input);
-				$("#checkId").val(0);
-				$("#userIdCheck").html("영어, 숫자조합 5~8자");
-			}
-			 */
 
 			$.ajax("/userRest/json/getUser", {
 
@@ -216,7 +232,6 @@ body>div.container {
 
 					var userId = JSONData.userId;
 					console.log("DB로 받은 UserId : " + userId);
-
 					if (userId == "") {
 						$("#userIdCheck").html("사용가능한 아이디 입니다.");
 						$("#checkId").val(1);
@@ -294,24 +309,26 @@ body>div.container {
 													type="text" id="rrn1" name="rrn1" class="rrn1">
 											</div>
 											<div>
-												<input style="height: 40px; width: 150px;" type="text"
+												<input style="height: 40px; width: 150px;" type="password"
 													id="rrn2" name="rrn2" class="rrn2">
 											</div>
 											<input type="hidden" id="rrn" name="rrn" class="rrn">
+											<input type="hidden" id="rrnCheck">
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<th><span>비밀번호</span></th>
-									<td><input type="text" id="password" style="height: 40px;"
-										name="password" placeholder="비밀번호를 입력해주세요."><span
-										id="helpBlock" class="help-block"> <strong
-											class="text-danger">영어, 숫자조합 6~12자</strong>
+									<td><input type="password" id="password"
+										style="height: 40px;" name="password"
+										placeholder="비밀번호를 입력해주세요."><span id="helpBlock"
+										class="help-block"> <strong class="text-danger">영어,
+												숫자조합 6~12자</strong>
 									</span></td>
 								</tr>
 								<tr>
 									<th><span>비밀번호</span> <span>확인</span></th>
-									<td><input type="text" id="password2"
+									<td><input type="password" id="password2"
 										style="height: 40px;" name="password2"
 										placeholder="비밀번호를 확인하세요"><span id="helpBlock"
 										class="help-block"> <strong class="text-danger">영어,
@@ -322,15 +339,15 @@ body>div.container {
 									<th><span>이메일</span></th>
 									<td><input type="text"
 										style="height: 40px; width: 461.59px;" class="email"
-										id="email" placeholder=""></td>
+										name="email" id="email" placeholder=""></td>
 								</tr>
 								<tr>
-									<th><span>휴대폰번호</span></th>
+									<th><span>휴대폰</span><span>번호</span></th>
 									<td>
 										<div style="display: flex;">
 											<div>
 												<select class="form-control"
-													style="height: 40px; width: 80px; margin-right: 20px; border: 1px solid #2c2b2b17;"
+													style="height: 40px; width: 80px; margin-right: 20px; border: 1px solid #ececec;"
 													name="phone1" id="phone1">
 													<option value="010">010</option>
 													<option value="011">011</option>
@@ -351,7 +368,7 @@ body>div.container {
 													type="text" id="phone3" name="phone3" class="phone3"
 													placeholder="">
 												<button type="button" id="sendPhoneNumber"
-													style="height: 40px; width: 100px; background-color: #d9edf7; border-style: hidden;">인증번호
+													style="height: 40px; width: 100px; background-color: #E1BFFF; border-style: hidden;">인증번호
 													발송</button>
 											</div>
 											<input type="hidden" name="phoneNo" />
@@ -370,7 +387,7 @@ body>div.container {
 												name="inputCertifiedNumber" class="send_number"
 												placeholder="10:00">
 											<button type="button"
-												style="height: 40px; width: 100px; background-color: #d9edf7; border-style: hidden;"
+												style="height: 40px; width: 100px; background-color: #E1BFFF; border-style: hidden;"
 												id="checkBtn" class="btn_confirm">인증번호 확인</button>
 											<input type="hidden" id="checkNo">
 										</div></td>
@@ -382,23 +399,49 @@ body>div.container {
 								<tr>
 									<th><span>활동영역</span></th>
 									<td>
-										<div>
+										<div style="display: flex;">
 											<select class="form-control"
-												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17;"
+												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #ececec;"
 												name="areaSelcet" id="areaSelcet">
-												<option value="010">010</option>
-												<option value="011">011</option>
-												<option value="016">016</option>
-												<option value="018">018</option>
-												<option value="019">019</option>
+												<option value="강남구">강남구</option>
+												<option value="강동구">강동구</option>
+												<option value="강북구">강북구</option>
+												<option value="강서구">강서구</option>
+												<option value="관악구">관악구</option>
+												<option value="광진구">광진구</option>
+												<option value="구로구">구로구</option>
+												<option value="금천구">금천구</option>
+												<option value="노원구">노원구</option>
+												<option value="도봉구">도봉구</option> 
+												<option value="동대문구">동대문구</option>
+												<option value="동작구">동작구</option>
+												<option value="마포구">마포구</option>
+												<option value="서대문구">서대문구</option>
+												<option value="서초구">서초구</option>
+												<option value="성동구">성동구</option>
+												<option value="성북구">성북구</option>
+												<option value="송파구">송팡구</option>
+												<option value="양천구">양천구</option>
+												<option value="영등포구">영등포구</option>
+												<option value="용산구">용산구</option>
+												<option value="은평구">은평구</option>
+												<option value="종로구">종로구</option>
+												<option value="중구">중구</option>
+												<option value="중랑구">중랑구</option>
 											</select>
+											<button type="button"
+												style="width: 60px; background-color: #E1BFFF; border-style: hidden;"
+												id="areaClick">추가</button>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<th><span></span></th>
+									<th></th>
 									<td>
-										<div></div>
+										<div id="ar"></div> <input type="hidden" name="area1"
+										id="area1"> <input type="hidden" name="area2"
+										id="area2"> <input type="hidden" name="area3"
+										id="area3">
 									</td>
 								</tr>
 								<tr>
@@ -406,9 +449,8 @@ body>div.container {
 									<td>
 										<div style="display: flex;">
 											<select class="form-control"
-												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17;"
+												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #ececec;"
 												name="categorySelect" id="categorySelcet">
-												<option value="선택">선택해주세요</option>
 												<option value="운동">운동</option>
 												<option value="봉사활동">봉사활동</option>
 												<option value="음식">음식</option>
@@ -420,7 +462,7 @@ body>div.container {
 												<option value="기타">기타</option>
 											</select>
 											<button type="button"
-												style="width: 60px; background-color: #d9edf7; border-style: hidden;"
+												style="width: 60px; background-color: #E1BFFF; border-style: hidden;"
 												id="categryClick">추가</button>
 										</div>
 									</td>
@@ -442,17 +484,18 @@ body>div.container {
 								</tr>
 								<tr>
 									<th>프로필사진</th>
-									<td><input type="file" onchange="setThumbnail(event);" style="display: none;"
-										class="form-file" id="profileImageFile"
-										name="profileImageFile" 
-										 />
-										<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width:300px;"/></button>
-										</td>
+									<td><input type="file" onchange="setThumbnail(event);"
+										style="display: none;" class="form-file" id="profileImageFile"
+										name="profileImageFile" />
+										<button id="im" type="button" class="image"
+											style="border-style: hidden;">
+											<img id="imga" src="/resources/image/uploadFiles/default.png"
+												style="height: 300px; width: 300px;" />
+										</button></td>
 								</tr>
-							</tbody> 
+							</tbody>
 						</table>
-						<div class="exform_txt">
-						</div>
+						<div class="exform_txt"></div>
 					</div>
 					<!-- join_form E  -->
 					<div class="agree_wrap">

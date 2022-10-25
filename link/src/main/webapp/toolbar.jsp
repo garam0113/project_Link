@@ -53,7 +53,6 @@
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
                      <li class="menu-item"><a href="/user/login">로그인</a></li>
-                     <li class="menu-item"><a href="/user/addUser">회원가입</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a

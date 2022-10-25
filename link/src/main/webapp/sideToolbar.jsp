@@ -62,7 +62,7 @@
 			<div class="intro-item">
 					<div class="caption">
 						<h2 style="
-    margin-top: 100px;">MyPage</h2>
+    margin-top: 10px;">MyPage</h2>
 					</div>
 					<!-- caption -->
 				</div>
