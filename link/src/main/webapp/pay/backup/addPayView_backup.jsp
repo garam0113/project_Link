@@ -44,52 +44,81 @@
 		});
 		
 		$(".plus").bind("click", function(){
-			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
+			
+			//var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
+			var updateClubMemberCount = $(".payProduct-member").text();
 			var updateClubCount = parseInt( $(".payProduct-club").text() );
 			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( ${ pay.maxPay } === totalPrice ){
-				${ pay.clubNo }===0 ? $(".result").text( "한명당 최대로 가입 할 수 있는 모임은 10개입니다" ): $(".result").text( "하나의 모임당 최대 모임원은 50명입니다" );
+			var clubNo = $("input[name='clubNo']").val();
+			var maxPay = $("#maxPay").val();
+			
+			//alert( maxPay );
+			//alert( clubNo );			
+			//alert( updateClubMemberCount );
+			//alert( updateClubCount );
+			//alert( totalPrice );
+			
+			if( maxPay == totalPrice ){
+				alert('if');
+				${ pay.clubNo } == 0 ? $(".result").text( "한명당 최대로 가입 할 수 있는 모임은 10개입니다" ): $(".result").text( "하나의 모임당 최대 모임원은 50명입니다" );
 			}else{
-				if( ${ pay.clubNo } === 0 ){
-					$(".payProduct-club").text( updateClubCount + 2 );
+				alert('else');
+				if( clubNo != 0 ){
+					// 회원이 모입가입신청 했을때
+					alert('if');
+					$(".payProduct-club").text( parseInt( updateClubCount ) + 2 );
 					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
 				}else{
+					alert('else');
 					$(".payProduct-member").text( updateClubMemberCount + 10 );
 					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) + 10 );
 				}
 				$(".totalPrice").text( totalPrice + 5000 );
 				$(".result").text( "" );
 			}
+			
 		});//end of plus
+		
 		$(".minus").bind("click", function(){
-			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
-			var updateClubCount = parseInt( $(".payProduct-club").text() );
-			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( totalPrice === 5000 ){
+			
+			var updateClubMemberCount = $(".payProduct-member").text();
+			var updateClubCount = $(".payProduct-club").text();
+			var totalPrice = $(".totalPrice").text();
+			var clubNo = $("input[name='clubNo']").val();
+			var max_member = $(".return-max-member").text();
+			
+			if( totalPrice == 5000 ){
+				alert('if');
 				$(".result").text( "최소 결제 금액은 5000원입니다" );
 			}else{
-				if( ${ pay.clubNo } === 0 ){
-					$(".payProduct-club").text( updateClubCount - 2 );
+				alert('else');
+				if( clubNo == 0 ){
+					alert('if');
+					$(".payProduct-club").text( parseInt( updateClubCount - 2 ) );
 					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
 				}else{
+					alert('else');
+					alert(updateClubMemberCount);
+					alert(max_member);
 					$(".payProduct-member").text( updateClubMemberCount - 10 );
-					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) - 10 );
+					$(".return-max-member").text( parseInt( max_member ) - 10 );
 				}
 				$(".totalPrice").text( totalPrice - 5000 );
 				$(".result").text( "" );
 			}
+			
 		});//end of minus
 	});
 </script>
 
 <script type="text/javascript">
 	function requestPayment() {
-		alert('여기로 오나?');
+		//alert('여기로 오나?');
 		
 		var email = "${ user.email }";
 		var phoneNo = "${ user.phoneNo }";
 		var totalPrice = $(".totalPrice").text();
-		var payProduct = ${ pay.clubNo == 0 } ? "1": "0";
+		var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "모임원 추가": "모임 추가";
 		var pg = $("input[name='payOption']:checked").attr("pg");
 		var pay_method = $("input[name='payOption']:checked").attr("pay_method");
 		var name = payProduct===0 ? "최대 모임 수 증가" : "최대 모임원 수 증가";
@@ -113,8 +142,6 @@
 		//IMP.init("imp36216644"); // 가맹점 식별코드로 IMP 객체를 초기화한다
 		
 		IMP.request_pay({
-			//신용카드 결제
-			///*
 				pg : pg,
 				pay_method : pay_method,
 				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
@@ -122,85 +149,10 @@
 				amount : totalPrice,
 				customer_uid : 'your-customer-unique-id', // 필수 입력.
 				buyer_email : email,
-				buyer_name : '루피',
+				buyer_name : '상디',
 				buyer_tel : ${ user.phoneNo }
 			    //buyer_addr : '서울특별시 강남구 삼성동',
 			    //buyer_postcode : '123-456'
-			//*/
-
-			//카카오페이
-			/*
-				pg : 'kakaopay',
-				pay_method : 'card',
-				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-				name : '최초인증결제',
-				amount : 100,
-				customer_uid : 'your-customer-unique-id', // 필수 입력.
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '아임포트',
-				buyer_tel : '02-1234-1234'
-			 */
-
-			//휴대폰결제
-			/*
-			    pg : 'html5_inicis',
-			    pay_method : 'phone',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
-			    name : '주문명:결제테스트',
-			    amount : 100,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '서울특별시 강남구 삼성동',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
-			 */
-		
-			//토스페이
-			/*
-			    pg : 'tosspay',
-			    pay_method : 'card',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
-			    name : '주문명:결제테스트',
-			    amount : 100,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '서울특별시 강남구 삼성동',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile	
-			 */
-		
-			//실시간 계좌이체
-			/*
-			    pg : 'html5_inicis',
-			    pay_method : 'trans',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
-			    name : '주문명:결제테스트',
-			    amount : 1000,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '서울특별시 강남구 삼성동',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
-			*/
-
-			//무통장 입금
-				/*
-				pg : 'html5_inicis',
-				pay_method : 'vbank',
-				merchant_uid : 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
-				name : '주문명:결제테스트',
-				amount : 100,
-				buyer_email : 'itzrb577@naver.com',
-				buyer_name : '황다래',
-				buyer_tel : '010-8325-6825',
-				//buyer_addr : '서울특별시 강남구 삼성동',
-				//buyer_postcode : '123-456',
-				//m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}', // 예: https://www.my-service.com/payments/complete/mobile
-				//notice_url : 'http://192.168.0.74:8080/purchase/json/complete', //웹훅수신 URL 설
-			*/
 
 		}, function(rsp) { // callback
 			if (rsp.success) {
@@ -230,8 +182,8 @@
 		<input type="text" name="merchant_uid" value="">
 		<input type="text" name="updateClubMemberCount" value="0">
 		<input type="text" name="updateClubCount" value="0">
-		<input type="text" name="clubNo" value="0">
-		<input type="text" value="${ pay.maxPay }">
+		<input type="text" name="clubNo" value="${ pay.clubNo }">
+		<input type="text" id="maxPay" value="${ pay.maxPay }">
 		<input type="text" name="payNavigation" value="${ pay.payNavigation }">
 		</br></br></br>
 		
@@ -240,16 +192,17 @@
 		
 			<div class="pay-payOption">				
 				결제방법&nbsp;&nbsp;:&nbsp;&nbsp;
-				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">신용카드
-				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">카카오페이
-				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">휴대폰결제
-				<!-- <input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">토스페이 -->
-				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">실시간 계좌이체
+				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="신용카드">신용카드
+				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="카카오페이">카카오페이
+				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="휴대폰결제">휴대폰결제
+				<input type="radio" name="payOption" pg="tosspay" pay_method="card" value="토스페이">토스페이
+				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="실시간 계좌이체">실시간 계좌이체
 				</br></br>
 
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">결제 후 해당 모임의 총 모임원수는 <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>명</c:when>
-					<c:when test="${ pay.clubNo == 0 || pay.payNavigation == 1 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1  }">결제 후 해당 모임의 총 모임원수는 <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>명</c:when><%-- 모임원리스트로 --%>
+					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when><%-- 모임리스트로 이동 --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">결제 후 해당 회원의 총 모임수는 <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>개방</c:when><%-- 모임상세보기로 이동 --%>
 				</c:choose>
 			</div>
 			</br>
@@ -258,8 +211,9 @@
 			<div class="pay-payProduct">
 			&nbsp;&nbsp;<b class="plus">+</b>
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">추가할 모임원 수<b class="payProduct-member">10</b>명</c:when>
-					<c:when test="${ pay.clubNo == 0 }">추가할 모임 수<b class="payProduct-club">2</b>개방</c:when>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1 }">추가할 모임원 수<b class="payProduct-member">10</b>명</c:when><%-- 모임원리스트로 --%>
+					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">추가할 모임 수<b class="payProduct-club">2</b>개방</c:when><%-- 모임리스트로 이동 --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">추가할 모임 수<b class="payProduct-club">2</b>개방</c:when><%-- 모임상세보기로 이동 --%>
 				</c:choose>
 			<b class="minus">-</b>
 			<b class="result"></b>

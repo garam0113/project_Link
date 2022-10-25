@@ -144,18 +144,17 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
 											FROM club
-											<if test="searchCondition != null">
+											 <if test="searchCondition != null">
 												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
+													  <if test="searchCondition == 0 and searchKeyword !='' "> 
+													<!-- <if test=" searchKeyword !='' ">  -->
 										 				 club_title LIKE('%${searchKeyword}%')
-										 				<!-- club_no = #{searchKeyword} -->
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
+													 </if> 
+													 <if test="searchCondition == 1 and searchKeyword !='' ">
 										 				club_category LIKE ('%${searchKeyword}%')
-										 				<!-- club_title = #{searchKeyword} -->
-													</if>
+													</if> 
 												</where>
-											</if>
+											 </if> 
 											ORDER BY club_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
@@ -200,8 +199,11 @@
 
 				<where>
 					c.club_no = cU.club_no
-					<if test="searchKeyword != null">
-					and cU.user_id = #{searchKeyword}
+					<if test="searchKeyword != null and order == 0">
+						and cU.user_id = #{searchKeyword}
+					</if>
+					<if test="searchKeyword != null and order == 1">
+						and cU.user_id = #{userId}
 					</if>
 				</where>
 				

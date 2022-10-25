@@ -110,15 +110,17 @@
 		 }
 		 
 		 .btn {
-		 	background-color: #BD76FF;
-		 	color: #fbfbfb;
+		 	background-color: #fbfbfb;
+		 	color: #BD76FF;
+		 	border-color: #BD76FF;
 		 }
 		 
 		 .club-cT {
 		 		font-size: 
 		 }
+		
 		 
-		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
+/* 		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
     display: block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -129,11 +131,20 @@
     -moz-border-radius: 0.333em;
     border-radius: 0.333em;
     color: #333;
-}
+} */
 		 
 		 #pageNav {
 		 	float: center;
 		 }
+		 
+		 
+		 
+	 element.style {
+    	float: right;
+    	margin-bottom: 20px !important;
+	    margin-top: 10px !important;
+	}
+	
 		 
 		 
 	
@@ -158,7 +169,7 @@
 	
 	//============================== 검색 이벤트 처리 ====================
 	$(function(){
-		$("button.btn.btn-default").on("click", function() {
+		$("button.btn.btn-search").on("click", function() {
 			fncGetClubList(1);
 		});	
 	});
@@ -166,7 +177,7 @@
 	//========== 가입현황 처리 ================
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-myList").on("click", function() {
 			self.location="/club/getApprovalConditionList"
 			
 		});
@@ -191,7 +202,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-default").on("click", function() {
+		$("button.btn.btn-addMeeting").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -298,7 +309,7 @@
 
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778">
+			<div id="intro-wrap" data-height="20">
 				<div id="intro" class="preload darken">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
@@ -323,33 +334,93 @@
 	  	  <div id="main" class="row">
 	    
 		    
-		    <div class="col-md-6 text-right" style="float: right;">
+		    <div class="col-md-8 text-right" style="float: right;">
 			    <form class="form-inline" name="detailForm">
 			    
 				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
+				    <select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option>
+						<%-- <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option> --%>
 					</select>
 				  </div>
 				  
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-	    			 <button type="button" class="btn btn-default">검색</button>
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
+	    			<button type="button" class="btn btn-search">검색</button>
+	    			<button type="button" class="btn btn-myList">내 모임 보기</button>
+				  	<button type="button" class="btn btn-addMeeting">모임등록</button>
 				  </div>
 				  
-				  <div class="form-group">
+				  <!-- <div class="form-group">
 				  <button type="button" class="btn btn-primary">가입현황리스트</button>
 				  <button type="button" class="btn btn-default">모임등록</button>
-				  </div>
+				  </div> -->
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
 					</form>
 	    	</div>
+	    	
+	    	<table>
+	    		<colgroup span="4" class="columns"></colgroup>
+	    		<tr>
+	    			<th>
+	    				<select class="form-control" name="" style="border-color: #BD76FF;">
+	    					<option value="운동">운동</option>
+	  						<option value="봉사활동">봉사활동</option>
+	  						<option value="음식">음식</option>
+							<option value="여행">여행</option>
+							<option value="반려동물">반려동물</option>
+							<option value="게임">게임</option>
+							<option value="음악/댄스">음악/댄스</option>
+							<option value="독서">독서</option>
+							<option value="기타">기타</option>
+	    				</select>
+	    			</th>
+	    			<th>
+	    				<select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
+	    					<option value="강남구">강남구</option>
+							<option value="강동구">강동구</option>
+							<option value="강북구">강북구</option>
+							<option value="강서구">강서구</option>
+							<option value="관악구">관악구</option>
+							<option value="광진구">광진구</option>
+							<option value="구로구">구로구</option>
+							<option value="금천구">금천구</option>
+							<option value="노원구">노원구</option>
+							<option value="도봉구">도봉구</option>
+							<option value="동대문구">동대문구</option>
+							<option value="동작구">동작구</option>
+							<option value="마포구">마포구</option>
+							<option value="서대문구">서대문구</option>
+							<option value="서초구">서초구</option>
+							<option value="성동구">성동구</option>
+							<option value="성북구">성북구</option>
+							<option value="송파구">송팡구</option>
+							<option value="양천구">양천구</option>
+							<option value="영등포구">영등포구</option>
+							<option value="용산구">용산구</option>
+							<option value="은평구">은평구</option>
+							<option value="종로구">종로구</option>
+							<option value="중구">중구</option>
+							<option value="중랑구">중랑구</option>
+	    				</select>
+	    			</th>
+	    			<th>
+	    				<button type="button" class="btn btn-reset">초기화</button>
+	    			
+	    			</th>
+	    			<th>
+						<button type="button" class="btn btn-view">조회</button>
+					</th>
+	    		</tr>
+	    
+	    		
+	    	
+	    	</table>
 	    	
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -365,7 +436,7 @@
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button">모임보기</a></p>			  	
+				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</a></p>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>

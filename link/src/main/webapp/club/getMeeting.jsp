@@ -33,6 +33,16 @@
 		padding-top : 70px;
 	}
 	
+	#btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #fbfbfb;
+	}
+	
 	</style>
 
 	<!-- ?? -->
@@ -50,7 +60,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-danger").on("click", function() {
+		$("button.btn.btn-delete").on("click", function() {
 			alert("눌리나?");
 			fncDeleteMeeting();
 			
@@ -59,14 +69,14 @@
 	
 	$(function() {
 
-		$("button.btn.btn-primary").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			self.location="/club/getMeetingList"
 		});
 	});
 	
 	$(function() {
 
-		$("button.btn.btn-warning").on("click", function() {
+		$("button.btn.btn-update").on("click", function() {
 			//self.location="/club/updateMeetingView.jsp"
 			self.location="/club/updateMeetingView?meetingNo="+${meeting.meetingNo};
 		});
@@ -81,7 +91,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-success").on("click", function() {
+		$("button.btn.btn-addParticipant").on("click", function() {
 			alert("가입신청 되었습니다.");
 			fncAddMeetingMember();
 		});
@@ -134,7 +144,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="15"><!-- 상단 검은색 공통 영역 -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -225,13 +235,13 @@
 		<hr/>
 		
 		
-			<div class="form-group">
+			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 				
-					<button type="button" class="btn btn-success"  >참&nbsp;가&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-primary" > 이&nbsp;전</button>
-					<button type="button" class="btn btn-warning"  >수&nbsp;정</button>
-		      		<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
+					<button type="button" class="btn btn-addParticipant"  >참&nbsp;가&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-cancel" > 이&nbsp;전</button>
+					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
+		      		<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 					
 					
 		    </div>

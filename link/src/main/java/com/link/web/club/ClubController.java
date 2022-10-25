@@ -72,7 +72,7 @@ public class ClubController {
 		club.setClubMaxMember(10);
 		clubUser.setUser(user);
 		clubUser.setMemberRole("2");
-		clubUser.setApprovalCondition("2");
+		clubUser.setApprovalCondition("1");
 		clubUser.setJoinGreeting("모임대표의 가입인사");
 		
 		if (file != null && file.getSize() > 0) {
@@ -119,7 +119,7 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, Club clubS) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
@@ -213,7 +213,7 @@ public class ClubController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
+
 		Map<String, Object> map = clubService.getClubList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);
@@ -255,7 +255,7 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getApprovalConditionList")
-	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser) throws Exception {
+	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser, String userId) throws Exception {
 		
 		System.out.println("/club/getApprovalConditionList : GET/POST");
 		
@@ -267,8 +267,14 @@ public class ClubController {
 		
 		System.out.println("유저 세션에 뭐가 있나요 : "+user);
 		System.out.println("클럽넘버는 왔나요 : "+session.getAttribute("clubNo"));
+		System.out.println("유저 아이디는 뭐지? : "+userId);
 		
-		search.setSearchKeyword(user.getUserId());
+		if(search.getOrder()==0) {
+			search.setSearchKeyword(user.getUserId());
+//			search.setSearchKeyword(userId);
+		}else {
+			search.setSearchKeyword(userId);
+		}
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);

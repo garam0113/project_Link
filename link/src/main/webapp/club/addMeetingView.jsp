@@ -34,9 +34,27 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
     
+    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=390f3e2d16d538c1e7aa03b9ebdded3c&libraries=services"></script>
+    
 	<script type="text/javascript">
 
-
+	$(function() {
+		$("#locate").click(function() {
+			navigator.geolocation.getCurrentPosition(function(position){ //좌표 추출
+				var geocoder = new kakao.maps.services.Geocoder();
+				var callback = function(result, status) {
+					if(status == kakao.maps.services.Status.OK) {
+						var locate = result[0].address_name;
+					}
+				}
+			
+				geocoder.coord2RegionCode(position.coords.longitude, position.coords.latitude, callback); //현재위치 좌표 가져오기
+			});
+			
+		});
+		
+	});
 
 	function fncAddMeeting() {
 
@@ -52,7 +70,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-addMeeting").on("click", function() {
 			
 			fncAddMeeting();
 		});
@@ -60,7 +78,7 @@
 
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -96,8 +114,8 @@
 	
 	
 	
-	
-	var openWin;
+	//잠시 주석!
+	/* var openWin;
 	function popup() {
 		var url = "/club/searchPlace.jsp";
 		var name = "searchPlace";
@@ -110,7 +128,19 @@
 			popup();
 		});
 		
-	})
+	}); */
+	
+	
+	//자식창에서 부모창으로 값 전달하기
+	function openChild()
+	{
+		window.name = "addMeetingView";
+		
+		window.open("/club/searchPlace.jsp", "searchPlace", "width = 1000, height = 500, top = 100, left = 200, location = no");
+	}
+	
+
+	
 	
 	</script>
 	
@@ -124,6 +154,7 @@
       
   </style>
 
+	
 
 </head>
 
@@ -171,11 +202,12 @@
 							
 							<tr>
 								<th><span>모 임 장 소</span></th>
-								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다." autocomplete='off'></td>
+								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="모임장소는 필수입니다." autocomplete='off' onclick="openChild()"></td>
 							<tr>
 								<th></th>
-								<td><button type="button" class="btn btn-default" id="searchPlace">장소검색</button></td>
-							</tr>
+								<!-- <td><button type="button" value="장소 검색" onclick="openChild()">장소검색</button></td> -->
+								
+							
 								
 							
 						</tbody>	
@@ -191,8 +223,8 @@
 				
 				<div class="form-group">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
-			      		<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
-						<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			      		<button type="button" class="btn btn-addMeeting" style="background-color:#BD76FF; color:#fbfbfb">등 &nbsp;록</button>
+						<button type="button" class="btn btn-cancel" role="button" style="background-color:#BD76FF; color:#fbfbfb">취&nbsp;소</button>
 			    	</div>
 				</div>
 					

@@ -163,7 +163,7 @@
 			<when test="clubPost.heartCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
 			<when test="clubPost.clubPostCommentNo > 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
 			<when test="clubPost.clubPostCommentNo == -1">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT - 1</when>
-			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
+			<when test="report.reportCondition == 1 and report.reportReason > 0">REPORT_CONDITION = 1</when>
 			<otherwise>
 				CLUB_POST_TITLE = #{ clubPost.clubPostTitle:VARCHAR }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent:VARCHAR }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },
 				CLUB_POST_VIDEO3 = #{ clubPost.clubPostVideo3:VARCHAR }, CLUB_POST_UPDATE_DATE = sysdate, IMAGE1 = #{ clubPost.image1:VARCHAR }, IMAGE2 = #{ clubPost.image2:VARCHAR }, IMAGE3 = #{ clubPost.image3:VARCHAR },
@@ -225,17 +225,17 @@
 	<!-- 결제추가 -->
 	<insert id="addPay" parameterType="pay">
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
-		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payOption }, #{ payProduct }, #{ totalPrice }, SYSDATE, #{ updateClubCount }, #{ updateClubMemberCount }, #{ merchant_uid })
+		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payProduct }, #{ payOption }, #{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid } )
 	</insert>
 	
 
 	
 	<!-- 결제 리스트 -->
 	<select id="getPayList" parameterType="user" resultMap="paySelectMap">
-		SELECT PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
+		SELECT PAY_NO, U.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
 		PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID
-		FROM PAY
-		WHERE USER_ID = #{ userId }
+		FROM PAY P, USERS U
+		WHERE P.USER_ID = U.USER_ID AND U.USER_ID = #{ userId }
 		ORDER BY PAY_REG_DATE DESC
 	</select>
 	
@@ -243,10 +243,10 @@
 	
 	<!-- 결제 상세보기 -->
 	<select id="getPay" parameterType="pay" resultMap="paySelectMap">
-		SELECT PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
+		SELECT PAY_NO, U.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
 		PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID
-		FROM PAY
-		WHERE PAY_NO = #{ payNo }
+		FROM PAY P, USERS U
+		WHERE P.USER_ID = U.USER_ID AND PAY_NO = #{ payNo }
 	</select>
 	
 	

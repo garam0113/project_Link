@@ -42,8 +42,43 @@
  	 
  	 <style>
 	body {
-		padding-top : 70px;
+    background-color: #fbfbfb;
+    color: #333;
+    /* font-size: 1.125em; */
+    font-size: 15px !important;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 0.8 !important;
 	}
+	
+	.darkover {
+    position: sticky !important ;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.35);
+	}
+	
+	#calendar {
+	margin-left: 0px;
+	margin-top: 50px;
+	width: 90%;
+	height: 800px;
+	display: flex;
+	justify-content: center;
+	}
+	
+	
+	element.style {
+	
+		margin-right: 115px !important;
+		/* overflow: visible !important; */
+	}
+	
+	.fc-scroller {
+		overflow-y : hidden !important;
+	}
+	
+	
 	
 	</style>
 
@@ -53,7 +88,7 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		$("button.btn.btn-primary").on("click", function(){
+		$("button.btn.btn-addMeeting").on("click", function(){
 			self.location="/club/addMeetingView.jsp"
 		});
 	});
@@ -69,7 +104,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="20" style=""><!-- 상단 검은색 공통 영역 -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -85,9 +120,8 @@
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
+
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-bottom: 0em;">
 						<li data-group="advertising">
 							<a href="/club/getMeetingList">모임 일정</a>
 						</li>
@@ -114,43 +148,21 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<button type="button" class="btn btn-primary" style="float:right;">일정등록</button>
+		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#BD76FF; color:#fbfbfb; margin-right: 115px;">일정등록</button>
 
 
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
-	    		    
-		<%--     <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임일정이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임일정내용</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
-	    	</div> --%>
-	    	
+	    <div class="row" id="calendar" style="">
+	    
+	    	<jsp:include page="/club/calendar.jsp"/>	    		    
+	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
 		
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
+     <%--  <table class="table table-hover table-striped" >
       
         <thead>
           <tr>
@@ -164,7 +176,7 @@
        
 		<tbody>
 		<tr>
-		<%-- ${clubList} --%>
+		${clubList}
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${meetingList}">
 		  <input type="hidden" name="meetingNo" value="${i.meetingNo}">
@@ -179,14 +191,12 @@
         </tr>
         </tbody>
       
-      </table>
+      </table> --%>
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 		<div class="pageNavi" style="float:left;">
- 		<jsp:include page="../common/pageNavigator_new2.jsp" />
- 		</div>
+
 	</main>
 	
 </body>

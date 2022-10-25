@@ -7,7 +7,7 @@ FROM users;
 WHERE sns_user_id = 'bymin1992@naver.com' and add_user_type = '1';
 
 DELETE users
-WHERE phone_no = '010';
+WHERE phone_no = 'admin01';
 
 DELETE users
 WHERE user_id = 'user06';
@@ -19,11 +19,11 @@ VALUES ('user06', '1', SYSDATE);
 INSERT 
 INTO users (user_id, password, name, rrn, gender, phone_no, email, nickname, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('user07', '1233', '화요비', 1234561234567, '여자', 01033336666, 'bitcamp@bitcamp.com', '나락', NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
-
+VALUES	('admin01', '1234', '박경수', 123456-0234567, '여자', 010-3333-6666, 'bitcamp@bitcamp.com', '나락', NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+ 
 UPDATE users
-SET password = '1111', email = 'user01@bitcamp.com'
-WHERE user_id = 'user';
+SET role='1'
+WHERE user_id = 'admin01';
 
 UPDATE users
 SET password= ''

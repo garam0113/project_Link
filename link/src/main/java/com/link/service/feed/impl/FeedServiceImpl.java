@@ -92,7 +92,6 @@ public class FeedServiceImpl implements FeedService {
 		
 		// 하나의 댓글에 달린 대댓글 개수 세어서 넣어주기
 		// 댓글 달릴곳의 위치
-		int count = ((Comment) map.get("comment")).getSequence();
 		Comment originalComment = (Comment) map.get("comment");
 		
 		if(feedDAO.getFeedCommentBySequence(map) != null) {
@@ -100,7 +99,6 @@ public class FeedServiceImpl implements FeedService {
 			// 자식 댓글 개수는
 			int children = feedDAO.getChildrenCommentCount(map);
 			
-			System.out.println("자식의 개수 : " + children);
 			for(int i = 0 ; i < children ; i++) {
 				Comment comment = feedDAO.getFeedCommentBySequence(map);
 				comment.setCurrentPage(1);

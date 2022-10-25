@@ -37,6 +37,9 @@
 		border-bottom-left-radius: 10px;
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #fbfbfb;
 	}
 	a {
     	color: #bd76ff;
@@ -99,7 +102,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-danger").on("click", function() {
+		$("button.btn.btn-delete").on("click", function() {
 			alert("눌리나?");
 			fncDeleteClub();
 			
@@ -108,7 +111,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-primary").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -124,7 +127,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-warning").on("click", function() {
+		$("button.btn.btn-update").on("click", function() {
 			//popup();
 			//self.location="/club/updateClubView.jsp"
 			self.location="/club/updateClubView?clubNo="+${ club.clubNo };
@@ -139,8 +142,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-success").on("click", function() {
-			alert("안녕하세요");
+		$("button.btn.btn-addApproval").on("click", function() {
 			self.location="/club/applyClub.jsp"
 		});
 	});
@@ -181,11 +183,11 @@
 						<div class="club-wrap">
 						
 							<div class="club-image">
-							<img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage">
+								<a href="/club/getClub?clubNo=${clubNo}"><img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage"></a>
 							</div>
 							
 							<div class="club-text">
-							<h2 class="h2-color">CLUB</h2>
+							<h2 class="h2-color"><a href="/club/getClub?clubNo=${clubNo}"></a>CLUB</h2>
 							<p class="p-color">Make good memories with the members...</p>
 							</div>							
 						</div>
@@ -262,13 +264,13 @@
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 		      		
-		      		<button type="button" class="btn btn-success">가&nbsp;입&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-primary">이&nbsp;전</button>			
-					<button type="button" class="btn btn-warning"  >수&nbsp;정</button>
+		      		<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-cancel">이&nbsp;전</button>			
+					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
 					<!-- 모달을 열기 위한 버튼 -->
 					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
 					
-					<button type="button" class="btn btn-danger"  >삭&nbsp;제</button>
+					<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 					
 					<!-- 모달 영역 -->
 		<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

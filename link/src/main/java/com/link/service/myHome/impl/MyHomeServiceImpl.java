@@ -112,6 +112,10 @@ public class MyHomeServiceImpl implements MyHomeService {
 		System.out.println("\n[MyHomeServiceImpl getFollowList start]\n");
 		
 		List<User> list = myHomeDAO.getFollowList(search);
+		
+		for (User u : list) {
+			System.out.println("여기는 getFollowList : " + u);
+		}
 	
 		
 		Map<String, Object> map = new HashMap<String, Object>();

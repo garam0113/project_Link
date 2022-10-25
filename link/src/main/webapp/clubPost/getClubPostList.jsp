@@ -20,6 +20,11 @@
 		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
 		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
 		
+		<!--  font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
 		<!--  ///////////////////////// jQuery CDN////////////////////////// -->
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		
@@ -82,7 +87,7 @@
 								"Content-Type" : "application/json"
 							},
 							success : function( JSONData, status ) {
-								alert(status);
+								//alert(status);
 								//console.log(JSONData.clubPostList);
 								//console.log(JSONData.clubPostList.length);
 
@@ -125,6 +130,9 @@
 			}
 			.contains-order {
 				font-size: 15px;
+			}
+			.row{
+				font-family: 'Single Day', cursive;
 			}
 		</style>
 		
