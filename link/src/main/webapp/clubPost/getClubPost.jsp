@@ -25,6 +25,11 @@
 		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
 		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
 		
+		<!--  font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		
 		<script type="text/javascript">
@@ -146,15 +151,26 @@
 
 			<%-- 모임 게시물 댓글리스트 가져온다 --%>
 			$(document).on("click", ".recommentList", function(){
-				alert("댓글 수 클릭시 해당 댓글의 댓글리스트 가져온다");
+				alert("댓글 개수 클릭시 해당 댓글의 댓글리스트 가져온다");
 				var clubPostCommentNo = $(this).parent().parent().parent().attr("commentNo");
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
+				var clickCondition = $(".children.plain"+clubPostCommentNo).attr("clubCondition");
+				var depth = $(this).parent().parent().parent().attr("depth");
+
+				if( clickCondition == 1 ){
+					// 해당 댓글의 대댓글 리스트 숨기기
+					$(".children.plain"+clubPostCommentNo).attr("clubCondition", "0");
+					$(".children.plain"+clubPostCommentNo).empty();
+					return;
+				}
+				
 				$.ajax( "/clubPostRest/json/getClubPostCommentList",
 						{
 							method : "POST",
 							data : JSON.stringify({
 										clubPostCommentNo : clubPostCommentNo,
-										clubPostNo : clubPostNo
+										clubPostNo : clubPostNo,
+										depth : depth
 									}),
 							headers : {
 								"Accept" : "application/json",
@@ -162,45 +178,53 @@
 							},
 							dataType : "json",
 							success : function(JSONData, status){
-								alert(status);
+								//alert(status);
 								$.each( JSONData, function( index, el ){
-									alert( "댓글 번호 : " + el.clubPostCommentNo );
-									alert( "댓글 게시물 번호 : " + el.clubPostNo );
-									alert( "댓글 수 : " + el.commentCount );
-									alert( "댓글 내용 : " + el.commentContent );
-									alert( "댓글 등록날짜 : " + el.commentRegDate );
-									alert( "댓글 수정날짜 : " + el.commentUpdateDate );
-									alert( "댓글 좋아요 수 : " + el.commentHeartCount );
-									alert( "댓글 신고여부 : " + el.reportCondition );
-									alert( "댓글 삭제여부 : " + el.deleteCondition );
-									alert( "댓글 부모번호 : " + el.parent );
-									alert( "댓글 깊이 : " + el.depth );
-									alert( "댓글 순서 : " + el.sequence );
+									//alert( "댓글 번호 : " + el.clubPostCommentNo );
+									//alert( "댓글 게시물 번호 : " + el.clubPostNo );
+									//alert( "댓글 작성자 아이디 : " + el.user.userId );
+									//alert( "댓글 작성자 프로필이미지 : " + el.user.profileImage );
+									//alert( "댓글 작성자 닉네임 : " + el.user.nickName );
+									//alert( "댓글 수 : " + el.commentCount );
+									//alert( "댓글 내용 : " + el.commentContent );
+									//alert( "댓글 등록날짜 : " + el.commentRegDate );
+									//alert( "댓글 수정날짜 : " + el.commentUpdateDate );
+									//alert( "댓글 좋아요 수 : " + el.commentHeartCount );
+									//alert( "댓글 신고여부 : " + el.reportCondition );
+									//alert( "댓글 삭제여부 : " + el.deleteCondition );
+									//alert( "댓글 부모번호 : " + el.parent );
+									//alert( "댓글 깊이 : " + el.depth );
+									//alert( "댓글 순서 : " + el.sequence );
+									//alert( "댓글 해당 유저의 좋아요여부 : " + el.heartCondition );
+									
+									<%-- 하트컨디션이 댓글번호면 좋아요/0이면 좋아요 안했다 --%>
+									var heart = el.heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg';
 									
 									var display = 
-													+"<li class='recomment'>"
-															+"<div class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
+													"<li class='recomment'>"
+													+"<div class='single-comment"+el.clubPostCommentNo+"' depth='2' commentNo='"+el.clubPostCommentNo+"' revUserId='"+el.user.userId+"'>"
 															+"<div class='comment-author'>"
-																+"<cite><a href='#'><img src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' class='avatar' alt=''></a></cite>"
-																+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
+																+"<cite><a href='#'><img src='/resources/image/uploadFiles/"+el.user.profileImage+"' class='avatar' alt=''></a></cite>"
+																+"<cite><a href='#'>"+el.user.nickName+"</a></cite>"
 																+"<span class='says'>says:</span>"
 															+"</div>"
 															
 															
-					
+															
 															+"<div class='comment-meta'>"													
-																+"<time datetime='2013-03-23 19:58'>"+JSONData.commentRegDate+"</time>"														
+																+"<time datetime='2013-03-23 19:58'>"+el.commentRegDate+"</time>"
 																+"<div class='comment body'>"
 					
-																	+"<div class='comment-heart-"+JSONData.clubPostCommentNo+"'>"
+																	+"<div class='comment-heart-"+el.clubPostCommentNo+"'>"
 																		+"<a class='reply heartCondition'>"
-																 			+"<img src='/resources/image/uploadFiles/no_heart.jpg' height='40' width='40'>"
+																			<%-- 하트컨디션이 댓글번호면 좋아요/0이면 좋아요 안했다 --%>
+																 			+"<img src='/resources/image/uploadFiles/"+heart+"' height='40' width='40'>"
 																 		+"</a>"
 																	 +"</div>"
-																	 
+																	 																	 
 																	 +"<div>"
 																	 	<%-- 해당 댓글의 좋아요 수 --%>
-																	 	+"<span class='commentHeartCount"+JSONData.clubPostCommentNo+"' style='font-size: 30px;'>0</span>"																
+																	 	+"<span class='commentHeartCount"+el.clubPostCommentNo+"' style='font-size: 30px;'>"+el.commentHeartCount+"</span>"																
 																	 	<%-- 해당 댓글의 댓글 등록 --%>
 																	 	+"<a class='reply add'>"
 																			+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-plus-sign' aria-hidden='true' style='font-size: 25px;'></span>"
@@ -226,18 +250,18 @@
 																
 															+"</div>"
 															
-															+"<p>"+JSONData.commentContent+"</p>"
+															+"<p>"+el.commentContent+"</p>"
 															
-															+"<c:if test='"+JSONData.commentCount+">0'>"
+															+"<c:if test='"+el.commentCount+">0'>"
 																	+"<div class='comment-author'>"
 																		+"<cite>"
-																			+"<a class='123'>댓글 "+JSONData.commentCount+"개</a>"
+																			+"<a class='123'>댓글 "+el.commentCount+"개</a>"
 																		+"<cite>"
 																	+"</div>"
 															+"</c:if>"
 														+"</div>"
 														
-														+"<div class='clear-after-comment-add"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+														+"<div class='clear-after-comment-add"+el.clubPostCommentNo+"' commentTextArea='"+el.clubPostCommentNo+"' style='display: none;'>"
 															+"<form class='comment-form-add'>"
 															+"<textarea class='plain buffer' placeholder='댓글작성란'></textarea>"
 															+"<input class='plain button red add' value='등록완료' style='height: 30px; width: 90px;'>"
@@ -245,21 +269,33 @@
 															+"</form>"						
 														+"</div>"
 														
-														+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+														+"<div class='clear-after-comment-update"+el.clubPostCommentNo+"' commentTextArea='"+el.clubPostCommentNo+"' style='display: none;'>"
 															+"<form class='comment-form-update'>"
 															+"<textarea class='plain buffer'></textarea>"
-															+"<input class='plain button red add' value='수정완료' style='height: 30px; width: 90px;'>"
+															+"<input class='plain button red update' value='수정완료' style='height: 30px; width: 90px;'>"
 															+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
 															+"</form>"						
 														+"</div>"
+														
+
+														+"<div class='recomment-recomment-header'>"
+															+"<div class='recomment-header-space'></div>"
+															+"<div class='recomment-header-body'>"
+																+"<ul class='children plains"+el.clubPostCommentNo+"' clubCondition='0'>"
+																+"</ul>"
+															+"</div>"
+														+"</div>"
+														
 													+"</li>";
 													
 													
 													
 													
-									alert(display);
-		
-									//$("nav[class='"+clubPostCommentNo+"']").append(display);
+									//alert( display );
+
+									$(".children.plain"+el.parent).attr("clubCondition", "1");
+									$(".children.plain"+el.parent).append( display );
+									
 								});
 							} // end of success
 						}); // end of ajax
@@ -278,8 +314,6 @@
 				var commentContent = $(this).prev().val();
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
-				
-				alert( depth );
 				
 				if( depth == 0 ){
 					//alert("0이다");
@@ -301,8 +335,8 @@
 				
 				//alert( clubPostNo );
 				//alert( commentContent );
-				alert( "depth : " + depth );
-				//alert( clubPostCommentNo );
+				//alert( "등록할 댓글의 깊이 : " + depth );
+				//alert( "등록할 부모댓글 번호 : " + clubPostCommentNo );
 
 				$(this).prev().val("");
 				$(this).parent().parent().attr("style", "display: none");
@@ -318,10 +352,11 @@
 							data : JSON.stringify({
 								clubPostNo : clubPostNo,
 								commentContent : commentContent,
-								clubPostCommentNo : clubPostCommentNo
+								clubPostCommentNo : clubPostCommentNo,
+								depth : depth
 							}),
 							success : function(JSONData, status) {
-								alert(status);
+								//alert(status);
 								//alert(JSONData);
 								//alert(JSONData.user.userId);
 								//alert(JSONData.user.profileImage);
@@ -344,7 +379,7 @@
 									display += "<li class='comment'>";
 								}
 								
-									display += "<div class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
+									display += "<div id='recomment-body' class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
 													+"<div class='comment-author'>"
 														+"<cite><a href='#'><img src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' class='avatar' alt=''></a></cite>"
 														+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
@@ -413,22 +448,22 @@
 												+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-update'>"
 													+"<textarea class='plain buffer'></textarea>"
-													+"<input class='plain button red add' value='수정완료' style='height: 30px; width: 90px;'>"
+													+"<input class='plain button red update' value='수정완료' style='height: 30px; width: 90px;'>"
 													+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
 													+"</form>"						
 												+"</div>"
 											+"</li>";
 											
 								if( depth != 1){
-									alert( depth );
+									//alert( "게시물의 댓글등록" );
 									$(".comment-list.plain").append( display );
 								}else if( depth == 1 ){
-									alert( "여기로 와야한다" );
+									//alert( "댓글의 댓글등록" );
 									$(".children.plain"+clubPostCommentNo).append( display );
 								}
 								//alert( display );
 							}// end of success
-					
+						//content.trigger("create");
 				});// end of ajax
 			}); // end of 등록
 
@@ -438,8 +473,8 @@
 				var commentContent = $(this).prev().val();
 				var clubPostCommentNo = $(this).parent().parent().attr("commentTextArea");
 				var divClassName = $(this).parent().parent().attr("class");
-				//alert( commentContent );
-				//alert( clubPostCommentNo );
+				//alert( "댓글내용 : " + commentContent );
+				//alert( "해당댓글의번호 : " + clubPostCommentNo );
 				//alert( divClassName );
 				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
@@ -483,7 +518,7 @@
 							},
 							dataType : "json",
 							success : function(JSONData, status){
-								alert(status);
+								//alert(status);
 								//$("."+className).remove();
 							} // end of success
 						}); // end of ajax
@@ -562,10 +597,56 @@
 			$(document).on("click", ".clubPost-header-nickName", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
 			});//end of 마이홈피 이동
+			
+			
+			
+			///////////////////////////////////////// 등록, 수정, 삭제, 신고 Icon ////////////////////////////////////////////////
+			
+			
+			/* $(document).ready(funtion () {
+				$(".glyphicon").hover(function () {
+					$(this).css("color", "#5F0080");
+				}, function () {
+					$(this).css("color", "#5F0080");
+				});
+			}); */
+			
+			
 		});
 		</script>
 		
 		<style type="text/css">
+			.row{
+				font-family: 'Single Day', cursive;
+			}
+			
+			/* 등록, 수정, 삭제, 신고 아이콘 */
+			.glyphicon{
+				/* background-color: red; */
+			}
+			
+			.comment{
+				font-size: 20px;
+			}
+			
+			.recomment{
+				font-size: 20px;
+			}
+			
+			#comment-body{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				margin: 1rem;
+				padding: 1rem;
+			}
+			
+			#recomment-body{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				margin: 1rem;
+				padding: 1rem;
+			}
+			
 			.clubPost-header {
 				/* background-color: yellow; */
 				display: grid;
@@ -619,6 +700,7 @@
 			.recomment-header-body{
 				/* background-color: green; */
 			}
+			
 		</style>
 		
 	</head>
@@ -733,14 +815,18 @@
 								<%-- 해당 게시물 작성자 또는 해당 모임대표 또는 관리자 게시물 삭제 가능 --%>
 								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId || clubPost.getClubPost.clubRole == '2' || sessionScope.user.role == '1' }">
 									<div class="clubPost-header-delete">
-										<span class="glyphicon glyphicon-trash deleteComment" id="club-post-delete" aria-hidden="true"></span>
+										<a>
+											<span class="glyphicon glyphicon-trash deleteComment" id="club-post-delete" aria-hidden="true"></span>
+										</a>
 									</div>
 								</c:if>
 								
 								<%-- 해당 게시물 작성자 이외의 회원 신고 가능 --%>
 								<c:if test="${ clubPost.getClubPost.user.userId != sessionScope.user.userId }">
 									<div class="clubPost-header-report">
-										<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+										<a>
+											<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+										</a>
 									</div>
 								</c:if>
 							</div>
@@ -834,7 +920,7 @@
 								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 									<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
 										<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
-											<div class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="1" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">
+											<div id="comment-body" class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="1" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">
 												<div class="comment-author">
 													<cite><a href="#"><img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].user.profileImage }" class="avatar" alt=""></a></cite>
 													<cite><a href="#">${ clubPost.getClubPostCommentList[i].user.nickName }</a></cite>
@@ -913,7 +999,7 @@
 												
 												<form class="comment-form-update">
 													<textarea class="plain buffer"></textarea>
-													<input class="plain button red add${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="수정완료" style="height: 30px; width: 90px;">
+													<input class="plain button red update${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="수정완료" style="height: 30px; width: 90px;">
 													<input class="plain button red cancle" value="취소" style="height: 30px; width: 60px;">
 												</form>
 												
@@ -927,7 +1013,7 @@
 											<div class="recomment-header">
 												<div class="recomment-header-space"></div>
 												<div class="recomment-header-body">
-													<ul class="children plain${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+													<ul class="children plain${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" clubCondition="0">
 														
 														<%-- <li class="recomment">
 																 <div class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="2" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">

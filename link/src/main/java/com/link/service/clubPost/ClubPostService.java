@@ -10,6 +10,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 
 public interface ClubPostService {
@@ -65,7 +66,7 @@ public interface ClubPostService {
 	public Comment getClubPostComment(Comment comment) throws Exception;
 	
 	// 모임게시물 댓글 수정
-	public Comment updateClubPostComment(Comment comment, Heart heart) throws Exception;
+	public Comment updateClubPostComment(Comment comment, Heart heart, Report report) throws Exception;
 	
 	// 모잉게시물 댓글 삭제
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
