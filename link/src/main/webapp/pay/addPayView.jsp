@@ -114,16 +114,16 @@
 			background-color: #f2e3ff;
 			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 150px;
-			padding: 5rem;
+			border-radius: 10px;
+			padding: 1rem;
 			width: 950px;
 		}
 		.pay-body{
 			display: grid;
 			grid-template-columns: 2fr 5fr;
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 200px;
-			padding: 6rem;
+			border-radius: 10px;
+			padding: 1rem;
 			background-color: #f2f3ff;
 		}
 		.pay-body-text{

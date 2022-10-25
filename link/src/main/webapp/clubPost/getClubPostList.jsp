@@ -134,6 +134,29 @@
 			.row{
 				font-family: 'Single Day', cursive;
 			}
+			.club-post-add{
+				float: right;
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				padding: 10px;
+				margin: 10px;
+				width: 65px;
+				background-color: #5F0080;
+				color: white;
+				font-size: 20px;
+			}
+			.club-post-cancle{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				padding: 1rem;
+				background-color: white;
+				color: #5F0080;
+				font-size: 25px;
+				border-color: #5F0080;
+			}
+			.contains-order{
+				font-size: 30px;
+			}
 		</style>
 		
 	</head>
@@ -202,13 +225,13 @@
 							    
 								    <div class="contains-order">
 								    	<p class="text-primary" style="width: 87%">
-								    		전체  ${ clubPostListCount } 건수, 현재 ${ search.currentPage } 페이지&nbsp;&nbsp;&nbsp;&nbsp;
+								    		전체  ${ clubPostListCount } 건수, 현재 ${ search.currentPage } 페이지<br>
 											<b>최신순</b>&nbsp;/&nbsp;
 											<b>오래된순</b>&nbsp;/&nbsp;
 											<b>좋아요 많은순</b>&nbsp;/&nbsp;
 											<b>내가 작성한 게시물</b>
 											<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
-											<a class="button transparent aqua" style="float: right;">등록하기</a>
+											<input type="button" class="club-post-add" value="등록하기">
 								    	</p>
 								    </div>
 								    
@@ -303,7 +326,7 @@
 										</div> --%>
 										
 										<div style="display: inline-block;">
-											<a class="button transparent aqua">검색</a>
+											<input type="button" class="club-post-cancle" value="검색">
 										</div>
 									
 								</form>

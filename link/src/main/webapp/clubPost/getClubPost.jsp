@@ -463,7 +463,7 @@
 								}
 								//alert( display );
 							}// end of success
-						//content.trigger("create");
+
 				});// end of ajax
 			}); // end of 등록
 
@@ -603,13 +603,28 @@
 			///////////////////////////////////////// 등록, 수정, 삭제, 신고 Icon ////////////////////////////////////////////////
 			
 			
-			/* $(document).ready(funtion () {
+			$(document).ready(function () {
+				/* 등록, 수정, 삭제, 신고 아이콘 */
 				$(".glyphicon").hover(function () {
 					$(this).css("color", "#5F0080");
 				}, function () {
-					$(this).css("color", "#5F0080");
+					$(this).css("color", "black");
 				});
-			}); */
+
+				/* 댓글 개수 */
+				$(".recommentList").hover(function () {
+					$(this).css("color", "#5F0080");
+				}, function () {
+					$(this).css("color", "black");
+				});
+
+				/* 버튼 */
+				$(".plain.button.red").hover(function () {
+					$(this).css("color", "#5F0080");
+				}, function () {
+					$(this).css("color", "black");
+				});
+			});
 			
 			
 		});
@@ -618,11 +633,6 @@
 		<style type="text/css">
 			.row{
 				font-family: 'Single Day', cursive;
-			}
-			
-			/* 등록, 수정, 삭제, 신고 아이콘 */
-			.glyphicon{
-				/* background-color: red; */
 			}
 			
 			.comment{
@@ -645,6 +655,17 @@
 				border-radius: 10px;
 				margin: 1rem;
 				padding: 1rem;
+			}
+			
+			.plain.button.red{
+				background-color: #5F0080;
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				margin: 1rem;
+				padding: 10px;
+				width: 90px !important;
+				color: white !important;
+				font-size: 16px !important;
 			}
 			
 			.clubPost-header {

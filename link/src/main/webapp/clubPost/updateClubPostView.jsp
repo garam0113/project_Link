@@ -99,8 +99,8 @@
 			}
 			.club-post-update-view{
 				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-				border-radius: 150px;
-				padding: 5rem;
+				border-radius: 30px;
+				padding: 3rem;
 				/* background-color: #f2f3ff; */
 			}
 			.club-post-update-submit{
