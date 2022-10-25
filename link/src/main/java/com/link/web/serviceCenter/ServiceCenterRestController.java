@@ -2,8 +2,6 @@ package com.link.web.serviceCenter;
 
 
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.link.common.Page;
 import com.link.common.Search;
-import com.link.service.domain.QandA;
+import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
+import com.link.service.domain.Feed;
 import com.link.service.domain.Report;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -39,13 +38,31 @@ public class ServiceCenterRestController {
 	int pageUnit;
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
-	public String addReport(@RequestBody Report report,  Model model )throws Exception {
-		
+	public String addReport(@RequestBody Report report,  Model model , Search search  )throws Exception {
+		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
 		System.out.println(report);
 //		serviceCenterService.getReportDuple(report);
-	
-		serviceCenterService.addReport(report);
+		if(report.getReportSource()==1) {
+			ClubPost clubPost = new ClubPost();
+			clubPost.setClubNo(report.getNo());
+			report.setClubPost(clubPost);
+		}else if(report.getReportSource()==2) {
+			comment.setClubPostCommentNo(report.getNo());
+			report.setClubPostComment(comment);
+		}
+		else if(report.getReportSource()==3) {
+			Feed feed = new Feed();
+			feed.setFeedNo(report.getNo());
+			System.out.println(report.getNo()+"테스트용");
+			report.setFeed(feed);
+			System.out.println(feed);
+		}else if(report.getReportSource()==4) {
+			comment.setFeedCommentNo(report.getNo());
+			report.setFeedComment(comment);
+		}
+		
+		 serviceCenterService.addReport(report); 
 		
 		model.addAttribute("report", report);
 		

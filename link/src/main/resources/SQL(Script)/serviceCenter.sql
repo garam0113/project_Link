@@ -99,7 +99,9 @@ WHERE n.notice_no = 41;
 
 
 
-
+SELECT *
+FROM FEED
+WHERE FEED_NO ='52';
 
 
 
@@ -259,10 +261,19 @@ DELETE FROM REPORT_PUSH;
  FROM users; 
  
 SELECT *
-FROM users;
+FROM report_push;
  
-SELECT TO_CHAR(report_regdate, YY-MM-DD)
-FROM REPORT_PUSH R;
+SELECT *
+FROM REPORT_PUSH R
+where no='171';
+
+select *
+from feed_comment
+where feed_comment_no='362';
+
+
+
+
 
 SELECT R.*
 FROM CLUB_POST R
