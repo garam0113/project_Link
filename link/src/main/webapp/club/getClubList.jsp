@@ -309,7 +309,7 @@
 
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778">
+			<div id="intro-wrap" data-height="20">
 				<div id="intro" class="preload darken">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
