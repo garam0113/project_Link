@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 
 <!DOCTYPE html>
@@ -77,15 +78,35 @@
  }
  
 	function AddReport(){	
-		
+
 		var sum = 0;
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
 		
 		for(var i =0 ; i<checkbox; i++){
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);
-			alert(sum);		
-		}	
+				
+		}
+			alert($("#clubPostNo").val());
+			alert($("#clubPostCommentNo").val());
+			alert($("#feedNo").val());
+			alert($("#feedCommentNo").val());
+			
+		var no = 0;	
+			
+		 if( $("#clubPostNo").val()!=null){
+			 no += $("#clubPostNo").val();
+		}else if($("#clubPostCommentNo").val()!=null){
+			 no += $("#clubPostCommentNo").val();
+		}else if($("#feedNo").val()!=null){
+			 no += $("#feedNo").val();
+		}else if($("#feedCommentNo").val()!=null){
+			  no += $("#feedCommentNo").val();
+		}
+		
+		
+		
+		
 	 	$.ajax({
 		url  : "/serviceCenterRest/json/addReport",
 		contentType: 'application/json',
@@ -96,10 +117,14 @@
 			"content":$("#content").val(),
 			"reportImage1":$("#reportImage1").val(),
 			"reportImage2":$("#reportImage2").val(),
+			"user1":$("#user1").val(),
 			"user2":$("#user2").val(),
 			"reportSource":$("#reportSource").val(),
 			"reportReason": sum,
 			"type": $("#type").val(),
+			"no" :no,   
+
+			
 	
 		 success: function(){
 			 window.close();
@@ -196,19 +221,15 @@ textarea {
 
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
-			<input type="hidden" name="type" id="type" value="1"> <input
-				type="hidden" name="clubPostNo" id="clubPostNo" value="clubPostNo">
-			<input type="hidden" name="clubPostCommentNo" id="clubPostCommentNo"
-				value="clubPostCommentNo"> <input type="hidden" name="feed"
-				id="feed" value="feed"> <input type="hidden"
-				name="feedComment" id="feedComment" value="feedCommet">
+			<input type="hidden" name="type" id="type" value="1">
+			
+			<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
 			<div class="form-group">
 				<label for="title" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 				<div class="col-sm-4">
 					<textarea class="title" id="title" name="title" value=""
 						maxlength="80" placeholder="신고 제목을 입력해주세요"
 						style="position: fixed;"></textarea>
-
 
 				</div>
 
@@ -239,22 +260,26 @@ textarea {
 					
 					<c:if test="${reportSource== '1'}"> 
 						<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="1">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
+		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="2">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">
+		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="3">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="3">
+		     		 <input type="hidden" name="no" id="feedNo" value="${report.feed.feedNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='4'}">
 						<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="4">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
 					</c:if>
 					
-
+					
 				
 			</div>
 

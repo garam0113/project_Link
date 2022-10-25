@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC_KR" %>
-<%@ page pageEncoding="EUC_KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="EUC_KR">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
@@ -53,16 +53,15 @@
             ],
             
             disableResizeEditor: true,
-			height: 600,                 // ¿¡µðÅÍ ³ôÀÌ
-			minHeight: null,             // ÃÖ¼Ò ³ôÀÌ
-			maxHeight: null,             // ÃÖ´ë ³ôÀÌ
-			focus: true,                  // ¿¡µðÅÍ ·ÎµùÈÄ Æ÷Ä¿½º¸¦ ¸ÂÃâÁö ¿©ºÎ
+			height: 600,                 // ì—ë””í„° ë†’ì´
+			minHeight: null,             // ìµœì†Œ ë†’ì´
+			maxHeight: null,             // ìµœëŒ€ ë†’ì´
+			focus: true,                 // ì—ë””í„° ë¡œë”©í›„ í¬ì»¤ìŠ¤ë¥¼ ë§žì¶œì§€ ì—¬ë¶€
 			lang : 'ko-KR',
-			lang:'ko-KR',
 	        
 			callbacks : { 
             	onImageUpload : function(files, editor, welEditable) {
-           			// ÆÄÀÏ ¾÷·Îµå(´ÙÁß¾÷·Îµå¸¦ À§ÇØ ¹Ýº¹¹® »ç¿ë)
+           			// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
 					for (var i = files.length - 1; i >= 0; i--) {
 			            uploadSummernoteImageFile(files[i],
 			            this);
@@ -78,7 +77,7 @@
 		
 		
 		$(".btn_update").bind("click", function() {
-			alert("¼öÁ¤ÇÏ±â");
+			alert("ìˆ˜ì •í•˜ê¸°");
 			$("form").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
 		})
 	
@@ -125,7 +124,7 @@
 		
 		h5.meta-post {
 			margin-bottom:13px !important;
-			color:rgba(171,148,233,1) !important;
+			color:black !important;
 			display: inline-block;
 			vertical-align: text-bottom !important;
 		}
@@ -164,14 +163,14 @@
 			<div class="row-content buffer even clear-after">
 			
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">±æÃ£±â</a>
+					<a href="/feed/getFestivalLocation.jsp">ê¸¸ì°¾ê¸°</a>
 				</div>
 				
 				<div class="column six">
 				
 					<form id="feedInfo">
 					
-						<!-- ÇÇµå ³»¿ë -->
+						<!-- í”¼ë“œ ë‚´ìš© -->
 						<div class="post-area clear-after">
 						
 							<article role="main">
@@ -191,13 +190,13 @@
 	
 						</div>
 					
-						<!-- ´ñ±Û °ü·Ã hidden -->
+						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
 						<input type="hidden" name="source" value="0">
 						<input type="hidden" name="openCondition" value="3">
 						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
 						<input type="hidden" name="feedNo" value="${feed.feedNo}">
 						
-						<!-- ´ñ±Û °ü·Ã hidden -->
+						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
 					</form>
 					
 				</div>

@@ -377,6 +377,10 @@ public class ServiceCenterController {
 
 		if(report.getReportSource() == 1) {
 			// 모임 게시물 신고
+			clubPost.setUser(user);
+			System.out.println("모임 게시물 신고 : " + clubPost);
+			map.put("clubPost", clubPost);
+			report.setClubPost((ClubPost)clubPostServiceImpl.getClubPost(map).get("clubPost"));
 			clubPost.setClubPostNo(Integer.parseInt(number));
 			report.setClubPost(clubPost);
 			report.setUser2(new User(clubPost.getUserId()));
@@ -386,6 +390,7 @@ public class ServiceCenterController {
 			report.setClubPostComment(comment);
 			report.setUser2(new User(comment.getUserId()));
 		}else if(report.getReportSource() == 3) {
+			
 			map.put("feedNo", number);
 			map.put("user", user);
 			
@@ -398,6 +403,7 @@ public class ServiceCenterController {
 		model.addAttribute("reportSource", report.getReportSource());
 		model.addAttribute("user02", report.getUser2().getUserId());
 		model.addAttribute("report", report);
+		model.addAttribute("sourceNumber", number);
 		
 		return "forward:/serviceCenter/addReportView.jsp";
 	}
@@ -421,19 +427,23 @@ public class ServiceCenterController {
 	
 	
 	@RequestMapping(value = "updateReport", method = RequestMethod.POST)
-	public String updateReport(@ModelAttribute Report report, Model model, User user) throws Exception {
+	public String updateReport(@ModelAttribute Report report,  String number,
+			User user, Map<String, Object> map, ClubPost clubPost, Comment comment, HttpSession httpSession, Model model) throws Exception {
 		
 		System.out.println("/ServiceCenter/updateReport : POST");
 
-		serviceCenterService.updateReport(report);
+			System.out.println(report+" 처음 들어온 값");
+			serviceCenterService.updateReport(report);
+			System.out.println(report);
+			report = serviceCenterService.getReport(report.getNo());
+			
+			model.addAttribute("report", report);
+		
+			return "forward:/serviceCenter/getReportList.jsp";
+						   
 
-		System.out.println(report);
 		
-		report = serviceCenterService.getReport(report.getNo());
-		
-		model.addAttribute("report", report);
-		System.out.println("들렸다 갑니다.");
-		return "forward:/serviceCenter/getReportList";
+			
 	}
 	
 	@RequestMapping(value = "getReport")

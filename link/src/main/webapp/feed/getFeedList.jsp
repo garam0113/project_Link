@@ -41,6 +41,21 @@
 	
 	
 	
+	function formatDate(date) {
+	    
+	    var d = new Date(date),
+	    
+	    month = '' + (d.getMonth() + 1) , 
+	    day = '' + d.getDate(), 
+	    year = d.getFullYear();
+	    
+	    if (month.length < 2) month = '0' + month; 
+	    if (day.length < 2) day = '0' + day; 
+	    
+	    return [year, month, day].join('-');
+	    
+	}
+	
 	function uploadSummernoteImageFile(file, el) {
 		data = new FormData();
 		data.append("file", file);
@@ -91,21 +106,151 @@
 								
 								success : function(data, status) {
 									
-									var addHtml = "<p>";
+
+									var addHtml = "";
 									
 									$.each(data, function(index, item) {
 										
+
 										console.log("무한 스크롤 정보 성공" + item.content + "\n");
 										
-										addHtml += item.content + "\n"
+										addHtml +=
+										'<div class="showFeedForm">' +
+										'<form class="feedForm">' +
+										'	<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" /><h4 style="vertical-align: text-bottom;">' + item.user.nickName + '</h4>' + 
+										'	<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">'
+										
+										if(item.updateDate != null) {
+											addHtml += formatDate(item.updateDate) + '</h5>';
+										} else {
+											addHtml += formatDate(item.regDate) + '</h5>';
+										}
+										
+										
+										if(sessionUser == item.user.userId) {
+											addHtml += '<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">' +
+														'<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> ' +
+														'<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>' +
+														'</div>'
+										}
+										
+										addHtml += '<div class="feedContent">';
+										
+										if(item.content != null) {
+											addHtml += item.content
+										}
+										
+										if(item.image1 != null) {
+											addHtml += '<div id="carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" class="carousel slide" data-ride="carousel">' +
+														'<ol class="carousel-indicators">' +
+														'<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="0" class="active"></li>'
+														
+											if(item.image2 != null) {
+												addHtml += '<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="1"></li>';
+											}
+														
+											if(item.image3 != null) {
+												addHtml += '<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="2"></li>';
+											}
+											
+											if(item.image4 != null) {
+												addHtml += '<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="3"></li>';
+											}		
+														
+											addHtml += '</ol>' +
+												'<div class="carousel-inner" role="listbox">' +
+												'<div class="item active">' +
+												'<img src="/resources/image/uploadFiles/' + item.image1 + '" alt="' + item.image1 + '">' +
+												'</div>'
+												
+											if(item.image2 != null) {
+												addHtml += '<div class="item">' +
+															'<img src="/resources/image/uploadFiles/' + item.image2 + '" alt="' + item.image2 + '">' +
+															'</div>'
+											}
+														
+											if(item.image3 != null) {
+												addHtml += '<div class="item">' +
+															'<img src="/resources/image/uploadFiles/' + item.image3 + '" alt="' + item.image3 + '">' +
+															'</div>'
+											}
+											
+											if(item.image4 != null) {
+												addHtml += '<div class="item">' +
+															'<img src="/resources/image/uploadFiles/' + item.image4 + '" alt="' + item.image4 + '">' +
+															'</div>'
+											}
+																
+											addHtml += '</div>' +
+														'<a class="left carousel-control carousel_prev" href="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" role="button" data-slide="prev">' +
+														'	<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
+														'	<span class="sr-only">Previous</span>' +
+														'</a>' +
+														'<a class="right carousel-control carousel_next" href="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" role="button" data-slide="next">' +
+														'	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
+														'	<span class="sr-only">Next</span>' +
+														'</a>' +
+													'</div>'
+										}
+											
+										addHtml += '</div>';
+										
+										if(item.hashtag != null) {
+											addHtml += '<div class="hashtagContent">' +
+													item.hashtag +
+													'</div>'
+										}
+											
+										addHtml += '<input type="hidden" name="reportSource" value="3">' +
+											'<input type="hidden" name="sourceNumber" value="' + item.feedNo + '">' +
+											'<input type="hidden" name="user2" value="' + item.user.userId + '">' +
+											'<input type="hidden" name="source" value="0">' +
+											'<input type="hidden" name="feedNo" value="' + item.feedNo + '"> ' +
+											'<input type="hidden" id="userId" name="userId" value="' + sessionUser + '">' +
+											'<input type="hidden" name="openCondition" value="3">' +
+											'<section class="row section lastBar">' +
+											'	<div class="row">' +
+											'		<div class="col-xs-1"></div>'
+										
+										if(item.checkHeart == 0) {
+											addHtml += '<div class="col-xs-2">' +
+															'<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>' +
+														'</div>'
+										} else {
+											addHtml += '<div class="col-xs-2">' +
+															'<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>' +
+														'</div>'
+										}
+											
+										addHtml += '<div class="col-xs-1 likeCount">' +
+														item.heartCount +
+													'</div>' +
+													'<div class="col-xs-1">' +
+													'</div>' +
+													'<div class="col-xs-2 comment">' +
+													'	<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>' +
+													'</div>' +
+													'<div class="col-xs-1 commentCount">' +
+														item.commentCount +
+													'</div>' +
+													'<div class="col-xs-1">' +
+													'</div>' +
+													'<div class="col-xs-2 report">' +
+													'	<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>' +
+													'</div>' +
+													'<div class="col-xs-1"></div>' +
+													'</div>' +
+												'</section>' +
+											'</form>' +
+										'</div>'
 										
 									}) // each close
 									
-									addHtml += "</p>"
+									console.log(addHtml);
 									$(addHtml).appendTo($("div.six:last"));
 									$("#currentPage").val( parseInt($("#currentPage").val()) + 1 );
 									
-									if(addHtml == "<p></p>") {
+									if(addHtml == "") {
 										$("#pageFlag").val(false);
 									}
 									
@@ -167,8 +312,20 @@
 		<%-- ADD_FEED --%>
 		$(document).on("click", ".addFeed", function(event){
 			event.stopPropagation();
-			alert("피드 추가버튼");
-			$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			
+			console.log($(".note-editable").html());
+			
+			if($(".note-editable").html() == "<p><br></p>") {
+				Swal.fire({
+					  title: '내용을 입력하세요',
+					  width: 400,
+					  icon: 'warning',
+					  timer : 500,
+					  showConfirmButton : false,
+				})
+			} else {
+				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			}
 		});
 		<%-- ADD_FEED --%>
 		
@@ -189,8 +346,9 @@
 			console.log( $(this).parent().parents(".feedForm").html());
 			
 			Swal.fire({
-				  title: '글을 삭제하시겠습니까???',
+				  title: '글을 삭제하시겠습니까?',
 				  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+				  width: 500,
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -210,7 +368,7 @@
 		<%-- ADD_FEED_HEART --%>
 		$(document).on("click", ".feedLike", function(event){
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
+			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
@@ -249,7 +407,7 @@
 		<%-- DELETE_FEED_HEART --%>
 		$(document).on("click", ".feedDislike", function(event){
 			event.stopPropagation();
-			alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
+			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
