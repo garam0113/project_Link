@@ -82,9 +82,11 @@ INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '1', '1');
 
 SELECT * FROM FEED ORDER BY feed_no DESC;
 
+SELECT * FROM FEED WHERE feed_no = 52 ORDER BY feed_no DESC;
+
 SELECT * FROM FEED_COMMENT ORDER BY sequence ASC;
 
-SELECT * FROM FEED_COMMENT WHERE feed_no = 37 ORDER BY sequence ASC;
+SELECT * FROM FEED_COMMENT WHERE feed_no = 52 ORDER BY sequence ASC;
 
 SELECT * FROM HEART;
 
@@ -94,7 +96,7 @@ INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
 VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
-
+SELECT * FROM REPORT_PUSH
 
 
 ======================================================================================================================================
@@ -253,7 +255,7 @@ SELECT * from FEED_COMMENT ORDER BY feed_comment_no DESC;
 
 SELECT * FROM heart
 
-
+SELECT * FROM FOLLOW_BLOCK
 
 SELECT
 COUNT(*)
@@ -263,4 +265,179 @@ AND parent		= 101
 
 
 
-SELECT inner_table.* FROM ( SELECT rownum AS row_seq, deep_table.* FROM ( SELECT f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition , isLike.EXIST FROM users u, feed f, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '0' AND user_id = 'user05' ) isLike WHERE u.user_id = f.user_id AND f.feed_no = isLike.EXIST(+) AND f.feed_open_condition = '3' AND f.report_condition = '0' AND f.delete_condition = '0' ORDER BY feed_no DESC ) deep_table WHERE ROWNUM <= 10 ) inner_table WHERE row_seq BETWEEN 1 AND 10 
+SELECT * FROM USERS
+
+
+
+
+
+
+
+
+
+
+SELECT
+*
+FROM (
+	SELECT
+	*
+	FROM	(
+				SELECT 
+				f.feed_no, f.user_id, u.nickName, u.profile_image, 
+				f.feed_open_condition, f.feed_full_content, f.feed_content, 
+				f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4,
+				f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+				f.feed_reg_date, f.feed_update_date, f.report_condition, 
+				f.delete_condition , isLike.EXIST FROM users u, feed f, (
+																			SELECT
+																			source_no as EXIST
+																			FROM HEART
+																			WHERE TRIM(source)		= '0'
+																			AND user_id				= 'Link4813'
+																												) isLike
+				WHERE u.user_id = f.user_id
+				AND f.feed_no = isLike.EXIST(+)
+				AND f.feed_open_condition	=	'3'
+				AND f.report_condition		=	'0'
+				AND f.delete_condition		=	'0'
+				ORDER BY feed_no DESC	) ff, (
+												SELECT
+												SUBSTR(XMLAGG(XMLELEMENT(X, ',', recv_user_id) ORDER BY recv_user_id).EXTRACT('//text()'), 2) AS NAME
+												FROM FOLLOW_BLOCK
+												WHERE send_user_id = 'Link4813'
+												AND STATE = '1'
+												AND TYPE = '2'
+																) fb )
+
+															
+															
+															
+															
+		
+
+
+SELECT
+*
+FROM	(
+			SELECT 
+			f.feed_no, f.user_id, u.nickName, u.profile_image, 
+			f.feed_open_condition, f.feed_full_content, f.feed_content, 
+			f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4,
+			f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+			f.feed_reg_date, f.feed_update_date, f.report_condition, 
+			f.delete_condition , isLike.EXIST FROM users u, feed f, (
+																		SELECT
+																		source_no as EXIST
+																		FROM HEART
+																		WHERE TRIM(source)		= '0'
+																		AND user_id				= 'Link4813'
+																											) isLike
+			WHERE u.user_id = f.user_id
+			AND f.feed_no = isLike.EXIST(+)
+			AND f.feed_open_condition	=	'3'
+			AND f.report_condition		=	'0'
+			AND f.delete_condition		=	'0'
+			ORDER BY feed_no DESC	) ff
+WHERE TRIM(user_id) NOT IN (
+											SELECT
+											SUBSTR(XMLAGG(XMLELEMENT(X, ' ', recv_user_id) ORDER BY recv_user_id).EXTRACT('//text()'), 2) AS NAME
+											FROM FOLLOW_BLOCK
+											WHERE send_user_id = 'Link4813'
+											AND STATE = '1'
+											AND TYPE = '2'
+															)						
+															
+															
+															
+						
+
+
+SELECT
+*
+FROM	(
+			SELECT 
+			f.feed_no, f.user_id, u.nickName, u.profile_image, 
+			f.feed_open_condition, f.feed_full_content, f.feed_content, 
+			f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4,
+			f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+			f.feed_reg_date, f.feed_update_date, f.report_condition, 
+			f.delete_condition , isLike.EXIST FROM users u, feed f, (
+																		SELECT
+																		source_no as EXIST
+																		FROM HEART
+																		WHERE TRIM(source)		= '0'
+																		AND user_id				= 'Link4813'
+																											) isLike
+			WHERE u.user_id = f.user_id
+			AND f.feed_no = isLike.EXIST(+)
+			AND f.feed_open_condition	=	'3'
+			AND f.report_condition		=	'0'
+			AND f.delete_condition		=	'0'
+			ORDER BY feed_no DESC	) ff
+WHERE TRIM(user_id) NOT IN (
+											SELECT
+											recv_user_id AS NAME
+											FROM FOLLOW_BLOCK
+											WHERE send_user_id = 'Link4813'
+											AND STATE = '1'
+											AND TYPE = '2'
+															)						
+															
+															
+															
+															
+															
+															
+															
+															
+									SELECT    
+	rownum AS row_seq,    
+	deep_table.*    
+	FROM (      
+		SELECT    f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition               , isLike.EXIST 
+		FROM users u, feed f, (                
+					SELECT                
+					source_no as EXIST                
+					FROM HEART                
+					WHERE TRIM(source)  = '0'                
+					AND user_id    = 'Link4813'                           ) isLike         
+		WHERE u.user_id = f.user_id        
+		AND f.feed_no = isLike.EXIST(+)        
+		AND f.feed_open_condition = '3'        
+		AND f.report_condition  = '0'        
+		AND f.delete_condition  = '0'                                           
+		ORDER BY feed_no DESC  ) deep_table 						
+															
+															
+															
+															
+															SELECT
+XMLELEMENT(A, recv_user_id)
+FROM FOLLOW_BLOCKㄴㅁㅇㅁㄴㅇㅁㅇㅁㄴㅇ
+
+
+
+
+SELECT
+SUBSTR(XMLAGG(XMLELEMENT(X, ',', recv_user_id) ORDER BY recv_user_id).EXTRACT('//text()'), 2) AS NAME
+FROM FOLLOW_BLOCK
+WHERE send_user_id = 'Link4813'
+
+
+
+
+
+
+SELECT
+*
+FROM FOLLOW_BLOCK
+WHERE SEND_USER_ID = 'Link4813'
+AND STATE = '1'
+AND TYPE = '2'
+
+
+
+
+
+
+
