@@ -42,7 +42,12 @@
  	 
  	 <style>
 	body {
-		padding-top : 70px;
+    background-color: #fbfbfb;
+    color: #333;
+    /* font-size: 1.125em; */
+    font-size: 15px !important;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 0.8 !important;
 	}
 	
 	.darkover {
@@ -56,22 +61,21 @@
 	#calendar {
 	margin-left: 0px;
 	margin-top: 50px;
-	width: 1100px;
-	display: inline-block;
+	width: 90%;
+	height: 800px;
+	display: flex;
 	justify-content: center;
 	}
 	
-	.fc .fc-scroller-liquid-absolute {
-    /* position: static !important; */
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-	}
 	
 	element.style {
 	
-		margin-right: 40px !important;
+		margin-right: 115px !important;
+		/* overflow: visible !important; */
+	}
+	
+	.fc-scroller {
+		overflow-y : hidden !important;
 	}
 	
 	
@@ -100,7 +104,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="20" style=""><!-- 상단 검은색 공통 영역 -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -116,9 +120,8 @@
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
+
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-bottom: 0em;">
 						<li data-group="advertising">
 							<a href="/club/getMeetingList">모임 일정</a>
 						</li>
@@ -145,12 +148,12 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#BD76FF; color:#fbfbfb">일정등록</button>
+		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#BD76FF; color:#fbfbfb; margin-right: 115px;">일정등록</button>
 
 
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row" id="calendar">
+	    <div class="row" id="calendar" style="">
 	    
 	    	<jsp:include page="/club/calendar.jsp"/>	    		    
 	
@@ -159,7 +162,7 @@
 		
 		
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
+     <%--  <table class="table table-hover table-striped" >
       
         <thead>
           <tr>
@@ -173,7 +176,7 @@
        
 		<tbody>
 		<tr>
-		<%-- ${clubList} --%>
+		${clubList}
 		  <c:set var="i" value="0" />
 		  <c:forEach var="i" items="${meetingList}">
 		  <input type="hidden" name="meetingNo" value="${i.meetingNo}">
@@ -188,14 +191,12 @@
         </tr>
         </tbody>
       
-      </table>
+      </table> --%>
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 		<div class="pageNavi" style="float:left;">
- 		<jsp:include page="../common/pageNavigator_new2.jsp" />
- 		</div>
+
 	</main>
 	
 </body>

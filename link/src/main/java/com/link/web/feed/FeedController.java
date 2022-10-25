@@ -178,6 +178,9 @@ public class FeedController {
 			search.setCurrentPage(1);
 		}
 		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		heart.setSource("0");
@@ -196,6 +199,9 @@ public class FeedController {
 		
 		Map<String, Object> commentMap = feedService.getFeedCommentList(map);
 		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)commentMap.get("totalFeedCommentCount")).intValue(), pageUnit, pageSize);
+		
+		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("feed", map.get("feed"));
 		model.addAttribute("commentList", commentMap.get("commentList"));
 		model.addAttribute("totalFeedCommentCount", commentMap.get("totalFeedCommentCount"));
@@ -337,7 +343,7 @@ public class FeedController {
 				
 		model.addAttribute("feed", map.get("feed"));
 		
-		return "forward:/feed/getFeed.jsp";
+		return "forward:/feed/getFeed";
 	}
 	
 	// 사용

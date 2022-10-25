@@ -18,7 +18,7 @@ public class Report{
 	private String reportImage2;		// 신고 이미지2
 	private int type;					// 신고/알림 타입
 	private ClubPost clubPost;			// 모임 게시물
-	private Comment clubPostComment;    // 모임 게시물 댓글
+	private Comment comment;    // 모임 게시물 댓글
 	private Feed feed;					// 피드
 	private Comment feedComment; 		// 피드 댓글	
 	private Live live;	  				// 라이브
@@ -47,7 +47,7 @@ public class Report{
 		this.user1 = user1;
 		this.user2 = user2;
 		this.type = type;
-		this.clubPostComment = clubPostComment;
+		this.comment = clubPostComment;
 	}
 
 	public Report(int no, String title, String content, int reportSource, User user1, User user2, int reportReason,
@@ -67,7 +67,7 @@ public class Report{
 		this.reportImage2 = reportImage2;
 		this.type = type;
 		this.clubPost = clubPost;
-		this.clubPostComment = clubPostComment;
+		this.comment = clubPostComment;
 		this.feed = feed;
 		this.feedComment = feedComment;
 		this.live = live;
@@ -208,12 +208,12 @@ public class Report{
 
 
 	public Comment getClubPostComment() {
-		return clubPostComment;
+		return comment;
 	}
 
 
 	public void setClubPostComment(Comment clubPostComment) {
-		this.clubPostComment = clubPostComment;
+		this.comment = clubPostComment;
 	}
 
 
@@ -278,7 +278,7 @@ public class Report{
 		builder.append(", clubPost=");
 		builder.append(clubPost);
 		builder.append(", clubPostComment=");
-		builder.append(clubPostComment);
+		builder.append(comment);
 		builder.append(", feed=");
 		builder.append(feed);
 		builder.append(", feedComment=");

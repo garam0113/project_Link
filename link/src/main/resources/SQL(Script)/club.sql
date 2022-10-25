@@ -98,12 +98,12 @@ SELECT
 getClubMemberList()
 SELECT inner_table.*
 				FROM ( SELECT rownum AS row_seq, deep_table.*
-						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image, c.club_max_member
+						FROM ( SELECT cU.club_user_no, cU.user_id, u.nickName, cU.member_role, u.logout_date, cU.join_reg_date, cU.approval_condition, u.profile_image, c.club_max_member, c.club_image
 								FROM
 								users u, club_User cU, club c
 								WHERE cU.user_id = u.user_id
 										and cU.club_no = c.club_no
-										and cU.club_no = 103
+										and cU.club_no = 1
 										) deep_table
 							) inner_table
 									
