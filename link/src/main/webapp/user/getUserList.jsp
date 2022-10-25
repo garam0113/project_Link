@@ -30,13 +30,7 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
- -->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 body {
@@ -47,9 +41,17 @@ body {
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 	//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
+	function enterkey() {
+		if (window.event.keyCode == 13) {
+			$("#currentPage1").val(currentPage)
+			$("#form1").attr("method", "POST").attr("action",
+					"/user/getUserList").submit();
+		}
+	}
+
 	function fncGetUserList(currentPage) {
-		$("#currentPage").val(currentPage)
-		$("form").attr("method", "POST").attr("action", "/user/getUserList")
+		$("#currentPage1").val(currentPage)
+		$("#form1").attr("method", "POST").attr("action", "/user/getUserList")
 				.submit();
 	}
 
@@ -87,7 +89,6 @@ body {
 	 })
 	 })
 	 */
-	
 </script>
 
 </head>
@@ -108,9 +109,11 @@ body {
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
-			<c:if test="${ empty search.searchKeyword}">
-				<div class="col-md-6 left">
-					<form class="form-inline" name="detailForm">
+			<div class="col-md-6 left">
+				<form class="form-inline" id="form1">
+				
+					<c:if 
+						test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
 
 						<div class="form-group">
 							<select class="form-control" name="searchCondition">
@@ -118,24 +121,28 @@ body {
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>닉네임</option>
-							</select>
+							</select> 
 						</div>
-
+ 
 						<div class="form-group" style="margin-top: 20px;">
 							<label class="sr-only" for="searchKeyword">검색어</label> <input
 								type="text" class="form-control" id="searchKeyword"
-								name="searchKeyword" placeholder="검색어"
+								name="searchKeyword" placeholder="검색어" onkeyup="enterkey()"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
 						<button type="button" class="btn btn-default">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-						<input type="hidden" id="currentPage" name="currentPage" value="" />
+					</c:if>
+					<c:if
+						test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
+					</c:if>
+					<input type="hidden" id="currentPage1" name="currentPage" value="1" />
 
-					</form>
-				</div>
-			</c:if>
+				</form>
+			</div>
+
 
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -170,17 +177,6 @@ body {
 							${ fn:trim(user.penaltyType) == 1 ? "정지" : ""} ${ fn:trim(user.penaltyType) == 2 ? "영구정지" : ""}</td>
 						<td align="left">${ !empty user.stopStartDate ? user.stopStartDate : ""}
 							- ${ !empty user.stopEndDate ? user.stopEndDate : ""}</td>
-						<td>
-							<div id="${user.nickName}" title="프로필보기" hidden="dia">
-								<div id="ajaxImage"></div>
-								<div id="ajaxNickName"></div>
-								<div id="ajaxWriting"></div>
-								<div>
-									<span><button>차단</button>
-										<button>팔로우</button></span> <span><button>채팅</button></span>
-								</div>
-							</div>
-						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

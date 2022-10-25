@@ -71,6 +71,12 @@ body>div.container {
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <script type="text/javascript">
+	function enterkey() {
+		if (window.event.keyCode == 13) {
+			login();
+		}
+	}
+
 	$(function() {
 		$(".login__button").on("click", function() {
 			login(); //로그인
@@ -131,7 +137,7 @@ body>div.container {
 
 				console.log(Data.stopEndDate);
 
-				if (Data.userId == "") {
+				if (Data.userId == "" || Data.outUserState == 1) {
 					swal.fire("존재하지 않는 아이디입니다.");
 					return;
 				} else if (Data.userId != "" && pw != Data.password) {
@@ -170,18 +176,19 @@ body>div.container {
 			<form class="login__register" id="login-in">
 				<h1 class="login__title">Sign In</h1>
 				<div class="login__box">
-					<i class='bx bx-user login__icon'></i> <input type="text"
-						placeholder="Username" class="login__input" name="userId" style="font-size: initial;"
-						id="userId">
+					<i class='bx bx-user login__icon'></i> <input type="text" onkeyup="enterkey()" 
+						placeholder="Username" class="login__input" name="userId"
+						style="font-size: initial;" id="userId">
 				</div>
 				<div class="login__box">
 					<i class='bx bx-lock login__icon'></i> <input type="password"
-						placeholder="Password" class="login__input" name="password" style="font-size: initial;"
-						id="password">
+						placeholder="Password" class="login__input" name="password" onkeyup="enterkey()" 
+						style="font-size: initial;" id="password">
 				</div>
-				<a href="#getId" class="login__forgot" style="font-size: small;">Forgot Id? </a> <a
-					href="#getPassword" class="login__forgot" style="font-size: small;">Forgot Password? </a> <a
-					href="#login" class="login__button">Sign In</a>
+				<a href="#getId" class="login__forgot" style="font-size: small;">Forgot
+					Id? </a> <a href="#getPassword" class="login__forgot"
+					style="font-size: small;">Forgot Password? </a> <a href="#login"
+					class="login__button">Sign In</a>
 				<div class="form-group">
 					<div class="col-sm-offset-4 col-sm-6 text-center">
 						<button class="button" type="button" onclick="kakaoLogin();">
@@ -207,9 +214,10 @@ body>div.container {
 				</div>
 				<br /> <br /> <br /> <br /> <br /> <br />
 				<div>
-					<span class="login__account login__account--account" style="font-size: small;">Don't
-						Have an Account?</span> <span class="login__signin login__signin--signup" style="font-size: small;"
-						id="sign-up">Sign Up</span>
+					<span class="login__account login__account--account"
+						style="font-size: small;">Don't Have an Account?</span> <span
+						class="login__signin login__signin--signup"
+						style="font-size: small;" id="sign-up">Sign Up</span>
 				</div>
 			</form>
 		</div>
@@ -242,7 +250,7 @@ body>div.container {
 		$.ajax("/userRest/json/getUser", {
 			type : "POST",
 			data : JSON.stringify({
-				snsUserId : ","+snsId,
+				snsUserId : "," + snsId,
 				addType : ",2"
 			}),
 			dataType : "json",
@@ -254,7 +262,7 @@ body>div.container {
 				console.log("서버로 받는 데이타 : " + Data.userId)
 				console.log("서버로 받는 데이타 : " + Data.penaltyType)
 				console.log("서버로 받는 데이타 : " + Data.stopEndDate)
-				
+
 				if (Data.penaltyType == 2) {
 					swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
 					return;
@@ -270,8 +278,6 @@ body>div.container {
 		})
 
 	}
-	
-	
 </script>
 
 </body>
