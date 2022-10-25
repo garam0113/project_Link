@@ -42,27 +42,31 @@ public class ServiceCenterRestController {
 		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
 		System.out.println(report);
-//		serviceCenterService.getReportDuple(report);
-		if(report.getReportSource()==1) {
-			ClubPost clubPost = new ClubPost();
-			clubPost.setClubNo(report.getNo());
-			report.setClubPost(clubPost);
-		}else if(report.getReportSource()==2) {
-			comment.setClubPostCommentNo(report.getNo());
-			report.setClubPostComment(comment);
-		}
-		else if(report.getReportSource()==3) {
-			Feed feed = new Feed();
-			feed.setFeedNo(report.getNo());
-			System.out.println(report.getNo()+"테스트용");
-			report.setFeed(feed);
-			System.out.println(feed);
-		}else if(report.getReportSource()==4) {
-			comment.setFeedCommentNo(report.getNo());
-			report.setFeedComment(comment);
-		}
-		
-		 serviceCenterService.addReport(report); 
+		Report report2 = serviceCenterService.getReportDuple(report);
+			if(report2.getUser2().getUserId()!=report.getUser2().getUserId()) {
+					if(report.getReportSource()==1) {
+						ClubPost clubPost = new ClubPost();
+						clubPost.setClubPostNo(report.getNo());
+						System.out.println(report.getNo()+"테스트용 !!!");
+						report.setClubPost(clubPost);
+					}else if(report.getReportSource()==2) {
+						comment.setClubPostCommentNo(report.getNo());
+						System.out.println(report.getNo()+"테스트용 !!!");
+						report.setClubPostComment(comment);
+					}
+					else if(report.getReportSource()==3) {
+						Feed feed = new Feed();
+						feed.setFeedNo(report.getNo());
+						System.out.println(report.getNo()+"테스트용");
+						report.setFeed(feed);
+						System.out.println(feed);
+					}else if(report.getReportSource()==4) {
+						comment.setFeedCommentNo(report.getNo());
+						report.setFeedComment(comment);
+					}
+			serviceCenterService.addReport(report);
+			}
+		  
 		
 		model.addAttribute("report", report);
 		

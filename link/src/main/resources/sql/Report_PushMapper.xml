@@ -43,7 +43,7 @@
 	</association>
 	
 		
-	<association property="clubPostComment" javaType="comment">
+	<association property="comment" javaType="comment">
 		<result property="clubPostCommentNo"    column="club_post_comment_no" jdbcType="NUMERIC"/>
 	</association>
 	
@@ -83,7 +83,7 @@
 			 #{content},
 			 #{reportSource:VARCHAR},
 			 #{clubPost.clubPostNo:NUMERIC},
-			 #{clubPostComment.clubPostCommentNo:NUMERIC},
+			 #{comment.clubPostCommentNo:NUMERIC},
 			 #{feed.feedNo:NUMERIC},
 			 #{feedComment.feedCommentNo:NUMERIC}, 
 			 #{user1.userId:VARCHAR},
@@ -114,7 +114,7 @@
 		 <if test="clubPost.clubPostNo != null">
         AND R.CLUB_POST_NO
         </if>
-        <if test="clubPostComment.clubPostCommentNo != null">
+        <if test="comment.clubPostCommentNo != null">
         AND R.CLUB_POST_COMMENT_NO
         </if>
         <if test="feed.feedNo != null">

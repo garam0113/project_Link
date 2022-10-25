@@ -78,7 +78,7 @@
  }
  
 	function AddReport(){	
-		alert($("#feedNo").val());
+
 		var sum = 0;
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
 		
@@ -87,7 +87,7 @@
 			sum += sum+parseInt(sum2);
 				
 		}
-			alert($("#clubPostNo").val()!=null);
+			alert($("#clubPostNo").val());
 			alert($("#clubPostCommentNo").val());
 			alert($("#feedNo").val());
 			alert($("#feedCommentNo").val());

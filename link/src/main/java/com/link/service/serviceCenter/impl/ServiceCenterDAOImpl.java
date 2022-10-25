@@ -1,6 +1,6 @@
 package com.link.service.serviceCenter.impl;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.link.common.Search;
+import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
@@ -127,7 +129,8 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
 		
-		
+		System.out.println("들어오나요??");
+		System.out.println(report);
 		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
 	}
 
@@ -151,9 +154,15 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		System.out.println("여기까지 ㄴ들어오나?");
 		System.out.println(report3+"테스트용");
 			if(report3.getReportSource()==1) { //모임게시물에서 들어옴
-				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("report", report3);
+				map.put("clubPost", new ClubPost());
+				sqlSession.update("ClubPostMapper.updateClubPost", map);
 			}else if(report3.getReportSource()==2) { //모임게시물댓글
-				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("comment", new Comment());
+				map.put("report", report3);
+				sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);
 			}else if(report3.getReportSource()==3) {//피드
 				sqlSession.update("FeedMapper.reportFeed", report3.getFeed().getFeedNo());
 				System.out.println(report3.getFeed().getFeedNo()+"테스트용용 피드");
@@ -162,6 +171,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 				sqlSession.update("FeedMapper.reportFeedComment", report3.getFeedComment().getFeedCommentNo());
 			
 			}
+			
 	 }
 	 else {//신고처리 무혐의
 		 sqlSession.update("Report_PushMapper.handleReportCondition", report);
