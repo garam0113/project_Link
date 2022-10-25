@@ -33,8 +33,9 @@
 	
 	
 	<sql id="select-list">
-		SELECT C.CLUB_POST_COMMENT_NO, C.CLUB_POST_NO, C.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, C.COMMENT_CONTENT, C.COMMENT_REG_DATE, C.COMMENT_UPDATE_DATE, C.COMMENT_HEART_COUNT, C.COMMENT_COUNT,
-		C.REPORT_CONDITION, C.DELETE_CONDITION, C.PARENT, C.DEPTH, C.SEQUENCE, HEART_CONDITION
+		SELECT C.CLUB_POST_COMMENT_NO, C.CLUB_POST_NO, C.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, C.COMMENT_CONTENT, C.COMMENT_HEART_COUNT, C.COMMENT_COUNT, C.REPORT_CONDITION, C.DELETE_CONDITION,
+		TO_CHAR(C.COMMENT_REG_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS COMMENT_REG_DATE, TO_CHAR(C.COMMENT_UPDATE_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS COMMENT_UPDATE_DATE,
+		C.PARENT, C.DEPTH, C.SEQUENCE, HEART_CONDITION
 		FROM CLUB_POST_COMMENT C, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
 												FROM HEART
 												WHERE TRIM(SOURCE) = '3' AND USER_ID = #{ comment.user.userId } ) V1
@@ -98,20 +99,20 @@
 	
 	
 	<!-- 댓글내용 수정 -->
-	<update id="updateClubPostComment" parameterType="comment">
+	<update id="updateClubPostComment" parameterType="map">
 		UPDATE CLUB_POST_COMMENT
 		SET
 		<choose>
-			<when test="heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
-			<when test="heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
-			<when test="deleteCondition == 1">COMMENT_COUNT = COMMENT_COUNT - 1</when>
-			<when test="deleteCondition == -1">COMMENT_COUNT = COMMENT_COUNT + 1</when>
-			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
-			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
+			<when test="comment.heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
+			<when test="comment.heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
+			<when test="comment.deleteCondition == 1">COMMENT_COUNT = COMMENT_COUNT - 1</when>
+			<when test="comment.deleteCondition == -1">COMMENT_COUNT = COMMENT_COUNT + 1</when>
+			<when test="report.reportCondition == 1 and report.reportReason > 0">REPORT_CONDITION = 1</when>
+			<otherwise>COMMENT_CONTENT = #{ comment.commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
 		</choose>
 		<choose>
-			<when test="deleteCondition == 1">WHERE CLUB_POST_COMMENT_NO = #{ parent }</when>
-			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
+			<when test="comment.deleteCondition == 1 or comment.deleteCondition == -1">WHERE CLUB_POST_COMMENT_NO = #{ comment.parent }</when>
+			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ comment.clubPostCommentNo }</otherwise>
 		</choose>
 	</update>
 	

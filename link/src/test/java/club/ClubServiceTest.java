@@ -56,17 +56,17 @@ public class ClubServiceTest {
 //	}
 	
 //	@Test
-	public void testGetClub() throws Exception {
-		
-		System.out.println("\n ===========================");
-		Club club = clubService.getClub(1);
-		System.out.println(club);
-		
-		Assert.assertEquals(1, club.getClubNo());
-		
-		System.out.println("========================\n");
-		
-	}
+//	public void testGetClub() throws Exception {
+//		
+//		System.out.println("\n ===========================");
+//		Club club = clubService.getClub(1);
+//		System.out.println(club);
+//		
+//		Assert.assertEquals(1, club.getClubNo());
+//		
+//		System.out.println("========================\n");
+//		
+//	}
 	
 	//@Test
 	public void testGetClubList() throws Exception {
@@ -111,25 +111,25 @@ public class ClubServiceTest {
 	}
 	
 //	@Test
-	public void testUpdateClub() throws Exception {
-		
-		System.out.println("\n=================================");
-		
-		Club club = clubService.getClub(3);
-		
-		System.out.println("변경전 club : "+club);
-		
-		Club club01 = new Club();
-		club.setClubNo(3);
-		club.setClubTitle("JUNIT 수정테스트 모임제목");
-		club.setClubDetail("Junit 수정테스트 모임상세");
-		club.setClubCategory("Junit 수정테스트 모임카타");
-		club.setClubArea("Junit 수정테스트 모임지역");
-		club.setClubImage("Junit 수정테스트 모임이미지");
-		
-		clubService.updateClub(club);
-		System.out.println("변경 후 club : " + club);
-	}
+//	public void testUpdateClub() throws Exception {
+//		
+//		System.out.println("\n=================================");
+//		
+//		Club club = clubService.getClub(3);
+//		
+//		System.out.println("변경전 club : "+club);
+//		
+//		Club club01 = new Club();
+//		club.setClubNo(3);
+//		club.setClubTitle("JUNIT 수정테스트 모임제목");
+//		club.setClubDetail("Junit 수정테스트 모임상세");
+//		club.setClubCategory("Junit 수정테스트 모임카타");
+//		club.setClubArea("Junit 수정테스트 모임지역");
+//		club.setClubImage("Junit 수정테스트 모임이미지");
+//		
+//		clubService.updateClub(club);
+//		System.out.println("변경 후 club : " + club);
+//	}
 	
 	//@Test
 //	public void TestAddApptrovalCondition() throws Exception {
@@ -252,38 +252,38 @@ public class ClubServiceTest {
 //	}
 	
 	//@Test
-	public void TestGetMeeting() throws Exception {
-		
-		System.out.println("\n====================================");
-		
-		Meeting meeting = clubService.getMeeting(6);
-		System.out.println(meeting);
-		
-		Assert.assertEquals(6, meeting.getMeetingNo());
-		
-		System.out.println("==============================\n");
-	}
+//	public void TestGetMeeting() throws Exception {
+//		
+//		System.out.println("\n====================================");
+//		
+//		Meeting meeting = clubService.getMeeting(6);
+//		System.out.println(meeting);
+//		
+//		Assert.assertEquals(6, meeting.getMeetingNo());
+//		
+//		System.out.println("==============================\n");
+//	}
 	
 	//@Test
-	public void TestUpdateMeeting() throws Exception {
-		
-		System.out.println("\n===========================================");
-		
-		Meeting meeting = clubService.getMeeting(6);
-		
-		System.out.println("변경 전 meeting : "+meeting);
-		
-		Meeting meeting01 = new Meeting();
-		meeting.setMeetingNo(6);
-		meeting.setMeetingTitle("JUNIT 수정테스트 일정제목");
-		meeting.setMeetingContent("JUNIT 수정TEST 미팅내용");
-		meeting.setMeetingDate("JUNIT 수정테스트 date");
-		meeting.setMeetingTime("JUNIT 수정테스트 일정시간");
-		meeting.setMeetingMaximumMember(50);
-		
-		clubService.updateMeeting(meeting);
-		System.out.println("변경 후 meeting : "+meeting);
-	}
+//	public void TestUpdateMeeting() throws Exception {
+//		
+//		System.out.println("\n===========================================");
+//		
+//		Meeting meeting = clubService.getMeeting(6);
+//		
+//		System.out.println("변경 전 meeting : "+meeting);
+//		
+//		Meeting meeting01 = new Meeting();
+//		meeting.setMeetingNo(6);
+//		meeting.setMeetingTitle("JUNIT 수정테스트 일정제목");
+//		meeting.setMeetingContent("JUNIT 수정TEST 미팅내용");
+//		meeting.setMeetingDate("JUNIT 수정테스트 date");
+//		meeting.setMeetingTime("JUNIT 수정테스트 일정시간");
+//		meeting.setMeetingMaximumMember(50);
+//		
+//		clubService.updateMeeting(meeting);
+//		System.out.println("변경 후 meeting : "+meeting);
+//	}
 	
 //	@Test
 	public void TestGetMeetingList() throws Exception {
@@ -309,27 +309,27 @@ public class ClubServiceTest {
 	}
 	
 //	@Test
-	public void TestAddMeetingMember() throws Exception {
-		
-		System.out.println("\n========================================");
-		
-		Participant participant = new Participant();
-		
-		participant.setParticipantNo(10);
-		participant.setMeetingNo(2);
-		participant.setParticipantUserId("user04");
-		
-		System.out.println("insert 결과 : "+clubService.addMeetingMember(participant));
-		Assert.assertEquals(1, clubService.addMeetingMember(participant));
-	}
-	
-	//@Test
-	public void TestDeleteMeetingMember() throws Exception {
-		
-		System.out.println("\n==========================================");
-		
-		clubService.deleteMeetingMember(23);
-	}
+//	public void TestAddMeetingMember() throws Exception {
+//		
+//		System.out.println("\n========================================");
+//		
+//		Participant participant = new Participant();
+//		
+//		participant.setParticipantNo(10);
+//		participant.setMeetingNo(2);
+//		participant.setParticipantUserId("user04");
+//		
+//		System.out.println("insert 결과 : "+clubService.addMeetingMember(participant));
+//		Assert.assertEquals(1, clubService.addMeetingMember(participant));
+//	}
+//	
+//	//@Test
+//	public void TestDeleteMeetingMember() throws Exception {
+//		
+//		System.out.println("\n==========================================");
+//		
+//		clubService.deleteMeetingMember(23);
+//	}
 	
 //	@Test
 	public void TestGetMeetingMemberList() throws Exception {

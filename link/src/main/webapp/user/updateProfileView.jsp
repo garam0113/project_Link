@@ -29,6 +29,8 @@
 	src="/resources/javascript/user/nickNameCheck.js"></script>
 <script type="text/javascript" charset="utf-8"
 	src="/resources/javascript/user/category.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="/resources/javascript/user/image.js"></script>
 
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -55,7 +57,7 @@ body>div.container {
 		
 		var regExp2 = /\s/g;
 		var nickName = $("#nickName").val();
-		var gender = $("#gender").is(":checked");
+		var gender = $(".gender").is(":checked");
 		var checkNickName = $("#checkNickName").val();
 		//alert(gender);
 		
@@ -143,9 +145,9 @@ body>div.container {
 								<tr>
 								<tr>
 									<th><span>성별</span></th>
-									<td><input type="radio" class="form-radio" id="gender"
+									<td><input type="radio" class="gender" id="gender"
 										name="gender" placeholder="성별" value="남자">&nbsp;남자 <input
-										type="radio" class="form-radio" id="gender" name="gender"
+										type="radio" class="gender" id="gender" name="gender"
 										placeholder="성별" value="여자">&nbsp;여자</td>
 								</tr>
 								<tr>
@@ -170,7 +172,7 @@ body>div.container {
 									<th><span>관심카테고리</span></th>
 									<td><div style="display: flex;">
 											<select class="form-control"
-												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17;"
+												style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17;     font-size: inherit;"
 												name="categorySelect" id="categorySelcet">
 												<option value="운동">운동</option>
 												<option value="봉사활동">봉사활동</option>
@@ -182,7 +184,8 @@ body>div.container {
 												<option value="독서">독서</option>
 												<option value="기타">기타</option>
 											</select>
-											<button type="button" class="btn btn-primary"
+											<button type="button"
+												style="width: 60px; background-color: #d9edf7; border-style: hidden;"
 												id="categryClick">추가</button>
 										</div></td>
 								</tr>
@@ -205,9 +208,13 @@ body>div.container {
 								</tr>
 								<tr>
 									<th><span>프로필사진</span></th>
-									<td><input type="file" class="form-file" id="profileImageFile"
-										name="profileImageFile" placeholder="프로필사진"
-										value="${getUser.profileImage}"></td>
+									<td><input type="file" class="form-file" id="profileImageFile" style="display: none;"
+										name="profileImageFile"  onchange="setThumbnail(event);"
+										value="${getUser.profileImage}" />
+										<button id="im" type="button" class="image" style="border-style: hidden;">
+										<img id="imga" src="/resources/image/uploadFiles/${getUser.profileImage}" style="height: 300px; width:300px;"/>
+										</button>
+										</td>
 								</tr>
 								<tr>
 									<th><span></span></th>

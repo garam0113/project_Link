@@ -32,7 +32,17 @@
 	<style>
 	  body {
             padding-top : 50px;
-        }            
+        }
+        
+        #btn_group button{
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		color: #BD76FF;
+    	border-color: #BD76FF;
+    	background-color: #ffffff;
+		}            
         
     </style>
     
@@ -57,7 +67,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-primary").on("click", function() {
+		$("button.btn.btn-update").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			fncUpdateClub();
 		});
@@ -69,11 +79,32 @@
 
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			//window.close();
 			history.go(-1);
 		});
 	});
+	
+	function setThumbnail(event) {
+		var fileInput = document.getElementById("clubImage");
+		var file = fileInput.files[0];
+		var reader = new FileReader();
+
+		reader.onload = function(event) {
+			$("#imga").attr("src", event.target.result);
+		};
+		
+		console.log(file);
+		reader.readAsDataURL(file);
+		
+	} 
+
+	$(function() {
+		$(".image").on("click", function() {
+			$("#clubImage").click();		
+		})
+	})
+	
 
 </script>
 </head>
@@ -94,7 +125,7 @@
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}" style="width:300px" autocomplete='off'>
+					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}" style="width:300px; border-color: #BD76FF;" autocomplete='off'>
 				</div>					
 			</div>
 			
@@ -103,14 +134,14 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}" style="width:300px" autocomplete='off'>
+					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}" style="width:300px; border-color: #BD76FF;" autocomplete='off'>
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
 				<div class="col-sm-4">
-					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px">
+					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px; border-color: #BD76FF;">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -127,23 +158,50 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}" style="width:300px" autocomplete='off'>
+					<select class="form-control" id="clubArea" name="clubArea" style="width:300px; border-color: #BD76FF;">
+						<option value="강남구">강남구</option>
+						<option value="강동구">강동구</option>
+						<option value="강북구">강북구</option>
+						<option value="강서구">강서구</option>
+						<option value="관악구">관악구</option>
+						<option value="광진구">광진구</option>
+						<option value="구로구">구로구</option>
+						<option value="금천구">금천구</option>
+						<option value="노원구">노원구</option>
+						<option value="도봉구">도봉구</option>
+						<option value="동대문구">동대문구</option>
+						<option value="동작구">동작구</option>
+						<option value="마포구">마포구</option>
+						<option value="서대문구">서대문구</option>
+						<option value="서초구">서초구</option>
+						<option value="성동구">성동구</option>
+						<option value="성북구">성북구</option>
+						<option value="송파구">송팡구</option>
+						<option value="양천구">양천구</option>
+						<option value="영등포구">영등포구</option>
+						<option value="용산구">용산구</option>
+						<option value="은평구">은평구</option>
+						<option value="종로구">종로구</option>
+						<option value="중구">중구</option>
+						<option value="중랑구">중랑구</option>
+					</select>
 				</div>		
 			</div>			
 			
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
 				<div class="col-sm-4">
-					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
+					<input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
+					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/${club.clubImage}" style="height: 300px; width: 300px;"></button>
 				</div>		
 			</div>
 			
 			
 			
-			<div class="form-group">
+			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      		<button type="button" class="btn btn-update" >수 &nbsp;정</button>
+					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
 		    </div>
 			</div>
 			</div>

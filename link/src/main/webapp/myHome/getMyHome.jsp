@@ -17,6 +17,16 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
+<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
+	
+	
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	
 <script type="text/javascript">
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
@@ -37,7 +47,7 @@ $(function() {
 		
 		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 	});
-	
+   
 	
  });
  
@@ -54,20 +64,38 @@ $(function(){
 		$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 	});
 	<!-- ADD_FEED -->
+	$(document).on("click", ".btn_update", function(event){
+		event.stopPropagation();
+		console.log("피드 수정 버튼");
+		console.log($(this).parents(".feedForm").html())
+		
+		$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+	});
+	
 	
 	<!-- UPDATE_FEED -->
-	$(".btn_update").bind("click", function(){
-		alert("피드 수정 버튼");
-		$(this.form).attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+	$(document).on("click", ".btn_delete", function(event){
+		event.stopPropagation();
+		console.log("피드 삭제 버튼");
+		console.log( $(this).parents(".feedForm").html());
+		
+		Swal.fire({
+			  title: '글을 삭제하시겠습니까?',
+			  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.value) {
+	       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
+				// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+				$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+			}
+		})
 	});
-	<!-- UPDATE_FEED -->
-	
-	<!-- DELETE_FEED -->
-	$(".btn_delete").bind("click", function(){
-		alert("피드 삭제 버튼");
-		$(this.form).attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
-	});
-	<!-- DELETE_FEED -->
 	
 	<!-- GET_FEED -->
 	$(".btn_getFeed").bind("click", function(){
@@ -623,23 +651,31 @@ input[name="tab_item-follow"] {
 										<span class="says">says:</span>
 									</div>
 									<!-- comment-author -->
-									<div class="comment-meta">
-										<time datetime="2013-03-23 19:58">March 23, 2013 at
-											7:58 pm</time>
-										/ <a href="#" class="reply">Reply</a>
-									</div>
+									
+										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
+											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+										</h5>
+									
 									<!-- comment-meta -->
 									<p>${feed.content}</p>
 									<c:if test="${!empty feed.hashtag}">
 										<br />${feed.hashtag}</c:if>
 									<c:if test="${feed.checkHeart != 0}">
-										★★★내가 좋아요 한 피드입니다.★★★ 나중에 하트로 변경
+									<div class="col-xs-2">
+														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
+													</div>
 										</c:if>
+											<c:if test="${feed.checkHeart ne 0}">
+													<div class="col-xs-2">
+														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
+													</div>
+												</c:if>
 									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-										<input type="button" class="btn_update" value="수정">
-										<input type="button" class="btn_delete" value="삭제">
+										<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
 									</c:if>
-									<input type="button" class="btn_getFeed" value="보기"> <input
+									<input type="button" class= "btn_getFeed" value="보기"> <input
 										type="hidden" name="feedNo" value="${feed.feedNo}">
 
 									<section class="row section">
@@ -745,14 +781,16 @@ $(function() {
 });
 	
 	$(".tab_item-following").on("click" , function(e) {
-		var userId = $("#userId").val(); 
+		var userId = $("#userId").val();
+		console.log(userId);
 		$(".tab_item-following").off(e);
 	$.ajax({
 		url : "/myHomeRest/json/getFollowerList", // 어디로 갈거니? // 갈 때 데이터
 		type : "POST", // 타입은 뭘 쓸거니?
 		datatype : "json",
 		 data		:  JSON.stringify({
-			receiveId : userId
+			searchKeyword : userId
+			
 		 }),
 		 
 		contentType : "application/json",
@@ -761,13 +799,19 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:50px;' id="+item.userId+">"+
+				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"'>"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
-			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			
 			
-			$("#fl").append(value);            
+			 $("#fl").append(value);     
+			
+			 $(".yourHome2").on("click" , function() {
+					
+					self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+				});
+				
 			
 		})
 		

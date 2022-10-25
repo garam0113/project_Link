@@ -1,10 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
 <jsp:include page="/toolbar.jsp" />
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<script src="https://code.jquery.com/jquery.js"></script>
+	</head>
 		<main role="main">
 			<div id="intro-wrap">
 				<div id="intro" class="preload darken" data-autoplay="5000" data-navigation="true" data-pagination="true" data-transition="fadeUp">					
@@ -106,7 +115,7 @@
 						</div>
 					</div>
 				</section>	
-
+<jsp:include page="/myHome/followList.jsp" />
 				<section class="row section">
 					<div class="row-content buffer even clear-after">					
 						<div class="section-title"><h3>Latest News</h3></div>
@@ -362,11 +371,11 @@
 			</div><!-- row -->	
 		</footer>
 
-		<script src="https://code.jquery.com/jquery.js"></script>
+		
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
-		<script src="/resources/javascript/plugins.js"></script>
-		<script src="/resources/javascript/beetle.js"></script>
-
+		
+<script type="text/javascript" charset="utf-8"
+	src="/resources/javascript/myHome/followList.js"></script>
 	</body>
 
 </html>

@@ -6,10 +6,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -31,7 +29,6 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
-import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
@@ -175,28 +172,6 @@ public class ClubPostRestController {
 
 
 
-		
-///////////////////////////////////////////////////////////////////////////////////// Pay /////////////////////////////////////////////////////////////////////////////////////	
-
-
-
-	
-	
-	@RequestMapping(value = "/json/getPayList", method = RequestMethod.POST)
-	public List<Pay> getPayList(HttpSession session) throws Exception {
-		System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
-		return clubPostServiceImpl.getPayList((User)session.getAttribute("user"));
-	}
-	
-	@RequestMapping(value = "/json/getPay", method = RequestMethod.POST)
-	public Pay getPay(@RequestBody Pay pay) throws Exception {
-		System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
-		return clubPostServiceImpl.getPay(pay);
-	}
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////	
 	
@@ -252,7 +227,7 @@ public class ClubPostRestController {
 		
 		
 		
-		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent());
+		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent() + ", 댓글번호 : " + comment.getClubPostCommentNo());
 		
 		
 		
@@ -273,17 +248,30 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "json/getClubPostCommentList", method = RequestMethod.POST)
-	public List<Comment> getClubPostCommentList(@RequestBody Comment comment, Search search, Map<String, Object> map) throws Exception {
+	public List<Comment> getClubPostCommentList(@RequestBody Comment comment, Search search, Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("/getClubPostCommentList : POST : 특정 모임의 또는 특정 댓글의 댓글리스트");
 		// search - currentPaget와 pageSize, comment - depth, clubPostCommentNo
-
-		System.out.println("comment : " + comment);
-		System.out.println("search : " + search);
 		
+		System.out.println("해당 댓글의 깊이 : " + comment.getDepth() + ", 해당 댓글의 번호 : " + comment.getClubPostCommentNo() + ", 해당 댓글의 게시물번호 : " + comment.getClubPostNo());
+		
+
+		
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		
+		
+		// 해당 댓글에 좋아요 여부 확인위해서 필요하다
+		comment.setUser((User)session.getAttribute("user"));
 		map.put("comment", comment);
 		map.put("search", ClubPostCommon.getSearch(search));
 		
-		System.out.println("search 처리 후 : " + search);
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+
+		
+	
+		System.out.println("search 처리 후 : " + map.get("search"));
 		
 		return clubPostServiceImpl.getClubPostCommentList(map);
 	}

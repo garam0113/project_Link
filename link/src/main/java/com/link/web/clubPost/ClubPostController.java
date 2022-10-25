@@ -1,6 +1,5 @@
 package com.link.web.clubPost;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -391,6 +390,8 @@ public class ClubPostController {
 	
 	
 	
+	
+	
 	@RequestMapping(value = "addPayView", method = RequestMethod.GET)
 	public String addPayView(@ModelAttribute Pay pay, Model model, HttpSession sesstion) throws Exception {
 		System.out.println("/addPayView : GET : 모임번호를 가지고 결제화면으로 이동");
@@ -434,7 +435,7 @@ public class ClubPostController {
 		}
 		pay.setMaxPay(maxPay);
 		model.addAttribute("pay", pay);
-		return "forward:/clubPost/addPayView.jsp";
+		return "forward:/pay/addPayView.jsp";
 	}
 	
 	@RequestMapping(value = "addPay", method = RequestMethod.POST)
@@ -467,6 +468,20 @@ public class ClubPostController {
 			}
 		}
 	}//end of addPay
+
+	@RequestMapping(value = "getPayList", method = RequestMethod.POST)
+	public String getPayList(HttpSession session, Model model) throws Exception {
+		System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
+		model.addAttribute("payList", clubPostServiceImpl.getPayList((User)session.getAttribute("user")));
+		return "forward:/pay/getPayList.jsp";
+	}
+	
+	@RequestMapping(value = "getPay", method = RequestMethod.POST)
+	public String getPay(@ModelAttribute Pay pay, Model model) throws Exception {
+		System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
+		model.addAttribute("pay", clubPostServiceImpl.getPay(pay));
+		return "forward:/pay/getPay.jsp";
+	}
 	
 	
 	
