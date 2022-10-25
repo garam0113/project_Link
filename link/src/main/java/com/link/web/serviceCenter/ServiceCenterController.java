@@ -377,13 +377,14 @@ public class ServiceCenterController {
 
 		if(report.getReportSource() == 1) {
 			// 모임 게시물 신고
-			clubPost.setUser(user);
-			System.out.println("모임 게시물 신고 : " + clubPost);
-			map.put("clubPost", clubPost);
-			report.setClubPost((ClubPost)clubPostServiceImpl.getClubPost(map).get("clubPost"));
+			clubPost.setClubPostNo(Integer.parseInt(number));
+			report.setClubPost(clubPost);
+			report.setUser2(new User(clubPost.getUserId()));
 		}else if(report.getReportSource() == 2) {
 			// 모임 게시물 댓글 신고
-			report.setClubPostComment(clubPostServiceImpl.getClubPostComment(comment));
+			comment.setClubPostCommentNo(Integer.parseInt(number));
+			report.setClubPostComment(comment);
+			report.setUser2(new User(comment.getUserId()));
 		}else if(report.getReportSource() == 3) {
 			map.put("feedNo", number);
 			map.put("user", user);

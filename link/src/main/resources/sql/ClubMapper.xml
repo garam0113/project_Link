@@ -200,8 +200,11 @@
 
 				<where>
 					c.club_no = cU.club_no
-					<if test="searchKeyword != null">
-					and cU.user_id = #{searchKeyword}
+					<if test="searchKeyword != null and order == 0">
+						and cU.user_id = #{searchKeyword}
+					</if>
+					<if test="searchKeyword != null and order == 1">
+						and cU.user_id = #{userId}
 					</if>
 				</where>
 				

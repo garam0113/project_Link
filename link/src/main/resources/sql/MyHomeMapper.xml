@@ -113,12 +113,10 @@
 
 		<where>
 			u.user_id = f.recv_user_id
-			<if test="searchKeyword !=null and searchCondition ==1">
-				and f.send_user_id = #{searchKeyword} and TRIM(f.type)='1' and TRIM(f.state)='1'
+			<if test="searchKeyword !=null ">
+				and f.send_user_id = #{searchKeyword} and f.type='1' and f.state='1'
 			</if>
-			<if test="searchKeyword !=null and searchCondition ==2">
-				and f.send_user_id = #{searchKeyword} and TRIM(f.type)='1' and TRIM(f.state)='1'
-			</if>
+		
 		</where>
 
 
@@ -153,11 +151,9 @@
 
 		<where>
 			u.user_id = f.send_user_id
+			
 			<if test="searchKeyword !=null ">
-				and f.recv_user_id = #{searchKeyword} 
-			</if>
-			<if test="searchKeyword !=null ">
-				and f.recv_user_id = #{searchKeyword} 
+				and f.recv_user_id = #{searchKeyword} and f.type='1' and f.state='1'
 			</if>
 		</where>
 

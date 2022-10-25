@@ -101,7 +101,7 @@ public class MyHomeRestController {
 		 
 	 }
 	@RequestMapping(value = "/json/getFollowerList", method = RequestMethod.POST)
-	 public Map<String, Object> getFollowerList(@RequestBody Search search,User user, HttpSession session) throws Exception{
+	 public Map<String, Object> getFollowerList(@RequestBody Search search,User user) throws Exception{
 				 System.out.println("/myHomeRest/json/getMyHome : POST");
 				 
 				
@@ -113,14 +113,15 @@ public class MyHomeRestController {
 					search.setPageUnit(pageUnit);
 					
 					
-					String userId = ((User) session.getAttribute("user")).getUserId();
-					search.setSearchKeyword(userId);
+			         
 				 
 				 Map<String,Object>map = myHomeService.getFollowerList(search);
 				 
 				 map.put("search",search);
 				 map.put("user", user);	
 				 map.put("followerList",myHomeService.getFollowerList(search).get("followerList"));
+				 
+				 
 				 
 				 return map;
 				 
@@ -321,7 +322,7 @@ public class MyHomeRestController {
 			System.out.println("/getClubPostListMyHome : GET : 마이홈피로 내가 작성한 모임게시물 리스트, 모임게시물 리스트 개수");
 			// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 			
-			String userId = clubPost.getUserId();
+			 String userId = clubPost.getUserId();
 			 search.setSearchKeyword(userId);
 			 Map<String, Object> map = new HashMap<String, Object>();
 			 System.out.println(clubPostService);
