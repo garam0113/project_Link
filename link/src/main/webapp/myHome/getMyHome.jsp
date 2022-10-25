@@ -72,6 +72,12 @@ $(function(){
 		$(this).parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 	});
 	
+	$(document).on("click", ".feedForm", function(event) {
+		event.stopPropagation();
+		var feedNumber = $(this).children("input[name='feedNo']").val();
+		location.href="/feed/getFeed?feedNo=" + feedNumber;
+	})
+	
 	
 	<!-- UPDATE_FEED -->
 	$(document).on("click", ".btn_delete", function(event){
@@ -105,18 +111,21 @@ $(function(){
 	<!-- GET_FEED -->
 	
 	<!-- ADD_FEED_HEART -->
-	$(".like:contains('좋아요')").bind("click", function(){
+	$(document).on("click", ".feedLike", function(event){
 		event.stopPropagation();
 		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
 		
 		var html = $(this);
+		var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 		
 		$.ajax(
 				{
 					url : "/feedRest/json/addFeedHeart",
 					method : "POST",
 					data : JSON.stringify ({
-						feedNo : $(this).parents(".feedForm").children("input[name='feedNo']").val()
+						source : 0,
+						sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+						userId : sessionUser
 					}),
 					contentType: 'application/json',
 					dataType : "json",
@@ -127,11 +136,10 @@ $(function(){
 					
 					success : function(data, status) {
 						
-						swal.fire("피드 좋아요 성공 : " + data);
-						
-						$(html).parents(".row").children(".like:contains('좋아요')").hide();
-						$(html).parents(".row").children(".dislike:contains('시러요')").show();
+						alert("피드 좋아요 성공 : " + data);
+
 						$(html).parents(".row").children(".likeCount").text(data);
+						$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 						
 					} // success close
 					
@@ -346,7 +354,7 @@ margin-left: 100px;
 	width:500px;
 }
 .tab{
-display: block;
+
 }
 
 /* 탭 전체 스타일 */
@@ -675,8 +683,8 @@ input[name="tab_item-follow"] {
 										<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
 										<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
 									</c:if>
-									<input type="button" class= "btn_getFeed" value="보기"> <input
-										type="hidden" name="feedNo" value="${feed.feedNo}">
+								 
+									<input type="hidden" name="feedNo" value="${feed.feedNo}">
 
 									<section class="row section">
 										<div class="row">

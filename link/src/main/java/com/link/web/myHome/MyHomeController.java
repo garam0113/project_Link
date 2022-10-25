@@ -124,7 +124,7 @@ public class MyHomeController {
 		String sessoinId = ((User)session.getAttribute("user")).getUserId();
 		
 
-		
+		User cutUser = new User();
 		User getUser = new User();
 		User followUser = new User();
 		User recevieId = new User();
@@ -133,6 +133,10 @@ public class MyHomeController {
 		recevieId.setUserId(userId);
 		followUser.setReceiveId(recevieId);
 		followUser.setUserId(sessoinId);
+		cutUser.setReceiveId(followUser);
+		cutUser.setUserId(userId);
+		cutUser.setFbState("1");
+		cutUser.setFbType("2");
 		
 	    Search search2 = new Search();
 		
@@ -140,6 +144,7 @@ public class MyHomeController {
 	    search.setOrder(1);
 		
 		Map<String, Object> followUserId = myHomeService.getFollow(followUser);
+		Map<String, Object> cutUserId =  myHomeService.getFollow(cutUser);
 		
 		
 		
@@ -178,8 +183,14 @@ public class MyHomeController {
 		System.out.println("세션아이디"+sessoinId);
 		System.out.println("유저아이디"+userId);
 	
+	    if(cutUserId.get("block") != null ) {
+	    
+	    	return "forward:/feed/getFeedList.jsp";
+	 
+	    }else {
 		
 		return "forward:/myHome/getYourHome.jsp";
+	}
 	}
 	
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)

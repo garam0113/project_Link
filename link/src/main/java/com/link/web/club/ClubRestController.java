@@ -215,7 +215,7 @@ public class ClubRestController {
 		return null;
 	}
 	
-	
+	//캘린더
 	@RequestMapping(value="/json/getMeetList",method = RequestMethod.POST)
 	public List<Map<String, Object>>  getMeetList(@RequestBody Search search, Meeting meeting,Model model, HttpSession session, User user,String userId, Club club, String clubNo) throws Exception {
 		
@@ -247,6 +247,9 @@ public class ClubRestController {
 			map1.put("start", ((List<Meeting>)map.get("meetingList")).get(i).getMeetingDate());
 //          map1.put("backgroundColor", "rgb(0, 185, 186)");
 			map1.put("backgroundColor", "rgb(178, 118, 255)");
+			map1.put("borderColor", "rgb(178, 118, 255)");
+			map1.put("meetingNo", ( (List<Meeting>) map.get("meetingList")).get(i).getMeetingNo());
+			map1.put("url","/club/getMeeting?meetingNo="+( (List<Meeting>) map.get("meetingList")).get(i).getMeetingNo());
 			meetingList.add(map1);
 		}
 		//System.out.println("이응이응이응"+ map1.get("title").toString());
