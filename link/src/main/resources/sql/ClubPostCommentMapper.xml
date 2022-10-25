@@ -99,20 +99,20 @@
 	
 	
 	<!-- 댓글내용 수정 -->
-	<update id="updateClubPostComment" parameterType="comment">
+	<update id="updateClubPostComment" parameterType="map">
 		UPDATE CLUB_POST_COMMENT
 		SET
 		<choose>
-			<when test="heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
-			<when test="heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
-			<when test="deleteCondition == 1">COMMENT_COUNT = COMMENT_COUNT - 1</when>
-			<when test="deleteCondition == -1">COMMENT_COUNT = COMMENT_COUNT + 1</when>
-			<when test="reportCondition == 1">REPORT_CONDITION = 1</when>
-			<otherwise>COMMENT_CONTENT = #{ commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
+			<when test="comment.heartCondition == 1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT + 1</when>
+			<when test="comment.heartCondition == -1">COMMENT_HEART_COUNT = COMMENT_HEART_COUNT - 1</when>
+			<when test="comment.deleteCondition == 1">COMMENT_COUNT = COMMENT_COUNT - 1</when>
+			<when test="comment.deleteCondition == -1">COMMENT_COUNT = COMMENT_COUNT + 1</when>
+			<when test="report.reportCondition == 1 and report.reportReason > 0">REPORT_CONDITION = 1</when>
+			<otherwise>COMMENT_CONTENT = #{ comment.commentContent }, COMMENT_UPDATE_DATE = SYSDATE</otherwise>
 		</choose>
 		<choose>
-			<when test="deleteCondition == 1">WHERE CLUB_POST_COMMENT_NO = #{ parent }</when>
-			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
+			<when test="comment.deleteCondition == 1 or comment.deleteCondition == -1">WHERE CLUB_POST_COMMENT_NO = #{ comment.parent }</when>
+			<otherwise>WHERE CLUB_POST_COMMENT_NO = #{ comment.clubPostCommentNo }</otherwise>
 		</choose>
 	</update>
 	

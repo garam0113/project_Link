@@ -145,10 +145,10 @@
 			
 
 			<%-- 모임 게시물 댓글리스트 가져온다 --%>
-			/* $(document).on("click", "b:contains('댓글 수')", function(){
+			$(document).on("click", ".recommentList", function(){
 				alert("댓글 수 클릭시 해당 댓글의 댓글리스트 가져온다");
-				var clubPostCommentNo = $(this).attr("clubPostCommentNo");
-				var clubPostNo = $(this).attr("clubPostNo");
+				var clubPostCommentNo = $(this).parent().parent().parent().attr("commentNo");
+				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				$.ajax( "/clubPostRest/json/getClubPostCommentList",
 						{
 							method : "POST",
@@ -164,31 +164,106 @@
 							success : function(JSONData, status){
 								alert(status);
 								$.each( JSONData, function( index, el ){
-									var display = "<nav>"
-													+"댓글 내용 : <div class='" + el.clubPostCommentNo + "'>" + el.commentContent + "</div>"
-													+"<button class='" + el.clubPostCommentNo + "'>수정</button>"
-													+"<input type='button' class='" + el.clubPostCommentNo + "' value='삭제'>"
-													+"<b style='color : blue;'>댓글번호 : " + el.clubPostCommentNo + "</b></br>"
-													+"댓글등록날짜 : " + el.commentRegDate + "</br>"
-													+"댓글수정날짜 : " + el.commentUpdateDate + "</br>"
-													+"댓글 좋아요 수 : " + el.commentHeartCount + "</br>"
-													+"댓글 신고여부 : " + el.reportCondition + "</br>"
-													+"댓글 삭제여부 : " + el.deleteCondition + "</br>"
-													+"댓글 부모번호 : " + el.parent + "</br>"
-													+"댓글 깊이 : " + el.depth + "</br>"
-													+"댓글 순서 : " + el.sequence + "</br>"
-													//+"<div class='"+el.clubPostCommentNo+"'>"
-													//+"<b style='color : green;' clubPostNo="+el.clubPostNo+" clubPostCommentNo="
-															//+el.clubPostCommentNo+">댓글 수 " + el.commentCount + "</b></br>"
-													//+"</div>"
-													+"</nav>";
+									alert( "댓글 번호 : " + el.clubPostCommentNo );
+									alert( "댓글 게시물 번호 : " + el.clubPostNo );
+									alert( "댓글 수 : " + el.commentCount );
+									alert( "댓글 내용 : " + el.commentContent );
+									alert( "댓글 등록날짜 : " + el.commentRegDate );
+									alert( "댓글 수정날짜 : " + el.commentUpdateDate );
+									alert( "댓글 좋아요 수 : " + el.commentHeartCount );
+									alert( "댓글 신고여부 : " + el.reportCondition );
+									alert( "댓글 삭제여부 : " + el.deleteCondition );
+									alert( "댓글 부모번호 : " + el.parent );
+									alert( "댓글 깊이 : " + el.depth );
+									alert( "댓글 순서 : " + el.sequence );
+									
+									var display = 
+													+"<li class='recomment'>"
+															+"<div class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
+															+"<div class='comment-author'>"
+																+"<cite><a href='#'><img src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' class='avatar' alt=''></a></cite>"
+																+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
+																+"<span class='says'>says:</span>"
+															+"</div>"
+															
+															
+					
+															+"<div class='comment-meta'>"													
+																+"<time datetime='2013-03-23 19:58'>"+JSONData.commentRegDate+"</time>"														
+																+"<div class='comment body'>"
+					
+																	+"<div class='comment-heart-"+JSONData.clubPostCommentNo+"'>"
+																		+"<a class='reply heartCondition'>"
+																 			+"<img src='/resources/image/uploadFiles/no_heart.jpg' height='40' width='40'>"
+																 		+"</a>"
+																	 +"</div>"
+																	 
+																	 +"<div>"
+																	 	<%-- 해당 댓글의 좋아요 수 --%>
+																	 	+"<span class='commentHeartCount"+JSONData.clubPostCommentNo+"' style='font-size: 30px;'>0</span>"																
+																	 	<%-- 해당 댓글의 댓글 등록 --%>
+																	 	+"<a class='reply add'>"
+																			+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-plus-sign' aria-hidden='true' style='font-size: 25px;'></span>"
+																	 	+"</a>"
+																	 	<%-- 해당 댓글 수정 --%>
+																	 	+"<a class='reply update'>"
+																	 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-paperclip updateCommentView' aria-hidden='true' style='font-size: 25px;'></span>"
+																		+"</a>"
+																		<%-- 해당 댓글 삭제 --%>
+																	 	+"<a href='#' class='reply delete'>"
+																	 		<%-- 해당 댓글 작성자 또는 해당 게시물 작성자 또는 모임대표 또는 관리자 --%>
+																	 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash deleteComment comment' aria-hidden='true' style='font-size: 25px;'></span>"
+																		+"</a>"
+																		<%-- 해당 댓글 신고 --%>
+																	 	+"<a href='#' class='reply report'>"
+																	 		+"<c:if test='false'>"
+																	 			+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' style='font-size: 25px;'></span>"
+																	 		+"</c:if>"
+																	 	+"</a>"
+																	+"</div>"
+																	
+																+"</div>"
+																
+															+"</div>"
+															
+															+"<p>"+JSONData.commentContent+"</p>"
+															
+															+"<c:if test='"+JSONData.commentCount+">0'>"
+																	+"<div class='comment-author'>"
+																		+"<cite>"
+																			+"<a class='123'>댓글 "+JSONData.commentCount+"개</a>"
+																		+"<cite>"
+																	+"</div>"
+															+"</c:if>"
+														+"</div>"
+														
+														+"<div class='clear-after-comment-add"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+															+"<form class='comment-form-add'>"
+															+"<textarea class='plain buffer' placeholder='댓글작성란'></textarea>"
+															+"<input class='plain button red add' value='등록완료' style='height: 30px; width: 90px;'>"
+															+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
+															+"</form>"						
+														+"</div>"
+														
+														+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
+															+"<form class='comment-form-update'>"
+															+"<textarea class='plain buffer'></textarea>"
+															+"<input class='plain button red add' value='수정완료' style='height: 30px; width: 90px;'>"
+															+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
+															+"</form>"						
+														+"</div>"
+													+"</li>";
+													
+													
+													
+													
 									alert(display);
 		
-									$("nav[class='"+clubPostCommentNo+"']").append(display);
+									//$("nav[class='"+clubPostCommentNo+"']").append(display);
 								});
 							} // end of success
 						}); // end of ajax
-			}); // end of 댓글 수 */
+			}); // end of recommentList
 			
 			
 			
@@ -204,10 +279,30 @@
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
 				
-				alert( clubPostNo );
-				alert( commentContent );
 				alert( depth );
-				alert( clubPostCommentNo );
+				
+				if( depth == 0 ){
+					//alert("0이다");
+				}else if( depth > 0){
+					//alert("0보다크다");
+				}else{
+					//alert("???");
+					depth = 0;
+				}
+				
+				if( clubPostCommentNo == 0 ){
+					//alert("0이다");
+				}else if( clubPostCommentNo > 0){
+					//alert("0보다크다");
+				}else{
+					//alert("???");
+					clubPostCommentNo = 0;
+				}
+				
+				//alert( clubPostNo );
+				//alert( commentContent );
+				alert( "depth : " + depth );
+				//alert( clubPostCommentNo );
 
 				$(this).prev().val("");
 				$(this).parent().parent().attr("style", "display: none");
@@ -227,25 +322,25 @@
 							}),
 							success : function(JSONData, status) {
 								alert(status);
-								alert(JSONData);
-								alert(JSONData.user.userId);
-								alert(JSONData.user.profileImage);
-								alert(JSONData.user.nickName);
-								alert(JSONData.clubPostCommentNo);
-								alert(JSONData.commentContent);
-								alert(JSONData.commentRegDate);
-								alert(JSONData.commentUpdateDate);
-								alert(JSONData.commentCount);
-								alert(JSONData.commentHeartCount);
-								alert(JSONData.heartCondition);
+								//alert(JSONData);
+								//alert(JSONData.user.userId);
+								//alert(JSONData.user.profileImage);
+								//alert(JSONData.user.nickName);
+								//alert(JSONData.clubPostCommentNo);
+								//alert(JSONData.commentContent);
+								//alert(JSONData.commentRegDate);
+								//alert(JSONData.commentUpdateDate);
+								//alert(JSONData.commentCount);
+								//alert(JSONData.commentHeartCount);
+								//alert(JSONData.heartCondition);
 								
 								//alert(JSONData);
 								
 								var display = "";
 									
-								if( depth = 1){
+								if( depth == 1){
 									display += "<li class='recomment'>";
-								}else if( depth != 1 ){
+								}else if( depth == 0 ){
 									display += "<li class='comment'>";
 								}
 								
@@ -323,14 +418,15 @@
 													+"</form>"						
 												+"</div>"
 											+"</li>";
-								
-								if( depth == 1){
-									alert( "여기로 와야한다" );
-									$(".children.plain"+clubPostCommentNo).append( display );
-								}else if( depth != 1 ){
+											
+								if( depth != 1){
 									alert( depth );
 									$(".comment-list.plain").append( display );
+								}else if( depth == 1 ){
+									alert( "여기로 와야한다" );
+									$(".children.plain"+clubPostCommentNo).append( display );
 								}
+								//alert( display );
 							}// end of success
 					
 				});// end of ajax
@@ -790,11 +886,11 @@
 													 </div>
 												</div><!-- comment-meta -->
 												<p>${ clubPost.getClubPostCommentList[i].commentContent }</p>
-												<div class="comment-author-commentCount" style="background-color: red;">${ clubPost.getClubPostCommentList[i].commentCount }
+												<div class="comment-author">
 												<c:choose>
 													<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
 															<cite>
-																<a class="123">댓글 ${ clubPost.getClubPostCommentList[i].commentCount }개</a>
+																<a class="recommentList">댓글 ${ clubPost.getClubPostCommentList[i].commentCount }개</a>
 															<cite>
 													</c:when>
 												</c:choose>
