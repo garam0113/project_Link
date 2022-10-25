@@ -340,7 +340,7 @@
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option>
+						<%-- <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option> --%>
 					</select>
 				  </div>
 				  
@@ -349,7 +349,7 @@
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
 	    			<button type="button" class="btn btn-search">검색</button>
-	    			<button type="button" class="btn btn-myList">가입현황리스트</button>
+	    			<button type="button" class="btn btn-myList">내 모임 보기</button>
 				  	<button type="button" class="btn btn-addMeeting">모임등록</button>
 				  </div>
 				  
@@ -363,6 +363,64 @@
 				  
 					</form>
 	    	</div>
+	    	
+	    	<table>
+	    		<colgroup span="4" class="columns"></colgroup>
+	    		<tr>
+	    			<th>
+	    				<select class="form-control" name="" style="border-color: #BD76FF;">
+	    					<option value="운동">운동</option>
+	  						<option value="봉사활동">봉사활동</option>
+	  						<option value="음식">음식</option>
+							<option value="여행">여행</option>
+							<option value="반려동물">반려동물</option>
+							<option value="게임">게임</option>
+							<option value="음악/댄스">음악/댄스</option>
+							<option value="독서">독서</option>
+							<option value="기타">기타</option>
+	    				</select>
+	    			</th>
+	    			<th>
+	    				<select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
+	    					<option value="강남구">강남구</option>
+							<option value="강동구">강동구</option>
+							<option value="강북구">강북구</option>
+							<option value="강서구">강서구</option>
+							<option value="관악구">관악구</option>
+							<option value="광진구">광진구</option>
+							<option value="구로구">구로구</option>
+							<option value="금천구">금천구</option>
+							<option value="노원구">노원구</option>
+							<option value="도봉구">도봉구</option>
+							<option value="동대문구">동대문구</option>
+							<option value="동작구">동작구</option>
+							<option value="마포구">마포구</option>
+							<option value="서대문구">서대문구</option>
+							<option value="서초구">서초구</option>
+							<option value="성동구">성동구</option>
+							<option value="성북구">성북구</option>
+							<option value="송파구">송팡구</option>
+							<option value="양천구">양천구</option>
+							<option value="영등포구">영등포구</option>
+							<option value="용산구">용산구</option>
+							<option value="은평구">은평구</option>
+							<option value="종로구">종로구</option>
+							<option value="중구">중구</option>
+							<option value="중랑구">중랑구</option>
+	    				</select>
+	    			</th>
+	    			<th>
+	    				<button type="button" class="btn btn-reset">초기화</button>
+	    			
+	    			</th>
+	    			<th>
+						<button type="button" class="btn btn-view">조회</button>
+					</th>
+	    		</tr>
+	    
+	    		
+	    	
+	    	</table>
 	    	
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->

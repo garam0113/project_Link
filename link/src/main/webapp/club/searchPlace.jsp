@@ -11,9 +11,15 @@
 	<title>키워드로 장소 찾기</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	
 	<script type="text/javascript">
-		
+	
+		function setParentText(title) {
+			opener.document.getElementById("meetingPlace").value = title;
+		}
+	
 	</script>
 	
 	
@@ -22,7 +28,7 @@
 		      /* 지도 API */
 		      .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 		.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-		.map_wrap {position:relative;width:100%;height:500px;}
+		.map_wrap {position:relative;width:100%;height:665px;}
 		#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 		.bg_white {background:#fff;}
 		#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
@@ -60,6 +66,9 @@
       
       
   </style>
+	
+	
+	
 	
 	
 	
@@ -127,6 +136,9 @@
 					        // 정상적으로 검색이 완료됐으면
 					        // 검색 목록과 마커를 표출합니다
 					        displayPlaces(data);
+					        
+					        //머있지?
+					        console.log(data);
 					
 					        // 페이지 번호를 표출합니다
 					        displayPagination(pagination);
@@ -142,6 +154,8 @@
 					        return;
 					
 					    }
+					     
+				
 					}
 					
 					// 검색 결과 목록과 마커를 표출하는 함수입니다
@@ -150,7 +164,7 @@
 					    var listEl = document.getElementById('placesList'), 
 					    menuEl = document.getElementById('menu_wrap'),
 					    fragment = document.createDocumentFragment(), 
-					    bounds = new kakao.maps.LatLngBounds(), 
+					    bounds = new kakao.maps.LatLngBounds(),
 					    listStr = '';
 					    
 					    // 검색 결과 목록에 추가된 항목들을 제거합니다
@@ -180,6 +194,19 @@
 					
 					            kakao.maps.event.addListener(marker, 'mouseout', function() {
 					                infowindow.close();
+					            });
+					            
+					            //클릭 이벤트 잘 써보자
+					            kakao.maps.event.addListener(marker,'click', function() {
+					            	
+					            	alert(title);
+					            	console.log(title);
+					            	//setParentText(title);
+					            	setParentText(title);
+					            	
+					            	
+					            	window.close();
+					            	
 					            });
 					
 					            itemEl.onmouseover =  function () {
@@ -235,6 +262,7 @@
 					            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
 					            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
 					        },
+					        
 					        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
 					            marker = new kakao.maps.Marker({
 					            position: position, // 마커의 위치
@@ -244,6 +272,7 @@
 					    marker.setMap(map); // 지도 위에 마커를 표출합니다
 					    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 					
+					    console.log(marker);
 					    return marker;
 					}
 					
@@ -254,6 +283,7 @@
 					    }   
 					    markers = [];
 					}
+					
 					
 					// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 					function displayPagination(pagination) {
@@ -302,7 +332,5 @@
 					    }
 					}
 					</script>
-
-
 </body>
 </html>
