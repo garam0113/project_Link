@@ -8,7 +8,7 @@
 
 <!DOCTYPE html>
 
-<html lang="ko">
+<html>
 
 <head>
 <title>공지사항 목록</title>
@@ -122,9 +122,7 @@ body {
 	    width:1800px;
  	   background: rgba(0,0,0,0.35);
  	   }
-/* input::placeholder-shown {
-  color:#BD76FF; */
-#searchKeyword::-webkit-input-placeholder {  color:#E1BFFF;}
+
 
 }
 
@@ -134,8 +132,9 @@ body {
 <script type="text/javascript">
 
 	function fncGetList(currentPage) {
+		
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "GET").attr("action", "/serviceCenter/getNoticeList")
+		$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
 				.submit();
 	}
 
@@ -176,7 +175,7 @@ body {
 			</div><!-- intro-wrap -->
 	<!-- ToolBar End /////////////////////////////////////-->
 <body>  
-  <img src="/resources/image/uploadFiles/공지사항리스트.jpg" class="image2" height="220px" style="width:1000px; transform:translate(438px,132px);"/> 
+
 
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
   <h1 >공지사항 리스트</h1>
@@ -190,7 +189,7 @@ body {
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px); color:#BD76FF;">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
@@ -201,16 +200,16 @@ body {
 					<form class="form-inline" name="detailForm">
 						
 						<div class="form-group">
-							<select class="form-control" name="searchCondition" style="vertical-align: top; color:#BD76FF;">
+							<select class="form-control" name="searchCondition" style="vertical-align: top;">
 								<option value="0"
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
 
-							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">검색어</label> <input
+							<label class="sr-only" for="searchKeyword">검색어</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; color:#BD76FF;"
+								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px;"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
@@ -269,7 +268,12 @@ body {
 							<span style="--i:4">!</span>
 							</strong>
 							</c:if>
-								${getNoticeList.noticeTitle}</div>	</td>
+								${getNoticeList.noticeTitle}	
+							<c:if test="${getNoticeList.noticeImage1 !=null || getNoticeList.noticeImage2 != null}">
+							<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+							</c:if>	
+								</div>
+							</td>
 							<td></td>
 
 							<td align="left" >${getNoticeList.userId.nickName}</td>

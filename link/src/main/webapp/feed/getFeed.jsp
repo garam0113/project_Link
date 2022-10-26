@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
@@ -42,7 +42,7 @@
 			
 			
 			
-			<%-- ¹«ÇÑ ½ºÅ©·Ñ --%>
+			<%-- ë¬´í•œ ìŠ¤í¬ë¡¤ --%>
 			
 			$(window).scroll(function() {
 				console.log(($("#pageFlag").val()));
@@ -50,7 +50,7 @@
 				
 					if((Math.ceil($(window).scrollTop() + $(window).height())) >= ( $(document).height() )) {
 						
-						console.log("¹«ÇÑ ½ºÅ©·Ñ");
+						console.log("ë¬´í•œ ìŠ¤í¬ë¡¤");
 						
 						var maxHeight = $(document).height();
 						var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
@@ -75,7 +75,7 @@
 									
 									success : function(data, status) {
 										
-										console.log("¼º°ø¿ä");
+										console.log("ì„±ê³µìš”");
 										
 										var addHtml = "";
 										
@@ -121,7 +121,7 @@
 														if(item.reportCondition == 0) {
 															addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
 														} else {
-															addHtml += '°ü¸®ÀÚ¿¡ ÀÇÇØ »èÁ¦µÈ ´ñ±ÛÀÔ´Ï´Ù.'
+															addHtml += 'ê´€ë¦¬ìì— ì˜í•´ ì‚­ì œëœ ëŒ“ê¸€ì…ë‹ˆë‹¤.'
 														}
 														
 														addHtml += '<form class="commentInfo">' +
@@ -137,7 +137,7 @@
 																	'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 																	'</form>' +
 																	'<div class="btn_recommentCheck" style="display: none;">' +
-																	'<textarea name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+																	'<textarea name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 																	'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
 																	'</div>' +
 																	'</div>' +
@@ -160,14 +160,14 @@
 						
 						) // ajax close
 						
-					} // ¹«ÇÑ ½ºÅ©·Ñ Á¶°Ç if¹® Á¾·á
+					} // ë¬´í•œ ìŠ¤í¬ë¡¤ ì¡°ê±´ ifë¬¸ ì¢…ë£Œ
 					
-				} // flag È®ÀÎ close
+				} // flag í™•ì¸ close
 					
-			}) // ½ºÅ©·Ñ ÀÌº¥Æ® Á¾·á
+			}) // ìŠ¤í¬ë¡¤ ì´ë²¤íŠ¸ ì¢…ë£Œ
 						
 			
-			// ´ñ±Û ´Ş±â
+			// ëŒ“ê¸€ ë‹¬ê¸°
 			
 			$(document).on("click", ".btn_addComment", function(event) {
 				event.stopPropagation();
@@ -179,17 +179,17 @@
 				
 				var content =  $(this).siblings("textarea[name='commentContent']").val();
 				
-				console.log("´ñ±Û ¼ö : " + $(this).parents(".section").find(".commentCount").text().trim());
-				console.log("´ñ±Û ÀÛ¼ºÀÚ : " + $(this).siblings("input[name='userId']").val());
-				console.log("ÇÇµå ¹øÈ£ : " + $(this).siblings("input[name='feedNo']").val());
-				console.log("³»¿ë : " + $(this).siblings("textarea[name='commentContent']").val());
-				console.log("ºÎ¸ğ ¹øÈ£ : " + $(this).siblings("input[name='parent']").val());
-				console.log("±íÀÌ : " + $(this).siblings("input[name='depth']").val());
-				console.log("½ÃÄö½Ã : " + $(this).siblings("input[name='sequence']").val());
+				console.log("ëŒ“ê¸€ ìˆ˜ : " + $(this).parents(".section").find(".commentCount").text().trim());
+				console.log("ëŒ“ê¸€ ì‘ì„±ì : " + $(this).siblings("input[name='userId']").val());
+				console.log("í”¼ë“œ ë²ˆí˜¸ : " + $(this).siblings("input[name='feedNo']").val());
+				console.log("ë‚´ìš© : " + $(this).siblings("textarea[name='commentContent']").val());
+				console.log("ë¶€ëª¨ ë²ˆí˜¸ : " + $(this).siblings("input[name='parent']").val());
+				console.log("ê¹Šì´ : " + $(this).siblings("input[name='depth']").val());
+				console.log("ì‹œí€€ì‹œ : " + $(this).siblings("input[name='sequence']").val());
 				
 				if(content == "") {
 					Swal.fire({
-						  title: '³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä',
+						  title: 'ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”',
 						  width: 400,
 						  icon: 'warning',
 						  timer : 500,
@@ -276,7 +276,7 @@
 											'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 											'</div>' +
 											'<div class="btn_recommentCheck" style="display: none;" >' +
-											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 											'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 											'</div>' +
 											'</div>'
@@ -294,33 +294,33 @@
 							
 					) // ajax close
 				
-				} // À¯È¿¼º °Ë»ç
+				} // ìœ íš¨ì„± ê²€ì‚¬
 				
 			}); // btn_addComment event close
 			
-			// ÇÇµå ¼öÁ¤
+			// í”¼ë“œ ìˆ˜ì •
 			
 			$(document).on("click", "#updateFeed", function(event) {
 				event.stopPropagation();
-				console.log("ÇÇµå ¼öÁ¤");
+				console.log("í”¼ë“œ ìˆ˜ì •");
 				
 				$("form").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 			})
 			
 			
 			
-			// ÇÇµå »èÁ¦
+			// í”¼ë“œ ì‚­ì œ
 			
 			$(document).on("click", "#deleteFeed", function(event) {
 				event.stopPropagation();
-				console.log("ÇÇµå »èÁ¦");
+				console.log("í”¼ë“œ ì‚­ì œ");
 				
 				$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 			})
 			
 			
 			
-			// Reply ¹öÆ° Å¬¸¯ -> ´ë´ñ±Û ÀÛ¼º °ø°£ »ı¼º
+			// Reply ë²„íŠ¼ í´ë¦­ -> ëŒ€ëŒ“ê¸€ ì‘ì„± ê³µê°„ ìƒì„±
 			
 			$(document).on("click", ".btn_createRecomment", function(event){	
 				event.stopPropagation();
@@ -341,7 +341,7 @@
 			
 			
 			
-			// ´ë´ñ±Û ÀÛ¼º
+			// ëŒ€ëŒ“ê¸€ ì‘ì„±
 			
 			$(document).on("click", ".btn_addRecomment", function(event){
 				event.stopPropagation();
@@ -367,7 +367,7 @@
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
 				
 				if(content == "" || content == " ") {
-					swal.fire("³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+					swal.fire("ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”");
 					return false;
 				}
 				
@@ -446,7 +446,7 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
@@ -468,17 +468,30 @@
 			
 			
 			
-			// ´ñ±Û ¼öÁ¤ È­¸é ¶ç¿ì±â 
+			// ëŒ“ê¸€ ìˆ˜ì • í™”ë©´ ë„ìš°ê¸° 
 			
 			$(document).on("click", ".updateCommentView", function(event) {
 				event.stopPropagation();
 
-				console.log("ÇÇµå ¹øÈ£ : " + ${feed.feedNo} + " ´ñ±Û ¹øÈ£ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				console.log("í”¼ë“œ ë²ˆí˜¸ : " + ${feed.feedNo} + " ëŒ“ê¸€ ë²ˆí˜¸ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
 				
 				var changePoint = $(this).parent().siblings(".commentContent");
 				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
 				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
 				var depth = $(this).parent().siblings(".commentInfo").find("input[name='depth']").val();
+				
+				if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > 0) {
+					
+					Swal.fire({
+						  title: 'ìˆ˜ì • ë¶ˆê°€ëŠ¥ í•©ë‹ˆë‹¤',
+						  width: 500,
+						  icon: 'warning',
+						  timer : 500,
+						  showConfirmButton : false,
+					})
+					
+					return false;
+				}
 				
 				$.ajax (
 						
@@ -508,7 +521,7 @@
 								
 								
 								
-								// ´ñ±Û ¼öÁ¤ Å¬¸¯½Ã ÀÌº¥Æ® °É±â
+								// ëŒ“ê¸€ ìˆ˜ì • í´ë¦­ì‹œ ì´ë²¤íŠ¸ ê±¸ê¸°
 													
 								$(document).on("click", ".updateFeedComment", function(){
 									
@@ -587,7 +600,7 @@
 																'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 																'</div>' +
 																'<div class="btn_recommentCheck" style="display: none;" >' +
-																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 																'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 																'</div>' +
 																'</div>'
@@ -614,7 +627,7 @@
 			}) // updateCommentView event close
 			
 			
-			// ´ñ±Û ¼öÁ¤ È­¸é¿¡¼­ cancelÀ» ´­·¶À» °æ¿ì
+			// ëŒ“ê¸€ ìˆ˜ì • í™”ë©´ì—ì„œ cancelì„ ëˆŒë €ì„ ê²½ìš°
 			
 			$(document).on("click", "input[name='updateCommentCancel']", function(event) {
 				
@@ -638,13 +651,15 @@
 							
 							success : function(data, status) {
 								
-								console.log("¼º°ø¿ä");
+								console.log("ì„±ê³µìš”");
 								
 								var addHtml = "";
 								
 								$.each(data, function(index, item) {
 									
-									addHtml += '<div class="single-comment" style="margin-left: ' + 25 * item.depth + '"px;">' +
+									var depth = parseInt(item.depth) * 25; 
+									
+									addHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 												'<div class="comment-author">' +
 												'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
 												'		<cite><a href="#">' + item.user.nickName + '</a></cite>' +
@@ -684,7 +699,7 @@
 												if(item.reportCondition == 0) {
 													addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
 												} else {
-													addHtml += '°ü¸®ÀÚ¿¡ ÀÇÇØ »èÁ¦µÈ ´ñ±ÛÀÔ´Ï´Ù.'
+													addHtml += 'ê´€ë¦¬ìì— ì˜í•´ ì‚­ì œëœ ëŒ“ê¸€ì…ë‹ˆë‹¤.'
 												}
 												
 												addHtml += '<form class="commentInfo">' +
@@ -700,7 +715,7 @@
 															'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 															'</form>' +
 															'<div class="btn_recommentCheck" style="display: none;">' +
-															'<textarea name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+															'<textarea name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 															'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
 															'</div>' +
 															'</div>' +
@@ -722,12 +737,12 @@
 			
 			
 			
-			// ´ñ±Û »èÁ¦
+			// ëŒ“ê¸€ ì‚­ì œ
 			
 			$(document).on("click", ".deleteComment", function(event) {
 				event.stopPropagation();
 				
-				console.log("[»èÁ¦ ¿äÃ»] ÇÇµå ¹øÈ£ : " + ${feed.feedNo} + " ´ñ±Û ¹øÈ£ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				console.log("[ì‚­ì œ ìš”ì²­] í”¼ë“œ ë²ˆí˜¸ : " + ${feed.feedNo} + " ëŒ“ê¸€ ë²ˆí˜¸ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
 				
 				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
 				var wantComment = $(this).prev().val();
@@ -736,19 +751,32 @@
 				var commentCount = $(this).parents(".section").find(".commentCount");
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
 				
-				
-				
 				Swal.fire({
-					  title: '´ñ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
-					  text: "»èÁ¦ÇÏ½Ã¸é ´Ù½Ã º¹±¸½ÃÅ³ ¼ö ¾ø½À´Ï´Ù.",
+					  title: 'ëŒ“ê¸€ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+					  text: "ì‚­ì œí•˜ì‹œë©´ ë‹¤ì‹œ ë³µêµ¬ì‹œí‚¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.",
 					  width: 500,
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
 					  cancelButtonColor: '#d33',
-					  confirmButtonText: '»èÁ¦',
-					  cancelButtonText: 'Ãë¼Ò'
+					  confirmButtonText: 'ì‚­ì œ',
+					  cancelButtonText: 'ì·¨ì†Œ'
 				}).then((result) => {
+					
+					if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > 0) {
+						
+						Swal.fire({
+							  title: 'ëŒ“ê¸€ì´ ìˆì–´ ì‚­ì œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.',
+							  width: 500,
+							  icon: 'warning',
+							  timer : 500,
+							  showConfirmButton : false,
+						})
+						
+						return false;
+					}
+					
+					
 					if (result.value) {
 						$.ajax(
 								{
@@ -824,7 +852,7 @@
 												'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 												'</div>' +
 												'<div class="btn_recommentCheck" style="display: none;" >' +
-												'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+												'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 												'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 												'</div>' +
 												'</div>'
@@ -843,13 +871,14 @@
 						) // deleteComment ajax close;
 						
 					}
-				})
+					
+				}) // swal fire ì¢…ë£Œ
 				
 			}) // deleteComment event close
 			
 			
 			
-			// ´ñ±Û ÁÁ¾Æ¿ä 
+			// ëŒ“ê¸€ ì¢‹ì•„ìš” 
 			
 			$(document).on("click", ".addCommentHeart", function(event){
 				
@@ -879,7 +908,7 @@
 							
 							success : function(data, status) {
 								
-								console.log("Á¶¾Æ¿ä");
+								console.log("ì¡°ì•„ìš”");
 								
 								var changeHtml = "";
 								
@@ -935,7 +964,7 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
@@ -955,7 +984,7 @@
 			
 			
 			
-			// ´ñ±Û ½È¾î¿ä
+			// ëŒ“ê¸€ ì‹«ì–´ìš”
 			
 			$(document).on("click", ".deleteCommentHeart", function(event) {
 				
@@ -1039,7 +1068,7 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÀÛ¼º"></textarea>' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ì‘ì„±"></textarea>' +
 										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
@@ -1059,7 +1088,7 @@
 			
 			
 			
-			// ÇÇµå ÁÁ¾Æ¿ä
+			// í”¼ë“œ ì¢‹ì•„ìš”
 			
 			$(document).on("click", ".feedLike", function(event) {
 				
@@ -1099,7 +1128,7 @@
 			}); // .feedLike event close
 			
 			
-			// ÇÇµå ½È¾î¿ä
+			// í”¼ë“œ ì‹«ì–´ìš”
 			
 			$(document).on("click", ".feedDislike", function(event) {
 				
@@ -1140,7 +1169,7 @@
 			
 			
 			
-			// ÇÇµå ½Å°í
+			// í”¼ë“œ ì‹ ê³ 
 			
 			$(document).on("click", ".report", function(event) {
 				event.stopPropagation();
@@ -1151,7 +1180,7 @@
 			
 			
 			
-			// ´ñ±Û ½Å°í
+			// ëŒ“ê¸€ ì‹ ê³ 
 			
 			$(document).on("click", ".commentReport", function(event) {
 				event.stopPropagation();
@@ -1185,7 +1214,7 @@
 			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 				<div class="caption">
 					<h2>Feed</h2>
-					<p>If you¡¯re any good at all, you know you can be better.</p>
+					<p>If youâ€™re any good at all, you know you can be better.</p>
 				</div><!-- caption -->					
 			</div>								
 		</div><!-- intro -->
@@ -1206,12 +1235,12 @@
 				</div>
 				
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">±æÃ£±â</a>
+					<a href="/feed/getFestivalLocation.jsp">ê¸¸ì°¾ê¸°</a>
 				</div>
 				
 				<div class="column six">
 
-					<!-- ÇÇµå ³»¿ë -->
+					<!-- í”¼ë“œ ë‚´ìš© -->
 					<div class="post-area clear-after">
 					
 						<article role="main">
@@ -1220,13 +1249,13 @@
 							
 							<nav>
 								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-									<%-- ¼öÁ¤ ¹öÆ° --%>
+									<%-- ìˆ˜ì • ë²„íŠ¼ --%>
 									<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
-									<%-- ¼öÁ¤ ¹öÆ° --%>
+									<%-- ìˆ˜ì • ë²„íŠ¼ --%>
 								
-									<%-- »èÁ¦ ¹öÆ° --%>
+									<%-- ì‚­ì œ ë²„íŠ¼ --%>
 									<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
-									<%-- »èÁ¦ ¹öÆ° --%>
+									<%-- ì‚­ì œ ë²„íŠ¼ --%>
 								</c:if>
 							</nav>
 							
@@ -1237,7 +1266,7 @@
 							
 							<div class="feedContent">
 							
-							<%-- ÀÌ¹ÌÁö --%>
+							<%-- ì´ë¯¸ì§€ --%>
 								<c:if test="${!empty feed.image1}">
 								<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
 									<ol class="carousel-indicators">
@@ -1290,7 +1319,7 @@
 								</c:if>
 								
 								
-								<%-- ÀÌ¹ÌÁö --%>
+								<%-- ì´ë¯¸ì§€ --%>
 													
 								<p>${feed.content}</p>
 								
@@ -1299,19 +1328,31 @@
 						</article>
 
 					</div>
-					<!-- ÇÇµå ³»¿ë -->
+					<!-- í”¼ë“œ ë‚´ìš© -->
 					
-					<!-- ÇÇµå ÇØ½ÃÅÂ±× -->
-					<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
-					<!-- ÇÇµå ÇØ½ÃÅÂ±× -->
+					<!-- í”¼ë“œ í•´ì‹œíƒœê·¸ -->
+					<c:if test="${!empty feed.hashtag}">
+						<div class="hashtagContent">
+							
+							<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
+							tag : 
+							<c:forEach var="textValue" items="${text}" varStatus="varStatus">
+								<span class="searchByHashtag">
+									#${textValue}
+								</span>
+							</c:forEach>
+							
+						</div>
+					</c:if>
+					<!-- í”¼ë“œ í•´ì‹œíƒœê·¸ -->
 					
-					<!-- ÇÇµå ÁÁ¾Æ¿ä ´ñ±Û¼ö ½Å°í -->
+					<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 					<section class="row section">
 						<div class="row">
 						
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 							<div class="col-xs-1"></div>
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 							
 							<c:if test="${feed.checkHeart eq 0}">
 								<div class="col-xs-2">
@@ -1339,32 +1380,32 @@
 								 ${feed.commentCount}
 							</div>
 							
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 							<div class="col-xs-1"></div>
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 								
-							<!-- ½Å°í ¾ÆÀÌÄÜ -->
+							<!-- ì‹ ê³  ì•„ì´ì½˜ -->
 							<div class="col-xs-2 report">
 								<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
 							</div>
-							<!-- ½Å°í ¾ÆÀÌÄÜ -->
+							<!-- ì‹ ê³  ì•„ì´ì½˜ -->
 							
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 							<div class="col-xs-1"></div>
-							<%-- ¿©¹é --%>
+							<%-- ì—¬ë°± --%>
 							
 						</div>
 					</section>
-					<!-- ÇÇµå ÁÁ¾Æ¿ä ´ñ±Û¼ö ½Å°í -->
+					<!-- í”¼ë“œ ì¢‹ì•„ìš” ëŒ“ê¸€ìˆ˜ ì‹ ê³  -->
 					
 					<form id="feedInfo" style="margin-top:50px;">
-						<!-- ´ñ±Û °ü·Ã hidden -->
+						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
 						
-						<%-- ÇÇµå ½Å°í --%>
+						<%-- í”¼ë“œ ì‹ ê³  --%>
 						<input type="hidden" name="reportSource" value="3">
 						<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
 						<input type="hidden" name="user2" value="${feed.user.userId}">
-						<%-- ÇÇµå ½Å°í --%>
+						<%-- í”¼ë“œ ì‹ ê³  --%>
 						
 						<input type="hidden" name="source" value="0">
 						<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
@@ -1373,9 +1414,9 @@
 						<input type="hidden" name="parent" value="0">
 						<input type="hidden" name="depth" value="0">
 						<input type="hidden" name="sequence" value="${feed.commentCount}">
-						<textarea name="commentContent" placeholder="´ñ±ÛÀÛ¼º"></textarea>
+						<textarea name="commentContent" placeholder="ëŒ“ê¸€ì‘ì„±"></textarea>
 						<input class="plain button purple btn_addComment" style="float:right;" value="Submit">
-						<!-- ´ñ±Û °ü·Ã hidden -->
+						<!-- ëŒ“ê¸€ ê´€ë ¨ hidden -->
 					</form>
 					
 					<div class="comment-section">
@@ -1401,17 +1442,17 @@
 									<div class="comment-meta">
 										<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time> / <c:if test="${comment.depth lt 2}"><a class="btn_createRecomment">Reply</a></c:if>
 										<c:if test="${sessionScope.user.userId eq comment.user.userId}">
-											<!-- ¼öÁ¤ ¹öÆ° -->
+											<!-- ìˆ˜ì • ë²„íŠ¼ -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
-											<!-- ¼öÁ¤ ¹öÆ° -->
+											<!-- ìˆ˜ì • ë²„íŠ¼ -->
 											
-											<!--  »èÁ¦ ¹öÆ° -->
+											<!--  ì‚­ì œ ë²„íŠ¼ -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
-											<!--  »èÁ¦ ¹öÆ° -->
+											<!--  ì‚­ì œ ë²„íŠ¼ -->
 										</c:if>
-											<!--  ½Å°í ¹öÆ° -->
+											<!--  ì‹ ê³  ë²„íŠ¼ -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>
-											<!--  ½Å°í ¹öÆ° -->
+											<!--  ì‹ ê³  ë²„íŠ¼ -->
 										<c:if test="${comment.heartCondition ne 0}">
 											<div class="heartPosition">
 												<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />
@@ -1433,22 +1474,22 @@
 									</div><!-- comment-meta -->
 									
 									<c:if test="${fn:trim(comment.reportCondition) ne 0}">
-										°ü¸®ÀÚ¿¡ ÀÇÇØ »èÁ¦µÈ ´ñ±ÛÀÔ´Ï´Ù.
+										ê´€ë¦¬ìì— ì˜í•´ ì‚­ì œëœ ëŒ“ê¸€ì…ë‹ˆë‹¤.
 									</c:if>
 									
 									<c:if test="${fn:trim(comment.reportCondition) eq 0}">
 										<p class="commentContent">${comment.commentContent}</p>
 									</c:if>
 									
-									<!-- ´ë´ñ±Û °ü·Ã hidden -->
+									<!-- ëŒ€ëŒ“ê¸€ ê´€ë ¨ hidden -->
 			
 									<form class="commentInfo">
 									
-										<%-- ÇÇµå ´ñ±Û ½Å°í --%>
+										<%-- í”¼ë“œ ëŒ“ê¸€ ì‹ ê³  --%>
 										<input type="hidden" name="reportSource" value="4">
 										<input type="hidden" name="sourceNumber" value="${comment.feedCommentNo}">
 										<input type="hidden" name="user2" value="${comment.user.userId}">
-										<%-- ÇÇµå ´ñ±Û ½Å°í --%>
+										<%-- í”¼ë“œ ëŒ“ê¸€ ì‹ ê³  --%>
 									
 										<input type='hidden' name='source' value='1'>
 										<input type='hidden' name='userId' value='${sessionScope.user.userId}'>
@@ -1461,10 +1502,10 @@
 										
 									</form>
 							
-									<!-- ´ë´ñ±Û °ü·Ã hidden -->
+									<!-- ëŒ€ëŒ“ê¸€ ê´€ë ¨ hidden -->
 								
 									<div class='btn_recommentCheck' style="display: none;">
-										<textarea name='commentContent' placeholder='ÀÛ¼º'></textarea>
+										<textarea name='commentContent' placeholder='ì‘ì„±'></textarea>
 										<input class="plain button purple btn_addRecomment" type="submit" value="Submit">
 									</div>
 								
@@ -1480,10 +1521,10 @@
 				
 				<div class="column three"></div>
 				
-				<%-- ÇöÀç ÆäÀÌÁö --%>
+				<%-- í˜„ì¬ í˜ì´ì§€ --%>
 				<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
 				<input type="hidden" id="pageFlag" value=true>
-				<%-- ÇöÀç ÆäÀÌÁö --%>
+				<%-- í˜„ì¬ í˜ì´ì§€ --%>
 				
 			</div>
 		</section>

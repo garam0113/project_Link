@@ -77,11 +77,11 @@
 		QANDA_IMAGE1 = #{qandAImage1:VARCHAR},
 		QANDA_IMAGE2 = #{qandAImage2:VARCHAR},
 		QANDA_OPEN_CONDITION= #{qandAOpenCondition:VARCHAR}
-			<if test="userId.userId == 'admin01'">
+		<if test="userId.userId == 'admin01'">
 			,	ANSWER_CONTENT = #{qandAAnswerContent},
 	 			ANSWER_REGDATE = SYSDATE,
 	 			ANSWER_CONDITION = '1'
-			</if>
+		</if>
 		</set>
 		WHERE QANDA_NO = #{qandANo}
 	</update>

@@ -23,21 +23,102 @@
 <style>
 body {
 	padding-top: 50px;
-	width: 1005px;
 }
-.add6 {
-    background-color: white; 
-  	color: black; 
-  	border: 2px solid #0a6bdf;
-  	border-radius : 13px;
+
+.head {
+	background-color: #5F0080;
+   background-image: linear-gradient(315deg, #BD76FF  0%, #5F0080 74%);
+	border: 1px solid #bcbcbc;
+	align = center;
 }
-.add6:hover {
-   background-color: #0a6bdf;
-  color: white;
+
+
+.content {
+
+	width: 500px;
 }
-.container{
-	width : 1005px;
+
+.custom-btn {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none !important;
+  box-shadow:none !important;
+  outline: none;
 }
+.btn-13 {
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover { <%-- 글씨색 --%>
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
+.waviy {
+  position: relative;
+}
+.waviy span {
+  position: relative;
+  display: inline-block;
+  font-size: 5px;
+  color: #5F0080;
+  text-transform: uppercase;
+  animation: flip 1s infinite;
+  animation-delay: calc(.2s * var(--i))
+}
+@keyframes flip {
+  0%,80% {
+    transform: rotateY(360deg) 
+  }
+}
+.darkover {
+    	position: sticky !important;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    width:1800px;
+ 	   background: rgba(0,0,0,0.35);
+ 	   }
+
+
+}
+
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -59,14 +140,20 @@ body {
 </script>
 
 </head>
-
-<body>
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/toolbar.jsp" />
+		<jsp:include page="/toolbar.jsp" />
+					<div id="intro-wrap" data-height="15">
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
+						<div class="caption">
+							
+						
+						</div><!-- caption -->					
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
 	<!-- ToolBar End /////////////////////////////////////-->
-
-
-	<!--  화면구성 div Start /////////////////////////////////////-->
+<body>  
 	<div class="container">
 
 		<div class="row1">
@@ -111,48 +198,50 @@ body {
 
 
 		<!--  table Start /////////////////////////////////////-->
-		<table  style="text-align-last: center;">
-			<div class="row2">
-				<thead>
-					<tr>
+			<table   style="text-align-last: center;">
+				<div class="row2">
+			  <thead class="bg-primary text-white">
+					<tr class = "head" id ="head" >
 						<th align="center">No</th>
 						<td />
 						<th align="center" class="content">제목</th>
 						<td />
-						<th align="center">신고처리상태</th>
+						<th align="center">진행상황</th>
 						<td />
-						<th align="center">신고대상ID</th>
+						<th align="center">신고받는 ID</th>
 						<td />
-						<th align="center" width="140">신고접수날짜</th>
+						<th align="center" width="140">작성 날짜</th>
 					</tr>
 				</thead>
 				
-				</div>
-				</table>
+				
 				<tbody>
-				<table>
+			
 					<c:set var="i" value="0" />
 					<c:forEach var="getReportList" items="${getReportList}">
 						<c:set var="i" value="${i + 1}" />
 						<tr class="ct_list_pop">
-							<td align="left" id="bb">${getReportList.no}</td>
-
+							<td align="center" id="bb">${getReportList.no}</td>
 							<td></td>
-							<td align="left">${getReportList.title}</td>
+							<td align="center" class="content">${getReportList.title}	
+							<c:if test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
+							<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+							</c:if>	
+							</td>
 							<td></td>
 							<c:if test="${getReportList.reportCondition=='1'}">
-								<td align="left" >처리완료</td>
+								<td align="center" >처리완료</td>
 							</c:if>
 							<c:if test="${getReportList.reportCondition=='0'}">
-								<td align="left" >대기중</td>
+								<td align="center" >대기중</td>
 							</c:if>
 							<td></td>
-							<td align="left">${getReportList.user2.userId}</td>
+							<td align="center">${getReportList.user2.userId}</td>
 							<td></td>
 							<td align="left">${getReportList.regDate}</td>
-							<td align="center"></td>
+							
 
-							<td></td>
+							
 					</c:forEach>
 				</tbody>
 		</table>
@@ -184,8 +273,8 @@ body {
 
 							<div class="col-md-3 col-sm-3 col-xs-6">
 
-								<button class="add add6"
-									style="transform: translate(900px, -70px);">뒤로</button>
+							<button class="custom-btn btn-13" style= "transform: translate(900px, -90px); ">
+									뒤로</button>
 							</div>
 
 

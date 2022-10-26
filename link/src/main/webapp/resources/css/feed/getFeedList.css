@@ -7,25 +7,25 @@
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 
-	/* SUMMERNOTE */
+	/* SUMMERNOTE border: 2px solid rgba(171,148,233,1) !important; */
 
 	.note-editor.note-frame {
-		box-shadow: 12px 13px 5px 0px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 		margin-bottom: 40px;
 	}
 	
 	div.note-toolbar {
-		border: 2px solid rgba(171,148,233,1) !important;
+		
 		color: #5F0080 !important;
 	}
 		
 	.note-btn {
-		border: 2px solid rgba(171,148,233,1);
+		
 		color: #5F0080 !important;
 	}
 	
 	.note-editing-area {
-		border: 2px solid rgba(171,148,233,1);
+		
 		color: rgba(171,148,233,1) !important;
 	}
 
@@ -33,9 +33,8 @@
 
 	/* FEED BORDER */
 	.showFeedForm {
-		border: 2px solid rgba(171,148,233,1);
 		color: black !important;
-		box-shadow: 12px 13px 5px 0px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 		margin-bottom: 40px;
 		border-radius: 15px !important;
 	}
@@ -46,6 +45,7 @@
 
 	div.feedContent {
 		margin-left: 60px;
+		margin-right: 25px;
 		color: black !important;
 	}
 
@@ -78,7 +78,7 @@
 		float: right !important;
 
 		color: black !important;
-		box-shadow: 12px 13px 5px 0px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 		background-color: white;
 	}
 	
@@ -88,7 +88,6 @@
 	
 	h5.meta-post {
 		margin-bottom:13px !important;
-		color:rgba(171,148,233,1) !important;
 	}
 	
 	/* FEED TIME */
@@ -96,7 +95,7 @@
 	/* FEED HASHTAG */
 	
 	.hashtagContent {
-		margin-right: 5px;
+		margin-right: 25px;
 		margin-bottom: 25px;
 		margin-left: 60px;
 	}
@@ -111,6 +110,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border-radius: 15px;
 	}
 	
 	/* FEED LASTBAR */
@@ -159,6 +159,8 @@
 
 	.col-xs-2 {
 		text-align: center !important;
+		display: flex;
+		justify-content: center;
 	}
 
 	.report > img {
@@ -217,21 +219,38 @@
 	
 	/* 피드 작성자 이미지 */
 
-	/* SWAL 창 */
+	/* 검색창 */
+
+	#searchKeyword {
+		width: 100%;
+		display: flex;
+	}
+
+	/* 검색창 */
 
 
-	/* SWAL 창 */
+	/* 화면 커트 나누기 */
+
+	div.buffer {
+		display: flex;
+	}
+
+	/* 화면 커트 나누기 */
+
+	/* 주변 검색 */
+
+	.searchPlace {
+		width: 100%;
+		position: fixed;
+	}
+
+	/* 주변 검색 */
 
 
-
-
-
-
-
-
-
-
-
+	.modal {
+		z-index: 9999 !important;
+		position: relative;
+	}
 
 
 

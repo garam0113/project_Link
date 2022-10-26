@@ -216,7 +216,7 @@ textarea {
 	<div class="container">
 		<div></div>
 		<div class="page-header text-center">
-			<h2>신고 등록</h2>
+			<h2><strong>신고 등록</strong></h2>
 		</div>
 
 		<!-- form Start /////////////////////////////////////-->

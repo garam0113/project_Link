@@ -82,15 +82,15 @@
 	<select  id="getNoticeList"  parameterType="map"	resultMap="noticeSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE, N.NOTICE_COUNT
+	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE, N.NOTICE_COUNT, N.NOTICE_IMAGE1, N.NOTICE_IMAGE2
 											FROM NOTICE N , USERS U
 											WHERE N.USER_ID = 'admin01' AND U.USER_ID = N.USER_ID
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
-										 			AND	LOWER(notice_no) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(NOTICE_NO) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-										 			AND	LOWER(notice_title) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(NOTICE_TITLE) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 											</if>
 											ORDER BY NOTICE_NO DESC) inner_table
