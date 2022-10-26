@@ -10,202 +10,217 @@
 
 <head>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<title></title>
+<title>Q&A 상세보기</title>
 </head>
 
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 
-		$("td.ct_btn01:contains('이전')").bind("click", function() {
+		$("button:contains('뒤로')").bind("click", function() {
 			
-			if(${empty sessionScope.user.userId}){
-				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
-			}
-			if(${!empty sessionScope.user.userId}){
-				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
-			}
+				if(${empty sessionScope.user.userId}){
+					location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+				
+				}else if(${!empty sessionScope.user.userId}){
+					if(${ user.role == '1'}){ //관리자
+						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+					}else if(${user.role == '0' }){ //유저
+						$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit(); 	//겟 ==전체보기
+					}
+				}  
 		});
 
-		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateQandA?qandANo="+$('tr.qandANo').find('td').text();
+		$("button:contains('수정')").bind("click", function() {
+			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
 
-		$("td.ct_btn01:contains('삭제')").bind("click", function() {
-			
-			alert($('tr.noticeNo').find('td').text());
-			
-		 	self.location = "../serviceCenter/deleteQandA?qandANo="+$('tr.qandANo').find('td').text(); 
+		$("button:contains('삭제')").bind("click", function() {
+			 Swal.fire({
+		          title: '정말로 삭제하시겠습니까?',
+		          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+		          icon: 'warning',
+		          showCancelButton: true,
+		          confirmButtonColor: '#3085d6',
+		          cancelButtonColor: '#d33',
+		          confirmButtonText: '삭제',
+		          cancelButtonText: '취소'
+		      }).then((result) => {
+		          if (result.isConfirmed) {
+		 	self.location = "/serviceCenter/deleteQandA?qandANo="+$('#qandANo').val();
+		          }
+		    })
 		})
-
 	});
 </script>
+<style>
 
-<body bgcolor="#ffffff" text="#000000">
+textarea {
+	resize: none;
+}
 
-	<form>
-
-		<table width="100%" height="37" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr>
-				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-					width="15" height="37"></td>
-				<td background="/images/ct_ttl_img02.gif" width="100%"
-					style="padding-left: 10px;">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="93%" class="ct_ttl01">QandA 조회33</td>
-							<td width="20%" align="right">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-					width="12" height="37" /></td>
-			</tr>
-		</table>
-
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 13px;">
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">번호 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr class ="qandANo">
-							<td width="105"><input type="hidden" name="qandANo" id="qandANo"value="${qandA.qandANo}">
-								${qandA.qandANo}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">제목 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandATitle}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-
+.custom-btn {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none !important;
+  box-shadow:none !important;
+  outline: none;
+}
+.btn-13 {
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover { <%-- 글씨색 --%>
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
 
 
-			<tr>
-				<td width="104" class="ct_write">이미지 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
+</style>
 
-<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" width="100" height="100" align="absmiddle"/>
-<img src="/resources/image/uploadFiles/${qandA.qandAImage2}" width="100" height="100" align="absmiddle"/>
-			</tr>
+<jsp:include page="/toolbar.jsp" />
 
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
+<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+  <h2>Q&A 상세보기</h2>
+</div>
+	
+		<div class="container" style="margin-top: 37px;">
+			<!--  table Start /////////////////////////////////////-->
+			<table>
+				<div class="row2">
+				<thead>
+				</thead>
+				</div>
+				</tbody>
+					 <tr class = "body" id ="body" >
+						<th style="text-align-last: center;"></th>
+						<td align="left">${qandA.qandANo}번째 질문
+						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
+						</td>
+					</tr>
+					<tr class = "content" id ="content">
+						<th style="text-align-last: center;">제목</th>
+						<td>		
+						<textarea class="text" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}"  
+						style="width: 900px; height:40px;" readonly >${qandA.qandATitle}</textarea>
+						</td> 
+					</tr>
+					<tr>
+						<th></th>
+						<td align="left" name ="qandARegDate" id="qandARegDate">${qandA.qandARegDate }</td>
+						<td align="left" style="transform: translateX(-370px);">${qandA.userId.nickName}</td>
+						
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td>
+						<textarea class="text" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}"  
+						style="width: 900px; size:400px;" readonly >${qandA.qandAContent}</textarea>
+						</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">첨부파일</th>
+						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
+							<td>첨부파일 없음</td>
+						</c:if>
+						<td><c:if test="${qandA.qandAImage1 != null }">
+						<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
+						
+						</c:if>
+						<c:if test="${qandA.qandAImage2 != null }">
+						<img src="/resources/image/uploadFiles/${qandA.qandAImage2}" 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
+						
+						</c:if>
+						</td>
+						
+						
+						
+						<c:if test ="${qandA.qandAAnswerRegDate != null}"> <%--관리자--%>
+					<tr>
+						<th></th>
+						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate">${qandA.qandAAnswerRegDate }</td>
+						<td align="left" style="transform: translateX(-370px);">관리자</td>
+						<td/>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td>
+						<textarea class="text" id="qandAAnswerContent" name="qandAAnswerContent" value="${qandA.qandAAnswerContent}"  
+						style="width: 900px; size:400px;" readonly >${qandA.qandAAnswerContent}</textarea>
+						</td>
+					</tr>
+						</c:if>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;"></th>
+					</tr>
+			</table>
+			<!--  table End /////////////////////////////////////-->
+	
 
-			<tr>
-				<td width="104" class="ct_write">질문내용 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandAContent}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">작성일자</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandARegDate}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">답변내용</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandAAnswerContent}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">답변날짜</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandAAnswerRegDate}</td>
-			</tr>
-			<tr/><tr/>
-		<tr>
-				<td width="104" class="ct_write">공개범위</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${qandA.qandAOpenCondition}</td>
-			</tr>
-
-			
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-		</table>
-
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
-
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-
-							
-								<table border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td class="ct_write01"><input type="hidden"
-											id="Quantity" name="Quantity" value="1" /></td>
-									</tr>
-								</table>
-							<td width="30"></td>
-							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">수정</td>
-							
-							<td width="30"></td>
-
-							<td background="/images/ct_btnbg02.gif" class="ct_btn01"
-								style="padding-top: 3px;">삭제</td>
-								
-							<td width="14" height="23">
-							<td background="/images/ct_btnbg02.gif" width="90"
-								class="ct_btn01" style="padding-top: 3px;">이전</td>
-
-							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
-								width="14" height="23"></td>
-								
-								
-
-								
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
-	</form>
-
+		
+						
+									<div> 
+									
+ 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									   수정</button> 
+									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									   삭제</button> 
+									
+									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									뒤로</button>
+									
+									</div>
+				
+			</div>
+<form></form>
 </body>
 
 </html>

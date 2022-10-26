@@ -23,7 +23,10 @@
 
 
 <style>
-	::selection { 
+.row {
+	margin-left : 0px !important;
+}
+::selection { 
 				background-color: #3a85ed !important;
 				color: white  !important;
 			}
@@ -122,7 +125,7 @@ $(function() {
 	<jsp:include page="/toolbar.jsp" />
 
 
-<body style="overflow-x: hidden">	
+<body >	
 	<%--검은색 화면 --%>
 			<div id="intro-wrap" data-height="15">
 				<div id="intro" class="preload darken">					

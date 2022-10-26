@@ -117,11 +117,7 @@ body {
 	    width:1800px;
  	   background: rgba(0,0,0,0.35);
  	   }
-/* input::placeholder-shown {
-  color:#BD76FF; */
-#searchKeyword::-webkit-input-placeholder {  color:#E1BFFF;}
 
-}
 
 </style>
 
@@ -226,7 +222,7 @@ function fncGetList(currentPage) {
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px); color:#BD76FF;">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
@@ -237,7 +233,7 @@ function fncGetList(currentPage) {
 					<form class="form-inline" name="detailForm">
 						
 						<div class="form-group">
-							<select class="form-control" name="searchCondition" style="vertical-align: top; color:#BD76FF;">
+							<select class="form-control" name="searchCondition" style="vertical-align: top;">
 								<option value="0"
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
@@ -246,7 +242,7 @@ function fncGetList(currentPage) {
 
 							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">검색어</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; color:#BD76FF;"
+								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; "
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 

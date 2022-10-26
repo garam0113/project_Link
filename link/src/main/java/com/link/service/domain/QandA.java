@@ -13,7 +13,7 @@ public class QandA {
 	private String qandAImage2;			//Q&A 이미지2
 	private int qandACondition;			//Q&A 진행상황
 	private String qandAAnswerContent;	//Q&A 답변내용
-	private String qandAAnswerRegDate;	//Q&A 답변등록날짜
+	private Date qandAAnswerRegDate;	//Q&A 답변등록날짜
 	private int qandAOpenCondition;		//Q&A 공개여부
 	
 	
@@ -74,10 +74,10 @@ public class QandA {
 	public void setQandAAnswerContent(String qandAAnswerContent) {
 		this.qandAAnswerContent = qandAAnswerContent;
 	}
-	public String getQandAAnswerRegDate() {
+	public Date getQandAAnswerRegDate() {
 		return qandAAnswerRegDate;
 	}
-	public void setQandAAnswerRegDate(String qandAAnswerRegDate) {
+	public void setQandAAnswerRegDate(Date qandAAnswerRegDate) {
 		this.qandAAnswerRegDate = qandAAnswerRegDate;
 	}
 	public int getQandAOpenCondition() {
