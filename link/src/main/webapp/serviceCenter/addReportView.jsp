@@ -28,7 +28,7 @@
 		var title = $("textarea[name=title]").val();		
 		var content =$("textarea[name=content]").val();			
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
-		
+
 		
 		
 		if(title == null || title.length <1){
@@ -82,15 +82,13 @@
 		var sum = 0;
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
 		
+		
 		for(var i =0 ; i<checkbox; i++){
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);
 				
 		}
-			alert($("#clubPostNo").val());
-			alert($("#clubPostCommentNo").val());
-			alert($("#feedNo").val());
-			alert($("#feedCommentNo").val());
+
 			
 		var no = 0;	
 			
@@ -104,7 +102,7 @@
 			  no += $("#feedCommentNo").val();
 		}
 		
-		
+
 		
 		
 	 	$.ajax({
@@ -115,15 +113,14 @@
 		data : JSON.stringify ({
 			"title":$("#title").val(),
 			"content":$("#content").val(),
-			"reportImage1":$("#reportImage1").val(),
-			"reportImage2":$("#reportImage2").val(),
+		<%--	"file": image, --%>
 			"user1":$("#user1").val(),
 			"user2":$("#user2").val(),
 			"reportSource":$("#reportSource").val(),
 			"reportReason": sum,
 			"type": $("#type").val(),
 			"no" :no,   
-
+			"clubPost":$("#clubPost").val(),
 			
 	
 		 success: function(){
@@ -155,7 +152,7 @@
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
 		var user2 = opener.$("input[name='user2']").val();
-		
+	<%--	var image = $("input:multiple[name=image]").val(); --%>
 		var userId = opener.$("input[name='reportedId']").val();
 		$("#reportSource").val(reportSource);
 		$("#user2").val(user2);
@@ -241,8 +238,7 @@ textarea {
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label">내용</label>
 				<div class="context">
-					<textarea class="content" id="content" name="content" value=""
-						placeholder="신고 내용을 입력해주세요." maxlength="500"
+					<textarea class="content" id="content" name="content" value="" placeholder="신고 내용을 입력해주세요." maxlength="500"
 						style="width: 400px; height: 250px; margin-left: 15px;"></textarea>
 				</div>
 			</div>
@@ -262,11 +258,14 @@ textarea {
 						<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
 		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
+		     		 <input type="hidden" name="order" id="clubPost" value="${report.clubPost}"/>
+		     		 ${report.clubPost}
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">  			
 		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
+		     		  <input type="hidden" name="order" id="clubNo" value="${report.clubPost.clubNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
@@ -274,9 +273,11 @@ textarea {
 		     		 <input type="hidden" name="no" id="feedNo" value="${report.feed.feedNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='4'}">
-						<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
+					<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     		       	
 		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
+		     		피드넘버 ${report.feedComment.feedNo }   게시물넘버 ${report.feedComment.feedCommentNo}
 					</c:if>
 					
 					
@@ -300,9 +301,8 @@ textarea {
 			<label for="reportImage"
 				class="col-sm-offset-1 col-sm-3 control-label">파일첨부</label>
 			<div class="col-sm-4">
-				<input multiple="multiple" type="file" name="image"
-					class="ct_input_g" style="width: 200px; height: 50px"
-					 />사진은 2장까지 가능합니다.
+				<input multiple="multiple" type="file" name="image" class="ct_input_g" style="width: 200px; height: 50px"/>
+				사진은 2장까지 가능합니다.
 
 		 </div>
 			

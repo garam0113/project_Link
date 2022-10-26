@@ -131,21 +131,21 @@ textarea {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left">${notice.noticeNo}번 공지사항
+						<td align="left" style="display:flex; height: 50px;">${notice.noticeNo}번 공지사항
 						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 						</td>
 					</tr>
 					<tr class = "content" id ="content">
 						<th style="text-align-last: center;">제목</th>
-						<td>		
+						<td style="    display: flex; height: 40px;">								
 						<textarea class="text" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}"  
 						style="width: 900px; height:40px;" readonly >${notice.noticeTitle}</textarea>
 						</td> 
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="noticeRegDate" id="noticeRegDate">${notice.noticeRegDate }</td>
-						<td align="left" style="transform: translateX(-370px);">${notice.userId.nickName}</td>
+						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;">${notice.noticeRegDate }</td>
+						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;">${notice.userId.nickName}</td>
 						
 					</tr>
 					<tr >

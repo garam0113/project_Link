@@ -2,6 +2,9 @@ package com.link.web.serviceCenter;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +19,7 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Report;
+import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 @RestController
@@ -25,6 +29,10 @@ public class ServiceCenterRestController {
 	@Autowired
 	@Qualifier("ServiceCenterServiceImpl")
 	private ServiceCenterService serviceCenterService;
+	
+	@Autowired
+	@Qualifier("feedServiceImpl")
+	private FeedService	feedService;
 	
 	public ServiceCenterRestController() {
 		// TODO Auto-generated constructor stub
@@ -38,31 +46,52 @@ public class ServiceCenterRestController {
 	int pageUnit;
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
-	public String addReport(@RequestBody Report report,  Model model , Search search  )throws Exception {
+	public String addReport(@RequestBody Report report,  Model model , ClubPost clubPost,  Search search  )throws Exception {
 		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
 		System.out.println(report);
 		
-					if(report.getReportSource()==1) {
-						ClubPost clubPost = new ClubPost();
+		//사진 업로드
+/*		int fileCount = 0;
+		
+		String root ="C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+			 
+		for(MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+				
+			if(fileCount != file.length) {
+			  report.setReportImage2(files.getOriginalFilename());
+			}
+			 report.setReportImage1(files.getOriginalFilename());
+			File saveFile = new File(root+ files.getOriginalFilename());
+			boolean isExists = saveFile.exists();
+			if(!isExists) {
+				files.transferTo(saveFile);
+			}
+		}   */	
+			
+					
+					Feed feed = new Feed();
+					Map<String, Object> map = new HashMap<String, Object>();
+					if(report.getReportSource()==1) {				//모임게시물
 						clubPost.setClubPostNo(report.getNo());
-						System.out.println(report.getNo()+"테스트용 !!!");
 						report.setClubPost(clubPost);
-					}else if(report.getReportSource()==2) {
+					}else if(report.getReportSource()==2) {   		//모임게시물댓글
 						comment.setClubPostCommentNo(report.getNo());
-						System.out.println(report.getNo()+"테스트용 !!!");
 						report.setClubPostComment(comment);
 					}
-					else if(report.getReportSource()==3) {
-						Feed feed = new Feed();
+					else if(report.getReportSource()==3) {			//피드
 						feed.setFeedNo(report.getNo());
-						System.out.println(report.getNo()+"테스트용");
 						report.setFeed(feed);
-						System.out.println(feed);
-					}else if(report.getReportSource()==4) {
-						comment.setFeedCommentNo(report.getNo());
-						report.setFeedComment(comment);
+						
+					}else if(report.getReportSource()==4) {			//피드댓글
+					report.setFeedComment(feedService.getFeedComment(report.getNo()));
+					map.put("feedNo", report.getFeedComment().getFeedNo());
+					report.setFeed((Feed)feedService.getFeed(map).get("feed"));
 					}
+					
+
 			serviceCenterService.addReport(report);
 			model.addAttribute("report", report);
 		

@@ -29,7 +29,7 @@
 		<result property="reportCount" column="report_count" jdbcType="NUMERIC"/>
 		<result property="stopStartDate" column="stop_start_date" jdbcType="DATE"/>
 		<result property="stopEndDate" column="stop_end_date" jdbcType="DATE"/>
-		
+		<result property="nickName" column="nickname" jdbcType="VARCHAR" />
 	</association>
 	
 
@@ -44,6 +44,7 @@
 	
 		
 	<association property="comment" javaType="comment">
+		<result property="clubPostNo" column="club_post_no" jdbcType="NUMERIC"/>
 		<result property="clubPostCommentNo"    column="club_post_comment_no" jdbcType="NUMERIC"/>
 	</association>
 	
@@ -53,6 +54,7 @@
 	</association>
 	
 	<association property="feedComment" javaType="comment">
+		<result property="feedNo" column="feed_no" jdbcType="NUMERIC"/>
 		<result property="feedCommentNo" column="feed_comment_no" jdbcType="NUMERIC"/>
 	</association>
 	
@@ -129,7 +131,7 @@
 
 	 <!-- SQL : SELECT ONE -->
 	 <select id="getReport" parameterType="int" resultMap="Report_PushSelectMap" >
-		SELECT R.*, U.REPORT_COUNT , U.STOP_START_DATE , U.STOP_END_DATE 
+		SELECT R.*, U.REPORT_COUNT , U.STOP_START_DATE , U.STOP_END_DATE , U.NICKNAME
         FROM REPORT_PUSH R, USERS U
         WHERE R.user_id2 = U.USER_ID AND NO = #{no}
 	 </select>
@@ -227,7 +229,7 @@
 	<select  id="getReportList"  parameterType="map"	resultMap="Report_PushSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT R.NO , R.TITLE , R.USER_ID2 , R.REPORT_CONDITION , R.REPORT_REGDATE
+	  					FROM		(	SELECT R.NO , R.TITLE , R.USER_ID2 , R.REPORT_CONDITION , R.REPORT_REGDATE, R.REPORT_IMAGE1, R.REPORT_IMAGE2
 											FROM REPORT_PUSH R
 											WHERE TYPE = 1
 											<if test="userId==''"></if>
