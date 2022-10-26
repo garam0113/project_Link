@@ -82,16 +82,19 @@ INSERT INTO heart VALUES (seq_heart_no.nextval, 'user05', '1', '1');
 
 SELECT * FROM FEED ORDER BY feed_no DESC;
 
-SELECT * FROM FEED WHERE feed_no = 52 ORDER BY feed_no DESC;
+SELECT * FROM FEED WHERE feed_no = 89 ORDER BY feed_no DESC;
 
 SELECT * FROM FEED_COMMENT ORDER BY sequence ASC;
 
-SELECT * FROM FEED_COMMENT WHERE feed_no = 52 ORDER BY sequence ASC;
+SELECT * FROM FEED_COMMENT WHERE feed_no = 89 ORDER BY sequence ASC;
 
 SELECT * FROM HEART;
 
 
 SELECT * FROM USERS;
+
+
+
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
 VALUES	('user05', '1234', '박상기', '1111110000000', '남자', '01011113333', 'USER05@hotmail.com', '0', '회원', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);

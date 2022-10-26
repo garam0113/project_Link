@@ -1,6 +1,7 @@
 package com.link.web.feed;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,8 @@ import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.user.UserService;
+
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 @RequestMapping("/feed/*")
@@ -141,18 +144,31 @@ public class FeedController {
 		// 해시태그 저장하기 시작
 		
 		StringBuilder stringBuilder = new StringBuilder();
-		String[] hashtag = feed.getContent().split("#"); 
+		String[] hashtag = feed.getContent().split("#");
 		
-		for(int i = 1 ; i < hashtag.length ; i++) {
+		for(int i = 0 ; i < hashtag.length ; i++) {
+			hashtag[i] = hashtag[i].replaceAll(" ", "");
+			System.out.println("테스트 : " + hashtag[i]);
+		}
+		
+		@SuppressWarnings("unchecked")
+		LinkedHashSet<String> hashSet = new LinkedHashSet<String>(Arrays.asList(hashtag));
+		String[] resultHashtag = hashSet.toArray(new String[0]);
+		
+		for(String str : resultHashtag) {
+			System.out.println("결과 : " + str + "\n");
+		}
+		
+		for(int i = 1 ; i < resultHashtag.length ; i++) {
 			
-			if(hashtag[i].contains(" ")) {
+			if(resultHashtag[i].contains(" ")) {
 				// 공백 체크
-				int index = hashtag[i].indexOf(" ");
+				int index = resultHashtag[i].indexOf(" ");
 				
-				hashtag[i] = hashtag[i].substring(0, index);
+				resultHashtag[i] = resultHashtag[i].substring(0, index);
 			}
 			
-			stringBuilder.append("#").append(hashtag[i]);
+			stringBuilder.append("#").append(resultHashtag[i]);
 			
 		}
 		

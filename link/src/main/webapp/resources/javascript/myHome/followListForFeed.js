@@ -18,8 +18,8 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"'>"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
+				"<div class='following-section' id='"+item.userId+"'>"+
+			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='75' height='75' />"+"</div><div>"+
 			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			
@@ -56,7 +56,7 @@ window.onload=function() {
        $.each(data.list, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='follow-section' style='margin-left:50px;' id='"+item.receiveId.userId+"'>"+
+				"<div class='follow-section' id='"+item.receiveId.userId+"'>"+
 			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='75' height='75' />"+"</div><div'>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 		"</div>";
