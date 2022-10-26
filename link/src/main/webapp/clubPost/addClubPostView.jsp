@@ -167,7 +167,7 @@
 						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
 							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<div class="clubPostTitle">
-								제목<input type="text" name="clubPostTitle" placeholder="제목">
+								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
 							<textarea id="summernote" name="clubPostContent">
 							</textarea>
