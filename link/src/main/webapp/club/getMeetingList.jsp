@@ -41,21 +41,40 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <style>
-	body {
-    background-color: #fbfbfb;
+	 body {
+    background-color: #f0f2f5;
     color: #333;
-    /* font-size: 1.125em; */
+    font-size: 1.125em;
     font-size: 15px !important;
     font-family: 'Open Sans', sans-serif;
     line-height: 0.8 !important;
 	}
 	
+	#main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	.container {
+		background-color: #f0f2f5;
+	}
+	
+	
+	element.style {
+    background-color: #f0f2f5 !important;
+	}
+	
+	
 	.darkover {
-    position: sticky !important ;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    background: rgba(0,0,0,0.35);
+	    position: fixed !important;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    background: rgba(0,0,0,0.0) !important;
 	}
 	
 	#calendar {
@@ -65,14 +84,9 @@
 	height: 800px;
 	display: flex;
 	justify-content: center;
+	background-color: #f0f2f5 !important;
 	}
-	
-	
-	element.style {
-	
-		margin-right: 115px !important;
-		/* overflow: visible !important; */
-	}
+			
 	
 	.fc-scroller {
 		overflow-y : hidden !important;
@@ -104,7 +118,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="20" style=""><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="20"><!-- 상단 검은색 공통 영역 -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -148,7 +162,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#BD76FF; color:#fbfbfb; margin-right: 115px;">일정등록</button>
+		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#f0f2f5; color:#BD76FF; margin-right: 115px; border-color: #BD76FF;">일정등록</button>
 
 
 	    
