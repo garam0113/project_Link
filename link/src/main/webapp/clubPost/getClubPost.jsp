@@ -695,6 +695,7 @@
 		<input type="hidden" name="reportSource" value="1">
 		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
 		<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
+		<input type="text" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
 		<%-- 모임게시물 신고 --%>
 	</form>
 	
@@ -703,6 +704,8 @@
 		<input type="hidden" name="reportSource" value="2">
 		<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
 		<input type="hidden" name="userId" id="revUserId" value="">
+		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
+		<input type="text" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
 		<%-- 모임게시물 댓글 신고 --%>
 	</form>
 
