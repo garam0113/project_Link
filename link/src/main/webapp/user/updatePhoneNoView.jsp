@@ -38,7 +38,7 @@
 			fncUpdatePhone();
 		});
 		
-		$("a[href='#']").on("click", function() {
+		$("#back").on("click", function() {
 			window.close();
 		});
 	})
@@ -73,7 +73,6 @@
    			console.log(phoneNo);
 
  			var userId = $("#userId").val();
-  			alert(userId);
 
   			$.ajax("/userRest/json/updatePhoneNo", {
 
@@ -124,18 +123,18 @@
 
 <body>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class="container" style="background-color: lavenderblush;" >
 	
-			<h1 class="bg-primary text-center">핸드폰번호 변경</h1>
+			<h1 style="font-weight: bold; margin-bottom: 30px; margin-left: 60px;">핸드폰번호 변경</h1>
 	    
 	    <!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+		<form class="form-horizontal" >
 		
 		<input type="hidden" id = "userId" name="userId" value="${ user.userId }">
 		  <div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
+				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: -10px;">휴대전화번호</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="phone1" id="phone1">
+					<select class="form-control" name="phone1" id="phone1" style="margin-left: -10px;">
 						<option value="010">010</option>
 						<option value="011">011</option>
 						<option value="016">016</option>
@@ -145,35 +144,35 @@
 				</div>
 			
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone2" name="phone2"
+					<input type="text" class="form-control" id="phone2" name="phone2" style="margin-left: -20px;"
 						placeholder="번호">
 				</div>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone3" name="phone3"
+					<input type="text" class="form-control" id="phone3" name="phone3" style="margin-left: -30px;"
 						placeholder="번호">
 				</div>
 				<input type="hidden" id="phoneNo" name="phoneNo" />
 				<div class="col-sm-2">
-					<button type="button" id="sendPhoneNumber" class="btn ">인증번호전송</button>
+					<button type="button" id="sendPhoneNumber" class="btn " style="margin-left: -40px; background: white; border-color: #5F0080;">인증번호전송</button>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">인증번호</label>
+				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: -20px;">인증번호</label>
 				<div class="col-sm-2">
 					<input type="text" class="form-control" id="inputCertifiedNumber"
 						name="inputCertifiedNumber" placeholder="인증번호">
 					<input type="hidden" id="checkNo">
 				</div>
 				<div class="col-sm-2">
-					<button type="button" id="checkBtn" class="btn ">인증번호확인</button>
+					<button type="button" id="checkBtn" class="btn "style="margin-left: -10px; background: white; border-color: #5F0080;">인증번호확인</button>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="chang" class="btn btn-primary">확 &nbsp;인</button>
-					<a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+					<button type="button" id="chang" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">확 &nbsp;인</button>
+					<button type="button" id="back" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">취&nbsp;소</button>
 				</div>
 			</div>
 		</form>

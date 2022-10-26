@@ -111,16 +111,16 @@
 		FROM REPORT_PUSH R
 		WHERE  R.USER_ID2 = #{user2.userId}
 		AND TO_CHAR(R.REPORT_REGDATE, 'YYYYMMDD') &lt; TO_CHAR(R.REPORT_REGDATE+3, 'YYYYMMDD')
-		 <if test="clubPost.clubPostNo != null">
+		 <if test="clubPost.clubPostNo != 0">
         AND R.CLUB_POST_NO
         </if>
-        <if test="comment.clubPostCommentNo != null">
+        <if test="comment.clubPostCommentNo != 0">
         AND R.CLUB_POST_COMMENT_NO
         </if>
-        <if test="feed.feedNo != null">
+        <if test="feed.feedNo != 0">
         AND R.FEED_NO
         </if>
-        <if test="feedComment.feedCommentNo != null">
+        <if test="feedComment.feedCommentNo != 0">
         AND R.FEED_COMMENT_NO
         </if>
 	  </select>

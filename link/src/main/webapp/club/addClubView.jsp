@@ -232,9 +232,6 @@
 						<option value="종로구">종로구</option>
 						<option value="중구">중구</option>
 						<option value="중랑구">중랑구</option>
-					
-					
-					
 					</select>
 				</div>		
 			</div>			

@@ -42,8 +42,7 @@ public class ServiceCenterRestController {
 		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
 		System.out.println(report);
-		Report report2 = serviceCenterService.getReportDuple(report);
-			if(report2.getUser2().getUserId()!=report.getUser2().getUserId()) {
+		
 					if(report.getReportSource()==1) {
 						ClubPost clubPost = new ClubPost();
 						clubPost.setClubPostNo(report.getNo());
@@ -65,10 +64,7 @@ public class ServiceCenterRestController {
 						report.setFeedComment(comment);
 					}
 			serviceCenterService.addReport(report);
-			}
-		  
-		
-		model.addAttribute("report", report);
+			model.addAttribute("report", report);
 		
 		//돌려보내는 곳 신고하기 전 -1하고, alter 창? 완료 되었습니다 2개 변경
 		return "forward:/serviceCenter/serviceCenterHome.jsp";

@@ -28,13 +28,27 @@
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <script type="text/javascript">
 	$(function() {
-		$("button").on("click", function() {
+		$("#update").on("click", function() {
 			self.location = "/user/updateUser?userId=${getUser.userId}";
+		});
+		$("#out").on("click", function() {
+			swal.fire({
+				title : "Å»ÅðÇÏ½Ã°Ú½À´Ï±î?",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Å»Åð',
+				cancelButtonText: 'Ãë¼Ò'
+			}).then((result) =>{
+				if (result.isConfirmed){
+				self.location = "/user/deleteUser?userId=${getUser.userId}";
+				}
+			})
 		});
 	});
 	/*
@@ -163,7 +177,11 @@
 
 		<div class="row">
 			<div class="col-sm-offset-4  col-sm-4 text-center">
-				<button type="button" class="btn btn-primary">¼ö &nbsp;Á¤</button>
+				<button type="button" class="btn" id="update"
+					style="border-style: hidden; background-color: #5F0080; color: white;">¼ö
+					&nbsp;Á¤</button>
+				<button type="button" class="btn" id="out"
+					style="border-style: hidden; background-color: #5F0080; color: white;">È¸¿øÅ»Åð</button>
 			</div>
 		</div>
 		<br /> <br />

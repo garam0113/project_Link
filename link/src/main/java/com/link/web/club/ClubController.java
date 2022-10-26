@@ -213,7 +213,7 @@ public class ClubController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
+
 		Map<String, Object> map = clubService.getClubList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);

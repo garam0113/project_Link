@@ -398,14 +398,16 @@ public class ClubPostController {
 
 		int maxPay = 0;
 		// 모임번호 + navigation이 1이면 모임 상세보기로 간다
-		// 모임번호만 있으면 모임원리스트로 간다
-		// 둘 다 없으면 모임리스트로 간다
-		
 		// pay.setPayNavigation(1);
-		// pay.setClubNo(0);
-		// 둘 다 없으면 모임원리스트로 간다
+		// pay.setClubNo(22);
+		
+		// 모임번호만 있으면 모임원리스트로 간다
+		 pay.setClubNo(22);
+			
+		// 둘 다 없으면 모임리스트로 간다
+				
 		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
-		if( pay.getClubNo() != 0 ) {
+		if( (pay.getClubNo() != 0 && pay.getPayNavigation() != 0) || (pay.getClubNo() != 0 && pay.getPayNavigation() == 0) ) {
 			// 모임대표가 가입승인 클릭시
 			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
 			Map<String, Object> map = clubServiceImpl.getClub(pay.getClubNo());

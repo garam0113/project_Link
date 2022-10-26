@@ -151,8 +151,6 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		sqlSession.update("Report_PushMapper.addReportCount", report2);   //신고당한 유저 reportCount + 하는 메서드
 		Report report3 = getReport(report.getNo());
 		sqlSession.update("Report_PushMapper.stopDate",report3); //신고당한 유저의 reportCount 값에 따라 정지시간 메기는 메서드
-		System.out.println("여기까지 ㄴ들어오나?");
-		System.out.println(report3+"테스트용");
 			if(report3.getReportSource()==1) { //모임게시물에서 들어옴
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("report", report3);
@@ -197,9 +195,9 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 			return sqlSession.selectOne("Report_PushMapper.getTotalCount2", search);
 		}else if (a == 1) {
 			return sqlSession.selectOne("QandAMapper.getTotalCount", search);
-		}else if (a==2) {
+		}else if (a== 2) {
 			return sqlSession.selectOne("NoticeMapper.getTotalCount", search);
-		}else if(a==3)  {  
+		}else if(a== 3)  {  
 			return sqlSession.selectOne("QandAMapper.getTotalCount2", search);
 		}
 		else {

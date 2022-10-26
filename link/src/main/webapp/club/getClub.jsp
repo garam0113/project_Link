@@ -183,11 +183,11 @@
 						<div class="club-wrap">
 						
 							<div class="club-image">
-							<img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage">
+								<a href="/club/getClub?clubNo=${clubNo}"><img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage"></a>
 							</div>
 							
 							<div class="club-text">
-							<h2 class="h2-color">CLUB</h2>
+							<h2 class="h2-color"><a href="/club/getClub?clubNo=${clubNo}"></a>CLUB</h2>
 							<p class="p-color">Make good memories with the members...</p>
 							</div>							
 						</div>
