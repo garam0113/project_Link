@@ -15,6 +15,11 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
+		<!--  font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
 		<!-- include summernote css/js -->
 		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
 		<script src="/resources/summernote/summernote-lite.js"></script>
@@ -81,15 +86,48 @@
 			$(function(){
 				textEdit();
 				
-				$("a:contains('등록완료')").bind("click", function(){
+				$("input[value='등록완료']").bind("click", function(){
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
-					$("form").attr("accept-charset", "EUC-KR").submit();
+					//$("form").attr("accept-charset", "EUC-KR").submit();
 				});
-				$("a:contains('리스트로이동')").bind("click", function(){
+				$("input[value='리스트로이동']").bind("click", function(){
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
 		</script>
+		<style type="text/css">
+			.row{
+				font-family: 'Single Day', cursive;
+			}
+			.club-post-add-view{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 30px;
+				padding: 3rem;
+				/* background-color: #f2f3ff; */
+			}
+			#summernote{
+				background-color: white;
+			}
+			.club-post-add-submit{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				padding: 1rem;
+				width: 110px;
+				background-color: #5F0080;
+				color: white;
+				font-size: 25px;
+				border-color: #5F0080;
+			}
+			.list-navigation{
+				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+				border-radius: 10px;
+				padding: 1rem;
+				background-color: white;
+				color: #5F0080;
+				font-size: 25px;
+				border-color: #5F0080;
+			}
+		</style>
 	</head>
 
 	<body class="single single-post">
@@ -124,15 +162,19 @@
 							<a href="/clubPost/addPayView?clubNo=${ clubNo }">결제</a>
 						</li>
 					</ul>
-	
-					<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
-						모임 번호 : ${ clubNo }<input type="hidden" name="clubNo" value="${ clubNo }"></br>
-						<input type="text" name="clubPostTitle" placeholder="제목"></br>
-						<textarea id="summernote" name="clubPostContent">
-						</textarea>
-						<a class="button transparent aqua">등록완료</a>
-						<a class="button transparent aqua">리스트로이동</a>
-					</form>
+					
+					<div class="club-post-add-view">
+						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
+							<input type="hidden" name="clubNo" value="${ clubNo }">
+							<div class="clubPostTitle">
+								제목<input type="text" name="clubPostTitle" placeholder="제목">
+							</div>
+							<textarea id="summernote" name="clubPostContent">
+							</textarea>
+							<input type="button" class="club-post-add-submit" value="등록완료">
+							<input type="button" class="list-navigation" value="리스트로이동">
+						</form>
+					</div>
 					
 				</div><!-- row-content -->
 			</div><!-- row -->
