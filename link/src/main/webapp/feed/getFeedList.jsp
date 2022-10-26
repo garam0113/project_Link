@@ -38,9 +38,33 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<%-- BOOTSTRAP ICON --%>
 	
+	<%-- SOCKET IO --%>
+	<script src="/socket.io/socket.io.js"></script>
+	<%-- SOCKET IO --%>
+	
+	<script>
+	// 소켓 서버 연결
+		var socket = io();
+		var box = document.getElementById("box");
+	
+	// noti 이벤트 수신
+		socket.on("noti", function(){
+			var time = getTimeString();
+	
+			box.insertAdjacentHTML("afterbegin", "<div>" + time + " 소켓 서버로부터 알림을 받았습니다.</div>");
+		});
+	
+		function getTimeString() {
+			var h = new Date().getHours();
+			var m = new Date().getMinutes();
+			var s = new Date().getSeconds();
+			var fill = function(n) {return n<10 ? "0" + n : n};
+		
+			return fill(h) + ":" + fill(m) + ":" + fill(s);
+		}
+	</script>
+	
 	<script type="text/javascript">
-	
-	
 	
 	
 	
@@ -163,7 +187,7 @@
 										
 										if(item.image1 != null) {
 											addHtml += '<div id="carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" class="carousel slide" data-ride="carousel">' +
-														'<ol class="carousel-indicators">' +
+													'<ol class="carousel-indicators">' +
 														'<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="0" class="active"></li>'
 														
 											if(item.image2 != null) {
@@ -479,9 +503,9 @@
 		<%-- CALL REPORT --%>
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
-		    
-			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
 			
+			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+		//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		}) // .report evenet close
 		<%-- CALL REPORT --%>
 		
@@ -683,6 +707,14 @@
 </head>
 
 <body>
+
+<h2>Logs</h2>
+<div id="box"></div>
+
+<h2>Push API</h2>
+<p>
+  새 창에서 <a href="/push" target="_blank">Push API</a> 를 호출하면 위 Logs에 수신된 알림이 출력된다.
+</p>
 
 	<jsp:include page="/toolbar.jsp" />
 

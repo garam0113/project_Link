@@ -246,10 +246,10 @@
 
 	/* 주변 검색 */
 
-
 	.modal {
-		z-index: 9999 !important;
-		position: relative;
+
+		top: 250px !important;
+
 	}
 
 
