@@ -24,6 +24,7 @@ public class Feed {
 	private int checkMyHome;		// 1	: myHome 호출
 	private int checkComment;
 	private int currentPage;
+	private String searchKeyword;
 	private String fullContent;
 	
 	public Feed() {
@@ -190,6 +191,14 @@ public class Feed {
 		this.currentPage = currentPage;
 	}
 
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
+
 	public String getFullContent() {
 		return fullContent;
 	}
@@ -241,6 +250,8 @@ public class Feed {
 		builder.append(checkComment);
 		builder.append(", currentPage=");
 		builder.append(currentPage);
+		builder.append(", searchKeyword=");
+		builder.append(searchKeyword);
 		builder.append(", fullContent=");
 		builder.append(fullContent);
 		builder.append("]");

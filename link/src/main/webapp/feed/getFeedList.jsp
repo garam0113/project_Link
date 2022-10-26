@@ -9,6 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
@@ -38,6 +39,8 @@
 	<%-- BOOTSTRAP ICON --%>
 	
 	<script type="text/javascript">
+	
+	
 	
 	
 	
@@ -74,6 +77,21 @@
 	
 	$(function(){
 		
+		
+				
+		<%-- SEARCH BY HASHTAG --%>
+		
+		$(document).on("click", ".searchByHashtag", function(event){
+			event.stopPropagation();
+			
+			var searchKeyword = $(this).text().trim();
+			$("#searchKeyword").val(searchKeyword);
+			
+			console.log($("#searchKeyword").val());
+			$("#searchForm").attr("method", "POST").attr("action","/feed/getFeedList").submit();
+		})
+		
+		
 		<%-- 무한 스크롤 --%>
 		
 		$(window).scroll(function() {
@@ -89,13 +107,16 @@
 					
 					var sessionUser = $("#userId").val();
 					
+					console.log("서치키워드 : " + $("#searchKeyword").val());
+					
 					$.ajax(
 							{
 								url : "/feedRest/json/getFeedList",
 								method : "POST",
 								data : JSON.stringify ({
 									userId : sessionUser,
-									currentPage : parseInt($("#currentPage").val()) + 1
+									currentPage : parseInt($("#currentPage").val()) + 1,
+									searchKeyword : $("#searchKeyword").val()
 								}),
 								contentType: 'application/json',
 								dataType : "json",
@@ -305,6 +326,12 @@
 		$(document).on("click", ".feedForm", function(event) {
 			event.stopPropagation();
 			var feedNumber = $(this).children("input[name='feedNo']").val();
+			
+			if($(event.target).hasClass("comment") || $(event.target).hasClass("commentImg")) {
+				
+				return false;
+			}
+			
 			location.href="/feed/getFeed?feedNo=" + feedNumber;
 		})
 		<%-- GET_FEED --%>
@@ -391,7 +418,7 @@
 						
 						success : function(data, status) {
 							
-							alert("피드 좋아요 성공 : " + data);
+							console.log("피드 좋아요 성공 : " + data);
 
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
@@ -430,7 +457,7 @@
 						
 						success : function(data, status) {
 							
-							alert("피드 시러요 성공 : " + data);
+							console.log("피드 시러요 성공 : " + data);
 							
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
@@ -468,6 +495,185 @@
 
 <style type="text/css">
 
+	/* 선택 된 탭 콘텐츠를 표시 */
+	#all:checked ~ #all_content,
+	#programming:checked ~ #programming_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	#all-follow:checked ~ #all-follow_content,
+	#programming-follow:checked ~ #programming-follow_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	
+	
+	
+	.tab{
+		display: block;
+	}
+	
+	/* 탭 전체 스타일 position: fixed; */
+	.tabs1 {
+		position: fixed;
+		width:200px;
+		margin-bottom: 100px;
+		background-color: #ffffff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		display:inline-block;
+		float: left;
+		height:500px;
+		border-radius: 15px;
+	}
+		
+	
+	/* 탭 스타일 */
+	.tab_item1 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	.tab_item-following {
+		width: 100px !important;
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 15px;
+	}
+	.tab_item-follow {
+		width: 100px !important;
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 15px;
+	}
+	
+	.tab_item2 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	
+	.tab_item1:hover {
+		opacity: 0.75;
+	}
+	.tab_item2:hover {
+		opacity: 0.75;
+	}
+	}
+	.tab_item-follow:hover {
+		pacity: 0.75;
+	}
+	}
+	.tab_item-following:hover {
+		opacity: 0.75;
+	}
+	
+	/* 라디오 버튼 UI삭제*/
+	input[name="tab_item"] {
+		display: none;
+	}
+	input[name="tab_item-follow"] {
+		display: none;
+	}
+	
+	/* 탭 컨텐츠 스타일 */
+	.tab_content {
+		position: fixed;
+		display: none;
+		height: 440px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+	    width: inherit;
+	}
+	.tab_content-follow {
+		position: fixed;
+		display: none;
+		height: 440px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+		width: inherit;
+	}
+	
+	/* 스크롤바 안보이기 */
+	
+	.tab_content::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	.tab_content-follow::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	#fll {
+	    display: contents;
+	}
+	
+	#fl {
+	    display: contents;
+	}
+
+	.follow-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	.following-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -500,14 +706,12 @@
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						<a href="http://localhost:5005/" onclick="window.open(this.href, '_blank', 'width=600, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">장소검색</a>
 						
-						<button class="plain button purple">장소검색</button>
-						
+						<button class="plain button purple searchPlace" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>						
 						<%-- 검색 --%>
 						<form id="searchForm" method="POST" action="/feed/getFeedList" accept-charset="euc-kr">
 							
-							<input type="text" style="width:200px" placeholder="검색" name="searchKeyword" value="">
+							<input type="text" id="searchKeyword" placeholder="검색" name="searchKeyword" value="${search.searchKeyword}">
 							
 						</form>
 						<%-- 검색 --%>
@@ -541,7 +745,7 @@
 
 							<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
 
-								<div class="showFeedForm">
+								<div class="showFeedForm shadow-lg">
 									<form class="feedForm">
 
 										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
@@ -624,7 +828,15 @@
 										
 										<c:if test="${!empty feed.hashtag}">
 											<div class="hashtagContent">
-												${feed.hashtag}
+												
+												<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
+												tag : 
+												<c:forEach var="textValue" items="${text}" varStatus="varStatus">
+													<span class="searchByHashtag">
+														#${textValue}
+													</span>
+												</c:forEach>
+												
 											</div>
 										</c:if>
 										
@@ -665,7 +877,7 @@
 												</div>
 												
 												<div class="col-xs-2 comment">
-													<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
+													<img src="/resources/image/uploadFiles/comment2.jpg" class="commentImg" aria-hidden="true" data-toggle="modal" data-target="#myModal"/>
 												</div>
 												
 												<div class="col-xs-1 commentCount">
@@ -694,12 +906,34 @@
 								</div>
 
 							</c:if>
+							
 						</c:forEach>
 
-
 					</div>
-
-					<div class="column three"></div>
+					
+					<div class="column three">
+					
+					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
+					
+						<div class="tabs1">
+							<input id="all-follow" type="radio" name="tab_item-follow" checked>
+						    <label class="tab_item-follow" for="all-follow">Follow</label>
+						    <input id="programming-follow" type="radio" name="tab_item-follow">
+						    <label class="tab_item-following" for="programming-follow">Follower</label>
+						    
+							 <div class="tab_content-follow" id="all-follow_content" >
+							     <div class="col-md-4" id="fll">
+												 		<br />
+								</div>
+							</div>		
+								 <div class="tab_content-follow" id="programming-follow_content">
+							    	 <div class="col-md-4" id="fl">
+												 		<br />
+									</div>
+								</div>
+						</div>
+						
+					</div>
 					
 					<%-- 현재 페이지 --%>
 					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
@@ -714,6 +948,32 @@
 		</div>
 
 	</main>
+	
+	<!-- COMMENT Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						title
+					</h4>
+				</div>
+				<div class="modal-body">여기는 내용</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close
+					</button>
+					<button type="button" class="btn btn-primary">
+						Save changes
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

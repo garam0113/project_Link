@@ -187,6 +187,8 @@ public class FeedRestController {
 		
 		user = (User) httpSession.getAttribute("user");
 		
+		System.out.println("search 테스트 " + search);
+		
 		// 피드 리스트
 		
 		if(feed.getCurrentPage() == 0) {
@@ -195,6 +197,7 @@ public class FeedRestController {
 			search.setCurrentPage(feed.getCurrentPage());
 		}
 		
+		search.setSearchKeyword(feed.getSearchKeyword());
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
@@ -203,6 +206,8 @@ public class FeedRestController {
 		map.put("feed", feed);
 		map.put("feedNo", feed.getFeedNo());
 		map.put("user", user);
+		
+		System.out.println("유저 : " + user);
 		
 		return (List<Feed>) feedService.getFeedList(map).get("feedList");
 		

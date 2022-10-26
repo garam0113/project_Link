@@ -7,8 +7,14 @@
 		<meta charset="EUC-KR">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The Page Description">
+		
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
-		<title>Beetle - Works 4 Columns Alternative</title>
+		
+		<title>모임 게시물 리스트</title>
+		
+		<!-- 사용자 정의 css -->
+		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+		
 		<link rel="stylesheet" href="css/layers.min.css" media="screen">
 		<link rel="stylesheet" href="css/font-awesome.min.css" media="screen"> 
 		<link rel="stylesheet" href="style.css" media="screen">
@@ -30,7 +36,7 @@
 		
 		<script type="text/javascript">
 			$(function() {
-				$("a:contains('등록하기')").bind("click", function() {
+				$("input[value='등록하기']").bind("click", function() {
 					location.href = "/clubPost/addClubPostView?clubNo="+${ clubNo };
 				});
 				$("b:contains('최신순')").bind("click", function() {
@@ -45,9 +51,9 @@
 				$("b:contains('내가 작성한 게시물')").bind("click", function() {
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=3";
 				});
-				$("a:contains('검색')").bind("click", function() {
+				$("input[value='검색']").bind("click", function() {
 					$("input[name='currentPage']").val("1");
-					$("form").submit();
+					//$("form").submit();
 				});
 				
 				//무한 페이징
@@ -109,6 +115,15 @@
 					}// end of if			
 				}); // end of scroll
 				
+				// order
+				$(document).ready(function () {
+					$(".club-post-list-order").hover(function () {
+						$(this).css("color", "#5F0080");
+					}, function () {
+						$(this).css("color", "black");
+					});
+				});
+								
 				
 				
 			});// end of function()
@@ -125,38 +140,6 @@
 		</script>
 		
 		<style type="text/css">
-			.clubPostList-Thumbnail {
-				background-color: blue;
-			}
-			.contains-order {
-				font-size: 15px;
-			}
-			.row{
-				font-family: 'Single Day', cursive;
-			}
-			.club-post-add{
-				float: right;
-				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-				border-radius: 10px;
-				padding: 10px;
-				margin: 10px;
-				width: 65px;
-				background-color: #5F0080;
-				color: white;
-				font-size: 20px;
-			}
-			.club-post-cancle{
-				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-				border-radius: 10px;
-				padding: 1rem;
-				background-color: white;
-				color: #5F0080;
-				font-size: 25px;
-				border-color: #5F0080;
-			}
-			.contains-order{
-				font-size: 30px;
-			}
 		</style>
 		
 	</head>
@@ -225,13 +208,13 @@
 							    
 								    <div class="contains-order">
 								    	<p class="text-primary" style="width: 87%">
-								    		전체  ${ clubPostListCount } 건수, 현재 ${ search.currentPage } 페이지<br>
-											<b>최신순</b>&nbsp;/&nbsp;
-											<b>오래된순</b>&nbsp;/&nbsp;
-											<b>좋아요 많은순</b>&nbsp;/&nbsp;
-											<b>내가 작성한 게시물</b>
+								    		전체  <span class="page">${ clubPostListCount }</span> 건수, 현재 <span class="page">${ search.currentPage }</span> 페이지<br>
+											<b class="club-post-list-order">최신순</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">오래된순</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">좋아요 많은순</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">내가 작성한 게시물</b>
 											<!-- <a href="/clubPost/getClubNoticeList">모임공지사항</a> -->
-											<input type="button" class="club-post-add" value="등록하기">
+											<input type="button" class=" plain button red" value="등록하기">
 								    	</p>
 								    </div>
 								    
@@ -268,7 +251,7 @@
 											<div style="display: flex; width: 87%;">
 												<div style="flex:1;">
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
-														<img src="/resources/image/uploadFiles/${ clubPostList[i].user.profileImage }" height="100" width="100">
+														<img class="profileImage" src="/resources/image/uploadFiles/${ clubPostList[i].user.profileImage }">
 													</a>
 												</div>
 												<div style="flex:1;">
@@ -277,11 +260,11 @@
 													</a>
 												</div>
 												<div style="flex:1;">
-													<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostHeartCount }</p>
-												</div>
-												<div style="flex:1;">
 													<!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
 													<img src="/resources/image/uploadFiles/${ clubPostList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
+												</div>
+												<div style="flex:1;">
+													<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostHeartCount }</p>
 												</div>
 												
 											</div>
@@ -312,26 +295,27 @@
 						<aside role="complementary" class="sidebar column three last">
 							<div class="widget widget_search">
 								<form role="search">
-									<span class="pre-input"><i class="icon icon-search"></i></span>
+									<!-- <span class="pre-input" style="background-color: gray;"><i class="icon icon-search"></i></span> -->
 									
-										<div style="float: left; width: 65%;">
+										<%-- <div style="float: left; width: 65%; background-color: orange;">
 											<input type="text"  name="searchKeyword" placeholder="내용을 입력" class="plain buffer" value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
 										</div>
 									
-										<%-- <div class="form-group" style="flex: 1;">
+										<div class="form-group" style="flex: 1;">
 											<select class="form-control" name="searchCondition" >
 												<option value="0"  ${ ! empty search.searchCondition && search.searchCondition == 0 ? "selected" : "" }>아이디</option>
 												<option value="1"  ${ ! empty search.searchCondition && search.searchCondition == 1 ? "selected" : "" }>내용</option>
 											</select>
-										</div> --%>
+										</div>
 										
 										<div style="display: inline-block;">
-											<input type="button" class="club-post-cancle" value="검색">
-										</div>
+											<input type="button" class="club-post-search" value="검색">
+										</div> --%>
 									
 								</form>
 							</div>
 						</aside>
+						
 						
 						
 						
