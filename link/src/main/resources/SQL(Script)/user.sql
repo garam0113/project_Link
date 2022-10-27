@@ -59,7 +59,7 @@ WHERE user_id = 'user001';
 
 UPDATE users
 SET penalty_type = '0'
-WHERE user_id = 'user333';
+WHERE user_id = 'user555';
 
 UPDATE users
 SET total_visit_count = 1
