@@ -258,7 +258,11 @@
 
 	}
 
+	/* 위에 메뉴 오류 */
 
+	menu-togle a {
+		width: auto !important;
+	}
 
 
 	h4 {

@@ -441,7 +441,7 @@ public class ServiceCenterController {
 			
 			model.addAttribute("report", report);
 		
-			return "forward:/serviceCenter/getReportList.jsp";
+			return "redirect:/serviceCenter/getReportList";
 						   
 
 		

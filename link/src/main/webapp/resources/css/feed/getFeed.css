@@ -53,10 +53,12 @@
 	
 	.feedLike {
 		width:25px !important;
+		height:25px !important;
 	}
 
 	.feedDislike {
 		width:25px !important;
+		height:25px !important;
 	}
 
 	.comment > img {
@@ -77,6 +79,7 @@
 
 	.report > img {
 		width:25px !important;
+		height:25px !important;
 	}
 
 	/* FEED LIKE & DISLIKE ICON & COMMET ICON */
