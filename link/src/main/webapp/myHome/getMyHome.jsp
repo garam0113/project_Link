@@ -1005,19 +1005,31 @@ $(function() {
     	   console.log( "하트컨디션 : " + item.heartCondition);
     	   var heartImage = item.heartCondition != 0? 'heart.jpg' : 'no_heart.jpg';
     	   console.log( "하트이미지 : " + heartImage ); 
+			var date = "";
+			if(item.clubPostUpdateDate != null){
+				date = item.clubPostUpdateDate+"(수정)";
+			}else{
+				date = item.clubPostRegDate;
+			};
+			
+			
 			var value = "";
-			 
 			if(item.clubPostVideo1 == null){
 				value =
 					"<div class='post'"+
+					"<p>"+date+"</p>"+
 				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 				"<img src='/resources/image/uploadFiles/"+item.image1+"' height='300' width='400' style='border-radius:20px;'>"+
 			"</a>"+
+			"<div style='width: 87%;'>"+
+			"<p align='center' style='font-size: 25px'>"+item.clubPostTitle+"</p>"+
+		"</div>"+
 			"<div style='display: flex; width: 87%;'>"+
 				"<div style='flex:1; margin-top:10px;'>"+
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
 					"</a>"+
+					
 				"</div>"+
 				"<div style='margin-right:130px; padding-top: 15px;'>"+
 					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
@@ -1035,21 +1047,22 @@ $(function() {
 			
 				
 			"</div>"+
-			"<div style='width: 87%;'>"+
-				"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
-			"</div>"+"</div>";
+			"</div>";
 
 				
 			}else{
 				value =
 					"<div class='post'"+
+					"<p>"+date+"</p>"+
 				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 				"<img src='https://img.youtube.com/vi/"+item.clubPostVideo1+"/mqdefault.jpg' height='300' width='400' style='border-radius:20px;'>"+
 				
 			"</a>"+
 			
+			"<p align='center' style='font-size: 25px; margin-bottom : -50px;'>"+item.clubPostTitle+"</p>"+
+	
 			"<div style='display: flex; width: 87%;'>"+
-				"<div style='flex:1; margin-top:10px;'>"+
+				"<div style='flex:1; margin-top:30px;'>"+
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
 					"</a>"+
@@ -1070,9 +1083,7 @@ $(function() {
 			
 				
 			"</div>"+
-			"<div style='width: 87%;'>"+
-				"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
-			"</div>"+"</div>";
+			"</div>";
 				
 			};
 			
