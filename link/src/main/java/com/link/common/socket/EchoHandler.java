@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -34,8 +33,12 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 로그인 값이 있는 경우만
 		
 		if(senderId != null) {
-			System.out.println("★★★★★" + senderId + " 연결 ★★★★★");
+			System.out.println("★★★★★ " + senderId + " 연결 ★★★★★");
 			users.put(senderId, session);	// 로그인중 개별 유저 저장
+		} else {
+			log("★★★★★ " + senderId + " 연결 종료 ★★★★★");
+			users.remove(senderId);
+			sessions.remove(session);
 		}
 	}
 	
@@ -47,7 +50,8 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		// 모든 유저에게 보내기
 		for(WebSocketSession sess : sessions) {
-			sess.sendMessage(new TextMessage(senderId + " : " + message.getPayload()));
+			System.out.println("핸들러 텍스트 메세지 : " + senderId);
+			sess.sendMessage(new TextMessage(senderId + message.getPayload()));
 		}
 		
 //		// 특정 유저에게 보내기
@@ -131,7 +135,12 @@ public class EchoHandler extends TextWebSocketHandler {
 	private String getMemberId(WebSocketSession session) {
 		// TODO Auto-generated method stub
 		Map<String, Object> httpSession = session.getAttributes();
-		String m_id = ((User)httpSession.get("user")).getUserId();
+		
+		String m_id = null;
+		
+		if((User)httpSession.get("user") != null) {
+			m_id = ((User)httpSession.get("user")).getUserId();
+		}
 		
 		return m_id == null? null : m_id;
 	}

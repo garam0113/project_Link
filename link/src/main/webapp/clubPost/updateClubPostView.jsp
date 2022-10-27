@@ -69,14 +69,14 @@
 								//alert(data.url);
 								alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
-								jsonArray.push(json["url"]);
-								jsonFn(jsonArray);
+								//jsonArray.push(json["url"]);
+								//jsonFn(jsonArray);
 							}
 						});
 				}//end of uploadSummernoteImageFile
 				
 				function jsonFn(jsonArray){
-					console.log(jsonArray);
+					//console.log(jsonArray);
 				}
 
 			};//end of textEdit

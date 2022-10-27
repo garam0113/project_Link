@@ -58,8 +58,8 @@ SET stop_start_date = '2022-10-01', stop_end_date = '2022-10-12'
 WHERE user_id = 'user001';
 
 UPDATE users
-SET penalty_type = '2'
-WHERE user_id = 'user001';
+SET penalty_type = '0'
+WHERE user_id = 'user555';
 
 UPDATE users
 SET total_visit_count = 1

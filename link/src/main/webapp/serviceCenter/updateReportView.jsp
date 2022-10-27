@@ -12,17 +12,16 @@
 
 <head>
 <meta charset="EUC-KR">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="The Page Description">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="The Page Description">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<title>신고내용 수정</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<title>신고내용 처리</title>
 	
 	
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>	
@@ -30,36 +29,33 @@
 	
 	function fncUpdateReport(){
 
-	
-
-		
-	
 		alert($($("form")[0]));
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateReport").submit();
+	
 	}
-			
-	
-	
 	$(function(){
 		
-		$("button:contains('수정')").bind("click", function(){
+		$("button:contains('처리')").bind("click", function(){
 			fncUpdateReport();
 		});
 		
 		$("button:contains('뒤로')").bind("click", function(){
-			self.location = "/serviceCenter/getReportList";;
+				self.location = "/serviceCenter/getReportList";
 		});
 		
 	
 		
 
 		
-	});
+	})
+	
 
 </script>
 <style>
 textarea {
 	resize: none;
+	border: none;
+    outline: none;
 }
 
 .custom-btn {
@@ -119,186 +115,115 @@ textarea {
 	margin-right: 70px;
 }
 
-
 </style>
 </head>
-
-<body bgcolor="#ffffff" text="#000000">
-
-<form>
-
-<input type="hidden" name="no" value="${report.no}"/>
-
-<table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
-
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">신고처리</td>
-					<td width="20%" align="right">&nbsp;</td>
-				</tr>
+<jsp:include page="/toolbar.jsp" /><form>
+<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+  <h2>신고 처리하기</h2>
+</div>
+	
+		<div class="container" style="margin-top: 37px;">
+			<!--  table Start /////////////////////////////////////-->
+			<table>
+			
+				<div class="row2">
+				<thead>
+				</thead>
+				</div>
+				</tbody>
+					 <tr class = "body" id ="body" >
+				<th style="text-align-last: center;"></th>
+						<td align="left" style="display:flex; height: 50px;">${report.no}번 신고
+						<input type="hidden" name="no" id="no" value="${report.no}">
+						</td>
+					</tr>
+					<tr class = "content" id ="content" >
+						<th style="text-align-last: center;">제목</th>
+						<td style="display: flex; height: 40px; width: 900px;">						
+						${report.title}
+						<input type="hidden" id="title" name="title" value="${report.title}">
+						</td> 
+					</tr>
+					<tr>
+						<th></th>
+						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;">${report.regDate }</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${report.content}
+						<input type="hidden" id="content" name="content" value="${report.content}">
+						</td>
+					</tr>
+					<tr>
+					 	<th style="text-align-last: center;"> 신고 출처</th>
+					 	<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 70px;">
+					 		<c:if test="${report.reportSource== '1'}"> 
+					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
+		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
+		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>	
+		     						
+		     						
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='2'}"> 
+							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
+		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
+		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>
+		     		 		</c:if>
+		     		 		<c:if test="${report.reportSource=='3'}">
+							<input type="text" class="" value="피드" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="3">
+		     				 
+		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feed.feedNo} 번째 피드 </a>
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='4'}">
+							<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feedComment.feedNo} 번째 피드 </a>
+		     				 </c:if>
+		     			</td>
+		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
+		     			 ${report.user2.nickName}
+		     			</td>
+					</tr>
+					<tr  style="margin-top:20px;" >
+						<th style="text-align-last: center;">신고 사유</th>
+						<td style="display:flex;   margin-top:20px;">
+						<input type="checkbox" id="욕설" name="reportReason" value="1" style="margin-left:55px">욕설
+						<input type="checkbox" id="광고" name="reportReason" value="2" style="margin-left:30px">광고
+						<input type="checkbox" id="기타" name="reportReason" value="4" style="margin-left:30px">기타
+						<input type="checkbox" id="성적" name="reportReason" value="8" style="margin-left:30px">성적인 발언
+						</td>
+						
+					</tr>
+					<tr>
+						<th style="text-align-last: center;"></th>
+					</tr>
 			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
-		</td>
-	</tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			번호 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input type="text" name="no" value="${report.no}" class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			제목 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="105">
-						<input 	type="text" name="title" class="ct_input_g" 
-								style="width: 100px; height: 19px" maxLength="20" 
-								value="${report.title}">
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-
-	<tr>
-		<td width="104" class="ct_write">
-			내용 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input type="text" name="content" value="${report.content}" class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
-		</td>
-	</tr>
-				
-	<tr>
-		<td width="104" class="ct_write">
-			신고받는ID <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input type="text" name="user2.userId" value="${report.user2.userId}" class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
-		</td>
-	</tr>
-				
-	 <div class="form-group">
-		    <label for="reportReason" class="col-sm-offset-1 col-sm-3 control-label">신고 사유</label>
-		    <div class="col-sm-4">
-		      욕설<input type="checkbox"  name="reportReason" value="1" >
-		      광고<input type="checkbox"  name="reportReason" value="2" >
-		      기타<input type="checkbox"  name="reportReason" value="4" >
-		      성적<input type="checkbox"  name="reportReason" value="8" >
-		    </div>
-		 </div>
+			<!--  table End /////////////////////////////////////-->
 	
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
+</form>	
 		
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
+						
+									<div> 
+									
+ 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									   처리</button> 
+
+									
+								<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									뒤로</button>
+									</div>
 				
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		
-	
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	
-	
-	
-	<tr>
+			</div>
 
-		
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-</table>
-
-
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
-	<tr>
-		<td width="53%"></td>
-		<td align="right">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						수정
-					</td>
-				
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-					</td>
-					<td width="30"></td>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif"width="17" height="23"/>
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						취소
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-</form>
 
 </body>
+
 </html>

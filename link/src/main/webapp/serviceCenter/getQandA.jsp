@@ -207,12 +207,12 @@ textarea {
 		
 						
 									<div> 
-									
+									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
  									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
 									   수정</button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
 									   삭제</button> 
-									
+									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
 									뒤로</button>
 									

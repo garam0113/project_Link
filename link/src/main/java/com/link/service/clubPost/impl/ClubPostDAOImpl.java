@@ -258,11 +258,13 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 댓글개수 가져온다
 		if(comment.getDepth() != 0) {
+			comment.setDeleteCondition(10+"");
 			System.out.println(comment);
 			System.out.println("여기로");
 			comment = sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
 			System.out.println(comment);
 			map.put("commentCount", comment.getCommentCount());
+			map.put("parent", ((Comment)map.get("comment")).getParent());
 		}
 		
 		map.put("clubPostCommentCount", clubPost.getClubPostCommentCount());

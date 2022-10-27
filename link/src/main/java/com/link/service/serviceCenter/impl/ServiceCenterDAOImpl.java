@@ -218,9 +218,15 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}	
 	
 	@Override
-	public List<Push> getPushList(User user) {
+	public List<Report> getPushList(User user) throws Exception{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("Report_PushMapper.getPushList", user);
+	}
+	
+	@Override
+	public int getPushListTotalCount(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Report_PushMapper.getPushListTotalCount", user);
 	}
 			
 // ==================================================================여기까지가 Push

@@ -27,9 +27,9 @@ var url = 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api'; /*URL*
 var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D'; /*Service Key*/
 queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('5'); /**/
-queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /*
+queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); 
 
-queryParams += '&' + encodeURIComponent('fstvlNm') + '=' + encodeURIComponent(''); 
+queryParams += '&' + encodeURIComponent('fstvlNm') + '=' + encodeURIComponent('');/* 
 queryParams += '&' + encodeURIComponent('opar') + '=' + encodeURIComponent('');
 queryParams += '&' + encodeURIComponent('fstvlStartDate') + '=' + encodeURIComponent(''); 
 queryParams += '&' + encodeURIComponent('fstvlEndDate') + '=' + encodeURIComponent(''); 
@@ -63,7 +63,7 @@ xhr.send('');
 
 </script>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>asdf</title>
 </head>
 <body>
 	<table class="table table-hover table-striped"  style="text-align-last: center;">
