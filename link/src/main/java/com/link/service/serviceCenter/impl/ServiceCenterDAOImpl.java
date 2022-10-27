@@ -207,5 +207,13 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}
 //==================================================================여기까지가 공통
 
-
+	// ==================================================================여기부터가 Push
+	
+		public void addPush(Report push) throws Exception {
+			
+			sqlSession.insert("Report_PushMapper.addPush", push);
+			
+		}
+			
+	// ==================================================================여기까지가 Push
 }

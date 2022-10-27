@@ -37,36 +37,9 @@
 	<%-- BOOTSTRAP ICON --%>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<%-- BOOTSTRAP ICON --%>
-	
-	<%-- SOCKET IO --%>
-	<script src="/socket.io/socket.io.js"></script>
-	<%-- SOCKET IO --%>
-	
-	<script>
-	// 소켓 서버 연결
-		var socket = io();
-		var box = document.getElementById("box");
-	
-	// noti 이벤트 수신
-		socket.on("noti", function(){
-			var time = getTimeString();
-	
-			box.insertAdjacentHTML("afterbegin", "<div>" + time + " 소켓 서버로부터 알림을 받았습니다.</div>");
-		});
-	
-		function getTimeString() {
-			var h = new Date().getHours();
-			var m = new Date().getMinutes();
-			var s = new Date().getSeconds();
-			var fill = function(n) {return n<10 ? "0" + n : n};
 		
-			return fill(h) + ":" + fill(m) + ":" + fill(s);
-		}
-	</script>
 	
 	<script type="text/javascript">
-	
-	
 	
 	function formatDate(date) {
 	    
@@ -100,7 +73,6 @@
 	}
 	
 	$(function(){
-		
 		
 				
 		<%-- SEARCH BY HASHTAG --%>
@@ -323,7 +295,7 @@
             ],
             
             disableResizeEditor: true,
-			height: 300,                 	// 에디터 높이
+			height: 200,                 	// 에디터 높이
 			minHeight: null,             	// 최소 높이
 			maxHeight: null,             	// 최대 높이
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
@@ -446,6 +418,13 @@
 
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+							
+							if(sock) {
+								var Msg = "feed,Link4813,피드,작성";
+								
+								console.log("소켓 열려있는 상태 : " + Msg);
+								sock.send(Msg);
+							}
 							
 						} // success close
 						
@@ -698,6 +677,19 @@
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	#boxx {
+		border:2px solid #ddd;
+		padding:10px;
+		min-height:100px;
+		font-size:12px;
+	 }
+  
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -708,30 +700,25 @@
 
 <body>
 
-<h2>Logs</h2>
-<div id="box"></div>
-
-<h2>Push API</h2>
-<p>
-  새 창에서 <a href="/push" target="_blank">Push API</a> 를 호출하면 위 Logs에 수신된 알림이 출력된다.
-</p>
-
-	<jsp:include page="/toolbar.jsp" />
+	<jsp:include page="/toolbarTest.jsp" />
 
 	<main role="main">
 	
 		<div id="intro-wrap" data-height="15">
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
-						<div class="caption">
-							<h2>Feed</h2>
-							<p>If you’re any good at all, you know you can be better.</p>
-						</div><!-- caption -->					
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+			<div id="intro" class="preload darken">					
+				<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
+					<div class="caption">
+						<h2>Feed</h2>
+						<p>If you’re any good at all, you know you can be better.</p>
+					</div><!-- caption -->					
+				</div>								
+			</div><!-- intro -->
+		</div><!-- intro-wrap -->
+		
 		
 		<div id="main">
+		
+		<div id="msgStack"></div>
 		
 			<section class="row section">
 			<div class="container">

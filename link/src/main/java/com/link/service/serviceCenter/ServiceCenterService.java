@@ -49,4 +49,12 @@ public interface ServiceCenterService {
 	
 	//==여기까지가 신고 Report  ==//
 	
+	// 알림 공간 //
+	
+	public void addPush(Report push) throws Exception;
+	
+	
+	
+	// 알림 공간 //
+	
 }

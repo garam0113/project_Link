@@ -14,6 +14,12 @@
 		margin-bottom: 40px;
 	}
 	
+	.note-editor .note-editable {
+
+		line-height: 10%;
+
+	}
+
 	div.note-toolbar {
 		
 		color: #5F0080 !important;

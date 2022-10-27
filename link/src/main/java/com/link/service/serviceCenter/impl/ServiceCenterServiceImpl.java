@@ -253,4 +253,18 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 
 	}
 	// ==================================================================여기까지가 Report
+	
+	
+	// ==================================================================여기부터가 Push
+	
+	@Override
+	public void addPush(Report push) throws Exception {
+		// TODO Auto-generated method stub
+		
+		serviceCenterDAO.addPush(push);
+		
+	}
+	
+	
+	// ==================================================================여기까지가 Push
 }
