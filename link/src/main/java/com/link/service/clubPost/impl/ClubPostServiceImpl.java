@@ -158,7 +158,6 @@ public class ClubPostServiceImpl implements ClubPostService {
 			comment.setParent(comment.getClubPostNo());
 		}else {
 			// 댓글의 댓글
-			
 			Comment c = clubPostDAOImpl.getClubPostComment(comment);
 			// 댓글의 댓글 개수
 			comment.setSequence(c.getCommentCount());

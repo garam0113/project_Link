@@ -255,7 +255,13 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 	@Override
 	public Map<String, Object> getPushList(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return (Map<String, Object>) serviceCenterDAO.getPushList(user);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("alarm", serviceCenterDAO.getPushList(user));
+		map.put("alarmCount", serviceCenterDAO.getPushListTotalCount(user));
+	
+		return map;
 	}
 	
 	

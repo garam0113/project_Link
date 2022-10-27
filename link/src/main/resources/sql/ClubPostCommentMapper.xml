@@ -89,11 +89,11 @@
 		FROM CLUB_POST_COMMENT C, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
 												FROM HEART
 												WHERE TRIM(SOURCE) = '3' AND USER_ID = #{ user.userId } ) V1
-		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0 AND C.REPORT_CONDITION = 0 AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
-		<!-- <choose>
-			<when test="depth != 0">AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</when>
-			<when test="depth == 0">AND C.CLUB_POST_NO = #{ clubPostNo } AND C.PARENT = #{ clubPostNo }</when>
-		</choose> -->
+		WHERE HEART_CONDITION (+) = C.CLUB_POST_COMMENT_NO AND C.USER_ID = U.USER_ID AND C.DELETE_CONDITION = 0 AND C.REPORT_CONDITION = 0
+		<choose>
+			<when test="deleteCondition == 10">AND C.CLUB_POST_COMMENT_NO = #{ parent }</when>
+			<otherwise>AND C.CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
+		</choose>
 	</select>
 	
 	
