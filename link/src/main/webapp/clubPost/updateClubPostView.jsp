@@ -166,7 +166,7 @@
 							<textarea id="summernote" name="clubPostContent">${ getClubPost.clubPostContent }
 							</textarea>
 							<input type="button" class="club-post-update-submit" value="수정완료">
-							<input type="button" class="list-navigation" value="리스트로이동">
+							<input type="button" class="list-navigation" value="이전으로">
 						</form>
 					</div>
 					

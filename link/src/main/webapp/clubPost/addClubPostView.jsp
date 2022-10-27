@@ -10,6 +10,9 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/beetle.js"></script>
 		
+		<!-- 사용자 정의 css -->
+		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+		
 		<!-- include libraries(jQuery, bootstrap) -->
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -90,7 +93,7 @@
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 					$("form").attr("accept-charset", "EUC-KR").submit();
 				});
-				$("input[value='리스트로이동']").bind("click", function(){
+				$("input[value='이전으로']").bind("click", function(){
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
@@ -172,7 +175,7 @@
 							<textarea id="summernote" name="clubPostContent">
 							</textarea>
 							<input type="button" class="plain button red" value="등록완료">
-							<input type="button" class=".plain.button.red" value="리스트로이동">
+							<input type="button" class="plain button red cancle" value="이전으로">
 						</form>
 					</div>
 					

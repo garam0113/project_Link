@@ -111,13 +111,15 @@
    						"Accept" : "application/json"	
    					},
    					success : function(JSONData, status) {
-						
+						alert('수정완료');
    						console.log("수정완료");
+
    						window.close();
 						}
    				});
 			}
     	});
+  			refreshMemList();
 	}
 	
     </script>

@@ -149,12 +149,12 @@ public class ClubPostRestController {
 		JsonObject jsonObject = new JsonObject();
 		
 		// 내부경로로 저장
-		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		//String originalFileName = multipartFile.getOriginalFilename();
 		//String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-		String savedFileName = originalFileName;	//저장될 파일 명
+		String savedFileName = multipartFile.getOriginalFilename();	//저장될 파일 명
 		
-		File targetFile = new File(tempDir + savedFileName);
+		File targetFile = new File(tempDir + savedFileName);	//저장될 전체 파일 경로 + 파일명
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
