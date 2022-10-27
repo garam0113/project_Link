@@ -102,7 +102,6 @@
 
 /* 댓글의 댓글개수 마우스 오버 */
 .recommentList:hover{
-	/* background-color: #5F0080; */
 	color: #5F0080 !important;
 }
 
@@ -133,9 +132,6 @@
 	display: grid;
 	grid-template-columns: 2fr 1fr 4fr 1fr 1fr 1fr 1fr 1fr;
 	font-size: 3rem;
-	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	border-radius: 10px;
-	padding: 30px; */
 }
 
 .club-post-time{
@@ -150,16 +146,8 @@
 /* 상세보기에서 제목 글씨 크기 */
 .clubPost-body-title{
 	font-size: 4rem;
-	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	border-radius: 10px;
-	padding: 30px; */
 }
 
-.clubPost-body-content{
-	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	border-radius: 10px;
-	padding: 30px; */
-}
 
 /* 대댓글 리스트 전체를 감싸는 태그 */
 .recomment-header{
@@ -192,18 +180,8 @@
 	padding: 30px;
 }
 
-.club-post-list-content{
-	/* display: flex !important;
-	width: 87% !important;
-	background-color: #5F0080; */
-}
 
 
-
-
-
-
-			
 
 /* 전체건수 페이지 정렬 4가지의 글씨 크기 */
 .contains-order {
@@ -226,5 +204,42 @@
 	color: #5F0080;
 	font-size: 40px;
 }
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,6 +10,9 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/beetle.js"></script>
 		
+		<!-- 사용자 정의 css -->
+		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+		
 		<!-- include libraries(jQuery, bootstrap) -->
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -20,6 +23,8 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 		
+		<!-- import.payment.js -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>		
 		
 		<script type="text/javascript">
 		$(function(){
@@ -27,92 +32,156 @@
 				requestPayment();
 			});
 			$("input[value='취소하기']").bind("click", function(){
-				history.go(-1);
+				//history.go(-1);
+				location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo };
 			});
 			
-			$(".plus").bind("click", function(){
+			var clubOption = (${returnClub.clubMaxMember} == 0) ? true : false;
+			
+			$(".glyphicon.glyphicon-plus").bind("click", function(){
 				
-				//var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
 				var updateClubMemberCount = $(".payProduct-member").text();
 				var updateClubCount = parseInt( $(".payProduct-club").text() );
 				var totalPrice = parseInt( $(".totalPrice").text() );
-				var clubNo = $("input[name='clubNo']").val();
-				var maxPay = $("#maxPay").val();
+				var clubNo = parseInt( ${ pay.clubNo } );
+				var maxPay = ${ pay.maxPay };
+				var afterMemberCount = $(".after-pay-member-count").text();
 				
+				//alert( afterMemberCount );
 				//alert( maxPay );
 				//alert( clubNo );			
 				//alert( updateClubMemberCount );
 				//alert( updateClubCount );
 				//alert( totalPrice );
 				
+				
+				//alert(clubOption);
+				
 				if( maxPay == totalPrice ){
-					alert('if');
-					${ pay.clubNo } == 0 ? $(".result").text( "한명당 최대로 가입 할 수 있는 모임은 10개입니다" ): $(".result").text( "하나의 모임당 최대 모임원은 50명입니다" );
+					//alert('if');
+					${ pay.clubNo } == 0 ? $(".message").text( "  (한명당 최대로 가입 할 수 있는 모임은 10개입니다)" ): $(".message").text( "  (하나의 모임당 최대 모임원은 50명입니다)" );
 				}else{
-					alert('else');
-					if( clubNo != 0 ){
-						// 회원이 모입가입신청 했을때
-						alert('if');
+					//alert('else');
+					if( clubOption ){
+						// 모임 추가
+						//alert('if');
 						$(".payProduct-club").text( parseInt( updateClubCount ) + 2 );
 						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
 					}else{
-						alert('else');
-						$(".payProduct-member").text( updateClubMemberCount + 10 );
-						$(".return-max-member").text( parseInt( $(".return-max-member").text() ) + 10 );
+						// 모임원 추가
+						//alert('else');
+						$(".payProduct-member").text( parseInt( updateClubMemberCount ) + 10 );
+						$(".after-pay-member-count").text( parseInt( afterMemberCount ) + 10 );
 					}
 					$(".totalPrice").text( totalPrice + 5000 );
-					$(".result").text( "" );
+					$(".message").text( "" );
+					
 				}
 				
 			});//end of plus
 			
-			$(".minus").bind("click", function(){
+			$(".glyphicon.glyphicon-minus").bind("click", function(){
 				
 				var updateClubMemberCount = $(".payProduct-member").text();
 				var updateClubCount = $(".payProduct-club").text();
 				var totalPrice = $(".totalPrice").text();
 				var clubNo = $("input[name='clubNo']").val();
 				var max_member = $(".return-max-member").text();
+				var afterMemberCount = $(".after-pay-member-count").text();
+				
+				//alert( afterMemberCount );
 				
 				if( totalPrice == 5000 ){
-					alert('if');
-					$(".result").text( "최소 결제 금액은 5000원입니다" );
+					//alert('if');
+					$(".message").text( "  (최소 결제 금액은 5000원입니다)" );
 				}else{
-					alert('else');
-					if( clubNo == 0 ){
-						alert('if');
+					//alert('else');
+					if( clubOption ){
+						//alert('if');
 						$(".payProduct-club").text( parseInt( updateClubCount - 2 ) );
 						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
 					}else{
-						alert('else');
-						alert(updateClubMemberCount);
-						alert(max_member);
+						//alert('else');
+						//alert(updateClubMemberCount);
+						//alert(max_member);
 						$(".payProduct-member").text( updateClubMemberCount - 10 );
-						$(".return-max-member").text( parseInt( max_member ) - 10 );
+						$(".after-pay-member-count").text( parseInt( afterMemberCount ) - 10 );
 					}
 					$(".totalPrice").text( totalPrice - 5000 );
-					$(".result").text( "" );
+					$(".message").text( "" );
 				}
 				
 			});//end of minus
 		});
 	</script>
-	<style type="text/css">
 	
-		/* 메인화면 */
-		.row{
-			font-family: 'Single Day', cursive;
+	<script type="text/javascript">
+		function requestPayment() {
+			
+			var email = "${ user.email }";
+			var phoneNo = "${ user.phoneNo }";
+			var totalPrice = $(".totalPrice").text();
+			var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "1": "0";
+			var pg = $("input[name='payOption']:checked").attr("pg");
+			var pay_method = $("input[name='payOption']:checked").attr("pay_method");
+			var name = payProduct===0 ? "최대 모임 수 증가" : "최대 모임원 수 증가";
+			var updateClubMemberCount = $(".payProduct-member").text();
+			var updateClubCount = $(".payProduct-club").text();
+			
+			if( !updateClubMemberCount ){
+				updateClubMemberCount = 0;
+			}
+			if( !updateClubCount ){
+				updateClubCount = 0;
+			}
+			
+			$("input[name='payProduct']").val( payProduct );
+			$("input[name='totalPrice']").val( totalPrice );
+			$("input[name='updateClubMemberCount']").val( updateClubMemberCount );
+			$("input[name='updateClubCount']").val( updateClubCount );
+			$("input[name='clubNo']").val( ${ pay.clubNo } );		
+			
+			IMP.init("imp83557107"); // 가맹점 식별코드로 IMP 객체를 초기화한다
+			//IMP.init("imp36216644"); // 가맹점 식별코드로 IMP 객체를 초기화한다
+			
+			IMP.request_pay({
+					pg : pg,
+					pay_method : pay_method,
+					merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+					name : name,
+					amount : totalPrice,
+					customer_uid : 'your-customer-unique-id', // 필수 입력.
+					buyer_email : email,
+					buyer_name : '상디',
+					buyer_tel : ${ user.phoneNo }
+				    //buyer_addr : '서울특별시 강남구 삼성동',
+				    //buyer_postcode : '123-456'
+	
+			}, function(rsp) { // callback
+				if (rsp.success) {
+					//msg += '\n고유ID : ' + rsp.imp_uid;
+	    			//msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+	    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
+	    			alert(msg);
+	    			$("input[name='merchant_uid']").val( rsp.merchant_uid );
+	    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
+				} else {
+					var msg = '결제에 실패하였습니다.';
+					msg += '에러내용 : ' + rsp.error_msg;
+					alert(msg);
+				}
+			});
 		}
-		
-		/* 메인화면 */
+	</script>
+	
+	<style type="text/css">
 		.pay-main{
-			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
 			border-radius: 100px;
-			font-size: 25px;;
+			font-size: 20px;
 		}
 		.pay-header{
 			background-color: #f2e3ff;
-			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 			border-radius: 10px;
 			padding: 1rem;
@@ -127,15 +196,12 @@
 			background-color: #f2f3ff;
 		}
 		.pay-body-text{
-			/* background-color: blue; */
 		}
 		.pay-body-content{
-			/* background-color: orange; */
 		}
 		.pay-body-updown{
 		}
 		.glyphicon.glyphicon-plus{
-			/* background-color: red; */
 			font-size: 2rem;
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 			border-radius: 10px;
@@ -147,7 +213,6 @@
 			border-color: #5F0080;
 		}
 		.glyphicon.glyphicon-minus{
-			/* background-color: yellow; */
 			font-size: 2rem;
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 			border-radius: 10px;
@@ -159,32 +224,10 @@
 			border-color: #5F0080;
 		}
 		.payProduct-member{
-			/* background-color: purple; */
 			font-size: 4rem;
 		}
 		.totalPrice{
 			font-size: 4rem;
-		}
-		.submit {
-			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 10px;
-			margin: 1rem;
-			padding: 1rem;
-			width: 100px;
-			background-color: #5F0080;
-			color: white;
-			font-size: 2rem;
-		}
-		.cancle {
-			border-color: #5F0080;
-			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 10px;
-			margin: 1rem;
-			padding: 1rem;
-			width: 100px;
-			background-color: white;
-			color: #5F0080;
-			font-size: 2rem;
 		}
 	</style>
 		
@@ -219,7 +262,7 @@
 							<a href="#">모임 채팅</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubNo }">결제</a>
+							<a href="/clubPost/addPayView?clubNo=${ pay.clubNo }">결제</a>
 						</li>
 					</ul>
 					
@@ -247,25 +290,30 @@
 								</div>
 								<div class="pay-body-content">
 									<div>
-										<div><input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="신용카드">&nbsp;&nbsp;신용카드</div>
-										<div><input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="카카오페이">&nbsp;&nbsp;&nbsp;&nbsp;카카오페이</div>
-										<div><input type="radio" name="payOption" pg="kcp" pay_method="phone" value="휴대폰결제">&nbsp;&nbsp;휴대폰결제</div>
-										<div><input type="radio" name="payOption" pg="tosspay" pay_method="card" value="토스페이">&nbsp;&nbsp;&nbsp;&nbsp;토스페이</div>
-										<div><input type="radio" name="payOption" pg="kcp" pay_method="trans" value="실시간 계좌이체">&nbsp;&nbsp;&nbsp;&nbsp;실시간 계좌이체</div>
+										<div><input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">&nbsp;&nbsp;신용카드</div>
+										<div><input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">&nbsp;&nbsp;&nbsp;&nbsp;카카오페이</div>
+										<div><input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">&nbsp;&nbsp;휴대폰결제</div>
+										<div><input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">&nbsp;&nbsp;&nbsp;&nbsp;토스페이</div>
+										<div><input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">&nbsp;&nbsp;&nbsp;&nbsp;실시간 계좌이체</div>
 									</div>
 									<br>
 									
-									<div><span>${ returnClub.clubTitle }</span>의 현재 모임원 수 <span>10</span>명</div>
+									<div>
+										<span style="font-size: 30px; color: #5F0080;">${ returnClub.clubTitle }</span> 모임의 결제 후 모임원 수 
+										<span class="after-pay-member-count" style="font-size: 35px; color: #5F0080;">${ returnClub.clubMaxMember + 10 }</span>&nbsp;&nbsp;명
+									</div>
 									<div class="pay-body-updown">
 										<span class="glyphicon glyphicon-minus"></span>
 										<span class="payProduct-member">10</span>
 										<span class="glyphicon glyphicon-plus"></span>명
+										<span class="message"></span>
 									</div>
 									<div>
 										<span class="totalPrice">5000</span>원
 									</div>
 									<div>
-										<div><input type="button" class="submit" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="이전으로"></div>
+										<div><input type="button" class="plain button red pay" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="button" class="plain button red cancle" value="취소하기"></div>
 									</div>
 								</div>							
 							</div>

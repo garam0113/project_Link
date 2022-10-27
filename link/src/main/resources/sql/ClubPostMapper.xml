@@ -51,7 +51,7 @@
 		<result property="payRegDate" 				column="PAY_REG_DATE" 				jdbcType="DATE"/>
 		<result property="updateClubCount" 			column="UPDATE_CLUB_COUNT" 			jdbcType="NUMERIC"/>
 		<result property="updateClubMemberCount" 	column="UPDATE_CLUB_MEMBER_COUNT" 	jdbcType="NUMERIC"/>
-		<result property="merchant_uid" 			column="MERCHANT_UID" 				jdbcType="NUMERIC"/>
+		<result property="merchant_uid" 			column="MERCHANT_UID" 				jdbcType="VARCHAR"/>
 		
 		<association property="user"				javaType="user">
 			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
@@ -229,7 +229,19 @@
 	<!-- 결제추가 -->
 	<insert id="addPay" parameterType="pay">
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
-		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payProduct }, #{ payOption }, #{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid } )
+		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, 
+																	<choose>
+																		<when test="payProduct == '0'">'모임 추가',</when>
+																		<otherwise>'모임원 추가',</otherwise>
+																	</choose>
+																	<choose>
+																		<when test="payOption == 0">'신용카드',</when>
+																		<when test="payOption == 1">'카카오페이',</when>
+																		<when test="payOption == 2">'휴대폰결제',</when>
+																		<when test="payOption == 3">'토스페이',</when>
+																		<otherwise>'실시간 계좌이체',</otherwise>
+																	</choose>
+						#{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid:VARCHAR } )
 	</insert>
 	
 
