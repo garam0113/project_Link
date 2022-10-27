@@ -241,8 +241,8 @@
 							<div class="pay-body">
 								<div class="pay-body-text">
 									<div>결제방법</div><br><br><br><br><br>
-									<div>모임이름</div><br><br>
-									<div>추가 모임원 수</div><br><br>
+									<div>모임이름</div><br>
+									<div>추가 모임원 수</div><br>
 									<div>총 결제금액</div>
 								</div>
 								<div class="pay-body-content">
@@ -255,20 +255,17 @@
 									</div>
 									<br>
 									
-									<div>${ returnClub.clubTitle }의 현재 모임원 수 10명</div>
-									<br>
+									<div><span>${ returnClub.clubTitle }</span>의 현재 모임원 수 <span>10</span>명</div>
 									<div class="pay-body-updown">
 										<span class="glyphicon glyphicon-minus"></span>
 										<span class="payProduct-member">10</span>
 										<span class="glyphicon glyphicon-plus"></span>명
 									</div>
-									<br>
 									<div>
 										<span class="totalPrice">5000</span>원
 									</div>
-									<br>
 									<div>
-										<div><input type="button" class="submit" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="취소하기"></div>
+										<div><input type="button" class="submit" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="이전으로"></div>
 									</div>
 								</div>							
 							</div>

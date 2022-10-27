@@ -43,7 +43,7 @@
  	 
  	 <style>
 		body {
-		    /* background-color: #333; */
+		    background-color: #f0f2f5;
 		    color: #333;
 		    font-size: 1.125em;
 		    font-size: 15px;
@@ -55,7 +55,7 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    /* background-color: #333333; */
+		    background-color: #f0f2f5;
 		}
 		
 		header {
@@ -137,12 +137,32 @@
 		 	float: center;
 		 }
 		 
+		 #toolbar {
+		 	float: right !important;
+		 }
+		 
+		 nav {
+		 	float: none;
+		 }
 		 
 		 
 	 element.style {
     	float: right;
     	margin-bottom: 20px !important;
 	    margin-top: 10px !important;
+	}
+	
+	.keyword_search_area {
+    padding: 18px 0 10px 20px;
+    border: solid 1px #d8d8d8;
+    background-color: #f8f8 !important;
+    font-size: 12px;
+	}
+	
+	section {
+		background-color: #5F0080 !important;
+		border: solid 1px #d8d8d8 !important;
+		margin: 10px;
 	}
 	
 		 
@@ -208,6 +228,14 @@
 	});
 	
 	
+	function enterkey() {
+		if(window.event.keyCode == 13) {
+			//fncGetClubList(currentPage);
+			fncGetClubList();
+		}
+	}
+	
+	
 	//무한 페이징
 	var currentPage = 1;
 	$(window).scroll(function() {
@@ -252,9 +280,10 @@
 	</script>	
 </head>
 
+
 <%-- <jsp:include page="/toolbar.jsp" /> --%>
 
-<body class="page">
+ <body class="page">
 
    <header role="banner" class="transparent light">
       <div class="row">
@@ -268,7 +297,7 @@
             </div>
             <!-- brand -->
             <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-            <nav>
+            <nav id="toolbar">
                <ul class="reset" role="navigation">
                   <li class="menu-item"><a href="/main.jsp">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
@@ -305,7 +334,7 @@
 
 
 <body class="blog masonry-style">
-
+	
 
 	<main role="main">
 		
@@ -333,7 +362,7 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  	  <div id="main" class="row">
 	    
-		    
+		   <section class="keyowrd_search_area"> 
 		    <div class="col-md-8 text-right" style="float: right;">
 			    <form class="form-inline" name="detailForm">
 			    
@@ -346,7 +375,7 @@
 				  
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" onkeyup="enterkey()"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
 	    			<button type="button" class="btn btn-search">검색</button>
 	    			<button type="button" class="btn btn-myList">내 모임 보기</button>
@@ -369,6 +398,7 @@
 	    		<tr>
 	    			<th>
 	    				<select class="form-control" name="" style="border-color: #BD76FF;">
+	    					<option value="" ${! empty search.order ? search.order : '' }>카테고리</option>
 	    					<option value="운동">운동</option>
 	  						<option value="봉사활동">봉사활동</option>
 	  						<option value="음식">음식</option>
@@ -382,6 +412,7 @@
 	    			</th>
 	    			<th>
 	    				<select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
+	    					<option value="">지역</option>
 	    					<option value="강남구">강남구</option>
 							<option value="강동구">강동구</option>
 							<option value="강북구">강북구</option>
@@ -418,9 +449,9 @@
 					</th>
 	    		</tr>
 	    
-	    		
-	    	
+	    			    	
 	    	</table>
+	    </section>
 	    	
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -435,6 +466,7 @@
 				  		<p>${i.clubArea}</p>
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
+				  		<p>카테고리 : ${i.clubCategory }</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
 				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</a></p>			  	
 				 </div>
@@ -447,8 +479,10 @@
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
-
+	
+	<div id="pageNav" >
  	<jsp:include page="../common/pageNavigator_new2.jsp" />
+ 	</div>
  	
 	</main>
 	

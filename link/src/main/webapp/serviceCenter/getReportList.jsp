@@ -123,14 +123,26 @@ body {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
+function fncGetList(currentPage) {
+	
+	if(${user.role=='1'}){
+		$("#currentPage").val(currentPage)
+		$("form").attr("method", "GET").attr("action", "/serviceCenter/getReportList")   //전체보기
+				.submit();
+		
+	}else if (${user.role=='0'}){
+		$("#currentPage").val(currentPage)
+		$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();   //나만보기
+				
+    }
+}
 	$(function() {
 		$("td:nth-child(3)").on(
 				"click",
 				function() {
-					self.location = "/serviceCenter/getReport?no="
-							+ $(this).parent().find("td:eq(0)").text()
-
-				});
+					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find("td:eq(0)").text()
+							});
 
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
@@ -237,7 +249,9 @@ body {
 							</c:if>
 							<td></td>
 							<td align="center">${getReportList.user2.userId}</td>
-							<td></td>
+							<td>
+							<input type="hidden" name="order" id="order" value="${search.order}">
+							</td>
 							<td align="left">${getReportList.regDate}</td>
 							
 

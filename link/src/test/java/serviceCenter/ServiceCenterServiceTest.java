@@ -186,7 +186,6 @@ public class ServiceCenterServiceTest {
 		
 		qandA.setUserId(user);
 		qandA.setQandAAnswerContent("바뀐답변입니다");
-		qandA.setQandAAnswerRegDate("22-11-05");
 		qandA.setQandACondition(1);
 		
 		

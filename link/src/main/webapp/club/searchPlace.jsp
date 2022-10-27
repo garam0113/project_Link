@@ -199,7 +199,7 @@
 					            //클릭 이벤트 잘 써보자
 					            kakao.maps.event.addListener(marker,'click', function() {
 					            	
-					            	alert(title);
+					            	//alert(title);
 					            	console.log(title);
 					            	//setParentText(title);
 					            	setParentText(title);

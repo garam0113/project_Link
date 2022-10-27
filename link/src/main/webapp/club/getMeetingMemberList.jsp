@@ -52,6 +52,14 @@
 			
 	}
 	
+	main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	#main {
+		background-color: #f0f2f5 !important;
+	}
+	
 	.h2-color {
 		color: yellow;
 	}

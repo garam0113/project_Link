@@ -23,7 +23,9 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
-		
+
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
@@ -34,6 +36,7 @@
                     
         element.style {
     	margin-top: 100px !important;
+    	margin-left: -87px !important;
 		}
 		
 		
@@ -41,6 +44,11 @@
  		   margin-top: 20px;
 		   margin-bottom: 50px;
 		}
+		
+		textarea {
+		resize: none;
+	
+}
 		
         
         
@@ -56,7 +64,17 @@
 		////////////////////////////////////////////////////
 		//document.detailForm.action = '/addProduct.do';
 		///////////////////////////////////////////////////
-
+		
+		var joinGreeting = $("textarea[name='joinGreeting']").val();
+		
+		if ( joinGreeting == null || joinGreeting.length < 1 ) {
+			Swal.fire({
+				icon: 'error',
+				title: '가입인사는 필수입니다.' ,
+			});
+			return;
+		}
+		
 
 		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition")
 				.submit();
@@ -74,7 +92,8 @@
 	$(function() {
 
 		$("button.btn.btn-cancel").bind("click", function() {
-			history.go(-1);
+			//history.go(-1);
+			window.close();
 		});
 	});
 
@@ -85,7 +104,7 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center" style="background-color:#ffffff; border-color:#BD76FF; color:#BD76FF; width:700px; margin-left: 166px;">모 임 가 입 신 청</h1>
+		<h1 class="bg-primary text-center" style="background-color:#ffffff; border-color:#BD76FF; color:#BD76FF; width:700px; margin-left: -87px;">모 임 가 입 신 청</h1>
 		
 		<form class="form-horizontal">
 		
@@ -99,7 +118,7 @@
 			<div class="form-group">
 				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> 가 입 인 사</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="joinGreeting" name="joinGreeting" placeholder="가입인사는 필수입니다." style="border-color: #BD76FF;">
+					<textarea class="joinGreeting" id="joinGreeting" name="joinGreeting" value="" maxlength="100" style="width: 300px; height: 50px;" placeholder="가입인사는 필수입니다."></textarea>
 				</div>		
 			</div>
 			

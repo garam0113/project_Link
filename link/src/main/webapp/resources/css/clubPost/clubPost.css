@@ -1,0 +1,219 @@
+
+/* 상단 모임 툴바? */
+.inline.cats.filter-options{
+	font-size: 40px;
+}
+			
+/* 리스트와 상세보기와 댓글과 대댓글의 프로필 사진 */
+.profileImage{
+	border-radius: 50px;
+	height: 100px;
+	width: 100px;
+}
+
+/* 전제 글씨체 */
+.row{
+	font-family: 'Single Day', cursive;
+}
+		
+/* 댓글전체를 감싸는 태그 */
+.comment{
+	font-size: 20px;
+}
+
+.recomment{
+	font-size: 20px;
+}
+
+/* 하나의 댓글 전체를 감싸는 태그 */
+#comment-body{
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 1rem;
+}
+
+/* 게시물등록, 댓글등록, 등록완료, 수정완료, 취소의 버튼 */
+.plain.button.red{
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 10px;
+	width: 90px !important;
+	color: white !important;
+	font-size: 16px !important;
+	text-align: center;
+	border: 2px solid;
+}
+
+/* 댓글등록, 등록완료, 수정완료, 취소의 버튼 마우스 오버 */
+.plain.button.red:hover{
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 10px;
+	width: 90px !important;
+	color: #5F0080 !important;
+	font-size: 16px !important;
+}
+
+/* 취소 이전으로 버튼 */
+.plain.button.red.cancle{
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 10px;
+	width: 90px !important;
+	color: #5F0080 !important;
+	font-size: 16px !important;
+	text-align: center;
+	border: solid 2px;
+}
+
+.plain.button.red:hover{
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 10px;
+	width: 90px !important;
+	color: white !important;
+	font-size: 16px !important;
+}
+
+.club-post-time{
+	font-size: 20px;
+}
+
+#replyadd{
+	width: 125px !important;
+}
+
+/* 댓글의 댓글개수 마우스 오버 */
+.recommentList:hover{
+	/* background-color: #5F0080; */
+	color: #5F0080 !important;
+}
+
+/* summernote textarea */
+.plain.buffer{
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	width: 920px;
+}
+
+/* 모임 게시물 상세보기 전체 감싸는 태그 */
+.post-area.clear-after{
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 30px;
+}
+
+/* 게시물의 댓글 개수 */
+#comments{
+	padding: 30px;
+	color: #5F0080 !important;
+}
+
+/* 게시물 상단 프로필사진, 좋아요 이미지, 좋아요 개수, 등록, 수정, 삭제, 신고 수평 정렬하기 위해 부모태그에 설정 */
+.clubPost-header {
+	display: grid;
+	grid-template-columns: 2fr 1fr 4fr 1fr 1fr 1fr 1fr 1fr;
+	font-size: 3rem;
+	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	padding: 30px; */
+}
+
+.club-post-time{
+	font-size: 20px !important;
+}
+
+/* 상세보기에서 닉네임 글씨 크기 */
+.clubPost-header-nickName{
+	font-size: 2rem;
+}
+
+/* 상세보기에서 제목 글씨 크기 */
+.clubPost-body-title{
+	font-size: 4rem;
+	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	padding: 30px; */
+}
+
+.clubPost-body-content{
+	/* box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	padding: 30px; */
+}
+
+/* 대댓글 리스트 전체를 감싸는 태그 */
+.recomment-header{
+	display: none;
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 30px;
+}
+			
+/* 댓글과 대댓글의 하트이미지 div태그 좋아요수 등록 수정 삭제 신고 아이콘 div태그 수평정렬 */
+.comment.body{
+	display: grid;
+	grid-template-columns: 1fr 13fr;
+}
+
+
+
+
+/* 게시물 리스트에서 하나의 리스트만 */
+.col-md-4{
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 30px;
+	margin-top: 50px;
+	padding: 30px;
+}
+
+.club-post-list-content{
+	/* display: flex !important;
+	width: 87% !important;
+	background-color: #5F0080; */
+}
+
+
+
+
+
+
+			
+
+/* 전체건수 페이지 정렬 4가지의 글씨 크기 */
+.contains-order {
+	font-size: 15px;
+}
+
+.club-post-search{
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 2px;
+	padding: 1rem;
+	background-color: white;
+	color: #5F0080;
+	font-size: 25px;
+	border-color: #5F0080;
+}
+.contains-order{
+	font-size: 30px;
+}
+.page{
+	color: #5F0080;
+	font-size: 40px;
+}
+	
+	
