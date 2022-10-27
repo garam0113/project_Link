@@ -12,6 +12,7 @@ import com.link.common.Search;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterDAO;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -239,4 +240,24 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 
 	}
 	// ==================================================================여기까지가 Report
+	
+	
+	// ==================================================================여기부터가 Push
+	
+	@Override
+	public void addPush(Report push) throws Exception {
+		// TODO Auto-generated method stub
+		
+		serviceCenterDAO.addPush(push);
+		
+	}
+	
+	@Override
+	public Map<String, Object> getPushList(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>) serviceCenterDAO.getPushList(user);
+	}
+	
+	
+	// ==================================================================여기까지가 Push
 }

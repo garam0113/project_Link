@@ -37,12 +37,9 @@
 	<%-- BOOTSTRAP ICON --%>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<%-- BOOTSTRAP ICON --%>
+		
 	
 	<script type="text/javascript">
-	
-	
-	
-	
 	
 	function formatDate(date) {
 	    
@@ -76,7 +73,6 @@
 	}
 	
 	$(function(){
-		
 		
 				
 		<%-- SEARCH BY HASHTAG --%>
@@ -163,7 +159,7 @@
 										
 										if(item.image1 != null) {
 											addHtml += '<div id="carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" class="carousel slide" data-ride="carousel">' +
-														'<ol class="carousel-indicators">' +
+													'<ol class="carousel-indicators">' +
 														'<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="0" class="active"></li>'
 														
 											if(item.image2 != null) {
@@ -299,7 +295,7 @@
             ],
             
             disableResizeEditor: true,
-			height: 300,                 	// 에디터 높이
+			height: 200,                 	// 에디터 높이
 			minHeight: null,             	// 최소 높이
 			maxHeight: null,             	// 최대 높이
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
@@ -399,6 +395,8 @@
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
 			
 			$.ajax(
 					{
@@ -406,7 +404,7 @@
 						method : "POST",
 						data : JSON.stringify ({
 							source : 0,
-							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							sourceNo : feedNo,
 							userId : sessionUser
 						}),
 						contentType: 'application/json',
@@ -422,6 +420,13 @@
 
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+							
+							if(sock) {
+								var Msg = "heart," + sessionUser + "," + content + "," + feedNo;
+								
+								console.log("소켓 열려있는 상태 : " + Msg);
+								sock.send(Msg);
+							}
 							
 						} // success close
 						
@@ -479,9 +484,9 @@
 		<%-- CALL REPORT --%>
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
-		    
-			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
 			
+			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+		//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		}) // .report evenet close
 		<%-- CALL REPORT --%>
 		
@@ -674,6 +679,19 @@
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	#boxx {
+		border:2px solid #ddd;
+		padding:10px;
+		min-height:100px;
+		font-size:12px;
+	 }
+  
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -684,22 +702,25 @@
 
 <body>
 
-	<jsp:include page="/toolbar.jsp" />
+	<jsp:include page="/toolbarTest.jsp" />
 
 	<main role="main">
 	
 		<div id="intro-wrap" data-height="15">
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
-						<div class="caption">
-							<h2>Feed</h2>
-							<p>If you’re any good at all, you know you can be better.</p>
-						</div><!-- caption -->					
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+			<div id="intro" class="preload darken">					
+				<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
+					<div class="caption">
+						<h2>Feed</h2>
+						<p>If you’re any good at all, you know you can be better.</p>
+					</div><!-- caption -->					
+				</div>								
+			</div><!-- intro -->
+		</div><!-- intro-wrap -->
+		
 		
 		<div id="main">
+		
+		<div id="msgStack"></div>
 		
 			<section class="row section">
 			<div class="container">

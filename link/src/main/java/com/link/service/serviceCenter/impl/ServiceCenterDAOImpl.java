@@ -1,6 +1,7 @@
 package com.link.service.serviceCenter.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,8 +13,10 @@ import com.link.common.Search;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Push;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterDAO;
 
 @Repository("ServiceCenterDAOImpl")
@@ -206,5 +209,20 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}
 //==================================================================여기까지가 공통
 
-
+// ==================================================================여기부터가 Push
+	@Override
+	public void addPush(Report push) throws Exception {
+		
+		sqlSession.insert("Report_PushMapper.addPush", push);
+		
+	}	
+	
+	@Override
+	public List<Push> getPushList(User user) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("Report_PushMapper.getPushList", user);
+	}
+			
+// ==================================================================여기까지가 Push
+	
 }
