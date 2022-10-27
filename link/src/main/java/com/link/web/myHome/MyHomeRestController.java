@@ -329,8 +329,6 @@ public class MyHomeRestController {
 			 search.setSearchKeyword(userId);
 			 Map<String, Object> map = new HashMap<String, Object>();
 			 System.out.println(clubPostService);
-			 System.out.println("ddd"+ (clubPostService.getClubPostListMyHome(userId)));
-		
 			 map.put("ClubPostList",clubPostService.getClubPostListMyHome(userId).get("clubPostList"));
 			 
 			 return map;
