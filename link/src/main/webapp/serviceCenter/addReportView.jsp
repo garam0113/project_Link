@@ -102,11 +102,21 @@
 			  no += $("#feedCommentNo").val();
 		}
 		
-
+		var clubNo = 0;
 		
+		if( $("#clubNo2").val()!=null ){
+			clubNo += $("#clubNo2").val();
+		}else if( $("#clubNo3").val()!=null){
+			clubNo += $("#clubNo3").val();
+		}
+		
+		var clubPostNo2 = 0;
+		if ( $("#clubPostNo2").val()!=0){
+			clubPostNo2 += $("#clubPostNo2").val();
+		}
 		
 	 	$.ajax({
-		url  : "/serviceCenterRest/json/addReport",
+		url  : "/serviceCenterRest/json/addReport?clubNo="+${clubNo},
 		contentType: 'application/json',
 		method : "POST",
 		dataType: "json",
@@ -120,8 +130,7 @@
 			"reportReason": sum,
 			"type": $("#type").val(),
 			"no" :no,   
-			"clubPost":$("#clubPost").val(),
-			
+			"clubPostNo2":clubPostNo2,
 	
 		 success: function(){
 			 window.close();
@@ -258,14 +267,16 @@ textarea {
 						<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
 		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
-		     		 <input type="hidden" name="order" id="clubPost" value="${report.clubPost}"/>
+		     		 <input type="hidden" name="clubNo" id="clubNo2" value="${report.clubPost.clubNo}"/>
 		     		 ${report.clubPost}
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">  			
 		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
-		     		  <input type="hidden" name="order" id="clubNo" value="${report.clubPost.clubNo}"/>
+		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPost.clubPostNo}"/>
+		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPost.clubNo}"/>
+		     	     {report.clubPost}
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
@@ -277,7 +288,6 @@ textarea {
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">
 		     		       	
 		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
-		     		피드넘버 ${report.feedComment.feedNo }   게시물넘버 ${report.feedComment.feedCommentNo}
 					</c:if>
 					
 					

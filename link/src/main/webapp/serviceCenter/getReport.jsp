@@ -37,8 +37,8 @@
 			}
 		})
 
-		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateReport?no="+$('tr.no').find('td').text();
+		$("button:contains('수정')").bind("click", function() {
+			self.location = "/serviceCenter/updateReport?no="+$('#no').val();
 		})
 
 

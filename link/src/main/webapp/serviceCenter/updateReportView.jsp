@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
     
-<%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 
@@ -10,15 +11,22 @@
 <html>
 
 <head>
+<meta charset="EUC-KR">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-
-<title>신고처리</title>
+<title>신고내용 수정</title>
 	
-	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 	
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../javascript/calendar.js"></script>
-	<script type="text/javascript">
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>	
+<script type="text/javascript">
 	
 	function fncUpdateReport(){
 
@@ -34,12 +42,12 @@
 	
 	$(function(){
 		
-		$("td.ct_btn01:contains('수정')").bind("click", function(){
+		$("button:contains('수정')").bind("click", function(){
 			fncUpdateReport();
 		});
 		
-		$("td.ct_btn01:contains('취소')").bind("click", function(){
-			history.go(-1);
+		$("button:contains('뒤로')").bind("click", function(){
+			self.location = "/serviceCenter/getReportList";;
 		});
 		
 	
@@ -49,7 +57,70 @@
 	});
 
 </script>
+<style>
+textarea {
+	resize: none;
+}
 
+.custom-btn {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none !important;
+  box-shadow:none !important;
+  outline: none;
+}
+.btn-13 {
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover { <%-- 글씨색 --%>
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
+.input{
+	width:auto;
+	height:auto;
+	margin-right: 70px;
+}
+
+
+</style>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">

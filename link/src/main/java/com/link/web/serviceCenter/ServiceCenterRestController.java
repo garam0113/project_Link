@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Search;
@@ -46,11 +48,13 @@ public class ServiceCenterRestController {
 	int pageUnit;
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
-	public String addReport(@RequestBody Report report,  Model model , ClubPost clubPost,  Search search  )throws Exception {
+	public String addReport(@RequestBody Report report,  Model model , @PathVariable int clubNo,
+			@RequestParam(value = "clubPostNo", required =false) int clubPostNo ,Search search  )throws Exception {
+		
 		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
+
 		System.out.println(report);
-		
 		//사진 업로드
 /*		int fileCount = 0;
 		
@@ -70,10 +74,13 @@ public class ServiceCenterRestController {
 				files.transferTo(saveFile);
 			}
 		}   */	
-			
-					
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+					ClubPost clubPost = new ClubPost();
 					Feed feed = new Feed();
-					Map<String, Object> map = new HashMap<String, Object>();
+					
 					if(report.getReportSource()==1) {				//모임게시물
 						clubPost.setClubPostNo(report.getNo());
 						report.setClubPost(clubPost);
@@ -94,6 +101,7 @@ public class ServiceCenterRestController {
 
 			serviceCenterService.addReport(report);
 			model.addAttribute("report", report);
+
 		
 		//돌려보내는 곳 신고하기 전 -1하고, alter 창? 완료 되었습니다 2개 변경
 		return "forward:/serviceCenter/serviceCenterHome.jsp";

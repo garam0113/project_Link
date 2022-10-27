@@ -73,11 +73,11 @@
 	 WHERE QANDA_NO = '3';
 		
 
-DELETE report_push WHERE no='147';
+DELETE report_push WHERE no='262';
 
 SELECT * FROM QANDA;
 
-SELECT * FROM report_push;
+SELECT * FROM report_push WHERE no='261';
 
 
 
