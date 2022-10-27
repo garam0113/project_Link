@@ -14,15 +14,21 @@ public class LiveRestController {
 	public LiveRestController() {
 		System.out.println(this.getClass());
 	}
-	
+
 	@RequestMapping(value = "json/addRoomName", method = RequestMethod.POST)
 	public Live addRoomName(@RequestBody String roomName, Live live) throws Exception {
 		System.out.println("/liveRest/json/addRoomName : POST");
-		
+
 		roomName = "1234";
-		
+
 		live.setRoomName(roomName);
-		
+
+		return live;
+
+	}
+
+	@RequestMapping(value = "json/getRoomName")
+	public Live getRoomName(@RequestBody Live live) throws Exception {
 		return live;
 	}
 }

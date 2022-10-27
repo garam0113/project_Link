@@ -284,7 +284,8 @@ function fncGetList(currentPage) {
 						<%-- 관리자 --%>
 						<c:if test="${ user.role == '1' }">
 							<td align="left"><a
-								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
+								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
+								
 									${getQandAList.qandATitle} </a>
 									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
@@ -297,7 +298,7 @@ function fncGetList(currentPage) {
 						<c:if test="${ user.role== null }">
 							<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<td align="left"><a
-									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
+									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} </a>
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 										&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
@@ -323,7 +324,7 @@ function fncGetList(currentPage) {
 							<td align="left">
 							<c:if test="${sessionScope.user.userId == getQandAList.userId.userId}">
 									
-									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
+									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} <c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	</a>	
@@ -332,7 +333,7 @@ function fncGetList(currentPage) {
 							<%--세션 아이디비교  NO --%>
 							<c:if test="${sessionScope.user.userId != getQandAList.userId.userId}">
 									<c:if test="${getQandAList.qandAOpenCondition=='1'}">
-								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
+								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} 
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">

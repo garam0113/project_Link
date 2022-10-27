@@ -77,7 +77,7 @@ DELETE report_push WHERE no='262';
 
 SELECT * FROM QANDA;
 
-SELECT * FROM report_push WHERE no='261';
+SELECT * FROM report_push where no='73';
 
 
 
