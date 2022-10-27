@@ -31,7 +31,6 @@
 <script type="text/javascript">
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
-		alert(clubPostNo);
 		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
 	}
 	
@@ -664,7 +663,11 @@ header.transparent {
     -moz-box-shadow: none;
     box-shadow: none;
 }
+.post{
+width:500px;
+margin-left:65px;
 
+}
 
 </style>
 </head>
@@ -1001,42 +1004,79 @@ $(function() {
     	   console.log(item.clubPostNo);
     	   console.log( "하트컨디션 : " + item.heartCondition);
     	   var heartImage = item.heartCondition != 0? 'heart.jpg' : 'no_heart.jpg';
-    	   var clubPostVideo1 = empty item.clubPostVideo1;
-    	   var clubPostVideo11 = !empty item.clubPostVideo1;
-    	   console.log( "하트이미지 : " + heartImage );
-			var value = 
-				"<div class='col-md-4'><a href='javascript:getClubPostGo('"+item.clubNo+"','"+item.clubPostNo+"')'>"+
-				"<c:if test='"+clubPostVideo1+"'>"+
-			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='400' width='700'></c:if>"+
-			"<c:if test='"+clubPostVideo11+"'>"+
-			"<img src='/resources/image/uploadFiles/"+item.clubPostVideo1+"/mqdefault.jpg' alt='영상 썸네일입니다.' height='400' width='700'></c:if>"+
-		"</a>"+
-		
-		"<div class='club-post-list-content' style='display: grid; grid-template-columns: 1fr 1fr 3fr 1fr 1fr;'>"+
-			"<div>"+
-			"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
-					"<img class='profileImage' src='/resources/image/uploadFiles/"+ item.user.profileImage+ "'>"+
-				"</a>"+
-			"</div>"+
-			"<div>"+
+    	   console.log( "하트이미지 : " + heartImage ); 
+			var value = "";
+			 
+			if(item.clubPostVideo1 == null){
+				value =
+					"<div class='post'"+
+				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+				"<img src='/resources/image/uploadFiles/"+item.image1+"' height='300' width='400' style='border-radius:20px;'>"+
+			"</a>"+
+			"<div style='display: flex; width: 87%;'>"+
+				"<div style='flex:1; margin-top:10px;'>"+
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
-					"<p align='center' style='font-size: 30px; color: red;'>"+ item.user.nickName+ "</p>"+
-				"</a>"+
+						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
+					"</a>"+
+				"</div>"+
+				"<div style='margin-right:130px; padding-top: 15px;'>"+
+					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
+					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
+					"</a>"+
+				"</div>"+
+				"<div style='padding-top: 33px; margin-left:50px;'>"+
+                <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
+                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+             "</div>"+
+				"<div style='flex:1;  padding-top: 15px;' >"+
+					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+				"</div>"+
+			
+				
 			"</div>"+
-			"<div></div>"+
-			"<div style='padding-top: 20px;'>"+
-            	<!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-            	"<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='50' width='50'>"+
-         	"</div>"+
-			"<div>"+
-				"<p align='center' style='font-size: 30px; float : left;'>"+ item.clubPostHeartCount+ "</p>"+
-			"</div>"+
-		"</div>"+
-		"<div style='width: 87%;'>"+
-			"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
-		"</div>"+
-		"</div>";
+			"<div style='width: 87%;'>"+
+				"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
+			"</div>"+"</div>";
 
+				
+			}else{
+				value =
+					"<div class='post'"+
+				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+				"<img src='https://img.youtube.com/vi/"+item.clubPostVideo1+"/mqdefault.jpg' height='300' width='400' style='border-radius:20px;'>"+
+				
+			"</a>"+
+			
+			"<div style='display: flex; width: 87%;'>"+
+				"<div style='flex:1; margin-top:10px;'>"+
+				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
+					"</a>"+
+				"</div>"+
+				"<div style='flex:1; margin-right:130px; padding-top: 15px;'>"+
+					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
+					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
+					"</a>"+
+				"</div>"+
+				"<div style='padding-top: 33px; margin-left:50px;'>"+
+                <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
+                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+             "</div>"+
+				"<div style='flex:1; padding-top: 15px;'>"+
+					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+				"</div>"+
+			
+				
+			"</div>"+
+			"<div style='width: 87%;'>"+
+				"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
+			"</div>"+"</div>";
+				
+			};
+			
+				
 			$("#cp").append(value);       
                       
 			
@@ -1089,7 +1129,7 @@ $(function() {
 });	
 
 </script>
-	
+
 
 </body>
 
