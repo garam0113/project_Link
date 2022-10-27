@@ -92,7 +92,6 @@ public class FeedServiceImpl implements FeedService {
 		
 		// 하나의 댓글에 달린 대댓글 개수 세어서 넣어주기
 		// 댓글 달릴곳의 위치
-		int count = ((Comment) map.get("comment")).getSequence();
 		Comment originalComment = (Comment) map.get("comment");
 		
 		if(feedDAO.getFeedCommentBySequence(map) != null) {

@@ -44,7 +44,7 @@
 	N.NOTICE_NO , N.NOTICE_TITLE , N.NOTICE_CONTENT , N.NOTICE_IMAGE1 , 
 	N.NOTICE_IMAGE2, N.NOTICE_REGDATE, N.NOTICE_COUNT, N.CLUB_NO, U.USER_ID, U.NICKNAME
 	FROM NOTICE N , USERS U
-	WHERE n.notice_no = #{notice_no} AND U.USER_ID = N.USER_ID AND U.USER_ID = 'admin1'
+	WHERE n.notice_no = #{notice_no} AND U.USER_ID = N.USER_ID AND U.USER_ID = 'admin01'
 
 	 </select>
 	 
@@ -82,15 +82,15 @@
 	<select  id="getNoticeList"  parameterType="map"	resultMap="noticeSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE, N.NOTICE_COUNT
+	  					FROM		(	SELECT N.NOTICE_NO , N.NOTICE_TITLE , U.USER_ID, U.NICKNAME , N.NOTICE_REGDATE, N.NOTICE_COUNT, N.NOTICE_IMAGE1, N.NOTICE_IMAGE2
 											FROM NOTICE N , USERS U
-											WHERE N.USER_ID = 'admin1' AND U.USER_ID = N.USER_ID
+											WHERE N.USER_ID = 'admin01' AND U.USER_ID = N.USER_ID
 											<if test="search.searchCondition != null">
 													<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
-										 			AND	LOWER(notice_no) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(NOTICE_NO) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 													<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-										 			AND	LOWER(notice_title) LIKE LOWER('%${search.searchKeyword}%')
+										 			AND	LOWER(NOTICE_TITLE) LIKE LOWER('%${search.searchKeyword}%')
 													</if>
 											</if>
 											ORDER BY NOTICE_NO DESC) inner_table

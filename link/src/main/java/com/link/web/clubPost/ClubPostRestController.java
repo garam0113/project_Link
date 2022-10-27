@@ -149,12 +149,12 @@ public class ClubPostRestController {
 		JsonObject jsonObject = new JsonObject();
 		
 		// 내부경로로 저장
-		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		//String originalFileName = multipartFile.getOriginalFilename();
 		//String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-		String savedFileName = originalFileName;	//저장될 파일 명
+		String savedFileName = multipartFile.getOriginalFilename();	//저장될 파일 명
 		
-		File targetFile = new File(tempDir + savedFileName);
+		File targetFile = new File(tempDir + savedFileName);	//저장될 전체 파일 경로 + 파일명
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
@@ -227,7 +227,7 @@ public class ClubPostRestController {
 		
 		
 		
-		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent() + ", 댓글번호 : " + comment.getClubPostCommentNo());
+		System.out.println("모임게시물번호 : " + comment.getClubPostNo() + ", 댓글 내용 : " + comment.getCommentContent() + ", 댓글번호 : " + comment.getClubPostCommentNo() + ", 댓글깊이 : " + comment.getDepth());
 		
 		
 		
@@ -283,7 +283,7 @@ public class ClubPostRestController {
 	}
 	
 	@RequestMapping(value = "json/updateClubPostComment", method = RequestMethod.POST)
-	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart, HttpSession session) throws Exception {
+	public Comment updateClubPostComment(@RequestBody Comment comment, Heart heart, Report report, HttpSession session) throws Exception {
 		System.out.println("/updateClubPostComment : POST : 모임게시물 댓글 수정, 해당 모임게시물 댓글 상세보기 가져온다");
 		
 		
@@ -305,7 +305,7 @@ public class ClubPostRestController {
 		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
 		
 		// 좋아요 또는 좋아요 취소
-		return clubPostServiceImpl.updateClubPostComment(comment, heart);
+		return clubPostServiceImpl.updateClubPostComment(comment, heart, report);
 	}
 	
 	@RequestMapping(value = "json/deleteClubPostComment", method = RequestMethod.POST)

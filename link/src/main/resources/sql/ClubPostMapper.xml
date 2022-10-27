@@ -225,17 +225,17 @@
 	<!-- 결제추가 -->
 	<insert id="addPay" parameterType="pay">
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
-		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payOption }, #{ payProduct }, #{ totalPrice }, SYSDATE, #{ updateClubCount }, #{ updateClubMemberCount }, #{ merchant_uid })
+		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payProduct }, #{ payOption }, #{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid } )
 	</insert>
 	
 
 	
 	<!-- 결제 리스트 -->
 	<select id="getPayList" parameterType="user" resultMap="paySelectMap">
-		SELECT PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
+		SELECT PAY_NO, U.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
 		PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID
-		FROM PAY
-		WHERE USER_ID = #{ userId }
+		FROM PAY P, USERS U
+		WHERE P.USER_ID = U.USER_ID AND U.USER_ID = #{ userId }
 		ORDER BY PAY_REG_DATE DESC
 	</select>
 	
@@ -243,10 +243,10 @@
 	
 	<!-- 결제 상세보기 -->
 	<select id="getPay" parameterType="pay" resultMap="paySelectMap">
-		SELECT PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
+		SELECT PAY_NO, U.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE,
 		PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID
-		FROM PAY
-		WHERE PAY_NO = #{ payNo }
+		FROM PAY P, USERS U
+		WHERE P.USER_ID = U.USER_ID AND PAY_NO = #{ payNo }
 	</select>
 	
 	

@@ -71,17 +71,17 @@
 		<set>
 		QANDA_TITLE = #{qandATitle},
 		QANDA_CONTENT= #{qandAContent},
-		<if test="userId.userId != 'admin1'">
+		<if test="userId.userId != 'admin01'">
 		QANDA_REGDATE = SYSDATE,
 		</if>
 		QANDA_IMAGE1 = #{qandAImage1:VARCHAR},
 		QANDA_IMAGE2 = #{qandAImage2:VARCHAR},
 		QANDA_OPEN_CONDITION= #{qandAOpenCondition:VARCHAR}
-			<if test="userId.userId == 'admin1'">
+		<if test="userId.userId == 'admin01'">
 			,	ANSWER_CONTENT = #{qandAAnswerContent},
 	 			ANSWER_REGDATE = SYSDATE,
 	 			ANSWER_CONDITION = '1'
-			</if>
+		</if>
 		</set>
 		WHERE QANDA_NO = #{qandANo}
 	</update>
@@ -103,8 +103,8 @@
 	<select  id="getQandAList"  parameterType="map"	resultMap="qandASelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT Q.QANDA_NO , Q.QANDA_TITLE , Q.ANSWER_CONDITION , U.USER_ID , U.NICKNAME, Q.QANDA_REGDATE
-	  										  , Q.QANDA_OPEN_CONDITION
+	  					FROM		(	SELECT Q.QANDA_NO , Q.QANDA_TITLE , Q.ANSWER_CONDITION , U.USER_ID , U.NICKNAME, Q.QANDA_REGDATE, Q.QANDA_IMAGE1, 
+	  					                Q.QANDA_IMAGE2, Q.QANDA_OPEN_CONDITION
 											FROM QANDA Q, USERS U
 											<if test ="search.order==3">
 											WHERE Q.USER_ID = #{search.userId} AND Q.USER_ID = U.USER_ID

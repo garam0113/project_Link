@@ -57,14 +57,13 @@
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
                      <li class="menu-item"><a href="/user/login">로그인</a></li>
-                     <li class="menu-item"><a href="/user/addUser">회원가입</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a
-                        href="/user/logout?userId=${user.userId}">로그아웃</a></li>
+                        href="/user/logout?userId=${sessionScope.user.userId}">로그아웃</a></li>
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
-                           href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
+                           href="/user/getUser?userId=${sessionScope.user.userId}">내정보보기</a></li>
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>

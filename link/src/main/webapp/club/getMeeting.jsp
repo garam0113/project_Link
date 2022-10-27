@@ -40,7 +40,16 @@
 		border-bottom-right-radius: 10px;
 		color: #BD76FF;
     	border-color: #BD76FF;
-    	background-color: #fbfbfb;
+    	background-color: #f0f2f5;
+	}
+	
+	#main {
+	
+		background-color: #f0f2f5 !important;
+	}
+	
+	main {
+		background-color: #f0f2f5 !important;
 	}
 	
 	</style>
@@ -144,7 +153,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="27.778"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="15"><!-- 상단 검은색 공통 영역 -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">

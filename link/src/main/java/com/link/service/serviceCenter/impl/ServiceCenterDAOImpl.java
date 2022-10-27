@@ -1,6 +1,6 @@
 package com.link.service.serviceCenter.impl;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.link.common.Search;
+import com.link.service.domain.ClubPost;
+import com.link.service.domain.Comment;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
@@ -126,8 +128,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		
-		
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getFeed());
+		System.out.println("123123"+report.getFeedComment());
 		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
 	}
 
@@ -142,13 +146,33 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-	 
-		sqlSession.update("Report_PushMapper.handleReportCondition", report);
+	 if(report.getReportReason()!=0){ //신고처리 혐의 OK
+		sqlSession.update("Report_PushMapper.handleReportCondition", report); //신고처리 플래그 변경
 		Report report2 = getReport(report.getNo());
-		sqlSession.update("Report_PushMapper.addReportCount", report2); 
+		sqlSession.update("Report_PushMapper.addReportCount", report2);   //신고당한 유저 reportCount + 하는 메서드
 		Report report3 = getReport(report.getNo());
-		sqlSession.update("Report_PushMapper.stopDate",report3);
-
+		sqlSession.update("Report_PushMapper.stopDate",report3); //신고당한 유저의 reportCount 값에 따라 정지시간 메기는 메서드
+			if(report3.getReportSource()==1) { //모임게시물에서 들어옴
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("report", report3);
+				map.put("clubPost", new ClubPost());
+				sqlSession.update("ClubPostMapper.updateClubPost", map);
+			}else if(report3.getReportSource()==2) { //모임게시물댓글
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("comment", new Comment());
+				map.put("report", report3);
+				sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);
+			}else if(report3.getReportSource()==3) {//피드
+				sqlSession.update("FeedMapper.reportFeed", report3.getFeed().getFeedNo());
+			}else if(report3.getReportSource()==4) {//피드게시물댓글
+				sqlSession.update("FeedMapper.reportFeedComment", report3.getFeedComment().getFeedCommentNo());
+			
+			}
+			
+	 }
+	 else {//신고처리 무혐의
+		 sqlSession.update("Report_PushMapper.handleReportCondition", report);
+	 }
 	}
 	
 	@Override
@@ -170,9 +194,9 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 			return sqlSession.selectOne("Report_PushMapper.getTotalCount2", search);
 		}else if (a == 1) {
 			return sqlSession.selectOne("QandAMapper.getTotalCount", search);
-		}else if (a==2) {
+		}else if (a== 2) {
 			return sqlSession.selectOne("NoticeMapper.getTotalCount", search);
-		}else if(a==3)  {  
+		}else if(a== 3)  {  
 			return sqlSession.selectOne("QandAMapper.getTotalCount2", search);
 		}
 		else {
@@ -182,5 +206,13 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}
 //==================================================================여기까지가 공통
 
-
+	// ==================================================================여기부터가 Push
+	
+		public void addPush(Report push) throws Exception {
+			
+			sqlSession.insert("Report_PushMapper.addPush", push);
+			
+		}
+			
+	// ==================================================================여기까지가 Push
 }

@@ -73,11 +73,11 @@
 	 WHERE QANDA_NO = '3';
 		
 
-DELETE report_push WHERE no='147';
+DELETE report_push WHERE no='262';
 
 SELECT * FROM QANDA;
 
-SELECT * FROM report_push;
+SELECT * FROM report_push WHERE no='261';
 
 
 
@@ -99,7 +99,9 @@ WHERE n.notice_no = 41;
 
 
 
-
+SELECT *
+FROM FEED
+WHERE FEED_NO ='52';
 
 
 
@@ -174,6 +176,7 @@ CREATE TABLE REPORT_PUSH (
 	TITLE				VARCHAR2(200)				,
 	CONTENT				VARCHAR2(2000)				NOT NULL,
 	REPORT_SOURCE 			CHAR(3)					,
+	CLUB_NO					NUMBER(20)				NULL REFERENCES club(club_no),
 	CLUB_POST_NO			NUMBER(20)					NULL	REFERENCES club_post(club_post_no),
 	CLUB_POST_COMMENT_NO		NUMBER(20)					NULL	REFERENCES club_post_comment(club_post_comment_no),
 	CHAT_NO				NUMBER(20)				NULL		REFERENCES chat(chat_no),
@@ -259,10 +262,27 @@ DELETE FROM REPORT_PUSH;
  FROM users; 
  
 SELECT *
-FROM users;
+FROM report_push;
  
-SELECT TO_CHAR(report_regdate, YY-MM-DD)
-FROM REPORT_PUSH R;
+SELECT *
+FROM REPORT_PUSH R
+where no='182';
+
+select *
+from club_post_comment
+where club_post_comment_no='81';
+
+select *
+from feed_comment
+where feed_comment_no='362';
+
+
+select *
+from users;
+
+update users
+set rrn='111111-000000'
+where user_id='user05';
 
 SELECT R.*
 FROM CLUB_POST R

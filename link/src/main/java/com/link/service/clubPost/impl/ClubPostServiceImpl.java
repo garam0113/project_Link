@@ -16,6 +16,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 
 @Service("clubPostServiceImpl")
@@ -153,8 +154,6 @@ public class ClubPostServiceImpl implements ClubPostService {
 			List<Comment> c = (List<Comment>) clubPostDAOImpl.getClubPostCommentList(map);
 			// 게시물 댓글 개수
 			comment.setSequence(c.size());
-			// 게시물의 댓글이니 깊이는 0이다
-			comment.setDepth(0);
 			// 게시물의 댓글이니 부모번호는 게시물번호이다
 			comment.setParent(comment.getClubPostNo());
 		}else {
@@ -163,8 +162,6 @@ public class ClubPostServiceImpl implements ClubPostService {
 			Comment c = clubPostDAOImpl.getClubPostComment(comment);
 			// 댓글의 댓글 개수
 			comment.setSequence(c.getCommentCount());
-			// 댓글의 댓글이니 깊이는 1이다
-			comment.setDepth(1);
 			// 댓글의 댓글이니 부모번호는 댓글번호이다
 			comment.setParent(comment.getClubPostCommentNo());
 		}
@@ -186,7 +183,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}// end of getClubPostComment(Comment comment)
 
 	@Override
-	public Comment updateClubPostComment(Comment comment, Heart heart) throws Exception {
+	public Comment updateClubPostComment(Comment comment, Heart heart, Report report) throws Exception {
 		System.out.println(getClass() + ".updateClubPostComment(Comment comment, Heart heart) 도착");
 		
 		System.out.println("댓글 정보 : " + comment);
@@ -208,9 +205,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 		
 		map.put("heart", heart);
 		map.put("comment", comment);
+		map.put("report", report);
 		
 		return clubPostDAOImpl.updateClubPostComment(map);
-	}// end of updateClubPostComment(Comment comment, Heart heart)
+	}// end of updateClubPostComment(Comment comment, Heart heart, Report report)
 
 	@Override
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {

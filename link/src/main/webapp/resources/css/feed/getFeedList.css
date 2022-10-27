@@ -7,25 +7,31 @@
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 
-	/* SUMMERNOTE */
+	/* SUMMERNOTE border: 2px solid rgba(171,148,233,1) !important; */
 
 	.note-editor.note-frame {
-		box-shadow: 5px 5px 5px 0px;
-		margin-bottom: 20px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		margin-bottom: 40px;
 	}
 	
+	.note-editor .note-editable {
+
+		line-height: 10%;
+
+	}
+
 	div.note-toolbar {
-		border: 2px solid rgba(171,148,233,1) !important;
+		
 		color: #5F0080 !important;
 	}
 		
 	.note-btn {
-		border: 2px solid rgba(171,148,233,1);
+		
 		color: #5F0080 !important;
 	}
 	
 	.note-editing-area {
-		border: 2px solid rgba(171,148,233,1);
+		
 		color: rgba(171,148,233,1) !important;
 	}
 
@@ -33,10 +39,10 @@
 
 	/* FEED BORDER */
 	.showFeedForm {
-		border: 2px solid rgba(171,148,233,1);
 		color: black !important;
-		box-shadow: 5px 5px 5px 0px;
-		margin-bottom: 20px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		margin-bottom: 40px;
+		border-radius: 15px !important;
 	}
 	
 	/* FEED BORDER */
@@ -45,6 +51,7 @@
 
 	div.feedContent {
 		margin-left: 60px;
+		margin-right: 25px;
 		color: black !important;
 	}
 
@@ -57,6 +64,7 @@
 		left: 0;
 		width: 100%;
 		height: 350px;
+		border-radius: 30px;
 	} 
 	
 	.carousel-control.left, .carousel-control.right {
@@ -73,8 +81,11 @@
 		margin-top:18px;
 		margin-right:0px;
 		font-size: 0.5em !important;
-		background-color: #5F0080 !important;
 		float: right !important;
+
+		color: black !important;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		background-color: white;
 	}
 	
 	/* FEED ADD BUTTON */
@@ -83,7 +94,6 @@
 	
 	h5.meta-post {
 		margin-bottom:13px !important;
-		color:rgba(171,148,233,1) !important;
 	}
 	
 	/* FEED TIME */
@@ -91,7 +101,7 @@
 	/* FEED HASHTAG */
 	
 	.hashtagContent {
-		margin-right: 5px;
+		margin-right: 25px;
 		margin-bottom: 25px;
 		margin-left: 60px;
 	}
@@ -106,6 +116,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border-radius: 15px;
 	}
 	
 	/* FEED LASTBAR */
@@ -154,6 +165,8 @@
 
 	.col-xs-2 {
 		text-align: center !important;
+		display: flex;
+		justify-content: center;
 	}
 
 	.report > img {
@@ -206,24 +219,44 @@
 		width:50px; 
 		height:50px; 
 		margin-top:10px; 
-		margin-left:10px
-
+		margin-left:10px;
+		border-radius: 25% !important;
 	}
 	
 	/* 피드 작성자 이미지 */
 
+	/* 검색창 */
+
+	#searchKeyword {
+		width: 100%;
+		display: flex;
+	}
+
+	/* 검색창 */
 
 
+	/* 화면 커트 나누기 */
 
+	div.buffer {
+		display: flex;
+	}
 
+	/* 화면 커트 나누기 */
 
+	/* 주변 검색 */
 
+	.searchPlace {
+		width: 100%;
+		position: fixed;
+	}
 
+	/* 주변 검색 */
 
+	.modal {
 
+		top: 250px !important;
 
-
-
+	}
 
 
 
@@ -275,5 +308,6 @@
 		margin-top:10px; 
 		margin-bottom:10px; 
 		margin-left:10px;
+		border-radius: 25% !important;
 	}
 	

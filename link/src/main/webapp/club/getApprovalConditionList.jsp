@@ -43,8 +43,8 @@
 	
 	
 	body {
-		    background-color: #333;
-		    color: #333;
+		    /* background-color: #333; */
+		    /* color: #333; */
 		    font-size: 1.125em;
 		    font-size: 15px;
 		    font-family: 'Open Sans', sans-serif;
@@ -55,7 +55,8 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    background-color: #333333;
+		    margin-top: 50px;
+		    /* background-color: #333333; */
 		}
 	
 	header {
@@ -85,8 +86,8 @@
 			    padding: 0px;
 			    margin-bottom: 20px;
 			    line-height: 1;
-			    background-color: #f5c7f4;
-			    /* border: 1px solid #ddd; */
+			    background-color: #fbfbfb;
+			    border: 1px solid #5F0080;
 			    border-radius: 4px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
@@ -101,6 +102,16 @@
 			min-height:200px;
 			height:150px;
 			width: 250px;
+		 }
+		 
+		 .btn {
+		 	background-color: #fbfbfb;
+		 	color: #BD76FF;
+		 	border-color: #BD76FF;
+		 }
+		 
+		 .club-cT {
+		 	
 		 }
 		 
 		 
@@ -209,12 +220,12 @@
 			
 			<div class="thumbnail" style="">
 			  <img src="/resources/image/uploadFiles/${i.clubImage}" alt=".">
-			  	<p>${i.clubTitle}</p>
+			  	<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
 			  	<p>${i.clubArea}</p>
 			  	<%-- <p>현재인원 : ${i.currentMember}</p> --%>
 			  	<p>최대인원 : ${i.clubMaxMember}</p>
-			  	<p>신청현황 : ${i.approvalCondition}</p>
-			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">모임보기</a></p>			
+			  	<p>신청현황 : ${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : "" } ${ fn:trim(i.approvalCondition) == 1 ? "승인완료" : ""}
+			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</p></a>			
 			</div>
 		</div>
    	</c:forEach>

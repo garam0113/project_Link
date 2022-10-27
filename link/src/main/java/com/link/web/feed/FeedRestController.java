@@ -118,6 +118,17 @@ public class FeedRestController {
 	@RequestMapping(value = "/json/updateFeedComment", method = RequestMethod.POST)
 	public List<Comment> updateFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
 		
+		if(comment.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(1);
+			search.setOrder( comment.getCurrentPage() );
+			System.out.println("테스트 " + search.getOrder());
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
 		feedService.updateFeedComment(comment);
 		
 		comment = feedService.getFeedComment(comment.getFeedCommentNo());
@@ -139,6 +150,17 @@ public class FeedRestController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/deleteFeedComment", method = RequestMethod.POST)
 	public List<Comment> deleteFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
+		
+		if(comment.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(1);
+			search.setOrder( comment.getCurrentPage() );
+			System.out.println("테스트 " + search.getOrder());
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
 		user.setUserId(comment.getUserId());
 		user = userService.getUser(user);
@@ -165,7 +187,41 @@ public class FeedRestController {
 		
 		user = (User) httpSession.getAttribute("user");
 		
+		System.out.println("search 테스트 " + search);
+		
 		// 피드 리스트
+		
+		if(feed.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(feed.getCurrentPage());
+		}
+		
+		search.setSearchKeyword(feed.getSearchKeyword());
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("feed", feed);
+		map.put("feedNo", feed.getFeedNo());
+		map.put("user", user);
+		
+		System.out.println("유저 : " + user);
+		
+		return (List<Feed>) feedService.getFeedList(map).get("feedList");
+		
+	}
+	
+	// 사용
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/getFeedCommentList", method = RequestMethod.POST)
+	public List<Comment> getFeedCommentList(@RequestBody Feed feed, Search search, User user,
+												HttpSession httpSession) throws Exception{
+		
+		user = (User) httpSession.getAttribute("user");
+
+		// 피드 댓글 리스트
 		
 		if(feed.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -177,41 +233,8 @@ public class FeedRestController {
 		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("feed", feed);
 		map.put("feedNo", feed.getFeedNo());
-		map.put("user", user);
-		
-		return (List<Feed>) feedService.getFeedList(map).get("feedList");
-		
-	}
-	
-	// 사용
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/json/getFeedCommentList", method = RequestMethod.POST)
-	public List<Comment> getFeedCommentList(@RequestBody Comment comment, Search search, User user) throws Exception{
-	
-
-		// 피드 댓글 리스트
-		
-		if(comment.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		} else {
-			search.setCurrentPage(comment.getCurrentPage());
-		}
-		
-		search.setPageSize(pageSize);
-		search.setPageUnit(pageUnit);
-		
-		comment = feedService.getFeedComment(comment.getFeedCommentNo());
-		
-		user.setUserId(comment.getUser().getUserId());
-		user = userService.getUser(user);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("comment", comment);
-		map.put("feedNo", comment.getFeedNo());
 		map.put("user", user);
 		
 		return (List<Comment>) feedService.getFeedCommentList(map).get("commentList");
@@ -283,6 +306,17 @@ public class FeedRestController {
 	@RequestMapping(value = "/json/addFeedCommentHeart", method = RequestMethod.POST)
 	public List<Comment> addFeedCommentHeart(@RequestBody Comment comment, Search search, User user, Heart heart) throws Exception {
 		
+		if(comment.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(1);
+			search.setOrder( comment.getCurrentPage() );
+			System.out.println("테스트 " + search.getOrder());
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
+		
 		// 피드 댓글 좋아요
 		
 		user.setUserId(comment.getUserId());
@@ -313,6 +347,17 @@ public class FeedRestController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/deleteCommentHeart", method = RequestMethod.POST)
 	public List<Comment> deleteFeedCommentHeart(@RequestBody Comment comment, Search search, User user, Heart heart) throws Exception {
+		
+		if(comment.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(1);
+			search.setOrder( comment.getCurrentPage() );
+			System.out.println("테스트 " + search.getOrder());
+		}
+		
+		search.setPageSize(pageSize);
+		search.setPageUnit(pageUnit);
 		
 		// 피드 댓글 싫어요
 		

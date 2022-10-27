@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 
 <!DOCTYPE html>
@@ -27,7 +28,7 @@
 		var title = $("textarea[name=title]").val();		
 		var content =$("textarea[name=content]").val();			
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
-		
+
 		
 		
 		if(title == null || title.length <1){
@@ -77,29 +78,59 @@
  }
  
 	function AddReport(){	
-		
+
 		var sum = 0;
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+		
 		
 		for(var i =0 ; i<checkbox; i++){
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);
-			alert(sum);		
-		}	
+				
+		}
+
+			
+		var no = 0;	
+			
+		 if( $("#clubPostNo").val()!=null){
+			 no += $("#clubPostNo").val();
+		}else if($("#clubPostCommentNo").val()!=null){
+			 no += $("#clubPostCommentNo").val();
+		}else if($("#feedNo").val()!=null){
+			 no += $("#feedNo").val();
+		}else if($("#feedCommentNo").val()!=null){
+			  no += $("#feedCommentNo").val();
+		}
+		
+		var clubNo = 0;
+		
+		if( $("#clubNo2").val()!=null ){
+			clubNo += $("#clubNo2").val();
+		}else if( $("#clubNo3").val()!=null){
+			clubNo += $("#clubNo3").val();
+		}
+		
+		var clubPostNo2 = 0;
+		if ( $("#clubPostNo2").val()!=0){
+			clubPostNo2 += $("#clubPostNo2").val();
+		}
+		
 	 	$.ajax({
-		url  : "/serviceCenterRest/json/addReport",
+		url  : "/serviceCenterRest/json/addReport?clubNo="+${clubNo},
 		contentType: 'application/json',
 		method : "POST",
 		dataType: "json",
 		data : JSON.stringify ({
 			"title":$("#title").val(),
 			"content":$("#content").val(),
-			"reportImage1":$("#reportImage1").val(),
-			"reportImage2":$("#reportImage2").val(),
+		<%--	"file": image, --%>
+			"user1":$("#user1").val(),
 			"user2":$("#user2").val(),
 			"reportSource":$("#reportSource").val(),
 			"reportReason": sum,
 			"type": $("#type").val(),
+			"no" :no,   
+			"clubPostNo2":clubPostNo2,
 	
 		 success: function(){
 			 window.close();
@@ -130,7 +161,7 @@
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
 		var user2 = opener.$("input[name='user2']").val();
-		
+	<%--	var image = $("input:multiple[name=image]").val(); --%>
 		var userId = opener.$("input[name='reportedId']").val();
 		$("#reportSource").val(reportSource);
 		$("#user2").val(user2);
@@ -191,24 +222,20 @@ textarea {
 	<div class="container">
 		<div></div>
 		<div class="page-header text-center">
-			<h2>신고 등록</h2>
+			<h2><strong>신고 등록</strong></h2>
 		</div>
 
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" enctype="multipart/form-data">
-			<input type="hidden" name="type" id="type" value="1"> <input
-				type="hidden" name="clubPostNo" id="clubPostNo" value="clubPostNo">
-			<input type="hidden" name="clubPostCommentNo" id="clubPostCommentNo"
-				value="clubPostCommentNo"> <input type="hidden" name="feed"
-				id="feed" value="feed"> <input type="hidden"
-				name="feedComment" id="feedComment" value="feedCommet">
+			<input type="hidden" name="type" id="type" value="1">
+			
+			<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
 			<div class="form-group">
 				<label for="title" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 				<div class="col-sm-4">
 					<textarea class="title" id="title" name="title" value=""
 						maxlength="80" placeholder="신고 제목을 입력해주세요"
 						style="position: fixed;"></textarea>
-
 
 				</div>
 
@@ -220,8 +247,7 @@ textarea {
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label">내용</label>
 				<div class="context">
-					<textarea class="content" id="content" name="content" value=""
-						placeholder="신고 내용을 입력해주세요." maxlength="500"
+					<textarea class="content" id="content" name="content" value="" placeholder="신고 내용을 입력해주세요." maxlength="500"
 						style="width: 400px; height: 250px; margin-left: 15px;"></textarea>
 				</div>
 			</div>
@@ -239,22 +265,32 @@ textarea {
 					
 					<c:if test="${reportSource== '1'}"> 
 						<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="1">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
+		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
+		     		 <input type="hidden" name="clubNo" id="clubNo2" value="${report.clubPost.clubNo}"/>
+		     		 ${report.clubPost}
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="2">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">  			
+		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
+		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPost.clubPostNo}"/>
+		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPost.clubNo}"/>
+		     	     ${report.clubPostComment}
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="3">
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="3">
+		     		 <input type="hidden" name="no" id="feedNo" value="${report.feed.feedNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='4'}">
-						<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" name="reportSource" value="4">
+					<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     		       	
+		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
 					</c:if>
 					
-
+					
 				
 			</div>
 
@@ -275,9 +311,8 @@ textarea {
 			<label for="reportImage"
 				class="col-sm-offset-1 col-sm-3 control-label">파일첨부</label>
 			<div class="col-sm-4">
-				<input multiple="multiple" type="file" name="image"
-					class="ct_input_g" style="width: 200px; height: 50px"
-					 />사진은 2장까지 가능합니다.
+				<input multiple="multiple" type="file" name="image" class="ct_input_g" style="width: 200px; height: 50px"/>
+				사진은 2장까지 가능합니다.
 
 		 </div>
 			

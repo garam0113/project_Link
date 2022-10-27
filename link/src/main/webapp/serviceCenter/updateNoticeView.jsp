@@ -84,8 +84,8 @@ textarea {
   outline: none;
 }
 .btn-13 {
-  background-color: #1528d7;
-background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
   border: none;
   z-index: 1;
 }
@@ -98,8 +98,8 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
   left: 0;
   z-index: -1;
   border-radius: 5px;
-   background-color: #2491b7;
-  background-image: linear-gradient(315deg, #2491b7 0%, #2491b7 74%);
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
   box-shadow:
    -7px -7px 20px 0px #fff9,
    -4px -4px 5px 0px #fff9,
@@ -107,7 +107,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
    4px 4px 5px 0px #0001;
   transition: all 0.3s ease;
 }
-.btn-13:hover {
+.btn-13:hover { <%-- 글씨색 --%>
   color: #fff;
 }
 .btn-13:hover:after {
@@ -120,7 +120,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 </style>
 </head>
 
-<body>
+<body style="margin-left: 643px;">
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
@@ -172,9 +172,9 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(0px, 0px);">수정</button>
+						style="transform: translate(40px, 0px);">수정</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(0px, 0px);">뒤로</button>
+						style="transform: translate(100px, 0px);">뒤로</button>
 				</div>
 			</div>
 		

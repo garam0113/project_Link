@@ -8,7 +8,7 @@
 
 <!DOCTYPE html>
 
-<html lang="ko">
+<html>
 
 <head>
 <title>공지사항 목록</title>
@@ -16,6 +16,10 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="The Page Description">
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -29,7 +33,8 @@ body {
 }
 
 .head {
-	background-color : #293b7a;
+	background-color: #5F0080;
+   background-image: linear-gradient(315deg, #BD76FF  0%, #5F0080 74%);
 	border: 1px solid #bcbcbc;
 	align = center;
 }
@@ -58,8 +63,8 @@ body {
   outline: none;
 }
 .btn-13 {
-  background-color: #1528d7;
-background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
   border: none;
   z-index: 1;
 }
@@ -72,8 +77,8 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
   left: 0;
   z-index: -1;
   border-radius: 5px;
-   background-color: #2491b7;
-  background-image: linear-gradient(315deg, #2491b7 0%, #2491b7 74%);
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
   box-shadow:
    -7px -7px 20px 0px #fff9,
    -4px -4px 5px 0px #fff9,
@@ -81,7 +86,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
    4px 4px 5px 0px #0001;
   transition: all 0.3s ease;
 }
-.btn-13:hover {
+.btn-13:hover { <%-- 글씨색 --%>
   color: #fff;
 }
 .btn-13:hover:after {
@@ -98,15 +103,27 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
   position: relative;
   display: inline-block;
   font-size: 5px;
-  color: blue;
+  color: #5F0080;
   text-transform: uppercase;
-  animation: flip 2s infinite;
+  animation: flip 1s infinite;
   animation-delay: calc(.2s * var(--i))
 }
 @keyframes flip {
   0%,80% {
     transform: rotateY(360deg) 
   }
+}
+.darkover {
+    	position: sticky !important;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    width:1800px;
+ 	   background: rgba(0,0,0,0.35);
+ 	   }
+
+
 }
 
 </style>
@@ -115,8 +132,9 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 <script type="text/javascript">
 
 	function fncGetList(currentPage) {
+		
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "GET").attr("action", "/serviceCenter/getNoticeList")
+		$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
 				.submit();
 	}
 
@@ -145,12 +163,22 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 </head>
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/toolbar.jsp" />
+					<div id="intro-wrap" data-height="15">
+				<div id="intro" class="preload darken">					
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
+						<div class="caption">
+							
+						
+						</div><!-- caption -->					
+					</div>								
+				</div><!-- intro -->
+			</div><!-- intro-wrap -->
 	<!-- ToolBar End /////////////////////////////////////-->
 <body>  
-  <img src="/resources/image/uploadFiles/공지사항리스트.jpg" class="image2" height="220px" style="width:1000px; transform:translate(438px,132px);"/>
+
 
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
-  <h1>공지사항 리스트</h1>
+  <h1 >공지사항 리스트</h1>
 </div>
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -161,7 +189,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text-primary" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
@@ -179,13 +207,13 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
 
-							<label class="sr-only" for="searchKeyword" >검색어</label> <input
+							<label class="sr-only" for="searchKeyword">검색어</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
 								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px;"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-						<button type="button" class="btn btn-default" style="transform: translate(20px, 0px);">검색</button>
+						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 40px; height :30px;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
@@ -240,7 +268,12 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 							<span style="--i:4">!</span>
 							</strong>
 							</c:if>
-								${getNoticeList.noticeTitle}</div>	</td>
+								${getNoticeList.noticeTitle}	
+							<c:if test="${getNoticeList.noticeImage1 !=null || getNoticeList.noticeImage2 != null}">
+							<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+							</c:if>	
+								</div>
+							</td>
 							<td></td>
 
 							<td align="left" >${getNoticeList.userId.nickName}</td>
@@ -283,7 +316,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 								<td width="30"></td>
 								
 									<div class="col-md-3 col-sm-3 col-xs-6"> 
-									<c:if test="${user.userId=='admin1'}">
+									<c:if test="${ user.role == '1' }">
 									
 									  <button class="custom-btn btn-13" style= "transform: translate(900px, -90px); ">
 									   등록</button> 

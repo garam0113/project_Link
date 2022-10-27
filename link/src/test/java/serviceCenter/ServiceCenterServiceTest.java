@@ -53,7 +53,7 @@ public class ServiceCenterServiceTest {
 		notice.setNoticeContent("내용ss");
 		notice.setNoticeImage1("abc.jpg");
 		notice.setNoticeImage2("cdf.jpg");
-		notice.setNoticeRegDate("22-10-05");
+		
 		notice.setNoticeCount(1);
 		notice.setUserId(user);
 		notice.setClubNo(0);
@@ -77,7 +77,7 @@ public class ServiceCenterServiceTest {
 		notice.setNoticeTitle("바뀐내용ss");
 		notice.setNoticeImage1("abc.jpg");
 		notice.setNoticeImage2("cdf.jpg");
-		notice.setNoticeRegDate("22-10-05");
+		
 		notice.setNoticeCount(1);
 		notice.setUserId(user);
 		notice.setClubNo(0);
@@ -154,7 +154,7 @@ public class ServiceCenterServiceTest {
 		qandA.setQandAContent("내용ss");
 		qandA.setQandAImage1("abc.jpg");
 		qandA.setQandAImage2("cdf.jpg");
-		qandA.setQandARegDate("22-10-05");
+		
 
 		qandA.setQandACondition(0);
 		qandA.setQandAOpenCondition(0);
@@ -183,10 +183,9 @@ public class ServiceCenterServiceTest {
 		qandA.setQandAContent("바뀐내용ss");
 		qandA.setQandAImage1("abc.jpg");
 		qandA.setQandAImage2("cdf.jpg");
-		qandA.setQandARegDate("22-10-05");
+		
 		qandA.setUserId(user);
 		qandA.setQandAAnswerContent("바뀐답변입니다");
-		qandA.setQandAAnswerRegDate("22-11-05");
 		qandA.setQandACondition(1);
 		
 		
@@ -255,7 +254,7 @@ public class ServiceCenterServiceTest {
 //		report.setFeedComment(comment2);
 		report.setUser1(user);
 		report.setUser2(user2);
-		report.setRegDate("22-03-30");
+		
 		report.setReportImage1("abc.jpg");
 		report.setReportImage2("넌범죄자.jpg");
 		/* report.setHandleDate(null); */

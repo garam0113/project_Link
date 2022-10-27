@@ -160,22 +160,6 @@ public class UserController {
 		return "forward:/user/getIdView.jsp"; // 화면Navigation
 	}
 
-	@RequestMapping(value = "getUserId", method = RequestMethod.POST)
-	public String getUserId(@ModelAttribute("user") User user, Model model) throws Exception {
-
-		System.out.println("/user/getUser : POST");
-
-		User userId = new User();
-
-		userId = userService.getUser(user); // DB에 저장된 회원 정보 userId 객체에 set
-
-		System.out.println("DB에서 받은 정보 : " + userId);
-
-		model.addAttribute("userId", userId); // set한 회원Data model에 저장
-
-		return "forward:/user/getId.jsp";
-	}
-
 	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
 	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session)
 			throws Exception {
@@ -302,11 +286,11 @@ public class UserController {
 
 		session.setAttribute("user", getUser);
 
-		System.out.println("세션에 저장된 값 : "+session.getAttribute("user").toString());
+		System.out.println("세션에 저장된 값 : " + session.getAttribute("user").toString());
 
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
 		if (sessionId.equals(getUser.getUserId())) {
-			System.out.println("if 문 안의 세션에 저장된 값 : "+session.getAttribute("user").toString());
+			System.out.println("if 문 안의 세션에 저장된 값 : " + session.getAttribute("user").toString());
 		}
 
 		return "forward:/myHome/getMyHome?userId=" + user.getUserId();
@@ -379,7 +363,8 @@ public class UserController {
 
 		System.out.println("로그인시 받는 User 정보 : " + getUser);
 
-		if (getUser != null && user.getPassword().equals(getUser.getPassword())) {
+		if (getUser != null && user.getPassword().equals(getUser.getPassword())
+				&& getUser.getOutUserState().trim().equals("0")) {
 			session.setAttribute("user", getUser); // DB에 있는 회원 pass와 입력받은 pass가 일치 할 경우 session에 정보 저장 후 로그인처리
 			session.setAttribute("follow", map.get("list"));
 		}
@@ -428,17 +413,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
-	public String deleteUser(@ModelAttribute("userId") String userId, @ModelAttribute("UserState") String userState)
-			throws Exception {
-		
+	public String deleteUser(@ModelAttribute("userId") String userId, @ModelAttribute("UserState") String userState,
+			HttpSession session) throws Exception {
+
 		System.out.println("/user/deleteUser : GET");
 
 		User user = new User(); // get방식으로 들어온 Data 저장을 위해 생성
 
 		user.setUserId(userId); // 회원ID domain객체에 Set
-		user.setOutUserState(userState); // 회원상태 domain객체에 Set
+		user.setOutUserState("1"); // 회원상태 domain객체에 Set
 
 		userService.updateUser(user); // 회원 정보를 DB에 저장
+
+		session.invalidate();
 
 		return "redirect:/main.jsp";
 	}

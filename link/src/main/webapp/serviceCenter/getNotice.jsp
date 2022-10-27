@@ -54,8 +54,9 @@
 
 	});
 </script>
-<style> <%-- CSS 시작 --%>
-textarea { <%-- textarea 사이즈 변경 제한 --%>
+<style> 
+
+textarea {
 	resize: none;
 }
 
@@ -77,8 +78,8 @@ textarea { <%-- textarea 사이즈 변경 제한 --%>
   outline: none;
 }
 .btn-13 {
-  background-color: #1528d7;
-background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
   border: none;
   z-index: 1;
 }
@@ -91,8 +92,8 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
   left: 0;
   z-index: -1;
   border-radius: 5px;
-   background-color: #2491b7;
-  background-image: linear-gradient(315deg, #2491b7 0%, #2491b7 74%);
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
   box-shadow:
    -7px -7px 20px 0px #fff9,
    -4px -4px 5px 0px #fff9,
@@ -100,7 +101,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
    4px 4px 5px 0px #0001;
   transition: all 0.3s ease;
 }
-.btn-13:hover {
+.btn-13:hover { <%-- 글씨색 --%>
   color: #fff;
 }
 .btn-13:hover:after {
@@ -110,6 +111,7 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 .btn-13:active {
   top: 2px;
 }
+
 </style>
 
 </head>
@@ -129,21 +131,21 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left">${notice.noticeNo}번 공지사항
+						<td align="left" style="display:flex; height: 50px;">${notice.noticeNo}번 공지사항
 						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 						</td>
 					</tr>
 					<tr class = "content" id ="content">
 						<th style="text-align-last: center;">제목</th>
-						<td>		
+						<td style="    display: flex; height: 40px;">								
 						<textarea class="text" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}"  
 						style="width: 900px; height:40px;" readonly >${notice.noticeTitle}</textarea>
 						</td> 
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="noticeRegDate" id="noticeRegDate">${notice.noticeRegDate }</td>
-						<td align="left" style="transform: translateX(-370px);">${notice.userId.nickName}</td>
+						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;">${notice.noticeRegDate }</td>
+						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;">${notice.userId.nickName}</td>
 						
 					</tr>
 					<tr >
@@ -184,13 +186,13 @@ background-image: linear-gradient(315deg, #08165c  0%, #293b7a 74%);
 		
 						
 									<div> 
-									<c:if test="${user.userId=='admin1'}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									<c:if test="${user.role=='1'}">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
 									   수정</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
 									   삭제</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
 									뒤로</button>
 									</div>
 				

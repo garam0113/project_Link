@@ -372,7 +372,17 @@
 							<if test="myHome == 1">
 								AND f.user_id		= #{user.userId}		
 							</if>
-							ORDER BY feed_no DESC
+							ORDER BY feed_no DESC		) deep_table
+							
+							WHERE TRIM(deep_table.user_id) NOT IN(
+											SELECT
+											recv_user_id AS NAME
+											FROM FOLLOW_BLOCK
+											WHERE send_user_id = #{user.userId}
+											AND STATE = '1'
+											AND TYPE = '2'
+															)	
+							AND ROWNUM &lt;= #{search.endRowNum} 					) inner_table
 						</when>
 						<otherwise>
 						FROM users u, feed f
@@ -383,11 +393,10 @@
 						<if test="search.searchKeyword != null">
 							AND f.feed_content LIKE '%${search.searchKeyword}%'
 						</if>
-						ORDER BY feed_no DESC
+						ORDER BY feed_no DESC			) deep_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} 					) inner_table
 						</otherwise>
 					</choose>
-												) deep_table
-			WHERE ROWNUM &lt;= #{search.endRowNum} 					) inner_table
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	<!--========================================사용========================================-->
@@ -396,35 +405,58 @@
 	
 	<!-- 사용 -->
 	<select 	id="getFeedCommentList"			parameterType="hashmap"		resultMap="feedCommentSelectMap">
-		SELECT 
-		c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
-		c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence
-		<choose>
-			<when test="user != null">
-				, isLike.EXIST FROM feed_comment c, users u, (
-														SELECT
-														source_no as EXIST
-														FROM HEART
-														WHERE TRIM(source) 	= '1'
-														AND user_id			= #{user.userId}
-																						) isLike
-				<where>
-				c.feed_comment_no = isLike.EXIST(+)
-				AND c.user_id						= u.user_id
-				AND c.feed_no						= #{feedNo}
-				AND delete_condition				= '0'
-				</where>
-				
-				ORDER BY sequence ASC
+	
+	SELECT
+		inner_table.*
+		FROM (
+			SELECT
+			rownum AS row_seq,
+			deep_table.*
+			FROM (
+					SELECT 
+					c.feed_comment_no, c.feed_no, c.user_id, u.nickName, u.profile_image, c.feed_comment_content, c.feed_comment_heart_count, c.feed_recomment_count,
+					c.feed_comment_reg_date, c.feed_comment_update_date, c.report_condition, c.delete_condition, c.parent, c.depth, c.sequence
+					<choose>
+						<when test="user != null">
+							, isLike.EXIST FROM feed_comment c, users u, (
+																	SELECT
+																	source_no as EXIST
+																	FROM HEART
+																	WHERE TRIM(source) 	= '1'
+																	AND user_id			= #{user.userId}
+																	
+																									) isLike
+							<where>
+							c.feed_comment_no = isLike.EXIST(+)
+							AND c.user_id						= u.user_id
+							AND c.feed_no						= #{feedNo}
+							AND delete_condition				= '0'
+							</where>
+							
+							ORDER BY sequence ASC
+						</when>
+						<otherwise>
+						FROM feed_comment c, users u
+						WHERE delete_condition				= '0'
+						AND c.user_id						= u.user_id
+						AND c.feed_no						= #{feedNo}
+						ORDER BY sequence ASC
+						</otherwise>
+					</choose>
+												) deep_table
+		
+			<choose>
+			<when test="search.order == 0">
+			WHERE ROWNUM &lt;= #{search.endRowNum} 					) inner_table
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}	
 			</when>
-			<otherwise>
-			FROM feed_comment c, users u
-			WHERE delete_condition				= '0'
-			AND c.user_id						= u.user_id
-			AND c.feed_no						= #{feedNo}
-			ORDER BY sequence ASC
-			</otherwise>
+			
+			<when test="search.order != 0">
+			WHERE ROWNUM &lt;= #{search.endRowNum} * #{search.order} 					) inner_table
+		WHERE row_seq BETWEEN 0 AND #{search.endRowNum} * #{search.order}	
+			</when>
 		</choose>
+		
 	</select>
 	
 	

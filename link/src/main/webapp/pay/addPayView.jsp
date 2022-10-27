@@ -1,287 +1,350 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-
-<html lang="ko">
-
+<html>
 <head>
-<meta charset="EUC-KR">
-
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- Bootstrap Dropdown Hover CSS -->
-<!-- <link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet"> -->
-
-<!-- Bootstrap Dropdown Hover JS -->
-<!-- <script src="/javascript/bootstrap-dropdownhover.min.js"></script> -->
-<!-- calendar.js -->
-<script type="text/javascript" src="/javascript/calendar.js"></script>
-<!-- import.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<!-- import¸¦ »ç¿ëÇÏ±â À§ÇÔ -->
-
-<script type="text/javascript">
-	$(function(){
-		$("input[value='°áÁ¦ÇÏ±â']").bind("click", function(){
-			requestPayment();
-		});
-		$("input[value='Ãë¼ÒÇÏ±â']").bind("click", function(){
-			history.go(-1);
-		});
+<meta charset="UTF-8">
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
+		<script src="js/plugins.js"></script>
+		<script src="js/beetle.js"></script>
 		
-		$(".plus").bind("click", function(){
-			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
-			var updateClubCount = parseInt( $(".payProduct-club").text() );
-			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( ${ pay.maxPay } === totalPrice ){
-				${ pay.clubNo }===0 ? $(".result").text( "ÇÑ¸í´ç ÃÖ´ë·Î °¡ÀÔ ÇÒ ¼ö ÀÖ´Â ¸ğÀÓÀº 10°³ÀÔ´Ï´Ù" ): $(".result").text( "ÇÏ³ªÀÇ ¸ğÀÓ´ç ÃÖ´ë ¸ğÀÓ¿øÀº 50¸íÀÔ´Ï´Ù" );
-			}else{
-				if( ${ pay.clubNo } === 0 ){
-					$(".payProduct-club").text( updateClubCount + 2 );
-					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
+		<!-- include libraries(jQuery, bootstrap) -->
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
+		<!--  font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
+		
+		<script type="text/javascript">
+		$(function(){
+			$("input[value='ê²°ì œí•˜ê¸°']").bind("click", function(){
+				requestPayment();
+			});
+			$("input[value='ì·¨ì†Œí•˜ê¸°']").bind("click", function(){
+				history.go(-1);
+			});
+			
+			$(".plus").bind("click", function(){
+				
+				//var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
+				var updateClubMemberCount = $(".payProduct-member").text();
+				var updateClubCount = parseInt( $(".payProduct-club").text() );
+				var totalPrice = parseInt( $(".totalPrice").text() );
+				var clubNo = $("input[name='clubNo']").val();
+				var maxPay = $("#maxPay").val();
+				
+				//alert( maxPay );
+				//alert( clubNo );			
+				//alert( updateClubMemberCount );
+				//alert( updateClubCount );
+				//alert( totalPrice );
+				
+				if( maxPay == totalPrice ){
+					alert('if');
+					${ pay.clubNo } == 0 ? $(".result").text( "í•œëª…ë‹¹ ìµœëŒ€ë¡œ ê°€ì… í•  ìˆ˜ ìˆëŠ” ëª¨ì„ì€ 10ê°œì…ë‹ˆë‹¤" ): $(".result").text( "í•˜ë‚˜ì˜ ëª¨ì„ë‹¹ ìµœëŒ€ ëª¨ì„ì›ì€ 50ëª…ì…ë‹ˆë‹¤" );
 				}else{
-					$(".payProduct-member").text( updateClubMemberCount + 10 );
-					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) + 10 );
+					alert('else');
+					if( clubNo != 0 ){
+						// íšŒì›ì´ ëª¨ì…ê°€ì…ì‹ ì²­ í–ˆì„ë•Œ
+						alert('if');
+						$(".payProduct-club").text( parseInt( updateClubCount ) + 2 );
+						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
+					}else{
+						alert('else');
+						$(".payProduct-member").text( updateClubMemberCount + 10 );
+						$(".return-max-member").text( parseInt( $(".return-max-member").text() ) + 10 );
+					}
+					$(".totalPrice").text( totalPrice + 5000 );
+					$(".result").text( "" );
 				}
-				$(".totalPrice").text( totalPrice + 5000 );
-				$(".result").text( "" );
-			}
-		});//end of plus
-		$(".minus").bind("click", function(){
-			var updateClubMemberCount = parseInt( $(".payProduct-member").text() );
-			var updateClubCount = parseInt( $(".payProduct-club").text() );
-			var totalPrice = parseInt( $(".totalPrice").text() );
-			if( totalPrice === 5000 ){
-				$(".result").text( "ÃÖ¼Ò °áÁ¦ ±İ¾×Àº 5000¿øÀÔ´Ï´Ù" );
-			}else{
-				if( ${ pay.clubNo } === 0 ){
-					$(".payProduct-club").text( updateClubCount - 2 );
-					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
+				
+			});//end of plus
+			
+			$(".minus").bind("click", function(){
+				
+				var updateClubMemberCount = $(".payProduct-member").text();
+				var updateClubCount = $(".payProduct-club").text();
+				var totalPrice = $(".totalPrice").text();
+				var clubNo = $("input[name='clubNo']").val();
+				var max_member = $(".return-max-member").text();
+				
+				if( totalPrice == 5000 ){
+					alert('if');
+					$(".result").text( "ìµœì†Œ ê²°ì œ ê¸ˆì•¡ì€ 5000ì›ì…ë‹ˆë‹¤" );
 				}else{
-					$(".payProduct-member").text( updateClubMemberCount - 10 );
-					$(".return-max-member").text( parseInt( $(".return-max-member").text() ) - 10 );
+					alert('else');
+					if( clubNo == 0 ){
+						alert('if');
+						$(".payProduct-club").text( parseInt( updateClubCount - 2 ) );
+						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
+					}else{
+						alert('else');
+						alert(updateClubMemberCount);
+						alert(max_member);
+						$(".payProduct-member").text( updateClubMemberCount - 10 );
+						$(".return-max-member").text( parseInt( max_member ) - 10 );
+					}
+					$(".totalPrice").text( totalPrice - 5000 );
+					$(".result").text( "" );
 				}
-				$(".totalPrice").text( totalPrice - 5000 );
-				$(".result").text( "" );
-			}
-		});//end of minus
-	});
-</script>
-
-<script type="text/javascript">
-	function requestPayment() {
-		alert('¿©±â·Î ¿À³ª?');
-		
-		var email = "${ user.email }";
-		var phoneNo = "${ user.phoneNo }";
-		var totalPrice = $(".totalPrice").text();
-		var payProduct = ${ pay.clubNo == 0 } ? "1": "0";
-		var pg = $("input[name='payOption']:checked").attr("pg");
-		var pay_method = $("input[name='payOption']:checked").attr("pay_method");
-		var name = payProduct===0 ? "ÃÖ´ë ¸ğÀÓ ¼ö Áõ°¡" : "ÃÖ´ë ¸ğÀÓ¿ø ¼ö Áõ°¡";
-		var updateClubMemberCount = $(".payProduct-member").text();
-		var updateClubCount = $(".payProduct-club").text();
-		
-		if( !updateClubMemberCount ){
-			updateClubMemberCount = 0;
-		}
-		if( !updateClubCount ){
-			updateClubCount = 0;
-		}
-		
-		$("input[name='payProduct']").val( payProduct );
-		$("input[name='totalPrice']").val( totalPrice );
-		$("input[name='updateClubMemberCount']").val( updateClubMemberCount );
-		$("input[name='updateClubCount']").val( updateClubCount );
-		$("input[name='clubNo']").val( ${ pay.clubNo } );		
-		
-		IMP.init("imp83557107"); // °¡¸ÍÁ¡ ½Äº°ÄÚµå·Î IMP °´Ã¼¸¦ ÃÊ±âÈ­ÇÑ´Ù
-		//IMP.init("imp36216644"); // °¡¸ÍÁ¡ ½Äº°ÄÚµå·Î IMP °´Ã¼¸¦ ÃÊ±âÈ­ÇÑ´Ù
-		
-		IMP.request_pay({
-			//½Å¿ëÄ«µå °áÁ¦
-			///*
-				pg : pg,
-				pay_method : pay_method,
-				merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£
-				name : name,
-				amount : totalPrice,
-				customer_uid : 'your-customer-unique-id', // ÇÊ¼ö ÀÔ·Â.
-				buyer_email : email,
-				buyer_name : '·çÇÇ',
-				buyer_tel : ${ user.phoneNo }
-			    //buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
-			    //buyer_postcode : '123-456'
-			//*/
-
-			//Ä«Ä«¿ÀÆäÀÌ
-			/*
-				pg : 'kakaopay',
-				pay_method : 'card',
-				merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£
-				name : 'ÃÖÃÊÀÎÁõ°áÁ¦',
-				amount : 100,
-				customer_uid : 'your-customer-unique-id', // ÇÊ¼ö ÀÔ·Â.
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '¾ÆÀÓÆ÷Æ®',
-				buyer_tel : '02-1234-1234'
-			 */
-
-			//ÈŞ´ëÆù°áÁ¦
-			/*
-			    pg : 'html5_inicis',
-			    pay_method : 'phone',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£¸¦ Àü´Ş
-			    name : 'ÁÖ¹®¸í:°áÁ¦Å×½ºÆ®',
-			    amount : 100,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '±¸¸ÅÀÚÀÌ¸§',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{¸ğ¹ÙÀÏ¿¡¼­ °áÁ¦ ¿Ï·á ÈÄ ¸®µğ·º¼Ç µÉ URL}' // ¿¹: https://www.my-service.com/payments/complete/mobile
-			 */
-		
-			//Åä½ºÆäÀÌ
-			/*
-			    pg : 'tosspay',
-			    pay_method : 'card',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£¸¦ Àü´Ş
-			    name : 'ÁÖ¹®¸í:°áÁ¦Å×½ºÆ®',
-			    amount : 100,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '±¸¸ÅÀÚÀÌ¸§',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{¸ğ¹ÙÀÏ¿¡¼­ °áÁ¦ ¿Ï·á ÈÄ ¸®µğ·º¼Ç µÉ URL}' // ¿¹: https://www.my-service.com/payments/complete/mobile	
-			 */
-		
-			//½Ç½Ã°£ °èÁÂÀÌÃ¼
-			/*
-			    pg : 'html5_inicis',
-			    pay_method : 'trans',
-			    merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£¸¦ Àü´Ş
-			    name : 'ÁÖ¹®¸í:°áÁ¦Å×½ºÆ®',
-			    amount : 1000,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '±¸¸ÅÀÚÀÌ¸§',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
-			    buyer_postcode : '123-456',
-			    m_redirect_url : '{¸ğ¹ÙÀÏ¿¡¼­ °áÁ¦ ¿Ï·á ÈÄ ¸®µğ·º¼Ç µÉ URL}' // ¿¹: https://www.my-service.com/payments/complete/mobile
-			*/
-
-			//¹«ÅëÀå ÀÔ±İ
-				/*
-				pg : 'html5_inicis',
-				pay_method : 'vbank',
-				merchant_uid : 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£¸¦ Àü´Ş
-				name : 'ÁÖ¹®¸í:°áÁ¦Å×½ºÆ®',
-				amount : 100,
-				buyer_email : 'itzrb577@naver.com',
-				buyer_name : 'È²´Ù·¡',
-				buyer_tel : '010-8325-6825',
-				//buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
-				//buyer_postcode : '123-456',
-				//m_redirect_url : '{¸ğ¹ÙÀÏ¿¡¼­ °áÁ¦ ¿Ï·á ÈÄ ¸®µğ·º¼Ç µÉ URL}', // ¿¹: https://www.my-service.com/payments/complete/mobile
-				//notice_url : 'http://192.168.0.74:8080/purchase/json/complete', //À¥ÈÅ¼ö½Å URL ¼³
-			*/
-
-		}, function(rsp) { // callback
-			if (rsp.success) {
-				msg += '\n°íÀ¯ID : ' + rsp.imp_uid;
-    			msg += '\n»óÁ¡ °Å·¡ID : ' + rsp.merchant_uid;
-    			msg += '\n°áÁ¦ ±İ¾× : ' + rsp.paid_amount;
-    			msg += '\nÄ«µå ½ÂÀÎ¹øÈ£ : ' + rsp.apply_num;
-    			alert(msg);
-    			$("input[name='merchant_uid']").val( rsp.merchant_uid );
-    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
-			} else {
-				var msg = '°áÁ¦¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.';
-				msg += '¿¡·¯³»¿ë : ' + rsp.error_msg;
-				alert(msg);
-			}
+				
+			});//end of minus
 		});
-	}
-</script>
-
-</head>
-
-<body>
-	<form name="addPayForm" method="post" action="/clubPost/addPay">
+	</script>
+	<style type="text/css">
 	
-		<input type="text" name="payProduct" value="">
-		<input type="text" name="totalPrice" value="">
-		<input type="text" name="merchant_uid" value="">
-		<input type="text" name="updateClubMemberCount" value="0">
-		<input type="text" name="updateClubCount" value="0">
-		<input type="text" name="clubNo" value="0">
-		<input type="text" value="${ pay.maxPay }">
-		<input type="text" name="payNavigation" value="${ pay.payNavigation }">
-		</br></br></br>
+		/* ë©”ì¸í™”ë©´ */
+		.row{
+			font-family: 'Single Day', cursive;
+		}
 		
-		<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-		<div class="pay-view">
+		/* ë©”ì¸í™”ë©´ */
+		.pay-main{
+			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
+			border-radius: 100px;
+			font-size: 25px;;
+		}
+		.pay-header{
+			background-color: #f2e3ff;
+			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			padding: 1rem;
+			width: 950px;
+		}
+		.pay-body{
+			display: grid;
+			grid-template-columns: 2fr 5fr;
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			padding: 1rem;
+			background-color: #f2f3ff;
+		}
+		.pay-body-text{
+			/* background-color: blue; */
+		}
+		.pay-body-content{
+			/* background-color: orange; */
+		}
+		.pay-body-updown{
+		}
+		.glyphicon.glyphicon-plus{
+			/* background-color: red; */
+			font-size: 2rem;
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 1rem;
+			padding: 1rem;
+			width: 70px;
+			background-color: white;
+			color: #5F0080;
+			border-color: #5F0080;
+		}
+		.glyphicon.glyphicon-minus{
+			/* background-color: yellow; */
+			font-size: 2rem;
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 1rem;
+			padding: 1rem;
+			width: 70px;
+			background-color: white;
+			color: #5F0080;
+			border-color: #5F0080;
+		}
+		.payProduct-member{
+			/* background-color: purple; */
+			font-size: 4rem;
+		}
+		.totalPrice{
+			font-size: 4rem;
+		}
+		.submit {
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 1rem;
+			padding: 1rem;
+			width: 100px;
+			background-color: #5F0080;
+			color: white;
+			font-size: 2rem;
+		}
+		.cancle {
+			border-color: #5F0080;
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 1rem;
+			padding: 1rem;
+			width: 100px;
+			background-color: white;
+			color: #5F0080;
+			font-size: 2rem;
+		}
+	</style>
 		
-			<div class="pay-payOption">				
-				°áÁ¦¹æ¹ı&nbsp;&nbsp;:&nbsp;&nbsp;
-				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">½Å¿ëÄ«µå
-				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">Ä«Ä«¿ÀÆäÀÌ
-				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">ÈŞ´ëÆù°áÁ¦
-				<!-- <input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">Åä½ºÆäÀÌ -->
-				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">½Ç½Ã°£ °èÁÂÀÌÃ¼
-				</br></br>
+	</head>
 
-				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">°áÁ¦ ÈÄ ÇØ´ç ¸ğÀÓÀÇ ÃÑ ¸ğÀÓ¿ø¼ö´Â <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>¸í</c:when>
-					<c:when test="${ pay.clubNo == 0 || pay.payNavigation == 1 }">°áÁ¦ ÈÄ ÇØ´ç È¸¿øÀÇ ÃÑ ¸ğÀÓ¼ö´Â <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>°³¹æ</c:when>
-				</c:choose>
-			</div>
-			</br>
-			
-			
-			<div class="pay-payProduct">
-			&nbsp;&nbsp;<b class="plus">+</b>
-				<c:choose>
-					<c:when test="${ pay.clubNo != 0 }">Ãß°¡ÇÒ ¸ğÀÓ¿ø ¼ö<b class="payProduct-member">10</b>¸í</c:when>
-					<c:when test="${ pay.clubNo == 0 }">Ãß°¡ÇÒ ¸ğÀÓ ¼ö<b class="payProduct-club">2</b>°³¹æ</c:when>
-				</c:choose>
-			<b class="minus">-</b>
-			<b class="result"></b>
-			</div>
-			</br>
-			
-			<div class="pay-totalPrice">
-				ÃÑ °áÁ¦±İ¾× : <b class="totalPrice">5000</b>¿ø
-			</div>
-			</br>
-			
-			<div>
-				<input type="button" value="°áÁ¦ÇÏ±â">
-				<input type="button" value="Ãë¼ÒÇÏ±â">
-			</div>
-		
-		</div>
-		<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	</form>
+	<body class="single single-post">
 
-</body>
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/toolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+
+		<main role="main">
+			<div id="intro-wrap">
+			</div><!-- intro-wrap -->
+
+			<div id="main" class="row">
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px; font-size: 3rem;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">ëª¨ì„ ì¼ì •</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">ëª¨ì„ ê²Œì‹œë¬¼</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">ëª¨ì„ì›</a>
+						</li>
+						<li data-group="infographics">
+							<a href="#">ëª¨ì„ ì±„íŒ…</a>
+						</li>
+						<li data-group="infographics">
+							<a href="/clubPost/addPayView?clubNo=${ clubNo }">ê²°ì œ</a>
+						</li>
+					</ul>
+					
+					
+					
+					
+					
+					
+							
+					<form name="addPayForm" method="post" action="/clubPost/addPay">
+					
+					
+						<div class="pay-main">
+							<div class="pay-header">
+								<div>5000ì›ë‹¹ ê²°ì œí•´íƒ<br>10ëª…ì˜ ëª¨ì„ì›ì„ ì¶”ê°€ í•  ìˆ˜ ìˆë‹¤&nbsp;&nbsp;(í•˜ë‚˜ì˜ ëª¨ì„ë‹¹ ìµœëŒ€ ëª¨ì„ì›ìˆ˜ëŠ” 50ëª…)<br>
+								2ê°œì˜ ëª¨ì„ì— ê°€ì… í•  ìˆ˜ ìˆë‹¤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(í•œëª…ì˜ íšŒì›ë‹¹ ìµœëŒ€ ê°€ì… í•  ìˆ˜ ìˆëŠ” ëª¨ì„ìˆ˜ëŠ” 10ê°œ)</div>
+							</div>
+							<br>
+							<div class="pay-body">
+								<div class="pay-body-text">
+									<div>ê²°ì œë°©ë²•</div><br><br><br><br><br>
+									<div>ëª¨ì„ì´ë¦„</div><br>
+									<div>ì¶”ê°€ ëª¨ì„ì› ìˆ˜</div><br>
+									<div>ì´ ê²°ì œê¸ˆì•¡</div>
+								</div>
+								<div class="pay-body-content">
+									<div>
+										<div><input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="ì‹ ìš©ì¹´ë“œ">&nbsp;&nbsp;ì‹ ìš©ì¹´ë“œ</div>
+										<div><input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="ì¹´ì¹´ì˜¤í˜ì´">&nbsp;&nbsp;&nbsp;&nbsp;ì¹´ì¹´ì˜¤í˜ì´</div>
+										<div><input type="radio" name="payOption" pg="kcp" pay_method="phone" value="íœ´ëŒ€í°ê²°ì œ">&nbsp;&nbsp;íœ´ëŒ€í°ê²°ì œ</div>
+										<div><input type="radio" name="payOption" pg="tosspay" pay_method="card" value="í† ìŠ¤í˜ì´">&nbsp;&nbsp;&nbsp;&nbsp;í† ìŠ¤í˜ì´</div>
+										<div><input type="radio" name="payOption" pg="kcp" pay_method="trans" value="ì‹¤ì‹œê°„ ê³„ì¢Œì´ì²´">&nbsp;&nbsp;&nbsp;&nbsp;ì‹¤ì‹œê°„ ê³„ì¢Œì´ì²´</div>
+									</div>
+									<br>
+									
+									<div><span>${ returnClub.clubTitle }</span>ì˜ í˜„ì¬ ëª¨ì„ì› ìˆ˜ <span>10</span>ëª…</div>
+									<div class="pay-body-updown">
+										<span class="glyphicon glyphicon-minus"></span>
+										<span class="payProduct-member">10</span>
+										<span class="glyphicon glyphicon-plus"></span>ëª…
+									</div>
+									<div>
+										<span class="totalPrice">5000</span>ì›
+									</div>
+									<div>
+										<div><input type="button" class="submit" value="ê²°ì œí•˜ê¸°">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="ì´ì „ìœ¼ë¡œ"></div>
+									</div>
+								</div>							
+							</div>
+						</div>
+						
+						
+						
+	
+						<br><br><br>
+						<input type="text" name="payProduct" value="">
+						<input type="text" name="totalPrice" value="">
+						<input type="text" name="merchant_uid" value="">
+						<input type="text" name="updateClubMemberCount" value="0">
+						<input type="text" name="updateClubCount" value="0">
+						<input type="text" name="clubNo" value="${ pay.clubNo }">
+						<input type="text" id="maxPay" value="${ pay.maxPay }">
+						<input type="text" name="payNavigation" value="${ pay.payNavigation }">
+					
+					
+					
+					</form>
+					
+					
+					
+					
+					
+					
+					
+				</div><!-- row-content -->
+			</div><!-- row -->
+		</main><!-- main -->
+		
+		
+
+		<footer role="contentinfo">
+			<div class="row">
+				<div class="row-content buffer clear-after">
+					<section id="top-footer">
+						<div class="widget column three">
+							<h4>Menu</h4>
+							<ul class="plain">
+								<li><a href="home-01.html">Home</a></li>
+								<li><a href="works-3-columns.html">Portfolio</a></li>
+								<li><a href="blog-4-columns-masonry.html">Blog</a></li>
+								<li><a href="resume.html">Resume</a></li>
+								<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
+							</ul>
+						</div>
+						<div class="widget column three">
+							<h4>Archives</h4>
+							<ul class="plain">
+								<li><a href="#">March 2014</a></li>
+								<li><a href="#">April 2014</a></li>
+								<li><a href="#">May 2014</a></li>
+								<li><a href="#">June 2014</a></li>
+								<li><a href="#">July 2014</a></li>
+							</ul>
+						</div>								
+						<div class="widget column three">
+							<h4>Widget</h4>
+							<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+						</div>				
+						<div class="widget meta-social column three">
+							<h4>Follow Us</h4>
+							<ul class="inline">
+								<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
+								<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
+								<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
+							</ul>
+						</div>														
+					</section><!-- top-footer -->
+					<section id="bottom-footer">
+						<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
+						<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+					</section><!-- bottom-footer -->			
+				</div><!-- row-content -->	
+			</div><!-- row -->	
+		</footer>
+
+	</body>
 
 </html>
-
-

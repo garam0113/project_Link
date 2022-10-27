@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
@@ -40,10 +40,136 @@
 	
 		$(function(){
 			
-			// ¥Ò±€ ¥ﬁ±‚
+			
+			
+			<%-- Î¨¥Ìïú Ïä§ÌÅ¨Î°§ --%>
+			
+			$(window).scroll(function() {
+				console.log(($("#pageFlag").val()));
+				if($("#pageFlag").val() == "true") {
+				
+					if((Math.ceil($(window).scrollTop() + $(window).height())) >= ( $(document).height() )) {
+						
+						console.log("Î¨¥Ìïú Ïä§ÌÅ¨Î°§");
+						
+						var maxHeight = $(document).height();
+						var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+						
+						var sessionUser = $("#userId").val();
+						
+						$.ajax(
+								{
+									url : "/feedRest/json/getFeedCommentList",
+									method : "POST",
+									data : JSON.stringify ({
+										userId : sessionUser,
+										feedNo : ${feed.feedNo},
+										currentPage : parseInt($("#currentPage").val()) + 1
+									}),
+									contentType: 'application/json',
+									dataType : "json",
+									header : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									}, // header end
+									
+									success : function(data, status) {
+										
+										console.log("ÏÑ±Í≥µÏöî");
+										
+										var addHtml = "";
+										
+										$.each(data, function(index, item) {
+											
+											addHtml += '<div class="single-comment" style="margin-left: ' + 25 * item.depth + '"px;">' +
+														'<div class="comment-author">' +
+														'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+														'		<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+														'		<span class="says">says:</span>' +
+														'</div>' +
+														'<div class="comment-meta">' +
+														'	<time datetime="' + item.commentRegDate + '">' + item.commentRegDate + '</time> / '
+														if(item.depth < 2) {
+															addHtml += '<a class="btn_createRecomment">Reply </a>'
+														}
+														
+														if(sessionUser == item.user.userId) {
+															addHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>' +
+																		' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+														}
+														
+														addHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>'
+																
+														if(item.heartCondition != 0) {
+															addHtml += '<div class="heartPosition">' +
+																		'<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+																		'<div class="heartCountPosition">' +
+																		item.commentHeartCount +
+																		'</div>' +
+																		'</div>'
+														} else {
+															addHtml += '<div class="heartPosition">' +
+																		'<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+																		'<div class="heartCountPosition">' +
+																		item.commentHeartCount +
+																		'</div>' +
+																		'</div>'
+														}
+														
+														addHtml += '</div>'
+														
+														if(item.reportCondition == 0) {
+															addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
+														} else {
+															addHtml += '<p class="commentContent">Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ ÏÇ≠Ï†úÎêú ÎåìÍ∏ÄÏûÖÎãàÎã§.</p>'
+														}
+														
+														addHtml += '<form class="commentInfo">' +
+																	'<input type="hidden" name="reportSource" value="4">' +
+																	'<input type="hidden" name="sourceNumber" value="' + item.feedCommentNo + '">' +
+																	'<input type="hidden" name="user2" value="' + item.user.userId + '">' +
+																	'<input type="hidden" name="source" value="1">' +
+																	'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+																	'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+																	'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+																	'<input type="hidden" name="parent" value="' + item.parent + '">' +
+																	'<input type="hidden" name="depth" value="' + item.depth + '">' +
+																	'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+																	'</form>' +
+																	'<div class="btn_recommentCheck" style="display: none;">' +
+																	'<textarea name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+																	'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
+																	'</div>' +
+																	'</div>' +
+																	'</li>' +
+																	'</ul>' +
+																	'</div>'
+											
+										}) // each close
+										
+										if(addHtml == "") {
+											$("#pageFlag").val(false);
+										} else {
+											$(addHtml).appendTo($(".comment:last"));
+											$("#currentPage").val( parseInt($("#currentPage").val()) + 1 );
+										}
+										
+									} // success close
+										
+								} // ajax inner close
+						
+						) // ajax close
+						
+					} // Î¨¥Ìïú Ïä§ÌÅ¨Î°§ Ï°∞Í±¥ ifÎ¨∏ Ï¢ÖÎ£å
+					
+				} // flag ÌôïÏù∏ close
+					
+			}) // Ïä§ÌÅ¨Î°§ Ïù¥Î≤§Ìä∏ Ï¢ÖÎ£å
+						
+			
+			// ÎåìÍ∏Ä Îã¨Í∏∞
 			
 			$(document).on("click", ".btn_addComment", function(event) {
-				
 				event.stopPropagation();
 				
 				var sessionUser = $(this).siblings("input[name='userId']").val();
@@ -51,121 +177,150 @@
 				var commentCount = $(this).parents(".section").find(".commentCount");
 				var htmlSequence = $(this).siblings("input[name='sequence']");
 				
-				console.log("¥Ò±€ ºˆ : " + $(this).parents(".section").find(".commentCount").text().trim());
-				console.log("¥Ò±€ ¿€º∫¿⁄ : " + $(this).siblings("input[name='userId']").val());
-				console.log("««µÂ π¯»£ : " + $(this).siblings("input[name='feedNo']").val());
-				console.log("≥ªøÎ : " + $(this).siblings("textarea[name='commentContent']").val());
-				console.log("∫Œ∏ π¯»£ : " + $(this).siblings("input[name='parent']").val());
-				console.log("±Ì¿Ã : " + $(this).siblings("input[name='depth']").val());
-				console.log("Ω√ƒˆΩ√ : " + $(this).siblings("input[name='sequence']").val());
+				var content =  $(this).siblings("textarea[name='commentContent']").val();
 				
-				$.ajax(
-						{
-							url : "/feedRest/json/addFeedComment",
-							method : "POST",
-							data : JSON.stringify ({
-								userId : $(this).siblings("input[name='userId']").val(),
-								feedNo : $(this).siblings("input[name='feedNo']").val(),
-								commentContent : $(this).siblings("textarea[name='commentContent']").val(),
-								parent : $(this).siblings("input[name='parent']").val(),
-								depth : $(this).siblings("input[name='depth']").val(),
-								sequence : parseInt($(this).siblings("input[name='sequence']").val())
-							}),
-							contentType: 'application/json',
-							dataType : "json",
-							header : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							}, // header end
+				console.log("ÎåìÍ∏Ä Ïàò : " + $(this).parents(".section").find(".commentCount").text().trim());
+				console.log("ÎåìÍ∏Ä ÏûëÏÑ±Ïûê : " + $(this).siblings("input[name='userId']").val());
+				console.log("ÌîºÎìú Î≤àÌò∏ : " + $(this).siblings("input[name='feedNo']").val());
+				console.log("ÎÇ¥Ïö© : " + $(this).siblings("textarea[name='commentContent']").val());
+				console.log("Î∂ÄÎ™® Î≤àÌò∏ : " + $(this).siblings("input[name='parent']").val());
+				console.log("ÍπäÏù¥ : " + $(this).siblings("input[name='depth']").val());
+				console.log("ÏãúÌÄÄÏãú : " + $(this).siblings("input[name='sequence']").val());
+				
+				if(content == "") {
+					Swal.fire({
+						  title: 'ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî',
+						  width: 400,
+						  icon: 'warning',
+						  timer : 500,
+						  showConfirmButton : false,
+					})
+					
+					return false;
+				} else {
+					
+					$.ajax(
+							{
+								url : "/feedRest/json/addFeedComment",
+								method : "POST",
+								data : JSON.stringify ({
+									userId : $(this).siblings("input[name='userId']").val(),
+									feedNo : $(this).siblings("input[name='feedNo']").val(),
+									commentContent : $(this).siblings("textarea[name='commentContent']").val(),
+									parent : $(this).siblings("input[name='parent']").val(),
+									depth : $(this).siblings("input[name='depth']").val(),
+									sequence : parseInt($(this).siblings("input[name='sequence']").val())
+								}),
+								contentType: 'application/json',
+								dataType : "json",
+								header : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								}, // header end
+								
+								success : function(data, status) {
+									
+									$(this).siblings("input[name='sequence']").val($("input[name='sequence']").val() + 1);
+									
+									var changeHtml = "";
+									
+									$.each(data, function(index, item) {
+										
+										var depth = parseInt(item.depth) * 25; 
+										
+										changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+										'<div class="comment-author">' +
+										'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+										'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+										'<span class="says"> says:</span>' +
+										'</div>' +
+										'<div class="comment-meta">' +
+										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
+										
+										if(item.depth < 2) {
+											changeHtml += '<a class="btn_createRecomment">Reply</a>'
+										}
+										
+										if(sessionUser == item.user.userId) {
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+										}
+										
+										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
+										
+										if(item.heartCondition == 0) {
+											changeHtml +=	'<div class="heartPosition">' +
+															'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+															'	<div class="heartCountPosition">' +
+															item.commentHeartCount + 
+															'	</div>' +
+															'</div>'
+										} else {
+											changeHtml +=	'<div class="heartPosition">' + 
+															'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+															'	<div class="heartCountPosition">' +
+															item.commentHeartCount + 
+															'	</div>' +
+															'</div>'
+										}
+										
+										changeHtml += '</div>' + 
+											'<p class="commentContent">' + item.commentContent + '</p>' +
+											'<div class="commentInfo">' +
+											'<input type="hidden" name="source" value="1">' +
+											'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+											'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+											'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+											'<input type="hidden" name="parent" value="' + item.parent + '">' +
+											'<input type="hidden" name="depth" value="' + item.depth + '">' +
+											'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+											'</div>' +
+											'<div class="btn_recommentCheck" style="display: none;" >' +
+											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+											'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+											'</div>' +
+											'</div>'
+										
+									}) // $.each close 
+									
+									console.log(changeHtml);
+									$(changePoint).html(changeHtml);
+									$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
+									$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
+									
+								} // success end
+								
+							} // ajax inner close
 							
-							success : function(data, status) {
-								
-								$(this).siblings("input[name='sequence']").val($("input[name='sequence']").val() + 1);
-								
-								var changeHtml = "";
-								
-								$.each(data, function(index, item) {
-									
-									var depth = parseInt(item.depth) * 25; 
-									
-									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
-									'<div class="comment-author">' +
-									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-									'<span class="says"> says:</span>' +
-									'</div>' +
-									'<div class="comment-meta">' +
-									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
-									
-									if(item.depth < 2) {
-										changeHtml += '<a class="btn_createRecomment">Reply</a>'
-									}
-									
-									if(sessionUser == item.user.userId) {
-										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
-										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
-									}
-									
-									changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
-									
-									if(item.heartCondition == 0) {
-										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
-									} else {
-										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
-									}
-									
-									changeHtml += '</div>' + 
-										'<p class="commentContent">' + item.commentContent + '</p>' +
-										'<div class="commentInfo">' +
-										'<input type="hidden" name="source" value="1">' +
-										'<input type="hidden" name="userId" value="' + sessionUser + '">' +
-										'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
-										'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
-										'<input type="hidden" name="parent" value="' + item.parent + '">' +
-										'<input type="hidden" name="depth" value="' + item.depth + '">' +
-										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
-										'</div>' +
-										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
-										'</div>' +
-										'</div>'
-									
-								}) // $.each close 
-								
-								console.log(changeHtml);
-								$(changePoint).html(changeHtml);
-								$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
-								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
-								
-							} // success end
-						} // ajax inner close
-				) // ajax close
+					) // ajax close
+				
+				} // Ïú†Ìö®ÏÑ± Í≤ÄÏÇ¨
+				
 			}); // btn_addComment event close
 			
-			// ««µÂ ºˆ¡§
+			// ÌîºÎìú ÏàòÏ†ï
 			
 			$(document).on("click", "#updateFeed", function(event) {
 				event.stopPropagation();
-				console.log("««µÂ ºˆ¡§");
+				console.log("ÌîºÎìú ÏàòÏ†ï");
 				
 				$("form").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 			})
 			
 			
 			
-			// ««µÂ ªË¡¶
+			// ÌîºÎìú ÏÇ≠Ï†ú
 			
 			$(document).on("click", "#deleteFeed", function(event) {
 				event.stopPropagation();
-				console.log("««µÂ ªË¡¶");
+				console.log("ÌîºÎìú ÏÇ≠Ï†ú");
 				
 				$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 			})
 			
 			
 			
-			// Reply πˆ∆∞ ≈¨∏Ø -> ¥Î¥Ò±€ ¿€º∫ ∞¯∞£ ª˝º∫
+			// Reply Î≤ÑÌäº ÌÅ¥Î¶≠ -> ÎåÄÎåìÍ∏Ä ÏûëÏÑ± Í≥µÍ∞Ñ ÏÉùÏÑ±
 			
 			$(document).on("click", ".btn_createRecomment", function(event){	
 				event.stopPropagation();
@@ -186,7 +341,7 @@
 			
 			
 			
-			// ¥Î¥Ò±€ ¿€º∫
+			// ÎåÄÎåìÍ∏Ä ÏûëÏÑ±
 			
 			$(document).on("click", ".btn_addRecomment", function(event){
 				event.stopPropagation();
@@ -210,6 +365,11 @@
 				var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
 				
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
+				
+				if(content == "" || content == " ") {
+					swal.fire("ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî");
+					return false;
+				}
 				
 				$.ajax(
 						{
@@ -256,12 +416,22 @@
 										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
 									}
 									
-									changeHtml += '&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
+									changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
 									
 									if(item.heartCondition == 0) {
-										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+										changeHtml +=	'<div class="heartPosition">' +
+														'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									} else {
-										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+										changeHtml +=	'<div class="heartPosition">' + 
+														'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									}
 									
 									changeHtml += '</div>' + 
@@ -276,8 +446,8 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
 									
@@ -285,6 +455,7 @@
 								
 								console.log(changeHtml);
 								$(changePoint).html(changeHtml);
+								$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
 								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
 							} // success end
@@ -297,17 +468,30 @@
 			
 			
 			
-			// ¥Ò±€ ºˆ¡§ »≠∏È ∂ÁøÏ±‚ 
+			// ÎåìÍ∏Ä ÏàòÏ†ï ÌôîÎ©¥ ÎùÑÏö∞Í∏∞ 
 			
 			$(document).on("click", ".updateCommentView", function(event) {
 				event.stopPropagation();
 
-				console.log("««µÂ π¯»£ : " + ${feed.feedNo} + " ¥Ò±€ π¯»£ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				console.log("ÌîºÎìú Î≤àÌò∏ : " + ${feed.feedNo} + " ÎåìÍ∏Ä Î≤àÌò∏ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
 				
 				var changePoint = $(this).parent().siblings(".commentContent");
 				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
 				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
 				var depth = $(this).parent().siblings(".commentInfo").find("input[name='depth']").val();
+				
+				if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > 0) {
+					
+					Swal.fire({
+						  title: 'ÏàòÏ†ï Î∂àÍ∞ÄÎä• Ìï©ÎãàÎã§',
+						  width: 500,
+						  icon: 'warning',
+						  timer : 500,
+						  showConfirmButton : false,
+					})
+					
+					return false;
+				}
 				
 				$.ajax (
 						
@@ -329,17 +513,17 @@
 								
 								var width = 427 - (parseInt(depth) * 50);
 								
-								var changeHtml = "<textarea style='width:" + width + "px; resize:none; name='commentContent'>" + data.commentContent + "</textarea>" +
-													"<input class='button red updateFeedComment' style='float:right; display: inline-block;' value='Update Comment'>" + 
-													"<input class='button red cancel' style='float:right; display: inline-block;' value='Cancel'>";
+								var changeHtml = "<textarea style='width:" + width + "px; resize:none;' name='commentContent'>" + data.commentContent + "</textarea>" +
+													"<input class='button purple updateFeedComment' margin-right: 0px; float:right; display: inline-block;' value='Update'>" + 
+													"<input class='button purple cancel' name='updateCommentCancel' style='float:right; display: inline-block;' value='Cancel'>";
 													
 								$(changePoint).html(changeHtml);
 								
 								
 								
-								// ¥Ò±€ ºˆ¡§ ≈¨∏ØΩ√ ¿Ã∫•∆Æ ∞…±‚
+								// ÎåìÍ∏Ä ÏàòÏ†ï ÌÅ¥Î¶≠Ïãú Ïù¥Î≤§Ìä∏ Í±∏Í∏∞
 													
-								$(document).on(".updateFeedComment", function(){
+								$(document).on("click", ".updateFeedComment", function(){
 									
 									var wantComment = $(this).prev().val();
 									var changePoint = $(this).parents(".comment");
@@ -361,7 +545,6 @@
 													}, // header end
 													
 													success : function(data, status) {
-														swal.fire("º∫∞¯");
 														
 														var changeHtml = "";
 														
@@ -390,9 +573,19 @@
 															changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
 															
 															if(item.heartCondition == 0) {
-																changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+																changeHtml +=	'<div class="heartPosition">' +
+																				'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+																				'	<div class="heartCountPosition">' +
+																				item.commentHeartCount + 
+																				'	</div>' +
+																				'</div>'
 															} else {
-																changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+																changeHtml +=	'<div class="heartPosition">' + 
+																				'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+																				'	<div class="heartCountPosition">' +
+																				item.commentHeartCount + 
+																				'	</div>' +
+																				'</div>'
 															}
 															
 															changeHtml += '</div>' + 
@@ -407,8 +600,8 @@
 																'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 																'</div>' +
 																'<div class="btn_recommentCheck" style="display: none;" >' +
-																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-																'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+																'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 																'</div>' +
 																'</div>'
 															
@@ -434,125 +627,20 @@
 			}) // updateCommentView event close
 			
 			
+			// ÎåìÍ∏Ä ÏàòÏ†ï ÌôîÎ©¥ÏóêÏÑú cancelÏùÑ ÎàåÎ†ÄÏùÑ Í≤ΩÏö∞
 			
-			// ¥Ò±€ ªË¡¶
-			
-			$(document).on("click", ".deleteComment", function(event) {
-				event.stopPropagation();
+			$(document).on("click", "input[name='updateCommentCancel']", function(event) {
 				
-				alert("[ªË¡¶ ø‰√ª] ««µÂ π¯»£ : " + ${feed.feedNo} + " ¥Ò±€ π¯»£ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
-				
-				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
-				var wantComment = $(this).prev().val();
-				var changePoint = $(this).parents(".comment");
-				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
-				var commentCount = $(this).parents(".section").find(".commentCount");
-				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
-				
-				$.ajax(
-							{
-								url : "/feedRest/json/deleteFeedComment",
-								method : "POST",
-								data : JSON.stringify ({
-									userId : sessionUser,
-									feedNo : ${feed.feedNo},
-									feedCommentNo : commentNo,
-									commentContent : wantComment
-								}),
-								contentType: 'application/json',
-								dataType : "json",
-								header : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								}, // header end
-								
-								success : function(data, status) {
-
-									var changeHtml = "";
-									
-									$.each(data, function(index, item) {
-										
-										var depth = parseInt(item.depth) * 25; 
-										
-										changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
-										'<div class="comment-author">' +
-										'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-										'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-										'<span class="says"> says:</span>' +
-										'</div>' +
-										'<div class="comment-meta">' +
-										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
-										
-										if(item.depth < 2) {
-											changeHtml += '<a class="btn_createRecomment">Reply</a>'
-										}
-										
-										if(sessionUser == item.user.userId) {
-											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
-											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
-										}
-										
-										changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
-										
-										if(item.heartCondition == 0) {
-											changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
-										} else {
-											changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
-										}
-										
-										changeHtml += '</div>' + 
-											'<p class="commentContent">' + item.commentContent + '</p>' +
-											'<div class="commentInfo">' +
-											'<input type="hidden" name="source" value="1">' +
-											'<input type="hidden" name="userId" value="' + sessionUser + '">' +
-											'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
-											'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
-											'<input type="hidden" name="parent" value="' + item.parent + '">' +
-											'<input type="hidden" name="depth" value="' + item.depth + '">' +
-											'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
-											'</div>' +
-											'<div class="btn_recommentCheck" style="display: none;" >' +
-											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-											'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
-											'</div>' +
-											'</div>'
-										
-									}) // $.each close 
-									
-									console.log(changeHtml);
-									$(changePoint).html(changeHtml);
-									$(commentCount).text( parseInt( $(commentCount).text() ) - 1 );
-									$(htmlSequence).val( parseInt($(htmlSequence).val()) - 1);
-
-								} // success close
-								
-							} // ajax inner close
-								
-				) // deleteComment ajax close;
-				
-			}) // deleteComment event close
-			
-			
-			
-			// ¥Ò±€ ¡¡æ∆ø‰ 
-			
-			$(document).on("click", ".addCommentHeart", function(event){
-				
-				event.stopPropagation();
-				
-				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
-				var changePoint = $(this).parents(".comment");
-				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
-				
-				console.log(commentNo);
+				var sessionUser = '${sessionScope.user.userId}';
 				
 				$.ajax(
 						{
-							url : "/feedRest/json/addFeedCommentHeart",
+							url : "/feedRest/json/getFeedCommentList",
 							method : "POST",
 							data : JSON.stringify ({
-								feedCommentNo : commentNo,
-								userId : sessionUser
+								userId : sessionUser,
+								feedNo : ${feed.feedNo},
+								currentPage : parseInt($("#currentPage").val())
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -563,7 +651,264 @@
 							
 							success : function(data, status) {
 								
-								alert("¡∂æ∆ø‰");
+								console.log("ÏÑ±Í≥µÏöî");
+								
+								var addHtml = "";
+								
+								$.each(data, function(index, item) {
+									
+									var depth = parseInt(item.depth) * 25; 
+									
+									addHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+												'<div class="comment-author">' +
+												'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+												'		<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+												'		<span class="says">says:</span>' +
+												'</div>' +
+												'<div class="comment-meta">' +
+												'	<time datetime="' + item.commentRegDate + '">' + item.commentRegDate + '</time> / '
+												if(item.depth < 2) {
+													addHtml += '<a class="btn_createRecomment">Reply </a>'
+												}
+												
+												if(sessionUser == item.user.userId) {
+													addHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>' +
+																' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+												}
+												
+												addHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>'
+														
+												if(item.heartCondition != 0) {
+													addHtml += '<div class="heartPosition">' +
+																'<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+																'<div class="heartCountPosition">' +
+																item.commentHeartCount +
+																'</div>' +
+																'</div>'
+												} else {
+													addHtml += '<div class="heartPosition">' +
+																'<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+																'<div class="heartCountPosition">' +
+																item.commentHeartCount +
+																'</div>' +
+																'</div>'
+												}
+												
+												addHtml += '</div>'
+												
+												if(item.reportCondition == 0) {
+													addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
+												} else {
+													addHtml += '<p class="commentContent">Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ ÏÇ≠Ï†úÎêú ÎåìÍ∏ÄÏûÖÎãàÎã§.</p>'
+												}
+												
+												addHtml += '<form class="commentInfo">' +
+															'<input type="hidden" name="reportSource" value="4">' +
+															'<input type="hidden" name="sourceNumber" value="' + item.feedCommentNo + '">' +
+															'<input type="hidden" name="user2" value="' + item.user.userId + '">' +
+															'<input type="hidden" name="source" value="1">' +
+															'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+															'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+															'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+															'<input type="hidden" name="parent" value="' + item.parent + '">' +
+															'<input type="hidden" name="depth" value="' + item.depth + '">' +
+															'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+															'</form>' +
+															'<div class="btn_recommentCheck" style="display: none;">' +
+															'<textarea name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+															'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
+															'</div>' +
+															'</div>' +
+															'</li>' +
+															'</ul>' +
+															'</div>'
+									
+								}) // each close
+								
+								$("li.comment").html(addHtml);
+								
+							} // success close
+								
+						} // ajax inner close
+				
+				) // ajax close
+				
+			})
+			
+			
+			
+			// ÎåìÍ∏Ä ÏÇ≠Ï†ú
+			
+			$(document).on("click", ".deleteComment", function(event) {
+				event.stopPropagation();
+				
+				console.log("[ÏÇ≠Ï†ú ÏöîÏ≤≠] ÌîºÎìú Î≤àÌò∏ : " + ${feed.feedNo} + " ÎåìÍ∏Ä Î≤àÌò∏ : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				
+				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var wantComment = $(this).prev().val();
+				var changePoint = $(this).parents(".comment");
+				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
+				var commentCount = $(this).parents(".section").find(".commentCount");
+				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
+				
+				Swal.fire({
+					  title: 'ÎåìÍ∏ÄÏùÑ ÏÇ≠Ï†úÌïòÏãúÍ≤†ÏäµÎãàÍπå?',
+					  text: "ÏÇ≠Ï†úÌïòÏãúÎ©¥ Îã§Ïãú Î≥µÍµ¨ÏãúÌÇ¨ Ïàò ÏóÜÏäµÎãàÎã§.",
+					  width: 500,
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'ÏÇ≠Ï†ú',
+					  cancelButtonText: 'Ï∑®ÏÜå'
+				}).then((result) => {
+					
+					if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > 0) {
+						
+						Swal.fire({
+							  title: 'ÎåìÍ∏ÄÏù¥ ÏûàÏñ¥ ÏÇ≠Ï†úÌï† Ïàò ÏóÜÏäµÎãàÎã§.',
+							  width: 500,
+							  icon: 'warning',
+							  timer : 500,
+							  showConfirmButton : false,
+						})
+						
+						return false;
+					}
+					
+					
+					if (result.value) {
+						$.ajax(
+								{
+									url : "/feedRest/json/deleteFeedComment",
+									method : "POST",
+									data : JSON.stringify ({
+										userId : sessionUser,
+										feedNo : ${feed.feedNo},
+										feedCommentNo : commentNo,
+										commentContent : wantComment,
+										currentPage : $("#currentPage").val()
+									}),
+									contentType: 'application/json',
+									dataType : "json",
+									header : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									}, // header end
+									
+									success : function(data, status) {
+
+										var changeHtml = "";
+										
+										$.each(data, function(index, item) {
+											
+											var depth = parseInt(item.depth) * 25; 
+											
+											changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
+											'<div class="comment-author">' +
+											'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
+											'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
+											'<span class="says"> says:</span>' +
+											'</div>' +
+											'<div class="comment-meta">' +
+											'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
+											
+											if(item.depth < 2) {
+												changeHtml += '<a class="btn_createRecomment">Reply</a>'
+											}
+											
+											if(sessionUser == item.user.userId) {
+												changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>'
+												changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>'
+											}
+											
+											changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
+											
+											if(item.heartCondition == 0) {
+												changeHtml +=	'<div class="heartPosition">' +
+																'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+																'	<div class="heartCountPosition">' +
+																item.commentHeartCount + 
+																'	</div>' +
+																'</div>'
+											} else {
+												changeHtml +=	'<div class="heartPosition">' + 
+																'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+																'	<div class="heartCountPosition">' +
+																item.commentHeartCount + 
+																'	</div>' +
+																'</div>'
+											}
+											
+											changeHtml += '</div>' + 
+												'<p class="commentContent">' + item.commentContent + '</p>' +
+												'<div class="commentInfo">' +
+												'<input type="hidden" name="source" value="1">' +
+												'<input type="hidden" name="userId" value="' + sessionUser + '">' +
+												'<input type="hidden" name="feedNo" value="' + ${feed.feedNo} + '">' +
+												'<input type="hidden" name="feedCommentNo" value="' + item.feedCommentNo + '">' +
+												'<input type="hidden" name="parent" value="' + item.parent + '">' +
+												'<input type="hidden" name="depth" value="' + item.depth + '">' +
+												'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
+												'</div>' +
+												'<div class="btn_recommentCheck" style="display: none;" >' +
+												'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+												'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+												'</div>' +
+												'</div>'
+											
+										}) // $.each close 
+										
+										console.log(changeHtml);
+										$(changePoint).html(changeHtml);
+										$(commentCount).text( parseInt( $(commentCount).text() ) - 1 );
+										$(htmlSequence).val( parseInt($(htmlSequence).val()) - 1);
+
+									} // success close
+									
+								} // ajax inner close
+									
+						) // deleteComment ajax close;
+						
+					}
+					
+				}) // swal fire Ï¢ÖÎ£å
+				
+			}) // deleteComment event close
+			
+			
+			
+			// ÎåìÍ∏Ä Ï¢ãÏïÑÏöî 
+			
+			$(document).on("click", ".addCommentHeart", function(event){
+				
+				event.stopPropagation();
+				console.log($(this).parent().parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
+				var commentNo = $(this).parent().parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var changePoint = $(this).parent().parents(".comment");
+				var sessionUser = $(this).parent().parent().siblings(".commentInfo").find("input[name='userId']").val();
+				
+				console.log(commentNo);
+				
+				$.ajax(
+						{
+							url : "/feedRest/json/addFeedCommentHeart",
+							method : "POST",
+							data : JSON.stringify ({
+								feedCommentNo : commentNo,
+								userId : sessionUser,
+								currentPage : parseInt($("#currentPage").val())
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								console.log("Ï°∞ÏïÑÏöî");
 								
 								var changeHtml = "";
 								
@@ -592,9 +937,19 @@
 									changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
 									
 									if(item.heartCondition == 0) {
-										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+										changeHtml +=	'<div class="heartPosition">' +
+														'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									} else {
-										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+										changeHtml +=	'<div class="heartPosition">' + 
+														'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									}
 									
 									changeHtml += '</div>' + 
@@ -609,8 +964,8 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
 									
@@ -629,15 +984,15 @@
 			
 			
 			
-			// ¥Ò±€ Ω»æÓø‰
+			// ÎåìÍ∏Ä Ïã´Ïñ¥Ïöî
 			
 			$(document).on("click", ".deleteCommentHeart", function(event) {
 				
 				event.stopPropagation();
 				
-				var commentNo = $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
-				var changePoint = $(this).parents(".comment");
-				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
+				var commentNo = $(this).parent().parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				var changePoint = $(this).parent().parents(".comment");
+				var sessionUser = $(this).parent().parent().siblings(".commentInfo").find("input[name='userId']").val();
 				
 				console.log(commentNo);
 				
@@ -647,7 +1002,8 @@
 							method : "POST",
 							data : JSON.stringify ({
 								feedCommentNo : commentNo,
-								userId : sessionUser
+								userId : sessionUser,
+								currentPage : parseInt($("#currentPage").val())
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -657,8 +1013,6 @@
 							}, // header end
 							
 							success : function(data, status) {
-								
-								alert("Ω√∑Øø‰");
 								
 								var changeHtml = "";
 								
@@ -687,9 +1041,19 @@
 									changeHtml += ' &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'
 									
 									if(item.heartCondition == 0) {
-										changeHtml += '<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'
+										changeHtml +=	'<div class="heartPosition">' +
+														'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									} else {
-										changeHtml += '<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" />'										
+										changeHtml +=	'<div class="heartPosition">' + 
+														'	<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />' +
+														'	<div class="heartCountPosition">' +
+														item.commentHeartCount + 
+														'	</div>' +
+														'</div>'
 									}
 									
 									changeHtml += '</div>' + 
@@ -704,8 +1068,8 @@
 										'<input type="hidden" name="sequence" value="' + item.sequence + '">' +
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
-										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="¿€º∫"></textarea>' +
-										'<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">' +
+										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="ÏûëÏÑ±"></textarea>' +
+										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
 										'</div>' +
 										'</div>'
 									
@@ -724,7 +1088,7 @@
 			
 			
 			
-			// ««µÂ ¡¡æ∆ø‰
+			// ÌîºÎìú Ï¢ãÏïÑÏöî
 			
 			$(document).on("click", ".feedLike", function(event) {
 				
@@ -764,7 +1128,7 @@
 			}); // .feedLike event close
 			
 			
-			// ««µÂ Ω»æÓø‰
+			// ÌîºÎìú Ïã´Ïñ¥Ïöî
 			
 			$(document).on("click", ".feedDislike", function(event) {
 				
@@ -805,7 +1169,7 @@
 			
 			
 			
-			// ««µÂ Ω≈∞Ì
+			// ÌîºÎìú Ïã†Í≥†
 			
 			$(document).on("click", ".report", function(event) {
 				event.stopPropagation();
@@ -816,7 +1180,7 @@
 			
 			
 			
-			// ¥Ò±€ Ω≈∞Ì
+			// ÎåìÍ∏Ä Ïã†Í≥†
 			
 			$(document).on("click", ".commentReport", function(event) {
 				event.stopPropagation();
@@ -850,7 +1214,7 @@
 			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 				<div class="caption">
 					<h2>Feed</h2>
-					<p>If you°Øre any good at all, you know you can be better.</p>
+					<p>If you‚Äôre any good at all, you know you can be better.</p>
 				</div><!-- caption -->					
 			</div>								
 		</div><!-- intro -->
@@ -871,12 +1235,12 @@
 				</div>
 				
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">±Ê√£±‚</a>
+					<a href="/feed/getFestivalLocation.jsp">Í∏∏Ï∞æÍ∏∞</a>
 				</div>
 				
 				<div class="column six">
 
-					<!-- ««µÂ ≥ªøÎ -->
+					<!-- ÌîºÎìú ÎÇ¥Ïö© -->
 					<div class="post-area clear-after">
 					
 						<article role="main">
@@ -885,13 +1249,13 @@
 							
 							<nav>
 								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-									<%-- ºˆ¡§ πˆ∆∞ --%>
+									<%-- ÏàòÏ†ï Î≤ÑÌäº --%>
 									<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
-									<%-- ºˆ¡§ πˆ∆∞ --%>
+									<%-- ÏàòÏ†ï Î≤ÑÌäº --%>
 								
-									<%-- ªË¡¶ πˆ∆∞ --%>
+									<%-- ÏÇ≠Ï†ú Î≤ÑÌäº --%>
 									<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
-									<%-- ªË¡¶ πˆ∆∞ --%>
+									<%-- ÏÇ≠Ï†ú Î≤ÑÌäº --%>
 								</c:if>
 							</nav>
 							
@@ -902,7 +1266,7 @@
 							
 							<div class="feedContent">
 							
-							<%-- ¿ÃπÃ¡ˆ --%>
+							<%-- Ïù¥ÎØ∏ÏßÄ --%>
 								<c:if test="${!empty feed.image1}">
 								<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
 									<ol class="carousel-indicators">
@@ -955,7 +1319,7 @@
 								</c:if>
 								
 								
-								<%-- ¿ÃπÃ¡ˆ --%>
+								<%-- Ïù¥ÎØ∏ÏßÄ --%>
 													
 								<p>${feed.content}</p>
 								
@@ -964,19 +1328,31 @@
 						</article>
 
 					</div>
-					<!-- ««µÂ ≥ªøÎ -->
+					<!-- ÌîºÎìú ÎÇ¥Ïö© -->
 					
-					<!-- ««µÂ «ÿΩ√≈¬±◊ -->
-					<c:if test="${!empty feed.hashtag}"><br />${feed.hashtag}</c:if>
-					<!-- ««µÂ «ÿΩ√≈¬±◊ -->
+					<!-- ÌîºÎìú Ìï¥ÏãúÌÉúÍ∑∏ -->
+					<c:if test="${!empty feed.hashtag}">
+						<div class="hashtagContent">
+							
+							<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
+							tag : 
+							<c:forEach var="textValue" items="${text}" varStatus="varStatus">
+								<span class="searchByHashtag">
+									#${textValue}
+								</span>
+							</c:forEach>
+							
+						</div>
+					</c:if>
+					<!-- ÌîºÎìú Ìï¥ÏãúÌÉúÍ∑∏ -->
 					
-					<!-- ««µÂ ¡¡æ∆ø‰ ¥Ò±€ºˆ Ω≈∞Ì -->
+					<!-- ÌîºÎìú Ï¢ãÏïÑÏöî ÎåìÍ∏ÄÏàò Ïã†Í≥† -->
 					<section class="row section">
 						<div class="row">
 						
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 							<div class="col-xs-1"></div>
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 							
 							<c:if test="${feed.checkHeart eq 0}">
 								<div class="col-xs-2">
@@ -1004,43 +1380,43 @@
 								 ${feed.commentCount}
 							</div>
 							
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 							<div class="col-xs-1"></div>
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 								
-							<!-- Ω≈∞Ì æ∆¿Ãƒ‹ -->
+							<!-- Ïã†Í≥† ÏïÑÏù¥ÏΩò -->
 							<div class="col-xs-2 report">
 								<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
 							</div>
-							<!-- Ω≈∞Ì æ∆¿Ãƒ‹ -->
+							<!-- Ïã†Í≥† ÏïÑÏù¥ÏΩò -->
 							
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 							<div class="col-xs-1"></div>
-							<%-- ø©πÈ --%>
+							<%-- Ïó¨Î∞± --%>
 							
 						</div>
 					</section>
-					<!-- ««µÂ ¡¡æ∆ø‰ ¥Ò±€ºˆ Ω≈∞Ì -->
+					<!-- ÌîºÎìú Ï¢ãÏïÑÏöî ÎåìÍ∏ÄÏàò Ïã†Í≥† -->
 					
 					<form id="feedInfo" style="margin-top:50px;">
-						<!-- ¥Ò±€ ∞¸∑√ hidden -->
+						<!-- ÎåìÍ∏Ä Í¥ÄÎ†® hidden -->
 						
-						<%-- ««µÂ Ω≈∞Ì --%>
+						<%-- ÌîºÎìú Ïã†Í≥† --%>
 						<input type="hidden" name="reportSource" value="3">
 						<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
 						<input type="hidden" name="user2" value="${feed.user.userId}">
-						<%-- ««µÂ Ω≈∞Ì --%>
+						<%-- ÌîºÎìú Ïã†Í≥† --%>
 						
 						<input type="hidden" name="source" value="0">
-						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+						<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
 						<input type="hidden" name="feedNo" value="${feed.feedNo}">
 						
 						<input type="hidden" name="parent" value="0">
 						<input type="hidden" name="depth" value="0">
 						<input type="hidden" name="sequence" value="${feed.commentCount}">
-						<textarea style="width:476px; height:80px; resize:none;" name="commentContent" placeholder="¥Ò±€¿€º∫"></textarea>
+						<textarea name="commentContent" placeholder="ÎåìÍ∏ÄÏûëÏÑ±"></textarea>
 						<input class="plain button purple btn_addComment" style="float:right;" value="Submit">
-						<!-- ¥Ò±€ ∞¸∑√ hidden -->
+						<!-- ÎåìÍ∏Ä Í¥ÄÎ†® hidden -->
 					</form>
 					
 					<div class="comment-section">
@@ -1064,40 +1440,56 @@
 									
 									
 									<div class="comment-meta">
-										<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time> / <c:if test="${comment.depth lt 3}"><a class="btn_createRecomment">Reply</a></c:if>
+										<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time> / <c:if test="${comment.depth lt 2}"><a class="btn_createRecomment">Reply</a></c:if>
 										<c:if test="${sessionScope.user.userId eq comment.user.userId}">
-											<!-- ºˆ¡§ πˆ∆∞ -->
+											<!-- ÏàòÏ†ï Î≤ÑÌäº -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
-											<!-- ºˆ¡§ πˆ∆∞ -->
+											<!-- ÏàòÏ†ï Î≤ÑÌäº -->
 											
-											<!--  ªË¡¶ πˆ∆∞ -->
+											<!--  ÏÇ≠Ï†ú Î≤ÑÌäº -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
-											<!--  ªË¡¶ πˆ∆∞ -->
+											<!--  ÏÇ≠Ï†ú Î≤ÑÌäº -->
 										</c:if>
-											<!--  Ω≈∞Ì πˆ∆∞ -->
+											<!--  Ïã†Í≥† Î≤ÑÌäº -->
 											&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>
-											<!--  Ω≈∞Ì πˆ∆∞ -->
-										<c:if test="${comment.heartCondition ne 0}"><img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" width="20" height="20" style="margin-top : 0px; float: right;" /></c:if>
-										<c:if test="${comment.heartCondition eq 0}"><img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" width="20" height="20" style="margin-top : 0px;float: right;" /></c:if>
+											<!--  Ïã†Í≥† Î≤ÑÌäº -->
+										<c:if test="${comment.heartCondition ne 0}">
+											<div class="heartPosition">
+												<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />
+												
+												<div class="heartCountPosition">
+													${comment.commentHeartCount}
+												</div>
+											</div>
+										</c:if>
+										<c:if test="${comment.heartCondition eq 0}">
+											<div class="heartPosition">
+												<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />
+												
+												<div class="heartCountPosition">
+													${comment.commentHeartCount}
+												</div>
+											</div>
+										</c:if>
 									</div><!-- comment-meta -->
 									
 									<c:if test="${fn:trim(comment.reportCondition) ne 0}">
-										∞¸∏Æ¿⁄ø° ¿««ÿ ªË¡¶µ» ¥Ò±€¿‘¥œ¥Ÿ.
+										<p class="commentContent">Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ ÏÇ≠Ï†úÎêú ÎåìÍ∏ÄÏûÖÎãàÎã§.</p>
 									</c:if>
 									
 									<c:if test="${fn:trim(comment.reportCondition) eq 0}">
 										<p class="commentContent">${comment.commentContent}</p>
 									</c:if>
 									
-									<!-- ¥Î¥Ò±€ ∞¸∑√ hidden -->
+									<!-- ÎåÄÎåìÍ∏Ä Í¥ÄÎ†® hidden -->
 			
 									<form class="commentInfo">
 									
-										<%-- ««µÂ ¥Ò±€ Ω≈∞Ì --%>
+										<%-- ÌîºÎìú ÎåìÍ∏Ä Ïã†Í≥† --%>
 										<input type="hidden" name="reportSource" value="4">
 										<input type="hidden" name="sourceNumber" value="${comment.feedCommentNo}">
 										<input type="hidden" name="user2" value="${comment.user.userId}">
-										<%-- ««µÂ ¥Ò±€ Ω≈∞Ì --%>
+										<%-- ÌîºÎìú ÎåìÍ∏Ä Ïã†Í≥† --%>
 									
 										<input type='hidden' name='source' value='1'>
 										<input type='hidden' name='userId' value='${sessionScope.user.userId}'>
@@ -1110,11 +1502,11 @@
 										
 									</form>
 							
-									<!-- ¥Î¥Ò±€ ∞¸∑√ hidden -->
+									<!-- ÎåÄÎåìÍ∏Ä Í¥ÄÎ†® hidden -->
 								
 									<div class='btn_recommentCheck' style="display: none;">
-										<textarea name='commentContent' placeholder='¿€º∫'></textarea>
-										<input class="plain button red btn_addRecomment" style="float:right;" type="submit" value="Submit Comment">
+										<textarea name='commentContent' placeholder='ÏûëÏÑ±'></textarea>
+										<input class="plain button purple btn_addRecomment" type="submit" value="Submit">
 									</div>
 								
 								</div><!-- single-comment -->
@@ -1128,6 +1520,11 @@
 				</div>
 				
 				<div class="column three"></div>
+				
+				<%-- ÌòÑÏû¨ ÌéòÏù¥ÏßÄ --%>
+				<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
+				<input type="hidden" id="pageFlag" value=true>
+				<%-- ÌòÑÏû¨ ÌéòÏù¥ÏßÄ --%>
 				
 			</div>
 		</section>

@@ -83,10 +83,11 @@
 
 	/* 댓글창 CSS */
 
-	textarea {
-		resize:none;
+	textarea[name='commentContent'] {
+		resize: none;
 		display: flex !important;
-		width:100% !important;
+		width: 100% !important;
+		height: 90px !important;
 	}
 
 	/* 댓글창 CSS */
@@ -96,8 +97,8 @@
 	article > nav {
 
 		float:right !important;
-		margin-right: 5px;
-   		margin-top: 5px;
+		margin-right: 10px;
+   		margin-top: 10px;
 			
 	}
 
@@ -107,7 +108,7 @@
 	/* FEED TIME */
 	
 	h5.meta-post {
-		color:rgba(171,148,233,1) !important;
+		color:black !important;
 		display: inline;
 	}
 	
@@ -116,8 +117,8 @@
 	/* TEST */
 
 	div.six {
-
-		border:2px solid black;
+		border-radius: 15px;
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 	}
 
 	/* TEST */
@@ -128,6 +129,7 @@
 		margin-top : 10px;
 		margin-left : 10px;
 		float : left;
+		border-radius: 25% !important;
 	}
 
 	/* 작성자 프로필 이미지 */
@@ -136,6 +138,7 @@
 
 	div.feedContent {
 		margin-left: 60px;
+		margin-right: 25px;
 		color: black !important;
 	}
 
@@ -143,19 +146,122 @@
 
 	/* 피드 댓글 달기 버튼 */
 
-	input.button.purple {
+	input.button.btn_addComment {
 		display: flex;
 		margin-right: 0px !important;
 
-		width: 75px;
-		height: 35px;
+		width: 75px !important;
+		height: 35px !important;
 		font-size: 0.5em !important;
 		background-color: #5F0080 !important;
 	}
 
+
 	/* 피드 댓글 달기 버튼 */
 
+	/* 댓글의 좋아요 사진 사이즈 */
 
+	.addCommentHeart {
+		width: 20px;
+		height: 20px;
+		margin-top: 0px;
+	}
+
+	.deleteCommentHeart {
+		width: 20px;
+		height: 20px;
+		margin-top: 0px;
+	}
+
+	/* 댓글의 좋아요 사진 사이즈 */
+
+	/* 대댓글 관련 hidden */
+
+	.btn_addRecomment {
+		margin-right: 0px !important;
+		width: 50px !important;
+		height: 25px !important;
+		font-size: 0.5em !important;
+		background-color: #5F0080 !important;
+	}
+
+	/* 대댓글 관련 hidden */
+
+	.heartPosition {
+	    display: flex;
+		float:right;
+	}
+
+	.heartCountPosition {
+		display: flex;
+		float:right;
+	}
+
+
+	/* 사진 모서리 둥글게 */
+
+	.carousel-inner > .item > img {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 350px;
+		border-radius: 30px;
+	}
+
+	/* 사진 모서리 둥글게 */
+
+	/* 해시 태그 */
+
+	.hashtagContent {
+		margin-left: 60px;
+		margin-right: 25px;
+	}
+
+	/* 해시 태그 */
+
+
+	/* 하단 바 중앙 정렬 */
+
+	.col-xs-2 {
+		text-align: center !important;
+		display: flex;
+		justify-content: center;
+	}
+
+	/* 하단 바 중앙 정렬 */
+
+
+
+
+
+
+
+
+
+
+
+
+	.updateFeedComment {
+
+		margin-right: 0px !important;
+		width: 75px !important;
+		height: 35px !important;
+		font-size: 0.5em !important;
+		background-color: #5F0080 !important;
+		float: right;
+
+	}
+
+
+	.cancel {
+
+		margin-right: 0px !important;
+		width: 75px !important;
+		height: 35px !important;
+		font-size: 0.5em !important;
+		background-color: #5F0080 !important;
+
+	}
 
 
 
