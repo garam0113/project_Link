@@ -33,8 +33,8 @@ body {
 }
 
 .head {
-	background-color: #5F0080;
-   background-image: linear-gradient(315deg, #BD76FF  0%, #5F0080 74%);
+	background-color: #5F0080; 
+   background-image: linear-gradient(315deg, #5F0080  30%, #BD76FF 74%);
 	border: 1px solid #bcbcbc;
 	align = center;
 }

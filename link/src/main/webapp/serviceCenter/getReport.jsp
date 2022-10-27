@@ -145,7 +145,7 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">³»¿ë</th>
-						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 100%">
 						${report.content}
 						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>

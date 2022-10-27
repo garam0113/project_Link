@@ -155,7 +155,7 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">³»¿ë</th>
-						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 100%">
 						${qandA.qandAContent}
 						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
 						</td>

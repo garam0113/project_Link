@@ -150,7 +150,7 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">³»¿ë</th>
-						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 100%">
 						${notice.noticeContent}
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
