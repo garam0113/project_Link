@@ -75,10 +75,12 @@
 			return;
 		}
 		
+		
 
-		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition")
-				.submit();
-	}
+		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition").submit();
+		
+		
+			}
 
 
 	$(function() {
@@ -86,16 +88,24 @@
 		$("button.btn.btn-apply").on("click", function() {
 			
 			fncAddApprovalCondition();
+			
 		});
 	});	
 
 	$(function() {
 
 		$("button.btn.btn-cancel").bind("click", function() {
-			//history.go(-1);
-			window.close();
+			history.go(-1);
+			//window.close();
 		});
 	});
+	
+/* 	window.addEventListener('beforeunload', function(event) {
+
+		event.preventDefault();
+		
+		event.returnValue = '';
+	}); */
 
 </script>
 </head>

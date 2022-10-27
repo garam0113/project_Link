@@ -151,7 +151,7 @@
 										 				 club_title LIKE('%${searchKeyword}%')
 													 </if> 
 													 <if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_category LIKE ('%${searchKeyword}%')
+										 			 club_category LIKE ('%${searchKeyword}%')
 													</if> 
 												</where>
 											 </if> 
