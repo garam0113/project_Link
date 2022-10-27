@@ -34,7 +34,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 로그인 값이 있는 경우만
 		
 		if(senderId != null) {
-			System.out.println(senderId + " 연결 됨");
+			System.out.println("★★★★★" + senderId + " 연결 ★★★★★");
 			users.put(senderId, session);	// 로그인중 개별 유저 저장
 		}
 	}
@@ -45,28 +45,65 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		String senderId = getMemberId(session);
 		
-		// 특정 유저에게 보내기
-		String msg = message.getPayload();
-		if(StringUtils.isNotEmpty(msg)) {
-			String[] strs = msg.split(",");
-			if(strs != null && strs.length == 4) {
-				String type = strs[0];
-				String target = strs[1]; // m_id 저장
-				String content = strs[2];
-				String url = strs[3];
-				WebSocketSession targetSession = users.get(target);
-				
-				// 실시간 접속 시
-				if(targetSession != null) {
-					// ex :  [XXX] 신청이 들어왔습니다.
-					
-					System.out.println("실시간 접속시 확인 : " + strs[0] + strs[1] + strs[2] + strs[3]);
-					TextMessage tmpMsg = new TextMessage(target + "님이 게시글을 남겼습니다.");
-					System.out.println("메시지 출력 확인 : " + tmpMsg);
-					targetSession.sendMessage(tmpMsg);
-				}
-			}
+		// 모든 유저에게 보내기
+		for(WebSocketSession sess : sessions) {
+			sess.sendMessage(new TextMessage(senderId + " : " + message.getPayload()));
 		}
+		
+//		// 특정 유저에게 보내기
+//		String msg = message.getPayload();
+//		if(StringUtils.isNotEmpty(msg)) {
+//			String[] strs = msg.split(",");
+//			if(strs != null && strs.length == 4) {
+//				String type = strs[0];		// 
+//				String target = strs[1];	// m_id 저장
+//				String content = strs[2];	// 내용
+//				String url = strs[3];		// 
+//				WebSocketSession targetSession = users.get(target);
+//				
+//				// 실시간 접속 시
+//				if(targetSession != null) {
+//					// ex :  [XXX] 신청이 들어왔습니다.
+//					
+//					System.out.println("실시간 접속시 확인 : " + strs[0] + strs[1] + strs[2] + strs[3]);
+//					
+//					if(type.equals("heart")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target + "님이 " + content + " 게시물에 좋아요를 하셨습니다.");
+//						
+//						targetSession.sendMessage(tmpMsg);
+//						
+//					} else if(type.equals("feed")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target + "님이 " + content + " 게시물 작성했습니다.");
+//						
+//						targetSession.sendMessage(tmpMsg);
+//					} else if(type.equals("feedComment")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target);
+//						
+//						targetSession.sendMessage(tmpMsg);
+//					} else if(type.equals("club")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target);
+//						
+//						targetSession.sendMessage(tmpMsg);
+//					} else if(type.equals("clubPost")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target);
+//						
+//						targetSession.sendMessage(tmpMsg);
+//					} else if(type.equals("clubPostComment")) {
+//						
+//						TextMessage tmpMsg = new TextMessage(target);
+//						
+//						targetSession.sendMessage(tmpMsg);
+//					}
+//					
+//										
+//				}
+//			}
+//		} // 특정 유저에게 보내기 close
 	}
 
 	// 연결 해제 시
@@ -76,7 +113,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		// TODO Auto-generated method stub
 		String senderId = getMemberId(session);
 		if(senderId!=null) {	// 로그인 값이 있는 경우만
-			log(senderId + " 연결 종료됨");
+			log("★★★★★" + senderId + " 연결 종료 ★★★★★");
 			users.remove(senderId);
 			sessions.remove(session);
 		}
