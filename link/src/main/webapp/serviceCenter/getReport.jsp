@@ -152,7 +152,9 @@ textarea {
 					 		<c:if test="${report.reportSource== '1'}"> 
 					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
-		     				
+		     						</hr></hr>
+		     						${report.club.clubNo} 클럽 번호
+		     						${report.clubPost.clubPostNo} 클럽번호
 		     				</c:if>
 		     				<c:if test="${report.reportSource=='2'}"> 
 							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />

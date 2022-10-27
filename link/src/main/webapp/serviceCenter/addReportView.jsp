@@ -276,7 +276,7 @@ textarea {
 		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
 		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPost.clubPostNo}"/>
 		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPost.clubNo}"/>
-		     	     {report.clubPost}
+		     	     ${report.clubPostComment}
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="ÇÇµå" style="width: 150px;" disabled />

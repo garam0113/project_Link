@@ -129,7 +129,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("123123"+report.getClubPost());
-		System.out.println("123123"+report.getClubPostComment());
+		System.out.println("123123"+report.getClubPost());
 		System.out.println("123123"+report.getFeed());
 		System.out.println("123123"+report.getFeedComment());
 		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
