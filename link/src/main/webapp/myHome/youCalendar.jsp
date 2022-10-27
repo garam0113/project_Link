@@ -15,6 +15,54 @@
 
 
 </script>
+<style>
+a{
+color : white !important
+}
+.fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100%; 
+    border-radius: 15px;
+        
+        
+}
+.fc .fc-toolbar {
+background-color: black;
+    border-radius: 15px;
+}
+.fc .fc-toolbar-title {
+    font-size: 1.75em;
+    margin: 0;
+    color : white;
+        border-radius: 15px;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: blueviolet;
+        border-radius: 15px;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: blueviolet;
+        border-radius: 15px;
+}
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin-left: 0.75em;
+    background-color: blueviolet;
+    border-radius: 15px;
+}
+.fc, .fc *, .fc *:before, .fc *:after {
+    box-sizing: border-box;
+    border-radius: 15px; 
+}
+.fc-dom {
+ color : white;
+}
+</style>
 </head>
 <body>
 <div id='calendar'></div>
@@ -45,6 +93,8 @@
 			    
 				var calendarEl = document.getElementById('calendar');
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
+			    	contentheight:680,
+			    	contentwidth:650,
 			      initialView: 'dayGridMonth',
 			      headerToolbar: {
 			        left: 'prev,next today',
@@ -67,6 +117,8 @@
 			
 			var calendarEl = document.getElementById('calendar');
 		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		    	contentheight:660,
+		    	contentwidth:660,
 		      initialView: 'dayGridMonth',
 		      headerToolbar: {
 		        left: 'prev,next today',

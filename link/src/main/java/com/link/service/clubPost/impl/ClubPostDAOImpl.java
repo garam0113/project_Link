@@ -240,9 +240,9 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		map.put("clubPost", new ClubPost(comment.getClubPostNo(), -1));
 		map.put("comment", comment);
 		
-		if(comment.getDepth() == 0) {
-			sqlSession.update("ClubPostMapper.updateClubPost", map);
-		}else {
+		sqlSession.update("ClubPostMapper.updateClubPost", map);
+		
+		if(comment.getDepth() != 0) {
 			System.out.println("댓글 삭제시 : 삭제여부 : " + ((Comment)map.get("comment")).getDeleteCondition()
 					+ ", 하트여부 : " + ((Comment)map.get("comment")).getHeartCondition() + ", 댓글의 부모번호 : " + ((Comment)map.get("comment")).getParent());
 			sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);

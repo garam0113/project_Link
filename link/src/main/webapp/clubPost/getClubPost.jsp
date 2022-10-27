@@ -53,8 +53,10 @@
 			<%-- 댓글등록 버튼 클릭시 버튼 숨기고 게시물의 댓글을 등록할 수 있는 textarea 보여진다 --%>
 			$("input[value='댓글등록']").bind("click", function(){
 				alert("게시물 댓글 등록");
+				
 				// 댓글작성 textarea와 등록 취소 버튼 보이기
 				$(this).parent().next().removeAttr("style");
+				
 				// 댓글등록 버튼 숨기기
 				$(this).parent().attr("style", "display: none");
 			});
@@ -62,10 +64,13 @@
 			<%-- 취소하기 버튼 클릭시 게시물의 댓글을 등록할 수 있는 textarea 숨기고 댓글등록 버튼 보여진다 --%>
 			$("input[value='취소하기']").bind("click", function(){
 				alert("게시물 댓글 취소");
+				
 				// 댓글작성란 textarea에 있는 내용 지우기
 				$(this).prev().prev().val("");
+				
 				// 게시물 댓글등록 버튼 보이기
 				$(this).parent().parent().prev().removeAttr("style");
+				
 				// 댓글취소 버튼 숨기기
 				$(this).parent().parent().attr("style", "display: none");
 			});
@@ -73,28 +78,42 @@
 			<%-- 댓글의 댓글을 등록할 수 있는 textarea 보여진다 --%>
 			$(document).on("click", ".reply.add", function(){
 				alert('대댓글 등록');
-				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
+				
+				// display : none을 제거하여 댓글작성란이 보이게한다
 				$(".clear-after-comment-add").attr("style", "display: none");
 				$(".clear-after-comment-update").attr("style", "display: none");
+
+				// display : none을 제거하여 댓글작성란이 보이게한다
 				$(this).parent().parent().parent().parent().next().removeAttr("style");
 			}); // end of 등록
 
 			<%-- 해당 댓글을 수정할 수 있는 입력텍스트 보여진다 --%>
 			$(document).on("click", ".reply.update", function(){
 				alert('대댓글 수정');
-				<%-- display : none을 제거하여 댓글작성란이 보이게한다 --%>
-				//alert('update');
+				
+				// display : none을 하여 등록란 수정란을 다 닫는다
 				$(".clear-after-comment-add").attr("style", "display: none");
 				$(".clear-after-comment-update").attr("style", "display: none");
-				//$(this).parent().parent().parent().parent().parent().children("div:eq(2)").removeAttr("style");
-				alert( $(this).parent().parent().parent().parent().parent().children("div:eq(2)").attr("class") );
+
+				// display : none을 제거하여 댓글작성란이 보이게한다
+				$(this).parent().parent().parent().parent().parent().children("div:eq(2)").removeAttr("style");
+				
+				// 기존 댓글내용
 				var content = $(this).parent().parent().parent().parent().children("p").text();
-				$(this).parent().parent().parent().parent().parent().find("textarea").val(content );
+				//alert( content );
+				
+				// 기존 댓글내용을 수정란에 출력
+				$(this).parent().parent().parent().parent().parent().children("div:eq(2)").find("textarea").val(content );
 			});
 			
 			<%-- 댓글의 수정, 댓글의 댓글 등록을 취소한다 --%>
 			$(document).on("click", ".plain.button.red.cancle", function(){
 				alert('대댓글 취소');
+				
+				// 댓글을 지운다
+				$(this).siblings("textarea").val("");
+				
+				// 댓글 작성란을 숨긴다
 				$(this).parent().parent().attr("style", "display: none");
 			});
 			
@@ -243,7 +262,7 @@
 															
 															
 															
-																+"<div class='comment-meta' style='display: inline-block; padding-left: 30px;'>"													
+																+"<div class='comment-meta' style='display: inline-block; padding-left: 30px;'>"
 																	+"<time datetime='2013-03-23 19:58'>"+el.commentRegDate+"</time>"
 																	+"<div class='comment body'>"
 						
@@ -332,6 +351,12 @@
 									//alert( display );
 
 									$(".children.plain"+el.parent).attr("clubCondition", "1");
+									
+									// 대댓글리스트 가져오기 전에 등록한 대댓글을 지운다
+									$(".children.plain"+el.parent).children("div:eq(0)").remove();
+									//$(".children.plain"+el.parent).removeChild();
+									
+									// 대댓글리스트 전체를 가져온다
 									$(".children.plain"+el.parent).append( display );
 									
 								});
@@ -405,17 +430,27 @@
 								
 								//alert(JSONData);
 								
+								var depth = JSONData.depth;
+								alert( depth );
+								alert( depth == 0 ? '게시물 댓글 등록' : '댓글의 댓글 등록' );
+								alert( depth );
+								
 								var display = "<div class='comment-parent'>";
+								var addComment = "";
+								var addRecommentCss = "";
 									
-								if( depth == 1){
-									display += "<li class='recomment'>";
-								}else if( depth == 0 ){
-									display += "<li class='comment'>";
+								if( depth == 0 ){
+									display += "<li class='comment'><div id='comment-body' class='single-comment"+JSONData.clubPostCommentNo+"' depth='1' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>";
+									addComment += "class='glyphicon glyphicon-plus-sign'";
+									addRecommentCss += "depth";
+								}else if( depth == 1 ){
+									display += "<li class='recomment'><div class='single-comment"+JSONData.clubPostCommentNo+"' depth='1' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>";
 								}
 								
+								
+								
 								display += 
-												"<div id='comment-body' class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
-													+"<div class='comment-author' style='float: left;'>"
+													"<div class='comment-author' style='float: left;'>"
 														+"<cite><a href='#'><img class='profileImage' src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' alt=''></a></cite>"
 														+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
 														+"<span class='says'>says:</span>"
@@ -423,7 +458,7 @@
 													
 													
 
-													+"<div class='comment-meta' style='display: inline-block; padding-left: 30px;'>"													
+													+"<div class='comment-meta' style='display: inline-block; padding-left: 30px;'>"
 														+"<time datetime='2013-03-23 19:58'>"+JSONData.commentRegDate+"</time>"														
 														+"<div class='comment body'>"
 
@@ -438,7 +473,7 @@
 															 	+"<span class='commentHeartCount"+JSONData.clubPostCommentNo+"' style='font-size: 30px;'>0</span>"																
 															 	<%-- 해당 댓글의 댓글 등록 --%>
 															 	+"<a class='reply add'>"
-																	+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-plus-sign' aria-hidden='true' style='font-size: 25px;'></span>"
+															 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span "+addComment+" aria-hidden='true' style='font-size: 25px;'></span>"
 															 	+"</a>"
 															 	<%-- 해당 댓글 수정 --%>
 															 	+"<a class='reply update'>"
@@ -476,8 +511,8 @@
 												+"<div class='clear-after-comment-add"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-add'>"
 													+"<textarea class='plain buffer' placeholder='댓글작성란'></textarea>"
-													+"<input class='plain button red add' value='등록완료' style='height: 30px; width: 90px;'>"
-													+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
+													+"<input class='plain button red add' value='등록완료'>"
+													+"<input class='plain button red cancle' value='취소'>"
 													+"</form>"						
 												+"</div>"
 												
@@ -485,21 +520,22 @@
 												+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-update'>"
 													+"<textarea class='plain buffer'></textarea>"
-													+"<input class='plain button red update' value='수정완료' style='height: 30px; width: 90px;'>"
-													+"<input class='plain button red cancle' value='취소' style='height: 30px; width: 60px;'>"
+													+"<input class='plain button red update' value='수정완료'>"
+													+"<input class='plain button red cancle' value='취소'>"
 													+"</form>"						
 												+"</div>"
 												
 												
-												+"<div class='recomment-header'>"
+												+"<div class='recomment-header "+addRecommentCss+"'>"
 													+"<div class='recomment-header-space'></div>"
 													+"<div class='recomment-header-body'>"
-														+"<ul class='children plains"+JSONData.clubPostCommentNo+"' clubCondition='0'>"
+														+"<ul class='children plain"+JSONData.clubPostCommentNo+"' clubCondition='0'>"
 														+"</ul>"
 													+"</div>"
 												+"</div>"
 												<%-- 대댓글 리스트 class='recomment-header' --%>
-											
+
+												+"<br>"
 											+"</li>"
 											
 										+"</div>";
@@ -507,11 +543,12 @@
 										
 										
 											
-								if( depth != 1){
-									//alert( "게시물의 댓글등록" );
+								if( depth == 0 ){
+									alert( "게시물의 댓글등록" );
 									$(".comment-list.plain").append( display );
 								}else if( depth == 1 ){
-									//alert( "댓글의 댓글등록" );
+									alert( "댓글의 댓글등록" );
+									alert( display );
 									$(".children.plain"+clubPostCommentNo).append( display );
 								}
 								//alert( display );
@@ -526,9 +563,9 @@
 				var commentContent = $(this).prev().val();
 				var clubPostCommentNo = $(this).parent().parent().attr("commentTextArea");
 				var divClassName = $(this).parent().parent().attr("class");
-				alert( "댓글내용 : " + commentContent );
-				alert( "해당댓글의번호 : " + clubPostCommentNo );
-				alert( divClassName );
+				//alert( "댓글내용 : " + commentContent );
+				//alert( "해당댓글의번호 : " + clubPostCommentNo );
+				//alert( divClassName );
 				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
 						{
@@ -680,21 +717,6 @@
 			$(document).on("click", ".clubPost-header-nickName", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
 			});//end of 마이홈피 이동
-			
-			
-			
-			///////////////////////////////////////// 등록, 수정, 삭제, 신고 Icon ////////////////////////////////////////////////
-			
-			
-			$(document).ready(function () {
-				/* 등록, 수정, 삭제, 신고 아이콘 */
-				$(".glyphicon").hover(function () {
-					$(this).css("color", "#5F0080");
-				}, function () {
-					$(this).css("color", "black");
-				});
-				
-			});
 			
 			
 		});
@@ -981,9 +1003,9 @@
 												
 												
 												<%-- 대댓글리스트 --%>
-												<div class="recomment-header">
+												<div class="recomment-header depth">
 													<div class="recomment-header-space"></div>
-													<div class="recomment-header-body"">
+													<div class="recomment-header-body">
 														<ul class="children plain${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" clubCondition="0">
 															
 															<%-- "<div class='comment-parent'>"

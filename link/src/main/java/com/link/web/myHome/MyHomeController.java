@@ -326,7 +326,15 @@ public class MyHomeController {
 		return "forward:/myHome/getFollowerList.jsp";
 	}
 	
-	
+	@RequestMapping(value = "getPayList")
+	public String getPayList(HttpSession session, Model model) throws Exception {
+		System.out.println("/getPayList : POST : 마이홈피에서 내가 결제한 리스트");
+		User user = new User();
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		user.setUserId(sessionId);
+		model.addAttribute("payList", clubPostService.getPayList((User)session.getAttribute("user")));
+		return "forward:/pay/getPayList.jsp";
+	}
 	
 	
 	
