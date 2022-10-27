@@ -41,8 +41,8 @@
 	
 			function connectWs() {
 	
-				sock = new SockJS('http://localhost:8080/echo');
-	
+				sock = new SockJS("<c:url value="/echo"/>");
+				
 				sock.onopen = function () {
 					console.log('open');
 	

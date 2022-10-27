@@ -26,6 +26,7 @@ import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
+import com.link.service.serviceCenter.ServiceCenterService;
 import com.link.service.user.UserService;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
@@ -41,6 +42,10 @@ public class FeedController {
 	@Autowired
 	@Qualifier("feedServiceImpl")
 	private FeedService feedService;
+	
+	@Autowired
+	@Qualifier("ServiceCenterServiceImpl")
+	private ServiceCenterService serviceCenterService;
 	
 	public FeedController() {
 		// TODO Auto-generated constructor stub
@@ -179,6 +184,12 @@ public class FeedController {
 		// Report & Push
 		
 		feedService.addFeed(feed);
+		
+		report.setFeed(feed);
+		report.setType(2);
+		report.setContent(feed.getContent());
+		
+		serviceCenterService.addPush(report);
 		
 		return "redirect:/feed/getFeedList";
 	}
@@ -383,7 +394,7 @@ public class FeedController {
 	// 사용
 	@RequestMapping(value = "getFeedList")
 	public String getFeedList(@ModelAttribute Search search, Heart heart,
-								User user, HttpSession httpSession, Model model) throws Exception {
+								User user, HttpSession httpSession, Map<String, Object> map, Model model) throws Exception {
 		
 		user = (User) httpSession.getAttribute("user");
 		
@@ -394,7 +405,6 @@ public class FeedController {
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("heart", heart);
 		map.put("search", search);
 		map.put("user", user);
@@ -407,6 +417,8 @@ public class FeedController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("feedList", map.get("feedList"));
+		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
+		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
 		return "forward:/feed/getFeedList.jsp";
 	}

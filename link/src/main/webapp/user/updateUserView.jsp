@@ -281,10 +281,10 @@ label {
 								<tr>
 									<th><span></span></th>
 									<td align="center">
-										<button type="button" class="btn"
+										<button type="button" class="btn" id="update"
 											style="background-color: #5F0080; color: white;"update">수
 											&nbsp;정</button>
-										<button type="button" class="btn"
+										<button type="button" class="btn" id="cancel"
 											style="background-color: #5F0080; color: white;"cancel">취
 											&nbsp;소</button>
 									</td>
