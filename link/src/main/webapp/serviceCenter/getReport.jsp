@@ -48,6 +48,8 @@
 <style>
 textarea {
 	resize: none;
+	border: none;
+    outline: none;
 }
 
 .custom-btn {
@@ -130,9 +132,9 @@ textarea {
 					</tr>
 					<tr class = "content" id ="content" >
 						<th style="text-align-last: center;">제목</th>
-						<td style="    display: flex; height: 40px;">						
-						<textarea class="text" id="title" name="title" value="${report.title}"  
-						style="width: 900px; height:40px;" readonly >${report.title}</textarea>
+						<td style="display: flex; height: 40px; width: 900px;">						
+						${report.title}
+						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 
 					</tr>
 					<tr>
@@ -141,9 +143,9 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td>
-						<textarea class="text" id="content" name="content" value="${report.content}"  
-						style="width: 900px; size:400px;" readonly >${report.content}</textarea>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${report.content}
+						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>
 					</tr>
 					<tr>
@@ -152,14 +154,18 @@ textarea {
 					 		<c:if test="${report.reportSource== '1'}"> 
 					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
-		     						</hr></hr>
-		     						${report.club.clubNo} 클럽 번호
-		     						${report.clubPost.clubPostNo} 클럽번호
+		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>	
+		     						
+		     						
 		     				</c:if>
 		     				<c:if test="${report.reportSource=='2'}"> 
 							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
 		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
-		     		 		
+		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>
 		     		 		</c:if>
 		     		 		<c:if test="${report.reportSource=='3'}">
 							<input type="text" class="" value="피드" style="width: 150px;" disabled />
@@ -175,7 +181,7 @@ textarea {
 		     				 ${report.feedComment.feedNo} 번째 피드 </a>
 		     				 </c:if>
 		     			</td>
-		     			<td style="transform: translate(-450px, -5px);"><strong>신고받는 닉네임</strong>
+		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
 		     			 <input type="text" class="" value="${report.user2.nickName}" style="width:auto; height:35px; display:inline;" disabled />
 		     			</td>
 					</tr>
@@ -201,28 +207,7 @@ textarea {
 						</td>
 						
 					</tr>
-					<tr >
-						<th style="text-align-last: center;">첨부 파일</th>
-						<c:if test="${report.reportImage1 == null && report.reportImage2 ==null }">
-							<td>첨부파일 없음</td>
-						</c:if>
-						<td><c:if test="${report.reportImage1 != null }">
-						<img src="/resources/image/uploadFiles/${report.reportImage1}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
-						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${report.reportImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
-						
-						</c:if>
-						<c:if test="${report.reportImage2 != null }">
-						<img src="/resources/image/uploadFiles/${report.reportImage2}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
-						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${report.reportImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
-						
-						</c:if>
-						</td>
-						
-						
-					</tr>
-					<tr >
+					<tr>
 						<th style="text-align-last: center;"></th>
 					</tr>
 			</table>

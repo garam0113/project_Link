@@ -137,9 +137,9 @@ textarea {
 					</tr>
 					<tr class = "content" id ="content">
 						<th style="text-align-last: center;">제목</th>
-						<td style="    display: flex; height: 40px;">								
-						<textarea class="text" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}"  
-						style="width: 900px; height:40px;" readonly >${notice.noticeTitle}</textarea>
+						<td style="display: flex; height: 40px; width: 900px;">						
+						${notice.noticeTitle}	
+						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						</td> 
 					</tr>
 					<tr>
@@ -150,9 +150,9 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td>
-						<textarea class="text" id="noticeContent" name="noticeContent" value="${notice.noticeContent}"  
-						style="width: 900px; size:400px;" readonly >${notice.noticeContent}</textarea>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${notice.noticeContent}
+						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
 					</tr>
 					<tr >
