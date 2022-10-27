@@ -144,25 +144,63 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
 											FROM club
-											 <if test="searchCondition != null">
+											  <if test="searchCondition != null">
 												<where>
-													  <if test="searchCondition == 0 and searchKeyword !='' "> 
-													<!-- <if test=" searchKeyword !='' ">  -->
-										 				 club_title LIKE('%${searchKeyword}%')
-													 </if> 
-													 <if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
-										 			 	and club_category LIKE ('%${category}%')
-													</if>
-													<if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
-										 			 	and club_area LIKE ('%${area}%')
-													</if> 
-													 
+													<choose>
+														<when test="searchKeyword !='' and clubCategory != '' and clubArea != '' ">
+															<!--  카테고리 and 지역 and 이름검색 -->
+															club_title LIKE '%'||#{searchKeyword}||'%' and club_category = #{clubCategory} and club_area = #{clubArea}
+														</when>													
+														<when test="searchKeyword == null or searchKeyword =='' ">
+															<choose>
+																<when test="clubArea == '' ">
+																	<!-- 카테고리만 검색 -->
+																	club_category = #{clubCategory}
+																</when>
+																<when test="clubCategory == '' ">
+																	<!-- 지역만 검색 -->
+																	club_area = #{clubArea}	
+																</when>
+																<otherwise>
+																	<!-- 카테고리 and 지역 -->
+																	club_category = #{clubCategory} and club_area = #{clubArea}
+																</otherwise>
+															</choose>
+														</when>																										
+														<when test="clubCategory == '' ">
+															<choose>
+																<when test="clubArea == '' ">
+																	<!-- 이름만 검색 -->
+																	club_title LIKE '%'||#{searchKeyword}||'%'
+																</when>
+																<otherwise>
+																	<!-- 지역 and 이름검색 -->
+																	club_area = #{clubArea} and club_title LIKE '%'||#{searchKeyword}||'%'
+																</otherwise>
+															</choose>															
+														</when>													
+														<otherwise>
+															<!-- 카ㅔ고리 and 이름검색 -->
+															club_category = #{clubCategory} and club_title LIKE '%'||#{searchKeyword}||'%'
+														</otherwise>
+													</choose>														
 												</where>
 											 </if> 
 											ORDER BY club_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select> 	  	 	     	 
+	 </select>
+	 
+	 <!-- <if test=" searchKeyword !='' ">  -->
+										 				 <!-- club_title LIKE('%${searchKeyword}%') and club_category = #{clubCategory} or club_area = #{clubArea} -->
+										 				 
+													 
+													<!--  <if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
+										 			 	and club_category LIKE ('%${category}%')
+													</if>
+													<if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
+										 			 	and club_area LIKE ('%${area}%')
+													</if>  -->
 	 
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
