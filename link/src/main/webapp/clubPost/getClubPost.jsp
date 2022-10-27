@@ -112,9 +112,26 @@
 			
 			<%-- 모임 게시물 삭제 --%>
 			$("#club-post-delete").bind("click", function(){
-				if(confirm("정말 삭제하시겠습니까?")){
-					$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
-				}
+				
+				Swal.fire({
+					  title: '정말 삭제하시겠습니까?',
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '삭제',
+					  cancelButtonText: '취소',
+					}).then((result) => {
+					  if (result.isConfirmed) {
+					    Swal.fire(
+					      '삭제완료',
+					      '댓글이 삭제되었습니다',
+					      'success'
+					    )
+					    
+					    clubPostdeleteFnc();
+					  }//end of if
+					})// end of swal
 			});
 			
 			<%-- 모임 게시물 신고 --%>
@@ -397,7 +414,7 @@
 								}
 								
 								display += 
-												+"<div id='comment-body' class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
+												"<div id='comment-body' class='single-comment"+JSONData.clubPostCommentNo+"' depth='3' commentNo='"+JSONData.clubPostCommentNo+"' revUserId='"+JSONData.user.userId+"'>"
 													+"<div class='comment-author' style='float: left;'>"
 														+"<cite><a href='#'><img class='profileImage' src='/resources/image/uploadFiles/"+JSONData.user.profileImage+"' alt=''></a></cite>"
 														+"<cite><a href='#'>"+JSONData.user.nickName+"</a></cite>"
@@ -683,6 +700,12 @@
 		});
 		</script>
 		
+		<script type="text/javascript">
+			function clubPostdeleteFnc(){
+				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+			}
+		</script>
+		
 	</head>
 
 	<body class="single single-post">
@@ -695,7 +718,7 @@
 		<input type="hidden" name="reportSource" value="1">
 		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
 		<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
-		<input type="text" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
+		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
 		<%-- 모임게시물 신고 --%>
 	</form>
 	
@@ -704,8 +727,8 @@
 		<input type="hidden" name="reportSource" value="2">
 		<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
 		<input type="hidden" name="userId" id="revUserId" value="">
-		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
-		<input type="text" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
+		<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
+		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
 		<%-- 모임게시물 댓글 신고 --%>
 	</form>
 
@@ -759,7 +782,7 @@
 					<div class="post-area clear-after">
 						<article role="main">
 							
-							<h5><time datetime="2013-11-09">
+							<h5><time datetime="2013-11-09" class="club-post-time">
 							<c:choose>
 								<c:when test="${ !empty clubPost.getClubPost.clubPostUpdateDate }">${ clubPost.getClubPost.clubPostUpdateDate }(수정 됨)</c:when>
 								<c:otherwise>${ clubPost.getClubPost.clubPostRegDate }</c:otherwise>
@@ -769,7 +792,11 @@
 							<div class="clubPost-header">
 								<%-- 게시물 등록 회원 프로필 사진 --%>
 								<div class="clubPost-header-profile" userId = "${ clubPost.getClubPost.user.userId }">
-									<img class="profileImage" src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }"></div>
+									<img class="profileImage" src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }">
+								</div>
+							
+								<%-- 게시물 등록 회원 닉네임 --%>
+								<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
 								
 								<div class="clubPost-header-space"></div>
 								
@@ -814,9 +841,6 @@
 								</c:if>
 							</div>
 							
-							<%-- 게시물 등록 회원 닉네임 --%>
-							<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
-							
 							<div class="clubPost-body">
 							
 								<br><br>
@@ -826,8 +850,6 @@
 								<br><br>
 								
 								<div class="clubPost-body-content">
-									<%-- <p>모임 번호 : ${ clubPost.getClubPost.clubNo }</p> --%>
-									<%-- <p>모임 게시물 번호 : ${ clubPost.getClubPost.clubPostNo }</p> --%>
 									<p>${ clubPost.getClubPost.clubPostContent }</p>
 								</div>
 							</div>

@@ -248,23 +248,24 @@
 												</c:if>
 											</a>
 											
-											<div style="display: flex; width: 87%;">
-												<div style="flex:1;">
+											<div class="club-post-list-content" style="display: grid; grid-template-columns: 1fr 1fr 3fr 1fr 1fr;">
+												<div>
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
 														<img class="profileImage" src="/resources/image/uploadFiles/${ clubPostList[i].user.profileImage }">
 													</a>
 												</div>
-												<div style="flex:1;">
+												<div>
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
 														<p align="center" style="font-size: 30px; color: red;">${ clubPostList[i].user.nickName }</p>
 													</a>
 												</div>
-												<div style="flex:1;">
+												<div></div>
+												<div style="padding-top: 20px;">
 													<!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-													<img src="/resources/image/uploadFiles/${ clubPostList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
+													<img style="float: right;" src="/resources/image/uploadFiles/${ clubPostList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
 												</div>
-												<div style="flex:1;">
-													<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostHeartCount }</p>
+												<div>
+													<p align="center" style="font-size: 30px; float: left;">${ clubPostList[i].clubPostHeartCount }</p>
 												</div>
 												
 											</div>
