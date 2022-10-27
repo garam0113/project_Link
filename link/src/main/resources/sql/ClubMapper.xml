@@ -150,9 +150,13 @@
 													<!-- <if test=" searchKeyword !='' ">  -->
 										 				 club_title LIKE('%${searchKeyword}%')
 													 </if> 
-													 <if test="searchCondition == 1 and searchKeyword !='' ">
-										 				club_category LIKE ('%${searchKeyword}%')
+													 <if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
+										 			 	and club_category LIKE ('%${category}%')
+													</if>
+													<if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
+										 			 	and club_area LIKE ('%${area}%')
 													</if> 
+													 
 												</where>
 											 </if> 
 											ORDER BY club_no ) inner_table

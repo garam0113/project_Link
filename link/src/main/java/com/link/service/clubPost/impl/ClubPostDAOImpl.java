@@ -240,8 +240,10 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		map.put("clubPost", new ClubPost(comment.getClubPostNo(), -1));
 		map.put("comment", comment);
 		
+		// 게시물의 전체 댓글개수 - 1 한다
 		sqlSession.update("ClubPostMapper.updateClubPost", map);
-		
+
+		// 댓글개수 - 1 한다
 		if(comment.getDepth() != 0) {
 			System.out.println("댓글 삭제시 : 삭제여부 : " + ((Comment)map.get("comment")).getDeleteCondition()
 					+ ", 하트여부 : " + ((Comment)map.get("comment")).getHeartCondition() + ", 댓글의 부모번호 : " + ((Comment)map.get("comment")).getParent());
@@ -250,8 +252,24 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 
 		// 댓글 삭제
 		sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+		
+		// 게시물 댓글개수 가져온다
+		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo(), comment.getUser()));
+		
+		// 댓글개수 가져온다
+		if(comment.getDepth() != 0) {
+			comment.setDeleteCondition(10+"");
+			System.out.println(comment);
+			System.out.println("여기로");
+			comment = sqlSession.selectOne("ClubPostCommentMapper.getClubPostComment", comment);
+			System.out.println(comment);
+			map.put("commentCount", comment.getCommentCount());
+			map.put("parent", ((Comment)map.get("comment")).getParent());
+		}
+		
+		map.put("clubPostCommentCount", clubPost.getClubPostCommentCount());
 
-		return null;
+		return map;
 	}
 
 	
