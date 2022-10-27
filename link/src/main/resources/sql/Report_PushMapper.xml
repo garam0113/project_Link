@@ -293,6 +293,51 @@
 								</if>
 						</if> ) countTable						
 	 </select>
-	  
+	 
+	 
+	 
+	 
+	 
+	 <!--////////// 알림 //////////-->
+	 
+	 <insert id="addPush"		parameterType="report">
+	 	INSERT INTO REPORT_PUSH
+		( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_NO, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,
+		USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)
+	
+		VALUES (seq_report_push_no.nextval,
+				 #{title:VARCHAR},
+				 #{content},
+				 #{reportSource:VARCHAR},
+				 #{club.clubNo:NUMERIC},
+				 #{clubPost.clubPostNo:NUMERIC},
+				 #{comment.clubPostCommentNo:NUMERIC},
+				 #{feed.feedNo:NUMERIC},
+				 #{feedComment.feedCommentNo:NUMERIC}, 
+				 #{user1.userId:VARCHAR},
+				 #{user2.userId:VARCHAR},
+				 SYSDATE,
+				 #{reportImage1:VARCHAR},
+				 #{reportImage2:VARCHAR}, 
+				 #{type:VARCHAR},
+				 #{reportReason:VARCHAR},
+			     #{reportCondition:VARCHAR} )
+	 </insert>
+	 
+	 <update id="updatePush">
+	 
+	 </update>
+	 
+	 <select id="getPushList"	parameterType="hashmap"			resultMap="Report_PushSelectMap">
+	 	SELECT
+	 	*
+	 	FROM REPORT_PUSH
+	 	WHERE TYPE = 2
+	 	AND USER_ID2 = #{user.userId}
+	 </select>
+	 
+	 
+	<!--////////// 알림 //////////-->
+	 
 	 
 </mapper>

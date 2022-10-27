@@ -12,6 +12,8 @@ public class Search {
 	private int startRowNum;
 	private int endRowNum;
 	private String userId;
+	private String category;
+	private String area;
 	
 	public Search(){
 		
@@ -92,6 +94,22 @@ public class Search {
 		this.userId = userId;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getarea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -113,12 +131,12 @@ public class Search {
 		builder.append(endRowNum);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", area=");
+		builder.append(area);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-	
 	
 }

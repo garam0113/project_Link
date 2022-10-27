@@ -55,14 +55,15 @@ public class ServiceCenterRestController {
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
 	public String addReport(@RequestBody Report report,  Model model , @RequestParam int clubNo,
-			@RequestParam(value = "clubPostNo2", required =false) String clubPostNo2 ,Search search  )throws Exception {
+			@RequestParam(value = "clubPostNo", required =false) int clubPostNo ,Search search  )throws Exception {
+			//Search search  )throws Exception {
 		
 		Comment comment = new Comment();
 		System.out.println("/serviceCenterRest/json/addReport : POST");
 
 		System.out.println(report);
 		System.out.println("asdf   "+clubNo);  //모임번호
-		System.out.println("asdf   "+clubPostNo2); //모임게시물번호
+		System.out.println("asdf   "+clubPostNo); //모임게시물번호
 		//사진 업로드
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -77,7 +78,11 @@ public class ServiceCenterRestController {
 						report.setClubPost(clubPost);
 					}else if(report.getReportSource()==2) {   		//모임게시물댓글
 						comment.setClubPostCommentNo(report.getNo());
+						club.setClubNo(clubNo);
+						clubPost.setClubPostNo(clubPostNo);
 						report.setComment(comment);
+						report.setClub(club);
+						report.setClubPost(clubPost);
 					}
 					else if(report.getReportSource()==3) {			//피드
 						feed.setFeedNo(report.getNo());
