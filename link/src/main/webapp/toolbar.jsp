@@ -23,9 +23,80 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
 		
-	</head>
+		<%-- SOCKET IO --%>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+		<%-- SOCKET IO --%>
+		
+		<script type="text/javascript">
+		
+		
+		</script>
+		
+		<script>
+			var sock = null;
+	
+			$(document).ready(function () {
+				connectWs();
+			});
+	
+			function connectWs() {
+	
+				sock = new SockJS('http://localhost:8080/echo');
+	
+				sock.onopen = function () {
+					console.log('open');
+	
+				};
+	
+				sock.onmessage = onMessage;
+	
+				sock.onclose = function () {
+					console.log("체크" + sock);
+					console.log('close');
+				};
+	
+			};
+	
+			function getContextPath() {
+				var hostIndex = location.href.indexOf(location.host) + location.host.length;
+	
+				return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+			};
+			
+			function onMessage(evt){
+				var data = evt.data;
+			    
+			    const Toast = Swal.mixin({
+			    	  toast: true,
+			    	  position: 'bottom-end',
+			    	  showConfirmButton: false,
+			    	  timer: 3000,
+			    	  timerProgressBar: true,
+			    	  didOpen: (toast) => {
+			    	    toast.addEventListener('mouseenter', Swal.stopTimer)
+			    	    toast.addEventListener('mouseleave', Swal.resumeTimer)
+			    	  }
+			    	})
+
+			    	Toast.fire({
+			    	  icon: 'info',
+			    	  title: data
+			    	})
+			    
+			    
+			};	
+		
+		</script>
 
 </head>
+
+<style>
+
+</style>
+		
+	</head>
+
+
 
 <body class="page">
 

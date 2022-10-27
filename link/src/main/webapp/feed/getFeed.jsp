@@ -121,7 +121,7 @@
 														if(item.reportCondition == 0) {
 															addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
 														} else {
-															addHtml += '관리자에 의해 삭제된 댓글입니다.'
+															addHtml += '<p class="commentContent">관리자에 의해 삭제된 댓글입니다.</p>'
 														}
 														
 														addHtml += '<form class="commentInfo">' +
@@ -699,7 +699,7 @@
 												if(item.reportCondition == 0) {
 													addHtml += '<p class="commentContent">' + item.commentContent + '</p>'
 												} else {
-													addHtml += '관리자에 의해 삭제된 댓글입니다.'
+													addHtml += '<p class="commentContent">관리자에 의해 삭제된 댓글입니다.</p>'
 												}
 												
 												addHtml += '<form class="commentInfo">' +
@@ -1474,7 +1474,7 @@
 									</div><!-- comment-meta -->
 									
 									<c:if test="${fn:trim(comment.reportCondition) ne 0}">
-										관리자에 의해 삭제된 댓글입니다.
+										<p class="commentContent">관리자에 의해 삭제된 댓글입니다.</p>
 									</c:if>
 									
 									<c:if test="${fn:trim(comment.reportCondition) eq 0}">

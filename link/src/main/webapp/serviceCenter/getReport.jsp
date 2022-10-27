@@ -10,9 +10,18 @@
 
 <head>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
+<meta charset="EUC-KR">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="The Page Description">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<title></title>
+<title>신고내용 조회</title>
 </head>
 
 
@@ -20,238 +29,205 @@
 <script type="text/javascript">
 	$(function() {
 
-		$("td.ct_btn01:contains('이전')").bind("click", function() {
+		$("button:contains('뒤로')").bind("click", function() {
+			if(${user.role=='1'}){
+			self.location = "/serviceCenter/getReportList";
+			}else if (${user.role=='0'}){
+			$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();	
+			}
+		})
 
-			history.go(-1);
-
-		});
-
-		$("td.ct_btn01:contains('수정')").bind("click", function() {
-			self.location = "../serviceCenter/updateReport?no="+$('tr.no').find('td').text();
+		$("button:contains('수정')").bind("click", function() {
+			self.location = "/serviceCenter/updateReport?no="+$('#no').val();
 		})
 
 
 
 	});
 </script>
+<style>
+textarea {
+	resize: none;
+	border: none;
+    outline: none;
+}
 
-<body bgcolor="#ffffff" text="#000000">
+.custom-btn {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none !important;
+  box-shadow:none !important;
+  outline: none;
+}
+.btn-13 {
+  background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #5F0080;
+  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover { <%-- 글씨색 --%>
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
+.input{
+	width:auto;
+	height:auto;
+	margin-right: 70px;
+}
 
-	<form>
+</style>
+<%-- 테이블 시작 --%>
+<jsp:include page="/toolbar.jsp" />
+<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+  <h2>신고 상세보기</h2>
+</div>
+	
+		<div class="container" style="margin-top: 37px;">
+			<!--  table Start /////////////////////////////////////-->
+			<table>
+				<div class="row2">
+				<thead>
+				</thead>
+				</div>
+				</tbody>
+					 <tr class = "body" id ="body" >
+						<th style="text-align-last: center;"></th>
+						<td align="left" style="display:flex; height: 50px;">${report.no}번 신고
+						<input type="hidden" name="no" id="no" value="${report.no}">
+						</td>
+					</tr>
+					<tr class = "content" id ="content" >
+						<th style="text-align-last: center;">제목</th>
+						<td style="display: flex; height: 40px; width: 900px;">						
+						${report.title}
+						<input type="hidden" id="title" name="title" value="${report.title}">
+						</td> 
+					</tr>
+					<tr>
+						<th></th>
+						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;">${report.regDate }</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${report.content}
+						<input type="hidden" id="content" name="content" value="${report.content}">
+						</td>
+					</tr>
+					<tr>
+					 	<th style="text-align-last: center;"> 신고 출처</th>
+					 	<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 70px;">
+					 		<c:if test="${report.reportSource== '1'}"> 
+					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
+		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
+		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>	
+		     						
+		     						
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='2'}"> 
+							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
+		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
+		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>
+		     		 		</c:if>
+		     		 		<c:if test="${report.reportSource=='3'}">
+							<input type="text" class="" value="피드" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="3">
+		     				 
+		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feed.feedNo} 번째 피드 </a>
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='4'}">
+							<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feedComment.feedNo} 번째 피드 </a>
+		     				 </c:if>
+		     			</td>
+		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
+		     			 <input type="text" class="" value="${report.user2.nickName}" style="width:auto; height:35px; display:inline;" disabled />
+		     			</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">신고 사유</th>
+						<td style="display:flex;">
+						<c:if test="${report.reportReason == '1'|| report.reportReason == '3' || report.reportReason == '5' || report.reportReason =='7'|| report.reportReason =='9'
+		 				   || report.reportReason =='11'|| report.reportReason =='13'|| report.reportReason =='15'}">
+		    			  욕설<input type="checkbox" class="input" id="reportReason" name="reportReason" value="1" checked> 
+		    			</c:if>
+		    			 <c:if test="${report.reportReason == '2'|| report.reportReason == '3' || report.reportReason =='6'|| report.reportReason =='7'|| report.reportReason =='10'
+		     			|| report.reportReason =='14'|| report.reportReason =='15'}">
+		    				  광고<input type="checkbox" class="input" id="reportReason" name="reportReason" value="2" checked>
+		    			</c:if>
+		    				<c:if test="${report.reportReason == '4'|| report.reportReason == '5' || report.reportReason == '6' || report.reportReason =='7'|| report.reportReason == '12'
+		    			|| report.reportReason =='13'|| report.reportReason =='14'|| report.reportReason =='15'}">
+		   				   기타<input type="checkbox" class="input" id="reportReason" name="reportReason" value="4" checked>
+		   				  </c:if>
+		   				 <c:if test="${report.reportReason == '8'|| report.reportReason == '9' || report.reportReason == '10' || report.reportReason == '11' || report.reportReason == '12'
+		    				 || report.reportReason == '11' || report.reportReason == '14' || report.reportReason == '15' }">
+		    			  성적<input type="checkbox" class="input" id="reportReason" name="reportReason" value="8" checked>
+		   				</c:if>
+						</td>
+						
+					</tr>
+					<tr>
+						<th style="text-align-last: center;"></th>
+					</tr>
+			</table>
+			<!--  table End /////////////////////////////////////-->
+	
 
-		<table width="100%" height="37" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr>
-				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-					width="15" height="37"></td>
-				<td background="/images/ct_ttl_img02.gif" width="100%"
-					style="padding-left: 10px;">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="93%" class="ct_ttl01">신고 처리한다</td>
-							<td width="20%" align="right">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-					width="12" height="37" /></td>
-			</tr>
-		</table>
+		
+						
+									<div> 
+									<c:if test="${user.role=='1'}">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									   수정</button> 
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 13px;">
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">번호 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr class ="no">
-							<td width="105"><input type="hidden" name="no" id="no" value="${report.no}">
-								${report.no}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">제목 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.title}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
+									</c:if>
+									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									뒤로</button>
+									</div>
+				
+			</div><form></form>
 
-			<c:set var="text" value="${fn:split(report.reportImage1, '*')}"></c:set>
-
-			<tr>
-				<td width="104" class="ct_write">이미지 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-
-				<td class="ct_write01"><c:forEach var="i" items="${text}">
-						<img src="/images/uploadFiles/${i}" width="300" height="300"
-							align="absmiddle" />
-					</c:forEach></td>
-			</tr>
-
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-
-			<tr>
-				<td width="104" class="ct_write">내용 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.content}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">작성일자</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.regDate}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			
-		    <label for="reportReason" class="col-sm-offset-1 col-sm-3 control-label">신고 사유</label>
-		    <div class="col-sm-4">
-		    <c:if test="${report.reportReason == '1'|| report.reportReason == '3' || report.reportReason == '5' || report.reportReason =='7'|| report.reportReason =='9'
-		    || report.reportReason =='11'|| report.reportReason =='13'|| report.reportReason =='15'}">
-		      욕설<input type="checkbox" class="form-control" id="reportReason" name="reportReason" value="1" checked >
-		    </c:if>
-		     <c:if test="${report.reportReason == '2'|| report.reportReason == '3' || report.reportReason =='6'|| report.reportReason =='7'|| report.reportReason =='10'
-		     || report.reportReason =='14'|| report.reportReason =='15'}">
-		      광고<input type="checkbox" class="form-control" id="reportReason" name="reportReason" value="2" checked>
-		    </c:if>
-		    <c:if test="${report.reportReason == '4'|| report.reportReason == '5' || report.reportReason == '6' || report.reportReason =='7'|| report.reportReason == '12'
-		    || report.reportReason =='13'|| report.reportReason =='14'|| report.reportReason =='15'}">
-		      기타<input type="checkbox" class="form-control" id="reportReason" name="reportReason" value="4" checked>
-		     </c:if>
-		    <c:if test="${report.reportReason == '8'|| report.reportReason == '9' || report.reportReason == '10' || report.reportReason == '11' || report.reportReason == '12'
-		     || report.reportReason == '11' || report.reportReason == '14' || report.reportReason == '15' }">
-		      성적<input type="checkbox" class="form-control" id="reportReason" name="reportReason" value="8" checked>
-		   </c:if>
-
-		    </div>
-		  	</tr>
-		 <tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">신고한 ID</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.user1.userId}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">신고대상ID</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.user2.userId}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">신고누적횟수</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.user2.reportCount}</td>
-			</tr>
-			<tr>
-			<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-				<tr>
-				<td width="104" class="ct_write">신고출처</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">
-				<c:if test="${report.reportSource=='1'}">모임게시물</c:if>
-				<c:if test="${report.reportSource=='2'}">모임게시물댓글</c:if>
-				<c:if test="${report.reportSource=='3'}">피드</c:if>
-				<c:if test="${report.reportSource=='4'}">피드댓글</c:if>
-				</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr/><tr/>
-			<tr>
-				<td width="104" class="ct_write">신고처리상태</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.reportCondition}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">신고처리날짜</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${report.user2.stopStartDate}</td>
-			</tr>
-			
-			
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-		</table>
-
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
-
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-
-							
-								<table border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td class="ct_write01"><input type="hidden"
-											id="Quantity" name="Quantity" value="1" /></td>
-									</tr>
-								</table>
-							<td width="30"></td>
-							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">수정</td>
-							
-							<td width="30"></td>
-
-								
-							<td width="14" height="23">
-							<td background="/images/ct_btnbg02.gif" width="90"
-								class="ct_btn01" style="padding-top: 3px;">이전</td>
-
-							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
-								width="14" height="23"></td>
-								
-								
-
-								
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
-	</form>
 
 </body>
 
