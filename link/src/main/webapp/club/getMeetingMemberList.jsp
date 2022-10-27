@@ -116,7 +116,7 @@
 	
 	$(function() {
 
-		$("a[href='#']").bind("click", function() {
+		$("button.btn.btn-cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -144,9 +144,6 @@
 					
 						<div class="club-wrap">
 						
-							<div class="club-image">
-							<img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage">
-							</div>
 							
 							<div class="club-text">
 							<h2 class="h2-color">Meeting Member List</h2>
@@ -220,8 +217,8 @@
 	  
 		<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-default" id="deleteParticipant">신&nbsp;청&nbsp;취&nbsp;소</button>
-					<a class="btn btn-primary btn" href="#" role="button">닫&nbsp;기</a>					
+					<button type="button" class="btn btn-deleteParticipant" id="deleteParticipant" style="border-color: #BD76FF; color: #BD76FF; background-color: #f0f2f5; border-radius: 10px;">신&nbsp;청&nbsp;취&nbsp;소</button>
+					<button type="button" class="btn btn-cancel" style="border-color: #BD76FF; color: #BD76FF; background-color: #f0f2f5; border-radius: 10px;">닫&nbsp;기</button>					
 		    </div>
 			</div>		
 	  
