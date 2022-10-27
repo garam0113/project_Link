@@ -285,7 +285,10 @@ public class MyHomeRestController {
 			
 			map1.put("title", ((List<Participant>)map.get("meetingMemberList")).get(i).getMeeting().getMeetingTitle());
 			map1.put("start", ((List<Participant>)map.get("meetingMemberList")).get(i).getMeeting().getMeetingDate());
-            map1.put("backgroundColor", "rgb(0, 185, 186)");
+			map1.put("backgroundColor", "rgb(178, 118, 255)");
+            map1.put("borderColor", "rgb(178, 118, 255)");
+            map1.put("width", "90px");
+            map1.put("url","/club/getMeeting?meetingNo="+( (List<Participant>) map.get("meetingMemberList")).get(i).getMeetingNo());
 			meetingList.add(map1);
 		}
 		//System.out.println("이응이응이응"+ map1.get("title").toString());
