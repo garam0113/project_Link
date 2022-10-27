@@ -27,6 +27,11 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 		<%-- SOCKET IO --%>
 		
+		<script type="text/javascript">
+		
+		
+		</script>
+		
 		<script>
 			var sock = null;
 	
@@ -59,16 +64,26 @@
 			};
 			
 			function onMessage(evt){
-			    var data = evt.data;
-			    // toast
-			    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-			    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-			    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-			    toast += "<span aria-hidden='true'>&times;</span></button>";
-			    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
-			    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
-			    $(".toast").toast({"animation": true, "autohide": false});
-			    $('.toast').toast('show');
+				var data = evt.data;
+			    
+			    const Toast = Swal.mixin({
+			    	  toast: true,
+			    	  position: 'bottom-end',
+			    	  showConfirmButton: false,
+			    	  timer: 3000,
+			    	  timerProgressBar: true,
+			    	  didOpen: (toast) => {
+			    	    toast.addEventListener('mouseenter', Swal.stopTimer)
+			    	    toast.addEventListener('mouseleave', Swal.resumeTimer)
+			    	  }
+			    	})
+
+			    	Toast.fire({
+			    	  icon: 'info',
+			    	  title: data
+			    	})
+			    
+			    
 			};	
 		
 		</script>

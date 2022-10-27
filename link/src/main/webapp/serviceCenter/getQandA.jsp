@@ -141,11 +141,10 @@ textarea {
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
-					<tr class = "content" id ="content">
+					<tr class = "title" id ="title">
 						<th style="text-align-last: center;">제목</th>
-						<td>		
-						<textarea class="text" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}"  
-						style="width: 900px; height:40px;" readonly >${qandA.qandATitle}</textarea>
+						<td style="display: flex; height: 40px; width: 900px;">${qandA.qandATitle}
+						<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle }">		
 						</td> 
 					</tr>
 					<tr>
@@ -156,9 +155,9 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td>
-						<textarea class="text" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}"  
-						style="width: 900px; size:400px;" readonly >${qandA.qandAContent}</textarea>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${qandA.qandAContent}
+						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
 						</td>
 					</tr>
 					<tr >

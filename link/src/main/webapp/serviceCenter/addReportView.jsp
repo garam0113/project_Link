@@ -2,34 +2,24 @@
 <%@ page pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
 <title>신고 등록</title>
 
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script type="text/javascript"></script>
-
-
 <script type="text/javascript">
 	
-
 	function fncAddReport(){
 		
 		var title = $("textarea[name=title]").val();		
 		var content =$("textarea[name=content]").val();			
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
-
-		
 		
 		if(title == null || title.length <1){
           	Swal.fire({
@@ -56,10 +46,6 @@
 			return;
 		}
 		
-
-		
-			
-	
 						
 	  Swal.fire({
           title: '정말로 신고하시겠습니까?',
@@ -81,42 +67,48 @@
 
 		var sum = 0;
 		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
-		
-		
+				
 		for(var i =0 ; i<checkbox; i++){
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
-			sum += sum+parseInt(sum2);
-				
+			sum += sum+parseInt(sum2);			
 		}
 
 			
 		var no = 0;	
 			
 		 if( $("#clubPostNo").val()!=null){
-			 no += $("#clubPostNo").val();
+			 no = $("#clubPostNo").val();
 		}else if($("#clubPostCommentNo").val()!=null){
-			 no += $("#clubPostCommentNo").val();
+			 no = $("#clubPostCommentNo").val();
 		}else if($("#feedNo").val()!=null){
-			 no += $("#feedNo").val();
+			 no = $("#feedNo").val();
 		}else if($("#feedCommentNo").val()!=null){
-			  no += $("#feedCommentNo").val();
+			  no = $("#feedCommentNo").val();
 		}
 		
 		var clubNo = 0;
 		
 		if( $("#clubNo2").val()!=null ){
-			clubNo += $("#clubNo2").val();
+			clubNo = $("#clubNo2").val();
 		}else if( $("#clubNo3").val()!=null){
-			clubNo += $("#clubNo3").val();
+			clubNo = $("#clubNo3").val();
 		}
 		
-		var clubPostNo2 = 0;
+		var clubPostNo = 0;
+		
+		
 		if ( $("#clubPostNo2").val()!=0){
-			clubPostNo2 += $("#clubPostNo2").val();
+			
+			clubPostNo = $("#clubPostNo2").val();
+			if(clubPostNo == undefined){
+				clubPostNo = 0;
+			}
+			
 		}
 		
 	 	$.ajax({
-		url  : "/serviceCenterRest/json/addReport?clubNo="+${clubNo},
+		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
+ 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
 		contentType: 'application/json',
 		method : "POST",
 		dataType: "json",
@@ -129,9 +121,8 @@
 			"reportSource":$("#reportSource").val(),
 			"reportReason": sum,
 			"type": $("#type").val(),
-			"no" :no,   
-			"clubPostNo2":clubPostNo2,
-	
+			"no" :no,
+				
 		 success: function(){
 			 window.close();
 		 }
@@ -268,15 +259,13 @@ textarea {
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
 		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
 		     		 <input type="hidden" name="clubNo" id="clubNo2" value="${report.clubPost.clubNo}"/>
-		     		 ${report.clubPost}
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
 					<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">  			
 		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
-		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPost.clubPostNo}"/>
-		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPost.clubNo}"/>
-		     	     ${report.clubPostComment}
+		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPostComment.clubPostNo}"/>
+		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPostComment.clubNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='3'}">
 						<input type="text" class="" value="피드" style="width: 150px;" disabled />
@@ -285,8 +274,7 @@ textarea {
 					</c:if>
 					<c:if test="${reportSource=='4'}">
 					<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
-		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">
-		     		       	
+		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">    	
 		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
 					</c:if>
 					
@@ -308,14 +296,7 @@ textarea {
 				</div>
 			</div>
 
-			<label for="reportImage"
-				class="col-sm-offset-1 col-sm-3 control-label">파일첨부</label>
-			<div class="col-sm-4">
-				<input multiple="multiple" type="file" name="image" class="ct_input_g" style="width: 200px; height: 50px"/>
-				사진은 2장까지 가능합니다.
 
-		 </div>
-			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="left:30px;">
 					<button type="button" class="add add5">등록</button>

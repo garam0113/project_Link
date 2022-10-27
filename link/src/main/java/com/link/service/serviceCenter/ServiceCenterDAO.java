@@ -5,8 +5,10 @@ import java.util.Map;
 
 import com.link.common.Search;
 import com.link.service.domain.Notice;
+import com.link.service.domain.Push;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 
 public interface ServiceCenterDAO {
 
@@ -55,7 +57,9 @@ public interface ServiceCenterDAO {
 	
 	// ==================================================================여기부터가 Push
 	
-	public void addPush(Report push) throws Exception;		
+	public void addPush(Report push) throws Exception;
+
+	public List<Push> getPushList(User user);		
 		
 	// ==================================================================여기까지가 Push
 	
