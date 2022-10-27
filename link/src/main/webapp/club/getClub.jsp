@@ -125,50 +125,33 @@
 	});
 	
 	//팝업 띄우기
-	 var openWin;
+	var openWin;
 	function popup() {
 		var url = "/club/applyClub.jsp";
 		var name = "applyClub";
-		var option = "width = 500, height = 300%, top = 100, left = 200, location = no"
+		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
+		
 		openWin = window.open(url, name, option);
-	}
+	} 
 	
 	$(function() {
 
 		$("button.btn.btn-update").on("click", function() {
-			//popup();
-			//self.location="/club/updateClubView.jsp"
 			self.location="/club/updateClubView?clubNo="+${ club.clubNo };
-			// ${club.clubTitle} 모임 제목
-			// ${club.clubDetail} 모임 설명
-			// ${club.clubCategory} 모임 카테고리
-			// ${club.clubArea} 모임 활동영역
-			// ${club.clubMaxMember} 모임 최대 인원수
-			// ${club.clubImage} 모임 대표 이미지
+
 		});
 	});
 	
 	$(function() {
-
 		$("button.btn.btn-addApproval").on("click", function() {
-			//self.location="/club/applyClub.jsp"
-			popup();
+			self.location="/club/applyClub.jsp"
+			//popup();
 		});
-	});
+	}); 
 	
-/* 	$("#exampleModal").on('show.bs.modal', function(event) {
-		alert('눌리나?');
-		var button = $(event.relatedTarget)
-		var recipient = button.data('whatever')
-		
-		var modal = $(this)
-		modal.find('.modal-title').text('New Message to ' + recipient)
-		modal.find('.modal-body input ').val(recipient)
-	})
+
+
 	
-	$("#closeModalBtn").on('click', function() {
-		$('#modalBox').modal('hide');
-	}); */
 	 
 	
 	</script>	

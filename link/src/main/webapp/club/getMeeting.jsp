@@ -236,7 +236,7 @@
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여현황)</a></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
 			<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
 			
 		</div>

@@ -341,7 +341,8 @@ public class ClubController {
 		clubUser.setMemberRole("0");
 		clubUser.setApprovalCondition("0");
 		clubService.addApprovalCondition(clubUser);
-		return "forward:/club/getClubList";
+		
+		return "forward:/club/getClubList";		
 	}
 	
 	@RequestMapping(value="getClubMemberList")

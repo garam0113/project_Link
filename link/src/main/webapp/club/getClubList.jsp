@@ -160,7 +160,7 @@
 	}
 	
 	section {
-		background-color: #5F0080 !important;
+		background-color: #cf0cc90d !important;
 		border: solid 1px #d8d8d8 !important;
 		margin: 10px;
 	}
@@ -175,12 +175,6 @@
 	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
-	function fncUpdateMemberRole() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
-		alert("모임원 수정 화면")
-		.submit();
-	}
 	
 	function fncGetClubList(currentPage) {
 		$("#currentPage").val(currentPage)
@@ -203,26 +197,9 @@
 		});
 	});
 	
-	var openWin;
-	function popup() {
-		var url = "/club/getClub?clubNo=${club.clubNo}";
-		var name = "getClub";
-		var option = "width = 1000, height = 500, top = 100, left = 200, location = no"
-		openWin = window.open(url, name, option);
-		
-	}
-	
-/* 	$(function() {
-		$("button,btn.btn-success").on("click", function() {
-			//alert('하이');
-			popup();
-		})
-	}) */
-	
-	
 	$(function() {
 		
-		$("button.btn.btn-addMeeting").on("click", function() {
+		$("button.btn.btn-addClub").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -231,9 +208,26 @@
 	function enterkey() {
 		if(window.event.keyCode == 13) {
 			//fncGetClubList(currentPage);
-			fncGetClubList();
+			fncGetClubList(1);
 		}
 	}
+	
+	function changeFn() {
+		var category = document.getElementById("category");
+		var value = (category.options[category.selectedIndex].value);
+		alert("value = "+value);
+	}
+	
+	function changeFn2() {
+		var area = document.getElementById("area");
+		var value = (area.options[area.selectedIndex].value);
+		alert("value = "+value);
+	}
+	
+	function resetBtn() {
+		$("#searchArea")[0].reset();
+	}
+	
 	
 	
 	//무한 페이징
@@ -362,9 +356,9 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  	  <div id="main" class="row">
 	    
-		   <section class="keyowrd_search_area"> 
+		   <section class="keyword_search_area"> 
 		    <div class="col-md-8 text-right" style="float: right;">
-			    <form class="form-inline" name="detailForm">
+			    <form class="form-inline" name="detailForm" id="searchArea">
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
@@ -379,7 +373,7 @@
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
 	    			<button type="button" class="btn btn-search">검색</button>
 	    			<button type="button" class="btn btn-myList">내 모임 보기</button>
-				  	<button type="button" class="btn btn-addMeeting">모임등록</button>
+				  	<button type="button" class="btn btn-addClub">모임등록</button>
 				  </div>
 				  
 				  <!-- <div class="form-group">
@@ -390,67 +384,66 @@
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
-					</form>
-	    	</div>
+					
+	    
 	    	
 	    	<table>
 	    		<colgroup span="4" class="columns"></colgroup>
 	    		<tr>
 	    			<th>
-	    				<select class="form-control" name="" style="border-color: #BD76FF;">
-	    					<option value="" ${! empty search.order ? search.order : '' }>카테고리</option>
-	    					<option value="운동">운동</option>
-	  						<option value="봉사활동">봉사활동</option>
-	  						<option value="음식">음식</option>
-							<option value="여행">여행</option>
-							<option value="반려동물">반려동물</option>
-							<option value="게임">게임</option>
-							<option value="음악/댄스">음악/댄스</option>
-							<option value="독서">독서</option>
-							<option value="기타">기타</option>
+	    				<select class="form-control" name="category" id="category" onchange="changeFn()" style="border-color: #BD76FF;">
+	    					<option value="${! empty search.category ? search.category : '' }">카테고리</option>
+	    					<option name="category" value="운동">운동</option>
+	  						<option name="category" value="봉사활동">봉사활동</option>
+	  						<option name="category" value="음식">음식</option>
+							<option name="category" value="여행">여행</option>
+							<option name="category" value="반려동물">반려동물</option>
+							<option name="category" value="게임">게임</option>
+							<option name="category" value="음악/댄스">음악/댄스</option>
+							<option name="category" value="독서">독서</option>
+							<option name="category" value="기타">기타</option>
 	    				</select>
 	    			</th>
 	    			<th>
-	    				<select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
-	    					<option value="">지역</option>
-	    					<option value="강남구">강남구</option>
-							<option value="강동구">강동구</option>
-							<option value="강북구">강북구</option>
-							<option value="강서구">강서구</option>
-							<option value="관악구">관악구</option>
-							<option value="광진구">광진구</option>
-							<option value="구로구">구로구</option>
-							<option value="금천구">금천구</option>
-							<option value="노원구">노원구</option>
-							<option value="도봉구">도봉구</option>
-							<option value="동대문구">동대문구</option>
-							<option value="동작구">동작구</option>
-							<option value="마포구">마포구</option>
-							<option value="서대문구">서대문구</option>
-							<option value="서초구">서초구</option>
-							<option value="성동구">성동구</option>
-							<option value="성북구">성북구</option>
-							<option value="송파구">송팡구</option>
-							<option value="양천구">양천구</option>
-							<option value="영등포구">영등포구</option>
-							<option value="용산구">용산구</option>
-							<option value="은평구">은평구</option>
-							<option value="종로구">종로구</option>
-							<option value="중구">중구</option>
-							<option value="중랑구">중랑구</option>
+	    				<select class="form-control" name="area" id="area" onchange="changeFn2()" style="border-color: #BD76FF;">
+	    					<option value="${! empty search.area ? search.area : '' }">지역</option>
+	    					<option name="area" value="강남구">강남구</option>
+							<option name="area" value="강동구">강동구</option>
+							<option name="area" value="강북구">강북구</option>
+							<option name="area" value="강서구">강서구</option>
+							<option name="area" value="관악구">관악구</option>
+							<option name="area" value="광진구">광진구</option>
+							<option name="area" value="구로구">구로구</option>
+							<option name="area" value="금천구">금천구</option>
+							<option name="area" value="노원구">노원구</option>
+							<option name="area" value="도봉구">도봉구</option>
+							<option name="area" value="동대문구">동대문구</option>
+							<option name="area" value="동작구">동작구</option>
+							<option name="area" value="마포구">마포구</option>
+							<option name="area" value="서대문구">서대문구</option>
+							<option name="area" value="서초구">서초구</option>
+							<option name="area" value="성동구">성동구</option>
+							<option name="area" value="성북구">성북구</option>
+							<option name="area" value="송파구">송팡구</option>
+							<option name="area" value="양천구">양천구</option>
+							<option name="area" value="영등포구">영등포구</option>
+							<option name="area" value="용산구">용산구</option>
+							<option name="area" value="은평구">은평구</option>
+							<option name="area" value="종로구">종로구</option>
+							<option name="area" value="중구">중구</option>
+							<option name="area" value="중랑구">중랑구</option>
 	    				</select>
 	    			</th>
 	    			<th>
-	    				<button type="button" class="btn btn-reset">초기화</button>
+	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>초기화</button>
 	    			
 	    			</th>
-	    			<th>
-						<button type="button" class="btn btn-view">조회</button>
-					</th>
 	    		</tr>
 	    
 	    			    	
 	    	</table>
+	    	</form>
+	    	</div>
 	    </section>
 	    	
 		
