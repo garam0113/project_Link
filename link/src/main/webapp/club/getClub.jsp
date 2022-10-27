@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -100,6 +100,7 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
+	
 	<script type="text/javascript">
 	
 	function fncDeleteClub() {
@@ -125,53 +126,63 @@
 	});
 	
 	//팝업 띄우기
-	 var openWin;
+	var openWin;
 	function popup() {
 		var url = "/club/applyClub.jsp";
 		var name = "applyClub";
-		var option = "width = 500, height = 300%, top = 100, left = 200, location = no"
+		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
+		
 		openWin = window.open(url, name, option);
-	}
+	} 
 	
 	$(function() {
 
 		$("button.btn.btn-update").on("click", function() {
-			//popup();
-			//self.location="/club/updateClubView.jsp"
 			self.location="/club/updateClubView?clubNo="+${ club.clubNo };
-			// ${club.clubTitle} 모임 제목
-			// ${club.clubDetail} 모임 설명
-			// ${club.clubCategory} 모임 카테고리
-			// ${club.clubArea} 모임 활동영역
-			// ${club.clubMaxMember} 모임 최대 인원수
-			// ${club.clubImage} 모임 대표 이미지
+
 		});
 	});
 	
 	$(function() {
-
 		$("button.btn.btn-addApproval").on("click", function() {
-			//self.location="/club/applyClub.jsp"
-			popup();
+			self.location="/club/applyClub.jsp"
+			//popup();
 		});
-	});
+	}); 
 	
-/* 	$("#exampleModal").on('show.bs.modal', function(event) {
-		alert('눌리나?');
-		var button = $(event.relatedTarget)
-		var recipient = button.data('whatever')
+	$(function() {
+		var options = {
+				"forcNew" : true
+		};
+		var url = "https://192.168.0.183:4000";
 		
-		var modal = $(this)
-		modal.find('.modal-title').text('New Message to ' + recipient)
-		modal.find('.modal-body input ').val(recipient)
+		socket = io.connect(url, options);
+		
+		socket.on("connect", function() {
+			//alert("소켓연결 완료");
+		});
+		
+		$(".live").on("click", function() {
+			console.log($("#addName").val());
+			console.log($("#total").val());
+			console.log($("#nickName").val());
+			console.log($("#profile").val());
+			if(socket == undefined){
+			//	alert("서버가 연결되어 있지 않습니다.");
+				return;
+			}
+			socket.emit("name", $("#addName").val());
+			socket.emit("total", $("#total").val());
+			socket.emit("nickName", $("#nickName").val());
+			socket.emit("profile", $("#profile").val());
+			self.location = "https://192.168.0.183:4040"; 
+		})
 	})
+
 	
-	$("#closeModalBtn").on('click', function() {
-		$('#modalBox').modal('hide');
-	}); */
-	 
+	  
 	
-	</script>	
+	</script>	 
 
 </head>
 
@@ -229,9 +240,7 @@
 						</li> --%>
 					</ul>
 		
-		
-		
-	
+		<button type="button" class="live">모임 화상채팅</button>
 			
 			
 		<form class="form-horizontal" enctype="multipart/form-data">
@@ -278,7 +287,7 @@
 					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
 					<!-- 모달을 열기 위한 버튼 -->
 					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-					
+				
 					<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 					
 					<!-- 모달 영역 -->
@@ -313,7 +322,10 @@
 					</div>	 --%>	
 					
 					
-					
+						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
+						<input type="hidden" id="total" value="${clubMemberCount}">
+						<input type="hidden" id="nickName" value="${user.nickName }">
+						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
 			</form>		

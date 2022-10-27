@@ -3,7 +3,10 @@ package com.link.web.serviceCenter;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +26,7 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -132,5 +136,28 @@ public class ServiceCenterRestController {
 	 * return map; }
 	 */
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////// 알림 ///////////////////////////////////////////////
+	
+	@RequestMapping(value = "/json/getPushList", method = RequestMethod.POST)
+	public List<Report> getPushList(@RequestBody User user, HttpSession httpSession) throws Exception {
+		
+		user = (User) httpSession.getAttribute("user");
+		
+		return null;
+		
+	}
+	
+	
+	/////////////////////////////////////////////// 알림 ///////////////////////////////////////////////
 
 }//RestController 끝
