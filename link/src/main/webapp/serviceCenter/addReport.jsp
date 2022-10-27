@@ -1,183 +1,315 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>공지사항 확인</title>
+<title>신고 등록</title>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript">
+	
+	function fncAddReport(){
+		
+		var title = $("textarea[name=title]").val();		
+		var content =$("textarea[name=content]").val();			
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+		
+		if(title == null || title.length <1){
+          	Swal.fire({
+                icon: 'error',
+                title: '신고 제목은 필수입니다.',
+            });
+				return;
+			}
+		if(content == null || content.length <1){
+			Swal.fire({
+                icon: 'error',
+                title: '신고 내용은 필수입니다.',
+                text: '가능한 상세히 적어주세요.',
+            });
+				return;
+			}
+				
+		if(checkbox==0){
+			Swal.fire({
+                icon: 'error',
+                title: '신고 사유는 필수입니다.',
+                text: '1개 이상 클릭해주세요.',
+            });
+			return;
+		}
+		
+						
+	  Swal.fire({
+          title: '정말로 신고하시겠습니까?',
+          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '신고',
+          cancelButtonText: '취소'
+      }).then((result) => {
+          if (result.isConfirmed) {
+             AddReport()
+          }
+      })
+ }
+ 
+	function AddReport(){	
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<script type="text/javascript"></script>
+		var sum = 0;
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+				
+		for(var i =0 ; i<checkbox; i++){
+			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
+			sum += sum+parseInt(sum2);			
+		}
 
+			
+		var no = 0;	
+			
+		 if( $("#clubPostNo").val()!=null){
+			 no = $("#clubPostNo").val();
+		}else if($("#clubPostCommentNo").val()!=null){
+			 no = $("#clubPostCommentNo").val();
+		}else if($("#feedNo").val()!=null){
+			 no = $("#feedNo").val();
+		}else if($("#feedCommentNo").val()!=null){
+			  no = $("#feedCommentNo").val();
+		}
+		
+		var clubNo = 0;
+		
+		if( $("#clubNo2").val()!=null ){
+			clubNo = $("#clubNo2").val();
+		}else if( $("#clubNo3").val()!=null){
+			clubNo = $("#clubNo3").val();
+		}
+		
+		var clubPostNo = 0;
+		
+		
+		if ( $("#clubPostNo2").val()!=0){
+			
+			clubPostNo = $("#clubPostNo2").val();
+			if(clubPostNo == undefined){
+				clubPostNo = 0;
+			}
+			
+		}
+		
+	 	$.ajax({
+		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
+ 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+		contentType: 'application/json',
+		method : "POST",
+		dataType: "json",
+		data : JSON.stringify ({
+			"title":$("#title").val(),
+			"content":$("#content").val(),
+		<%--	"file": image, --%>
+			"user1":$("#user1").val(),
+			"user2":$("#user2").val(),
+			"reportSource":$("#reportSource").val(),
+			"reportReason": sum,
+			"type": $("#type").val(),
+			"no" :no,
+				
+		 success: function(){
+			 window.close();
+		 }
+		}),
+			
+		})<!-- ajax ( ReportAdd) 끝 --> 
+		
 
-<script type="text/javascript"> <%-- 자바스크립트 확인 --%>
-</script>
-<style><%-- CSS 확인 --%>
+	} //funtion 끝
+	
 
+	$(function(){
+		
+  		
+		$("button:contains('등록')").bind("click", function(){
+			fncAddReport()
+			
+		})
+
+		
+		$("button:contains('뒤로')").bind("click", function(){
+			
+			self.close();
+			<%-- self.close() 하고 window.close() 둘 다 크롬에서 되는지 확인해보기.
+			부모창 없어서 나 혼자로는 못 끔 --%>
+		})
+		
+		var reportSource = opener.$("input[name='reportSource']").val();
+		var user2 = opener.$("input[name='user2']").val();
+	<%--	var image = $("input:multiple[name=image]").val(); --%>
+		var userId = opener.$("input[name='reportedId']").val();
+		$("#reportSource").val(reportSource);
+		$("#user2").val(user2);
+		$("#user2").val(userId);
+		
+	});
+	
+	</script>
+<style>
+textarea {
+	resize: none;
+}
+
+.title {
+	width: 400px;
+}
+.add {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.add5 {
+    background-color: white; 
+  	color: black; 
+  	border: 2px solid #f44336;
+  	border-radius : 13px;
+}
+.add5:hover {
+   background-color: #f44336;
+  color: white;
+}
+.add6 {
+    background-color: white; 
+  	color: black; 
+  	border: 2px solid #0a6bdf;
+  	border-radius : 13px;
+}
+.add6:hover {
+   background-color: #0a6bdf;
+  color: white;
+}
 </style>
-
-<head>
-<meta charset="EUC-KR">
-
 </head>
-<body>
-	
 
 <body>
-<table width="100%" height="37" border="0" cellpadding="0"
-			cellspacing="0">
-			<tr>
-				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-					width="15" height="37"></td>
-				<td background="/images/ct_ttl_img02.gif" width="100%"
-					style="padding-left: 10px;">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="93%" class="ct_ttl01">공지사항 조회</td>
-							<td width="20%" align="right">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-					width="12" height="37" /></td>
-			</tr>
-		</table>
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 13px;">
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">상품번호 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr class ="noticeNo">
-							<td width="105"><input type="hidden" name="noticeNo" id="noticeNo"value="${notice.noticeNo}">
-								${notice.noticeNo}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">제목 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeTitle}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
 
+	<!-- form Start /////////////////////////////////////-->
+	<div class="container">
 	
+		<div></div>
+		<div class="page-header text-center">
+			<h2><strong>신고 등록</strong></h2>
+		</div>
 
-			<tr>
-				<td width="104" class="ct_write">이미지 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>${notice.noticeImage1}
-				${notice.noticeImage2}
-				<img src="/resources/image/uploadFiles/${notice.noticeImage1}" width="100" height="100" align="absmiddle"/>
-				<img src="/resources/image/uploadFiles/${notice.noticeImage2}" width="100" height="100" align="absmiddle"/>
-					
-			</tr>
+		<!-- form Start /////////////////////////////////////-->
+		<form class="form-horizontal" enctype="multipart/form-data">
+			<input type="hidden" name="type" id="type" value="1">
+			<input type="hidden" name="no" value="${report.no}"/>
+			<div class="form-group">
+			<table>
+				<tr class = "body" id ="body" >
+						<th style="text-align-last: center;"></th>
+						<td align="left" style="display:flex; height: 50px;">${report.no}번 신고
+						<input type="hidden" name="no" id="no" value="${report.no}">
+						</td>
+					</tr>
+				<tr class = "content" id ="content" >
+						<th style="text-align-last: center;">제목</th>
+						<td style="display: flex; height: 40px; width: 900px;">						
+						${report.title}
+						<input type="hidden" id="title" name="title" value="${report.title}">
+						</td> 
+					</tr>
+					<tr>
+						<th></th>
+						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;">${report.regDate }</td>
+					</tr>
+					<tr >
+						<th style="text-align-last: center;">내용</th>
+						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						${report.content}
+						<input type="hidden" id="content" name="content" value="${report.content}">
+						</td>
+					</tr>
+					<tr>
+					 	<th style="text-align-last: center;"> 신고 출처</th>
+					 	<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 70px;">
+					 		<c:if test="${report.reportSource== '1'}"> 
+					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
+		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
+		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>	
+		     						
+		     						
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='2'}"> 
+							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
+		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
+		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
+		     				 style="transform: translate(-150px, 30px);"> 
+		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>
+		     		 		</c:if>
+		     		 		<c:if test="${report.reportSource=='3'}">
+							<input type="text" class="" value="피드" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="3">
+		     				 
+		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feed.feedNo} 번째 피드 </a>
+		     				</c:if>
+		     				<c:if test="${report.reportSource=='4'}">
+							<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
+		     				 <input type="hidden" id="reportSource" name="reportSource" value="4">
+		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px);"> 
+		     				 ${report.feedComment.feedNo} 번째 피드 </a>
+		     				 </c:if>
+		     			</td>
+		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
+		     			 <input type="text" class="" value="${report.user2.nickName}" style="width:auto; height:35px; display:inline;" disabled />
+		     			</td>
+					</tr>
+					<tr>
+					<th style="text-align-last: center;">신고 사유</th>
+					<td style="display:flex;">
+					<input type="checkbox" id="욕설" name="reportReason" value="1" style="margin-left:55px">욕설
+					<input type="checkbox" id="광고" name="reportReason" value="2" style="margin-left:30px">광고
+					<input type="checkbox" id="기타" name="reportReason" value="4" style="margin-left:30px">기타
+					<input type="checkbox" id="성적" name="reportReason" value="8" style="margin-left:30px">성적인 발언
+					</tr>
+ 				</table>	
+	<!--  화면구성 div end /////////////////////////////////////-->
 
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
+			</div>
 
-			<tr>
-				<td width="104" class="ct_write">내용 <img
-					src="/images/ct_icon_red.gif" width="3" height="3"
-					align="absmiddle" />
-				</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeContent}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">작성일자</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01">${notice.noticeRegDate}</td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-			<tr>
-				<td width="104" class="ct_write">WoW</td>
-				<td bgcolor="D6D6D6" width="1"></td>
-				<td class="ct_write01"><fmt:formatNumber type="number"
-						maxFractionDigits="3" value="${notice.noticeCount}" /></td>
-			</tr>
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-	
-			<tr>
-				<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			</tr>
-		</table>
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
 
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
+			<div class="form-group">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="left:30px;">
+					<button type="button" class="add add5">수정</button>
+					<button type="button" class="add add6">뒤로</button>
+				</div>
+			</div>
 
-							
-								<table border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td class="ct_write01"><input type="hidden"
-											id="Quantity" name="Quantity" value="1" /></td>
-									</tr>
-								</table>
-							<td width="30"></td>
-							<td background="/images/ct_btnbg02.gif" width="90" class="ct_btn01" style="padding-top: 3px;">수정</td>
-							
-							<td width="30"></td>
+		</form>
+	</div>
+	<!--  화면구성 div end /////////////////////////////////////-->
 
-							<td background="/images/ct_btnbg02.gif" class="ct_btn01"
-								style="padding-top: 3px;">삭제</td>
-								
-							<td width="14" height="23">
-							<td background="/images/ct_btnbg02.gif" width="90"
-								class="ct_btn01" style="padding-top: 3px;">이전</td>
-
-							<td width="14" height="25"><img src="/images/ct_btnbg03.gif"
-								width="14" height="23"></td>
-
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
 </body>
-</body>
-</div>
-</body>
+
 </html>

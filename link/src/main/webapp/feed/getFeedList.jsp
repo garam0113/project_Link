@@ -348,6 +348,12 @@
 				})
 			} else {
 				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+				
+				if(sock) {
+					var Msg = "가 피드를 작성했습니다.";
+					
+					sock.send(Msg);
+				}
 			}
 		});
 		<%-- ADD_FEED --%>
@@ -383,6 +389,12 @@
 		       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
 					// $(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 					$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+					
+					if(sock) {
+						var Msg = "가 피드를 삭제했습니다.";
+						
+						sock.send(Msg);
+					}
 				}
 			})
 		});
@@ -422,9 +434,8 @@
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "heart," + sessionUser + "," + content + "," + feedNo;
+								var Msg = "가 피드 좋아요를 눌렀습니다.";
 								
-								console.log("소켓 열려있는 상태 : " + Msg);
 								sock.send(Msg);
 							}
 							
@@ -443,6 +454,8 @@
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
 			
 			$.ajax(
 					{
@@ -466,6 +479,12 @@
 							
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
+							
+							if(sock) {
+								var Msg = "가 피드 좋아요 취소 했습니다.";
+								
+								sock.send(Msg);
+							}
 							
 						} // success close
 						
@@ -702,7 +721,7 @@
 
 <body>
 
-	<jsp:include page="/toolbarTest.jsp" />
+	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
 	

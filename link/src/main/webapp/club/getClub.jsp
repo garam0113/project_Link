@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -100,6 +100,7 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/resources/javascript/plugins.js"></script>
 	<script src="/resources/javascript/beetle.js"></script>
+	
 	<script type="text/javascript">
 	
 	function fncDeleteClub() {
@@ -149,12 +150,39 @@
 		});
 	}); 
 	
-
+	$(function() {
+		var options = {
+				"forcNew" : true
+		};
+		var url = "https://192.168.0.183:4000";
+		
+		socket = io.connect(url, options);
+		
+		socket.on("connect", function() {
+			//alert("소켓연결 완료");
+		});
+		
+		$(".live").on("click", function() {
+			console.log($("#addName").val());
+			console.log($("#total").val());
+			console.log($("#nickName").val());
+			console.log($("#profile").val());
+			if(socket == undefined){
+			//	alert("서버가 연결되어 있지 않습니다.");
+				return;
+			}
+			socket.emit("name", $("#addName").val());
+			socket.emit("total", $("#total").val());
+			socket.emit("nickName", $("#nickName").val());
+			socket.emit("profile", $("#profile").val());
+			self.location = "https://192.168.0.183:4040"; 
+		})
+	})
 
 	
-	 
+	  
 	
-	</script>	
+	</script>	 
 
 </head>
 
@@ -212,9 +240,7 @@
 						</li> --%>
 					</ul>
 		
-		
-		
-	
+		<button type="button" class="live">모임 화상채팅</button>
 			
 			
 		<form class="form-horizontal" enctype="multipart/form-data">
@@ -261,7 +287,7 @@
 					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
 					<!-- 모달을 열기 위한 버튼 -->
 					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-					
+				
 					<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 					
 					<!-- 모달 영역 -->
@@ -296,7 +322,10 @@
 					</div>	 --%>	
 					
 					
-					
+						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
+						<input type="hidden" id="total" value="${clubMemberCount}">
+						<input type="hidden" id="nickName" value="${user.nickName }">
+						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
 			</form>		

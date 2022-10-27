@@ -392,7 +392,7 @@
 	    		<tr>
 	    			<th>
 	    				<select class="form-control" name="category" id="category" onchange="changeFn()" style="border-color: #BD76FF;">
-	    					<option value="${! empty search.category ? search.category : '' }">카테고리</option>
+	    					<option name="category" value="">카테고리</option>
 	    					<option name="category" value="운동">운동</option>
 	  						<option name="category" value="봉사활동">봉사활동</option>
 	  						<option name="category" value="음식">음식</option>
@@ -406,7 +406,7 @@
 	    			</th>
 	    			<th>
 	    				<select class="form-control" name="area" id="area" onchange="changeFn2()" style="border-color: #BD76FF;">
-	    					<option value="${! empty search.area ? search.area : '' }">지역</option>
+	    					<option name="area" value="">지역</option>
 	    					<option name="area" value="강남구">강남구</option>
 							<option name="area" value="강동구">강동구</option>
 							<option name="area" value="강북구">강북구</option>
