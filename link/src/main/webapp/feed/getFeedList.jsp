@@ -395,6 +395,8 @@
 			
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
 			
 			$.ajax(
 					{
@@ -402,7 +404,7 @@
 						method : "POST",
 						data : JSON.stringify ({
 							source : 0,
-							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							sourceNo : feedNo,
 							userId : sessionUser
 						}),
 						contentType: 'application/json',
@@ -420,7 +422,7 @@
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "feed,Link4813,피드,작성";
+								var Msg = "heart," + sessionUser + "," + content + "," + feedNo;
 								
 								console.log("소켓 열려있는 상태 : " + Msg);
 								sock.send(Msg);

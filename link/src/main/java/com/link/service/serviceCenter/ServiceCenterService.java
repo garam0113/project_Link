@@ -6,6 +6,7 @@ import com.link.common.Search;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 
 public interface ServiceCenterService {
 	
@@ -52,6 +53,8 @@ public interface ServiceCenterService {
 	// 알림 공간 //
 	
 	public void addPush(Report push) throws Exception;
+	
+	public Map<String, Object> getPushList(User user) throws Exception;
 	
 	
 	

@@ -12,6 +12,7 @@ import com.link.common.Search;
 import com.link.service.domain.Notice;
 import com.link.service.domain.QandA;
 import com.link.service.domain.Report;
+import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterDAO;
 import com.link.service.serviceCenter.ServiceCenterService;
 
@@ -249,6 +250,12 @@ public class ServiceCenterServiceImpl implements ServiceCenterService {
 		
 		serviceCenterDAO.addPush(push);
 		
+	}
+	
+	@Override
+	public Map<String, Object> getPushList(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>) serviceCenterDAO.getPushList(user);
 	}
 	
 	
