@@ -90,10 +90,12 @@
 				textEdit();
 				
 				$("input[value='등록완료']").bind("click", function(){
+					alert('등록완료');
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 					$("form").attr("accept-charset", "EUC-KR").submit();
 				});
 				$("input[value='이전으로']").bind("click", function(){
+					alert('이전으로');
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
