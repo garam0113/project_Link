@@ -29,6 +29,18 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
   
+  
+  <!-- 데이트피커 -->
+  <link rel="stylesheet" href="datepicker.css">
+<script src="datepicker.js"></script>
+  
+  <!-- alert -->
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  
+  
+  
   <!-- 타임피커 -->
   	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
@@ -58,9 +70,61 @@
 
 	function fncAddMeeting() {
 
-		////////////////////////////////////////////////////
-		//document.detailForm.action = '/addProduct.do';
-		///////////////////////////////////////////////////
+		var title = $("textarea[name='meetingTitle']").val();
+		var content = $("textarea[name='meetingContent']").val();
+		var date = $("input[name='meetingDate']").val();
+		var time = $("input[name='meetingTime']").val();
+		var member = $("textarea[name='meetingMaximumMember']").val();
+		var place = $("input[name='meetingPlace']").val();
+		
+		
+		if (title == null || title.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '일정제목은 필수입니다.',
+			});
+			return;
+		}
+				
+		if( date == null || date.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '일정날짜는 필수입니다.',
+			});
+			return;
+		}
+		
+		if( time == null || time.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '일정시간은 필수입니다.',
+			});
+			return;
+		}
+		
+		if( content == null || content.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '일정내용은 필수입니다.',
+			});
+			return;
+		}
+		
+		if( member == null || member.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '정원은 필수입니다.',
+			});
+			return;
+		}
+		
+		if( place == null || place.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '모임장소는 필수입니다.',
+			});
+			return;
+		}
 
 
 		$("form").attr("method", "POST").attr("action", "/club/addMeeting")
@@ -150,6 +214,10 @@
 			border: 3px solid #D6CDB7;
 			margin-top: 10px;
 		}
+		
+		textarea {
+			resize: none;
+		}
       
       
   </style>
@@ -159,11 +227,15 @@
 </head>
 
 <body>
+
+	<jsp:include page="/toolbar.jsp"/>
+
+
 	<form>
 		<div class="wrap wd668">
 			<div class="container">
 				<div class="form_txtInput">
-					<h2 class="sub_tit_txt">모 임 일 정 등 록</h2>
+					<h2 class="sub_tit_txt">모임일정등록</h2>
 					<p class="exTxt">새로운 일정을 등록해보세요...</p>
 					<div class="join_form">
 					
@@ -175,8 +247,8 @@
 						
 						<tbody>
 							<tr>
-								<th><span>모 임 일 정 제 목</span></th>
-								<td><input style="height: 40px;" type="text" id="meetingTitle" name="meetingTitle" placeholder="모임일정제목은 필수입니다." autocomplete='off'>
+								<th><span>일 정 제 목</span></th>
+								<td><textarea class="meetingTitle" id="meetingTitle" name="meetingTitle" value="" maxlength="80" placeholder="일정 제목을 입력해주세요." style="width: 280px; height: 50px;"></textarea>
 								</td>
 							</tr>
 							
@@ -192,12 +264,15 @@
 							
 							<tr>
 								<th><span>일 정 내 용</span></th>
-								<td><input type="text" id="meetingContent" name="meetingContent" placeholder="일정내용은 필수입니다." style="height: 40px" autocomplete='off'></td>
+								<td><textarea class="meetingContent" id="meetingContent" name="meetingContent" maxlength="500" placeholder="일정 내용을 입력해주세요." style="width: 280px; height: 200px;"></textarea>
+								</td>
 							</tr>
 							
 							<tr>
 								<th><span>정 원</span>
-								<td><input type="text" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="모임일정 정원을 입력하세요" autocomplete='off'></td>
+								<td>
+									<textarea class="meetingMaximumMember" id="meetingMaximumMember" name="meetingMaximumMember" maxlength="50" style="width:80px; height: 40px;"></textarea>
+								</td>
 							</tr>
 							
 							<tr>
@@ -223,8 +298,8 @@
 				
 				<div class="form-group">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
-			      		<button type="button" class="btn btn-addMeeting" style="background-color:#BD76FF; color:#fbfbfb">등 &nbsp;록</button>
-						<button type="button" class="btn btn-cancel" role="button" style="background-color:#BD76FF; color:#fbfbfb">취&nbsp;소</button>
+			      		<button type="button" class="btn btn-addMeeting" style="background-color:#ffffff; color:#BD76FF; border-color: #BD76FF; border-radius: 10px;">등 &nbsp;록</button>
+						<button type="button" class="btn btn-cancel" role="button" style="background-color:#ffffff; color:#BD76FF; border-color: #BD76FF; border-radius: 10px;">취&nbsp;소</button>
 			    	</div>
 				</div>
 					
