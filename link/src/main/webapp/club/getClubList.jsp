@@ -95,9 +95,9 @@
 			    padding: 0px;
 			    margin-bottom: 20px;
 			    line-height: 1;
-			    background-color: #fbfbfb;
+			    background-color: #ffffff;
 			    border: 1px solid #5F0080;
-			    border-radius: 4px;
+			    border-radius: 10px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
 			    transition: border .2s ease-in-out;
@@ -106,7 +106,8 @@
 		.thumbnail img { 
 			min-height:200px;
 			height:100px;
-		    width: 250px;
+		    width: 254px;
+		    border-radius: 20px;
 		 }     
 		 
 		 div {
@@ -144,7 +145,7 @@
 } */
 		 
 		 #pageNav {
-		 	float: center;
+		 	float: none;
 		 }
 		 
 		 #toolbar {
@@ -378,12 +379,12 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  	  <div id="main" class="row">
 	    
-		   <div class="keyword_search_area"> 
+		   
 		    <div class="col-md-8 text-right" style="float: left;">
-			    <form class="form-inline" name="detailForm" id="searchArea" style="border: 1px solid; margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px;">
+			    <form class="form-inline" name="detailForm" id="searchArea" style="border: 2px solid; margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: 2px 2px;">
 			    
 				  <div class="form-group" id="selectTitle">
-				    <select class="form-control" name="searchCondition" style="margin-top: 5px; margin-left: 5px;">
+				    <select class="form-control" name="searchCondition" style="margin-top: 5px; margin-left: 5px; background-color: #f0f2f5;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
 					</select>
 					
@@ -398,7 +399,7 @@
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="모임 검색" onkeyup="enterkey()"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 5px; margin-right: 70px; margin-left: 5px;">
 				    			 
-					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 377px; margin-left: 5px;">
+					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 5px;">
 	    					<option value="">지역</option>
 	    					<option value="강남구">강남구</option>
 							<option value="강동구">강동구</option>
@@ -444,7 +445,7 @@
 					<p>
 					
 						<button type="button" class="btn btn-search" style="margin-top: 30px; display: contents;">검색</button>
-	    				<button type="button" onclick="resetBtn()" class="btn btn-reset" style="margin-left: 50px; "><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
+	    				<button type="button" onclick="resetBtn()" class="btn btn-reset" style="margin-left: 50px; background-color: #f0f2f5 !important; border-color: #f0f2f5 !important;"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
 				  </div>
 				  
 				  <!-- <div class="form-group">
@@ -456,19 +457,22 @@
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 	    	    			
 	    	</form>
-	    	<button type="button" class="btn btn-myList">내 모임 보기</button>
-	  		<button type="button" class="btn btn-addClub">모임등록</button>
 	    	</div>
+	    	
+	    	
+	    <div class="col-md-4 text-right" style="float: right;">
+	    	<!-- <button type="button" class="btn btn-myList" style="">내 모임 보기</button> -->
+	  		<button type="button" class="btn btn-addClub" style="margin-top: 100px; margin-right: 60px; width: 170px; height: 80px; border-radius: 10px; background-color: #f0f2f5; font-size: 20px; box-shadow: 2px 2px;">모임등록</button>
 	    </div>
 	    	
-		
+	</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
 
 	<div id="main" class="row">
 		  <c:forEach var="i" items="${clubList}">
 		  	<div class="col-xs-4 col-md-3">	
-				<div class="thumbnail" style="">
+				<div class="thumbnail" style="box-shadow: 2px 2px; border-radius: 20px;">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
 			  			<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>
@@ -476,7 +480,7 @@
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
 				  		<p>카테고리 : ${i.clubCategory }</p>
 				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</a></p>			  	
+				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px; box-shadow: 2px 2px;">모임보기</a></p>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>
@@ -485,7 +489,7 @@
       
 	</div>
 	  
- 	</div>
+ 	
  	<!--  화면구성 div End /////////////////////////////////////-->
 	
 	<div id="pageNav" >
