@@ -41,7 +41,7 @@
 	
 			function connectWs() {
 	
-				sock = new SockJS('http://localhost:8080/echo');
+				sock = new SockJS('http://192.168.0.21:8080/echo');
 	
 				sock.onopen = function () {
 					console.log('open');
@@ -92,6 +92,15 @@
 
 <style>
 
+	/* 알람 스타일 */
+
+	.sub-menu a {
+	
+		width:auto;
+		 
+	}
+
+
 </style>
 		
 	</head>
@@ -135,6 +144,24 @@
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
                      </c:if>
+                     
+                     <%-- 실시간 알림 --%>
+                     <c:if test="${!empty sessionScope.user}">
+                        
+						<span id="alarmCount" class="badge">${alarmCount}</span>
+												
+							<li class="menu-item">
+								<a href="">알림</a>
+								<ul class="sub-menu">
+									<li><a href="home-01.html">Generic Home Page</a></li>
+									<li><a href="home-02.html">App Showcase</a></li>
+									<li><a href="home-03.html">App Showcase Alternative</a></li>
+								</ul>
+							</li>
+						
+                     </c:if>
+                     <%-- 실시간 알림 --%>
+                     
                   </c:if>
                </ul>
             </nav>
