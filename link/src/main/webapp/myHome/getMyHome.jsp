@@ -13,12 +13,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	
+	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 	
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -51,8 +52,10 @@ $(function() {
 	
  });
  
+ 
 
 $(function(){
+	
 	
 	<!-- REST CONTROLLTER TEST -->
 
@@ -185,6 +188,19 @@ $(function(){
 		) // ajax close
 	})
 	<!-- DELETE_FEED_HEART -->
+	$(document).on("click", ".carousel-control", function(event) {
+		event.stopPropagation();
+	})
+	<%-- CAROUSEL 침범 방지 --%>
+	
+	<%-- CALL REPORT --%>
+	$(document).on("click", ".report", function(event) {
+		event.stopPropagation();
+	    
+		$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+		
+	}) // .report evenet close
+	<%-- CALL REPORT --%>
 	
 })
 	
@@ -195,17 +211,52 @@ $(function(){
 </script>
 
 <style>
+a {
+    color: #222;
+    text-decoration: auto !important;
+    width: 140px;
+    color : black !important;
+}
+#main{
+background-color : #EBEDF0 !important;
+}
+
+i{
+color : #b276ff !important;
+
+}
+
+
+h5.meta-post {
+    margin-bottom: 13px !important;
+    color: black !important;
+}
+.main{
+display:block;
+position:relative;
+
+}
+
 #calendar {
-	margin-left: 0px;
+	margin-left: 955px;
 	margin-top: 50px;
-	width: 800px;
-	display: inline-block;
+	display: flex;
 	justify-content: center;
+	float: left;
+	width : 675px;
+	height : 680px;
+	
 }
 
 .container {
 	float: left;
-	margin-left: 300px;
+	margin-left: 455px;
+	display: flex;
+	position:absolute;
+	margin-top: 10px;
+	width: 340px;
+	background-color:#F5F6F7;
+	border-radius: 15px;
 }
 
 /* Profile container */
@@ -216,18 +267,18 @@ $(function(){
 /* Profile sidebar */
 .profile-sidebar {
 	padding: 20px 0 10px 0;
-	width:600px;
+	width:500px;
 	
 }
 
 .profile-userpic img {
 	float: left;
-	margin-left: 50px;
-	width: 50%;
-	height: 40%;
-	-webkit-border-radius: 50% !important;
-	-moz-border-radius: 50% !important;
-	border-radius: 50% !important;
+	margin-left: 30px;
+	width: 250px;
+	height: 300px;
+	-webkit-border-radius: 20% !important;
+	-moz-border-radius: 20% !important;
+	border-radius: 20% !important;
 }
 
 .profile-usertitle {
@@ -237,7 +288,7 @@ $(function(){
 }
 
 .profile-usertitle-name {
-	color: #5b9bd1;
+	
 	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 7px;
@@ -245,7 +296,7 @@ $(function(){
 
 .profile-usertitle-job {
 	text-transform: uppercase;
-	color: #5b9bd1;
+	
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 15px;
@@ -272,6 +323,8 @@ $(function(){
 
 .profile-usermenu {
 	margin-top: 30px;
+
+	
 }
 
 .profile-usermenu ul li {
@@ -283,20 +336,22 @@ $(function(){
 }
 
 .profile-usermenu ul li a {
-	color: #5b9bd1;
-	font-size: 14px;
-	font-weight: 400;
+	color: #b276ff;
+	font-size: 15px;
+	font-weight: 600;
 }
 
 .profile-usermenu ul li a i {
 	margin-right: 8px;
 	font-size: 14px;
+	
 }
 
 .profile-usermenu ul li a:hover {
-	background-color: #fafcfd;
-	color: #5b9bd1;
+	background-color:#CCD0D5;
+	
 }
+
 
 .profile-usermenu ul li.active {
 	border-bottom: none;
@@ -312,17 +367,37 @@ $(function(){
 	padding: 20px;
 	min-height: 460px;
 }
+.follow-section img {
+ vertical-align: sub;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 15px;
+	
+}
 
 .follow-section {
-	margin-left: 200px;
+	margin-right: 100px;
 	margin-top: 50px;
 	width: 500px;
 	display: inline-block;
 	justify-content: center;
 	float: left;
 }
+.following-section img {
+  vertical-align: sub;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 15px;
+	
+}
 .following-section {
-	margin-left: 200px;
+	margin-right: 100px;
 	margin-top: 50px;
 	width: 500px;
 	display: inline-block;
@@ -332,6 +407,14 @@ $(function(){
 
 .single-comment {
 	padding-left: 0;
+	border-radius:20px;
+	margin-left : 70px;
+    width : 600px;
+    border: 2px solid #CCD0D5;
+    border-radius: 15px;
+    
+    
+	
 }
 
 .f {
@@ -354,30 +437,37 @@ margin-left: 100px;
 	width:500px;
 }
 .tab{
+display:flex;
+margin-left:150px;
+
+
 
 }
 
 /* 탭 전체 스타일 */
 .tabs1 {
-  margin-top: 50px;
+  margin-top: 120px;
   margin-bottom: 100px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  background-color: #F5F6F7;
+  width: 330px;
   display:inline-block;
-  margin-left:300px;
+  margin-left:310px;
   float: left;
   height:800px;
+  border-radius: 15px;
+  border: 2px solid #CCD0D5;
   }
   .tabs2 {
-  margin-top: 50px;
+  margin-top: 120px;
   margin-bottom: 100px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 800px;
+   background-color: #F5F6F7;
+   border: 2px solid #DADDE1;
+  width: 670px;
   display:inline-block;
-  margin-left:200px;
+  margin-left:170px;
   height:800px;
+   border-radius: 15px;
+  
   
   
   
@@ -387,65 +477,69 @@ margin-left: 100px;
 .tab_item1 {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid #333333;
-  background-color: #f8f8f8;
+  border-bottom: 3px solid #EBEDF0;;
+  background-color: #F5F6F7;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: block;
   float: left;
-  width:400px;
+  width:330px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
+  border-radius: 15px 15px 0px 0px ;
 }
 .tab_item-following {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid #333333;
-  background-color: #f8f8f8;
+  background-color: #F5F6F7;
+  border-bottom: 3px solid #EBEDF0;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: inline-block;
-  width:200px;
+  width:160px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
+ border-radius: 15px 15px 0px 0px ;
 }
 .tab_item-follow {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid #333333;
-  background-color: #f8f8f8;
+  background-color: #F5F6F7;
+  border-bottom: 3px solid #EBEDF0;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: block;
   float: left;
-  width:200px;
+  width:160px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
+  border-radius: 15px 15px 0px 0px ;
 }
 
 .tab_item2 {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid #333333;
-  background-color: #f8f8f8;
+  border-bottom: 3px solid #EBEDF0;
+  background-color: #F5F6F7;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: inline-block;
-  width:400px;
+  width:330px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
+  border-radius: 15px 15px 0px 0px ;
 }
 
 .tab_item1:hover {
@@ -477,6 +571,7 @@ input[name="tab_item-follow"] {
   padding: 0px 40px 0;
   clear: both;
   overflow: hidden;
+  
 }
 .tab_content-follow {
   display: none;
@@ -512,6 +607,65 @@ input[name="tab_item-follow"] {
 ::-webkit-scrollbar {
   display: none;
 }
+.feedForm {
+  margin-left:-70px;
+}
+
+.feedForm > img {
+    vertical-align: sub;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 15px;
+}
+.neon {
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+  font-family: 'Sacramento';
+  
+}
+.caption h2 {
+margin-top:35px !important;
+}
+
+@keyframes neon {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #da00ff, 0 0 11px #da00ff, 0 0 19px #da00ff, 0 0 40px #da00ff,
+      0 0 80px #da00ff, 0 0 90px #da00ff, 0 0 100px #da00ff, 0 0 150px #da00ff;
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+.userbtn{
+background-color :#EBEDF0; 
+font-size: 15px; 
+font-weight: 600;
+width :300px;
+border-radius: 15px;
+margin-bottom: 15px;
+text-align: center;
+margin-left : 5px;
+}
+header.transparent {
+    background-color: white !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+
 </style>
 </head>
 
@@ -520,15 +674,14 @@ input[name="tab_item-follow"] {
 
 	<jsp:include page="/toolbar.jsp" />
 
-	<main role="main">
+	<main role="main" class="main">
 		
-			<div id="intro-wrap" data-height="27.778">
+			<div id="intro-wrap" data-height="12" style="background-color : black;">
 				<div id="intro" class="preload">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
-							<h2>MyBlog</h2>
-							<p>Write down your daily life</p>
+							<h2 class="neon">MyBlog</h2>
 						</div>
 						<!-- caption -->
 					</div>
@@ -546,7 +699,7 @@ input[name="tab_item-follow"] {
 
 				<div class="container">
 					<div class="row profile">
-						<div class="col-md-3">
+						
 							<div class="profile-sidebar">
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic">
@@ -578,43 +731,42 @@ input[name="tab_item-follow"] {
 								<!-- END SIDEBAR BUTTONS -->
 								<!-- SIDEBAR MENU -->
 								<div class="profile-usermenu">
-									<ul class="nav">
-										<li class="active"><a href="/club/getApprovalConditionList?userId=${user.userId}"> <i
-												class="glyphicon glyphicon-home"></i> 내 모임
-										</a></li>
-										<li>
-										<a href="/user/updateProfile?userId=${user.userId }"> <i
-												class="glyphicon glyphicon-user"></i> 프로필 수정
-										</a></li>
-										<li><a href="#" target="_blank"> <i
-												class="glyphicon glyphicon-ok"></i> Tasks
-										</a></li>
-										<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
-												Help
-										</a></li>
-									</ul>
+									
+										<div class="userbtn"><a href="/club/getApprovalConditionList?userId=${user.userId}">
+												 내 모임</a></div>
+										
+										<div class="userbtn"><a href="/user/updateProfile?userId=${user.userId }"> 
+										
+												 프로필 수정</a></div>
+										
+										<div class="userbtn"><a href="#"> 
+												차단 리스트</a></div>
+												
+										<div class="userbtn"><a href="/myHome/getPayList"> 
+												결제 내역</a></div>
+										
 								</div>
 								<!-- END MENU -->
 							</div>
-						</div>
-						<div class="col-md-9"></div>
+						
+						
 					</div>
 				</div>
 <div class="tab">
 			<div class="tabs1">
 			<input id="all-follow" type="radio" name="tab_item-follow" checked>
-    <label class="tab_item-follow" for="all-follow">FollowList</label>
+    <label class="tab_item-follow" for="all-follow"><h4> 팔로우</h4></label>
     <input id="programming-follow" type="radio" name="tab_item-follow">
-    <label class="tab_item-following" for="programming-follow">FollowerList</label>
+    <label class="tab_item-following" for="programming-follow"><h4>팔로워</h4></label>
     
-    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
         		
         		<br />
 		<c:set var = "i" value = "0" />
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div style="display: inline-block;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:300px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			<div style="display: inline-block; margin-left :-50px;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
 					
 				</div>
@@ -622,7 +774,7 @@ input[name="tab_item-follow"] {
 			
 				
 				</div>
-				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
      <div class="col-md-4" id="fl">
 					 		<br />
 		
@@ -635,80 +787,169 @@ input[name="tab_item-follow"] {
 		
 <div class="tabs2">
     <input id="all" type="radio" name="tab_item" checked>
-    <label class="tab_item1" for="all">내가 쓴 피드</label>
+    <label class="tab_item1" for="all"><h4>내가 쓴 피드</h4></label>
     <input id="programming" type="radio" name="tab_item">
-    <label class="tab_item2" for="programming">내 모임 게시물</label>
+    <label class="tab_item2" for="programming"><h4>내 모임 게시물</h4></label>
     
  
-    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left:-30px;">
+    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:660px; height:700px; margin-left:-30px;">
         		<div class="comment-section" style="margin-left:-50px; width:720px; " >
 					<br />
 					<c:set var="i" value="0"></c:set>
 					<c:forEach var="feed" items="${feedList}">
 						<c:set var="i" value="${i + 1}"></c:set>
 
-						<c:if test="${fn:trim(feed.deleteCondition) eq '0'}">
+						<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
 
 							<div class="single-comment">
 								<form class="feedForm">
-									<div class="comment-author">
-
-										<img
-										src="/resources/image/uploadFiles/${user.profileImage}"
-										class="img-responsive" width="100" height="100"> <cite>${user.nickName }</cite>
-										<span class="says">says:</span>
-									</div>
-									<!-- comment-author -->
 									
+
+											<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
+									 &nbsp; &nbsp;
+									<!-- comment-author -->
+									    
 										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
 											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 										</h5>
-									
+									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+											
+											<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">
+												<%-- 수정 버튼 --%>
+												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
+												<%-- 수정 버튼 --%>
+											
+												<%-- 삭제 버튼 --%>
+												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>
+												<%-- 삭제 버튼 --%>
+											</div>
+										</c:if>
+										
 									<!-- comment-meta -->
-									<p>${feed.content}</p>
-									<c:if test="${!empty feed.hashtag}">
-										<br />${feed.hashtag}</c:if>
-									<c:if test="${feed.checkHeart != 0}">
-									<div class="col-xs-2">
+											<div class="feedContent">
+											<h4>${feed.content}</h4>
+											
+											<%-- 이미지 --%>
+											<c:if test="${!empty feed.image1}">
+											<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+												<ol class="carousel-indicators">
+													<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+													
+													<c:if test="${!empty feed.image2}">
+														<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+													</c:if>
+													<c:if test="${!empty feed.image3}">
+														<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+													</c:if>
+													<c:if test="${!empty feed.image4}">
+														<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+													</c:if>
+												</ol>
+											
+												<!-- Wrapper for slides -->
+												<div class="carousel-inner" role="listbox">
+													<div class="item active">
+														<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+													</div>
+													
+													<c:if test="${!empty feed.image2}">
+														<div class="item">
+															<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+														</div>
+															<c:if test="${!empty feed.image3}">
+																<div class="item">
+																	<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+																</div>
+																<c:if test="${!empty feed.image4}">
+																	<div class="item">
+																		<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																	</div>
+																</c:if>
+															</c:if>														
+													</c:if>
+												</div>
+	
+												<!-- Controls -->
+												<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
+													<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+													<span class="sr-only">Previous</span>
+												</a>
+												<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
+													<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+													<span class="sr-only">Next</span>
+												</a>
+											</div>
+											</c:if>
+											<%-- 이미지 --%>
+											
+										</div>
+										<c:if test="${!empty feed.hashtag}">
+											<div class="hashtagContent">
+												${feed.hashtag}
+											</div>
+										</c:if>
+										<%-- 피드 댓글 신고 --%>
+										<input type="hidden" name="reportSource" value="3">
+										<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
+										<input type="hidden" name="user2" value="${feed.user.userId}">
+										<%-- 피드 댓글 신고 --%>
+										
+										<input type="hidden" name="source" value="0">
+										<input type="hidden" name="feedNo" value="${feed.feedNo}">
+										<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
+										<input type="hidden" name="openCondition" value="3">
+								
+								 
+									<input type="hidden" name="feedNo" value="${feed.feedNo}">
+
+									<section class="row section lastBar">
+											<div class="row">
+												<%-- 여백 --%>
+												<div class="col-xs-1"></div>
+												<%-- 여백 --%>
+											
+												<c:if test="${feed.checkHeart eq 0}">
+													<div class="col-xs-2">
 														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
 													</div>
-										</c:if>
-											<c:if test="${feed.checkHeart ne 0}">
+												</c:if>
+												<c:if test="${feed.checkHeart ne 0}">
 													<div class="col-xs-2">
 														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
 													</div>
 												</c:if>
-									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-										<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true"></span>
-									</c:if>
-								 
-									<input type="hidden" name="feedNo" value="${feed.feedNo}">
-
-									<section class="row section">
-										<div class="row">
-											<c:if test="${feed.checkHeart == 0}">
-												<div class="column two like" style="display: show;">
-													좋아요</div>
-												<div class="column two dislike" style="display: none;">
-													시러요</div>
-											</c:if>
-											<c:if test="${feed.checkHeart != 0}">
-												<div class="column two like" style="display: none;">
-													좋아요</div>
-												<div class="column two dislike" style="display: show;">
-													시러요</div>
-											</c:if>
-											<div class="column two likeCount">${feed.heartCount}</div>
-
-											<div class="column two comment">댓글수</div>
-
-											<div class="column two commentCount">
-												${feed.commentCount}</div>
-											<div class="column four last">신고</div>
-										</div>
-									</section>
+												
+												<div class="col-xs-1 likeCount">
+													${feed.heartCount}
+												</div>
+												
+												<div class="col-xs-1">
+												</div>
+												
+												<div class="col-xs-2 comment">
+													<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
+												</div>
+												
+												<div class="col-xs-1 commentCount">
+													 ${feed.commentCount}
+												</div>
+												
+												<div class="col-xs-1">
+												</div>
+													
+												<!-- 신고 아이콘 -->
+												<div class="col-xs-2 report">
+													<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
+												</div>
+												<!-- 신고 아이콘 -->
+												
+												<%-- 여백 --%>
+												<div class="col-xs-1"></div>
+												<%-- 여백 --%>
+												
+											</div>
+										</section>
 								</form>
 							</div>
 
@@ -716,6 +957,11 @@ input[name="tab_item-follow"] {
 					</c:forEach>
 
 				</div>
+					
+					<%-- 현재 페이지 --%>
+					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
+					<input type="hidden" id="pageFlag" value=true>
+					<%-- 현재 페이지 --%>
     </div>
     <div class="tab_content" id="programming_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left : 10px;">
     
@@ -724,6 +970,7 @@ input[name="tab_item-follow"] {
 											
 </div>
 
+  </div>
   </div>
 			</div>
 		</div>
@@ -807,8 +1054,8 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"'>"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
+				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"'>"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
 			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			

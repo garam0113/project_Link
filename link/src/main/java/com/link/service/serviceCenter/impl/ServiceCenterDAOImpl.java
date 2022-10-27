@@ -128,9 +128,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		
-		System.out.println("들어오나요??");
-		System.out.println(report);
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getFeed());
+		System.out.println("123123"+report.getFeedComment());
 		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
 	}
 
@@ -163,9 +164,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 				sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);
 			}else if(report3.getReportSource()==3) {//피드
 				sqlSession.update("FeedMapper.reportFeed", report3.getFeed().getFeedNo());
-				System.out.println(report3.getFeed().getFeedNo()+"테스트용용 피드");
 			}else if(report3.getReportSource()==4) {//피드게시물댓글
-				System.out.println(report3.getFeedComment().getFeedCommentNo()+"테스트용용 피드댓글 ");
 				sqlSession.update("FeedMapper.reportFeedComment", report3.getFeedComment().getFeedCommentNo());
 			
 			}
@@ -207,5 +206,13 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}
 //==================================================================여기까지가 공통
 
-
+	// ==================================================================여기부터가 Push
+	
+		public void addPush(Report push) throws Exception {
+			
+			sqlSession.insert("Report_PushMapper.addPush", push);
+			
+		}
+			
+	// ==================================================================여기까지가 Push
 }

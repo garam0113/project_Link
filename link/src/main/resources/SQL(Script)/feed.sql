@@ -270,10 +270,12 @@ AND parent		= 101
 
 SELECT * FROM USERS
 
+SELECT * FROM REPORT_PUSH
 
 
 
 
+TYPE - 2가 알림
 
 
 

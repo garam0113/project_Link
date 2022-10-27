@@ -53,4 +53,10 @@ public interface ServiceCenterDAO {
 	public int getTotalCount(Search search, int a) throws Exception;
 
 	
+	// ==================================================================여기부터가 Push
+	
+	public void addPush(Report push) throws Exception;		
+		
+	// ==================================================================여기까지가 Push
+	
 }
