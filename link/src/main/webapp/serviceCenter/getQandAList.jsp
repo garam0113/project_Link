@@ -117,11 +117,7 @@ body {
 	    width:1800px;
  	   background: rgba(0,0,0,0.35);
  	   }
-/* input::placeholder-shown {
-  color:#BD76FF; */
-#searchKeyword::-webkit-input-placeholder {  color:#E1BFFF;}
 
-}
 
 </style>
 
@@ -226,7 +222,7 @@ function fncGetList(currentPage) {
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px); color:#BD76FF;">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
@@ -237,7 +233,7 @@ function fncGetList(currentPage) {
 					<form class="form-inline" name="detailForm">
 						
 						<div class="form-group">
-							<select class="form-control" name="searchCondition" style="vertical-align: top; color:#BD76FF;">
+							<select class="form-control" name="searchCondition" style="vertical-align: top;">
 								<option value="0"
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
@@ -246,7 +242,7 @@ function fncGetList(currentPage) {
 
 							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">검색어</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; color:#BD76FF;"
+								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; "
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
@@ -289,7 +285,12 @@ function fncGetList(currentPage) {
 						<c:if test="${ user.role == '1' }">
 							<td align="left"><a
 								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
-									${getQandAList.qandATitle} </a></td>
+									${getQandAList.qandATitle} </a>
+									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									</c:if>	
+									
+									</td>
 						</c:if>
 						<%--관리자 끝 --%>
 						<%-- 비회원--%>
@@ -297,20 +298,21 @@ function fncGetList(currentPage) {
 							<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<td align="left"><a
 									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
-										${getQandAList.qandATitle} </a></td>
+										${getQandAList.qandATitle} </a>
+										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+										&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+										</c:if>	
+										</td>
 							</c:if>
 
 							<c:if test="${getQandAList.qandAOpenCondition=='0'}">
 								<td >
-								<div class="waviy">
-									<strong>
-								<span style="--i:1">비</span>
-								<span style="--i:2">밀</span>
-								<span style="--i:3">글</span>
-								<span style="--i:4">!</span></strong>
-								
+								<img src="/resources/image/uploadFiles/자물쇠.jpg" style="width:15px; height:15px; display: inline;">
 								비밀글입니다.
-								</div>
+								<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									</c:if>	
+								
 								</td>
 							</c:if>
 						</c:if>
@@ -322,30 +324,31 @@ function fncGetList(currentPage) {
 							<c:if test="${sessionScope.user.userId == getQandAList.userId.userId}">
 									
 									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
-										${getQandAList.qandATitle} </a>	
+										${getQandAList.qandATitle} <c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									</c:if>	</a>	
 							</c:if>
 							<%--세션 아이디비교 OK 끝 --%>
 							<%--세션 아이디비교  NO --%>
 							<c:if test="${sessionScope.user.userId != getQandAList.userId.userId}">
 									<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
-										${getQandAList.qandATitle} </a>
+										${getQandAList.qandATitle} 
+										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									</c:if>	</a>
 							</c:if>
 							
 									<c:if test="${getQandAList.qandAOpenCondition=='0'}">
-								<div class="waviy">
-									<strong>
-								<span style="--i:1">비</span>
-								<span style="--i:2">밀</span>
-								<span style="--i:3">글</span>
-								<span style="--i:4">!</span></strong>
-								
+									<img src="/resources/image/uploadFiles/자물쇠.jpg" style="width:15px; height:15px; display: inline;">
 								비밀글입니다.
-								</div>
 									</c:if>
-							
+									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
+									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									</c:if>								
 								
 							</c:if></c:if>
+							
 							</td>
 							<%--세션 아이디비교 NO 끝 --%>
 						

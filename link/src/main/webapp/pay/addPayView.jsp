@@ -114,16 +114,16 @@
 			background-color: #f2e3ff;
 			/* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 150px;
-			padding: 5rem;
+			border-radius: 10px;
+			padding: 1rem;
 			width: 950px;
 		}
 		.pay-body{
 			display: grid;
 			grid-template-columns: 2fr 5fr;
 			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 200px;
-			padding: 6rem;
+			border-radius: 10px;
+			padding: 1rem;
 			background-color: #f2f3ff;
 		}
 		.pay-body-text{
@@ -241,8 +241,8 @@
 							<div class="pay-body">
 								<div class="pay-body-text">
 									<div>결제방법</div><br><br><br><br><br>
-									<div>모임이름</div><br><br>
-									<div>추가 모임원 수</div><br><br>
+									<div>모임이름</div><br>
+									<div>추가 모임원 수</div><br>
 									<div>총 결제금액</div>
 								</div>
 								<div class="pay-body-content">
@@ -255,20 +255,17 @@
 									</div>
 									<br>
 									
-									<div>${ returnClub.clubTitle }의 현재 모임원 수 10명</div>
-									<br>
+									<div><span>${ returnClub.clubTitle }</span>의 현재 모임원 수 <span>10</span>명</div>
 									<div class="pay-body-updown">
 										<span class="glyphicon glyphicon-minus"></span>
 										<span class="payProduct-member">10</span>
 										<span class="glyphicon glyphicon-plus"></span>명
 									</div>
-									<br>
 									<div>
 										<span class="totalPrice">5000</span>원
 									</div>
-									<br>
 									<div>
-										<div><input type="button" class="submit" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="취소하기"></div>
+										<div><input type="button" class="submit" value="결제하기">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="cancle" value="이전으로"></div>
 									</div>
 								</div>							
 							</div>

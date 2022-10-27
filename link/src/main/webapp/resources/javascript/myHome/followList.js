@@ -57,7 +57,7 @@ window.onload=function() {
     	   console.log(item);
 			var value = 
 				"<div class='follow-section' style='margin-left:50px;' id='"+item.receiveId.userId+"'>"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
+			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='75' height='75' />"+"</div><div'>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			

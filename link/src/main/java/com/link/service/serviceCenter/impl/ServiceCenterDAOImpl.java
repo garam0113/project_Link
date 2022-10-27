@@ -128,9 +128,10 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void addReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
-		
-		System.out.println("들어오나요??");
-		System.out.println(report);
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getClubPost());
+		System.out.println("123123"+report.getFeed());
+		System.out.println("123123"+report.getFeedComment());
 		sqlSession.insert("Report_PushMapper.addReport", report); //신고하기
 	}
 
@@ -151,8 +152,6 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 		sqlSession.update("Report_PushMapper.addReportCount", report2);   //신고당한 유저 reportCount + 하는 메서드
 		Report report3 = getReport(report.getNo());
 		sqlSession.update("Report_PushMapper.stopDate",report3); //신고당한 유저의 reportCount 값에 따라 정지시간 메기는 메서드
-		System.out.println("여기까지 ㄴ들어오나?");
-		System.out.println(report3+"테스트용");
 			if(report3.getReportSource()==1) { //모임게시물에서 들어옴
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("report", report3);
@@ -165,9 +164,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 				sqlSession.update("ClubPostCommentMapper.updateClubPostComment", map);
 			}else if(report3.getReportSource()==3) {//피드
 				sqlSession.update("FeedMapper.reportFeed", report3.getFeed().getFeedNo());
-				System.out.println(report3.getFeed().getFeedNo()+"테스트용용 피드");
 			}else if(report3.getReportSource()==4) {//피드게시물댓글
-				System.out.println(report3.getFeedComment().getFeedCommentNo()+"테스트용용 피드댓글 ");
 				sqlSession.update("FeedMapper.reportFeedComment", report3.getFeedComment().getFeedCommentNo());
 			
 			}
@@ -197,9 +194,9 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 			return sqlSession.selectOne("Report_PushMapper.getTotalCount2", search);
 		}else if (a == 1) {
 			return sqlSession.selectOne("QandAMapper.getTotalCount", search);
-		}else if (a==2) {
+		}else if (a== 2) {
 			return sqlSession.selectOne("NoticeMapper.getTotalCount", search);
-		}else if(a==3)  {  
+		}else if(a== 3)  {  
 			return sqlSession.selectOne("QandAMapper.getTotalCount2", search);
 		}
 		else {
@@ -209,5 +206,13 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	}
 //==================================================================여기까지가 공통
 
-
+	// ==================================================================여기부터가 Push
+	
+		public void addPush(Report push) throws Exception {
+			
+			sqlSession.insert("Report_PushMapper.addPush", push);
+			
+		}
+			
+	// ==================================================================여기까지가 Push
 }

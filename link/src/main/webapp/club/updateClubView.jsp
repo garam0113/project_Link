@@ -28,6 +28,13 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 		
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/resources/javascript/plugins.js"></script>
+	<script src="/resources/javascript/beetle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>	
+		
+		
+		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
@@ -42,7 +49,12 @@
 		color: #BD76FF;
     	border-color: #BD76FF;
     	background-color: #ffffff;
-		}            
+		}
+		
+		textarea {
+		resize: none;
+	
+		}          
         
     </style>
     
@@ -51,16 +63,36 @@
 
 	function fncUpdateClub() {
 
-		////////////////////////////////////////////////////
-		//document.detailForm.action = '/addProduct.do';
-		///////////////////////////////////////////////////
-
-		// 		document.detailForm.action = '/product/addProduct';		
-		// 		document.detailForm.submit(); 
-
-		/* $("form").attr("method", "POST").attr("action", "/club/updateClub")
-				.submit(); */
-				
+		var title = $("textarea[name='clubTitle']").val();
+		var content = $("textarea[name='clubDetail']").val();
+		var image = $("input[name='file']").val();
+		
+		if (title == null || title.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '모임이름은 필수입니다.',
+			});
+			return;
+		}
+		
+		if( content == null || content.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '모임설명은 필수입니다.',
+			});
+			return;
+		}
+		
+		if( image == null || image.length < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: '모임대표이미지는 필수입니다.',
+			});
+			return;
+		}
+		
+		
+		
 		$("form").submit();
 	}
 
@@ -111,6 +143,9 @@
 
 <body>
 	
+	<jsp:include page="/toolbar.jsp"/>
+	
+	
 	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
 			<div class="container">
@@ -123,25 +158,26 @@
 		
 		
 			<div class="form-group">
-				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">모 임 제 목</label>
+				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}" style="width:300px; border-color: #BD76FF;" autocomplete='off'>
+					<strong>모 임 이 름</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" style="width: 500px; height: 50px;">${club.clubTitle }</textarea>
 				</div>					
 			</div>
 			
 			
 		
 			<div class="form-group">
-				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">모 임 설 명</label>
+				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}" style="width:300px; border-color: #BD76FF;" autocomplete='off'>
+					<strong>모 임 설 명</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" maxlength="500" style="width: 500px; height: 300px;">${club.clubDetail }</textarea>
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">모임카테고리</label>
+				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<select class="form-control" id="clubCategory" name="clubCategory" style="width:300px; border-color: #BD76FF;">
+					<strong>모임카테고리</strong>
+					<select class="form-control" id="clubCategory" name="clubCategory" style="width:350px;">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -156,9 +192,10 @@
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">활 동 영 역</label>
+				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<select class="form-control" id="clubArea" name="clubArea" style="width:300px; border-color: #BD76FF;">
+					<strong>지 역</strong>
+					<select class="form-control" id="clubArea" name="clubArea" style="width:350px;">
 						<option value="강남구">강남구</option>
 						<option value="강동구">강동구</option>
 						<option value="강북구">강북구</option>
@@ -189,10 +226,11 @@
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">모임이미지</label>
+				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
+				<strong>모임이미지</strong>
 					<input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
-					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/${club.clubImage}" style="height: 300px; width: 300px;"></button>
+					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/${club.clubImage}" style="height: 300px; width: 300px; max-width: 260%;"></button>
 				</div>		
 			</div>
 			

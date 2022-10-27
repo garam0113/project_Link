@@ -32,6 +32,14 @@
 		padding-top : 70px;
 	}
 	
+	#main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	main {
+		background-color: #f0f2f5 !important;
+	}
+	
 	#btn_group button{
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
@@ -39,7 +47,7 @@
 		border-bottom-right-radius: 10px;
 		color: #BD76FF;
     	border-color: #BD76FF;
-    	background-color: #fbfbfb;
+    	background-color: #f0f2f5;
 	}
 	a {
     	color: #bd76ff;
@@ -119,9 +127,9 @@
 	//ÆË¾÷ ¶ç¿ì±â
 	 var openWin;
 	function popup() {
-		var url = "/club/updateClubView.jsp";
-		var name = "updateClubView";
-		var option = "width = 800, height = 500, top = 100, left = 200, location = no"
+		var url = "/club/applyClub.jsp";
+		var name = "applyClub";
+		var option = "width = 500, height = 300%, top = 100, left = 200, location = no"
 		openWin = window.open(url, name, option);
 	}
 	
@@ -143,7 +151,8 @@
 	$(function() {
 
 		$("button.btn.btn-addApproval").on("click", function() {
-			self.location="/club/applyClub.jsp"
+			//self.location="/club/applyClub.jsp"
+			popup();
 		});
 	});
 	

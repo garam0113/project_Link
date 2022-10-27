@@ -10,6 +10,9 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/beetle.js"></script>
 		
+		<!-- 사용자 정의 css -->
+		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+		
 		<!-- include libraries(jQuery, bootstrap) -->
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -69,7 +72,7 @@
 								//alert(data.url);
 								alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
-								alert(data.url);
+								//alert(data.url);
 								jsonArray.push(json["url"]);
 								jsonFn(jsonArray);
 							}
@@ -88,9 +91,9 @@
 				
 				$("input[value='등록완료']").bind("click", function(){
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
-					//$("form").attr("accept-charset", "EUC-KR").submit();
+					$("form").attr("accept-charset", "EUC-KR").submit();
 				});
-				$("input[value='리스트로이동']").bind("click", function(){
+				$("input[value='이전으로']").bind("click", function(){
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
@@ -101,8 +104,8 @@
 			}
 			.club-post-add-view{
 				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-				border-radius: 150px;
-				padding: 5rem;
+				border-radius: 30px;
+				padding: 3rem;
 				/* background-color: #f2f3ff; */
 			}
 			#summernote{
@@ -167,12 +170,12 @@
 						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
 							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<div class="clubPostTitle">
-								제목<input type="text" name="clubPostTitle" placeholder="제목">
+								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
 							<textarea id="summernote" name="clubPostContent">
 							</textarea>
-							<input type="button" class="club-post-add-submit" value="등록완료">
-							<input type="button" class="list-navigation" value="리스트로이동">
+							<input type="button" class="plain button red" value="등록완료">
+							<input type="button" class="plain button red cancle" value="이전으로">
 						</form>
 					</div>
 					

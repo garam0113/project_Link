@@ -118,7 +118,7 @@
 
 	div.six {
 		border-radius: 15px;
-		border:2px solid rgba(171,148,233,1);
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 	}
 
 	/* TEST */
@@ -138,6 +138,7 @@
 
 	div.feedContent {
 		margin-left: 60px;
+		margin-right: 25px;
 		color: black !important;
 	}
 
@@ -209,7 +210,36 @@
 
 	/* 사진 모서리 둥글게 */
 
-	
+	/* 해시 태그 */
+
+	.hashtagContent {
+		margin-left: 60px;
+		margin-right: 25px;
+	}
+
+	/* 해시 태그 */
+
+
+	/* 하단 바 중앙 정렬 */
+
+	.col-xs-2 {
+		text-align: center !important;
+		display: flex;
+		justify-content: center;
+	}
+
+	/* 하단 바 중앙 정렬 */
+
+
+
+
+
+
+
+
+
+
+
 
 	.updateFeedComment {
 

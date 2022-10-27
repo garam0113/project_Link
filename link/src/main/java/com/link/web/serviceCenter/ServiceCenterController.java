@@ -241,7 +241,7 @@ public class ServiceCenterController {
 								 Model model , HttpServletResponse response) throws Exception {
 		
 		
-		System.out.println("/ServiceCenter/getNotice : GET & POST");
+		System.out.println("/ServiceCenter/getQandA : GET & POST");
 		
 		
 		qandA = serviceCenterService.getQandA(qandA.getQandANo());
@@ -263,12 +263,13 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "updateQandA", method = RequestMethod.GET)
-	public String updateQandA(@ModelAttribute QandA qandA, Model model) throws Exception {
+	public String updateQandA(@ModelAttribute QandA qandA, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("/ServiceCenter/updateQandA : GET");
 
 		System.out.println(qandA);
-		
+		User userId =(User)session.getAttribute("user");
+		qandA.setUserId(userId);
 		qandA = serviceCenterService.getQandA(qandA.getQandANo());
 		
 		model.addAttribute("qandA", qandA);
@@ -279,16 +280,15 @@ public class ServiceCenterController {
 
 	
 	@RequestMapping(value = "updateQandA", method = RequestMethod.POST)
-	public String updateQandA(@ModelAttribute QandA qandA, Model model, User user) throws Exception {
+	public String updateQandA(@ModelAttribute QandA qandA, Model model, User user, HttpSession session ) throws Exception {
 		
 		System.out.println("/ServiceCenter/updateQandA : POST");
-	
-		user.setUserId("admin1");
-		qandA.setUserId(user);
 		
+		User userId =(User)session.getAttribute("user");
+		qandA.setUserId(userId);
+		System.out.println(qandA);
 		serviceCenterService.updateQandA(qandA);
 		
-		System.out.println(qandA);
 		
 		qandA = serviceCenterService.getQandA(qandA.getQandANo());
 		
@@ -314,7 +314,9 @@ public class ServiceCenterController {
 	}
 	
 	@RequestMapping(value = "getQandAList" , method = RequestMethod.GET)
-	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,  Model model) throws Exception {
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA,  Model model ,
+			@RequestParam(value = "menu", defaultValue = "search") String menu) throws Exception {
+		
 			System.out.println("/serviceCenter/getQandAList : GET ");
 			if(search.getOrder()==0) {
 			search.setOrder(2);

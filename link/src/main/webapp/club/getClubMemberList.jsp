@@ -39,13 +39,22 @@
 		border-bottom-right-radius: 10px;
 		color: #BD76FF;
     	border-color: #BD76FF;
-    	background-color: #ffffff;
+    	background-color: #f0f2f5;
 		}    
 	
 	td {
 		text-align: center;
 		font-size: medium;
 		vertical-align: middle;
+		background-color: #f0f2f5 !important;
+	}
+	
+	#main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	main {
+		background-color: #f0f2f5 !important;
 	}
 	
 	.darkover {

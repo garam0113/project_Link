@@ -24,6 +24,7 @@ import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.user.UserService;
 
@@ -205,22 +206,24 @@ public class ClubPostController {
 			//}
 		//}//end of while
 		*/
-		int isIndexImage = 0;
-		int isIndexVideo = 0;
 		String specificImage = "/resources/image/uploadFiles/";
 		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
 		String specificVideo = "embed/";
-		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
+		
+		int isIndexImage = clubPost.getClubPostContent().indexOf(specificImage);
+		int isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo);
+		
+		if( isIndexImage != -1) {
 			System.out.println("이미지가 있다");
-			int startIndex = clubPost.getClubPostContent().indexOf(specificImage)+specificImage.length();
+			int startIndex = isIndexImage+specificImage.length();
 			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
 			// 파일명.확장자
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
 			clubPost.setImage1(str);
 		}
-		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
+		if( isIndexVideo != -1) {
 			System.out.println("영상이 있다");
-			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
+			int startIndex = isIndexVideo+specificVideo.length();
 			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
 			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
 				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
@@ -231,9 +234,8 @@ public class ClubPostController {
 			clubPost.setClubPostVideo1(str);
 		}
 		
-		System.out.println("////////////////" + clubPost.getImage1());
-		System.out.println("////////////////" + clubPost.getClubPostVideo1());
-
+		System.out.println("모임 게시물 대표 영상 썸네일 : " + clubPost.getClubPostVideo1() + ", 모임 게시물 대표 이미지 : " + clubPost.getImage1() + ", 모임 게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
+		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		return "forward:/clubPost/getClubPost.jsp";
 	}
@@ -306,40 +308,42 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "updateClubPost")
-	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, HttpSession session) throws Exception {
+	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
 		// session으로 로그인한 회원 정보를 가져온다
 		clubPost.setUser((User)session.getAttribute("user"));
 
-		int isIndexImage = 0;
-		int isIndexVideo = 0;
 		String specificImage = "/resources/image/uploadFiles/";
-		//String specificVideo = "<iframe frameborder=\"0\" src=\"//";
 		String specificVideo = "embed/";
-		if( (isIndexImage = clubPost.getClubPostContent().indexOf(specificImage)) != -1) {
+		
+		int isIndexImage = clubPost.getClubPostContent().indexOf(specificImage);
+		int isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo);
+
+		if( isIndexImage != -1) {
 			System.out.println("이미지가 있다");
-			int startIndex = clubPost.getClubPostContent().indexOf(specificImage)+specificImage.length();
+			int startIndex = isIndexImage+specificImage.length();
 			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
 			// 파일명.확장자
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
 			clubPost.setImage1(str);
 		}
-		if( (isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo)) != -1) {
+		
+		if( isIndexVideo != -1) {
 			System.out.println("영상이 있다");
-			int startIndex = clubPost.getClubPostContent().indexOf(specificVideo)+specificVideo.length();
+			int startIndex = isIndexVideo+specificVideo.length();
 			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
 			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
 				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
 			}
 			// 파일명.확장자
-			System.out.println("startIndex : " + startIndex + ", endIndexFromStartIndex : " + endIndexFromStartIndex);
+			System.out.println("시작 index : " + startIndex + ", 마지막 index : " + endIndexFromStartIndex);
 			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
 			clubPost.setClubPostVideo1(str);
 		}
 		
-		System.out.println("////////////////" + clubPost.getImage1() + ", " + clubPost.getUser());
-		System.out.println("////////////////" + clubPost.getClubPostVideo1());
+		System.out.println("모임 게시물 대표 영상 썸네일 : " + clubPost.getClubPostVideo1() + ", 모임 게시물 대표 이미지 : " + clubPost.getImage1() + ", 모임 게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
 		
+		map.put("report", report);
 		map.put("clubPost", clubPost);
 		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
 		return "forward:/clubPost/getClubPost.jsp";

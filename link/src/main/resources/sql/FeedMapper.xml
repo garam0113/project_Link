@@ -429,7 +429,6 @@
 							<where>
 							c.feed_comment_no = isLike.EXIST(+)
 							AND c.user_id						= u.user_id
-							AND c.report_condition		=	'0'
 							AND c.feed_no						= #{feedNo}
 							AND delete_condition				= '0'
 							</where>
@@ -440,7 +439,6 @@
 						FROM feed_comment c, users u
 						WHERE delete_condition				= '0'
 						AND c.user_id						= u.user_id
-						AND c.report_condition		=	'0'
 						AND c.feed_no						= #{feedNo}
 						ORDER BY sequence ASC
 						</otherwise>
