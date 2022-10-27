@@ -81,10 +81,11 @@
 	margin-left: 0px;
 	margin-top: 50px;
 	width: 90%;
-	height: 800px;
+	height: 700px;
 	display: flex;
 	justify-content: center;
 	background-color: #f0f2f5 !important;
+	color: #bd76ff !important;
 	}
 			
 	
@@ -135,18 +136,18 @@
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-bottom: 0em;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-bottom: 0em; margin-left: 20px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
+							<a href="/club/getMeetingList" style="color: #BD76FF;">모임일정</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
+							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
+							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">모임 채팅</a>
+							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
 						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
