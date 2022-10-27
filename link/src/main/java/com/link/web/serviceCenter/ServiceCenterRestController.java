@@ -103,6 +103,16 @@ public class ServiceCenterRestController {
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
 	
+	
+	/*
+	 * @RequestMapping(value = "/json/updateReport", method = RequestMethod.POST)
+	 * public String updateReport(@RequestBody Report report, Model model , Search
+	 * search )throws Exception {
+	 * 
+	 * 
+	 * 
+	 * return "forward:/serviceCenter/serviceCenterHome.jsp"; }
+	 */
 	/*
 	 * @RequestMapping(value="/json/getQandAList", method = RequestMethod.POST)
 	 * public Map<String, Object> getQandAList(@RequestBody Search search, QandA

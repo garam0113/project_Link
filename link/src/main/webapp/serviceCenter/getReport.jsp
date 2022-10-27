@@ -37,9 +37,11 @@
 			}
 		})
 
-		$("button:contains('수정')").bind("click", function() {
+		$("button:contains('처리')").bind("click", function() {
 			self.location = "/serviceCenter/updateReport?no="+$('#no').val();
+
 		})
+		
 
 
 
@@ -155,8 +157,8 @@ textarea {
 					 		<input type="text" class="" value="모임게시물" style="width: 150px;" disabled />
 		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
 		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
-		     				 style="transform: translate(-150px, 30px);"> 
-		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>	
+		     				 style="transform: translate(-150px, 30px); color: red;"> 
+		     						${report.clubPost.clubPostNo} 번 </a>	
 		     						
 		     						
 		     				</c:if>
@@ -164,21 +166,21 @@ textarea {
 							<input type="text" class="" value="모임게시물댓글" style="width: 150px;" disabled />
 		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
 		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
-		     				 style="transform: translate(-150px, 30px);"> 
-		     						${report.clubPost.clubPostNo} 클럽게시물 번호 </a>
+		     				 style="transform: translate(-150px, 30px); color: red;"> 
+		     						${report.clubPost.clubPostNo}번 </a>
 		     		 		</c:if>
 		     		 		<c:if test="${report.reportSource=='3'}">
 							<input type="text" class="" value="피드" style="width: 150px;" disabled />
 		     				 <input type="hidden" id="reportSource" name="reportSource" value="3">
 		     				 
-		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);"> 
-		     				 ${report.feed.feedNo} 번째 피드 </a>
+		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);color: red;"> 
+		     				 ${report.feed.feedNo}번 </a>
 		     				</c:if>
 		     				<c:if test="${report.reportSource=='4'}">
 							<input type="text" class="" value="피드댓글" style="width: 150px;" disabled />
 		     				 <input type="hidden" id="reportSource" name="reportSource" value="4">
-		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px);"> 
-		     				 ${report.feedComment.feedNo} 번째 피드 </a>
+		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px); color: red;"> 
+		     				 ${report.feedComment.feedNo}번 </a>
 		     				 </c:if>
 		     			</td>
 		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
@@ -219,7 +221,7 @@ textarea {
 									<div> 
 									<c:if test="${user.role=='1'}">
  									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
-									   수정</button> 
+									   처리</button> 
 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
