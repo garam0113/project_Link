@@ -135,6 +135,8 @@
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
                      </c:if>
+                     
+                     
                   </c:if>
                </ul>
             </nav>
