@@ -24,13 +24,13 @@
 		});
 
 		$("#add").on("click", function() {
-			console.log($("#addRoomName").val());
+			console.log($("#roomName").val());
 			if (socket == undefined) {
 				alert("서버가 연결되어 있지 안습니다");
 				return;
 			}
-			socket.emit("name", $("#addRoomName").val());
-			self.location = "https://192.168.0.183:4040";
+			socket.emit("name", $("#roomName").val());
+			$("form").attr("method", "POST").attr("action", "/live/addLive").submit();
 		})
 	});
 </script>
@@ -39,9 +39,10 @@
 	<!--  자신의 화면 송출 -->
 
 	<h3>Room생성</h3>
-	<input type="text" id="addRoomName" name="addRoomName">
-	<button type="button" id="add">등록</button>
-	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
-
+	<form>
+		<input type="text" id="roomName" name="roomName">
+		<button type="button" id="add">등록</button>
+		<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
+	</form>
 </body>
 </html>

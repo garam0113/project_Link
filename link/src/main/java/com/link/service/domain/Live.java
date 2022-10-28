@@ -3,7 +3,7 @@ package com.link.service.domain;
 public class Live {
 	
 	private String roomName;
-	private String nickName;
+	private String profileImage;
 	private int limit;
 	private int member;
 
@@ -15,12 +15,12 @@ public class Live {
 		this.roomName = roomName;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getProfileImage() {
+		return profileImage;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	public int getLimit() {
@@ -29,7 +29,7 @@ public class Live {
 
 	public void setLimit(int limit) {
 		this.limit = limit;
-	}
+	} 
 
 	public int getMember() {
 		return member;
@@ -41,7 +41,7 @@ public class Live {
 
 	@Override
 	public String toString() {
-		return "Live [roomName=" + roomName + ", nickName=" + nickName + ", limit=" + limit + ", member=" + member
+		return "Live [roomName=" + roomName + ", profileImage=" + profileImage + ", limit=" + limit + ", member=" + member
 				+ "]";
 	}
 

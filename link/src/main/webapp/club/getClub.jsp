@@ -175,7 +175,7 @@
 			socket.emit("total", $("#total").val());
 			socket.emit("nickName", $("#nickName").val());
 			socket.emit("profile", $("#profile").val());
-			self.location = "https://192.168.0.183:4040"; 
+			$("form").attr("method", "POST").attr("action", "/live/addLive").submit();
 		})
 	})
 
