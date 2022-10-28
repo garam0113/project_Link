@@ -12,8 +12,8 @@ public class Search {
 	private int startRowNum;
 	private int endRowNum;
 	private String userId;
-	private String category;
-	private String area;
+	private String clubCategory;
+	private String clubArea;
 	
 	public Search(){
 		
@@ -94,20 +94,28 @@ public class Search {
 		this.userId = userId;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getClubCategory() {
+		return clubCategory;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setClubCategory(String clubCategory) {
+		this.clubCategory = clubCategory;
 	}
 
-	public String getarea() {
-		return area;
+	public String getClubArea() {
+		return clubArea;
 	}
 
-	public void setArea(String area) {
-		this.area = area;
+	public void setClubArea(String clubArea) {
+		this.clubArea = clubArea;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
 	}
 
 	@Override
@@ -131,12 +139,14 @@ public class Search {
 		builder.append(endRowNum);
 		builder.append(", userId=");
 		builder.append(userId);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", area=");
-		builder.append(area);
+		builder.append(", clubCategory=");
+		builder.append(clubCategory);
+		builder.append(", clubArea=");
+		builder.append(clubArea);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+
 }
+	

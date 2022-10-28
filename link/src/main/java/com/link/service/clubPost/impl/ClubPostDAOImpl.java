@@ -316,6 +316,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public void addPay(Pay pay) throws Exception {
 		System.out.println(getClass() + ".addPay(Pay pay) 왔다");
+		System.out.println("결제할 정보 : " + pay);
 		sqlSession.insert("ClubPostMapper.addPay", pay);
 	}// end of addPay(Pay pay)
 

@@ -374,7 +374,8 @@ public class ClubPostController {
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
 	public String chatClubList(HttpSession session, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		return "forward:/chat/chatRoomList.jsp";
+		//return "forward:/chat/chatRoomList.jsp";
+		return "forward:/chat/chatRoom.jsp";
 		//return "forward:/chat/index3.jsp";
 	}
 	
@@ -403,20 +404,20 @@ public class ClubPostController {
 		int maxPay = 0;
 		// 모임번호 + navigation이 1이면 모임 상세보기로 간다
 		// pay.setPayNavigation(1);
-		// pay.setClubNo(22);
+		// pay.setClubNo(1);
 		
 		// 모임번호만 있으면 모임원리스트로 간다
-		 pay.setClubNo(22);
+		 pay.setClubNo(1);
 			
 		// 둘 다 없으면 모임리스트로 간다
 				
 		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
-		if( (pay.getClubNo() != 0 && pay.getPayNavigation() != 0) || (pay.getClubNo() != 0 && pay.getPayNavigation() == 0) ) {
+		if( pay.getClubNo() != 0 && pay.getPayNavigation() == 0 ) {
 			// 모임대표가 가입승인 클릭시
 			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
 			Map<String, Object> map = clubServiceImpl.getClub(pay.getClubNo());
 			Club returnClub = (Club)map.get("club");
-			returnClub.setClubMaxMember(returnClub.getClubMaxMember());
+			System.out.println("전달받은 모임 정보 : " + returnClub);
 			model.addAttribute("returnClub", returnClub);
 			
 			switch (returnClub.getClubMaxMember()) {
@@ -429,7 +430,7 @@ public class ClubPostController {
 			// 모임등록시 모임가입신청시
 			// 해당 회원의 최대 가입수까지의 최대 결제금액을 가져간다
 			User returnUser = userServiceImpl.getUser((User)sesstion.getAttribute("user"));
-			returnUser.setJoinClubLimit(returnUser.getJoinClubLimit());
+			System.out.println("전달받은 회원 정보 : " + returnUser);
 			model.addAttribute("returnUser", returnUser);
 			
 			switch (returnUser.getJoinClubLimit()) {

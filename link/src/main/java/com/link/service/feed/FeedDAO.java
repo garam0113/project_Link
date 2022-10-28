@@ -24,6 +24,8 @@ public interface FeedDAO {
 	// 피드 상세
 	public Feed getFeed(Map<String, Object> map) throws Exception;
 	
+	public Feed getFeedLast() throws Exception;
+	
 	// 피드 수정
 	public void updateFeed(Feed feed) throws Exception;
 	
@@ -41,6 +43,8 @@ public interface FeedDAO {
 	
 	// 피드 댓글 수정
 	public Comment getFeedComment(int feedCommentNo) throws Exception;
+	
+	public Comment getFeedLastComment() throws Exception;
 	
 	// 피드 댓글 수정
 	public void updateFeedComment(Comment comment) throws Exception;

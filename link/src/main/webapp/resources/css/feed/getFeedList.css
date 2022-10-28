@@ -260,9 +260,41 @@
 
 	/* 위에 메뉴 오류 */
 
-	menu-togle a {
+	#menu-toggle {
 		width: auto !important;
 	}
+
+	/* 위에 메뉴 오류 */
+
+
+	/* 알림 이미지 */
+
+	.alarmImg {
+		display: inline-flex; 
+		width:25px; 
+		height:25px;
+	}
+
+	.button-alarm {
+		border: none !important;
+	}
+
+
+	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
+
+	html {
+		overflow: -moz-scrollbars-vertical;
+		overflow-y: scroll;
+	}
+
+	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
+
+
+
+
+
+
+
 
 
 	h4 {

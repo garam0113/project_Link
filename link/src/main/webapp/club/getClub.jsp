@@ -25,6 +25,11 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  
+  
+  <!-- alert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 	<style>
@@ -94,6 +99,30 @@
 		color: yellow;
 	}
 	
+	.row-content.buffer, .row-content.buffer-left {
+    	padding-left: 0% !important;
+	}
+	
+	.row-content.buffer, .row-content.buffer-right {
+    padding-right: 0% !important;
+	}
+	
+	row-content.buffer, .row-content.buffer-bottom {
+    padding-bottom: 10% !important;
+	}
+	
+	
+	element.style {
+    	margin-bottom: 100px !important;
+	}
+		
+	
+	
+	
+	
+	
+	
+	
 	</style>
 	
 	<!-- ?? -->
@@ -105,14 +134,37 @@
 	
 	function fncDeleteClub() {
 		
-		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
-			.submit();
+		Swal.fire({
+			  title: '정말 모임을 삭제하시겠습니까?',
+			  text: "삭제한 모임은 복구가 불가능합니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'delete'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire(
+			      'Deleted!',
+			      'Your file has been deleted.',
+			      'success'
+			    )
+			    
+			    $("form").attr("method", "POST").attr("action", "/club/deleteClub")
+				.submit();	    
+			  }
+			})
+		
+		
+		
+/* 		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
+			.submit(); */
 	}
 	
 	$(function() {
 
 		$("button.btn.btn-delete").on("click", function() {
-			alert("눌리나?");
+			//alert("눌리나?");
 			fncDeleteClub();
 			
 		});
@@ -222,18 +274,18 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 310px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
+							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
+							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
+							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">모임 채팅</a>
+							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
 						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
@@ -241,10 +293,14 @@
 					</ul>
 		
 		<button type="button" class="live">모임 화상채팅</button>
-			
-			
-		<form class="form-horizontal" enctype="multipart/form-data">
 		
+		
+		<div class="mainForm" style="display: inline-flex;">
+		<!-- 클럽상세 -->	
+		<div>	
+		<form class="form-horizontal" enctype="multipart/form-data" style="width:443px;">
+		
+		<div class="col-xs 6 col-md-6" style="display: contents;">
 		<div class="row">
 			<div class="col-xs-4 col-md-6"><strong>모 임 제 목</strong></div>
  			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
@@ -253,7 +309,7 @@
 		<hr/>
 				
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>모 임 설 명</strong></div>
+	  		<div class="col-xs-4 col-md-6 "><strong>모 임 설 명</strong></div>
 			<div class="col-xs-8 col-md-8">${club.clubDetail}</div>
 		</div>
 
@@ -278,6 +334,33 @@
 			<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
 		</div>
 		
+		</div>
+		
+		</form>
+		
+		</div> <!-- 클럽상세 -->
+		
+		
+		<!-- 달력영역 -->
+		<div class="calendarArea">
+		
+		<jsp:include page="/club/calendar.jsp" />
+		
+		</div>
+		<!-- 달력 영역 -->
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</div>
 		
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
@@ -331,6 +414,8 @@
 			</form>		
 			</div>
 	</div>
+	
+	
 	
 		</main>
 </body>

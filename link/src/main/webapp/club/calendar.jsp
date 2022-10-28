@@ -14,7 +14,99 @@
 <script type="text/javascript">
 
 
+
+
 </script>
+
+
+<style>
+
+	}
+.fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100%; 
+    border-radius: 15px;
+        
+        
+}
+.fc .fc-toolbar {
+background-color: black;
+border-radius: 15px;
+margin-left: 20px;
+margin-bottom: 50px !important;
+}
+.fc .fc-toolbar-title {
+    font-size: 1.75em;
+    margin: 0;
+    color : white;
+    border-radius: 15px;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: blueviolet;
+    border-radius: 15px 0px 0px 15px ;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: blueviolet;
+    border-radius: 0px 15px 15px 0px ;
+}
+.fc-timeGridWeek-button{
+border-radius: 0px 0px 0px 0px  !important;
+}
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin-left: 0.75em;
+    background-color: blueviolet;
+    border-radius: 15px;
+}
+.fc, .fc *, .fc *:before, .fc *:after {
+    box-sizing: border-box;
+    border-radius: 15px; 
+}
+.fc .fc-scrollgrid-liquid {
+    height: 100%;
+    background-color: #F5F6F7;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+    margin-right: 2px;
+    width: 90px;
+}
+.fc .fc-scrollgrid-section-header > *, .fc .fc-scrollgrid-section-footer > * {
+    border-bottom-width: 0;
+    border-radius: 15px 15px 0px;
+}
+.fc .fc-scrollgrid-section > td {
+    border-radius: 0px 0px 15px 15px;
+}
+
+.fc-scroller {
+	overflow-y: hidden !important;
+}
+
+
+.fc .fc-view-harness-active > .fc-view {
+    position: absolute !important;
+    top: -38px !important;
+    right: -20px !important;
+    bottom: -120px !important;
+    left: 0 !important;
+}
+
+
+
+
+
+
+
+</style>
+
+
+
+
 </head>
 <body>
 <div id='calendar'></div>

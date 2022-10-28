@@ -185,9 +185,12 @@ public class FeedController {
 		
 		feedService.addFeed(feed);
 		
-		report.setFeed(feed);
+		report.setReportSource(3);
 		report.setType(2);
-		report.setContent(feed.getContent());
+		report.setContent(user.getNickName() + "님이 피드를 작성했습니다.");
+		
+		report.setFeed(feedService.getFeedLast());
+		report.setUser1(user);
 		
 		serviceCenterService.addPush(report);
 		

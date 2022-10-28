@@ -74,6 +74,50 @@
 	
 	$(function(){
 		
+		<%-- 알람 모달창 --%>
+		
+		$(document).on("click", ".alarmImg", function(event) {
+			var sessionUser = '${sessionScope.user.userId}';
+
+			$.ajax(
+					{
+						url : "/serviceCenterRest/json/getPushList",
+						method : "POST",
+						data : JSON.stringify ({
+							userId : sessionUser
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							var alarm = data.alarm;
+							var alarmCount = data.alarmCount;
+							var addHtml = 	"<div>총 알림 갯수" +
+												"<div>" + alarmCount + "</div>" +
+											"</div>";
+							
+							$.each(alarm, function(index, item){
+								addHtml += 	"<div>알림 내용" + 
+												"<div>" + item.content + "</div>" + 
+											"</div>"
+							}) // each close
+							
+							$(".alarmModalBody").html(addHtml);
+							
+						}
+					}	
+					
+			) // ajax close
+			
+		})
+		
+		<%-- 알람 모달창 --%>
+		
 				
 		<%-- SEARCH BY HASHTAG --%>
 		
@@ -697,19 +741,12 @@
 	    margin-bottom: 20px;
 	}
 	
+	.page {
+		padding-right: 0px !important;
+	}
 	
 	
 	
-	
-	
-	
-	
-	#boxx {
-		border:2px solid #ddd;
-		padding:10px;
-		min-height:100px;
-		font-size:12px;
-	 }
   
 </style>
 
@@ -738,8 +775,6 @@
 		
 		
 		<div id="main">
-		
-		<div id="msgStack"></div>
 		
 			<section class="row section">
 			<div class="container">
@@ -810,6 +845,10 @@
 									
 										<div class="feedContent">
 											${feed.content}
+											
+											<c:if test="${!empty feed.video}">
+												<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+											</c:if>
 											
 											<%-- 이미지 --%>
 											<c:if test="${!empty feed.image1}">
@@ -953,6 +992,13 @@
 					
 					<div class="column three">
 					
+					
+                    <div class="alarmHead" >
+						
+							<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+                    </div>
+					
 					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
 					
 						<div class="tabs1">
@@ -986,10 +1032,8 @@
 			</section>
 
 		</div>
-
-	</main>
-	
-	<!-- COMMENT Modal -->
+		
+		<!-- COMMENT Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -1014,6 +1058,32 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 알림 Modal -->
+	<div class="modal fade" id="alarmModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						알림
+					</h4>
+				</div>
+				<div class="modal-body alarmModalBody">여기는 알람모달</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	</main>
+	
 </body>
 </html>

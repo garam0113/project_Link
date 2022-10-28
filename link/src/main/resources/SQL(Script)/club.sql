@@ -215,7 +215,9 @@ DELETE FROM meeting WHERE meeting_member = 1;
 updateMemberRole()
 UPDATE club_user
 	SET member_role = 2
-	WHERE club_user_no = 53;
+	WHERE club_user_no = 68;
+
+SELECT * from club_user;
 
 
 //모임원 추방
@@ -381,6 +383,25 @@ SELECT * FROM participant;
 						FROM club_user
 						WHERE club_no = #{searchKeyword}								
 			) countTable			
+
+			
+			
+SELECT *
+FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+				FROM club
+				WHERE club_title LIKE '%'||?||'%'           club_category = ? and club_title LIKE '%'||?||'%'
+				ORDER BY club_no ) inner_table
+		WHERE ROWNUM <= ? )
+WHERE row_seq BETWEEN ? AND ?
+
+
+
+
+
+
+
+
 
 
 

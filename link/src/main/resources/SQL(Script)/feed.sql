@@ -267,15 +267,48 @@ WHERE feed_no	= 18
 AND parent		= 101 
 
 
-
+SELECT * FROM FEED
 SELECT * FROM USERS
 
-SELECT * FROM REPORT_PUSH WHERE TYPE = 2
-
+SELECT * FROM REPORT_PUSH WHERE TYPE = 2 ORDER BY NO DESC
+SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED
+					ORDER BY feed_no DESC)
+		WHERE ROWNUM = 1
 
 
 
 TYPE - 2가 알림
+
+SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED_COMMENT
+					ORDER BY feed_comment_no DESC)
+		WHERE ROWNUM = 1
+
+
+SELECT
+*
+FROM REPORT_PUSH rp 
+WHERE rp.type = 2
+AND rp.user_id1 IN (
+							SELECT
+							recv_user_id AS NAME
+							FROM FOLLOW_BLOCK
+							WHERE send_user_id = 'user04' 
+							AND STATE = '1'
+							AND TYPE = '1'	) 
+ORDER BY rp.no DESC
+
+
+
+
+
 
 
 

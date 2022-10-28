@@ -18,7 +18,7 @@
 	<result property="type"					column="type"		  		 jdbcType="VARCHAR" />
 	<result property="reportCondition" 		column="report_condition"	 jdbcType="VARCHAR" />
 	<result property="reportReason" 		column="report_reason" 		jdbcType="VARCHAR" />
-
+	<result property="readingStatus"		column="reading_status"		jdbcType="NUMERIC" />
 	
 	<association property="user1" javaType="user">
 		<result property="userId" column="user_id1" jdbcType="VARCHAR"/>
@@ -303,7 +303,7 @@
 	 <insert id="addPush"				parameterType="report">
 	 	INSERT INTO REPORT_PUSH
 		( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_NO, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,
-		USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)
+		USER_ID2, REPORT_REGDATE, TYPE, REPORT_REASON, REPORT_CONDITION)
 	
 		VALUES (seq_report_push_no.nextval,
 				 #{title:VARCHAR},
@@ -317,8 +317,6 @@
 				 #{user1.userId:VARCHAR},
 				 #{user2.userId:VARCHAR},
 				 SYSDATE,
-				 #{reportImage1:VARCHAR},
-				 #{reportImage2:VARCHAR}, 
 				 #{type:VARCHAR},
 				 #{reportReason:VARCHAR},
 			     #{reportCondition:VARCHAR} )
@@ -328,24 +326,56 @@
 	 
 	 </update>
 	 
-	 <select id="getPushList"			parameterType="user"			resultMap="Report_PushSelectMap">
+	 <select id="getPushList"					parameterType="user"			resultMap="Report_PushSelectMap">
 	
 	 	SELECT
 	 	*
-	 	FROM REPORT_PUSH
+	 	FROM REPORT_PUSH rp
 	 	<if test="userId != null">
 	 		WHERE TYPE = 2
-	 		AND USER_ID2 = #{userId}
+	 		AND rp.user_id1 IN (
+									SELECT
+									recv_user_id AS NAME
+									FROM FOLLOW_BLOCK
+									WHERE send_user_id = #{userId}
+									AND STATE = '1'
+									AND TYPE = '1'	) 
 	 	</if>
 	 	
 	 	<if test="userId == null">
 	 		WHERE TYPE = 3
 	 	</if>
 	 	
+	 	ORDER BY NO DESC
 	 	
 	 </select>
 	 
-	 <select id="getPushListTotalCount"	parameterType="user"			resultType="int">
+	 <select id="getPushListTotalCount"			parameterType="user"			resultType="int">
+	
+		SELECT
+		COUNT(*)
+		FROM (
+		 	SELECT
+		 	*
+		 	FROM REPORT_PUSH rp
+		 	<if test="userId != null">
+	 		WHERE TYPE = 2
+	 		AND rp.user_id1 IN (
+									SELECT
+									recv_user_id AS NAME
+									FROM FOLLOW_BLOCK
+									WHERE send_user_id = #{userId}
+									AND STATE = '1'
+									AND TYPE = '1'	) 
+		 	</if>
+		 	
+		 	<if test="userId == null">
+		 		WHERE TYPE = 3
+		 	</if>					)
+		
+	 </select>
+	 
+	 <select id="getPushListUnReadTotalCount"	parameterType="user"			resultType="int">
 	
 		SELECT
 		COUNT(*)
@@ -354,8 +384,8 @@
 		 	*
 		 	FROM REPORT_PUSH
 		 	<if test="userId != null">
-	 		WHERE TYPE = 2
-	 		AND USER_ID2 = #{userId}
+	 		WHERE TYPE 			= 2
+	 		AND reading_status 	= 0 
 		 	</if>
 		 	
 		 	<if test="userId == null">
