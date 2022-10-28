@@ -330,16 +330,23 @@
 	
 	 	SELECT
 	 	*
-	 	FROM REPORT_PUSH
+	 	FROM REPORT_PUSH rp
 	 	<if test="userId != null">
 	 		WHERE TYPE = 2
-	 		AND USER_ID2 = #{userId}
+	 		AND rp.user_id1 IN (
+									SELECT
+									recv_user_id AS NAME
+									FROM FOLLOW_BLOCK
+									WHERE send_user_id = #{userId}
+									AND STATE = '1'
+									AND TYPE = '1'	) 
 	 	</if>
 	 	
 	 	<if test="userId == null">
 	 		WHERE TYPE = 3
 	 	</if>
 	 	
+	 	ORDER BY NO DESC
 	 	
 	 </select>
 	 
@@ -350,10 +357,16 @@
 		FROM (
 		 	SELECT
 		 	*
-		 	FROM REPORT_PUSH
+		 	FROM REPORT_PUSH rp
 		 	<if test="userId != null">
 	 		WHERE TYPE = 2
-	 		AND USER_ID2 = #{userId}
+	 		AND rp.user_id1 IN (
+									SELECT
+									recv_user_id AS NAME
+									FROM FOLLOW_BLOCK
+									WHERE send_user_id = #{userId}
+									AND STATE = '1'
+									AND TYPE = '1'	) 
 		 	</if>
 		 	
 		 	<if test="userId == null">
@@ -372,7 +385,6 @@
 		 	FROM REPORT_PUSH
 		 	<if test="userId != null">
 	 		WHERE TYPE 			= 2
-	 		AND USER_ID2 		= #{userId}
 	 		AND reading_status 	= 0 
 		 	</if>
 		 	

@@ -1,71 +1,185 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <meta charset="EUC-KR"> -->
-<title>Ã¤ÆÃ ÇÁ·ÎÁ§Æ®</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial; }
-    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-    form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
-    form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-    #chatLog { list-style-type: none; margin: 0; padding: 0; }
-    #chatLog li { padding: 5px 10px; }
-    #chatLog li:nth-child(odd) { background: #eee; }
-</style>
-</head>
-<body>
-<ul id="chatLog"></ul>
-<form action="" id="sendForm">
-    <input name="message" autocomplete="off" /><button>Àü¼Û</button>
-</form>
+<meta charset="UTF-8">
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
+		<script src="js/plugins.js"></script>
+		<script src="js/beetle.js"></script>
+		
+		<!-- ì‚¬ìš©ì ì •ì˜ css -->
+		<link href="/resources/css/chat/chat.css" rel="stylesheet">
+		
+		<!-- include libraries(jQuery, bootstrap) -->
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
+		<!--  font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
+		<style>
+		    * { margin: 0; padding: 0; box-sizing: border-box; }
+		    body { font: 13px Helvetica, Arial; }
+		    form { background: #000; padding: 3px; bottom: 0; width: 100%; }
+		    
+		    form button { width: 100%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		    #chatLog { list-style-type: none; margin: 0; padding: 0; }
+		    #chatLog li { padding: 5px 10px; }
+		    /* #chatLog li:nth-child(odd) { background: #eee; } */
+		    /* ì „ì œ ê¸€ì”¨ì²´ */
+			.row{ font-family: 'Single Day', cursive; }
+		</style>
+	</head>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-<script>
-//¼ÒÄÏ¼­¹ö¿¡ Á¢¼Ó½ÃÅ²´Ù.
-var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat ³×ÀÓ½ºÆäÀÌ½º
-	cors: { origin: "*" },
-	path: '/socket.io',
-	query: {
-		userId : '${ user.userId }',
-		profileImage : '${ sessionScope.user.profileImage }',
-		nickName : '${ sessionScope.user.nickName }'
-	}
-});
+	<body class="single single-post">
+	
+	
 
-//»ç¿ëÀÚ Âü°¡
-socket.on('join', data => {
-    $('#chatLog').append('<li>' + data.username + '´ÔÀÌ ÀÔÀåÇÏ¼Ì½À´Ï´Ù</li>');
-});
+	
+	
+	<!-- ëª¨ì„ì±„íŒ… -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<script>
+	//ì†Œì¼“ì„œë²„ì— ì ‘ì†ì‹œí‚¨ë‹¤.
+	var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat ë„¤ì„ìŠ¤í˜ì´ìŠ¤
+		cors: { origin: "*" },
+		path: '/socket.io',
+		query: {
+			userId : '${ user.userId }',
+			profileImage : '${ sessionScope.user.profileImage }',
+			nickName : '${ sessionScope.user.nickName }'
+		}
+	});
+	
+	//ì‚¬ìš©ì ì°¸ê°€
+	socket.on('join', data => {
+	    $('#chatLog').append('<li style="font-size: 25px;">' + data.username + 'ë‹˜ì´ ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤</li>');
+	});
+	
+	//ì‚¬ìš©ì ì¢…ë£Œ
+	socket.on('leave', data => {
+	    $('#chatLog').append('<li style="font-size: 25px;">' + data.username + 'ë‹˜ì´ ë‚˜ê°€ì…¨ìŠµë‹ˆë‹¤</li>');
+	});
+	
+	
+	
+	//server message ë¼ëŠ” ì´ë²¤íŠ¸ëª…ìœ¼ë¡œ ëŒ€ê¸°
+	socket.on('server message', function(data){
+	    console.log(data);
+	    	    
+	    var display = 
+	    					"<div style='display: grid; grid-template-columns: 1fr 7fr;'>"
+	    						+"<div>"
+	    							+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' style='border-radius: 300px; height: 60px; width: 60px;'></div>"
+	    							+"<div style='padding-left: 10px;'>"+data.username+"</div>"
+	    						+"</div>"
+	    						+"<div style='vertical-align: middle;'><li style='font-size: 25px; padding-top: 20px;'>"+data.message+"</li></div>"
+	    					+"</div>"
+	    
+	    
+	    
+	    
+	    
+	    //ì†Œì¼“ì„œë²„ë¡œë¶€í„° ìˆ˜ì‹ í•œ ë©”ì‹œì§€ë¥¼ í™”ë©´ì— ì¶œë ¥í•œë‹¤.
+	    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
+	    $('#chatLog').append(display);
+	    
+	});
+	
+	$(document).ready(function(){
+	    $('#sendForm').submit(function(){
+	        var message = $('#sendForm input[name=message]');
+	        //ì†Œì¼“ ì„œë²„ì˜ 'client message' ë¼ëŠ” ì´ë²¤íŠ¸ëª…ìœ¼ë¡œ ë©”ì„¸ì§€ë¥¼ ì†¡ì‹ í•œë‹¤.
+	        socket.emit('client message', { message : message.val()});
+	        //input ë°•ìŠ¤ ì´ˆê¸°í™”
+	        message.val('');
+	        return false;
+	    });
+	});
+	</script>
+	<!-- ëª¨ì„ì±„íŒ… -->
+	
+	
+	
+	
 
-//»ç¿ëÀÚ Á¾·á
-socket.on('leave', data => {
-    $('#chatLog').append('<li>' + data.username + '´ÔÀÌ ³ª°¡¼Ì½À´Ï´Ù</li>');
-});
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/toolbar.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->		
 
 
 
-//server message ¶ó´Â ÀÌº¥Æ®¸íÀ¸·Î ´ë±â
-socket.on('server message', function(data){
-    console.log(data);
-    //¼ÒÄÏ¼­¹ö·ÎºÎÅÍ ¼ö½ÅÇÑ ¸Ş½ÃÁö¸¦ È­¸é¿¡ Ãâ·ÂÇÑ´Ù.
-    $('#chatLog').append('<li>' + data.username + ':' + data.message + '</li>');
-});
 
-$(document).ready(function(){
-    $('#sendForm').submit(function(){
-        var message = $('#sendForm input[name=message]');
-        //¼ÒÄÏ ¼­¹öÀÇ 'client message' ¶ó´Â ÀÌº¥Æ®¸íÀ¸·Î ¸Ş¼¼Áö¸¦ ¼Û½ÅÇÑ´Ù.
-        socket.emit('client message', { message : message.val()});
-        //input ¹Ú½º ÃÊ±âÈ­
-        message.val('');
-        return false;
-    });
-});
 
-</script>
-</body>
+		<main role="main">
+			<div id="intro-wrap">
+			</div><!-- intro-wrap -->
+
+			<div id="main" class="row" style="background-color: #EBEDF0;">
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				
+					<ul class="inline cats filter-options" style="font-size: 40px;">
+						<li data-group="advertising">
+							<a href="/club/getMeetingList">ëª¨ì„ ì¼ì •</a>
+						</li>
+						<li data-group="fun">
+							<a href="/clubPost/getClubPostList">ëª¨ì„ ê²Œì‹œë¬¼</a>
+						</li>
+						<li data-group="icons">
+							<a href="/club/getClubMemberList">ëª¨ì„ì›</a>
+						</li>
+						<li data-group="infographics">
+							<a href="#">ëª¨ì„ ì±„íŒ…</a>
+						</li>
+					</ul>
+					
+					
+					<%-- #f5ddff --%>
+					
+					
+					<div class="chat-main" style="padding-left: 100px; padding-right: 100px;">
+						<div style="background-color: #E1BFFF; height: 800px; box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px; border-radius: 100px; padding: 60px; padding-top: 70px;">
+							<div style="background-color: #ffeeff; height: 600px; box-shadow:0 5px 20px rgba(95, 0, 128, 0.4) inset; border-radius: 5px; padding: 10px; overflow: auto;"><ul id="chatLog"></ul></div>
+							<form action="" id="sendForm">
+								<div style="display: grid; grid-template-columns: 5fr 1fr;">
+										<div style="font-size: 20px;"><input name="message" autocomplete="off" style="font-size: 20px;"></div>
+										<div><button style="width: 80px; height: 45px; box-shadow:0 5px 20px rgba(95, 0, 128, 0.4); border-radius: 10px; font-size: 30px;">ì „ì†¡</button></div>
+								</div>
+							</form>
+						</div>
+						
+						<%-- <Ul>
+							<div style="display: grid; grid-template-columns: 1fr 7fr; background-color: red;">
+								<div>
+									<div><img src="/resources/image/uploadFiles/${ sessionScope.user.profileImage }" style="border-radius: 300px; height: 60px; width: 60px;"></div>
+									<div style="padding-left: 10px;">${ sessionScope.user.nickName }</div>
+								</div>
+								<div style="vertical-align: middle; background-color: gray;"><li style="font-size: 25px; padding-top: 20px;"></li></div>
+							</div>
+						</Ul> --%>
+					</div>
+					
+					
+					
+					
+					
+				</div><!-- row-content -->
+			</div><!-- row -->
+		</main><!-- main -->
+		
+		
+		
+		
+
+	</body>
+
 </html>

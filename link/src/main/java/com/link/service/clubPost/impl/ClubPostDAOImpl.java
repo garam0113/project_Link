@@ -156,7 +156,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println("게시물 작성자 아이디 : " + returnClubPost.getUser().getUserId());
 		
 		// 첫번째 2는 게시물 댓글, 두번째 2는 알림
-		Report report = new Report(comment.getUser().getNickName() + "님이 회원님의 게시물에 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()),
+		Report report = new Report(comment.getUser().getNickName() + "님이 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()),
 				new User(returnClubPost.getUser().getUserId()), 2, comment);
 		
 		// 모임게시물 작성자에게 댓글 추가되었다고 알림

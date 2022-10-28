@@ -70,7 +70,7 @@
 							success : function(data) {
 								//alert(data.responseCode);
 								//alert(data.url);
-								alert("업로드 하였습니다");
+								//alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
 								//alert(data.url);
 								//jsonArray.push(json["url"]);
@@ -90,12 +90,18 @@
 				textEdit();
 				
 				$("input[value='등록완료']").bind("click", function(){
-					alert('등록완료');
+					//alert('등록완료');
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 					$("form").attr("accept-charset", "EUC-KR").submit();
+					
+					if(sock) {
+						var Msg = "게시물 작성";
+						sock.send(Msg);
+					}
+					
 				});
 				$("input[value='이전으로']").bind("click", function(){
-					alert('이전으로');
+					//alert('이전으로');
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
 			});
@@ -174,7 +180,7 @@
 							<div class="clubPostTitle">
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
-							<textarea id="summernote" name="clubPostContent">
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent">
 							</textarea>
 							<input type="button" class="plain button red" value="등록완료">
 							<input type="button" class="plain button red cancle" value="이전으로">

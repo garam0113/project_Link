@@ -45,6 +45,8 @@ public interface FeedService {
 	// 피드 댓글 조회
 	public Comment getFeedComment(int feedCommentNo) throws Exception;
 	
+	public Comment getCommentLast() throws Exception;
+	
 	// 피드 댓글 수정
 	public void updateFeedComment(Comment comment) throws Exception;
 	

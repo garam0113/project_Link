@@ -93,10 +93,10 @@
 		.thumbnail {
 			    display: block;
 			    padding: 0px;
-			    margin-bottom: 20px;
+			    margin-bottom: 40px;
 			    line-height: 1;
 			    background-color: #ffffff;
-			    border: 1px solid #5F0080;
+			    /* border: 1px solid #5F0080; */
 			    border-radius: 10px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
@@ -472,7 +472,7 @@
 	<div id="main" class="row">
 		  <c:forEach var="i" items="${clubList}">
 		  	<div class="col-xs-4 col-md-3">	
-				<div class="thumbnail" style="box-shadow: 2px 2px; border-radius: 20px;">
+				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
 			  			<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>

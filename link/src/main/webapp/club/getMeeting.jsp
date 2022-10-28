@@ -52,6 +52,15 @@
 		background-color: #f0f2f5 !important;
 	}
 	
+	#menu_wrap {
+		display: none !important;
+	}
+	
+	.map_wrap {
+		width: 50% !important;
+	}
+	
+	
 	</style>
 
 	<!-- ?? -->
@@ -197,52 +206,64 @@
 		
 	<div class="container">
 	
-		<form class="form-horizontal">
-		
-		<div class="row">
-			<div class="col-xs-4 col-md-2"><strong>일정제목</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
-		</div>
+		<!-- 합치자~~ -->
+		<div>
+		<!-- 상세 div -->
+			<div>
+			<form class="form-horizontal">
 			
-		
-		<hr/>		
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일정날짜 </strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingDate}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일정시간</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingTime}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingPlace}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>일정설명</strong></div>
-			<div class="col-xs-8 col-md-4">${meeting.meetingContent}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
-			<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+			<div class="row">
+				<div class="col-xs-4 col-md-2"><strong>일정제목</strong></div>
+				<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
+			</div>
+				
 			
-		</div>
+			<hr/>		
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>일정날짜 </strong></div>
+				<div class="col-xs-8 col-md-4">${meeting.meetingDate}</div>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>일정시간</strong></div>
+				<div class="col-xs-8 col-md-4">${meeting.meetingTime}</div>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
+				<div class="col-xs-8 col-md-4"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>일정설명</strong></div>
+				<div class="col-xs-8 col-md-4">${meeting.meetingContent}</div>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
+				<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+				
+			</div>
+			
+			<hr/>
+			</form>	
+	</div>
+			
+			<div class="mapArea">
+				<jsp:include page="/club/searchPlace.jsp"/>			
+			</div>
 		
-		<hr/>
-		
+	<!-- 합치자~ -->		
+	</div>	
 		
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
@@ -253,9 +274,9 @@
 		      		<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 					
 					
-		    </div>
+		 	   </div>
 			</div>		
-			</form>	
+			
 		</div>
 		</div>
 	</div>
