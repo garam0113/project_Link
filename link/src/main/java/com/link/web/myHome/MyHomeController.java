@@ -185,7 +185,7 @@ public class MyHomeController {
 	
 	    if(cutUserId.get("block") != null ) {
 	    
-	    	return "forward:/feed/getFeedList.jsp";
+	    	return "forward:/feed/getFeedList";
 	 
 	    }else {
 		

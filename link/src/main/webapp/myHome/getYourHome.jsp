@@ -635,7 +635,7 @@ position:relative;
 	float: left;
 	text-align: center;
 	margin-top: 10px;
-	margin-left: 75px;
+	margin-left: 80px;
 }
 
 .profile-userbuttons .btn {
@@ -644,8 +644,8 @@ position:relative;
 	font-weight: 600;
 	padding: 6px 15px;
 	margin-right: 5px;
-	background-color:#D070FB;
-	border-color: #D070FB !important;
+	background-color:blueviolet;
+	border-color: blueviolet !important;
 }
 
 .profile-userbuttons .btn:last-child {

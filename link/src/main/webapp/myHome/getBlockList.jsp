@@ -89,6 +89,7 @@ $(function() {
 <style>
 .blockSection{
 margin-left : 50px;
+margin-bottom : 30px;
 }
 .yourHome{
 font-size:20px;
