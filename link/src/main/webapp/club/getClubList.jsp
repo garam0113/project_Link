@@ -128,22 +128,31 @@
 	    float: left;
 	    border: 1px solid !important;
 		}
-			 
 		
-		 
-/* 		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
-    display: block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin-bottom: 0em;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    -webkit-border-radius: 0.333em;
-    -moz-border-radius: 0.333em;
-    border-radius: 0.333em;
-    color: #333;
-} */
-		 
+		.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+		
 		 #pageNav {
 		 	float: none;
 		 }
@@ -174,6 +183,26 @@
 		background-color: #cf0cc90d !important;
 		border: solid 1px #d8d8d8 !important;
 		margin: 10px;
+	}
+	
+	
+	/*썸네일 애니메이션*/
+	@keyframes post-ani {
+    25% {
+        transform: rotate(2deg) scale(1.01);
+	    }
+ 
+    50% {
+        transform: rotate(0deg) scale(1);
+    	}
+ 
+    75% {
+        transform: rotate(-2deg) scale(1.01);
+    	}
+	}
+	.thumbnail:hover {
+	opacity: 0.9;
+	animation: post-ani 0.8s linear 1;
 	}
 	
 		 
@@ -222,7 +251,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-addClub").on("click", function() {
+		$("#addClubBtn").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -460,9 +489,9 @@
 	    	</div>
 	    	
 	    	
-	    <div class="col-md-4 text-right" style="float: right;">
+	    <div class="col-md-6 text-right" style="float: right;">
 	    	<!-- <button type="button" class="btn btn-myList" style="">내 모임 보기</button> -->
-	  		<button type="button" class="btn btn-addClub" style="margin-top: 100px; margin-right: 60px; width: 170px; height: 80px; border-radius: 10px; background-color: #f0f2f5; font-size: 20px; box-shadow: 2px 2px;">모임등록</button>
+	  		<button type="button" class="plain button red cencel" id="addClubBtn">모임등록</button>
 	    </div>
 	    	
 	</div>

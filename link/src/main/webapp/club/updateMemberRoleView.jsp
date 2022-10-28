@@ -36,15 +36,29 @@
         	height: 34px;
         }
         
-        #btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #ffffff;
-		}    
+        .plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	} 
         
         
         
@@ -58,7 +72,7 @@
 			window.close();
 		});
 		
-		$("button.btn-cancel").on("click", function() {
+		$("#cancel").on("click", function() {
 			//alert('눌리나?');
 			window.close();
 		});
@@ -164,8 +178,8 @@
 			
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="change" class="btn btn-update">수 &nbsp;정</button>
-					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
+					<button type="button" id="change" class="plain button red cancel">수 &nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 				</div>
 			</div>
 		</form>
