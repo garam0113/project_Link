@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The Page Description">
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
-		<title>Beetle - Home page</title>
+		<title>LINK</title>
 		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
@@ -107,7 +107,7 @@
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/main.jsp">Link</a>
+                  <a href="/main.jsp">LINK</a>
                </h1>
             </div>
             <!-- brand -->

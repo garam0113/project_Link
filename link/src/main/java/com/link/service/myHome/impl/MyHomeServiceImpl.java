@@ -146,6 +146,23 @@ public class MyHomeServiceImpl implements MyHomeService {
 		myHomeDAO.updateFollow(user);
 		
 	}
-
-
+	@Override
+	public Map<String, Object> getBlockList (Search search) throws Exception{
+		
+		System.out.println("\n[MyHomeServiceImpl getBlockList start]\n");
+		
+		List<User> list = myHomeDAO.getBlockList(search);
+		
+		for (User u : list) {
+			System.out.println("여기는 getBlockList : " + u);
+		}
+	
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+	
+		
+		return map;
+	}
+	
 }

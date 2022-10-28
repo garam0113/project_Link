@@ -51,7 +51,7 @@
 			
 			<%-- 댓글등록 버튼 클릭시 버튼 숨기고 게시물의 댓글을 등록할 수 있는 textarea 보여진다 --%>
 			$("input[value='댓글등록']").bind("click", function(){
-				alert("게시물 댓글 등록");
+				//alert("게시물 댓글 등록");
 				
 				// 댓글작성 textarea와 등록 취소 버튼 보이기
 				$(this).parent().next().removeAttr("style");
@@ -62,7 +62,7 @@
 			
 			<%-- 취소하기 버튼 클릭시 게시물의 댓글을 등록할 수 있는 textarea 숨기고 댓글등록 버튼 보여진다 --%>
 			$("input[value='취소하기']").bind("click", function(){
-				alert("게시물 댓글 취소");
+				//alert("게시물 댓글 취소");
 				
 				// 댓글작성란 textarea에 있는 내용 지우기
 				$(this).prev().prev().val("");
@@ -76,7 +76,7 @@
 
 			<%-- 댓글의 댓글을 등록할 수 있는 textarea 보여진다 --%>
 			$(document).on("click", ".reply.add", function(){
-				alert('대댓글 등록');
+				//alert('대댓글 등록');
 				
 				// display : none을 제거하여 댓글작성란이 보이게한다
 				$(".clear-after-comment-add").attr("style", "display: none");
@@ -88,7 +88,7 @@
 
 			<%-- 해당 댓글을 수정할 수 있는 입력텍스트 보여진다 --%>
 			$(document).on("click", ".reply.update", function(){
-				alert('대댓글 수정');
+				//alert('대댓글 수정');
 				
 				// display : none을 하여 등록란 수정란을 다 닫는다
 				$(".clear-after-comment-add").attr("style", "display: none");
@@ -107,7 +107,7 @@
 			
 			<%-- 댓글의 수정, 댓글의 댓글 등록을 취소한다 --%>
 			$(document).on("click", ".plain.button.red.cancle", function(){
-				alert('대댓글 취소');
+				//alert('대댓글 취소');
 				
 				// 댓글을 지운다
 				$(this).siblings("textarea").val("");
@@ -124,7 +124,7 @@
 			
 			<%-- 모임 게시물 수정 --%>
 			$(".clubPost-header-update").bind("click", function(){
-				alert("모임게시물 수정");
+				//alert("모임게시물 수정");
 				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			});
 			
@@ -154,14 +154,14 @@
 			
 			<%-- 모임 게시물 신고 --%>
 			$(".clubPost-header-report").bind("click", function(){
-				alert("모임게시물 신고");
+				//alert("모임게시물 신고");
 				event.stopPropagation();
 				$("form[name='clubPostReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
 			});
 
 			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
 			$(".clubPost-header-heart").bind("click", function(){
-				alert("모임게시물 좋아요");
+				//alert("모임게시물 좋아요");
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
 							method : "POST",
@@ -206,7 +206,7 @@
 
 			<%-- 모임 게시물 댓글리스트 가져온다 --%>
 			$(document).on("click", ".recommentList", function(){
-				alert("댓글 개수 클릭시 해당 댓글의 댓글리스트 가져온다");
+				//alert("댓글 개수 클릭시 해당 댓글의 댓글리스트 가져온다");
 				var clubPostCommentNo = $(this).parent().parent().parent().attr("commentNo");
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var clickCondition = $(".children.plain"+clubPostCommentNo).attr("clubCondition");
@@ -391,7 +391,7 @@
 			
 			<%-- 해당 게시물에 댓글 등록 --%>
 			$(document).on("click", ".plain.button.red.add", function(){
-				alert('댓글 등록완료');
+				//alert('댓글 등록완료');
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var commentContent = $(this).prev().val();
 				var depth = $(this).parent().parent().prev().attr("depth");
@@ -555,10 +555,10 @@
 										
 											
 								if( depth == 0 ){
-									alert( "게시물의 댓글등록" );
+									//alert( "게시물의 댓글등록" );
 									$(".comment-list.plain").append( display );
 								}else if( depth == 1 ){
-									alert( "댓글의 댓글등록" );
+									//alert( "댓글의 댓글등록" );
 									$(".children.plain"+clubPostCommentNo).append( display );
 								}
 								//alert( display );
@@ -569,7 +569,7 @@
 
 			<%-- 해당 댓글을 수정한다 --%>
 			$(document).on("click", "input[value='수정완료']", function(){
-				alert('댓글 수정완료');
+				//alert('댓글 수정완료');
 				var commentContent = $(this).prev().val();
 				var clubPostCommentNo = $(this).parent().parent().attr("commentTextArea");
 				var divClassName = $(this).parent().parent().attr("class");
@@ -670,7 +670,7 @@
 
 			<%-- 해당 댓글을 좋아요 또는 좋아요 취소한다 --%>
 			$(document).on("click", ".reply.heartCondition", function(){
-				alert("댓글 좋아요");
+				//alert("댓글 좋아요");
 				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
 				//alert( clubPostCommentNo );
 				var commentHeartCountClassName = $(this).parent().parent().parent().parent().find("span:eq(1)").attr("class");
@@ -713,7 +713,7 @@
 			
 			<%-- 모임 게시물 댓글 신고 --%>
 			$(document).on("click", ".reply.report", function(event) {
-				alert("댓글 신고");
+				//alert("댓글 신고");
 				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
 				var revUserId = $(this).parent().parent().parent().parent().attr("revUserId");
 				

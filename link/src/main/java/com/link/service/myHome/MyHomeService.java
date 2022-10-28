@@ -24,6 +24,8 @@ public interface MyHomeService  {
 	
 	public Map<String, Object> getFollowerList(Search search) throws Exception;
 	
+	public Map<String, Object> getBlockList(Search search) throws Exception;
+	
 	public void updateFollow(User user) throws Exception;
 
 

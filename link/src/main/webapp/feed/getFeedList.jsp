@@ -343,9 +343,7 @@
 			minHeight: null,             	// 최소 높이
 			maxHeight: null,             	// 최대 높이
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
-			placeholder: '오늘 하루는 어떤가요?',
-			lang:'ko-KR',
-			
+			placeholder: '오늘 하루는 어떤가요?',			
 			
 			callbacks : { 
             	onImageUpload : function(files, editor, welEditable) {
@@ -761,19 +759,7 @@
 	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
-	
-		<div id="intro-wrap" data-height="15">
-			<div id="intro" class="preload darken">					
-				<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
-					<div class="caption">
-						<h2>Feed</h2>
-						<p>If you’re any good at all, you know you can be better.</p>
-					</div><!-- caption -->					
-				</div>								
-			</div><!-- intro -->
-		</div><!-- intro-wrap -->
-		
-		
+
 		<div id="main">
 		
 			<section class="row section">
@@ -781,8 +767,8 @@
 			
 				<div class="row-content buffer even clear-after">
 					<div class="column three">
-						
-						<button class="plain button purple searchPlace" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>						
+						<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+							
 						<%-- 검색 --%>
 						<form id="searchForm" method="POST" action="/feed/getFeedList" accept-charset="euc-kr">
 							
