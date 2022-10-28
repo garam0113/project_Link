@@ -157,7 +157,7 @@
 							</form>
 						</div>
 						
-						<Ul>
+						<%-- <Ul>
 							<div style="display: grid; grid-template-columns: 1fr 7fr; background-color: red;">
 								<div>
 									<div><img src="/resources/image/uploadFiles/${ sessionScope.user.profileImage }" style="border-radius: 300px; height: 60px; width: 60px;"></div>
@@ -165,7 +165,7 @@
 								</div>
 								<div style="vertical-align: middle; background-color: gray;"><li style="font-size: 25px; padding-top: 20px;"></li></div>
 							</div>
-						</Ul>
+						</Ul> --%>
 					</div>
 					
 					
