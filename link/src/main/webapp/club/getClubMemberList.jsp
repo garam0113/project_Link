@@ -27,6 +27,9 @@
 	  <!-- jQuery UI toolTip 사용 JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
+ 	 <!-- alert -->
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ 	 
  	 <style>
 	body {
 		padding-top : 70px;
@@ -81,12 +84,6 @@
 		.submit();
 	}
 	
-	function fncDeleteClub() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
-		.submit();
-	}
-	
 	function refreshMemList(){
 		location.reload();
 	}
@@ -96,33 +93,53 @@
 		location.href = "/myHome/getYourHome?userId="+userId;
 	}
 	
+	
+	/* function deleteClubMember() {
+			
+			Swal.fire({
+			  title: '모임원을 추방하시겠습니까?',
+			  text: "삭제한 모임은 복구가 불가능합니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'delete'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire(
+			      'Deleted!',
+			      'Your file has been deleted.',
+			      'success'
+			    )	
+			
+			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+			 }
+		});
+	}
+	
 	$(function() {
-
-		$("button.btn.btn-delete").on("click", function() {
-			alert("모임을 삭제하시겠습니까?");
-			fncDeleteClub();
+		$("#banMember").on("click", function() {
+			deleteClubMember();
 		});
 	});
+	 */
+	
+	
+	
+	
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
 		$("#banMember").on("click", function() {
-			alert("모임원을 추방합니다 : ");
+			//alert("모임원을 추방합니다 : ");
+			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
-		}); 
-		
-		$(function() {
-			$("#updateApprovalCondition").on("click", function() {
-				//alert("모임원을 승인합니다 : ");
-				$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
-		});
-		
-		
+		 });
+ 
+
 			//추방 그냥 컨트롤러	
 			$(document).on("click", "#banMember", function(){
-			//alert('추방');
 			var clubUserNo = $(this).val();
-			//alert(clubUserNo);
 			$.ajax("/clubRest/json/deleteClubMember",
 					{
 						method : "POST" ,
@@ -140,34 +157,13 @@
 					}); //end of ajax
 					refreshMemList();
 			}); //모임원 추방 
-		
+	 	});
 			
-			
-			/* $(function() {
-				$("#banMember").on("click", function(e){
-					var clubUserNo = $(this).val();
-					$("banMember").off(e);
-				$.ajax({
-					url : "/clubRest/json/deleteClubMember",
-					type : "POST",
-					datatype : "json"
-					data : JSON.stringify({
-						clubUserNo : clubUserNo
-					}),
-					
-					contentType : "application/json",
-					success : function(data) {
-						console.log(data.clubMemberList);
-						
-					}
-					
-				})
-					
-				})
-			}) */
-			
-
-		
+			$(function() {
+				$("#updateApprovalCondition").on("click", function() {
+					//alert("모임원을 승인합니다 : ");
+					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+			});
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
 				//alert('승인');
@@ -193,6 +189,7 @@
 						}); // end of ajax
 						refreshMemList();
 				}); // end of 승인
+			});
 
 	
 	
@@ -229,9 +226,7 @@
 			openWin.document.getElementById("userId").value = $(this).attr("userId");
 		});
 	});
-	
-		});
-	 });
+
 	</script>
 </head>
 
@@ -262,9 +257,9 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 176px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList" style="color: #BD76FF;">모임일정</a>
+							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
 						<li data-group="fun">
 							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
@@ -296,7 +291,6 @@
 						<button type="button" class="btn btn-updateMemberRole" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
 						<button type="button" class="btn btn-cancel">이&nbsp;전</button>
 						<button type="button" class="btn btn-update"  >모&nbsp;임&nbsp;수&nbsp;정</button>
-						<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
 		  			</div>
 				</div>	
 	    	
