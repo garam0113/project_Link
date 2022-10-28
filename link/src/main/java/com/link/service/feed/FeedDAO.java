@@ -44,6 +44,8 @@ public interface FeedDAO {
 	// 피드 댓글 수정
 	public Comment getFeedComment(int feedCommentNo) throws Exception;
 	
+	public Comment getFeedLastComment() throws Exception;
+	
 	// 피드 댓글 수정
 	public void updateFeedComment(Comment comment) throws Exception;
 	

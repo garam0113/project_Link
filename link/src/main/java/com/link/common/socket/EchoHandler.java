@@ -51,7 +51,12 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 모든 유저에게 보내기
 		for(WebSocketSession sess : sessions) {
 			System.out.println("핸들러 텍스트 메세지 : " + senderId);
-			sess.sendMessage(new TextMessage(senderId + message.getPayload()));
+			
+			WebSocketSession ownerSession = users.get(senderId);
+			
+			if(!sess.equals(ownerSession)) {
+				sess.sendMessage(new TextMessage(senderId + message.getPayload()));
+			}
 		}
 		
 //		// 특정 유저에게 보내기

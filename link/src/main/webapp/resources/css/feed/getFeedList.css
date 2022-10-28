@@ -280,8 +280,14 @@
 	}
 
 
+	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
 
+	html {
+		overflow: -moz-scrollbars-vertical;
+		overflow-y: scroll;
+	}
 
+	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
 
 
 
