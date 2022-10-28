@@ -241,6 +241,16 @@
 	</select>
 	<!-- 사용 : 댓글 수정시 -->
 	
+	<select 	id="getFeedLastComment"			resultMap="feedCommentSelectMap">
+		SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED_COMMENT
+					ORDER BY feed_comment_no DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
 	
 	
 	<!-- 사용 : 댓글 수정시 -->

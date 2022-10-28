@@ -88,6 +88,12 @@ public class FeedDAOImpl implements FeedDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("FeedMapper.getFeedComment", feedCommentNo);
 	}
+	
+	@Override
+	public Comment getFeedLastComment() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getFeedLastComment");
+	}
 
 	@Override
 	public void updateFeedComment(Comment comment) throws Exception {
