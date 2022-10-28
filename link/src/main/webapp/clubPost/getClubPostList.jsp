@@ -14,10 +14,9 @@
 		
 		<!-- 사용자 정의 css -->
 		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+
+		<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
 		
-		<link rel="stylesheet" href="css/layers.min.css" media="screen">
-		<link rel="stylesheet" href="css/font-awesome.min.css" media="screen"> 
-		<link rel="stylesheet" href="style.css" media="screen">
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
 		<link rel="icon" href="favicon.ico">
@@ -30,6 +29,9 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		
+		<!-- Swal 쓰기위한 cdn -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		
 		<!--  ///////////////////////// jQuery CDN////////////////////////// -->
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
