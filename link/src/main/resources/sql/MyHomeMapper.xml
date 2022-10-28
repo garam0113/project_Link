@@ -182,6 +182,45 @@
 		 </if>
         </where>
 	</update>
+	
+	<select id="getBlockList" parameterType="search"
+		resultMap="myHomeSelectMap">
+		SELECT
+		inner_table.*
+		FROM (
+		SELECT
+		rownum AS row_seq ,
+		deep_table.*
+		FROM (
+		SELECT
+		f.send_user_Id ,
+		f.recv_user_id,
+		f.state,
+		f.type,
+		u.nickname ,
+		u.profile_image
+
+
+
+
+		FROM users u, follow_block f
+
+		<where>
+			u.user_id = f.recv_user_id
+			<if test="searchKeyword !=null ">
+				and f.send_user_id = #{searchKeyword} and f.type='2' and f.state='1'
+			</if>
+		
+		</where>
+
+
+		) deep_table
+		<!-- WHERE ROWNUM &lt;= #{endRowNum} -->
+		) inner_table
+		<!-- WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
+
+	</select>
+	
 
 
 

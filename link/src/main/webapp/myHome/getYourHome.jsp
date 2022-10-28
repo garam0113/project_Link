@@ -409,7 +409,6 @@ $(function() {
 		}
 	});
 	
-	
  });
  
  
@@ -535,6 +534,9 @@ $(function(){
 </script>
 
 <style>
+.my{
+margin-right: 450px;
+}
 a {
     color: #222;
     text-decoration: auto !important;
@@ -542,21 +544,22 @@ a {
     color : black !important;
 }
 #main{
-background-color : black !important;
+background-color : #EBEDF0 !important;
+display : grid;
+justify-content: center;
 }
 
 i{
-color : blueviolet !important;
+color : #b276ff !important;
 
 }
-.active{
 
-}
 
 h5.meta-post {
     margin-bottom: 13px !important;
-    color: white !important;
+    color: black !important;
 }
+
 .main{
 display:block;
 position:relative;
@@ -564,23 +567,25 @@ position:relative;
 }
 
 #calendar {
-	margin-left: 940px;
+	margin-left: 955px;
 	margin-top: 50px;
 	display: flex;
 	justify-content: center;
 	float: left;
-	width : 660px;
+	width : 675px;
 	height : 680px;
 	
 }
 
 .container {
 	float: left;
-	margin-left: 430px;
+	margin-left: 455px;
 	display: flex;
 	position:absolute;
 	margin-top: 10px;
-	
+	width: 340px;
+	background-color:#F5F6F7;
+	border-radius: 15px;
 }
 
 /* Profile container */
@@ -591,13 +596,13 @@ position:relative;
 /* Profile sidebar */
 .profile-sidebar {
 	padding: 20px 0 10px 0;
-	width:600px;
+	width:500px;
 	
 }
 
 .profile-userpic img {
 	float: left;
-	margin-left: 50px;
+	margin-left: 30px;
 	width: 250px;
 	height: 300px;
 	-webkit-border-radius: 20% !important;
@@ -612,7 +617,7 @@ position:relative;
 }
 
 .profile-usertitle-name {
-	color: white;
+	
 	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 7px;
@@ -620,7 +625,7 @@ position:relative;
 
 .profile-usertitle-job {
 	text-transform: uppercase;
-	color: white;
+	
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 15px;
@@ -630,7 +635,7 @@ position:relative;
 	float: left;
 	text-align: center;
 	margin-top: 10px;
-	margin-left: 10px;
+	margin-left: 75px;
 }
 
 .profile-userbuttons .btn {
@@ -639,6 +644,8 @@ position:relative;
 	font-weight: 600;
 	padding: 6px 15px;
 	margin-right: 5px;
+	background-color:#D070FB;
+	border-color: #D070FB !important;
 }
 
 .profile-userbuttons .btn:last-child {
@@ -647,6 +654,8 @@ position:relative;
 
 .profile-usermenu {
 	margin-top: 30px;
+
+	
 }
 
 .profile-usermenu ul li {
@@ -658,20 +667,22 @@ position:relative;
 }
 
 .profile-usermenu ul li a {
-	color: #5b9bd1;
-	font-size: 14px;
-	font-weight: 400;
+	color: #b276ff;
+	font-size: 15px;
+	font-weight: 600;
 }
 
 .profile-usermenu ul li a i {
 	margin-right: 8px;
 	font-size: 14px;
+	
 }
 
 .profile-usermenu ul li a:hover {
-	background-color: blueviolet;
+	background-color:#CCD0D5;
 	
 }
+
 
 .profile-usermenu ul li.active {
 	border-bottom: none;
@@ -729,8 +740,14 @@ position:relative;
 	padding-left: 0;
 	border-radius:20px;
 	margin-left : 70px;
-    box-shadow: rgba(252, 0, 255, 0.3) 4px 27px 38px, rgba(252, 0, 255, 0.22) 4px 27px 38px;
     width : 600px;
+    border: 2px solid #CCD0D5;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		
+		
+    
+    
 	
 }
 
@@ -763,25 +780,25 @@ margin-left:150px;
 
 /* 탭 전체 스타일 */
 .tabs1 {
-  margin-top: 180px;
+  margin-top: 120px;
   margin-bottom: 100px;
-  background-color: black;
-  box-shadow: rgba(252, 0, 255, 0.3) 4px 27px 38px, rgba(252, 0, 255, 0.22) 4px 27px 38px;
-  width: 300px;
+  background-color: #F5F6F7;
+  width: 330px;
   display:inline-block;
-  margin-left:300px;
+  margin-left:310px;
   float: left;
   height:800px;
   border-radius: 15px;
+  border: 2px solid #CCD0D5;
   }
   .tabs2 {
-  margin-top: 180px;
+  margin-top: 120px;
   margin-bottom: 100px;
-  background-color: black;
-  box-shadow: rgba(252, 0, 255, 0.3) 4px 27px 38px, rgba(252, 0, 255, 0.22) 4px 27px 38px;
-  width: 660px;
+   background-color: #F5F6F7;
+   border: 2px solid #DADDE1;
+  width: 670px;
   display:inline-block;
-  margin-left:200px;
+  margin-left:170px;
   height:800px;
    border-radius: 15px;
   
@@ -794,8 +811,8 @@ margin-left:150px;
 .tab_item1 {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid black;
-  background-color: black;
+  border-bottom: 3px solid #EBEDF0;;
+  background-color: #F5F6F7;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
@@ -806,57 +823,57 @@ margin-left:150px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
-  border-radius: 15px;
+  border-radius: 15px 15px 0px 0px ;
 }
 .tab_item-following {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid black;
-  background-color: black;
+  background-color: #F5F6F7;
+  border-bottom: 3px solid #EBEDF0;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: inline-block;
-  width:150px;
+  width:160px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
- border-radius: 15px;
+ border-radius: 15px 15px 0px 0px ;
 }
 .tab_item-follow {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid black;
-  background-color: black;
+  background-color: #F5F6F7;
+  border-bottom: 3px solid #EBEDF0;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: block;
   float: left;
-  width:150px;
+  width:160px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
-  border-radius: 15px;
+  border-radius: 15px 15px 0px 0px ;
 }
 
 .tab_item2 {
   width: calc(100%/3);
   height: 50px;
-  border-bottom: 3px solid black;
-  background-color: black;
+  border-bottom: 3px solid #EBEDF0;
+  background-color: #F5F6F7;
   line-height: 50px;
   font-size: 16px;
   text-align: center;
   color: #333333;
   display: inline-block;
-  width:310px;
+  width:330px;
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
-  border-radius: 15px;
+  border-radius: 15px 15px 0px 0px ;
 }
 
 .tab_item1:hover {
@@ -942,14 +959,11 @@ input[name="tab_item-follow"] {
   -moz-animation: neon 1s ease infinite;
   -webkit-animation: neon 1s ease infinite;
   font-family: 'Sacramento';
+  
 }
-.neon2 {
-  animation: neon 1s ease infinite;
-  -moz-animation: neon 1s ease infinite;
-  -webkit-animation: neon 1s ease infinite;
-  font-family: 'Sacramento';
+.caption h2 {
+margin-top:35px !important;
 }
-
 
 @keyframes neon {
   0%,
@@ -968,22 +982,30 @@ input[name="tab_item-follow"] {
     text-shadow: none;
   }
 }
-@keyframes neon2 {
-  0%,
-  18%,
-  22%,
-  25%,
-  53%,
-  57%,
-  100% {
-    text-shadow: 0 0 4px #da00ff, 0 0 11px #da00ff, 0 0 19px #da00ff, 0 0 40px #da00ff,
-      0 0 80px #da00ff, 0 0 90px #da00ff, 0 0 100px #da00ff, 0 0 150px #da00ff;
-  }
-    20%,
-  24%,
-  55% {
-    text-shadow: none;
-  }
+.userbtn{
+background-color :#EBEDF0; 
+font-size: 15px; 
+font-weight: 600;
+width :300px;
+border-radius: 15px;
+margin-bottom: 15px;
+text-align: center;
+margin-left : 5px;
+}
+header.transparent {
+    background-color: white !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.post{
+width:500px;
+margin-left:65px;
+
+}
+.btn{
+margin-top:100px;
+
 }
 
 
@@ -994,7 +1016,7 @@ input[name="tab_item-follow"] {
 
 	<jsp:include page="/toolbar.jsp" />
 
-	<main role="main">
+	<main role="main" class="main">
 		
 			<div id="intro-wrap" data-height="12" style="background-color : black;">
 				<div id="intro" class="preload">
@@ -1013,6 +1035,8 @@ input[name="tab_item-follow"] {
 			<!-- intro-wrap -->
 
 			<div id="main" class="row">
+			<div class="my">
+			<div>
 				<div id="calendar">
 
 					<jsp:include page="/myHome/youCalendar.jsp" />
@@ -1083,44 +1107,28 @@ input[name="tab_item-follow"] {
 							</div> 
 								<!-- END SIDEBAR BUTTONS -->
 								<!-- SIDEBAR MENU -->
-								<div class="profile-usermenu">
-									<ul class="nav">
-										<li class="active"><a href="/club/getApprovalConditionList?userId=${getUser.userId}&order=1"> <i
-													class="glyphicon glyphicon-home"></i> 내 모임
-										</a></li>
-										<li class="active">
-										<a href="/user/updateProfile?userId=${getUser.userId}"> <i
-												class="glyphicon glyphicon-user"></i> 프로필 수정
-										</a></li>
-										<li class="active"><a href="/myHome/getPayList"> 
-												<i class="glyphicon glyphicon-ok pay"></i> 결제 내역
-										</a></li>
-										<li class="active"><a href="#"> <i class="glyphicon glyphicon-flag"></i>
-												차단리스트
-										</a></li>
-									</ul>
-								</div>
+							
 								<!-- END MENU -->
 							</div>
-						
-						<div class="col-md-9"></div>
+							</div>
+							</div>
 					</div>
 				</div>
 <div class="tab">
 			<div class="tabs1">
 			<input id="all-follow" type="radio" name="tab_item-follow" checked>
-    <label class="tab_item-follow" for="all-follow"><h4 class="neon2" style="color:white"> 팔로우</h4></label>
+    <label class="tab_item-follow" for="all-follow"><h4> 팔로우</h4></label>
     <input id="programming-follow" type="radio" name="tab_item-follow">
-    <label class="tab_item-following" for="programming-follow"><h4 class="neon2" style="color:white">팔로워</h4></label>
+    <label class="tab_item-following" for="programming-follow"><h4>팔로워</h4></label>
     
-    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+    <div class="tab_content-follow" id="all-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
         		
         		<br />
 		<c:set var = "i" value = "0" />
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div style="display: inline-block; margin-left :-50px;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome" style="color : white;">${list.receiveId.nickName}</h4>
+			<div style="display: inline-block; margin-left :-50px;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
 					
 				</div>
@@ -1129,7 +1137,7 @@ input[name="tab_item-follow"] {
 			
 		
 				</div>
-				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:420px; height:700px;">
+				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
      <div class="col-md-4" id="fl">
 					 		<br />
 			
@@ -1141,12 +1149,12 @@ input[name="tab_item-follow"] {
 		
 <div class="tabs2">
     <input id="all" type="radio" name="tab_item" checked>
-    <label class="tab_item1" for="all"><h4 class="neon2" style="color:white">내가 쓴 피드</h4></label>
+    <label class="tab_item1" for="all"><h4>내가 쓴 피드</h4></label>
     <input id="programming" type="radio" name="tab_item">
-    <label class="tab_item2" for="programming"><h4 class="neon2" style="color:white">내 모임 게시물</h4></label>
+    <label class="tab_item2" for="programming"><h4>내 모임 게시물</h4></label>
     
  
-    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:820px; height:700px; margin-left:-30px;">
+    <div class="tab_content" id="all_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:660px; height:700px; margin-left:-30px;">
         		<div class="comment-section" style="margin-left:-50px; width:720px; " >
 					<br />
 					<c:set var="i" value="0"></c:set>
@@ -1159,16 +1167,16 @@ input[name="tab_item-follow"] {
 								<form class="feedForm">
 									
 
-										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom; color : white;">${feed.user.nickName}</h4>
+										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
 									 &nbsp; &nbsp;
 									<!-- comment-author -->
-									<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom; color:white;">
+									<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
 											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
 											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
 										</h5>
 									<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 											
-											<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px; color:white;">
+											<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">
 												<%-- 수정 버튼 --%>
 												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
 												<%-- 수정 버튼 --%>
@@ -1181,7 +1189,7 @@ input[name="tab_item-follow"] {
 									
 									<!-- comment-meta -->
 									<div class="feedContent">
-											<h4 style="color:white;">${feed.content}</h4>
+											<h4>${feed.content}</h4>
 											
 											<%-- 이미지 --%>
 											<c:if test="${!empty feed.image1}">
@@ -1264,16 +1272,16 @@ input[name="tab_item-follow"] {
 											
 												<c:if test="${feed.checkHeart eq 0}">
 													<div class="col-xs-2">
-														<img class="feedLike" src="/resources/image/uploadFiles/black_no_heart.jpg" aria-hidden="true"/>
+														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
 													</div>
 												</c:if>
 												<c:if test="${feed.checkHeart ne 0}">
 													<div class="col-xs-2">
-														<img class="feedDislike" src="/resources/image/uploadFiles/black_heart.jpg" aria-hidden="true"/>
+														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
 													</div>
 												</c:if>
 												
-												<div class="col-xs-1 likeCount" style="color : white;">
+												<div class="col-xs-1 likeCount">
 													${feed.heartCount}
 												</div>
 												
@@ -1281,10 +1289,10 @@ input[name="tab_item-follow"] {
 												</div>
 												
 												<div class="col-xs-2 comment">
-													<img src="/resources/image/uploadFiles/black_comment2.jpg" aria-hidden="true"/>
+													<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
 												</div>
 												
-												<div class="col-xs-1 commentCount" style="color : white;">
+												<div class="col-xs-1 commentCount">
 													 ${feed.commentCount}
 												</div>
 												
@@ -1293,7 +1301,7 @@ input[name="tab_item-follow"] {
 													
 												<!-- 신고 아이콘 -->
 												<div class="col-xs-2 report">
-													<img src="/resources/image/uploadFiles/black_report.jpg" aria-hidden="true"/>
+													<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
 												</div>
 												<!-- 신고 아이콘 -->
 												
@@ -1319,13 +1327,13 @@ input[name="tab_item-follow"] {
     
     <br/>
      <div class="col-md-4" id="cp">
-											
+		</div>									
 </div>
 
   </div>
 			</div>
 		</div>
-		</div>
+		
 	</main>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
@@ -1352,33 +1360,88 @@ $(function() {
        console.log(data.ClubPostList);
        $.each(data.ClubPostList, function(index, item) { // 데이터 =item
     	   console.log(item.clubPostNo);
-			var value = 
-				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
-			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='400' width='700'>"+
+    	   console.log( "하트컨디션 : " + item.heartCondition);
+    	   var heartImage = item.heartCondition != 0? 'heart.jpg' : 'no_heart.jpg';
+    	   console.log( "하트이미지 : " + heartImage ); 
+			var date = "";
+			if(item.clubPostUpdateDate != null){
+				date = item.clubPostUpdateDate+"(수정됨)";
+			}else{
+				date = item.clubPostRegDate;
+			};
 			
+			
+			var value = "";
+			if(item.clubPostVideo1 == null){
+			var value = 
+				"<div class='post' style='margin-bottom : 40px;'>"+
+				"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
+			"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='300' width='400' style='border-radius:20px;'>"+
 		"</a>"+
-		
+		"<div style='width: 87%;'>"+
+		"<p align='center' style='font-size: 25px; margin-bottom : -20px;'>"+item.clubPostTitle+"</p>"+
+	"</div>"+
 		"<div style='display: flex; width: 87%;'>"+
-			"<div style='flex:1;'>"+
+			"<div style='flex:1; margin-top:10px;'>"+
 			"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
-					"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='100' width='100'>"+
+					"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
 				"</a>"+
+				
 			"</div>"+
-			"<div style='flex:1;'>"+
+			"<div style='margin-right:130px; padding-top: 15px;'>"+
 				/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
-					"<p align='center' style='font-size: 30px; color: red;'>"+ item.user.nickName+ "</p>"+
+					"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
 				"</a>"+
 			"</div>"+
-			"<div style='flex:1;'>"+
-				"<p align='center' style='font-size: 30px'>"+ item.clubPostHeartCount+ "</p>"+
+			"<div style='padding-top: 33px; margin-left:50px;'>"+
+            <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
+            "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+         "</div>"+
+			"<div style='flex:1;  padding-top: 15px;' >"+
+				"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
 			"</div>"+
 		
 			
 		"</div>"+
-		"<div style='width: 87%;'>"+
-			"<p align='center' style='font-size: 30px'>"+item.clubPostTitle+"</p>"+
 		"</div>";
+			}else{
+				value =
+					"<div class='post' style='margin-bottom : 30px;'>"+
+					"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
+				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
+				"<img src='https://img.youtube.com/vi/"+item.clubPostVideo1+"/mqdefault.jpg' height='300' width='400' style='border-radius:20px;'>"+
+				
+			"</a>"+
+			"<div style='width: 87%;'>"+
+			"<p align='center' style='font-size: 25px; margin-bottom : -20px;'>"+item.clubPostTitle+"</p>"+
+			"</div>"+
+			"<div style='display: flex; width: 87%;'>"+
+				"<div style='flex:1; margin-top:10px;'>"+
+				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
+					"</a>"+
+				"</div>"+
+				"<div style='flex:1; margin-right:130px; padding-top: 15px;'>"+
+					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
+					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
+						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
+					"</a>"+
+				"</div>"+
+				"<div style='padding-top: 33px; margin-left:50px;'>"+
+                <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
+                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+             "</div>"+
+				"<div style='flex:1; padding-top: 15px;'>"+
+					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+				"</div>"+
+			
+				
+			"</div>"+
+			"</div>";
+				
+			};
 
 			$("#cp").append(value);       
                       
@@ -1406,13 +1469,18 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:50px;' id="+item.userId+">"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:300px;'>"+
-			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+				"<div class='following-section' style='margin-left:35px;' id="+item.userId+">"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 		"</div>";
 			
 			
-			$("#fl").append(value);            
+			$("#fl").append(value);      
+			
+			 $(".yourHome2").on("click" , function() {
+					
+					self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+				});
 			
 		})
 		

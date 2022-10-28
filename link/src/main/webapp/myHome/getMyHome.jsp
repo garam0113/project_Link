@@ -20,7 +20,7 @@
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
 	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="/resources/summernote/summernote-lite.js"></script>
@@ -47,10 +47,19 @@ $(function() {
 		
 		self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 	});
+	
+	
    
 	
  });
  
+function showPopUp(){
+    window.open("/myHome/getPayList","테스트","width=500, height=600, top=50, left=50");
+}
+
+function showPopUp2(){
+    window.open("/myHome/getBlockList","테스트","width=400, height=600, top=50, left=50");
+}
  
 
 $(function(){
@@ -210,6 +219,9 @@ $(function(){
 </script>
 
 <style>
+.my{
+margin-right: 450px;
+}
 a {
     color: #222;
     text-decoration: auto !important;
@@ -218,6 +230,8 @@ a {
 }
 #main{
 background-color : #EBEDF0 !important;
+display : grid;
+justify-content: center;
 }
 
 i{
@@ -230,6 +244,7 @@ h5.meta-post {
     margin-bottom: 13px !important;
     color: black !important;
 }
+
 .main{
 display:block;
 position:relative;
@@ -411,6 +426,9 @@ position:relative;
     width : 600px;
     border: 2px solid #CCD0D5;
     border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		
+		
     
     
 	
@@ -695,6 +713,8 @@ margin-left:65px;
 			<!-- intro-wrap -->
 
 			<div id="main" class="row">
+			<div class="my">
+			<div>
 				<div id="calendar">
 
 					<jsp:include page="/myHome/calendar.jsp" />
@@ -741,12 +761,12 @@ margin-left:65px;
 										<div class="userbtn"><a href="/user/updateProfile?userId=${user.userId }"> 
 										
 												 프로필 수정</a></div>
-										
-										<div class="userbtn"><a href="#"> 
-												차단 리스트</a></div>
 												
-										<div class="userbtn"><a href="/myHome/getPayList"> 
-												결제 내역</a></div>
+										<div class="userbtn" style="color : black;" onclick="showPopUp2();"> 
+												차단 리스트</div>
+												
+										<div class="userbtn" style="color : black;" onclick="showPopUp();"> 
+												결제 내역</div>
 										
 								</div>
 								<!-- END MENU -->
@@ -754,6 +774,8 @@ margin-left:65px;
 						
 						
 					</div>
+				</div>
+				</div>
 				</div>
 <div class="tab">
 			<div class="tabs1">
@@ -1007,7 +1029,7 @@ $(function() {
     	   console.log( "하트이미지 : " + heartImage ); 
 			var date = "";
 			if(item.clubPostUpdateDate != null){
-				date = item.clubPostUpdateDate+"(수정)";
+				date = item.clubPostUpdateDate+"(수정됨)";
 			}else{
 				date = item.clubPostRegDate;
 			};
@@ -1016,13 +1038,13 @@ $(function() {
 			var value = "";
 			if(item.clubPostVideo1 == null){
 				value =
-					"<div class='post'"+
-					"<p>"+date+"</p>"+
+					"<div class='post' style='margin-bottom : 40px;'>"+
+					"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
 				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 				"<img src='/resources/image/uploadFiles/"+item.image1+"' height='300' width='400' style='border-radius:20px;'>"+
 			"</a>"+
 			"<div style='width: 87%;'>"+
-			"<p align='center' style='font-size: 25px'>"+item.clubPostTitle+"</p>"+
+			"<p align='center' style='font-size: 25px; margin-bottom : -20px;'>"+item.clubPostTitle+"</p>"+
 		"</div>"+
 			"<div style='display: flex; width: 87%;'>"+
 				"<div style='flex:1; margin-top:10px;'>"+
@@ -1052,17 +1074,17 @@ $(function() {
 				
 			}else{
 				value =
-					"<div class='post'"+
-					"<p>"+date+"</p>"+
+					"<div class='post' style='margin-bottom : 30px;'>"+
+					"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
 				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 				"<img src='https://img.youtube.com/vi/"+item.clubPostVideo1+"/mqdefault.jpg' height='300' width='400' style='border-radius:20px;'>"+
 				
 			"</a>"+
-			
-			"<p align='center' style='font-size: 25px; margin-bottom : -50px;'>"+item.clubPostTitle+"</p>"+
-	
+			"<div style='width: 87%;'>"+
+			"<p align='center' style='font-size: 25px; margin-bottom : -20px;'>"+item.clubPostTitle+"</p>"+
+			"</div>"+
 			"<div style='display: flex; width: 87%;'>"+
-				"<div style='flex:1; margin-top:30px;'>"+
+				"<div style='flex:1; margin-top:10px;'>"+
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<img src='/resources/image/uploadFiles/"+ item.user.profileImage+ "' height='70' width='70' style='border-radius:50px;'>"+
 					"</a>"+
