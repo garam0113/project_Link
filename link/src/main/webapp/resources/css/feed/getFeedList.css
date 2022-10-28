@@ -4,6 +4,13 @@
 
 	/* FONT */
 	
+	/* 바탕색 */
+
+	#main {
+
+		background-color: #EBEDF0 !important;
+	}
+	
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 
@@ -246,8 +253,16 @@
 	/* 주변 검색 */
 
 	.searchPlace {
-		width: 100%;
-		position: fixed;
+		width: -webkit-fill-available;
+		position: inherit;
+		background-color: white !important;
+		border-radius: 10px;
+		color: #5F0080 !important;
+		font-size: 16px !important;
+		border: solid 2px;
+		box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+		font-weight: 700 !important;
+		font-size: 0.778em !important
 	}
 
 	/* 주변 검색 */
