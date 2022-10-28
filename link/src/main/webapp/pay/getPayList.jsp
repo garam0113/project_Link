@@ -42,32 +42,61 @@
 	 font-size : 40px;
 	 font-family:Verdana, Geneva, Arial, sans-serif;
 	}
+	.pay{
+	margin-left : 0px;
+	margin-top : 100px;
+	background-color: #F5F6F7;
+	border: 2px solid #CCD0D5;
+	width:500px;
+	border-radius : 15px;
+	color : black;
+	}
+	body{
+	 background-color : #EBEDF0 !important;
+	 
+	}
+	.ft{
+	font-size : 18px;
 	
+	}
+	.ftt{
+	font-size:20px;
+	font-weight: 600;
+	color: #555 !important;
+	}
 	</style>
 </head>
 <body>
-<div class="top" style="background-color : #5F0080"><H3 class="font" style="color : white">결제 내역</H3></div>
-
-
-
-
-
 <div>
+<div class="top" style="background-color : #5F0080"></br><H3 class="font" style="color : white">결제&nbsp;&nbsp;내역</H3></div>
+
+
+
+
+
+<div class="frame" style="display:grid;
+	 justify-content : center;">
 <c:forEach var = "payList" items = "${payList}">
 			<c:set var = "i" value = "${i + 1}" />
-			<div>${payList.payProduct}</div>
-			<div>${payList.payNo}</div>
-			<div> ${payList.user.userId}</div>
-			<div> ${payList.totalPrice}</div>
-			<div> ${payList.payRegDate}</div>
-		
-		
-			<div> ${payList.updateClubCount}</div>
-			<div> ${payList.updateClubMemberCount}</div>
-			<div> ${payList.payOption}</div>
+			<div class ="pay">
+			<br/>
+			<div style="margin-left:140px;">
+			<div class="ft"><span class="ftt">결제 상품 :</span>&nbsp; &nbsp;<span>${payList.payProduct}</span></div><br/>
 			
-			
-			<br/><br/>
+			<div class="ft"><span class="ftt">아이디 :</span>&nbsp; &nbsp;<span>${payList.user.userId}</span></div><br/>
+			<div class="ft"><span class="ftt">결제 금액 :</span>&nbsp; &nbsp;${payList.totalPrice}원</div><br/>
+			<div class="ft"><span class="ftt">결제일 :</span>&nbsp; &nbsp;${payList.payRegDate}</div><br/>
+		
+		    <c:if test="${payList.updateClubMemberCount eq 0}">
+			<div class="ft"><span class="ftt">모임 추가 :</span>&nbsp; &nbsp;${payList.updateClubCount}</div><br/>
+			</c:if>
+			<c:if test="${payList.updateClubCount eq 0}">
+			<div class="ft"><span class="ftt">모임원 추가 :</span>&nbsp; &nbsp;${payList.updateClubMemberCount}</div><br/>
+			</c:if>
+			<div class="ft"><span class="ftt">결제 수단 :</span>&nbsp; &nbsp; ${payList.payOption}</div><br/>
+			</div>
+			</div>
+		
 			
 					
 		
@@ -80,6 +109,6 @@
 			
 			
 			
-
+</div>
 </body>
 </html>
