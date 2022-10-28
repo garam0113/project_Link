@@ -175,7 +175,7 @@
 							</div>
 						</Ul> --%>
 						
-						<ul>
+						<!-- <ul>
 							<div style='display: grid; grid-template-columns: 7fr 1fr;'>
 								<div style='vertical-align: middle;'><li style='font-size: 25px; padding-top: 20px; text-align: right;'>message</li></div>
 								<div>
@@ -183,7 +183,7 @@
 									<div style='padding-left: 10px;'>nickName</div>
 								</div>
 							</div>
-						</ul>
+						</ul> -->
 					</div>
 					
 					

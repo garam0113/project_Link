@@ -40,8 +40,8 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 모임게시물 현재 sequence 가져온다
 		ClubPost returnClubPost = sqlSession.selectOne("ClubPostMapper.getCurrval", clubPost);
-		System.out.println("///////////////////////////" + returnClubPost);
-		//System.out.println("로그인한 유저의 아이디 : " + returnClubPost.getUser().getUserId() + ", 가장 최근 등록한 게시물의 모임번호 : " + returnClubPost.getClubNo() + ", 모임게시물번호 : " + returnClubPost.getClubPostNo());
+		System.out.println("모임 게시물 번호와 함께 등록할 모임 게시물 : " + returnClubPost);
+		System.out.println("로그인한 유저의 아이디 : " + returnClubPost.getUser().getUserId() + ", 가장 최근 등록한 게시물의 모임번호 : " + returnClubPost.getClubNo() + ", 모임게시물번호 : " + returnClubPost.getClubPostNo());
 		
 		// 모임게시물 등록한 모임에 있는 모임원 리스트 가져온다
 		List<ClubUser> clubUserList = sqlSession.selectList("ClubMapper.getClubMemberListToClubPost", clubPost);
@@ -55,6 +55,8 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 			
 			// 해당 모임의 모임원에게 보낼 알림 만들기
 			Report report = new Report(clubPost.getUser().getNickName() + "님이 게시물을 작성했습니다", 1, new User(clubPost.getUser().getUserId()), new User(clubUserList.get(i).getUser().getUserId()), 2, returnClubPost);
+			
+			System.out.println("등록될 알림 정보 : " + report);
 			
 			// 해당 모임의 모임원들에게 게시물 등록되었다고 알림
 			sqlSession.insert("Report_PushMapper.addReport", report);
@@ -156,12 +158,11 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println("게시물 작성자 아이디 : " + returnClubPost.getUser().getUserId());
 		
 		// 첫번째 2는 게시물 댓글, 두번째 2는 알림
-		Report report = new Report(comment.getUser().getNickName() + "님이 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()),
-				new User(returnClubPost.getUser().getUserId()), 2, comment);
+		Report report = new Report(comment.getUser().getNickName() + "님이 댓글을 남겼습니다", 2, new User(comment.getUser().getUserId()), new User(returnClubPost.getUser().getUserId()), 2, new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo()), comment);
 		
 		// 모임게시물 작성자에게 댓글 추가되었다고 알림
 		sqlSession.insert("Report_PushMapper.addReport", report);
-		System.out.println("모임게시물 작성자에게 댓글 추가되었다고 알림");
+		System.out.println("모임게시물 작성자에게 댓글 추가되었다고 알림 정보 : " + report);
 		
 		
 		

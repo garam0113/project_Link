@@ -47,6 +47,7 @@ public class Report{
 	public Report() {
 	}
 
+	// clubPost에서 게시물 등록시 사용
 	public Report(String content, int reportSource, User user1, User user2, int type, ClubPost clubPost) {
 		super();
 		this.content = content;
@@ -55,6 +56,18 @@ public class Report{
 		this.user2 = user2;
 		this.type = type;
 		this.clubPost = clubPost;
+	}
+	
+	// clubPost에서 댓글 등록시 사용
+	public Report(String content, int reportSource, User user1, User user2, int type, ClubPost clubPost, Comment comment) {
+		super();
+		this.content = content;
+		this.reportSource = reportSource;
+		this.user1 = user1;
+		this.user2 = user2;
+		this.type = type;
+		this.clubPost = clubPost;
+		this.comment = comment;
 	}
 
 	public Report(String content, int reportSource, User user1, User user2, int type,
