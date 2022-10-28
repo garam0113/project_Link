@@ -73,8 +73,24 @@
 	//server message 라는 이벤트명으로 대기
 	socket.on('server message', function(data){
 	    console.log(data);
+	    	    
+	    var display = 
+	    					"<div style='display: grid; grid-template-columns: 1fr 7fr;'>"
+	    						+"<div>"
+	    							+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' style='border-radius: 300px; height: 60px; width: 60px;'></div>"
+	    							+"<div style='padding-left: 10px;'>"+data.username+"</div>"
+	    						+"</div>"
+	    						+"<div style='vertical-align: middle;'><li style='font-size: 25px; padding-top: 20px;'>"+data.message+"</li></div>"
+	    					+"</div>"
+	    
+	    
+	    
+	    
+	    
 	    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-	    $('#chatLog').append('<li style="font-size: 25px;">' + data.username + '   ' + data.message + '</li>');
+	    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
+	    $('#chatLog').append(display);
+	    
 	});
 	
 	$(document).ready(function(){
@@ -140,6 +156,16 @@
 								</div>
 							</form>
 						</div>
+						
+						<Ul>
+							<div style="display: grid; grid-template-columns: 1fr 7fr; background-color: red;">
+								<div>
+									<div><img src="/resources/image/uploadFiles/${ sessionScope.user.profileImage }" style="border-radius: 300px; height: 60px; width: 60px;"></div>
+									<div style="padding-left: 10px;">${ sessionScope.user.nickName }</div>
+								</div>
+								<div style="vertical-align: middle; background-color: gray;"><li style="font-size: 25px; padding-top: 20px;"></li></div>
+							</div>
+						</Ul>
 					</div>
 					
 					
