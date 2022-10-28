@@ -93,6 +93,12 @@
 					alert('등록완료');
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 					$("form").attr("accept-charset", "EUC-KR").submit();
+					
+					if(sock) {
+						var Msg = "게시물 작성";
+						sock.send(Msg);
+					}
+					
 				});
 				$("input[value='이전으로']").bind("click", function(){
 					alert('이전으로');
