@@ -208,7 +208,7 @@
 							    
 								    <div class="contains-order">
 								    	<p class="text-primary" style="width: 87%">
-								    		전체  <span class="page">${ clubPostListCount }</span> 건수, 현재 <span class="page">${ search.currentPage }</span> 페이지<br>
+								    		전체  <span class="page">${ clubPostListCount }</span> 건수<%-- , 현재 <span class="page">${ search.currentPage }</span> 페이지 --%><br>
 											<b class="club-post-list-order">최신순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">오래된순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">좋아요 많은순</b>&nbsp;/&nbsp;

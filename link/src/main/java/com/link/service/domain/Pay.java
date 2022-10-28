@@ -5,7 +5,7 @@ public class Pay {
 	private int payNo;						// 결제번호
 	private User user;						// 결제한 회원 정보
 	private int clubNo;						// 모임번호
-	private String payProduct;				// 결제상품 - 0 : 모임추가, 1 : 모임원추가
+	private String payProduct;				// 결제상품 - 0 : 모임 추가, 1 : 모임원 추가
 	private String payOption;				// 결제방법 - 0 : 신용카드, 1 : 카카오페이, 2 : 휴대폰결제, 3 : 토스페이, 4 : 실시간계좌이체
 	private int totalPrice;					// 총 결제금액
 	private String payRegDate;				// 결제날짜

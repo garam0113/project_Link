@@ -51,7 +51,7 @@
 		<result property="payRegDate" 				column="PAY_REG_DATE" 				jdbcType="DATE"/>
 		<result property="updateClubCount" 			column="UPDATE_CLUB_COUNT" 			jdbcType="NUMERIC"/>
 		<result property="updateClubMemberCount" 	column="UPDATE_CLUB_MEMBER_COUNT" 	jdbcType="NUMERIC"/>
-		<result property="merchant_uid" 			column="MERCHANT_UID" 				jdbcType="NUMERIC"/>
+		<result property="merchant_uid" 			column="MERCHANT_UID" 				jdbcType="VARCHAR"/>
 		
 		<association property="user"				javaType="user">
 			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
@@ -200,8 +200,8 @@
 	<!-- 마이홈피 - 내가 작성한 모임게시물 리스트 -->
 	<select id="getClubPostListMyHome" parameterType="string" resultMap="clubPostSelectMap">
 		SELECT CP.CLUB_NO, CP.CLUB_POST_NO, CP.IMAGE1, CP.CLUB_POST_TITLE, CP.USER_ID, U.NICKNAME, U.PROFILE_IMAGE, CP.CLUB_POST_HEART_COUNT, HEART_CONDITION, CP.CLUB_POST_VIDEO1,
-		TO_CHAR(CP.CLUB_POST_REG_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS CLUB_POST_REG_DATE,
-		TO_CHAR(CP.CLUB_POST_UPDATE_DATE, '""YYYY"년 "MM"월 "DD"일" ""HH24"시 "MI"분 "SS"초"') AS CLUB_POST_UPDATE_DATE
+		TO_CHAR(CP.CLUB_POST_REG_DATE, '""YYYY"-"MM"-"DD""') AS CLUB_POST_REG_DATE,
+		TO_CHAR(CP.CLUB_POST_UPDATE_DATE, '""YYYY"-"MM"-"DD""' ) AS CLUB_POST_UPDATE_DATE
 		FROM CLUB_POST CP, USERS U, ( SELECT SOURCE_NO AS HEART_CONDITION
 												FROM HEART
 												WHERE TRIM(SOURCE) = '2' AND USER_ID = #{ clubPost.user.userId } ) V1
@@ -229,7 +229,19 @@
 	<!-- 결제추가 -->
 	<insert id="addPay" parameterType="pay">
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
-		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, #{ payProduct }, #{ payOption }, #{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid } )
+		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, 
+																	<choose>
+																		<when test="payProduct == '0'">'모임 추가',</when>
+																		<otherwise>'모임원 추가',</otherwise>
+																	</choose>
+																	<choose>
+																		<when test="payOption == 0">'신용카드',</when>
+																		<when test="payOption == 1">'카카오페이',</when>
+																		<when test="payOption == 2">'휴대폰결제',</when>
+																		<when test="payOption == 3">'토스페이',</when>
+																		<otherwise>'실시간 계좌이체',</otherwise>
+																	</choose>
+						#{ totalPrice }, SYSDATE, #{ updateClubCount:NUMERIC }, #{ updateClubMemberCount:NUMERIC }, #{ merchant_uid:VARCHAR } )
 	</insert>
 	
 
