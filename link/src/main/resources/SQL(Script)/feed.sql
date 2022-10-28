@@ -271,7 +271,13 @@ AND parent		= 101
 SELECT * FROM USERS
 
 SELECT * FROM REPORT_PUSH WHERE TYPE = 2
-
+SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED
+					ORDER BY feed_no DESC)
+		WHERE ROWNUM = 1
 
 
 

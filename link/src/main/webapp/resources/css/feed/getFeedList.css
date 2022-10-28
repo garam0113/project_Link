@@ -260,9 +260,35 @@
 
 	/* 위에 메뉴 오류 */
 
-	menu-togle a {
+	#menu-toggle {
 		width: auto !important;
 	}
+
+	/* 위에 메뉴 오류 */
+
+
+	/* 알림 이미지 */
+
+	.alarmImg {
+		display: inline-flex; 
+		width:25px; 
+		height:25px;
+	}
+
+	.button-alarm {
+		border: none !important;
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 	h4 {
