@@ -118,6 +118,16 @@
 		</choose>
 	</select>
 	
+	<select		id="getFeedLast"				resultMap="feedSelectMap">
+		SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED
+					ORDER BY feed_no DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
 	
 	
 	<update		id="updateFeed"					parameterType="feed">

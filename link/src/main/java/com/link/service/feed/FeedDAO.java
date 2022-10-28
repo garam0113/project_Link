@@ -24,6 +24,8 @@ public interface FeedDAO {
 	// 피드 상세
 	public Feed getFeed(Map<String, Object> map) throws Exception;
 	
+	public Feed getFeedLast() throws Exception;
+	
 	// 피드 수정
 	public void updateFeed(Feed feed) throws Exception;
 	

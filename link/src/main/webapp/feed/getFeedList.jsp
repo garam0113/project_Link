@@ -811,6 +811,10 @@
 										<div class="feedContent">
 											${feed.content}
 											
+											<c:if test="${!empty feed.video}">
+												<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+											</c:if>
+											
 											<%-- 이미지 --%>
 											<c:if test="${!empty feed.image1}">
 											<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
@@ -952,6 +956,26 @@
 					</div>
 					
 					<div class="column three">
+					
+					
+                    <div class="alarmHead" >
+                      <!-- Split button -->
+                      
+                      <!-- Single button -->
+						<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle button-alarm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" ><span class="badge">${alarmCount}</span>
+						</button>
+						
+							<ul class="dropdown-menu">
+							    <li><a href="#">Action</a></li>
+							    <li><a href="#">Another action</a></li>
+							    <li><a href="#">Something else here</a></li>
+							    <li role="separator" class="divider"></li>
+							    <li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+                    </div>
 					
 					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
 					
