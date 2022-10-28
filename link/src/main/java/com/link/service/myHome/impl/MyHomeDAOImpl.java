@@ -96,5 +96,11 @@ public class MyHomeDAOImpl implements MyHomeDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public List<User>getBlockList (Search search) throws Exception{
+		
+		System.out.println("\n[MyHomeDAOImpl getBlockList start]\n");
+		return sqlSession.selectList("MyHomeMapper.getBlockList", search);
+	}
 
 }
