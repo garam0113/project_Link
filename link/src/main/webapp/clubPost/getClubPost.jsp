@@ -15,10 +15,9 @@
 		
 		<!-- 사용자 정의 css -->
 		<link rel="stylesheet" href="/resources/css/clubPost/clubPost.css" type="text/css" media="screen" title="no title">
+
+		<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
 		
-		<link rel="stylesheet" href="css/layers.min.css" media="screen">
-		<link rel="stylesheet" href="css/font-awesome.min.css" media="screen"> 
-		<link rel="stylesheet" href="style.css" media="screen">
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
 		<!-- 수정, 삭제, 신고 아이콘 가져올 수 있다 -->
@@ -190,6 +189,11 @@
 								
 								$(".clubPost-header-heart").append( heartDisplay );
 								$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
+								
+								if(sock) {
+									var Msg = "하트 좋아요";
+									sock.send(Msg);
+								}
 							}
 						});
 			}); // end of 하트
