@@ -26,8 +26,10 @@ import com.link.common.Search;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
+import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
+import com.link.service.serviceCenter.ServiceCenterService;
 import com.link.service.user.UserService;
 
 @RestController
@@ -41,6 +43,10 @@ public class FeedRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("ServiceCenterServiceImpl")
+	private ServiceCenterService serviceCenterService;
 	
 	public FeedRestController() {
 		// TODO Auto-generated constructor stub
@@ -74,7 +80,7 @@ public class FeedRestController {
 	// 사용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/addFeedComment", method = RequestMethod.POST)
-	public List<Comment> addFeedComment(@RequestBody Comment comment, Search search, User user) throws Exception {
+	public List<Comment> addFeedComment(@RequestBody Comment comment, Report push, Search search, User user) throws Exception {
 		
 		// 댓글 작성
 			
@@ -98,6 +104,15 @@ public class FeedRestController {
 		map.put("search", search);
 		
 		feedService.addFeedComment(map);
+		
+		push.setReportSource(4);
+		push.setType(2);
+		push.setContent(user.getNickName() + "님이 댓글을 작성했습니다.");
+		
+		push.setFeedComment(feedService.getCommentLast());
+		push.setUser1(user);
+		
+		serviceCenterService.addPush(push);
 		
 		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
 		

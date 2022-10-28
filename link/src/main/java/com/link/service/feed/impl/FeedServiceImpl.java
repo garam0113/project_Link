@@ -135,6 +135,12 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		return feedDAO.getFeedComment(feedCommentNo);
 	}
+	
+	@Override
+	public Comment getCommentLast() throws Exception {
+		// TODO Auto-generated method stub
+		return feedDAO.getFeedLastComment();
+	}
 
 	@Override
 	public void updateFeedComment(Comment comment) throws Exception {

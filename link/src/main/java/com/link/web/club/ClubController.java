@@ -599,4 +599,16 @@ public class ClubController {
 		return "forward:/club/getMeetingList";
 	}
 	
+//	
+//	@RequestMapping(value="deleteClubMember", method=RequestMethod.POST)
+//	public String deleteClubMember(@ModelAttribute ClubUser clubUser) throws Exception {
+//		
+//		System.out.println("deleteClubMember 시작~~~~~");
+//		
+//		clubUser.setClubUserNo(clubUser.getClubUserNo());
+//		
+//		clubService.deleteClubMember(clubUser);
+//		
+//		return "forward:/club/getClubMemberList";
+//	}
 }
