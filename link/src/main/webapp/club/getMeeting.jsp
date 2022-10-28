@@ -236,7 +236,7 @@
 			
 			<div class="row">
 		  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingPlace}</div>
+				<div class="col-xs-8 col-md-4"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
 			</div>
 			
 			<hr/>
