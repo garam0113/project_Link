@@ -11,8 +11,23 @@ public class LiveController {
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass());
 	}
-
-	public String getLiveCall() throws Exception{
+	
+	
+	public String addLive() throws Exception{
+		
+		
+		return null;
+	}
+	
+	public String getLive() throws Exception{
+		return null;
+	}
+	
+	public String updateLive() throws Exception{
+		return null;
+	}
+	
+	public String getLiveList() throws Exception{
 		return null;
 	}
 }

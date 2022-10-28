@@ -330,7 +330,10 @@
 			</div>	
 			</form>		
 			</div>
+			<jsp:include page="/club/calendar.jsp" />
 	</div>
+	
+	
 	
 		</main>
 </body>
