@@ -45,6 +45,12 @@ public class FeedServiceImpl implements FeedService {
 //		feedDAO.addPush(null);
 	}
 	
+	@Override
+	public Feed getFeedLast() throws Exception {
+		// TODO Auto-generated method stub
+		return feedDAO.getFeedLast();
+	}
+	
 	// 사용
 	@Override
 	public Map<String, Object> getFeed(Map<String, Object> map) throws Exception {

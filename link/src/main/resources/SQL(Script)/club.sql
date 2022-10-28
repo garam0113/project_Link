@@ -382,6 +382,25 @@ SELECT * FROM participant;
 						WHERE club_no = #{searchKeyword}								
 			) countTable			
 
+			
+			
+SELECT *
+FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+				FROM club
+				WHERE club_title LIKE '%'||?||'%'           club_category = ? and club_title LIKE '%'||?||'%'
+				ORDER BY club_no ) inner_table
+		WHERE ROWNUM <= ? )
+WHERE row_seq BETWEEN ? AND ?
+
+
+
+
+
+
+
+
+
 
 
 

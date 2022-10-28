@@ -1266,7 +1266,12 @@
 							
 							<div class="feedContent">
 							
+							<c:if test="${!empty feed.video}">
+								<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+							</c:if>
+							
 							<%-- 이미지 --%>
+							
 								<c:if test="${!empty feed.image1}">
 								<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
 									<ol class="carousel-indicators">
