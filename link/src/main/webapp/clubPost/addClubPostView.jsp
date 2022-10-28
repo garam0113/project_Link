@@ -180,7 +180,7 @@
 							<div class="clubPostTitle">
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
-							<textarea id="summernote" name="clubPostContent">
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent">
 							</textarea>
 							<input type="button" class="plain button red" value="등록완료">
 							<input type="button" class="plain button red cancle" value="이전으로">
