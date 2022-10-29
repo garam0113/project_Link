@@ -825,31 +825,20 @@
 							},
 							dataType : "json",
 							success : function(JSONData, status){
-								alert(status);
-								alert(JSONData.clubPostTitle);
-								alert(JSONData.clubPostContent);
+								//alert(status);
+								//alert(JSONData.clubPostTitle);
+								//alert(JSONData.clubPostContent);
 								
 								$(".clubPost-body-title").text(JSONData.clubPostTitle);
 								
-								//$(".clubPost-body-content").text(  );
-								//console.log( JSONData.clubPostContent );
-								
-								/*
 								$(".clubPost-body-content").children("p").remove();
-								$(".clubPost-body-content").text( JSONData.clubPostContent );
-								console.log( JSONData.clubPostContent.length );
-								console.log( $(".clubPost-body-content").text().length );
-								*/
 								
-								
-								
-								var json = $.parseJSON(JSONData);
-								alert("JSONData : \n" + json);
-								
-								var displayValue = "제목 : " + json.clubPostTitle + "\n내용 : " + json.clubPostContent;
-								$(".clubPost-body-content").val(displayValue);
-								
-								
+								tmp = JSONData.clubPostContent.substring(3, JSONData.clubPostContent.length - 4 );
+								//alert("앞 뒤 p태그 자른 string : " + content);
+								var content = tmp.split("</p><p>");
+								for (var i = 0; i < content.length; i++) {
+									$(".clubPost-body-content").append( content[i] );
+								}
 								
 								// 모달창 닫기
 								$('#club-post-update-modal').modal("hide");
