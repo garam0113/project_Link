@@ -831,7 +831,7 @@
 								
 								$(".clubPost-body-title").text(JSONData.clubPostTitle);
 								
-								$(".clubPost-body-content").children("p").remove();
+								$(".clubPost-body-content").empty();
 								
 								tmp = JSONData.clubPostContent.substring(3, JSONData.clubPostContent.length - 4 );
 								//alert("앞 뒤 p태그 자른 string : " + content);
