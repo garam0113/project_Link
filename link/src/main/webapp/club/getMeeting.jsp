@@ -33,14 +33,28 @@
 		padding-top : 70px;
 	}
 	
-	#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #f0f2f5;
+	.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
 	}
 	
 	#main {
@@ -78,7 +92,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-delete").on("click", function() {
+		$("#deleteMeeting").on("click", function() {
 			alert("눌리나?");
 			fncDeleteMeeting();
 			
@@ -87,14 +101,14 @@
 	
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
-			self.location="/club/getMeetingList"
+		$("#cancel").bind("click", function() {
+			history.go(-1);
 		});
 	});
 	
 	$(function() {
 
-		$("button.btn.btn-update").on("click", function() {
+		$("#updateMeeting").on("click", function() {
 			//self.location="/club/updateMeetingView.jsp"
 			self.location="/club/updateMeetingView?meetingNo="+${meeting.meetingNo};
 		});
@@ -109,7 +123,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-addParticipant").on("click", function() {
+		$("#addParticipant").on("click", function() {
 			alert("가입신청 되었습니다.");
 			fncAddMeetingMember();
 		});
@@ -182,7 +196,7 @@
 				
 					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 176px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList" style="color: #BD76FF;">모임일정</a>
+							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
 						<li data-group="fun">
 							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
@@ -207,71 +221,75 @@
 	<div class="container">
 	
 		<!-- 합치자~~ -->
-		<div>
+		<div class="mainForm">
 		<!-- 상세 div -->
-			<div>
-			<form class="form-horizontal">
 			
-			<div class="row">
-				<div class="col-xs-4 col-md-2"><strong>일정제목</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
-			</div>
+			<!-- <form class="form-horizontal" style="width: 443px;"> -->
+			<div class="detailForm">
+			
+				<div>
+					<div class="col-xs-4 col-md-6"><strong>일정제목</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingTitle}</div> 		
+				</div>
+					
+				<p>
 				
-			
-			<hr/>		
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정날짜 </strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingDate}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정시간</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingTime}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
-				<div class="col-xs-8 col-md-4"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정설명</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingContent}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
-				<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정날짜 </strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingDate}</div>
+				</div>
 				
-			</div>
-			
-			<hr/>
-			</form>	
-	</div>
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정시간</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingTime}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정장소</strong></div>
+					<div class="col-xs-8 col-md-6"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정설명</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingContent}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
+					<div class="col-xs-8 col-md-6">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+				</div>
+				
+				<p>
+				
+				</div> <!-- detailForm 종료 -->			
+			<!-- </form>	 -->
 			
 			<div class="mapArea">
 				<jsp:include page="/club/searchPlace.jsp"/>			
 			</div>
 		
-	<!-- 합치자~ -->		
-	</div>	
+		<!-- 합치자~ -->		
+		</div>	
 		
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 26%;">
 				
-					<button type="button" class="btn btn-addParticipant"  >참&nbsp;가&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel" > 이&nbsp;전</button>
-					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
-		      		<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
+					<button type="button" class="plain button red cancel" id="addParticipant"  >참가신청</button>
+					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
+					<button type="button" class="plain button red cancel" id="updateMeeting" >수&nbsp;정</button>
+		      		<button type="button" class="plain button red cancel" id="deleteMeeting" >삭&nbsp;제</button>
 					
 					
 		 	   </div>

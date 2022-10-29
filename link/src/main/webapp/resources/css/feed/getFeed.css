@@ -1,3 +1,24 @@
+
+	/* 스크롤바 안보이지만 동작 */
+
+	html {
+		-ms-overflow-style:none !important; 
+	}
+
+	html::-webkit-scrollbar {
+		display:none !important;
+	}
+
+	/* 스크롤바 안보이지만 동작 */
+
+	/* PREV */
+
+	#prev-items .label {
+		color: grey;
+	}
+	
+	/* PREV */
+	
 	/* 화면 조정 */
 
 	@-ms-viewport {
@@ -49,11 +70,49 @@
 	
 	/* REPORT ICON */
 
+	/* 주변검색 */
+
+	.searchPlace {
+		width: -webkit-fill-available;
+		position: inherit;
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		margin-bottom: 25px !important;
+	}
+
+	.searchPlace:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	/* 주변 검색 */
+
 	/* FEED LIKE & DISLIKE ICON & COMMET ICON */
+
+	.updateCommentView {
+		cursor: pointer;
+	}
+
+	.deleteComment {
+		cursor: pointer;
+	}
+
+	.commentReport {
+		cursor: pointer;
+	}
 	
 	.feedLike {
 		width:25px !important;
 		height:25px !important;
+	}
+
+	.feedLike:hover {
+		transform: scale(1.4);
+		transition: transform .5s;
+		cursor: pointer;
 	}
 
 	.feedDislike {
@@ -61,8 +120,20 @@
 		height:25px !important;
 	}
 
+	.feedDislike:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+		cursor: pointer;
+	}
+
 	.comment > img {
 		width:25px !important;
+	}
+
+	.comment > img:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+		cursor: pointer;
 	}
 
 	.likeCount {
@@ -82,85 +153,65 @@
 		height:25px !important;
 	}
 
+	.report > img:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+		cursor: pointer;
+	}
+
+	.addCommentHeart:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+		cursor: pointer;
+	}
+
+	.deleteCommentHeart:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+		cursor: pointer;
+	}
+
 	/* FEED LIKE & DISLIKE ICON & COMMET ICON */
 
 	/* 댓글창 CSS */
 
+	textarea[name='mainCommentContent'] {
+		resize: none;
+		display: flex !important;
+		width: 80% !important;
+		height: 90px !important;
+	}
+
 	textarea[name='commentContent'] {
 		resize: none;
 		display: flex !important;
-		width: 100% !important;
+		width: 90% !important;
 		height: 90px !important;
 	}
 
 	/* 댓글창 CSS */
-
-	/* 수정 & 삭제 버튼 */
-
-	article > nav {
-
-		float:right !important;
-		margin-right: 10px;
-   		margin-top: 10px;
-			
-	}
-
-
-	/* 수정 & 삭제 버튼 */
-
-	/* FEED TIME */
-	
-	h5.meta-post {
-		color:black !important;
-		display: inline;
-	}
-	
-	/* FEED TIME */
 
 	/* TEST */
 
 	div.six {
 		border-radius: 15px;
 		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+		background-color: white;
 	}
 
 	/* TEST */
 
-	/* 작성자 프로필 이미지 */	
-
-	article > img {
-		margin-top : 10px;
-		margin-left : 10px;
-		float : left;
-		border-radius: 25% !important;
-	}
-
-	/* 작성자 프로필 이미지 */
-
 	/* FEED CONTENT FONT COLOR */
 
 	div.feedContent {
+		margin-top: 10px;
 		margin-left: 60px;
 		margin-right: 25px;
 		color: black !important;
+		font-size: 1rem;
 	}
 
 	/* FEED CONTENT FONT COLOR */
-
-	/* 피드 댓글 달기 버튼 */
-
-	input.button.btn_addComment {
-		display: flex;
-		margin-right: 0px !important;
-
-		width: 75px !important;
-		height: 35px !important;
-		font-size: 0.5em !important;
-		background-color: #5F0080 !important;
-	}
-
-
-	/* 피드 댓글 달기 버튼 */
 
 	/* 댓글의 좋아요 사진 사이즈 */
 
@@ -180,15 +231,35 @@
 
 	/* 대댓글 관련 hidden */
 
-	.btn_addRecomment {
-		margin-right: 0px !important;
-		width: 50px !important;
-		height: 25px !important;
-		font-size: 0.5em !important;
-		background-color: #5F0080 !important;
+	button.btn_addRecomment {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+		margin-right: 35px;
 	}
 
+	button.btn_addRecomment:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+	
+
 	/* 대댓글 관련 hidden */
+
+	/* 댓글 작성란 줄이기 */
+
+	#feedInfo {
+		text-align: -webkit-center;
+    	margin-top: 50px;
+	}
+
+
+	/* 댓글 작성란 줄이기 */
 
 	.heartPosition {
 	    display: flex;
@@ -233,51 +304,226 @@
 
 	/* 하단 바 중앙 정렬 */
 
+	/* 피드 상단 쪽 */
+
+	.feedHeader {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.feedLeft {
+		display: flex;
+		align-items: center;
+	}
+
+	.feedInner {
+		display: flex;
+    	align-items: center;
+	}
+
+	.feedCover {
+		display: flex;
+		margin: 10px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.feedProfileImage {
+		border-radius: 25% !important;
+		cursor: pointer;
+	}
+
+	.feedDate {
+		margin: 10px;
+		font-size: 0.778rem;
+		font-weight: 700 !important;
+	}
+
+	.feedName {
+		font-weight: 700 !important;
+		cursor: pointer;
+	}
+
+	.udIcon {
+		margin: 10px;
+		cursor: pointer;
+	}
+
+	/* 피드 상단 쪽 */
 
 
-
-
-
-
-
-
-
-
-
-	.updateFeedComment {
-
-		margin-right: 0px !important;
-		width: 75px !important;
-		height: 35px !important;
-		font-size: 0.5em !important;
-		background-color: #5F0080 !important;
+	/* FEEDCOMMENT ADD BUTTON */
+	
+	button.btn_addComment {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
 		float: right;
-
+		margin-right: 50px;
 	}
 
-
-	.cancel {
-
-		margin-right: 0px !important;
-		width: 75px !important;
-		height: 35px !important;
-		font-size: 0.5em !important;
+	button.btn_addComment:hover{
 		background-color: #5F0080 !important;
+		color: white !important;
+	}
+	
+	/* FEED ADD BUTTON */
 
+	/* FEED LASTBAR */
+	
+	section .row {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		margin-right: 0px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 15px;
+		background-color: white !important;
 	}
 
+	/* 하단 바 숫자 */
 
+	.col-xs-1 {
+		font-size: 15px;
+		padding-right: 0px !important;
+		padding-left: 0px !important;
+	}
 
-.row {
-	margin-top:0%;
-	margin-right:0%;
-	margin-bottom:0%;
-	margin-left:0%;
-}
+	/* 하단 바 숫자 */
+	
+	/* FEED LASTBAR */
 
+	/* 댓글 사진 혹은 이름 호버시 */
 
-h4 {
-	margin-top:5px;
-	margin-left:5px;
-	display: inline-block;
-}
+	.comment-author img {
+		cursor: pointer;
+	}
+
+	cite {
+		cursor: pointer;
+	}
+
+	/* 댓글 사진 혹은 이름 호버시 */
+
+	/* 댓글 수정 관련 버튼 */
+
+	button.updateFeedComment {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.updateFeedComment:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	button.cancel {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.cancel:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	/* 댓글 수정 관련 버튼 */
+
+	/* 모달창 피드 수정 */
+
+	.note-editable {
+		height: 400px !important;
+	}
+
+	button.btn_updateFeedCancel {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.btn_updateFeedCancel:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	button.btn_updateFeed {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.btn_updateFeed:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	.updateModalLeft {
+		display: flex;
+		align-items: center;
+	}
+
+	.updateModalInner {
+		display: flex;
+		align-items: center;
+	}
+
+	.updateModalInner img {
+		width: 50px
+	}
+
+	.updateCover {
+		display: flex;
+		margin: 10px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.modal-dialog {
+		top : 100px;
+	}
+
+	.updateFormName {
+		font-weight: 700 !important;
+		cursor: pointer;
+	}
+
+	.updateFeedDate {
+		margin: 10px;
+    	font-size: 0.778rem;
+    	font-weight: 700 !important;
+	}
+
+	.updateFeedProfileImage{
+		border-radius: 25% !important;
+		cursor: pointer;
+	}
+
+	/* 모달창 피드 수정 */
+

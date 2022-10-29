@@ -74,6 +74,154 @@
 	
 	$(function(){
 		
+	<%-- 피드 폼에서 아이디에 호버시 --%>
+		
+		$(document).on("click", ".feedProfileImage", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).parents(".feedCover").siblings(".feedName").text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		$(document).on("click", ".feedName", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		<%-- 피드 폼에서 아이디에 호버시 --%>
+		
+		<%-- 작성자 아이디에 호버시 --%>
+		
+		$(document).on("click", ".sessionProfileImage", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).parents(".addFormImage").siblings(".addFormName").text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		$(document).on("click", ".addFormName", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		<%-- 작성자 아이디에 호버시 --%>
+		
 		<%-- 알람 모달창 --%>
 		
 		$(document).on("click", ".alarmImg", function(event) {
@@ -178,31 +326,50 @@
 										addHtml +=
 										'<div class="showFeedForm">' +
 										'<form class="feedForm">' +
-										'	<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" /><h4 style="vertical-align: text-bottom;">' + item.user.nickName + '</h4>' + 
-										'	<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">'
+										'<div class="feedHeader">' +
+										'<div class="feedLeft">' + 
+										'<div class="feedInner">' + 
+										'<div class="feedCover">' +
+										'<img class="feedProfileImage" src="/resources/image/uploadFiles/' + item.user.profileImage + '" />' + 
+										'</div>' +
+										'<div class="feedName">' +
+										item.user.nickName +
+										'</div>' +
+										'</div>' + 
+										'<div class="feedDate">'
 										
 										if(item.updateDate != null) {
-											addHtml += formatDate(item.updateDate) + '</h5>';
+											addHtml += formatDate(item.updateDate) + '</div></div>';
 										} else {
-											addHtml += formatDate(item.regDate) + '</h5>';
+											addHtml += formatDate(item.regDate) + '</div></div>';
 										}
 										
 										
 										if(sessionUser == item.user.userId) {
-											addHtml += '<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">' +
-														'<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> ' +
+											addHtml += '<div class="udIcon">' +
 														'<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>' +
 														'</div>'
 										}
 										
-										addHtml += '<div class="feedContent">';
+										addHtml += '</div>';
 										
 										if(item.content != null) {
-											addHtml += item.content
+											addHtml += '<div class="feedContent">' + 
+														'<div class="feedLetter">' + 
+														item.content +
+														'</div>'
 										}
 										
+										if(item.video != null) {
+											addHtml += '<div class="feedVideo">' +
+														'<iframe width="560" height="315" src="http://' + item.video + '"></iframe>' +
+														'</div>'
+										}
+										
+										
 										if(item.image1 != null) {
-											addHtml += '<div id="carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" class="carousel slide" data-ride="carousel">' +
+											addHtml += '<div class="feedImage">' +
+													'<div id="carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" class="carousel slide" data-ride="carousel">' +
 													'<ol class="carousel-indicators">' +
 														'<li data-target="#carousel-example-generic' + index + 1 + (parseInt($("#currentPage").val()) * 10) + '" data-slide-to="0" class="active"></li>'
 														
@@ -251,7 +418,7 @@
 														'	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
 														'	<span class="sr-only">Next</span>' +
 														'</a>' +
-													'</div>'
+													'</div></div>'
 										}
 											
 										addHtml += '</div>';
@@ -271,7 +438,7 @@
 											'<input type="hidden" name="openCondition" value="3">' +
 											'<section class="row section lastBar">' +
 											'	<div class="row">' +
-											'		<div class="col-xs-1"></div>'
+											'		<div class="col-xs-2"></div>'
 										
 										if(item.checkHeart == 0) {
 											addHtml += '<div class="col-xs-2">' +
@@ -286,20 +453,16 @@
 										addHtml += '<div class="col-xs-1 likeCount">' +
 														item.heartCount +
 													'</div>' +
-													'<div class="col-xs-1">' +
-													'</div>' +
 													'<div class="col-xs-2 comment">' +
 													'	<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>' +
 													'</div>' +
 													'<div class="col-xs-1 commentCount">' +
 														item.commentCount +
 													'</div>' +
-													'<div class="col-xs-1">' +
-													'</div>' +
 													'<div class="col-xs-2 report">' +
 													'	<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>' +
 													'</div>' +
-													'<div class="col-xs-1"></div>' +
+													'<div class="col-xs-2"></div>' +
 													'</div>' +
 												'</section>' +
 											'</form>' +
@@ -403,11 +566,26 @@
 		<%-- UPDATE_FEED --%>
 		$(document).on("click", ".btn_update", function(event){
 			event.stopPropagation();
-			console.log("피드 수정 버튼");
-			console.log($(this).parent().parents(".feedForm").html())
+			// console.log("피드 수정 버튼");
+			// console.log($(this).parents(".feedForm").html())
 			
-			$(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+			
+			alert($(this).parents(".feedHeader").siblings(".feedContent").find(".feedLetter").html().trim())
+			
+			$(".updateCover").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedCover").html().trim())
+			$(".updateFormName").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedName").html().trim())
+			$(".updateFeedDate").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedDate").html().trim())
+			$("#updateFeedForm textarea").html($(this).parents(".feedHeader").siblings(".feedContent").html())
+			
+			
+			$('#updateModal').modal();
 		});
+		
+		$(document).on("click", ".btn_updateFeed", function(event) {
+			console.log("수정하기");
+			$("#updateFeedForm").attr("method", "GET").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+		})
 		<%-- UPDATE_FEED --%>
 		
 		<%-- DELETE_FEED --%>
@@ -546,9 +724,16 @@
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 			
-			$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
-		//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
-		}) // .report evenet close
+			// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+			// $(".modal-content").load("/loginModal");
+			var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
+			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+			
+			$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			$('#reportModal').modal();
+
+			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
+		})	// .report evenet close
 		<%-- CALL REPORT --%>
 		
 	})
@@ -561,189 +746,6 @@
 
 <style type="text/css">
 
-	/* 선택 된 탭 콘텐츠를 표시 */
-	#all:checked ~ #all_content,
-	#programming:checked ~ #programming_content,
-	#design:checked ~ #design_content {
-	  display: block;
-	}
-	#all-follow:checked ~ #all-follow_content,
-	#programming-follow:checked ~ #programming-follow_content,
-	#design:checked ~ #design_content {
-	  display: block;
-	}
-	
-	
-	
-	.tab{
-		display: block;
-	}
-	
-	/* 탭 전체 스타일 position: fixed; */
-	.tabs1 {
-		position: fixed;
-		width:200px;
-		margin-bottom: 100px;
-		background-color: #ffffff;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-		display:inline-block;
-		float: left;
-		height:500px;
-		border-radius: 15px;
-	}
-		
-	
-	/* 탭 스타일 */
-	.tab_item1 {
-		width: calc(100%/3);
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: block;
-		float: left;
-		width:400px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-	}
-	.tab_item-following {
-		width: 100px !important;
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: inline-block;
-		width:200px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-		border-radius: 15px;
-	}
-	.tab_item-follow {
-		width: 100px !important;
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: block;
-		float: left;
-		width:200px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-		border-radius: 15px;
-	}
-	
-	.tab_item2 {
-		width: calc(100%/3);
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: inline-block;
-		width:400px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-	}
-	
-	.tab_item1:hover {
-		opacity: 0.75;
-	}
-	.tab_item2:hover {
-		opacity: 0.75;
-	}
-	}
-	.tab_item-follow:hover {
-		pacity: 0.75;
-	}
-	}
-	.tab_item-following:hover {
-		opacity: 0.75;
-	}
-	
-	/* 라디오 버튼 UI삭제*/
-	input[name="tab_item"] {
-		display: none;
-	}
-	input[name="tab_item-follow"] {
-		display: none;
-	}
-	
-	/* 탭 컨텐츠 스타일 */
-	.tab_content {
-		position: fixed;
-		display: none;
-		height: 440px;
-		clear: both;
-		overflow: hidden;
-		overflow-y: auto;
-		scrollbar-width: none;
-	    width: inherit;
-	}
-	.tab_content-follow {
-		position: fixed;
-		display: none;
-		height: 440px;
-		clear: both;
-		overflow: hidden;
-		overflow-y: auto;
-		scrollbar-width: none;
-		width: inherit;
-	}
-	
-	/* 스크롤바 안보이기 */
-	
-	.tab_content::-webkit-scrollbar {
-	    display: none; /* Chrome, Safari, Opera*/
-	}
-	
-	.tab_content-follow::-webkit-scrollbar {
-	    display: none; /* Chrome, Safari, Opera*/
-	}
-	
-	#fll {
-	    display: contents;
-	}
-	
-	#fl {
-	    display: contents;
-	}
-
-	.follow-section {
-		margin: 0px;
-	    display: flex;
-	    justify-content: space-around;
-	    align-items: center;
-	    margin-bottom: 20px;
-	}
-	
-	.following-section {
-		margin: 0px;
-	    display: flex;
-	    justify-content: space-around;
-	    align-items: center;
-	    margin-bottom: 20px;
-	}
-	
-	.page {
-		padding-right: 0px !important;
-	}
-	
-	
 	
   
 </style>
@@ -786,11 +788,29 @@
 							<c:if test="${!empty sessionScope.user}">
 							
 								<article role="main">
-									<img class="sessionProfileImage" src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" /><h4 style="vertical-align: top;">${sessionScope.user.nickName}</h4>
+								
+								<div class="addHeader">
+									<div class="addHeaderInner">
+										<div class="addFormImage">
+											<img class="sessionProfileImage" src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" />
+										</div>
+										
+										<div class="addFormName">
+											${sessionScope.user.nickName}
+										</div>
+									</div>
 									
-									<input class="plain button purple addFeed" value="Submit">
+									<div>
+										<button class="btn btn-primary addFeed" type="button">SUBMIT</button>
+									</div>
+									
+								</div>
+								
+								<div class="addBody">
 									
 									<textarea id="summernote" name="fullContent"></textarea>
+								</div>
+								
 								</article>
 								
 							</c:if>
@@ -806,87 +826,105 @@
 
 							<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
 
-								<div class="showFeedForm shadow-lg">
+								<div class="showFeedForm">
 									<form class="feedForm">
-
-										<img src="/resources/image/uploadFiles/${feed.user.profileImage}" /><h4 style="vertical-align: text-bottom;">${feed.user.nickName}</h4>
-										
-										<h5 class="meta-post" style="display: inline-block; vertical-align: text-bottom;">
-											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
-										</h5>
-										
-										<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+										<div class="feedHeader">
+											<div class="feedLeft">
+												<div class="feedInner">
+													<div class="feedCover">
+														<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+													</div>
+													<div class="feedName">
+														${feed.user.nickName}
+													</div>
+												</div>
+												
+												<div class="feedDate">
+													<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+													<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+												</div>
+											</div>
+												
+											<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 											
-											<div style="display: inline-block; float: right; margin-top:10px; margin-right:10px;">
+											<div class="udIcon">
 												<%-- 수정 버튼 --%>
-												<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
+												<%-- <span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> --%>
 												<%-- 수정 버튼 --%>
 											
 												<%-- 삭제 버튼 --%>
 												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>
 												<%-- 삭제 버튼 --%>
 											</div>
-										</c:if>
-									
+												
+											</c:if>
+										</div>
 										<div class="feedContent">
-											${feed.content}
+											<div class="feedLetter">
+												${feed.content}
+											</div>
 											
 											<c:if test="${!empty feed.video}">
+											<div class="feedVideo">
 												<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+											</div>
 											</c:if>
 											
 											<%-- 이미지 --%>
-											<c:if test="${!empty feed.image1}">
-											<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
-												<ol class="carousel-indicators">
-													<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-													
-													<c:if test="${!empty feed.image2}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-													</c:if>
-													<c:if test="${!empty feed.image3}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-													</c:if>
-													<c:if test="${!empty feed.image4}">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
-													</c:if>
-												</ol>
 											
-												<!-- Wrapper for slides -->
-												<div class="carousel-inner" role="listbox">
-													<div class="item active">
-														<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
-													</div>
-													
-													<c:if test="${!empty feed.image2}">
-														<div class="item">
-															<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+											<c:if test="${!empty feed.image1}">
+											<div class="feedImage">
+												<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+													<ol class="carousel-indicators">
+														<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+														
+														<c:if test="${!empty feed.image2}">
+															<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+														</c:if>
+														<c:if test="${!empty feed.image3}">
+															<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+														</c:if>
+														<c:if test="${!empty feed.image4}">
+															<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+														</c:if>
+													</ol>
+												
+													<!-- Wrapper for slides -->
+													<div class="carousel-inner" role="listbox">
+														<div class="item active">
+															<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
 														</div>
-															<c:if test="${!empty feed.image3}">
-																<div class="item">
-																	<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-																</div>
-																<c:if test="${!empty feed.image4}">
+														
+														<c:if test="${!empty feed.image2}">
+															<div class="item">
+																<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+															</div>
+																<c:if test="${!empty feed.image3}">
 																	<div class="item">
-																		<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																		<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
 																	</div>
-																</c:if>
-															</c:if>														
-													</c:if>
+																	<c:if test="${!empty feed.image4}">
+																		<div class="item">
+																			<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																		</div>
+																	</c:if>
+																</c:if>														
+														</c:if>
+													</div>
+		
+													<!-- Controls -->
+													<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
+														<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+														<span class="sr-only">Previous</span>
+													</a>
+													<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
+														<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+														<span class="sr-only">Next</span>
+													</a>
 												</div>
-	
-												<!-- Controls -->
-												<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
-													<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-													<span class="sr-only">Previous</span>
-												</a>
-												<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
-													<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-													<span class="sr-only">Next</span>
-												</a>
 											</div>
 											</c:if>
+											
 											<%-- 이미지 --%>
 											
 										</div>
@@ -920,7 +958,7 @@
 										<section class="row section lastBar">
 											<div class="row">
 												<%-- 여백 --%>
-												<div class="col-xs-1"></div>
+												<div class="col-xs-2"></div>
 												<%-- 여백 --%>
 											
 												<c:if test="${feed.checkHeart eq 0}">
@@ -938,9 +976,6 @@
 													${feed.heartCount}
 												</div>
 												
-												<div class="col-xs-1">
-												</div>
-												
 												<div class="col-xs-2 comment">
 													<img src="/resources/image/uploadFiles/comment2.jpg" class="commentImg" aria-hidden="true" data-toggle="modal" data-target="#myModal"/>
 												</div>
@@ -949,9 +984,6 @@
 													 ${feed.commentCount}
 												</div>
 												
-												<div class="col-xs-1">
-												</div>
-													
 												<!-- 신고 아이콘 -->
 												<div class="col-xs-2 report">
 													<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
@@ -959,7 +991,7 @@
 												<!-- 신고 아이콘 -->
 												
 												<%-- 여백 --%>
-												<div class="col-xs-1"></div>
+												<div class="col-xs-2"></div>
 												<%-- 여백 --%>
 												
 											</div>
@@ -1019,7 +1051,7 @@
 
 		</div>
 		
-		<!-- COMMENT Modal -->
+	<!-- COMMENT Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -1060,6 +1092,22 @@
 					</h4>
 				</div>
 				<div class="modal-body alarmModalBody">여기는 알람모달</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 신고 Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				
+				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
 						Close

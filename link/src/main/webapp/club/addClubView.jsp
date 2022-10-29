@@ -54,15 +54,29 @@
 			margin-top: 10px;
 		}
 
-		#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #ffffff;
-		}
+		.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
 		
 		
 		textarea {
@@ -116,7 +130,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-addClub").on("click", function() {
+		$("#addClub").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			fncAddClub();
 		});
@@ -128,7 +142,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -194,6 +208,37 @@
 		maximumAge        : 5000, 
 		timeout           : 3000
 	};
+	
+	
+	//파일 드래그 앤 드롭
+	
+	const $drop = document.querySelector(".image");
+	const $title = document.querySelector("#imageArea")
+	
+	$drop.ondrop = (e) => {
+		e.preventDefalut();
+		$drop.className = "image";
+		
+		const file = [...e.dataTransfer?.files];
+		
+		$title.innerHTML = file.map(v => v.name).join("<br>");
+	}
+	
+	$drop.ondragover = (e) => {
+		e.preventDefault();
+	}
+	
+	$drop.ondragenter = (e) => {
+		e.preventDefault();
+		
+		$drop.classList.add("active");
+	}
+	
+	$drop.ondragleave = (e) => {
+		e.preventDefault();
+		
+		$drop.classList.remove("active");
+	}
 	
 
 </script>
@@ -284,7 +329,7 @@
 				</div>		
 			</div>			
 			
-			<div class="form-group">
+			<div class="form-group" id="imageArea">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <input type="file" name="file" class="file" id="clubImage" multiple="multiple"> -->
@@ -296,9 +341,9 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-addClub">등 &nbsp;록</button>
-					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
+				<div class="col-sm-offset-6  col-sm-6 text-center">
+		      		<button type="button" class="plain button red cancel" id="addClub">등 &nbsp;록</button>
+					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
 			</div>
 			</div>

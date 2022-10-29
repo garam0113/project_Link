@@ -51,7 +51,6 @@
 				sock.onmessage = onMessage;
 	
 				sock.onclose = function () {
-					console.log("체크" + sock);
 					console.log('close');
 				};
 	
@@ -91,7 +90,15 @@
 </head>
 
 <style>
+	.alarmHead {
+		float: right;
+	}
 
+	.alarmImg {
+		display: inline-flex; 
+		width:25px; 
+		height:25px;
+	}
 </style>
 		
 	</head>
@@ -131,6 +138,7 @@
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
                            href="/user/getUser?userId=${sessionScope.user.userId}">내정보보기</a></li>
+                           
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
@@ -138,8 +146,17 @@
                      
                      
                   </c:if>
+                  
                </ul>
+               
             </nav>
+            
+            <div class="alarmHead" >
+						
+				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+			</div>
+                    
          </div>
          <!-- row-content -->
       </div>

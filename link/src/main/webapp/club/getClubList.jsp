@@ -32,7 +32,7 @@
  	 
  	 
  	 <!-- alert! -->
- 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ 	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
  	 
  	 
  	 <!-- 따로 가능?? -->
@@ -85,7 +85,7 @@
 		}
 		
 		header.transparent {
-    		background-color: #23242b;
+    		/* background-color: #23242b; */
 		    -webkit-box-shadow: none;
 		    -moz-box-shadow: none;
  	   		box-shadow: none;
@@ -114,11 +114,11 @@
 		 	clear: none;
 		 }
 		 
-		 .btn {
+	 	/*  .btn {
 		 	background-color: #fbfbfb;
 		 	color: #BD76FF;
 		 	border-color: #BD76FF;
-		 }
+		 } */
 		 
 		 .club-cT {
 		 		font-size: 
@@ -128,22 +128,31 @@
 	    float: left;
 	    border: 1px solid !important;
 		}
-			 
 		
-		 
-/* 		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
-    display: block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin-bottom: 0em;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    -webkit-border-radius: 0.333em;
-    -moz-border-radius: 0.333em;
-    border-radius: 0.333em;
-    color: #333;
-} */
-		 
+		.btn{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 83px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.btn:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 83px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+		
 		 #pageNav {
 		 	float: none;
 		 }
@@ -174,6 +183,27 @@
 		background-color: #cf0cc90d !important;
 		border: solid 1px #d8d8d8 !important;
 		margin: 10px;
+	}
+	
+	
+	/*썸네일 애니메이션*/
+	@keyframes post-ani {
+	
+    25% {
+        transform: rotate(2deg) scale(1.01);
+	    }
+ 
+    50% {
+        transform: rotate(0deg) scale(1);
+    	}
+ 
+    75% {
+        transform: rotate(-2deg) scale(1.01);
+    	}
+	}
+	.thumbnail:hover {
+	opacity: 0.9;
+	animation: post-ani 0.8s linear 1;
 	}
 	
 		 
@@ -222,7 +252,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-addClub").on("click", function() {
+		$("#addClubBtn").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -355,7 +385,7 @@
 
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="20">
+			<!-- <div id="intro-wrap" data-height="20">
 				<div id="intro" class="preload darken">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
@@ -363,13 +393,13 @@
 							<h2>CLUB LIST</h2>
 							<p>The meeting is waiting for you.. </p>
 						</div>
-						<!-- caption -->
+						caption
 					</div>
-					<!-- intro -->
+					intro
 				</div>
-				<!-- intro -->
+				intro
 			</div>
-			<!-- intro-wrap -->
+			intro-wrap -->
 			
 			
 	
@@ -381,25 +411,25 @@
 	    
 		   
 		    <div class="col-md-8 text-right" style="float: left;">
-			    <form class="form-inline" name="detailForm" id="searchArea" style="border: 2px solid; margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: 2px 2px;">
+			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;">
 			    
 				  <div class="form-group" id="selectTitle">
-				    <select class="form-control" name="searchCondition" style="margin-top: 5px; margin-left: 5px; background-color: #f0f2f5;">
+				    <select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
 					</select>
 					
 					<p><label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">지 역</label></p>
 					
-					<label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
+					<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
 					
 				  </div>
 				  
 				  <div class="form-group" id="selects" style="text-align: left;">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="모임 검색" onkeyup="enterkey()"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 5px; margin-right: 70px; margin-left: 5px;">
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 5px;">
 				    			 
-					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 5px;">
+					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
 	    					<option value="">지역</option>
 	    					<option value="강남구">강남구</option>
 							<option value="강동구">강동구</option>
@@ -428,7 +458,7 @@
 							<option value="중랑구">중랑구</option>
 	    				</select>	
 	    				
-	    				<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 5px;">
+	    				<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
 	    					<option value="">카테고리</option>
 	    					<option value="운동">운동</option>
 	  						<option value="봉사활동">봉사활동</option>
@@ -444,8 +474,8 @@
 					
 					<p>
 					
-						<button type="button" class="btn btn-search" style="margin-top: 30px; display: contents;">검색</button>
-	    				<button type="button" onclick="resetBtn()" class="btn btn-reset" style="margin-left: 50px; background-color: #f0f2f5 !important; border-color: #f0f2f5 !important;"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
+						<button type="button" class="btn btn-search" >검색</button>
+	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
 				  </div>
 				  
 				  <!-- <div class="form-group">
@@ -460,10 +490,10 @@
 	    	</div>
 	    	
 	    	
-	    <div class="col-md-4 text-right" style="float: right;">
+	    <!-- <div class="col-md-6 text-right" style="float: right;"> -->
 	    	<!-- <button type="button" class="btn btn-myList" style="">내 모임 보기</button> -->
-	  		<button type="button" class="btn btn-addClub" style="margin-top: 100px; margin-right: 60px; width: 170px; height: 80px; border-radius: 10px; background-color: #f0f2f5; font-size: 20px; box-shadow: 2px 2px;">모임등록</button>
-	    </div>
+	  		<button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임등록</button>
+	    <!-- </div> -->
 	    	
 	</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -472,15 +502,15 @@
 	<div id="main" class="row">
 		  <c:forEach var="i" items="${clubList}">
 		  	<div class="col-xs-4 col-md-3">	
-				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;">
+				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
+			  			<p class="club-cT"><strong>${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
-				  		<p>카테고리 : ${i.clubCategory }</p>
-				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px; box-shadow: 2px 2px;">모임보기</a></p>			  	
+				  		<p>${i.clubCategory }</p>
+				  		<p>모임생성일 : ${i.clubRegDate}</p>
+				  		<%-- <p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px; box-shadow: 2px 2px;">모임보기</a></p> --%>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>

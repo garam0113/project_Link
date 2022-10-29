@@ -44,14 +44,14 @@ margin-bottom: 50px !important;
 .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    background-color: blueviolet;
+    background-color: #333;
     border-radius: 15px 0px 0px 15px ;
 }
 .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
     margin-left: -1px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    background-color: blueviolet;
+    background-color: #333;
     border-radius: 0px 15px 15px 0px ;
 }
 .fc-timeGridWeek-button{
@@ -60,7 +60,7 @@ border-radius: 0px 0px 0px 0px  !important;
 
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
     margin-left: 0.75em;
-    background-color: blueviolet;
+    background-color: #333;
     border-radius: 15px;
 }
 .fc, .fc *, .fc *:before, .fc *:after {

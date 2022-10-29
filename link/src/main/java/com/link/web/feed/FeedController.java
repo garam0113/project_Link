@@ -253,7 +253,7 @@ public class FeedController {
 				
 		model.addAttribute("feed", (Feed) feedService.getFeed(map).get("feed"));
 		
-		return "forward:/feed/updateFeedView.jsp";
+		return "forward:/feed/updateFeedViewModal.jsp";
 	}
 	
 	// 사용
