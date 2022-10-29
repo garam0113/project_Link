@@ -369,7 +369,7 @@ public class ServiceCenterController {
 
 
 
-	@RequestMapping(value = "addReport", method = RequestMethod.POST)
+	@RequestMapping(value = "addReport")
 	public String addReport(@ModelAttribute Report report, @RequestParam(value = "sourceNumber") String number,
 								User user, Map<String, Object> map, ClubPost clubPost, Comment comment, HttpSession httpSession, Model model) throws Exception {
 		
