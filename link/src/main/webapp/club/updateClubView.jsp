@@ -41,15 +41,29 @@
             padding-top : 50px;
         }
         
-        #btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #ffffff;
-		}
+        .plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+		.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
 		
 		textarea {
 		resize: none;
@@ -91,15 +105,13 @@
 			return;
 		}
 		
-		
-		
 		$("form").submit();
 	}
 
 
 	$(function() {
 
-		$("button.btn.btn-update").on("click", function() {
+		$("#updateClub").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			fncUpdateClub();
 		});
@@ -111,7 +123,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			//window.close();
 			history.go(-1);
 		});
@@ -228,18 +240,17 @@
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-				<strong>모임이미지</strong>
-					<input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
-					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/${club.clubImage}" style="height: 300px; width: 300px; max-width: 260%;"></button>
+				<strong>모임이미지</strong><input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
+					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width: 300px; max-width: 260%;"></button>
 				</div>		
 			</div>
 			
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-update" >수 &nbsp;정</button>
-					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
+				<div class="col-sm-offset-6  col-sm-6 text-center">
+		      		<button type="button" class="plain button red cancel" id="updateClub" >수 &nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
 			</div>
 			</div>
