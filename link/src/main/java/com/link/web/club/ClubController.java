@@ -574,7 +574,7 @@ public class ClubController {
 		//Business Logic
 		clubService.updateMeeting(meeting);
 		
-		return "forward:/club/getMeetingList";
+		return "forward:/club/getMeeting.jsp";
 	}
 	
 	@RequestMapping(value="deleteMeeting")

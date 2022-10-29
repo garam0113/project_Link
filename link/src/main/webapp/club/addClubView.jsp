@@ -209,6 +209,37 @@
 		timeout           : 3000
 	};
 	
+	
+	//파일 드래그 앤 드롭
+	
+	const $drop = document.querySelector(".image");
+	const $title = document.querySelector("#imageArea")
+	
+	$drop.ondrop = (e) => {
+		e.preventDefalut();
+		$drop.className = "image";
+		
+		const file = [...e.dataTransfer?.files];
+		
+		$title.innerHTML = file.map(v => v.name).join("<br>");
+	}
+	
+	$drop.ondragover = (e) => {
+		e.preventDefault();
+	}
+	
+	$drop.ondragenter = (e) => {
+		e.preventDefault();
+		
+		$drop.classList.add("active");
+	}
+	
+	$drop.ondragleave = (e) => {
+		e.preventDefault();
+		
+		$drop.classList.remove("active");
+	}
+	
 
 </script>
 </head>
@@ -298,7 +329,7 @@
 				</div>		
 			</div>			
 			
-			<div class="form-group">
+			<div class="form-group" id="imageArea">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <input type="file" name="file" class="file" id="clubImage" multiple="multiple"> -->

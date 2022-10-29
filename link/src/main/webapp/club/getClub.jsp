@@ -371,9 +371,10 @@
 		</div>
 		<!-- 달력 영역 -->
 		
-		<button type="button" class="plain button red cancel" id="addMeeting">일정생성</button>
-		</div>
 		
+		</div>
+
+		<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
 		
 		
 		
@@ -387,7 +388,7 @@
 		</div>
 		
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -151px;">
 		      		
 		      		<button type="button" class="plain button red cancel" id="addApproval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			

@@ -102,7 +102,7 @@
 	$(function() {
 
 		$("#cancel").bind("click", function() {
-			self.location="/club/getMeetingList"
+			history.go(-1);
 		});
 	});
 	
@@ -221,63 +221,67 @@
 	<div class="container">
 	
 		<!-- 합치자~~ -->
-		<div>
+		<div class="mainForm">
 		<!-- 상세 div -->
-			<div>
-			<form class="form-horizontal">
 			
-			<div class="row">
-				<div class="col-xs-4 col-md-2"><strong>일정제목</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingTitle}</div> 		
-			</div>
+			<!-- <form class="form-horizontal" style="width: 443px;"> -->
+			<div class="detailForm">
+			
+				<div>
+					<div class="col-xs-4 col-md-6"><strong>일정제목</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingTitle}</div> 		
+				</div>
+					
+				<p>
 				
-			
-			<hr/>		
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정날짜 </strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingDate}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정시간</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingTime}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정장소</strong></div>
-				<div class="col-xs-8 col-md-4"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>일정설명</strong></div>
-				<div class="col-xs-8 col-md-4">${meeting.meetingContent}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
-				<div class="col-xs-8 col-md-4">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정날짜 </strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingDate}</div>
+				</div>
 				
-			</div>
-			
-			<hr/>
-			</form>	
-	</div>
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정시간</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingTime}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정장소</strong></div>
+					<div class="col-xs-8 col-md-6"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>일정설명</strong></div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingContent}</div>
+				</div>
+				
+				<p>
+				
+				
+				<div>
+			  		<div class="col-xs-4 col-md-6 "><strong>정 원</strong><a href="/club/getMeetingMemberList">(참여인원)</a></div>
+					<div class="col-xs-8 col-md-6">(${meetingCount}/${meeting.meetingMaximumMember})</div>
+				</div>
+				
+				<p>
+				
+				</div> <!-- detailForm 종료 -->			
+			<!-- </form>	 -->
 			
 			<div class="mapArea">
 				<jsp:include page="/club/searchPlace.jsp"/>			
 			</div>
 		
-	<!-- 합치자~ -->		
-	</div>	
+		<!-- 합치자~ -->		
+		</div>	
 		
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 26%;">
