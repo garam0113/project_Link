@@ -110,6 +110,7 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
 
+	/*
 	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
 	public String addClubPostView(@RequestParam int clubNo, Model model) throws Exception {
 		System.out.println("/addClubPostView : GET : 모임번호 갖고 모임게시물 등록 화면으로 이동");
@@ -123,6 +124,7 @@ public class ClubPostController {
 		model.addAttribute("clubNo", clubNo);
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
+	*/
 	
 	/*
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
@@ -283,6 +285,7 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
+	/*
 	@RequestMapping(value = "updateClubPostView", method = RequestMethod.POST)
 	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, HttpSession session, Map<String, Object> map) throws Exception {
 		System.out.println("/updateClubPostView : POST : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
@@ -306,6 +309,7 @@ public class ClubPostController {
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		return "forward:/clubPost/updateClubPostView.jsp";
 	}
+	*/
 
 	@RequestMapping(value = "updateClubPost")
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
@@ -513,6 +517,7 @@ public class ClubPostController {
 		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostCommon.getSearch(search), notice, ((User)session.getAttribute("user")).getUserId()));
 		// 모임 공지사항 리슽 : getClubNoticeList, 모임 공지사항 리스트 개수 : getClubNoticeListCount
 		return "forward:/clubPost/getClubNoticeList.jsp";
+		//return "forward:/clubPost/test.jsp";
 	}
 	
 	@RequestMapping(value = "updateClubNoticeView", method = RequestMethod.POST)
