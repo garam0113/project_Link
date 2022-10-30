@@ -51,6 +51,36 @@
 				$("input[value='등록완료']").bind("click", function(){
 					//alert('등록완료');
 					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+					
+					if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '제목은 필수입니다'
+							})
+							return;
+					}
+					
+					if( $("input[name='clubPostTitle']").val().length > 40 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '제목은 40자까지 가능합니다'
+							})
+							return;
+					}
+					
+					alert( $("#summernote").val() );
+					alert( $("#summernote").val().match("img") );
+					alert( $("#summernote").val().match("iframe") );
+					
+					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
+						alert("없어요");
+						Swal.fire({
+							  icon: 'error',
+							  title: '이미지나 동영상 1개 필수입니다'
+							})
+							return;
+					}
+					
 					$("form").attr("accept-charset", "EUC-KR").submit();
 					
 					if(sock) {
@@ -60,7 +90,7 @@
 					
 				});
 				
-				$("input[value='이전으로']").bind("click", function(e){
+				$("input[value='이전으로']").bind("click", function(){
 					//alert('이전으로');
 					
 					// 제목과 내용 초기화
