@@ -224,11 +224,12 @@
 
 
 /* 게시물 리스트에서 하나의 리스트만 */
-.col-md-4{
+.col-md-12{
 	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	border-radius: 30px;
 	margin-top: 50px;
-	padding: 30px;
+	padding-left: 50px;
+	padding-top: 50px;
 }
 
 

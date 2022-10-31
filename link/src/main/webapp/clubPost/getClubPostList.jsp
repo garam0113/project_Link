@@ -415,7 +415,7 @@
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
-										<div class="col-md-4">
+										<div class="col-md-12">
 											<a href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
 													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
