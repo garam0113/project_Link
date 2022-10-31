@@ -90,8 +90,15 @@
 </head>
 
 <style>
+	header {
+		display: flex;
+	}
+
 	.alarmHead {
 		float: right;
+		display: flex;
+		align-items: center;
+		margin: 5px;
 	}
 
 	.alarmImg {
@@ -123,7 +130,6 @@
                <ul class="reset" role="navigation">
                   <li class="menu-item"><a href="/main.jsp">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
-                  <li class="menu-item"><a href="/">Live</a></li>
                   <li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
@@ -149,16 +155,23 @@
                   
                </ul>
                
+               <%--
+               	<div class="alarmHead" >
+						
+					<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+				</div>
+                --%>
             </nav>
             
-            <div class="alarmHead" >
-						
-				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-
-			</div>
-                    
          </div>
          <!-- row-content -->
       </div>
+      
+		<div class="alarmHead" >
+						
+			<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+		
+		</div>
       <!-- row -->
    </header>

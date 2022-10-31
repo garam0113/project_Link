@@ -527,3 +527,73 @@
 
 	/* 모달창 피드 수정 */
 
+	/* 신고 모달 관련 */
+
+	#reportModal .form-horizontal {
+		margin: 30px;
+	}
+
+	#reportModal {
+		font-size: 1rem;
+	}
+
+	.reportSourceDiv {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
+	.reportSourceDivId {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		width: 100px !important;
+	}
+
+	.reportSourceDivSource {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		width: 100px !important;
+	}
+
+	.reportTitleTitle {
+		display: flex;
+		justify-content: center;
+		font-weight: 700 !important;
+	}
+
+	.reportTitle {
+		display: flex;
+		justify-content: center;
+	}
+
+	.reportContentTitle {
+		display: flex;
+		justify-content: center;
+		font-weight: 700 !important;
+	}
+
+	.reportContent {
+		display: flex;
+		justify-content: center;
+	}
+
+	.reportModalReason {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	#title {
+		height: 50px;
+		width: 100%;
+		resize: none;
+	}
+
+	#content {
+		resize: none;
+		width: 100%;
+	}
+
+
+	/* 신고 모달 관련 */
+
+

@@ -23,55 +23,90 @@
 
 
 <style>
+body{
+background-color: #EBEDF0 !important;
+}
 .row {
 	margin-left : 0px !important;
+	    display: inherit;
 }
-::selection { 
-				background-color: #3a85ed !important;
-				color: white  !important;
-			}
-
 
 .card{
 border-color: BD76FF;
 }
-.card-header{
-border-color: BD76FF;
+
+.button1  {
+   background-color: white;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   margin: 1rem;
+   padding: 10px;
+   width: 130px !important;
+   color: #5F0080 !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
 
-.button{
-	height: 20px;
-	    background-color: #5F0080 !important;
-	    border-color : #5F0080 !important;
-}
-.button1{
-	width: 150px;
-	left: 30px;
-	    background-color: #5F0080 !important;
-	    border-color : #5F0080 !important;
-}
-.button2{
-    width: 150px;
-    left: 30px;
-        background-color: #5F0080 !important;
-}
 .button3{
-	left: 10px;
-	    background-color: #5F0080 !important;
+   background-color: white;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   width: 92px !important;
+   color: #5F0080 !important;
+   font-size: 16px !important;
+   text-align: center;
+    border: solid 2px;
+     padding: 10px;
+   
 }
 .button4{
-	left: 10px;
-	    background-color: #5F0080 !important;
+   background-color: white;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   margin: 1rem;
+   padding: 10px;
+   width: 92px !important;
+   color: #5F0080 !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
-.darkover {
-    	position: sticky !important;
-	    top: 0;
-	    right: 0;
-	    bottom: 0;
-	    left: 0;
-	    width:1800px;
- 	   background: rgba(0,0,0,0.35);
- 	   }
+
+.button1:hover{
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   margin: 1rem;
+   width: 130px !important;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+}
+.button3:hover{
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+
+   width: 92px !important;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+
+}
+.button4:hover{
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   margin: 1rem;
+    width: 92px !important;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+}
 </style>
 
 
@@ -102,7 +137,7 @@ $(function() {
 			alert('로그인 하셔야 이용 가능합니다.');
 			return;
 		}else if(${!empty sessionScope.user.userId}){
-			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
 		}
 	});
 
@@ -125,36 +160,26 @@ $(function() {
 	<jsp:include page="/toolbar.jsp" />
 
 
-<body >	
+<body style="overflow-x: hidden">
 	<%--검은색 화면 --%>
-			<div id="intro-wrap" data-height="15">
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/);">
-						<div class="caption">
-						
-						
-						</div><!-- caption -->					
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
 
+<jsp:include page="/serviceCenter/getFestival2.jsp"/>
 	<%-- --%>
-	<h1 style="transform: translate(500px, 50px);">고객센터</h1>
-	<h4 style="transform: translate(500px, 50px);">
+	<div style="transform: translate(800px, 50px);">
+	<h1 >&nbsp;&nbsp;&nbsp;고  객  센  터</h1>
+	<h4>
 		고객센터를 통해 궁금증을 해결하세요
 	<h4>
-			
-	<img src="/resources/image/uploadFiles/고객센터.JPG" class="image2"
-				width="400px" height="400px"
-				style="transform: translate(1020px, -150px);" /> <br /> <br /> <br />
+	</div>	
+
 			
    <div class="container" style="transform: translate(300px, -200px);">
    
    
-      <div class="row">
+      <div class="row" style="display:flex;">
         <div class="col-4" style ="">
           
-          <div class="card" style="transform: translate(-230px, 0px); border-color: BD76FF;">
+          <div class="card" style="transform: translate(-320px, 280px);">
             <div class="card-header">
              
             </div>
@@ -162,12 +187,12 @@ $(function() {
             <div class="card-body">
               <h3 class="card-title" align="center">공지사항</h3>
              <p class="card-text" align="center"> 사이트 내 공지사항을</br> 조회 할 수 있습니다.</p>
-              	<button type="submit" class="button button1" style="transform: translate(25px, 0px);">공지사항 보기</button>
+              	<button type="submit" class="button1 button1" style="transform: translate(60px, 0px); width: 150px;left: 30px;">공지사항 보기</button>
             </div>
           </div>
         </div>
         <div class="col-4">
-            <div class="card" style="transform: translate(-230px, 0px);">
+            <div class="card" style="transform: translate(-320px, 280px);">
             <div class="card-header">
 
             </div>
@@ -175,13 +200,13 @@ $(function() {
             <div class="card-body">
              <h3 class="card-title" align="center">Q&A</h3>
               <p class="card-text" align="center">사이트 내에 궁금하신 점이나</br> 의견을 남길 수 있습니다.</p>
-              <button type="submit" class="button button2" style="transform: translate(25px, -0px);">Q&A보기</button>
+              <button type="submit" class="button1 button2" style="transform: translate(60px, 0px);	width: 150px;left: 30px;">Q&A보기</button>
               
             </div>
           </div>
         </div>
           <div class="col-4">
-              <div class="card" style="transform: translate(-230px, 0px);">
+              <div class="card" style="transform: translate(-320px, 280px);">
             <div class="card-header">
             </div>
             <img src="/resources/image/uploadFiles/물음표.jpg" class="image3" height="220px" />
@@ -190,13 +215,13 @@ $(function() {
               <p class="card-text" align="center">내 신고 및 Q&A 내역을 </br>확인할 수 있습니다. </p>
               <c:if test="${ user.role == '0' || user.role== null }">
               	<form>
-				<button class="button button3" style="transform: translate(30px, 0px);">내 신고 보기</button>
-				<button class="button button4" style="transform: translate(70px, 0px);">내 질문 보기</button>
+				<button class="button3" style="transform: translate(15px, 0px);">내 신고 보기</button>
+				<button class="button4" style="transform: translate(40px, 0px);">내 질문 보기</button>
 				</form>
 				</c:if>
 				<c:if test="${ user.role == '1'  }">
-				<button class="button button3" style="transform: translate(30px, 0px);">신고 목록</button>
-				<button class="button button4" style="transform: translate(70px, 0px);">관리자 질문</button>
+				<button class="button3" style="transform: translate(15px, 0px);">신고 목록</button>
+				<button class="button4" style="transform: translate(40px, 0px);">관리자 질문</button>
 				</c:if>
             </div>
           </div>

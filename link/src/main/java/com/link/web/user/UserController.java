@@ -86,11 +86,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
-	public String addSnsUser(@ModelAttribute("user") User user) throws Exception {
+	public String addSnsUser(@ModelAttribute("user") User user, HttpSession session) throws Exception {
 
 		System.out.println("/user/addSnsUser : POST");
 
 		User getUser = new User();
+		User login = new User();
 //		User user= new User();
 //		user.setSnsUserId(snsUserId);
 		Random rand = new Random();
@@ -112,7 +113,11 @@ public class UserController {
 			if (getUser == null) {
 
 				userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
-
+				
+				login = userService.getUser(user);
+				
+				session.setAttribute("user", login); 
+				
 				break;
 			}
 		}
@@ -320,7 +325,7 @@ public class UserController {
 		if (sessionId.equals(getUser.getUserId())) {
 			session.setAttribute("user", getUser);
 		}
-
+		
 		return "forward:/main.jsp";
 	}
 

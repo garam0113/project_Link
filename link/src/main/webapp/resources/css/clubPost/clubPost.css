@@ -224,11 +224,12 @@
 
 
 /* 게시물 리스트에서 하나의 리스트만 */
-.col-md-4{
+.col-md-12{
 	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	border-radius: 30px;
 	margin-top: 50px;
-	padding: 30px;
+	padding-left: 50px;
+	padding-top: 50px;
 }
 
 
@@ -256,38 +257,70 @@
 	font-size: 40px;
 }
 
-.chat-fixed{
+#allChat{
+	background-color: white;
+}
+
+#allChat-content{
+	overflow: auto;
+}
+
+#chat-icon{
 	position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px;
 	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 }
-.chat-fixed:hover{
+#chat-icon:hover{
 	position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px;
 	box-shadow: rgba(102, 051, 102, 0.7) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 }
 
+#allChat-toolbar{
+	background-color: red;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
+#allChat-content{
+	/* background-color: yellow; */
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
+#allChat-toolbar-close{
+	float: right;
+	font-size: 30px;
+	font-family: sans-serif;
+}
 
+#allChat-toolbar-close:hover{
+	cursor: pointer;
+}
 
+#allChat-content{
+	height: 600px;
+}
 
+.chat-content{
+	height: 80px; margin-bottom: 10px;
+}
 
+#input-chatLog{
+	display: none;
+}
 
+.chat.chat-content{
+	background-color: #f7eef9;
+	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
+}
 
+.chat:hover{
+	cursor: pointer;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.chat-content{
+	background-color: #f7f7f9;
+	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
+}
 
 
 

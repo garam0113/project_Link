@@ -39,72 +39,53 @@
 
 		$("button:contains('처리')").bind("click", function() {
 			self.location = "/serviceCenter/updateReport?no="+$('#no').val();
+	
 
-		})
-		
-
-
-
+					})
 	});
 </script>
 <style>
+.row {
+	margin-left : 0px !important;
+	    display: inherit;
+}
+body{
+background-color: #EBEDF0 !important;
+}
 textarea {
 	resize: none;
 	border: none;
     outline: none;
 }
 
-.custom-btn {
-  margin: 5px;
-  width: 80px;
-  height: 30px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+.btn-13 {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
-  background: transparent;
+  background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  border: none !important;
+  border: solid 2px;
   box-shadow:none !important;
   outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
 }
-.btn-13 {
-  background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
-  border: none;
-  z-index: 1;
-}
-.btn-13:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  border-radius: 5px;
+
+.btn-13:hover { 
    background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
-.btn-13:hover { <%-- 글씨색 --%>
-  color: #fff;
-}
-.btn-13:hover:after {
-  top: 0;
-  height: 100%;
-}
-.btn-13:active {
-  top: 2px;
-}
+
 .input{
 	width:auto;
 	height:auto;
@@ -128,24 +109,24 @@ textarea {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left" style="display:flex; height: 50px;">${report.no}번 신고
+						<td align="left" style="display:flex; height: 50px;"><strong>${report.no}번 신고</strong>
 						<input type="hidden" name="no" id="no" value="${report.no}">
 						</td>
 					</tr>
 					<tr class = "content" id ="content" >
 						<th style="text-align-last: center;">제목</th>
-						<td style="display: flex; height: 40px; width: 900px;">						
+						<td style="display: flex; height: 40px; width: 500px; background-color:white; text-align : center; ">				
 						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;">${report.regDate }</td>
+						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;"><strong>${report.regDate }</strong></td>
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;">
 						${report.content}
 						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>

@@ -15,6 +15,7 @@ public class ClubUser {
 	private String joinGreeting;
 //	private String nickName;
 	private Club club;
+	private String roomId;
 	
 
 	public Club getClub() {
@@ -107,6 +108,16 @@ public class ClubUser {
 	}
 
 
+	public String getRoomId() {
+		return roomId;
+	}
+
+
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -130,12 +141,11 @@ public class ClubUser {
 		builder.append(joinGreeting);
 		builder.append(", club=");
 		builder.append(club);
+		builder.append(", roomId=");
+		builder.append(roomId);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
-
 
 	
 

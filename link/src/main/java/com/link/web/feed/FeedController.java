@@ -253,6 +253,22 @@ public class FeedController {
 				
 		model.addAttribute("feed", (Feed) feedService.getFeed(map).get("feed"));
 		
+		return "forward:/feed/updateFeedView.jsp";
+	}
+	
+	@RequestMapping(value = "updateFeedModal", method = RequestMethod.GET)
+	public String updateFeedModal(@RequestParam(value = "feedNo") int feedNo, Search search, 
+								User user, Heart heart, Model model) throws Exception {
+		
+		heart.setSource("0");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feedNo", feedNo);
+		map.put("search", search);
+		map.put("heart", heart);
+				
+		model.addAttribute("feed", (Feed) feedService.getFeed(map).get("feed"));
+		
 		return "forward:/feed/updateFeedViewModal.jsp";
 	}
 	
@@ -423,7 +439,7 @@ public class FeedController {
 		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
 		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
-		return "forward:/feed/getFeedList.jsp";
+		return "forward:/main.jsp";
 	}
 	
 	

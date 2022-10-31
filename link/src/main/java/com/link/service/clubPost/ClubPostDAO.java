@@ -28,6 +28,9 @@ public interface ClubPostDAO {
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception;
 	
+	// 내가 가입한 모임의 채팅방 번호 가져오기
+	public List<ClubUser> getRoomIdList(User user) throws Exception;
+	
 	
 	
 	

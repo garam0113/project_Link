@@ -164,17 +164,17 @@ label {
     </script>
 
 </head>
-<body>
+<body style=" background-color: #EBEDF0;">
 	<jsp:include page="/sideToolbar.jsp" />
 	<form>
 		<div class="wrap wd668">
-			<div class="container">
+			<div class="container" style="margin-left: 400px;">
 				<div class="form_txtInput">
 					<c:if test="${user.role == '0'}">
-						<h2 class="sub_tit_txt">내정보수정</h2>
+						<h3 class=" text-info">내정보보기>내정보수정</h3>
 					</c:if>
 					<c:if test="${user.role == '1'}">
-						<h2 class="sub_tit_txt">회원정보수정</h2>
+						<h3 class=" text-info">회원정보수정</h3>
 					</c:if>
 					<div class="join_form">
 						<table>

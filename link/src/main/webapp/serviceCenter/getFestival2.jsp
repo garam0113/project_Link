@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,58 +18,114 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-var data = {
-     serviceKey: '=zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D',
-     s_page: 0,
-     s_list: 10,
-     type: 'json'
-};
+ // 데이터를 aJax로 받기
+ 
+$(function(){
 
-$.ajax({
-    post: 'get',
-    url: 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api',
-    data: data,
-    dataType: 'json',
-    success: function(data){
-        
-		document.write(data.response.header.resultCode);
-    	//document.write(data.response.body);
 		
-        }
-    
-});
+		$.ajax({  //화면 나타내기
+				url  : "/serviceCenterRest/json/getFestivalList",
+				type : "get",
+				data : {"contentTypeId" : 15},
+				dataType: "json",
+				success:function(msg){
+					var myItem =msg.response.body.items.item;
+			 		var addHtml ="";
+			 		
+					$.each(myItem,function(index,item){
+					
+						const firstimage1 =$.trim(item.firstimage);
+						const firstimage2 =$.trim(item.firstimage2);
+						
+					<%--	document.write(item.title);   --%>
+			  if(firstimage1!=""){    //이미지 없는 거 거르기
+					addHtml+=	"<div class=card style = 'width:300px;'>"+
+						 	 		"<div class=card-header style= 'text-align: center;'>"+
+						 	  		 item.title+
+							 		 "</div>"+
+							  "<img src="+item.firstimage+" style= width:300px; height:300px;/>"+
+							  "<div class=card-body>"+
+						 	   "<h5 class=card-title style='text-align:center;'>"+ item.title+"</h5>"+
+						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"+
+						 	   
+						 	   "<button class='custom-btn btn-13'style='margin-left: 83px;'>"+"살펴보기"+"</button>"+
+							  "</div>"+
+							"</div>"
+								
+							
+	
+							
+					  }//if문 끝
+								
+					}) //each 끝
+						
+					  
+					$(".festival").html(addHtml);
+					
+				
+					 $("button:contains('살펴보기')").bind("click", function() {
+					<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
+							$.ajax({
+							url  : "/serviceCenterRest/json/getFestival",
+							type : "get",
+							data : {"contentid":$(this).parent().find('input[name="contentid"]').val()},
+							dataType: "json",
+							success:function(msg2){
+								alert(1);
+								var homepage =msg.response.body.items.item.homepage;
+								alert(homepage);
+								
+									}//안의 success
+						 
+								})//개인 이미지 찾아오기
+							})//버튼 펑션
+							} //ssuccess끝		 
 
+			 
+		 }) //화면 찾아오기 끝
 
-var xhr = new XMLHttpRequest();
-var url = 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api'; /*URL*/
-var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('0'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
-queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
-
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-        console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-    }
-};
-
-xhr.send('');
-
-
+		 
+	});//펑션 끝	 
+		 
+		 
 </script>
-<meta charset="EUC-KR">
+<style>
+.btn-13 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: solid 2px;
+  box-shadow:none !important;
+  outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
+}
+
+.btn-13:hover { 
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+}
+
+</style>
 <title>Insert title here</title>
 </head>
 <body>
-	<table class="table table-hover table-striped"  style="text-align-last: center;">
-				<div class="row2">
-				<thead>
-
-				</thead>
-				
-			<p id="demo"></p><br>
-				
-				
+<div class="container">
+	<div class="festival"> 
+	
+	</div>
+</div>	
 </body>
 </html>

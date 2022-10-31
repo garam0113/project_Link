@@ -20,12 +20,12 @@
 		});
 
 		$("li:contains('내 신고내역')").on("click", function() {
-			$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
+			$("form").attr("method","post").attr("action","/serviceCenter/getUserReportList/${sessionScope.user.userId}").submit();
 		
 		});
 
 		$("li:contains('내 Q&A')").on("click", function() {
-			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			$("form").attr("method","post").attr("action","/serviceCenter/getUserQandAList/${sessionScope.user.userId}").submit();
 		 
 		});
 
@@ -35,11 +35,11 @@
 		});
 
 		$("li:contains('신고내역조회')").on("click", function() {
-			location.href = "/serviceCenter/getReportList";
+			location.href = "/serviceCenter/getUserReportList";
 		});
 		
 		$("li:contains('관리자 Q&A')").on("click", function() {
-			location.href = "/serviceCenter/getQandAList";
+			location.href = "/serviceCenter/getUserQandAList";
 			 
 		});
 		$("#stop2").on("click", function() {
@@ -56,31 +56,17 @@
 
 <body class="portfolio">
 	<jsp:include page="/toolbar.jsp" />
-	<main role="main">
-		<div id="intro-wrap" class="topbar" data-height="13.222">
-			<div id="intro" class="preload darken">
-			<div class="intro-item">
-					<div class="caption">
-						<h2 style="
-    margin-top: 10px;">MyPage</h2>
-					</div>
-					<!-- caption -->
-				</div>
-			</div>
-			<!-- intro -->
-		</div>
-		<!-- intro-wrap -->
-	</main>
+	
 	<!-- main -->
 <form>
+<br/><br/>
 <input type="hidden" class="currentPage" id="currentPage" name="currentPage" value="1" />
 	<c:if test="${ user.role == '0' }">
-		<div id="main" class="row">
-			<div class="row-content buffer clear-after">
+		<div id="main" class="row"style="background-color: #EBEDF0;">
+			<div class="row-content buffer clear-after" style="margin-bottom: -100px;">
 				<ul class="inline cats filter-options">
 					<li data-group="advertising">내정보보기</li>
 					<li data-group="fun">내정보수정</li>
-					<li data-group="icons">차단리스트</li>
 					<li data-group="infographics">내 신고내역</li>
 					<li data-group="lightbox">내 Q&A</li>
 				</ul>
@@ -91,8 +77,8 @@
 	</c:if>
 
 	<c:if test="${ user.role == '1' }">
-		<div id="main" class="row">
-			<div class="row-content buffer clear-after">
+		<div id="main" class="row" style="background-color: #EBEDF0;">
+			<div class="row-content buffer clear-after" style="margin-bottom: -100px;">
 				<ul class="inline cats filter-options">
 					<li data-group="icons">회원정보수정</li>
 					<li data-group="infographics">신고내역조회</li>

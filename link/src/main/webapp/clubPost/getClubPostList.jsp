@@ -19,12 +19,6 @@
 		
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
-		
 		<!--  font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +31,11 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+		<!-- 템플릿에 있던 코드 -->
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+		<script src="/resources/javascript/plugins.js"></script>
+		<script src="/resources/javascript/beetle.js"></script>
 		
 		<script type="text/javascript">
 			$(function() {
@@ -117,7 +116,7 @@
 					$("#summernote").val("");
 					
 					// 모달창 닫기
-					$('#club-post-update-modal').modal("hide");
+					$('#club-post-add-modal').modal("hide");
 				});
 				
 				$("b:contains('최신순')").bind("click", function() {
@@ -318,10 +317,6 @@
 	</head>
 <body class="portfolio">
 
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/beetle.js"></script>
-
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
@@ -329,26 +324,8 @@
 	
 
 		<main role="main">
-			<div id="intro-wrap" class="full-height"><!-- 상단 검은색 공통 영역 -->
-				<div id="intro" class="preload darken more-button">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>Tools</h2>
-							<p>For me, the camera is a sketch book, an instrument of intuition and spontaneity.</p>
-						</div><!-- caption -->	
-						<div class="photocaption">
-							<h4>A shot by <a href="http://madebyvadim.com/" target="blank" alt="Vadim Sherbakov">Vadim Sherbakov</a></h4>
-						</div><!-- photocaption -->											
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
 
 			<div id="main" class="row"><!-- 중간 개별영역 -->
-			
-				<!-- 채팅 이미지 -->
-				<!-- <div>
-					<img class="chat-fixed" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
-				</div> -->
 			
 				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
@@ -415,13 +392,13 @@
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
-										<div class="col-md-4">
-											<a href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
+										<div class="col-md-12" style="padding-left: 105px;">
+											<a style="background-color: red;" href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
-													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
+													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="600">
 												</c:if>
 												<c:if test="${ ! empty clubPostList[i].clubPostVideo1 }">
-													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="영상 썸네일입니다." height="400" width="700">
+													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="영상 썸네일입니다." height="400" width="600">
 												</c:if>
 											</a>
 											

@@ -39,9 +39,6 @@ body {
 
 <script type="text/javascript">
 
-window.event.keyCode == 8) {
-	login();
-}
 	$(function() {
 		$("#check").on("click", function() {
 			fncGetId(); //IDÃ£±â
