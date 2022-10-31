@@ -1,21 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="EUC-KR">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The Page Description">
 		
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
 		
-		<title>¸ğÀÓ °Ô½Ã¹° ¸®½ºÆ®</title>
+		<title>ëª¨ì„ ê²Œì‹œë¬¼ ë¦¬ìŠ¤íŠ¸</title>
 		
-		<!-- »ç¿ëÀÚ Á¤ÀÇ css -->
+		<!-- ì‚¬ìš©ì ì •ì˜ css -->
 		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
 
-		<!-- °øÅë css´Â toolbar.jsp include ¹Ş¾Æ¼­ ¾²°íÀÖ´Ù -->
+		<!-- ê³µí†µ cssëŠ” toolbar.jsp include ë°›ì•„ì„œ ì“°ê³ ìˆë‹¤ -->
 		
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
@@ -30,35 +30,123 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 		
-		<!-- Swal ¾²±âÀ§ÇÑ cdn -->
+		<!-- Swal ì“°ê¸°ìœ„í•œ cdn -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		
-		<!--  ///////////////////////// jQuery CDN////////////////////////// -->
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<!--  ///////////////////////// jQuery CDN, bootstrap CDN ////////////////////////// -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 		<script type="text/javascript">
 			$(function() {
-				$("input[value='µî·ÏÇÏ±â']").bind("click", function() {
-					location.href = "/clubPost/addClubPostView?clubNo="+${ clubNo };
+				// summernote
+				textEdit();
+				
+				$("#club-post-add").bind("click", function(e) {
+					// ëª¨ë‹¬ì°½ ì—´ê¸°
+					$('#club-post-add-modal').modal("show");
 				});
-				$("b:contains('ÃÖ½Å¼ø')").bind("click", function() {
+				
+				$("input[value='ë“±ë¡ì™„ë£Œ']").bind("click", function(){
+					//alert('ë“±ë¡ì™„ë£Œ');
+					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+					
+					if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("input[name='clubPostTitle']").val().length > 40 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì œëª©ì€ 40ìê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì´ë¯¸ì§€ë‚˜ ë™ì˜ìƒ 1ê°œ í•„ìˆ˜ì…ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().length > 1000 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ë‚´ìš©ì´ ë„ˆë¬´ ê¹ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					$("form").attr("accept-charset", "EUC-KR").submit();
+					
+					if(sock) {
+						var Msg = "ê²Œì‹œë¬¼ ì‘ì„±";
+						sock.send(Msg);
+					}
+					
+				});
+				
+				$("input[value='ì´ì „ìœ¼ë¡œ']").bind("click", function(){
+					//alert('ì´ì „ìœ¼ë¡œ');
+					
+					// ì œëª©ê³¼ ë‚´ìš© ì´ˆê¸°í™”
+					$("input[name='clubPostTitle']").val("");
+					// summernoteëŠ” ë¶ˆëŸ¬ì˜¤ê³  ë‚˜ì„œ F12ë²ˆìœ¼ë¡œ textArea í´ë¦­í•´ì„œ classëª… ë‹¤ì‹œ ì§€ì •í•´ì¤Œ
+					$(".note-editable").text("");
+					$("#summernote").val("");
+					
+					// ëª¨ë‹¬ì°½ ë‹«ê¸°
+					$('#club-post-add-modal').modal("hide");
+				});
+				
+				// ëª¨ë‹¬ì°½ x í´ë¦­ì‹œ ì´ë²¤íŠ¸
+				$("button[class='close']").bind("click", function(){
+					//alert('ìˆ˜ì •ì™„ë£Œ ì´ì „ìœ¼ë¡œ');
+					
+					// ì œëª©ê³¼ ë‚´ìš© ì´ˆê¸°í™”
+					$("input[name='clubPostTitle']").val("");
+					// summernoteëŠ” ë¶ˆëŸ¬ì˜¤ê³  ë‚˜ì„œ F12ë²ˆìœ¼ë¡œ textArea í´ë¦­í•´ì„œ classëª… ë‹¤ì‹œ ì§€ì •í•´ì¤Œ
+					$(".note-editable").text("");
+					$("#summernote").val("");
+					
+					// ëª¨ë‹¬ì°½ ë‹«ê¸°
+					$('#club-post-add-modal').modal("hide");
+				});
+				
+				$("b:contains('ìµœì‹ ìˆœ')").bind("click", function() {
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
 				});
-				$("b:contains('¿À·¡µÈ¼ø')").bind("click", function() {
+				$("b:contains('ì˜¤ë˜ëœìˆœ')").bind("click", function() {
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=1";
 				});
-				$("b:contains('ÁÁ¾Æ¿ä ¸¹Àº¼ø')").bind("click", function() {
+				$("b:contains('ì¢‹ì•„ìš” ë§ì€ìˆœ')").bind("click", function() {
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=2";
 				});
-				$("b:contains('³»°¡ ÀÛ¼ºÇÑ °Ô½Ã¹°')").bind("click", function() {
+				$("b:contains('ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œë¬¼')").bind("click", function() {
 					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=3";
 				});
-				$("input[value='°Ë»ö']").bind("click", function() {
+				$("input[value='ê²€ìƒ‰']").bind("click", function() {
 					$("input[name='currentPage']").val("1");
 					//$("form").submit();
 				});
+				$("b:contains('ëª¨ì„ë“±ë¡ì‹œ - ëª¨ì„ ì¶”ê°€')").bind("click", function() {
+					location.href = "/clubPost/addPayView";
+				});
+				$("b:contains('ëª¨ì„ëŒ€í‘œê°€ ê°€ì…ìŠ¹ì¸ì‹œ - ëª¨ì„ì› ì¶”ê°€')").bind("click", function() {
+					location.href = "/clubPost/addPayView?clubNo="+${ clubNo };
+				});
+				$("b:contains('ëª¨ì„ì‹ ì²­ì‹œ - ëª¨ì„ì¶”ê°€')").bind("click", function() {
+					location.href = "/clubPost/addPayView?payNavigation=1";
+				});
 				
-				//¹«ÇÑ ÆäÀÌÂ¡
+				//ë¬´í•œ í˜ì´ì§•
 				var currentPage = 1;
 				$(window).scroll(function() {
 					var maxHeight = $(document).height();
@@ -130,24 +218,106 @@
 				
 			});// end of function()
 			
-			//½æ³×ÀÏ Å¬¸¯½Ã »ó¼¼»óÇ°Á¶È¸ ÆäÀÌÁö or »óÇ°¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
+			//ì¸ë„¤ì¼ í´ë¦­ì‹œ ìƒì„¸ìƒí’ˆì¡°íšŒ í˜ì´ì§€ or ìƒí’ˆìˆ˜ì • í˜ì´ì§€ë¡œ ì´ë™
 			function getClubPostGo(clubNo, clubPostNo){
 				location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
 			}
 			
-			// ´Ğ³×ÀÓ, ÇÁ·ÎÇÊ»çÁø Å¬¸¯½Ã ÇØ´ç À¯ÀúÀÇ ¸¶ÀÌÈ¨ÇÇ·Î ÀÌµ¿
+			// ë‹‰ë„¤ì„, í”„ë¡œí•„ì‚¬ì§„ í´ë¦­ì‹œ í•´ë‹¹ ìœ ì €ì˜ ë§ˆì´í™ˆí”¼ë¡œ ì´ë™
 			function getMyHomeGo(userId){
 				location.href = "/myHome/getYourHome?userId="+userId;
 			}
 		</script>
 		
+		<!-- include summernote css/js -->
+		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+		<script src="/resources/summernote/summernote-lite.js"></script>
+		<script>
+			function textEdit(){
+			    jsonArray = [];
+				$('#summernote').summernote({
+	                disableResizeEditor: true,
+	                minHeight : 400,
+	                maxHeight : 700,
+	                focus : true,
+	                lang : 'ko-KR',
+	                toolbar : [
+	  	              ["style", ["style"]],
+		              ["font", ["bold", "underline", "clear"]],
+		              ["fontname", ["fontname"]],
+		              ["para", ["ul", "ol", "paragraph"]],
+		              ["table", ["table"]],
+		              ["insert", ["link", "picture", "video"]],
+		              ["view", ["fullscreen", "codeview"]],
+		              ['highlight', ['highlight']]
+		            ],
+	                //ì½œë°± í•¨ìˆ˜
+	                callbacks : {
+	                	onImageUpload : function(files, editor, welEditable) {
+	               	 		// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
+	               	 		for (var i = files.length - 1; i >= 0; i--) {
+	                			uploadSummernoteImageFile(files[i], this);
+	                		}
+	                	}
+	                }//end of callbacks
+	            });//end of summernote
+
+				function uploadSummernoteImageFile(file, el) {
+					var data = new FormData();
+					data.append("file",file);
+						$.ajax({
+							url: '/clubPostRest/json/uploadSummernoteImageFile',
+							type: "POST",
+							enctype: 'multipart/form-data',
+							data: data,
+							cache: false,
+							contentType : false,
+							processData : false,
+							success : function(data) {
+								//alert(data.responseCode);
+								//alert(data.url);
+								//alert("ì—…ë¡œë“œ í•˜ì˜€ìŠµë‹ˆë‹¤");
+								$(el).summernote('editor.insertImage', data.url);
+								//alert(data.url);
+								//jsonArray.push(json["url"]);
+								//jsonFn(jsonArray);
+							}
+						});
+				}//end of uploadSummernoteImageFile
+				
+				function jsonFn(jsonArray){
+					//console.log(jsonArray);
+				}
+
+			};//end of textEdit
+		</script>
+		
 		<style type="text/css">
+		.modal{ 
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+		}
+		
+		.modal_content{
+			width:400px; height:200px;
+			background:#fff; border-radius:10px;
+			position:relative; top:50%; left:50%;
+			margin-top:-100px; margin-left:-200px;
+			text-align:center;
+			box-sizing:border-box; padding:74px 0;
+			line-height:23px; cursor:pointer;
+		}
+		
+		.club-post-add-view{
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 30px;
+			padding: 3rem;
+			/* background-color: #f2f3ff; */
+		}
 		</style>
 		
 	</head>
 <body class="portfolio">
 
-	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/beetle.js"></script>
@@ -159,7 +329,7 @@
 	
 
 		<main role="main">
-			<div id="intro-wrap" class="full-height"><!-- »ó´Ü °ËÀº»ö °øÅë ¿µ¿ª -->
+			<div id="intro-wrap" class="full-height"><!-- ìƒë‹¨ ê²€ì€ìƒ‰ ê³µí†µ ì˜ì—­ -->
 				<div id="intro" class="preload darken more-button">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -173,7 +343,12 @@
 				</div><!-- intro -->
 			</div><!-- intro-wrap -->
 
-			<div id="main" class="row"><!-- Áß°£ °³º°¿µ¿ª -->
+			<div id="main" class="row"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
+			
+				<!-- ì±„íŒ… ì´ë¯¸ì§€ -->
+				<!-- <div>
+					<img class="chat-fixed" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
+				</div> -->
 			
 				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
@@ -181,20 +356,17 @@
 				
 					<ul class="inline cats filter-options" style="font-size: 40px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">¸ğÀÓ ÀÏÁ¤</a>
+							<a href="/club/getMeetingList">ëª¨ì„ ì¼ì •</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">¸ğÀÓ °Ô½Ã¹°</a>
+							<a href="/clubPost/getClubPostList">ëª¨ì„ ê²Œì‹œë¬¼</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">¸ğÀÓ¿ø</a>
+							<a href="/club/getClubMemberList">ëª¨ì„ì›</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">¸ğÀÓ Ã¤ÆÃ</a>
+							<a href="/clubPost/chatRoomList">ëª¨ì„ ì±„íŒ…</a>
 						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">°áÁ¦</a>
-						</li> --%>
 					</ul>
 					
 					
@@ -202,28 +374,31 @@
 					<div class="grid-items preload">
 					
 					
-							<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+							<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 						<div class="column nine">
 							    
-							    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+							    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 							    <div class="contains-search">
 							    
 								    <div class="contains-order">
 								    	<p class="text-primary" style="width: 87%">
-								    		ÀüÃ¼  <span class="page">${ clubPostListCount }</span> °Ç¼ö<%-- , ÇöÀç <span class="page">${ search.currentPage }</span> ÆäÀÌÁö --%><br>
-											<b class="club-post-list-order">ÃÖ½Å¼ø</b>&nbsp;/&nbsp;
-											<b class="club-post-list-order">¿À·¡µÈ¼ø</b>&nbsp;/&nbsp;
-											<b class="club-post-list-order">ÁÁ¾Æ¿ä ¸¹Àº¼ø</b>&nbsp;/&nbsp;
-											<b class="club-post-list-order">³»°¡ ÀÛ¼ºÇÑ °Ô½Ã¹°</b>
-											<!-- <a href="/clubPost/getClubNoticeList">¸ğÀÓ°øÁö»çÇ×</a> -->
-											<input type="button" class=" plain button red" value="µî·ÏÇÏ±â">
+								    		ì „ì²´  <span class="page">${ clubPostListCount }</span> ê±´ìˆ˜<%-- , í˜„ì¬ <span class="page">${ search.currentPage }</span> í˜ì´ì§€ --%><br>
+											<b class="club-post-list-order">ìµœì‹ ìˆœ</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">ì˜¤ë˜ëœìˆœ</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">ì¢‹ì•„ìš” ë§ì€ìˆœ</b>&nbsp;/&nbsp;
+											<b class="club-post-list-order">ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œë¬¼</b><br>
+											<b class="club-post-list-order">ëª¨ì„ë“±ë¡ì‹œ - ëª¨ì„ ì¶”ê°€</b><br>
+											<b class="club-post-list-order">ëª¨ì„ëŒ€í‘œê°€ ê°€ì…ìŠ¹ì¸ì‹œ - ëª¨ì„ì› ì¶”ê°€</b><br>
+											<b class="club-post-list-order">ëª¨ì„ì‹ ì²­ì‹œ - ëª¨ì„ì¶”ê°€</b><br>
+											<!-- <a href="/clubPost/getClubNoticeList">ê³µì§€ì‚¬í•­</a> -->
+											<button type="button" class="plain button red" id="club-post-add">ë“±ë¡í•˜ê¸°</button>
 								    	</p>
 								    </div>
 								    
 									<div class="contains-search" >
 										<form class="form-inline" name="detailForm" action="/clubPost/getClubPostList" method="post">
 											
-											<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+											<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 											<input type="hidden" name="currentPage" value=""/>
 											<input type="hidden" name="order" value="${ search.order }">
 										  
@@ -231,11 +406,11 @@
 									</div>
 							    	
 							    </div>
-							    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+							    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 							    
 							    
 							    
-							    <!-- ½æ³×ÀÏ·Î list display start -->
+							    <!-- ì¸ë„¤ì¼ë¡œ list display start -->
 								<div class="row">
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
@@ -246,7 +421,7 @@
 													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="700">
 												</c:if>
 												<c:if test="${ ! empty clubPostList[i].clubPostVideo1 }">
-													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="¿µ»ó ½æ³×ÀÏÀÔ´Ï´Ù." height="400" width="700">
+													<img src="https://img.youtube.com/vi/${ clubPostList[i].clubPostVideo1 }/mqdefault.jpg" alt="ì˜ìƒ ì¸ë„¤ì¼ì…ë‹ˆë‹¤." height="400" width="700">
 												</c:if>
 											</a>
 											
@@ -263,7 +438,7 @@
 												</div>
 												<div></div>
 												<div style="padding-top: 20px;">
-													<!-- heartCondition¿¡ ¸ğÀÓ °Ô½Ã¹° ¹øÈ£°¡ ÀÖÀ¸¸é ÇØ´ç À¯Àú°¡ ÁÁ¾Æ¿äÇß´Ù / 0ÀÌ¸é ÁÁ¾Æ¿ä ¾ÈÇß´Ù -->
+													<!-- heartConditionì— ëª¨ì„ ê²Œì‹œë¬¼ ë²ˆí˜¸ê°€ ìˆìœ¼ë©´ í•´ë‹¹ ìœ ì €ê°€ ì¢‹ì•„ìš”í–ˆë‹¤ / 0ì´ë©´ ì¢‹ì•„ìš” ì•ˆí–ˆë‹¤ -->
 													<img style="float: right;" src="/resources/image/uploadFiles/${ clubPostList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="50" width="50">
 												</div>
 												<div>
@@ -279,17 +454,17 @@
 									
 									</c:if>
 									<c:if test="${ clubPostListCount == 0}">
-										<h4>ÇØ´çµÇ´Â °Ô½Ã¹°ÀÌ ¾ø½À´Ï´Ù.</h4>
+										<h4>í•´ë‹¹ë˜ëŠ” ê²Œì‹œë¬¼ì´ ì—†ìŠµë‹ˆë‹¤.</h4>
 									</c:if>
 								</div>
-								<!-- ½æ³×ÀÏ·Î list display end -->
+								<!-- ì¸ë„¤ì¼ë¡œ list display end -->
 							    
 							    
 							    
 							
 						
 						</div><!-- grid-items -->
-						<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+						<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 						
 						
 						
@@ -301,18 +476,18 @@
 									<!-- <span class="pre-input" style="background-color: gray;"><i class="icon icon-search"></i></span> -->
 									
 										<%-- <div style="float: left; width: 65%; background-color: orange;">
-											<input type="text"  name="searchKeyword" placeholder="³»¿ëÀ» ÀÔ·Â" class="plain buffer" value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
+											<input type="text"  name="searchKeyword" placeholder="ë‚´ìš©ì„ ì…ë ¥" class="plain buffer" value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
 										</div>
 									
 										<div class="form-group" style="flex: 1;">
 											<select class="form-control" name="searchCondition" >
-												<option value="0"  ${ ! empty search.searchCondition && search.searchCondition == 0 ? "selected" : "" }>¾ÆÀÌµğ</option>
-												<option value="1"  ${ ! empty search.searchCondition && search.searchCondition == 1 ? "selected" : "" }>³»¿ë</option>
+												<option value="0"  ${ ! empty search.searchCondition && search.searchCondition == 0 ? "selected" : "" }>ì•„ì´ë””</option>
+												<option value="1"  ${ ! empty search.searchCondition && search.searchCondition == 1 ? "selected" : "" }>ë‚´ìš©</option>
 											</select>
 										</div>
 										
 										<div style="display: inline-block;">
-											<input type="button" class="club-post-search" value="°Ë»ö">
+											<input type="button" class="club-post-search" value="ê²€ìƒ‰">
 										</div> --%>
 									
 								</form>
@@ -330,51 +505,33 @@
 		
 		
 		
-
-		<footer role="contentinfo"><!-- ÇÏ´Ü °ËÀº»ö ¿µ¿ª -->
-			<div class="row">
-				<div class="row-content buffer clear-after">
-					<section id="top-footer">
-						<div class="widget column three">
-							<h4>Menu</h4>
-							<ul class="plain">
-								<li><a href="home-01.html">Home</a></li>
-								<li><a href="works-3-columns.html">Portfolio</a></li>
-								<li><a href="blog-4-columns-masonry.html">Blog</a></li>
-								<li><a href="resume.html">Resume</a></li>
-								<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
-							</ul>
-						</div>
-						<div class="widget column three">
-							<h4>Archives</h4>
-							<ul class="plain">
-								<li><a href="#">March 2014</a></li>
-								<li><a href="#">April 2014</a></li>
-								<li><a href="#">May 2014</a></li>
-								<li><a href="#">June 2014</a></li>
-								<li><a href="#">July 2014</a></li>
-							</ul>
-						</div>								
-						<div class="widget column three">
-							<h4>Widget</h4>
-							<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-						</div>				
-						<div class="widget meta-social column three">
-							<h4>Follow Us</h4>
-							<ul class="inline">
-								<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
-								<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
-								<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
-							</ul>
-						</div>														
-					</section><!-- top-footer -->
-					<section id="bottom-footer">
-						<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
-						<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-					</section><!-- bottom-footer -->			
-				</div><!-- row-content -->	
-			</div><!-- row -->	
-		</footer>
+		<!-- ëª¨ë‹¬ì°½ start -->
+		<div class="modal fade" id="club-post-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</button>
+						<h3 class="modal-title" id="exampleModalLabel">ê²Œì‹œë¬¼ ë“±ë¡í•˜ê¸°</h5>
+					</div>
+					<div class="club-post-add-view">
+						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
+							<input type="hidden" name="clubNo" value="${ clubNo }">
+							<div class="clubPostTitle">
+								<input type="text" name="clubPostTitle" placeholder="ì œëª©">
+							</div>
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
+							<input type="button" class="plain button red" value="ë“±ë¡ì™„ë£Œ">
+							<input type="button" class="plain button red cancle" value="ì´ì „ìœ¼ë¡œ">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ëª¨ë‹¬ì°½ end -->
+		
+		
 
 </body>
 </html>

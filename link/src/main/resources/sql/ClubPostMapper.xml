@@ -231,7 +231,7 @@
 		INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
 		VALUES (seq_pay_no.NEXTVAL, #{ user.userId }, #{ clubNo }, 
 																	<choose>
-																		<when test="payProduct == '0'">'모임 추가',</when>
+																		<when test="payProduct == 0">'모임 추가',</when>
 																		<otherwise>'모임원 추가',</otherwise>
 																	</choose>
 																	<choose>

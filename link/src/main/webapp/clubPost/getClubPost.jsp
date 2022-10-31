@@ -1,28 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The Page Description">
 		
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
 		
-		<title>¸ğÀÓ °Ô½Ã¹° »ó¼¼º¸±â</title>
+		<title>ëª¨ì„ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°</title>
 		
-		<!-- »ç¿ëÀÚ Á¤ÀÇ css -->
+		<!-- ì‚¬ìš©ì ì •ì˜ css -->
 		<link rel="stylesheet" href="/resources/css/clubPost/clubPost.css" type="text/css" media="screen" title="no title">
 
-		<!-- °øÅë css´Â toolbar.jsp include ¹Ş¾Æ¼­ ¾²°íÀÖ´Ù -->
+		<!-- ê³µí†µ cssëŠ” toolbar.jsp include ë°›ì•„ì„œ ì“°ê³ ìˆë‹¤ -->
 		
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
-		<!-- ¼öÁ¤, »èÁ¦, ½Å°í ¾ÆÀÌÄÜ °¡Á®¿Ã ¼ö ÀÖ´Ù -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+		<!-- ìˆ˜ì •, ì‚­ì œ, ì‹ ê³  ì•„ì´ì½˜ ê°€ì ¸ì˜¬ ìˆ˜ ìˆë‹¤ -->
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
+		
+		<!--  ///////////////////////// jQuery CDN, bootstrap CDN ////////////////////////// -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<link rel="icon" href="favicon.ico">
 		<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -35,10 +40,12 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 		
-		<!-- Swal ¾²±âÀ§ÇÑ cdn -->
+		<!-- Swal ì“°ê¸°ìœ„í•œ cdn -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<!-- include summernote css/js -->
+		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+		<script src="/resources/summernote/summernote-lite.js"></script>
 		
 		<script type="text/javascript">
 		$(function(){
@@ -49,70 +56,70 @@
 			
 			
 			
-			<%-- ´ñ±Ûµî·Ï ¹öÆ° Å¬¸¯½Ã ¹öÆ° ¼û±â°í °Ô½Ã¹°ÀÇ ´ñ±ÛÀ» µî·ÏÇÒ ¼ö ÀÖ´Â textarea º¸¿©Áø´Ù --%>
-			$("input[value='´ñ±Ûµî·Ï']").bind("click", function(){
-				//alert("°Ô½Ã¹° ´ñ±Û µî·Ï");
+			<%-- ëŒ“ê¸€ë“±ë¡ ë²„íŠ¼ í´ë¦­ì‹œ ë²„íŠ¼ ìˆ¨ê¸°ê³  ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ì„ ë“±ë¡í•  ìˆ˜ ìˆëŠ” textarea ë³´ì—¬ì§„ë‹¤ --%>
+			$("input[value='ëŒ“ê¸€ë“±ë¡']").bind("click", function(){
+				//alert("ê²Œì‹œë¬¼ ëŒ“ê¸€ ë“±ë¡");
 				
-				// ´ñ±ÛÀÛ¼º textarea¿Í µî·Ï Ãë¼Ò ¹öÆ° º¸ÀÌ±â
+				// ëŒ“ê¸€ì‘ì„± textareaì™€ ë“±ë¡ ì·¨ì†Œ ë²„íŠ¼ ë³´ì´ê¸°
 				$(this).parent().next().removeAttr("style");
 				
-				// ´ñ±Ûµî·Ï ¹öÆ° ¼û±â±â
+				// ëŒ“ê¸€ë“±ë¡ ë²„íŠ¼ ìˆ¨ê¸°ê¸°
 				$(this).parent().attr("style", "display: none");
 			});
 			
-			<%-- Ãë¼ÒÇÏ±â ¹öÆ° Å¬¸¯½Ã °Ô½Ã¹°ÀÇ ´ñ±ÛÀ» µî·ÏÇÒ ¼ö ÀÖ´Â textarea ¼û±â°í ´ñ±Ûµî·Ï ¹öÆ° º¸¿©Áø´Ù --%>
-			$("input[value='Ãë¼ÒÇÏ±â']").bind("click", function(){
-				//alert("°Ô½Ã¹° ´ñ±Û Ãë¼Ò");
+			<%-- ì·¨ì†Œí•˜ê¸° ë²„íŠ¼ í´ë¦­ì‹œ ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ì„ ë“±ë¡í•  ìˆ˜ ìˆëŠ” textarea ìˆ¨ê¸°ê³  ëŒ“ê¸€ë“±ë¡ ë²„íŠ¼ ë³´ì—¬ì§„ë‹¤ --%>
+			$("input[value='ì·¨ì†Œí•˜ê¸°']").bind("click", function(){
+				//alert("ê²Œì‹œë¬¼ ëŒ“ê¸€ ì·¨ì†Œ");
 				
-				// ´ñ±ÛÀÛ¼º¶õ textarea¿¡ ÀÖ´Â ³»¿ë Áö¿ì±â
+				// ëŒ“ê¸€ì‘ì„±ë€ textareaì— ìˆëŠ” ë‚´ìš© ì§€ìš°ê¸°
 				$(this).prev().prev().val("");
 				
-				// °Ô½Ã¹° ´ñ±Ûµî·Ï ¹öÆ° º¸ÀÌ±â
+				// ê²Œì‹œë¬¼ ëŒ“ê¸€ë“±ë¡ ë²„íŠ¼ ë³´ì´ê¸°
 				$(this).parent().parent().prev().removeAttr("style");
 				
-				// ´ñ±ÛÃë¼Ò ¹öÆ° ¼û±â±â
+				// ëŒ“ê¸€ì·¨ì†Œ ë²„íŠ¼ ìˆ¨ê¸°ê¸°
 				$(this).parent().parent().attr("style", "display: none");
 			});
 
-			<%-- ´ñ±ÛÀÇ ´ñ±ÛÀ» µî·ÏÇÒ ¼ö ÀÖ´Â textarea º¸¿©Áø´Ù --%>
+			<%-- ëŒ“ê¸€ì˜ ëŒ“ê¸€ì„ ë“±ë¡í•  ìˆ˜ ìˆëŠ” textarea ë³´ì—¬ì§„ë‹¤ --%>
 			$(document).on("click", ".reply.add", function(){
-				//alert('´ë´ñ±Û µî·Ï');
+				//alert('ëŒ€ëŒ“ê¸€ ë“±ë¡');
 				
-				// display : noneÀ» Á¦°ÅÇÏ¿© ´ñ±ÛÀÛ¼º¶õÀÌ º¸ÀÌ°ÔÇÑ´Ù
+				// display : noneì„ ì œê±°í•˜ì—¬ ëŒ“ê¸€ì‘ì„±ë€ì´ ë³´ì´ê²Œí•œë‹¤
 				$(".clear-after-comment-add").attr("style", "display: none");
 				$(".clear-after-comment-update").attr("style", "display: none");
 
-				// display : noneÀ» Á¦°ÅÇÏ¿© ´ñ±ÛÀÛ¼º¶õÀÌ º¸ÀÌ°ÔÇÑ´Ù
+				// display : noneì„ ì œê±°í•˜ì—¬ ëŒ“ê¸€ì‘ì„±ë€ì´ ë³´ì´ê²Œí•œë‹¤
 				$(this).parent().parent().parent().parent().next().removeAttr("style");
-			}); // end of µî·Ï
+			}); // end of ë“±ë¡
 
-			<%-- ÇØ´ç ´ñ±ÛÀ» ¼öÁ¤ÇÒ ¼ö ÀÖ´Â ÀÔ·ÂÅØ½ºÆ® º¸¿©Áø´Ù --%>
+			<%-- í•´ë‹¹ ëŒ“ê¸€ì„ ìˆ˜ì •í•  ìˆ˜ ìˆëŠ” ì…ë ¥í…ìŠ¤íŠ¸ ë³´ì—¬ì§„ë‹¤ --%>
 			$(document).on("click", ".reply.update", function(){
-				//alert('´ë´ñ±Û ¼öÁ¤');
+				//alert('ëŒ€ëŒ“ê¸€ ìˆ˜ì •');
 				
-				// display : noneÀ» ÇÏ¿© µî·Ï¶õ ¼öÁ¤¶õÀ» ´Ù ´İ´Â´Ù
+				// display : noneì„ í•˜ì—¬ ë“±ë¡ë€ ìˆ˜ì •ë€ì„ ë‹¤ ë‹«ëŠ”ë‹¤
 				$(".clear-after-comment-add").attr("style", "display: none");
 				$(".clear-after-comment-update").attr("style", "display: none");
 
-				// display : noneÀ» Á¦°ÅÇÏ¿© ´ñ±ÛÀÛ¼º¶õÀÌ º¸ÀÌ°ÔÇÑ´Ù
+				// display : noneì„ ì œê±°í•˜ì—¬ ëŒ“ê¸€ì‘ì„±ë€ì´ ë³´ì´ê²Œí•œë‹¤
 				$(this).parent().parent().parent().parent().parent().children("div:eq(2)").removeAttr("style");
 				
-				// ±âÁ¸ ´ñ±Û³»¿ë
+				// ê¸°ì¡´ ëŒ“ê¸€ë‚´ìš©
 				var content = $(this).parent().parent().parent().parent().children("p").text();
 				//alert( content );
 				
-				// ±âÁ¸ ´ñ±Û³»¿ëÀ» ¼öÁ¤¶õ¿¡ Ãâ·Â
+				// ê¸°ì¡´ ëŒ“ê¸€ë‚´ìš©ì„ ìˆ˜ì •ë€ì— ì¶œë ¥
 				$(this).parent().parent().parent().parent().parent().children("div:eq(2)").find("textarea").val(content );
 			});
 			
-			<%-- ´ñ±ÛÀÇ ¼öÁ¤, ´ñ±ÛÀÇ ´ñ±Û µî·ÏÀ» Ãë¼ÒÇÑ´Ù --%>
+			<%-- ëŒ“ê¸€ì˜ ìˆ˜ì •, ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡ì„ ì·¨ì†Œí•œë‹¤ --%>
 			$(document).on("click", ".plain.button.red.cancle", function(){
-				//alert('´ë´ñ±Û Ãë¼Ò');
+				//alert('ëŒ€ëŒ“ê¸€ ì·¨ì†Œ');
 				
-				// ´ñ±ÛÀ» Áö¿î´Ù
+				// ëŒ“ê¸€ì„ ì§€ìš´ë‹¤
 				$(this).siblings("textarea").val("");
 				
-				// ´ñ±Û ÀÛ¼º¶õÀ» ¼û±ä´Ù
+				// ëŒ“ê¸€ ì‘ì„±ë€ì„ ìˆ¨ê¸´ë‹¤
 				$(this).parent().parent().attr("style", "display: none");
 			});
 			
@@ -122,28 +129,63 @@
 			
 			
 			
-			<%-- ¸ğÀÓ °Ô½Ã¹° ¼öÁ¤ --%>
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ìˆ˜ì • --%>
 			$(".clubPost-header-update").bind("click", function(){
-				//alert("¸ğÀÓ°Ô½Ã¹° ¼öÁ¤");
-				$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				//alert("ëª¨ì„ê²Œì‹œë¬¼ ìˆ˜ì •");
+				//$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
+				
+				var clubNo = $("#clubNo").val();
+				var clubPostNo = $("#clubPostNo").val();
+				
+				// ê¸°ì¡´ ë°ì´í„° ê°€ì ¸ì™€ì„œ ë„£ê¸°
+				$.ajax( "/clubPostRest/json/getClubPost",
+						{
+							method : "POST",
+							data : JSON.stringify({
+										clubNo : clubNo,
+										clubPostNo : clubPostNo
+							}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								//alert(status);
+								//alert(JSONData.clubPostTitle);
+								//alert(JSONData.clubPostContent);
+								
+								$("input[name='clubPostTitle']").val(JSONData.clubPostTitle);
+								
+								// ì´ë ‡ê²Œ ê°€ì ¸ì™€ì•¼ summernoteì—ì„œ ìˆ˜ì • ê°€ëŠ¥í•œ í˜•íƒœë¡œ ë“¤ì–´ê°„ë‹¤
+								$('#summernote').summernote('pasteHTML', JSONData.clubPostContent);
+								//$(".note-editable").summernote('pasteHTML', JSONData.clubPostContent);
+								
+								
+							}//end of success
+						});// end of ajax
+								
+				// ëª¨ë‹¬ì°½ ì—´ê¸°
+				$('#club-post-update-modal').modal("show");
 			});
 			
-			<%-- ¸ğÀÓ °Ô½Ã¹° »èÁ¦ --%>
+			
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ì‚­ì œ --%>
 			$("#club-post-delete").bind("click", function(){
 				
 				Swal.fire({
-					  title: 'Á¤¸» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
+					  title: 'ì •ë§ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
 					  cancelButtonColor: '#d33',
-					  confirmButtonText: '»èÁ¦',
-					  cancelButtonText: 'Ãë¼Ò',
+					  confirmButtonText: 'ì‚­ì œ',
+					  cancelButtonText: 'ì·¨ì†Œ',
 					}).then((result) => {
 					  if (result.isConfirmed) {
 					    Swal.fire(
-					      '»èÁ¦¿Ï·á',
-					      '´ñ±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù',
+					      'ì‚­ì œì™„ë£Œ',
+					      'ëŒ“ê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤',
 					      'success'
 					    )
 					    
@@ -152,16 +194,16 @@
 					})// end of swal
 			});
 			
-			<%-- ¸ğÀÓ °Ô½Ã¹° ½Å°í --%>
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ì‹ ê³  --%>
 			$(".clubPost-header-report").bind("click", function(){
-				//alert("¸ğÀÓ°Ô½Ã¹° ½Å°í");
+				//alert("ëª¨ì„ê²Œì‹œë¬¼ ì‹ ê³ ");
 				event.stopPropagation();
 				$("form[name='clubPostReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
 			});
 
-			<%-- ¸ğÀÓ °Ô½Ã¹° ÁÁ¾Æ¿ä ¶Ç´Â ÁÁ¾Æ¿äÃë¼Ò --%>
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ì¢‹ì•„ìš” ë˜ëŠ” ì¢‹ì•„ìš”ì·¨ì†Œ --%>
 			$(".clubPost-header-heart").bind("click", function(){
-				//alert("¸ğÀÓ°Ô½Ã¹° ÁÁ¾Æ¿ä");
+				//alert("ëª¨ì„ê²Œì‹œë¬¼ ì¢‹ì•„ìš”");
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
 							method : "POST",
@@ -180,7 +222,7 @@
 
 								var heartDisplay = "";
 								
-								// ·Î±×ÀÎÇÑ È¸¿øÀÌ ÁÁ¾Æ¿äÇÏ¸é °Ô½Ã¹°¹øÈ£¸¦ ¾ÈÇßÀ¸¸é 0À» ¸®ÅÏÇÑ´Ù
+								// ë¡œê·¸ì¸í•œ íšŒì›ì´ ì¢‹ì•„ìš”í•˜ë©´ ê²Œì‹œë¬¼ë²ˆí˜¸ë¥¼ ì•ˆí–ˆìœ¼ë©´ 0ì„ ë¦¬í„´í•œë‹¤
 								if(JSONData.heartCondition == 0){
 									heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
 								}else{
@@ -191,12 +233,12 @@
 								$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
 								
 								if(sock) {
-									var Msg = "ÇÏÆ® ÁÁ¾Æ¿ä";
+									var Msg = "í•˜íŠ¸ ì¢‹ì•„ìš”";
 									sock.send(Msg);
 								}
 							}
 						});
-			}); // end of ÇÏÆ®
+			}); // end of í•˜íŠ¸
 			
 			
 			
@@ -204,16 +246,16 @@
 			
 			
 
-			<%-- ¸ğÀÓ °Ô½Ã¹° ´ñ±Û¸®½ºÆ® °¡Á®¿Â´Ù --%>
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¨ë‹¤ --%>
 			$(document).on("click", ".recommentList", function(){
-				//alert("´ñ±Û °³¼ö Å¬¸¯½Ã ÇØ´ç ´ñ±ÛÀÇ ´ñ±Û¸®½ºÆ® °¡Á®¿Â´Ù");
+				//alert("ëŒ“ê¸€ ê°œìˆ˜ í´ë¦­ì‹œ í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ“ê¸€ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¨ë‹¤");
 				var clubPostCommentNo = $(this).parent().parent().parent().attr("commentNo");
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var clickCondition = $(".children.plain"+clubPostCommentNo).attr("clubCondition");
 				var depth = $(this).parent().parent().parent().attr("depth");
 
 				if( clickCondition == 1 ){
-					// ÇØ´ç ´ñ±ÛÀÇ ´ë´ñ±Û ¸®½ºÆ® ¼û±â±â
+					// í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ€ëŒ“ê¸€ ë¦¬ìŠ¤íŠ¸ ìˆ¨ê¸°ê¸°
 					$(".children.plain"+clubPostCommentNo).attr("clubCondition", "0");
 					$(".children.plain"+clubPostCommentNo).empty();
 					return;
@@ -237,42 +279,42 @@
 								var totalDisplay = "";
 								var parentTag = "";
 								$.each( JSONData, function( index, el ){
-									//alert( "´ñ±Û ¹øÈ£ : " + el.clubPostCommentNo );
-									//alert( "´ñ±Û °Ô½Ã¹° ¹øÈ£ : " + el.clubPostNo );
-									//alert( "´ñ±Û ÀÛ¼ºÀÚ ¾ÆÀÌµğ : " + el.user.userId );
-									//alert( "´ñ±Û ÀÛ¼ºÀÚ ÇÁ·ÎÇÊÀÌ¹ÌÁö : " + el.user.profileImage );
-									//alert( "´ñ±Û ÀÛ¼ºÀÚ ´Ğ³×ÀÓ : " + el.user.nickName );
-									//alert( "´ñ±Û ¼ö : " + el.commentCount );
-									//alert( "´ñ±Û ³»¿ë : " + el.commentContent );
-									//alert( "´ñ±Û µî·Ï³¯Â¥ : " + el.commentRegDate );
-									//alert( "´ñ±Û ¼öÁ¤³¯Â¥ : " + el.commentUpdateDate );
-									//alert( "´ñ±Û ÁÁ¾Æ¿ä ¼ö : " + el.commentHeartCount );
-									//alert( "´ñ±Û ½Å°í¿©ºÎ : " + el.reportCondition );
-									//alert( "´ñ±Û »èÁ¦¿©ºÎ : " + el.deleteCondition );
-									//alert( "´ñ±Û ºÎ¸ğ¹øÈ£ : " + el.parent );
-									//alert( "´ñ±Û ±íÀÌ : " + el.depth );
-									//alert( "´ñ±Û ¼ø¼­ : " + el.sequence );
-									//alert( "´ñ±Û ÇØ´ç À¯ÀúÀÇ ÁÁ¾Æ¿ä¿©ºÎ : " + el.heartCondition );
+									//alert( "ëŒ“ê¸€ ë²ˆí˜¸ : " + el.clubPostCommentNo );
+									//alert( "ëŒ“ê¸€ ê²Œì‹œë¬¼ ë²ˆí˜¸ : " + el.clubPostNo );
+									//alert( "ëŒ“ê¸€ ì‘ì„±ì ì•„ì´ë”” : " + el.user.userId );
+									//alert( "ëŒ“ê¸€ ì‘ì„±ì í”„ë¡œí•„ì´ë¯¸ì§€ : " + el.user.profileImage );
+									//alert( "ëŒ“ê¸€ ì‘ì„±ì ë‹‰ë„¤ì„ : " + el.user.nickName );
+									//alert( "ëŒ“ê¸€ ìˆ˜ : " + el.commentCount );
+									//alert( "ëŒ“ê¸€ ë‚´ìš© : " + el.commentContent );
+									//alert( "ëŒ“ê¸€ ë“±ë¡ë‚ ì§œ : " + el.commentRegDate );
+									//alert( "ëŒ“ê¸€ ìˆ˜ì •ë‚ ì§œ : " + el.commentUpdateDate );
+									//alert( "ëŒ“ê¸€ ì¢‹ì•„ìš” ìˆ˜ : " + el.commentHeartCount );
+									//alert( "ëŒ“ê¸€ ì‹ ê³ ì—¬ë¶€ : " + el.reportCondition );
+									//alert( "ëŒ“ê¸€ ì‚­ì œì—¬ë¶€ : " + el.deleteCondition );
+									//alert( "ëŒ“ê¸€ ë¶€ëª¨ë²ˆí˜¸ : " + el.parent );
+									//alert( "ëŒ“ê¸€ ê¹Šì´ : " + el.depth );
+									//alert( "ëŒ“ê¸€ ìˆœì„œ : " + el.sequence );
+									//alert( "ëŒ“ê¸€ í•´ë‹¹ ìœ ì €ì˜ ì¢‹ì•„ìš”ì—¬ë¶€ : " + el.heartCondition );
 									
-									<%-- ÇÏÆ®ÄÁµğ¼ÇÀÌ ´ñ±Û¹øÈ£¸é ÁÁ¾Æ¿ä/0ÀÌ¸é ÁÁ¾Æ¿ä ¾ÈÇß´Ù --%>
+									<%-- í•˜íŠ¸ì»¨ë””ì…˜ì´ ëŒ“ê¸€ë²ˆí˜¸ë©´ ì¢‹ì•„ìš”/0ì´ë©´ ì¢‹ì•„ìš” ì•ˆí–ˆë‹¤ --%>
 									var heart = el.heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg';
 									
 									var iconString = "";
 									
 									if('${ sessionScope.user.userId }' == el.user.userId ){
 										//alert('true');
-									 	<%-- ÇØ´ç ´ñ±Û ¼öÁ¤ --%>
+									 	<%-- í•´ë‹¹ ëŒ“ê¸€ ìˆ˜ì • --%>
 									 	iconString = "<a class='reply update'>"
 												 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-paperclip updateCommentView' aria-hidden='true' style='font-size: 25px;'></span>"
 													+"</a>"
-													<%-- ÇØ´ç ´ñ±Û »èÁ¦ --%>
+													<%-- í•´ë‹¹ ëŒ“ê¸€ ì‚­ì œ --%>
 												 	+"<a href='#' class='reply delete'>"
-												 		<%-- ÇØ´ç ´ñ±Û ÀÛ¼ºÀÚ ¶Ç´Â ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ¶Ç´Â ¸ğÀÓ´ëÇ¥ ¶Ç´Â °ü¸®ÀÚ --%>
+												 		<%-- í•´ë‹¹ ëŒ“ê¸€ ì‘ì„±ì ë˜ëŠ” í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ë˜ëŠ” ëª¨ì„ëŒ€í‘œ ë˜ëŠ” ê´€ë¦¬ì --%>
 												 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash deleteComment comment' aria-hidden='true' style='font-size: 25px;'></span>"
 													+"</a>"																		 		
 								 	}else{
 								 		//alert('false');
-										<%-- ÇØ´ç ´ñ±Û ½Å°í --%>
+										<%-- í•´ë‹¹ ëŒ“ê¸€ ì‹ ê³  --%>
 										iconString = "<a href='#' class='reply report'>"
 												 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' style='font-size: 25px;'></span>"
 												 	+"</a>"
@@ -295,15 +337,15 @@
 						
 																		+"<div class='comment-heart-"+el.clubPostCommentNo+"'>"
 																			+"<a class='reply heartCondition'>"
-																				<%-- ÇÏÆ®ÄÁµğ¼ÇÀÌ ´ñ±Û¹øÈ£¸é ÁÁ¾Æ¿ä/0ÀÌ¸é ÁÁ¾Æ¿ä ¾ÈÇß´Ù --%>
+																				<%-- í•˜íŠ¸ì»¨ë””ì…˜ì´ ëŒ“ê¸€ë²ˆí˜¸ë©´ ì¢‹ì•„ìš”/0ì´ë©´ ì¢‹ì•„ìš” ì•ˆí–ˆë‹¤ --%>
 																	 			+"<img src='/resources/image/uploadFiles/"+heart+"' height='40' width='40'>"
 																	 		+"</a>"
 																		 +"</div>"
 																		 																	 
 																		 +"<div>"
-																		 	<%-- ÇØ´ç ´ñ±ÛÀÇ ÁÁ¾Æ¿ä ¼ö --%>
+																		 	<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ì¢‹ì•„ìš” ìˆ˜ --%>
 																		 	+"<span class='commentHeartCount"+el.clubPostCommentNo+"' style='font-size: 30px;'>"+el.commentHeartCount+"</span>"																
-																		 	<%-- ÇØ´ç ´ñ±ÛÀÇ ´ñ±Û µî·Ï --%>
+																		 	<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡ --%>
 																		 	+"<a class='reply add'>"
 																		 		<%-- +"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-plus-sign' aria-hidden='true' style='font-size: 25px;'></span>" --%>
 																		 	+"</a>"
@@ -320,7 +362,7 @@
 																+"<c:if test='"+el.commentCount+">0'>"
 																		+"<div class='comment-author'>"
 																			+"<cite>"
-																				+"<a class='recommentList'>´ñ±Û "+el.commentCount+"°³</a>"
+																				+"<a class='recommentList'>ëŒ“ê¸€ "+el.commentCount+"ê°œ</a>"
 																			+"<cite>"
 																		+"</div>"
 																+"</c:if>"
@@ -330,17 +372,17 @@
 														
 															+"<div class='clear-after-comment-add"+el.clubPostCommentNo+"' commentTextArea='"+el.clubPostCommentNo+"' style='display: none;'>"
 																+"<form class='comment-form-add'>"
-																+"<textarea class='plain buffer' placeholder='´ñ±ÛÀÛ¼º¶õ'></textarea>"
-																+"<input class='plain button red add' value='µî·Ï¿Ï·á'>"
-																+"<input class='plain button red cancle' value='Ãë¼Ò'>"
+																+"<textarea class='plain buffer' placeholder='ëŒ“ê¸€ì‘ì„±ë€'></textarea>"
+																+"<input class='plain button red add' value='ë“±ë¡ì™„ë£Œ'>"
+																+"<input class='plain button red cancle' value='ì·¨ì†Œ'>"
 																+"</form>"						
 															+"</div>"
 															
 															+"<div class='clear-after-comment-update"+el.clubPostCommentNo+"' commentTextArea='"+el.clubPostCommentNo+"' style='display: none;'>"
 																+"<form class='comment-form-update'>"
 																+"<textarea class='plain buffer'></textarea>"
-																+"<input class='plain button red update' value='¼öÁ¤¿Ï·á'>"
-																+"<input class='plain button red cancle' value='Ãë¼Ò'>"
+																+"<input class='plain button red update' value='ìˆ˜ì •ì™„ë£Œ'>"
+																+"<input class='plain button red cancle' value='ì·¨ì†Œ'>"
 																+"</form>"						
 															+"</div>"
 															
@@ -365,17 +407,17 @@
 
 									$(".children.plain"+el.parent).attr("clubCondition", "1");
 									
-									// ´ë´ñ±Û¸®½ºÆ® °¡Á®¿À±â Àü¿¡ µî·ÏÇÑ ´ë´ñ±ÛÀ» Áö¿î´Ù
+									// ëŒ€ëŒ“ê¸€ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸° ì „ì— ë“±ë¡í•œ ëŒ€ëŒ“ê¸€ì„ ì§€ìš´ë‹¤
 									$(".children.plain"+el.parent).children("div:eq(0)").remove();
 									
-									// for¹®ÀÌ ³¡³ª°í ÀüÃ¼ ¸®½ºÆ®¸¦ ³Ö¾îÁÖ±â À§ÇØ
+									// forë¬¸ì´ ëë‚˜ê³  ì „ì²´ ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ì–´ì£¼ê¸° ìœ„í•´
 									totalDisplay += display;
 									parentTag = el.parent;
 									
 								});
 
 								//alert( totalDisplay );
-								// ´ë´ñ±Û¸®½ºÆ® ÀüÃ¼¸¦ °¡Á®¿Â´Ù
+								// ëŒ€ëŒ“ê¸€ë¦¬ìŠ¤íŠ¸ ì „ì²´ë¥¼ ê°€ì ¸ì˜¨ë‹¤
 								$(".children.plain"+parentTag).append( totalDisplay );
 								
 
@@ -389,34 +431,34 @@
 			
 			
 			
-			<%-- ÇØ´ç °Ô½Ã¹°¿¡ ´ñ±Û µî·Ï --%>
+			<%-- í•´ë‹¹ ê²Œì‹œë¬¼ì— ëŒ“ê¸€ ë“±ë¡ --%>
 			$(document).on("click", ".plain.button.red.add", function(){
-				//alert('´ñ±Û µî·Ï¿Ï·á');
+				//alert('ëŒ“ê¸€ ë“±ë¡ì™„ë£Œ');
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var commentContent = $(this).prev().val();
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
 				
 				if( depth <= 0 ){
-					//alert("°Ô½Ã¹°ÀÇ ´ñ±Û µî·Ï!");
+					//alert("ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ ë“±ë¡!");
 					depth = 0;
 				}
 				
 				if( clubPostCommentNo <= 0 ){
-					//alert("°Ô½Ã¹°ÀÇ ´ñ±Û µî·Ï");
+					//alert("ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ ë“±ë¡");
 					clubPostCommentNo = 0;
 				}
 				
-				//alert( "°Ô½Ã¹°¹øÈ£ : " + clubPostNo );
-				//alert( "´ñ±Û³»¿ë : " + commentContent );
-				//alert( "µî·ÏÇÒ ´ñ±ÛÀÇ ±íÀÌ : " + depth );
-				//alert( "µî·ÏÇÒ ºÎ¸ğ´ñ±Û ¹øÈ£ : " + clubPostCommentNo );
+				//alert( "ê²Œì‹œë¬¼ë²ˆí˜¸ : " + clubPostNo );
+				//alert( "ëŒ“ê¸€ë‚´ìš© : " + commentContent );
+				//alert( "ë“±ë¡í•  ëŒ“ê¸€ì˜ ê¹Šì´ : " + depth );
+				//alert( "ë“±ë¡í•  ë¶€ëª¨ëŒ“ê¸€ ë²ˆí˜¸ : " + clubPostCommentNo );
 
-				// ´ñ±ÛÀÛ¼º textarea µ¥ÀÌÅÍ Áö¿ì±â
+				// ëŒ“ê¸€ì‘ì„± textarea ë°ì´í„° ì§€ìš°ê¸°
 				$(this).prev().val("");
-				// ÀÛ¼º¶õ, µî·Ï Ãë¼Ò¹öÆ° ¼û±â±â
+				// ì‘ì„±ë€, ë“±ë¡ ì·¨ì†Œë²„íŠ¼ ìˆ¨ê¸°ê¸°
 				$(this).parent().parent().attr("style", "display: none");
-				// °Ô½Ã¹°ÀÇ ´ñ±Ûµî·Ï ¹öÆ° º¸ÀÌ±â
+				// ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ë“±ë¡ ë²„íŠ¼ ë³´ì´ê¸°
 				$(this).parent().parent().prev().removeAttr("style");
 				
 				$.ajax( "/clubPostRest/json/addClubPostComment",
@@ -450,7 +492,7 @@
 								//alert(JSONData);
 								
 								var depth = JSONData.depth;
-								//alert( depth == 0 ? '°Ô½Ã¹° ´ñ±Û µî·Ï' : '´ñ±ÛÀÇ ´ñ±Û µî·Ï' );
+								//alert( depth == 0 ? 'ê²Œì‹œë¬¼ ëŒ“ê¸€ ë“±ë¡' : 'ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡' );
 								
 								var display = "<div class='comment-parent'>";
 								var addComment = "";
@@ -486,19 +528,19 @@
 															 +"</div>"
 															 
 															 +"<div>"
-															 <%-- ÇØ´ç ´ñ±ÛÀÇ ÁÁ¾Æ¿ä ¼ö --%>
+															 <%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ì¢‹ì•„ìš” ìˆ˜ --%>
 															 	+"<span class='commentHeartCount"+JSONData.clubPostCommentNo+"' style='font-size: 30px;'>0</span>"																
-															 	<%-- ÇØ´ç ´ñ±ÛÀÇ ´ñ±Û µî·Ï --%>
+															 	<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡ --%>
 															 	+"<a class='reply add'>"
 															 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span "+addComment+" aria-hidden='true' style='font-size: 25px;'></span>"
 															 	+"</a>"
-															 	<%-- ÇØ´ç ´ñ±Û ¼öÁ¤ --%>
+															 	<%-- í•´ë‹¹ ëŒ“ê¸€ ìˆ˜ì • --%>
 															 	+"<a class='reply update'>"
 															 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-paperclip updateCommentView' aria-hidden='true' style='font-size: 25px;'></span>"
 																+"</a>"
-																<%-- ÇØ´ç ´ñ±Û »èÁ¦ --%>
+																<%-- í•´ë‹¹ ëŒ“ê¸€ ì‚­ì œ --%>
 															 	+"<a href='#' class='reply delete'>"
-															 		<%-- ÇØ´ç ´ñ±Û ÀÛ¼ºÀÚ ¶Ç´Â ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ¶Ç´Â ¸ğÀÓ´ëÇ¥ ¶Ç´Â °ü¸®ÀÚ --%>
+															 		<%-- í•´ë‹¹ ëŒ“ê¸€ ì‘ì„±ì ë˜ëŠ” í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ë˜ëŠ” ëª¨ì„ëŒ€í‘œ ë˜ëŠ” ê´€ë¦¬ì --%>
 															 		+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash deleteComment comment' aria-hidden='true' style='font-size: 25px;'></span>"
 																+"</a>"
 															+"</div>"
@@ -509,21 +551,21 @@
 													
 													+"<p>"+JSONData.commentContent+"</p>"
 													
-													+"<c:if test='"+JSONData.commentCount+">0'>"
-															+"<div class='comment-author'>"
-																+"<cite>"
-																	+"<a class='recommentList'>´ñ±Û "+JSONData.commentCount+"°³</a>"
-																+"<cite>"
-															+"</div>"
-													+"</c:if>"
+													<%-- ëŒ“ê¸€ ë“±ë¡ì‹œ ì¶”ê°€ ëŒ€ëŒ“ê¸€ ë“±ë¡ì‹œëŠ” ì•ˆ ì¶”ê°€ --%>
+													+"<div class='comment-author'>"
+														+"<cite>"
+															+"<a class='recommentList'><b class='recomment_count'></b></a>"
+														+"<cite>"
+													+"</div>"
+													
 												+"</div>"
 												<%-- class='single-comment' --%>
 												
 												+"<div class='clear-after-comment-add"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-add'>"
-													+"<textarea class='plain buffer' placeholder='´ñ±ÛÀÛ¼º¶õ'></textarea>"
-													+"<input class='plain button red add' value='µî·Ï¿Ï·á'>"
-													+"<input class='plain button red cancle' value='Ãë¼Ò'>"
+													+"<textarea class='plain buffer' placeholder='ëŒ“ê¸€ì‘ì„±ë€'></textarea>"
+													+"<input class='plain button red add' value='ë“±ë¡ì™„ë£Œ'>"
+													+"<input class='plain button red cancle' value='ì·¨ì†Œ'>"
 													+"</form>"						
 												+"</div>"
 												
@@ -531,8 +573,8 @@
 												+"<div class='clear-after-comment-update"+JSONData.clubPostCommentNo+"' commentTextArea='"+JSONData.clubPostCommentNo+"' style='display: none;'>"
 													+"<form class='comment-form-update'>"
 													+"<textarea class='plain buffer'></textarea>"
-													+"<input class='plain button red update' value='¼öÁ¤¿Ï·á'>"
-													+"<input class='plain button red cancle' value='Ãë¼Ò'>"
+													+"<input class='plain button red update' value='ìˆ˜ì •ì™„ë£Œ'>"
+													+"<input class='plain button red cancle' value='ì·¨ì†Œ'>"
 													+"</form>"						
 												+"</div>"
 												
@@ -544,7 +586,7 @@
 														+"</ul>"
 													+"</div>"
 												+"</div>"
-												<%-- ´ë´ñ±Û ¸®½ºÆ® class='recomment-header' --%>
+												<%-- ëŒ€ëŒ“ê¸€ ë¦¬ìŠ¤íŠ¸ class='recomment-header' --%>
 
 												+"<br>"
 											+"</li>"
@@ -552,29 +594,41 @@
 										+"</div>";
 										<%-- class='comment-parent' --%>
 										
-										
+										//ê²Œì‹œë¬¼ ëŒ“ê¸€ ê°œìˆ˜ ì¦ê°€
+										$("b[class='comment_count']").text( parseInt ($("b[class='comment_count']").text()) + 1 );
 											
 								if( depth == 0 ){
-									//alert( "°Ô½Ã¹°ÀÇ ´ñ±Ûµî·Ï" );
+									//alert( "ê²Œì‹œë¬¼ì˜ ëŒ“ê¸€ë“±ë¡" );
 									$(".comment-list.plain").append( display );
 								}else if( depth == 1 ){
-									//alert( "´ñ±ÛÀÇ ´ñ±Ûµî·Ï" );
+									//alert( "ëŒ“ê¸€ì˜ ëŒ“ê¸€ë“±ë¡" );
 									$(".children.plain"+clubPostCommentNo).append( display );
+									var commentCount = $(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recomment_count").text();
+									//alert(commentCount);
+									if( commentCount == '' ){
+										//alert('ì—¬ê¸°ë¡œ ì˜¤ë‚˜?');
+										//var displayComment = "ëŒ“ê¸€ <b class='recomment_count'>1</b>ê°œ";
+										//$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recommentList").empty();
+										//$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recommentList").append( displayComment );
+									}else{
+										$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recomment_count").text( parseInt(commentCount) + 1 );
+									}
+									
 								}
 								//alert( display );
 							}// end of success
 
 				});// end of ajax
-			}); // end of µî·Ï
+			}); // end of ë“±ë¡
 
-			<%-- ÇØ´ç ´ñ±ÛÀ» ¼öÁ¤ÇÑ´Ù --%>
-			$(document).on("click", "input[value='¼öÁ¤¿Ï·á']", function(){
-				//alert('´ñ±Û ¼öÁ¤¿Ï·á');
+			<%-- í•´ë‹¹ ëŒ“ê¸€ì„ ìˆ˜ì •í•œë‹¤ --%>
+			$(document).on("click", "input[value='ìˆ˜ì •ì™„ë£Œ']", function(){
+				//alert('ëŒ“ê¸€ ìˆ˜ì •ì™„ë£Œ');
 				var commentContent = $(this).prev().val();
 				var clubPostCommentNo = $(this).parent().parent().attr("commentTextArea");
 				var divClassName = $(this).parent().parent().attr("class");
-				//alert( "´ñ±Û³»¿ë : " + commentContent );
-				//alert( "ÇØ´ç´ñ±ÛÀÇ¹øÈ£ : " + clubPostCommentNo );
+				//alert( "ëŒ“ê¸€ë‚´ìš© : " + commentContent );
+				//alert( "í•´ë‹¹ëŒ“ê¸€ì˜ë²ˆí˜¸ : " + clubPostCommentNo );
 				//alert( divClassName );
 				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
@@ -595,24 +649,24 @@
 								$("."+divClassName).prev().prev().find("p").text( JSONData.commentContent );
 							} // end of success
 						}); // end of ajax
-			}); // end of ¼öÁ¤¿Ï·á
+			}); // end of ìˆ˜ì •ì™„ë£Œ
 
-			<%-- ÇØ´ç ´ñ±ÛÀ» »èÁ¦ÇÑ´Ù --%>
+			<%-- í•´ë‹¹ ëŒ“ê¸€ì„ ì‚­ì œí•œë‹¤ --%>
 			$(document).on("click", ".glyphicon.glyphicon-trash.deleteComment.comment", function(){
 				
 				Swal.fire({
-					  title: 'Á¤¸» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
+					  title: 'ì •ë§ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
 					  cancelButtonColor: '#d33',
-					  confirmButtonText: '»èÁ¦',
-					  cancelButtonText: 'Ãë¼Ò',
+					  confirmButtonText: 'ì‚­ì œ',
+					  cancelButtonText: 'ì·¨ì†Œ',
 					}).then((result) => {
 					  if (result.isConfirmed) {
 					    Swal.fire(
-					      '»èÁ¦¿Ï·á',
-					      '´ñ±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù',
+					      'ì‚­ì œì™„ë£Œ',
+					      'ëŒ“ê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤',
 					      'success'
 					    )
 					    
@@ -620,13 +674,13 @@
 						var className = $(this).parent().parent().parent().parent().parent().attr("class");
 						//var depth = $(this).parent().parent().parent().parent().parent().attr("depth");
 						//alert( clubPostCommentNo );
-						//alert( "»èÁ¦ÇÒ Å¬·¡½º¸í : " + className );
+						//alert( "ì‚­ì œí•  í´ë˜ìŠ¤ëª… : " + className );
 						//alert( depth );
 						
 						$("."+className).next().remove();
 						$("."+className).next().remove();
 						$("."+className).next().remove();
-						$("."+className).next().remove();//ÀÌ°Å´Â <br>ÅÂ±× Áö¿ì´Â°Í
+						$("."+className).next().remove();//ì´ê±°ëŠ” <br>íƒœê·¸ ì§€ìš°ëŠ”ê²ƒ
 						
 						$("."+className).remove();
 					    
@@ -648,12 +702,12 @@
 										//alert(JSONData.commentCount);
 										//alert(JSONData.parent);
 
-										// »èÁ¦µÈ°Íµµ °¡Á®¿Í¼­ ´ñ±Û°³¼ö º¯°æ ¾ÈÇØµµ µÈ´Ù
+										// ì‚­ì œëœê²ƒë„ ê°€ì ¸ì™€ì„œ ëŒ“ê¸€ê°œìˆ˜ ë³€ê²½ ì•ˆí•´ë„ ëœë‹¤
 										
-										// °Ô½Ã¹° ´ñ±Û°³¼ö ¼öÁ¤
+										// ê²Œì‹œë¬¼ ëŒ“ê¸€ê°œìˆ˜ ìˆ˜ì •
 										//$(".comment_count").text( JSONData.clubPostCommentCount );
 										
-										// °Ô½Ã¹° ´ñ±ÛÀÇ ´ñ±Û°³¼ö ¼öÁ¤
+										// ê²Œì‹œë¬¼ ëŒ“ê¸€ì˜ ëŒ“ê¸€ê°œìˆ˜ ìˆ˜ì •
 										//$("div .single-comment"+JSONData.parent).find("b").text( JSONData.commentCount );
 										
 										
@@ -662,15 +716,15 @@
 								
 								
 								
-					  }//end of swal if¹®
+					  }//end of swal ifë¬¸
 					})//end of swal
 				
 				
-			}); // end of »èÁ¦
+			}); // end of ì‚­ì œ
 
-			<%-- ÇØ´ç ´ñ±ÛÀ» ÁÁ¾Æ¿ä ¶Ç´Â ÁÁ¾Æ¿ä Ãë¼ÒÇÑ´Ù --%>
+			<%-- í•´ë‹¹ ëŒ“ê¸€ì„ ì¢‹ì•„ìš” ë˜ëŠ” ì¢‹ì•„ìš” ì·¨ì†Œí•œë‹¤ --%>
 			$(document).on("click", ".reply.heartCondition", function(){
-				//alert("´ñ±Û ÁÁ¾Æ¿ä");
+				//alert("ëŒ“ê¸€ ì¢‹ì•„ìš”");
 				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
 				//alert( clubPostCommentNo );
 				var commentHeartCountClassName = $(this).parent().parent().parent().parent().find("span:eq(1)").attr("class");
@@ -709,11 +763,11 @@
 								$("."+commentHeartCountClassName).text( JSONData.commentHeartCount );
 							}
 						});
-			}); // end of ´ñ±ÛÁÁ¾Æ¿ä
+			}); // end of ëŒ“ê¸€ì¢‹ì•„ìš”
 			
-			<%-- ¸ğÀÓ °Ô½Ã¹° ´ñ±Û ½Å°í --%>
+			<%-- ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ì‹ ê³  --%>
 			$(document).on("click", ".reply.report", function(event) {
-				//alert("´ñ±Û ½Å°í");
+				//alert("ëŒ“ê¸€ ì‹ ê³ ");
 				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
 				var revUserId = $(this).parent().parent().parent().parent().attr("revUserId");
 				
@@ -732,50 +786,257 @@
 			
 			
 
-			<%-- ÇÁ·ÎÇÊ»çÁø Å¬¸¯½Ã ÇØ´çÀ¯Àú ¸¶ÀÌÈ¨ÇÇ·Î ÀÌµ¿ --%>
+			<%-- í”„ë¡œí•„ì‚¬ì§„ í´ë¦­ì‹œ í•´ë‹¹ìœ ì € ë§ˆì´í™ˆí”¼ë¡œ ì´ë™ --%>
 			$(document).on("click", ".clubPost-header-profile", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
-			});//end of ¸¶ÀÌÈ¨ÇÇ ÀÌµ¿
+			});//end of ë§ˆì´í™ˆí”¼ ì´ë™
 
-			<%-- ´Ğ³×ÀÓ Å¬¸¯½Ã ÇØ´çÀ¯Àú ¸¶ÀÌÈ¨ÇÇ·Î ÀÌµ¿ --%>
+			<%-- ë‹‰ë„¤ì„ í´ë¦­ì‹œ í•´ë‹¹ìœ ì € ë§ˆì´í™ˆí”¼ë¡œ ì´ë™ --%>
 			$(document).on("click", ".clubPost-header-nickName", function(){
 				location.href = "/myHome/getYourHome?userId="+$(this).attr("userId");
-			});//end of ¸¶ÀÌÈ¨ÇÇ ÀÌµ¿
+			});//end of ë§ˆì´í™ˆí”¼ ì´ë™
 			
 			
 		});
 		</script>
 		
 		<script type="text/javascript">
+			$(function () {
+				// summernote
+				textEdit();
+				
+				$("#summernoteUpdate").bind("click", function(){
+					//alert("ê²Œì‹œë¬¼ ìˆ˜ì •ì™„ë£Œ");
+					
+					if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("input[name='clubPostTitle']").val().length > 40 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì œëª©ì€ 40ìê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ì´ë¯¸ì§€ë‚˜ ë™ì˜ìƒ 1ê°œ í•„ìˆ˜ì…ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().length > 1000 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'ë‚´ìš©ì´ ë„ˆë¬´ ê¹ë‹ˆë‹¤'
+							})
+							return;
+					}
+					
+					/* $("form[name='summernoteUpdateClubPost']").attr("method", "post").attr("enctype", "multipart/form-data")
+					.attr("action", "/clubPost/updateClubPost?clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&clubPostTitle="+$("input[name='clubPostTitle']").val()
+					+"&clubPostContent="+$("#summernote").val()).attr("accept-charset", "EUC-KR").submit(); */
+					
+					//self.location="/clubPost/updateClubPost?clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&clubPostTitle="+$("input[name='clubPostTitle']").val()+"&clubPostContent="+$("#summernote").val()
+					
+					// ëª¨ë‹¬ì°½ ë‹«ê¸°
+					$('#club-post-update-modal').modal("hide");
+					
+					// ê²Œì‹œë¬¼ ì œëª©
+					var title = $("input[name='clubPostTitle']").val();
+					
+					// ê²Œì‹œë¬¼ ë‚´ìš©
+					var content = $("#summernote").val();
+					
+					// ê²Œì‹œë¬¼ ë²ˆí˜¸
+					var clubPostNo = $("#clubPostNo").val();
+
+					$.ajax( "/clubPostRest/json/updateClubPostSummernote",
+						{
+							method : "POST",
+							data : JSON.stringify({
+										clubPostTitle : title,
+										clubPostContent : content,
+										clubPostNo : clubPostNo
+									}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								//alert(status);
+								//alert(JSONData.clubPostTitle);
+								//alert(JSONData.clubPostContent);
+								
+								$(".clubPost-body-title").text(JSONData.clubPostTitle);
+								
+								$(".clubPost-body-content").empty();
+								
+								tmp = JSONData.clubPostContent.substring(3, JSONData.clubPostContent.length - 4 );
+								//alert("ì• ë’¤ píƒœê·¸ ìë¥¸ string : " + content);
+								var content = tmp.split("</p><p>");
+								for (var i = 0; i < content.length; i++) {
+									$(".clubPost-body-content").append( content[i] );
+								}
+								
+								// ëª¨ë‹¬ì°½ ë‹«ê¸°
+								$('#club-post-update-modal').modal("hide");
+								
+							}//end of success
+						});//end of ajax
+				});
+				
+				$("#summernoteCancle").bind("click", function(){
+					//alert('ìˆ˜ì •ì™„ë£Œ ì´ì „ìœ¼ë¡œ');
+					
+					// ì œëª©ê³¼ ë‚´ìš© ì´ˆê¸°í™”
+					$("input[name='clubPostTitle']").val("");
+					// summernoteëŠ” ë¶ˆëŸ¬ì˜¤ê³  ë‚˜ì„œ F12ë²ˆìœ¼ë¡œ textArea í´ë¦­í•´ì„œ classëª… ë‹¤ì‹œ ì§€ì •í•´ì¤Œ
+					$(".note-editable").text("");
+					$("#summernote").val("");
+					
+					// ëª¨ë‹¬ì°½ ë‹«ê¸°
+					$('#club-post-update-modal').modal("hide");
+				});
+				
+				$("button[class='close']").bind("click", function(){
+					//alert('ìˆ˜ì •ì™„ë£Œ ì´ì „ìœ¼ë¡œ');
+					
+					// ì œëª©ê³¼ ë‚´ìš© ì´ˆê¸°í™”
+					$("input[name='clubPostTitle']").val("");
+					// summernoteëŠ” ë¶ˆëŸ¬ì˜¤ê³  ë‚˜ì„œ F12ë²ˆìœ¼ë¡œ textArea í´ë¦­í•´ì„œ classëª… ë‹¤ì‹œ ì§€ì •í•´ì¤Œ
+					$(".note-editable").text("");
+					$("#summernote").val("");
+					
+					// ëª¨ë‹¬ì°½ ë‹«ê¸°
+					$('#club-post-update-modal').modal("hide");
+				});
+			});
 			function clubPostdeleteFnc(){
 				$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 			}
 		</script>
 		
+		<script>
+			function textEdit(){
+			    jsonArray = [];
+				$('#summernote').summernote({
+	                disableResizeEditor: true,
+	                minHeight : 400,
+	                maxHeight : 700,
+	                focus : true,
+	                lang : 'ko-KR',
+	                toolbar : [
+	  	              ["style", ["style"]],
+		              ["font", ["bold", "underline", "clear"]],
+		              ["fontname", ["fontname"]],
+		              ["para", ["ul", "ol", "paragraph"]],
+		              ["table", ["table"]],
+		              ["insert", ["link", "picture", "video"]],
+		              ["view", ["fullscreen", "codeview"]],
+		              ['highlight', ['highlight']]
+		            ],
+	                //ì½œë°± í•¨ìˆ˜
+	                callbacks : {
+	                	onImageUpload : function(files, editor, welEditable) {
+	               	 		// íŒŒì¼ ì—…ë¡œë“œ(ë‹¤ì¤‘ì—…ë¡œë“œë¥¼ ìœ„í•´ ë°˜ë³µë¬¸ ì‚¬ìš©)
+	               	 		for (var i = files.length - 1; i >= 0; i--) {
+	                			uploadSummernoteImageFile(files[i], this);
+	                		}
+	                	}
+	                }//end of callbacks
+	            });//end of summernote
+
+				function uploadSummernoteImageFile(file, el) {
+					var data = new FormData();
+					data.append("file",file);
+						$.ajax({
+							url: '/clubPostRest/json/uploadSummernoteImageFile',
+							type: "POST",
+							enctype: 'multipart/form-data',
+							data: data,
+							cache: false,
+							contentType : false,
+							processData : false,
+							success : function(data) {
+								//alert(data.responseCode);
+								//alert(data.url);
+								//alert("ì—…ë¡œë“œ í•˜ì˜€ìŠµë‹ˆë‹¤");
+								$(el).summernote('editor.insertImage', data.url);
+								//jsonArray.push(json["url"]);
+								//jsonFn(jsonArray);
+							}
+						});
+				}//end of uploadSummernoteImageFile
+				
+				function jsonFn(jsonArray){
+					//console.log(jsonArray);
+				}
+
+			};//end of textEdit
+		</script>
+		
+		<style type="text/css">
+		.modal{ 
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+		}
+		
+		.modal_content{
+			width:400px; height:200px;
+			background:#fff; border-radius:10px;
+			position:relative; top:50%; left:50%;
+			margin-top:-100px; margin-left:-200px;
+			text-align:center;
+			box-sizing:border-box; padding:74px 0;
+			line-height:23px; cursor:pointer;
+		}
+		
+		.club-post-update-view{
+			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 30px;
+			padding: 3rem;
+			/* background-color: #f2f3ff; */
+		}
+		</style>
+		
 	</head>
 
 	<body class="single single-post">
+
+	<!-- í…œí”Œë¦¿ì— ìˆë˜ ì½”ë“œ -->
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
+	<script src="js/plugins.js"></script>
+	<script src="js/beetle.js"></script>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+	
 	<form name="clubPostReport" method="post" action="/serviceCenter/addReport">
-		<%-- ¸ğÀÓ°Ô½Ã¹° ½Å°í --%>
+		<%-- ëª¨ì„ê²Œì‹œë¬¼ ì‹ ê³  --%>
 		<input type="hidden" name="reportSource" value="1">
 		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
 		<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
 		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
-		<%-- ¸ğÀÓ°Ô½Ã¹° ½Å°í --%>
+		<%-- ëª¨ì„ê²Œì‹œë¬¼ ì‹ ê³  --%>
 	</form>
 	
 	<form name="commentReport" method="post" action="/serviceCenter/addReport">
-		<%-- ¸ğÀÓ°Ô½Ã¹° ´ñ±Û ½Å°í --%>
+		<%-- ëª¨ì„ê²Œì‹œë¬¼ ëŒ“ê¸€ ì‹ ê³  --%>
 		<input type="hidden" name="reportSource" value="2">
 		<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
 		<input type="hidden" name="userId" id="revUserId" value="">
 		<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
 		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
-		<%-- ¸ğÀÓ°Ô½Ã¹° ´ñ±Û ½Å°í --%>
+		<%-- ëª¨ì„ê²Œì‹œë¬¼ ëŒ“ê¸€ ì‹ ê³  --%>
 	</form>
 
 		<main role="main">
@@ -812,16 +1073,16 @@
 				
 					<ul class="inline cats filter-options">
 						<li data-group="advertising">
-							<a href="/club/getClubList">¸ğÀÓ ÀÏÁ¤</a>
+							<a href="/club/getClubList">ëª¨ì„ ì¼ì •</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">¸ğÀÓ °Ô½Ã¹°</a>
+							<a href="/clubPost/getClubPostList">ëª¨ì„ ê²Œì‹œë¬¼</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">¸ğÀÓ¿ø</a>
+							<a href="/club/getClubMemberList">ëª¨ì„ì›</a>
 						</li>
 						<li data-group="infographics">
-							<a href="#">¸ğÀÓ Ã¤ÆÃ</a>
+							<a href="#">ëª¨ì„ ì±„íŒ…</a>
 						</li>
 					</ul>
 
@@ -830,23 +1091,23 @@
 							
 							<h5><time datetime="2013-11-09" class="club-post-time">
 							<c:choose>
-								<c:when test="${ !empty clubPost.getClubPost.clubPostUpdateDate }">${ clubPost.getClubPost.clubPostUpdateDate }(¼öÁ¤ µÊ)</c:when>
+								<c:when test="${ !empty clubPost.getClubPost.clubPostUpdateDate }">${ clubPost.getClubPost.clubPostUpdateDate }(ìˆ˜ì • ë¨)</c:when>
 								<c:otherwise>${ clubPost.getClubPost.clubPostRegDate }</c:otherwise>
 							</c:choose>
 							</time></h5>
 							
 							<div class="clubPost-header">
-								<%-- °Ô½Ã¹° µî·Ï È¸¿ø ÇÁ·ÎÇÊ »çÁø --%>
+								<%-- ê²Œì‹œë¬¼ ë“±ë¡ íšŒì› í”„ë¡œí•„ ì‚¬ì§„ --%>
 								<div class="clubPost-header-profile" userId = "${ clubPost.getClubPost.user.userId }">
 									<img class="profileImage" src="/resources/image/uploadFiles/${ clubPost.getClubPost.user.profileImage }">
 								</div>
 							
-								<%-- °Ô½Ã¹° µî·Ï È¸¿ø ´Ğ³×ÀÓ --%>
+								<%-- ê²Œì‹œë¬¼ ë“±ë¡ íšŒì› ë‹‰ë„¤ì„ --%>
 								<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
 								
 								<div class="clubPost-header-space"></div>
 								
-								<%-- ÇØ´ç È¸¿øÀÌ ÁÁ¾Æ¿äÇÑ ¿©ºÎ¿¡ µû¶ó ÇÏÆ®»ö º¯È­ --%>
+								<%-- í•´ë‹¹ íšŒì›ì´ ì¢‹ì•„ìš”í•œ ì—¬ë¶€ì— ë”°ë¼ í•˜íŠ¸ìƒ‰ ë³€í™” --%>
 								<div class="clubPost-header-heart">
 									<a>
 									<c:choose>
@@ -856,10 +1117,10 @@
 									</a>
 								</div>
 								
-								<%-- °Ô½Ã¹° ÁÁ¾Æ¿ä ¼ö --%>
+								<%-- ê²Œì‹œë¬¼ ì¢‹ì•„ìš” ìˆ˜ --%>
 								<div class="clubPost-header-heartCount">${ clubPost.getClubPost.clubPostHeartCount }</div>
 								
-								<%-- °Ô½Ã¹° ¼öÁ¤ --%>
+								<%-- ê²Œì‹œë¬¼ ìˆ˜ì • --%>
 								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId }">
 									<div class="clubPost-header-update">
 										<a>
@@ -868,7 +1129,7 @@
 									</div>
 								</c:if>
 								
-								<%-- ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ¶Ç´Â ÇØ´ç ¸ğÀÓ´ëÇ¥ ¶Ç´Â °ü¸®ÀÚ °Ô½Ã¹° »èÁ¦ °¡´É --%>
+								<%-- í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ë˜ëŠ” í•´ë‹¹ ëª¨ì„ëŒ€í‘œ ë˜ëŠ” ê´€ë¦¬ì ê²Œì‹œë¬¼ ì‚­ì œ ê°€ëŠ¥ --%>
 								<c:if test="${ clubPost.getClubPost.user.userId == sessionScope.user.userId || clubPost.getClubPost.clubRole == '2' || sessionScope.user.role == '1' }">
 									<div class="clubPost-header-delete">
 										<a>
@@ -877,7 +1138,7 @@
 									</div>
 								</c:if>
 								
-								<%-- ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ÀÌ¿ÜÀÇ È¸¿ø ½Å°í °¡´É --%>
+								<%-- í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ì´ì™¸ì˜ íšŒì› ì‹ ê³  ê°€ëŠ¥ --%>
 								<c:if test="${ clubPost.getClubPost.user.userId != sessionScope.user.userId }">
 									<div class="clubPost-header-report">
 										<a>
@@ -906,15 +1167,15 @@
 					
 					
 					<div>
-						<input class="plain button red" value="´ñ±Ûµî·Ï">
+						<input class="plain button red" value="ëŒ“ê¸€ë“±ë¡">
 					</div>
 					<div id="post-comment" class="clear-after" style="display: none;">
 						<h3 id="reply-title"></h3>
 						<form class="comment-form">
 							<br><br>
-							<textarea class="plain buffer" placeholder="´ñ±Û µî·Ï¶õ"></textarea>
-							<input class="plain button red add" id="replyadd" value="´ñ±Û µî·ÏÇÏ±â">
-							<input class="plain button red cancle" value="Ãë¼ÒÇÏ±â">
+							<textarea class="plain buffer" placeholder="ëŒ“ê¸€ ë“±ë¡ë€"></textarea>
+							<input class="plain button red add" id="replyadd" value="ëŒ“ê¸€ ë“±ë¡í•˜ê¸°">
+							<input class="plain button red cancle" value="ì·¨ì†Œí•˜ê¸°">
 						</form>						
 					</div><!-- post-comment -->	
 					
@@ -925,11 +1186,11 @@
 					<div class="comment-section">
 						<h3 id="comments">
 							<c:choose>
-								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">´ñ±Û <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>°³</c:when>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">ëŒ“ê¸€ <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>ê°œ</c:when>
 							</c:choose>
 						</h3>
 						<ul class="comment-list plain">
-							<%-- ÇØ´ç °Ô½Ã¹°¿¡ ´ñ±ÛÀÌ ÀÖÀ»¶§¸¸ for¹®À» µ·´Ù --%>
+							<%-- í•´ë‹¹ ê²Œì‹œë¬¼ì— ëŒ“ê¸€ì´ ìˆì„ë•Œë§Œ forë¬¸ì„ ëˆë‹¤ --%>
 							<li class="comment">
 								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 									<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
@@ -944,40 +1205,40 @@
 													<div class="comment-meta" style="display: inline-block; padding-left: 30px;">
 														<c:choose>
 															<c:when test="${ empty clubPost.getClubPostCommentList[i].commentUpdateDate }"><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentRegDate }</time></c:when>
-															<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(¼öÁ¤µÊ)</time></c:otherwise>
+															<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(ìˆ˜ì •ë¨)</time></c:otherwise>
 														</c:choose>
 														
-														<%-- ÇØ´ç ´ñ±ÛÀÇ ÇØ´ç À¯ÀúÀÇ ÁÁ¾Æ¿ä ¿©ºÎ¿¡ µû¶ó ÀÌ¹ÌÁö º¯ÇÑ´Ù --%>
+														<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ í•´ë‹¹ ìœ ì €ì˜ ì¢‹ì•„ìš” ì—¬ë¶€ì— ë”°ë¼ ì´ë¯¸ì§€ ë³€í•œë‹¤ --%>
 														<div class="comment body">
 															<div class="comment-heart-${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
 															 	<a class="reply heartCondition">
-														 			<!-- ÇÏÆ®ÄÁµğ¼ÇÀÌ ´ñ±Û¹øÈ£¸é ÁÁ¾Æ¿ä/0ÀÌ¸é ÁÁ¾Æ¿ä ¾ÈÇß´Ù -->
+														 			<!-- í•˜íŠ¸ì»¨ë””ì…˜ì´ ëŒ“ê¸€ë²ˆí˜¸ë©´ ì¢‹ì•„ìš”/0ì´ë©´ ì¢‹ì•„ìš” ì•ˆí–ˆë‹¤ -->
 														 			<img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="40" width="40">
 																 </a>
 															 </div>
 															 <div>
-																<%-- ÇØ´ç ´ñ±ÛÀÇ ÁÁ¾Æ¿ä ¼ö --%>
+																<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ì¢‹ì•„ìš” ìˆ˜ --%>
 																 <span class="commentHeartCount${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" style="font-size: 30px;">${ clubPost.getClubPostCommentList[i].commentHeartCount }</span>
 																
-																<%-- ÇØ´ç ´ñ±ÛÀÇ ´ñ±Û µî·Ï --%>
+																<%-- í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡ --%>
 																 <a class="reply add">
 																 	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size: 25px;"></span>
 																 </a>
-																 <%-- ÇØ´ç ´ñ±Û ¼öÁ¤ --%>
+																 <%-- í•´ë‹¹ ëŒ“ê¸€ ìˆ˜ì • --%>
 																 <a class="reply update">
 																 	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId }">
 																 		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 25px;"></span>
 																 	</c:if>
 																 </a>
-																 <%-- ÇØ´ç ´ñ±Û »èÁ¦ --%>
+																 <%-- í•´ë‹¹ ëŒ“ê¸€ ì‚­ì œ --%>
 																 <a href="#" class="reply delete">
-																 <%-- ÇØ´ç ´ñ±Û ÀÛ¼ºÀÚ ¶Ç´Â ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ¶Ç´Â ¸ğÀÓ´ëÇ¥ ¶Ç´Â °ü¸®ÀÚ --%>
+																 <%-- í•´ë‹¹ ëŒ“ê¸€ ì‘ì„±ì ë˜ëŠ” í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ë˜ëŠ” ëª¨ì„ëŒ€í‘œ ë˜ëŠ” ê´€ë¦¬ì --%>
 																 <c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId || clubPost.getClubPost.user.userId == sessionScope.user.userId
 																 || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }">
 																  	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment comment" aria-hidden="true" style="font-size: 25px;"></span>
 																  </c:if>
 																  </a>
-																 <%-- ÇØ´ç ´ñ±Û ½Å°í --%>
+																 <%-- í•´ë‹¹ ëŒ“ê¸€ ì‹ ê³  --%>
 																  <a href="#" class="reply report">
 																  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
 																  		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 25px;"></span>
@@ -991,9 +1252,14 @@
 													<c:choose>
 														<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
 															<cite>
-																<a class="recommentList">´ñ±Û <b class="recomment_count">${ clubPost.getClubPostCommentList[i].commentCount }</b>°³</a>
+																<a class="recommentList">ëŒ“ê¸€ <b class="recomment_count">${ clubPost.getClubPostCommentList[i].commentCount }</b>ê°œ</a>
 															<cite>
 														</c:when>
+														<c:otherwise>
+															<cite>
+																<a class="recommentList"><b class="recomment_count"></b></a>
+															<cite>
+														</c:otherwise>
 													</c:choose>
 													</div>
 												</div><!-- single-comment -->
@@ -1002,9 +1268,9 @@
 													
 													<br>
 													<form class="comment-form-add">
-														<textarea class="plain buffer" placeholder="´ñ±ÛÀÛ¼º¶õ"></textarea>
-														<input class="plain button red add" value="µî·Ï¿Ï·á">
-														<input class="plain button red cancle" value="Ãë¼Ò">
+														<textarea class="plain buffer" placeholder="ëŒ“ê¸€ì‘ì„±ë€"></textarea>
+														<input class="plain button red add" value="ë“±ë¡ì™„ë£Œ">
+														<input class="plain button red cancle" value="ì·¨ì†Œ">
 													</form>
 													<br>
 													
@@ -1015,8 +1281,8 @@
 													<br>
 													<form class="comment-form-update">
 														<textarea class="plain buffer"></textarea>
-														<input class="plain button red update${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="¼öÁ¤¿Ï·á">
-														<input class="plain button red cancle" value="Ãë¼Ò">
+														<input class="plain button red update${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="ìˆ˜ì •ì™„ë£Œ">
+														<input class="plain button red cancle" value="ì·¨ì†Œ">
 													</form>
 													<br>
 													
@@ -1026,7 +1292,7 @@
 												
 												
 												
-												<%-- ´ë´ñ±Û¸®½ºÆ® --%>
+												<%-- ëŒ€ëŒ“ê¸€ë¦¬ìŠ¤íŠ¸ --%>
 												<div class="recomment-header depth">
 													<div class="recomment-header-space"></div>
 													<div class="recomment-header-body">
@@ -1043,40 +1309,40 @@
 																			<div class="comment-meta">
 																				<c:choose>
 																					<c:when test="${ empty clubPost.getClubPostCommentList[i].commentUpdateDate }"><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentRegDate }</time></c:when>
-																					<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(¼öÁ¤µÊ)</time></c:otherwise>
+																					<c:otherwise><time datetime="2013-03-23 19:58">${ clubPost.getClubPostCommentList[i].commentUpdateDate }(ìˆ˜ì •ë¨)</time></c:otherwise>
 																				</c:choose>
 																				
-																				ÇØ´ç ´ñ±ÛÀÇ ÇØ´ç À¯ÀúÀÇ ÁÁ¾Æ¿ä ¿©ºÎ¿¡ µû¶ó ÀÌ¹ÌÁö º¯ÇÑ´Ù
+																				í•´ë‹¹ ëŒ“ê¸€ì˜ í•´ë‹¹ ìœ ì €ì˜ ì¢‹ì•„ìš” ì—¬ë¶€ì— ë”°ë¼ ì´ë¯¸ì§€ ë³€í•œë‹¤
 																				<div class="comment body">
 																					<div class="comment-heart-${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
 																					 	<a class="reply heartCondition">
-																				 			<!-- ÇÏÆ®ÄÁµğ¼ÇÀÌ ´ñ±Û¹øÈ£¸é ÁÁ¾Æ¿ä/0ÀÌ¸é ÁÁ¾Æ¿ä ¾ÈÇß´Ù -->
+																				 			<!-- í•˜íŠ¸ì»¨ë””ì…˜ì´ ëŒ“ê¸€ë²ˆí˜¸ë©´ ì¢‹ì•„ìš”/0ì´ë©´ ì¢‹ì•„ìš” ì•ˆí–ˆë‹¤ -->
 																				 			<img src="/resources/image/uploadFiles/${ clubPost.getClubPostCommentList[i].heartCondition != 0 ? 'heart.jpg' : 'no_heart.jpg' }" height="40" width="40">
 																						 </a>
 																					 </div>
 																					 <div>
-																						ÇØ´ç ´ñ±ÛÀÇ ÁÁ¾Æ¿ä ¼ö
+																						í•´ë‹¹ ëŒ“ê¸€ì˜ ì¢‹ì•„ìš” ìˆ˜
 																						 <span class="commentHeartCount${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" style="font-size: 30px;">${ clubPost.getClubPostCommentList[i].commentHeartCount }</span>
 																						
-																						ÇØ´ç ´ñ±ÛÀÇ ´ñ±Û µî·Ï
+																						í•´ë‹¹ ëŒ“ê¸€ì˜ ëŒ“ê¸€ ë“±ë¡
 																						 <a class="reply add">
 																						 	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size: 25px;"></span>
 																						 </a>
-																						 ÇØ´ç ´ñ±Û ¼öÁ¤
+																						 í•´ë‹¹ ëŒ“ê¸€ ìˆ˜ì •
 																						 <a class="reply update">
 																						 	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId }">
 																						 		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true" style="font-size: 25px;"></span>
 																						 	</c:if>
 																						 </a>
-																						 ÇØ´ç ´ñ±Û »èÁ¦
+																						 í•´ë‹¹ ëŒ“ê¸€ ì‚­ì œ
 																						 <a href="#" class="reply delete">
-																						 ÇØ´ç ´ñ±Û ÀÛ¼ºÀÚ ¶Ç´Â ÇØ´ç °Ô½Ã¹° ÀÛ¼ºÀÚ ¶Ç´Â ¸ğÀÓ´ëÇ¥ ¶Ç´Â °ü¸®ÀÚ
+																						 í•´ë‹¹ ëŒ“ê¸€ ì‘ì„±ì ë˜ëŠ” í•´ë‹¹ ê²Œì‹œë¬¼ ì‘ì„±ì ë˜ëŠ” ëª¨ì„ëŒ€í‘œ ë˜ëŠ” ê´€ë¦¬ì
 																						 <c:if test="${ clubPost.getClubPostCommentList[i].user.userId == sessionScope.user.userId || clubPost.getClubPost.user.userId == sessionScope.user.userId
 																						 || fn:trim(sessionScope.clubUser.memberRole) == '2' || sessionScope.user.role == '1' }">
 																						  	&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment comment" aria-hidden="true" style="font-size: 25px;"></span>
 																						  </c:if>
 																						  </a>
-																						 ÇØ´ç ´ñ±Û ½Å°í
+																						 í•´ë‹¹ ëŒ“ê¸€ ì‹ ê³ 
 																						  <a href="#" class="reply report">
 																						  	<c:if test="${ clubPost.getClubPostCommentList[i].user.userId != sessionScope.user.userId }">
 																						  		&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="font-size: 25px;"></span>
@@ -1090,7 +1356,7 @@
 																				<c:when test="${ clubPost.getClubPostCommentList[i].commentCount > 0 }">
 																					<div class="comment-author">
 																						<cite>
-																							<a class="123">´ñ±Û ${ clubPost.getClubPostCommentList[i].commentCount }°³</a>
+																							<a class="123">ëŒ“ê¸€ ${ clubPost.getClubPostCommentList[i].commentCount }ê°œ</a>
 																						<cite>
 																					</div>
 																				</c:when>
@@ -1101,8 +1367,8 @@
 																			
 																			<form class="comment-form-update">
 																				<textarea class="plain buffer"></textarea>
-																				<input class="plain button red add${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="¼öÁ¤¿Ï·á" style="height: 30px; width: 90px;">
-																				<input class="plain button red cancle" value="Ãë¼Ò" style="height: 30px; width: 60px;">
+																				<input class="plain button red add${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" value="ìˆ˜ì •ì™„ë£Œ" style="height: 30px; width: 90px;">
+																				<input class="plain button red cancle" value="ì·¨ì†Œ" style="height: 30px; width: 60px;">
 																			</form>
 																			
 																		</div><!-- post-comment -->
@@ -1115,7 +1381,7 @@
 													</div>
 												</div>
 												<br>
-												<%-- ´ë´ñ±Û for¹® --%>
+												<%-- ëŒ€ëŒ“ê¸€ forë¬¸ --%>
 											</div>
 											
 											
@@ -1125,7 +1391,7 @@
 									</c:forEach>
 								</c:if>
 							</li>
-							<%--´ñ±Û for¹® --%>
+							<%--ëŒ“ê¸€ forë¬¸ --%>
 						</ul>
 					</div><!-- comment-section -->	
 					
@@ -1137,7 +1403,7 @@
 					<%-- <div class="comment-section">
 						<h3 id="comments">
 							<c:choose>
-								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">´ñ±Û ${ clubPost.getClubPost.clubPostCommentCount } °³</c:when>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">ëŒ“ê¸€ ${ clubPost.getClubPost.clubPostCommentCount } ê°œ</c:when>
 							</c:choose>
 						</h3>
 						<ul class="comment-list plain" style="background-color: aqua;">
@@ -1216,56 +1482,38 @@
 				</div><!-- row-content -->
 			</div><!-- row -->
 		</main><!-- main -->
-
-		<footer role="contentinfo">
-			<div class="row">
-				<div class="row-content buffer clear-after">
-					<section id="top-footer">
-						<div class="widget column three">
-							<h4>Menu</h4>
-							<ul class="plain">
-								<li><a href="home-01.html">Home</a></li>
-								<li><a href="works-3-columns.html">Portfolio</a></li>
-								<li><a href="blog-4-columns-masonry.html">Blog</a></li>
-								<li><a href="resume.html">Resume</a></li>
-								<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
-							</ul>
-						</div>
-						<div class="widget column three">
-							<h4>Archives</h4>
-							<ul class="plain">
-								<li><a href="#">March 2014</a></li>
-								<li><a href="#">April 2014</a></li>
-								<li><a href="#">May 2014</a></li>
-								<li><a href="#">June 2014</a></li>
-								<li><a href="#">July 2014</a></li>
-							</ul>
-						</div>								
-						<div class="widget column three">
-							<h4>Widget</h4>
-							<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-						</div>				
-						<div class="widget meta-social column three">
-							<h4>Follow Us</h4>
-							<ul class="inline">
-								<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
-								<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
-								<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
-							</ul>
-						</div>														
-					</section><!-- top-footer -->
-					<section id="bottom-footer">
-						<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
-						<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-					</section><!-- bottom-footer -->			
-				</div><!-- row-content -->	
-			</div><!-- row -->	
-		</footer>
-
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
-		<script src="js/plugins.js"></script>
-		<script src="js/beetle.js"></script>
+		
+		
+		
+		
+		<!-- ëª¨ë‹¬ì°½ start -->
+		<div class="modal fade" id="club-post-update-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</button>
+						<h3 class="modal-title" id="exampleModalLabel">ê²Œì‹œë¬¼ ìˆ˜ì •í•˜ê¸°</h5>
+					</div>
+					<div class="club-post-update-view">
+						<form name="summernoteUpdateClubPost">
+	
+							<input type="hidden" id="clubNo" value="${ clubPost.getClubPost.clubNo }">
+							<input type="hidden" id="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
+							
+							<div class="clubPostTitle">
+								<input type="text" name="clubPostTitle" placeholder="ì œëª©">
+							</div>
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
+							<input type="button" id="summernoteUpdate" value="ê²Œì‹œë¬¼ ìˆ˜ì •ì™„ë£Œ">
+							<input type="button" id="summernoteCancle" value="ì´ì „ìœ¼ë¡œ">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ëª¨ë‹¬ì°½ end -->
 
 	</body>
 

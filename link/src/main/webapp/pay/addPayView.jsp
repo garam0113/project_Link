@@ -23,8 +23,11 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 		
+		<!-- Swal 쓰기위한 cdn -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		
 		<!-- import.payment.js -->
-		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>		
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 		
 		<script type="text/javascript">
 		$(function(){
@@ -36,7 +39,7 @@
 				location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo };
 			});
 			
-			var clubOption = (${returnClub.clubMaxMember} == 0) ? true : false;
+			var clubOption = ('${ returnClub.clubMaxMember }' == 0) ? true : false;
 			
 			$(".glyphicon.glyphicon-plus").bind("click", function(){
 				
@@ -45,6 +48,7 @@
 				var totalPrice = parseInt( $(".totalPrice").text() );
 				var clubNo = parseInt( ${ pay.clubNo } );
 				var maxPay = ${ pay.maxPay };
+				var afterPayCount = $(".after-pay-count").text();
 				var afterMemberCount = $(".after-pay-member-count").text();
 				
 				//alert( afterMemberCount );
@@ -58,15 +62,28 @@
 				//alert(clubOption);
 				
 				if( maxPay == totalPrice ){
-					//alert('if');
-					${ pay.clubNo } == 0 ? $(".message").text( "  (한명당 최대로 가입 할 수 있는 모임은 10개입니다)" ): $(".message").text( "  (하나의 모임당 최대 모임원은 50명입니다)" );
+					//alert(clubOption);
+					if( clubOption ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '한명당 최대로 가입 할 수 있는 모임은 10개입니다'
+							})
+							return;
+					}else{
+						Swal.fire({
+							  icon: 'error',
+							  title: '하나의 모임당 최대 모임원은 50명입니다'
+							})
+							return;
+					}
+					
 				}else{
 					//alert('else');
 					if( clubOption ){
 						// 모임 추가
 						//alert('if');
 						$(".payProduct-club").text( parseInt( updateClubCount ) + 2 );
-						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
+						$(".after-pay-count").text( parseInt( afterPayCount ) + 2 );
 					}else{
 						// 모임원 추가
 						//alert('else');
@@ -74,7 +91,6 @@
 						$(".after-pay-member-count").text( parseInt( afterMemberCount ) + 10 );
 					}
 					$(".totalPrice").text( totalPrice + 5000 );
-					$(".message").text( "" );
 					
 				}
 				
@@ -86,29 +102,31 @@
 				var updateClubCount = $(".payProduct-club").text();
 				var totalPrice = $(".totalPrice").text();
 				var clubNo = $("input[name='clubNo']").val();
-				var max_member = $(".return-max-member").text();
+				var afterPayCount = $(".after-pay-count").text();
 				var afterMemberCount = $(".after-pay-member-count").text();
 				
 				//alert( afterMemberCount );
 				
 				if( totalPrice == 5000 ){
 					//alert('if');
-					$(".message").text( "  (최소 결제 금액은 5000원입니다)" );
+					Swal.fire({
+						  icon: 'error',
+						  title: '최소 결제 금액은 5000원입니다'
+						})
+						return;
 				}else{
 					//alert('else');
 					if( clubOption ){
 						//alert('if');
 						$(".payProduct-club").text( parseInt( updateClubCount - 2 ) );
-						$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) - 2 );
+						$(".after-pay-count").text( parseInt( afterPayCount ) - 2 );
 					}else{
 						//alert('else');
 						//alert(updateClubMemberCount);
-						//alert(max_member);
 						$(".payProduct-member").text( updateClubMemberCount - 10 );
 						$(".after-pay-member-count").text( parseInt( afterMemberCount ) - 10 );
 					}
 					$(".totalPrice").text( totalPrice - 5000 );
-					$(".message").text( "" );
 				}
 				
 			});//end of minus
@@ -121,12 +139,20 @@
 			var email = "${ user.email }";
 			var phoneNo = "${ user.phoneNo }";
 			var totalPrice = $(".totalPrice").text();
-			var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "1": "0";
+			var payProduct = ${ returnClub == null } ? "0": "1";
 			var pg = $("input[name='payOption']:checked").attr("pg");
 			var pay_method = $("input[name='payOption']:checked").attr("pay_method");
 			var name = payProduct===0 ? "최대 모임 수 증가" : "최대 모임원 수 증가";
 			var updateClubMemberCount = $(".payProduct-member").text();
 			var updateClubCount = $(".payProduct-club").text();
+			
+			if(pg == null){
+				Swal.fire({
+					icon: 'error',
+					title: '결제방법을 선택해주세요',
+				})
+				return;
+			}
 			
 			if( !updateClubMemberCount ){
 				updateClubMemberCount = 0;
@@ -134,6 +160,9 @@
 			if( !updateClubCount ){
 				updateClubCount = 0;
 			}
+			
+			alert( ${ returnUser == '' } );
+			alert( payProduct );
 			
 			$("input[name='payProduct']").val( payProduct );
 			$("input[name='totalPrice']").val( totalPrice );
@@ -161,15 +190,42 @@
 				if (rsp.success) {
 					//msg += '\n고유ID : ' + rsp.imp_uid;
 	    			//msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+	    			msg = '결제가 성공하였습니다\n결제 금액 : ' + rsp.paid_amount + '원';
 	    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
-	    			alert(msg);
-	    			$("input[name='merchant_uid']").val( rsp.merchant_uid );
-	    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
+	    			//alert(msg);
+	    			
+	    			let timerInterval
+					Swal.fire({
+						title: msg,
+						html: '이전 페이지로 이동합니다',
+						timer: 4000,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							//console.log('I was closed by the timer');
+							$("input[name='merchant_uid']").val( rsp.merchant_uid );
+			    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
+						}
+					})
+	    			
 				} else {
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-					alert(msg);
+					var msg = rsp.error_msg;
+					Swal.fire({
+						icon: 'error',
+						title: msg,
+					})
+					return;
 				}
 			});
 		}
@@ -194,12 +250,6 @@
 			border-radius: 10px;
 			padding: 1rem;
 			background-color: #f2f3ff;
-		}
-		.pay-body-text{
-		}
-		.pay-body-content{
-		}
-		.pay-body-updown{
 		}
 		.glyphicon.glyphicon-plus{
 			font-size: 2rem;
@@ -299,14 +349,33 @@
 									<br>
 									
 									<div>
-										<span style="font-size: 30px; color: #5F0080;">${ returnClub.clubTitle }</span> 모임의 결제 후 모임원 수 
-										<span class="after-pay-member-count" style="font-size: 35px; color: #5F0080;">${ returnClub.clubMaxMember + 10 }</span>&nbsp;&nbsp;명
+										
+
+										<c:if test="${ returnClub == null }">
+											<span style="font-size: 30px; color: #5F0080;">${ sessionScope.user.nickName }</span> 님의 결제 후 모임 수
+											<span class="after-pay-count" style="font-size: 35px; color: #5F0080;"> ${ returnUser.joinClubLimit + 2 }</span>&nbsp;&nbsp;개
+										</c:if>
+										<c:if test="${ returnUser == null }">
+											<span style="font-size: 30px; color: #5F0080;">${ returnClub.clubTitle }</span> 모임의 결제 후 모임원 수
+											<span class="after-pay-member-count" style="font-size: 35px; color: #5F0080;"> ${ returnClub.clubMaxMember + 10 }</span>&nbsp;&nbsp;명
+										</c:if>
+										
 									</div>
 									<div class="pay-body-updown">
 										<span class="glyphicon glyphicon-minus"></span>
-										<span class="payProduct-member">10</span>
-										<span class="glyphicon glyphicon-plus"></span>명
-										<span class="message"></span>
+										
+										<%-- 모임 추가일 떄 --%>
+										<c:if test="${ returnClub == null }">
+											<span class="payProduct-club" style="font-size: 60px; color: #5F0080;">2</span>
+											<span class="glyphicon glyphicon-plus"></span>개
+										</c:if>
+										
+										<%-- 모임원 추가일 떄 --%>
+										<c:if test="${ returnUser == null }">
+											<span class="payProduct-member" style="font-size: 60px; color: #5F0080;">10</span>
+											<span class="glyphicon glyphicon-plus"></span>명
+										</c:if>
+										
 									</div>
 									<div>
 										<span class="totalPrice">5000</span>원

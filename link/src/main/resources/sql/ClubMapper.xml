@@ -144,7 +144,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
 											FROM club
-											  <if test="searchCondition != null">
+											  <if test="searchCondition != null and searchCondition != '' ">
 												<where>
 													<choose>
 														<when test="searchKeyword !='' and clubCategory != '' and clubArea != '' ">

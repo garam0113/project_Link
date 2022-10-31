@@ -250,9 +250,9 @@
 	
 	<jsp:include page="/toolbar.jsp" />
 	
-	<main role="main">
+	<!-- <main role="main">
 		
-			<div id="intro-wrap" data-height="20"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="20">상단 검은색 공통 영역
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -260,8 +260,8 @@
 							<p>Manage the members of the club...</p>
 						</div>
 					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+				</div>intro
+			</div>intro-wrap -->
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -270,7 +270,7 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px; margin-top: 150px;">
 						<li data-group="advertising">
 							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
@@ -366,7 +366,7 @@
 	</div>
 	</div>
 	</div>
-	</main>
+	<!-- </main> -->
 </body>
 
 </html>

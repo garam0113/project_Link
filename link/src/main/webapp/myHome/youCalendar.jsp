@@ -108,8 +108,7 @@ border-radius: 0px 0px 0px 0px  !important;
 			    
 				var calendarEl = document.getElementById('calendar');
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
-			    	contentheight:660,
-			    	contentwidth:650,
+			    	
 			      initialView: 'dayGridMonth',
 			      headerToolbar: {
 			        left: 'prev,next today',
@@ -132,8 +131,7 @@ border-radius: 0px 0px 0px 0px  !important;
 			
 			var calendarEl = document.getElementById('calendar');
 		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		    	contentheight:660,
-		    	contentwidth:660,
+		    	
 		      initialView: 'dayGridMonth',
 		      headerToolbar: {
 		        left: 'prev,next today',

@@ -69,11 +69,14 @@
     $(function() {
 		$("#change").on("click", function() {
 			fncUpdateMemberRole();
-			window.close();
+			
+			opener.document.location.reload();
+			self.close();
+			
+			//window.close();
 		});
 		
 		$("#cancel").on("click", function() {
-			//alert('눌리나?');
 			window.close();
 		});
 	});
@@ -171,7 +174,7 @@
 				<div class="col-sm-2">
 					<select class="form-control" name="memberRole" id="memberRole" style="border-color:#BD76FF;">
 						<option value="1">모임부대표</option>
-						<option value="0">모임원</option>
+						<option value="0" selected>모임원</option>
 					</select>
 				</div>
 			</div>

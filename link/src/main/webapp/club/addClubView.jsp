@@ -88,6 +88,18 @@
 			width: 500px;
 			height: 50px;
 		}
+		
+	/* 	#imageArea{
+		outline: 2px dashed #92b0b3 ;
+	    outline-offset:-10px;  
+	    text-align: center;
+	    transition: all .15s ease-in-out;
+	    width: 300px;
+	    height: 300px;
+	    background-color: gray;
+		}
+		 */
+		
         
     </style>
     
@@ -209,6 +221,56 @@
 		timeout           : 3000
 	};
 	
+	
+	//파일 드래그 앤 드롭
+	
+	$('#imageArea')
+		.on("dragover", dragOver)
+		.on("dragleave", dragOver)
+		.on("drop", uploadFiles);
+	
+		function dragOver(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    if (e.type == "dragover") {
+	        $(e.target).css({
+	            "background-color": "black",
+	            "outline-offset": "-20px"
+	        });
+	    } else {
+	     $(e.target).css({
+	            "background-color": "gray",
+	            "outline-offset": "-10px"
+	        });
+	    }
+	}
+
+		 
+		function uploadFiles(e) {
+		    e.stopPropagation();
+		    e.preventDefault();
+		    dragOver(e); //1
+		 
+		    e.dataTransfer = e.originalEvent.dataTransfer; //2
+		    var files = e.target.files || e.dataTransfer.files;
+		 
+		    if (files.length > 1) {
+		        alert('하나만 올려라.');
+		        return;
+		    }
+		    
+		    if (files[0].type.match(/image.*/)) {
+                $(e.target).css({
+            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+            "outline": "none",
+            "background-size": "100% 100%"
+		        });
+		    }else{
+		      alert('이미지가 아닙니다.');
+		      return;
+		    }
+		}
+
 
 </script>
 </head>
@@ -221,7 +283,7 @@
 	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 등 록</h2>
 					<p class="exTxt">새로운 모임을 등록해보세요...</p>
 					<div class="join_form">
@@ -298,7 +360,7 @@
 				</div>		
 			</div>			
 			
-			<div class="form-group">
+			<div class="form-group" id="imageArea">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <input type="file" name="file" class="file" id="clubImage" multiple="multiple"> -->
