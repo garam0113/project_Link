@@ -137,7 +137,7 @@ $(function() {
 			alert('로그인 하셔야 이용 가능합니다.');
 			return;
 		}else if(${!empty sessionScope.user.userId}){
-			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
 		}
 	});
 

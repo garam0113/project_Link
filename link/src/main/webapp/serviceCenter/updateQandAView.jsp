@@ -43,7 +43,7 @@
             });
 				return;
 			}
-		
+		alert("2");
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateQandA").submit();
 	}
 			
@@ -53,10 +53,12 @@
 		
 		$("button:contains('수정')").bind("click", function(){
 			fncUpdateQandA();
+			alert("3");
 		});
 		
-		$("button:contains('뒤로')").bind("click", function(){
-			self.location = history.go(-1);
+		$("#back").bind("click", function(){
+			alert("4");
+			window.history.back(-1);
 		});
 
 		
@@ -204,7 +206,7 @@ textarea {
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
 							 style ="width:auto; height:auto;" checked>전체 보기</td></c:if>
 					</tr>
-			</table>
+			</table></form>
 			<!--  table End /////////////////////////////////////-->
 	
 
@@ -212,10 +214,10 @@ textarea {
 		
 						
 									<div> 
-			 						 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
-									   수정</button></form> 
+			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
+									   수정</button> 
 
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
 									뒤로</button>
 									
 									</div>
