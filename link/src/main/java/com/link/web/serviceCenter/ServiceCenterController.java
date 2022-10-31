@@ -314,16 +314,16 @@ public class ServiceCenterController {
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
 
-	@RequestMapping(value = "getQandAList", method = RequestMethod.POST)
+	@RequestMapping(value = "getQandAList/{userId}", method = RequestMethod.POST)
 	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model,
-			HttpSession httpSession) throws Exception {
+			@PathVariable String userId, HttpSession httpSession) throws Exception {
 		System.out.println("/serviceCenter/getQandAList :POST");
 
 		if (search.getOrder() == 0) {
 			search.setOrder(3);
 		}
-		User userId = (User) httpSession.getAttribute("user");
-		search.setUserId(userId.getUserId());
+		
+		
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -340,7 +340,58 @@ public class ServiceCenterController {
 
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
+	//정민이형 요구사항
+	@RequestMapping(value = "getQandAList/{userId}", method = RequestMethod.POST)
+	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model,
+			@PathVariable String userId, HttpSession httpSession) throws Exception {
+		System.out.println("/serviceCenter/getQandAList :POST");
 
+		if (search.getOrder() == 0) {
+			search.setOrder(3);
+		}
+		
+		
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		search.setPageSize(pageUnit);
+		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")), pageUnit, pageSize);
+
+		model.addAttribute("getQandAList", map.get("getQandAList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/user/getQandAList.jsp";
+	}
+	
+	//정민이형 요구사항 
+	@RequestMapping(value = "getQandAList", method = RequestMethod.GET)
+	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model,
+			@RequestParam(value = "menu", defaultValue = "search") String menu) throws Exception {
+
+		System.out.println("/serviceCenter/getQandAList : GET ");
+		if (search.getOrder() == 0) {
+			search.setOrder(2);
+		}
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+		Map<String, Object> map = serviceCenterService.getQandAList(search, qandA);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")), pageUnit, pageSize);
+
+		model.addAttribute("getQandAList", map.get("getQandAList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/user/getQandAList.jsp";
+	}
 // 여기까지가 QandA 끝 ====================================================================
 
 
@@ -477,6 +528,54 @@ public class ServiceCenterController {
 
 		return "forward:/serviceCenter/getReportList.jsp";
 	}
+	
+	//정민이형 요구사항
+	@RequestMapping(value = "getReportList/{userId}", method = RequestMethod.POST)
+	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model,
+			@PathVariable String userId) throws Exception {
 
+		System.out.println("/serviceCenter/getReportList : GET & POST");
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")), pageUnit, pageSize);
+
+		model.addAttribute("getReportList", map.get("getReportList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/user/getReportList.jsp";
+	}
+	//정민이형 요구사항
+	@RequestMapping(value = "getReportList", method = RequestMethod.GET)
+	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model) throws Exception {
+
+		System.out.println("/serviceCenter/getReportList : GET & POST");
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		String userId = "";
+
+		System.out.println(search);
+		Map<String, Object> map = serviceCenterService.getReportList(search, report, userId);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")), pageUnit, pageSize);
+
+		model.addAttribute("getReportList", map.get("getReportList"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/user/getReportList.jsp";
+	}
 	
 }// ServiceCenter 끝

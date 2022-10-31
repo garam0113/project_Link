@@ -28,6 +28,7 @@
 body {
 	padding-top: 50px;
 	background-color: #EBEDF0 !important;
+    margin-top: -54px !important;
 }
 
 .head {
@@ -139,43 +140,47 @@ function fncGetList(currentPage) {
 
 	<!-- ToolBar End /////////////////////////////////////-->
 <body>  
+<div class="page-header" align="center" style="transform: translate(-395px, 149px);">
+  <h1 >신고 리스트</h1>
+</div>
 	<div class="container">
 
 		<div class="row1">
 
-			<div class=" text-left">
-				<div class="col-md-3 col-sm-3 col-xs-6"></div>
-				<p class="text-primary" style="text-align-last:auto; transform: translate(10px, 75px);">전체 ${resultPage.totalCount } 건수, 현재
+		<div class=" text-left">
+				<div class="col-md-3 col-sm-3 col-xs-6"> 
+									</div>
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
 
 			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
-			<div class="col-md-6 text-right"
-				style="transform: translate(600px, 0px);">
-				<form class="form-inline" name="detailForm">
+			<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
+					<form class="form-inline" name="detailForm">
+						
+						<div class="form-group">
+							<select class="form-control" name="searchCondition" style="vertical-align: top;">
+								<option value="0"
+									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
+								<option value="1"
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
+							</select>
 
-					<div class="form-group">
-						<select class="form-control" name="searchCondition"
-							style="vertical-align: top;">
-							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
-							<option value="1"
-								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
-						</select> <label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
-							style="transform: translate(10px, 8px); width: 300px;"
-							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-					</div>
+							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">검색어</label> <input
+								type="text" class="form-control" id="searchKeyword" width="200px"
+								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; "
+								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+						</div>
 
-					<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :20px;">검색</button>
+							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">검색</button>
 
-					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-					<input type="hidden" id="currentPage" name="currentPage" value="1" />
-				</form>
-			</div>
+						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+						<input type="hidden" id="currentPage" name="currentPage" value="1" />
+					</form>
+				</div>
+
 
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->

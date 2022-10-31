@@ -34,6 +34,7 @@
 body{
 background-color: #EBEDF0 !important;
 	padding-top: -90px;
+	    margin-top: -54px !important;
 }
 .head {
 	background-color: #5F0080; 
@@ -172,7 +173,7 @@ background-color: #EBEDF0 !important;
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :20px;">검색</button>
+						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
