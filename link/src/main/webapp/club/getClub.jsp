@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,120 +15,21 @@
 <meta charset="EUC-KR">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- jQuery UI toolTip 사용 CSS-->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- jQuery UI toolTip 사용 JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<<<<<<< HEAD
-
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-<style>
-body {
-	padding-top: 70px;
-}
-
-#main {
-	background-color: #f0f2f5 !important;
-}
-
-main {
-	background-color: #f0f2f5 !important;
-}
-
-#btn_group button {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	color: #BD76FF;
-	border-color: #BD76FF;
-	background-color: #f0f2f5;
-}
-
-a {
-	color: #bd76ff;
-	text-decoration: underline;
-}
-
-.darkover {
-	position: sticky;
-	top: auto;
-	bottom: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.35);
-}
-
-.club-wrap {
-	width: 100%;
-	margin: 10px auto;
-	position: relative;
-}
-
-.club-wrap img {
-	width: 100%;
-	vertical-align: middle;
-	filter: brightness(1.1);
-}
-
-.club-text {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 100%;
-	transform: translate(-50%, -50%);
-	font-size: 20px;
-	text-align: center;
-}
-
-.h2-color {
-	color: yellow;
-}
-
-.p-color {
-	color: yellow;
-}
-
-.row-content.buffer, .row-content.buffer-left {
-	padding-left: 0% !important;
-}
-
-.row-content.buffer, .row-content.buffer-right {
-	padding-right: 0% !important;
-}
-
-row-content.buffer, .row-content.buffer-bottom {
-	padding-bottom: 10% !important;
-}
-
-element.style {
-	margin-bottom: 100px !important;
-}
-</style>
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- ?? -->
-<script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
-
 <script type="text/javascript">
 	
 	function fncDeleteClub() {
-		
 		Swal.fire({
 			  title: '정말 모임을 삭제하시겠습니까?',
 			  text: "삭제한 모임은 복구가 불가능합니다.",
@@ -143,12 +45,34 @@ element.style {
 			      'Your file has been deleted.',
 			      'success'
 			    )
-			    
 			    $("form").attr("method", "POST").attr("action", "/club/deleteClub")
 				.submit();	    
 			  }
 			})
 	}
+	
+	$(function() {
+		
+		$("#club-add-approval").bind("click", function() {
+			//모달창 열기
+			$('#club-add-approval-modal').modal("show");
+		});
+		
+		$("input[value='신청']").bind("click", function() {
+			
+			$("form").attr("accept-charset" , "EUC-KR").submit();
+		});
+		
+		$("input[value='취소']").bind("click", function() {
+			
+			//모달창 닫기
+			$('#club-add-approval-modal').modal("hide");
+		});
+		
+		$("button[class='close']").bind("click", function() {
+			$('#club-add-approval-modal').modal("hide");
+		});
+	});
 	
 	$(function() {
 		$("#addMeeting").on("click", function() {
@@ -157,15 +81,12 @@ element.style {
 	});
 	
 	$(function() {
-
 		$("#deleteClub").on("click", function() {
 			fncDeleteClub();
-			
 		});
 	});
 	
 	$(function() {
-
 		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
@@ -191,12 +112,11 @@ element.style {
 	
 	$(function() {
 		$("#addApproval").on("click", function() {
-			//self.location="/club/applyClub.jsp"
 			popup();
 		});
 	}); 
 	
-	$(function() {
+ 	$(function() {
 		
 		//alert("123");
 		var options = {
@@ -343,7 +263,132 @@ element.style {
 		
 	})
 	
+
+	
 	</script>
+
+	<style>
+		body {
+			padding-top: 70px;
+		}
+		
+		#main {
+			background-color: #f0f2f5 !important;
+		}
+		
+		main {
+			background-color: #f0f2f5 !important;
+		}
+		
+		.plain.button.red.cancel{
+		   background-color: white;
+		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+		   border-radius: 10px;
+		   margin: 1rem;
+		   padding: 0px;
+		   width: 65px !important;
+		   color: #5F0080 !important;
+		   font-size: 16px !important;
+		   text-align: center;
+		   border: solid 2px;
+		}
+		
+		.plain.button.red.cancel:hover{
+		   background-color: #5F0080;
+		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+		   border-radius: 10px;
+		   margin: 1rem;
+		   padding: 0px;
+		   width: 65px !important;
+		   color: white !important;
+		   font-size: 16px !important;
+		}
+		
+		a {
+			color: #bd76ff;
+			text-decoration: underline;
+		}
+		
+		.darkover {
+			position: sticky;
+			top: auto;
+			bottom: 0;
+			left: 0;
+			background: rgba(0, 0, 0, 0.35);
+		}
+		
+		.club-wrap {
+			width: 100%;
+			margin: 10px auto;
+			position: relative;
+		}
+		
+		.club-wrap img {
+			width: 100%;
+			vertical-align: middle;
+			filter: brightness(1.1);
+		}
+	
+		.club-text {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 100%;
+			transform: translate(-50%, -50%);
+			font-size: 20px;
+			text-align: center;
+		}
+		
+		.h2-color {
+			color: yellow;
+		}
+		
+		.p-color {
+			color: yellow;
+		}
+		
+		.row-content.buffer, .row-content.buffer-left {
+			padding-left: 0% !important;
+		}
+		
+		.row-content.buffer, .row-content.buffer-right {
+			padding-right: 0% !important;
+		}
+		
+		row-content.buffer, .row-content.buffer-bottom {
+			padding-bottom: 10% !important;
+		}
+		
+		element.style {
+			margin-bottom: 100px !important;
+		}
+		
+		
+		.modal { 
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+		}
+			
+		.modal_content{
+			width:400px; height:200px;
+			background:#fff; border-radius:10px;
+			position:relative; top:50%; left:50%;
+			margin-top:-100px; margin-left:-200px;
+			text-align:center;
+			box-sizing:border-box; padding:74px 0;
+			line-height:23px; cursor:pointer;
+		}
+		
+		.modal-backdrop {
+			position: static !important;
+		
+		}
+		
+		
+		
+		
+	</style>
+
+
 
 </head>
 
@@ -412,7 +457,7 @@ element.style {
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
 									<div class="col-xs-4 col-md-6">
-										<strong>모 임 제 목</strong>
+										<strong>모 임 제 목</strong> <button type="button" class="plain button red cancel" id="club-add-approval">가신2</button>
 									</div>
 									<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
 								</div>
@@ -460,7 +505,6 @@ element.style {
 					</div>
 					<!-- 클럽상세 -->
 
-
 					<!-- 달력영역 -->
 					<div class="calendarArea">
 
@@ -469,107 +513,37 @@ element.style {
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-			</div>
-
-=======
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 카 테 고 리</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-			<div class="col-s-4 col-md-6 "><strong>모임원 수</strong></div>
-			<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
-		</div>
-		
-		</div>
-		
-		</form>
-		
-		</div> <!-- 클럽상세 -->
-		
-		
-		<!-- 달력영역 -->
-		<div class="calendarArea">
-		
-		<jsp:include page="/club/calendar.jsp" />
-		
-		</div>
-		<!-- 달력 영역 -->
-		
-		
-		</div>
-
-		<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
-		
-		
-		</div>
-		
->>>>>>> refs/remotes/origin/master
-			<div class="form-group" id="btn_group">
-<<<<<<< HEAD
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-
-					<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel">이&nbsp;전</button>
-					<button type="button" class="btn btn-update">수&nbsp;정</button>
-					<!-- 모달을 열기 위한 버튼 -->
-					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-
-					<button type="button" class="btn btn-delete">삭&nbsp;제</button>
-
-					<!-- 모달 영역 -->
-					<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class = "modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-									<h4 class="modal-title" id="exampleModalLabel">모임 수정</h4>
-								</div>
-								
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="recipient-name" class="control-label">모임 제목</label>
-											<input type="text" class="form-control" id="clubTitle" value="${club.clubTitle}">
-										</div>
-										
-										<div class="form-group">
-											
-										</div>
-									</form>
-									
-								</div>
-								
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">수 정</button>
-									<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
-								</div> 
-							</div>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
+				</div>
+				
+			
+			<!-- 모달영역 -->
+			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							</button>
+							<h3 class="modal-title" id="exampleModalLabel">가입신청</h3>
 						</div>
-					</div>	 --%>
+					<div class="club-add-approval-view">
+						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
+							<input type="hidden" name="clubNo" value="${ clubNo }">
+							<div class="clubJoinGreeting">
+								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요">
+							</div>
+							<input type="button" class="plain button red cancel" value="신청">
+							<input type="button" class="plain button red cancel" value="취소">
+						</form>
+					</div>
+					</div>
+				</div>
+			
+			</div>
+		
+		
+			<div class="form-group" id="btn_group">
 
 
 					<!-- <button type="button" class="joinLi"></button> -->
@@ -578,10 +552,9 @@ element.style {
 					<input type="hidden" id="profile" value="${user.profileImage }">
 					<input type="hidden" id="no" value="${clubNo}">
 				</div>
-=======
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -151px;">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
-		      		<button type="button" class="plain button red cancel" id="addApproval">가입신청</button>
+		      		<!-- <button type="button" class="plain button red cancel" id="addApproval">가입신청</button> -->
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
@@ -593,22 +566,7 @@ element.style {
 						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
->>>>>>> refs/remotes/origin/master
-			</div>
-<<<<<<< HEAD
-			</form>
-		</div>
-		</div>
-
-
-
 	</main>
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
-=======
-	
-	
-	
-		</main>
->>>>>>> refs/remotes/origin/master
 </body>
 </html>

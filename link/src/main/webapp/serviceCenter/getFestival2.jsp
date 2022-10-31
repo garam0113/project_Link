@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,47 +18,27 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-var data = {
-     serviceKey: '=zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D',
-     s_page: 0,
-     s_list: 10,
-     type: 'json'
-};
-
+ // 데이터를 aJax로 받기
+ 
+ 
 $.ajax({
-    post: 'get',
-    url: 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api',
-    data: data,
-    dataType: 'json',
-    success: function(data){
-        
-		document.write(data.response.header.resultCode);
-    	//document.write(data.response.body);
-		
-        }
-    
-});
-
-
-var xhr = new XMLHttpRequest();
-var url = 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api'; /*URL*/
-var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('0'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
-queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
-
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-        console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-    }
-};
-
-xhr.send('');
-
+	url  : "/serviceCenterRest/json/getFestivalList",
+		contentType: 'application/json',
+		method : "GET",
+		dataType: "json",			
+		 success: function(msg){
+			 console.log(msg.reponse.body.items.item);
+			 var myItem = msg.response.body.items.item; 
+		 }
+		  	console.log(myItem.length);
+		    output += '<h3>'+ i + '번째 서울 축제 데이터' +'</h3>';
+            output += '<h4>'+myItem[i].addr1+'</h4>';
+            output += '<h4>'+myItem[i].title+'</h4>';
+            output += '<h4>'+myItem[i].tel+'</h4>';
+            document.body.innerHTML += output;
+		})<!-- ajax ( ReportAdd) 끝 --> 
 
 </script>
-<meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
@@ -72,7 +49,8 @@ xhr.send('');
 				</thead>
 				
 			<p id="demo"></p><br>
-				
-				
+				<c:forEach var="data" items="${data}">
+			data
+				</c:forEach>
 </body>
 </html>

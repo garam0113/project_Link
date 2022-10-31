@@ -108,34 +108,7 @@
 			$("form").attr("method", "POST").attr("action", "/club/deleteMeetingMember").submit();
 		});
 		
-	/* 	$(document).on("click", "#deleteParticipant", function() {
-			
-			var meetingNo = $(this).val();
-			var userId = $(this).attr("userId");
-			
-			$.ajax("/clubRest/json/deleteMeetingMember" ,
-					{
-						method : "POST" ,
-						data : JSON.stringify({
-							meetingNo : meetingNo ,
-							userId : userId
-						}) ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"							
-						},
-						dataType : "json",
-						success : function(JSONData, status){
-							alert(status);
-						} // end of success
-				
-					}); // end of ajax		
-				}); // end of 신청취소
-			
-		}); */
-	
-	
-		});
+	});
 	
 	
 	$(function() {
@@ -158,56 +131,12 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-
-		<!-- <main role="main">
-			<div id="intro-wrap" data-height="17.35">상단 검은색 공통 영역
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-					<div class="intro-item">
-					
-						<div class="club-wrap">
-						
-							
-							<div class="club-text">
-							<h2 class="h2-color">Meeting Member List</h2>
-							<p class="p-color">Make good memories with the members...</p>
-							</div>							
-						</div>
-					</div>								
-				</div>intro
-			</div>intro-wrap -->
-			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 200px;">
-						<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임 채팅</a>
-						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
-					</ul>
-	
-	
-	
-	
-			    
-			  <form class="form-horizontal">  
+
+			  <form class="form-horizontal" style="margin-top:230px;">  
 		      <!--  table Start /////////////////////////////////////-->
 		      <table class="table table-hover table-striped" >
 		      

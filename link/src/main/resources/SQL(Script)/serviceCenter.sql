@@ -160,7 +160,7 @@ select * from qanda;
 
 select * from users;
 
-select * from report_push;
+select * from report_push where type='1';
 desc report_push;
 select * from club_post;
 

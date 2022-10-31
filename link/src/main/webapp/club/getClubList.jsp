@@ -320,12 +320,12 @@
 
 <%-- <jsp:include page="/toolbar.jsp" /> --%>
 
- <body class="page">
+  <body class="page">
 
    <header role="banner" class="transparent light">
       <div class="row">
          <div
-            class="nav-inner row-content buffer-left buffer-right even clear-after">
+            class="nav-inner row-content buffer-left buffer-right even clear-after" style="margin-left: 350px; font-size: 17.5px;">
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
@@ -338,7 +338,6 @@
                <ul class="reset" role="navigation">
                   <li class="menu-item"><a href="/main.jsp">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
-                  <li class="menu-item"><a href="/">Live</a></li>
                   <li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
@@ -366,8 +365,7 @@
       </div>
       <!-- row -->
    </header>
-
-
+ 
 
 
 <body class="blog masonry-style">
@@ -494,14 +492,12 @@
 		  	<div class="col-xs-4 col-md-3">	
 				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT"><strong>${i.clubTitle}</strong></p>
-				  		<p>${i.clubArea}</p>
-				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
-				  		<p>최대인원 : ${i.clubMaxMember}</p>
-				  		<p>${i.clubCategory }</p>
-				  		<p>모임생성일 : ${i.clubRegDate}</p>
-				  		<%-- <p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px; box-shadow: 2px 2px;">모임보기</a></p> --%>			  	
-				 </div>
+			  			<p class="club-cT" style="margin-left:5px;"><strong>${i.clubTitle}</strong></p>
+				  		<p style="margin-left:5px;">${i.clubArea}</p>
+				  		<p style="margin-left:5px;">최대인원 : ${i.clubMaxMember}</p>
+				  		<p style="margin-left:5px;">${i.clubCategory }</p>
+				  		<p style="margin-left:5px;">모임생성일 : ${i.clubRegDate}</p>
+				</div>
 				</div>						
 	    	 </c:forEach>
 		</div>	
