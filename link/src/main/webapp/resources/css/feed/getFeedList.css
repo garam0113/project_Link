@@ -1,11 +1,33 @@
-	/* FONT */
 
+	/* 스크롤바 안보이지만 동작 */
 
+	html {
+		-ms-overflow-style:none !important; 
+	}
 
-	/* FONT */
+	html::-webkit-scrollbar {
+		display:none !important;
+	}
+
+	/* 스크롤바 안보이지만 동작 */
+
+	/* 바탕색 */
+
+	#main {
+		background-color: #EBEDF0 !important;
+	}
 	
 	
 	/* FONT COLOR rgba(171,148,233,1) */
+
+	/* 서머노트 인서트창 위치 조절 */
+
+	.note-modal-content {
+		top: 200px !important;
+		height: auto;
+	}
+
+	/* 서머노트 인서트창 위치 조절 */
 
 	/* SUMMERNOTE border: 2px solid rgba(171,148,233,1) !important; */
 
@@ -14,10 +36,12 @@
 		margin-bottom: 40px;
 	}
 	
+	.note-editor {
+		background-color: white;
+	}
+
 	.note-editor .note-editable {
-
 		line-height: 10%;
-
 	}
 
 	div.note-toolbar {
@@ -38,6 +62,7 @@
 	/* SUMMERNOTE */
 
 	/* FEED BORDER */
+
 	.showFeedForm {
 		color: black !important;
 		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -50,9 +75,11 @@
 	/* FEED CONTENT FONT COLOR */
 
 	div.feedContent {
-		margin-left: 60px;
+		margin-left: 70px;
 		margin-right: 25px;
+		margin-bottom: 25px;
 		color: black !important;
+		font-size: 1rem;
 	}
 
 	/* FEED CONTENT FONT COLOR */
@@ -75,17 +102,21 @@
 	
 	/* FEED ADD BUTTON */
 	
-	input.button.purple.addFeed {
-		width:75px;
-		height:35px;
-		margin-top:18px;
-		margin-right:0px;
-		font-size: 0.5em !important;
-		float: right !important;
+	button.addFeed {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+	}
 
-		color: black !important;
-		box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-		background-color: white;
+	button.addFeed:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+		transform: scale(1.1);
+		transition: transform .5s; 
 	}
 	
 	/* FEED ADD BUTTON */
@@ -111,12 +142,14 @@
 	/* FEED LASTBAR */
 	
 	section .row {
-		margin-top: 0px;
+		margin-top: 10px;
+		margin-bottom: 10px;
 		margin-right: 0px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		border-radius: 15px;
+		background-color: white !important;
 	}
 	
 	/* FEED LASTBAR */
@@ -147,12 +180,27 @@
 		width:25px !important;
 	}
 
+	.feedLike:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+	}
+
 	.feedDislike {
 		width:25px !important;
 	}
 
+	.feedDislike:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
+	}
+
 	.comment > img {
 		width:25px !important;
+	}
+
+	.comment > img:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
 	}
 
 	.likeCount {
@@ -171,6 +219,11 @@
 
 	.report > img {
 		width:25px !important;
+	}
+
+	.report > img:hover {
+		transform: scale(1.4);
+		transition: transform .5s; 
 	}
 
 	/* FEED LIKE & DISLIKE ICON & COMMET ICON */
@@ -197,8 +250,16 @@
 	}
 
 	form.feedForm {
-		cursor:pointer !important;
+		background-color: white;
+		cursor: pointer !important;
 		margin-bottom: 20px;
+		border-radius: 15px;
+		
+	}
+
+	form.feedForm:hover {
+		transform: scale(1.1);
+		transition: transform .5s; 
 	}
 
 	/* MOUSE CUROSR CHANGE */
@@ -230,10 +291,18 @@
 	#searchKeyword {
 		width: 100%;
 		display: flex;
+		text-align: center;
+		font-size: initial;
+		color: #5F0080 !important;
+	}
+
+	#searchKeyword:focus {
+		outline: auto !important;
+		transform: scale(1.1);
+		transition: transform .5s; 
 	}
 
 	/* 검색창 */
-
 
 	/* 화면 커트 나누기 */
 
@@ -243,11 +312,24 @@
 
 	/* 화면 커트 나누기 */
 
-	/* 주변 검색 */
+	/* 주변검색 */
 
 	.searchPlace {
-		width: 100%;
-		position: fixed;
+		width: -webkit-fill-available;
+		position: inherit;
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		margin-bottom: 25px !important;
+	}
+
+	.searchPlace:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+		transform: scale(1.1);
+		transition: transform .5s; 
 	}
 
 	/* 주변 검색 */
@@ -279,15 +361,326 @@
 		border: none !important;
 	}
 
-
-	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
-
-	html {
-		overflow: -moz-scrollbars-vertical;
-		overflow-y: scroll;
+	.addHeader {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
-	/* 스크롤바 항상 보이고 필요할 때만 활성화 */
+	/* 글쓰기 닉네임과 사진을 감싸는 DIV */
+
+	.addHeaderInner {
+		display: flex;
+		align-items: center;
+		font-weight: 700 !important;
+
+	}
+
+	.addFormName:hover {
+		cursor:pointer !important;
+	}
+
+	/* 글쓰기 란의 닉네임 */
+
+	/* 글쓰기 란의 사진 */
+
+	.sessionProfileImage {
+		vertical-align: sub !important; 
+		display: inline-block !important; 
+		width:50px; 
+		height:50px;
+		margin-top:10px; 
+		margin-bottom:10px; 
+		margin-left:10px;
+		margin-right:10px;
+		border-radius: 25% !important;
+	}
+
+	.sessionProfileImage:hover {
+		transform: scale(1.1);
+		transition: transform .01s;
+		cursor:pointer !important;
+	}
+
+	.addFormImage {
+		display: flex;
+	}
+
+	/* 글쓰기 란의 사진 */
+
+	/* 작성된 피드 내용 */
+
+	.feedHeader {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.feedLeft {
+		display: flex;
+		align-items: center;
+	}
+	
+	.feedInner {
+
+		display: flex;
+		align-items: center;
+	}
+
+	.feedCover {
+		display: flex;
+		margin: 10px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.feedProfileImage {
+		border-radius: 25% !important;
+	}
+
+	.feedDate {
+		margin: 10px;
+		font-size: 0.778rem;
+		font-weight: 700 !important;
+	}
+
+	.feedName {
+		font-weight: 700 !important;
+	}
+
+	.udIcon {
+		margin: 10px;
+	}
+
+
+	/* 작성된 피드 내용 */
+
+	/* 하단 바 숫자 */
+
+	.col-xs-1 {
+		font-size: 15px;
+		padding-right: 0px !important;
+		padding-left: 0px !important;
+	}
+
+	/* 하단 바 숫자 */
+
+	/* 사이드바에 있는 팔로우 목록 */
+
+	/* 선택 된 탭 콘텐츠를 표시 */
+	#all:checked ~ #all_content,
+	#programming:checked ~ #programming_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	#all-follow:checked ~ #all-follow_content,
+	#programming-follow:checked ~ #programming-follow_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	
+	.tab{
+		display: block;
+	}
+	
+	/* 탭 전체 스타일 position: fixed; */
+	.tabs1 {
+		position: fixed;
+		width:200px;
+		margin-bottom: 100px;
+		background-color: #ffffff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		display:inline-block;
+		height:700px;
+		border-radius: 15px;
+	}
+		
+	
+	/* 탭 스타일 */
+	.tab_item1 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	.tab_item-following {
+		width: 100px !important;
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 15px;
+	}
+	.tab_item-follow {
+		width: 100px !important;
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 15px;
+	}
+	
+	.tab_item2 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	
+	.tab_item1:hover {
+		opacity: 0.75;
+	}
+	.tab_item2:hover {
+		opacity: 0.75;
+	}
+	
+	/* 라디오 버튼 UI삭제*/
+	input[name="tab_item"] {
+		display: none;
+	}
+	input[name="tab_item-follow"] {
+		display: none;
+	}
+	
+	/* 탭 컨텐츠 스타일 */
+	.tab_content {
+		position: fixed;
+		display: none;
+		height: 630px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+	    width: inherit;
+	}
+	.tab_content-follow {
+		position: fixed;
+		display: none;
+		height: 630px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+		width: inherit;
+	}
+	
+	/* 스크롤바 안보이기 */
+	
+	.tab_content::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	.tab_content-follow::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	#fll {
+	    display: contents;
+	}
+	
+	#fl {
+	    display: contents;
+	}
+
+	.follow-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	.following-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+
+	.follow-section img {
+		border-radius: 15px;
+	}
+
+	.following-section img {
+		border-radius: 15px;
+	}
+
+	label.tab_item-follow:hover {
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	label.tab_item-follow:checked {color: red;}
+	
+	label.tab_item-following:hover {
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	label.tab_item-following:checked {color: red;}
+
+
+
+	/* 사이드바에 있는 팔로우 목록 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -332,18 +725,5 @@
 		margin-bottom: 25px;
 	}
 	
-	.feedContent {
-		margin-bottom: 25px;
-	}
 	
-	.sessionProfileImage {
-		vertical-align: sub !important; 
-		display: inline-block !important; 
-		width:50px; 
-		height:50px;
-		margin-top:10px; 
-		margin-bottom:10px; 
-		margin-left:10px;
-		border-radius: 25% !important;
-	}
 	

@@ -166,7 +166,7 @@
 							<input type="hidden" name="clubPostNo" value="${ getClubPost.clubPostNo }"><br>
 							<input type="hidden" name="clubNo" value="${ clubNo }"><br>
 							<input type="text" name="clubPostTitle" placeholder="제목" value="${ getClubPost.clubPostTitle }"><br>
-							<textarea id="summernote" name="clubPostContent">${ getClubPost.clubPostContent }
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent">${ getClubPost.clubPostContent }
 							</textarea>
 							<input type="button" class="plain button red update" value="수정완료">
 							<input type="button" class="plain button red cancle" value="이전으로">

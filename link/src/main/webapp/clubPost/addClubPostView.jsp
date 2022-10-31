@@ -110,16 +110,16 @@
 			.row{
 				font-family: 'Single Day', cursive;
 			}
-			.club-post-add-view{
+			/* .club-post-add-view{
 				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 				border-radius: 30px;
 				padding: 3rem;
 				/* background-color: #f2f3ff; */
-			}
+			} */
 			#summernote{
 				background-color: white;
 			}
-			.club-post-add-submit{
+			/* .club-post-add-submit{
 				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 				border-radius: 10px;
 				padding: 1rem;
@@ -128,8 +128,8 @@
 				color: white;
 				font-size: 25px;
 				border-color: #5F0080;
-			}
-			.list-navigation{
+			} */
+			/* .list-navigation{
 				box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 				border-radius: 10px;
 				padding: 1rem;
@@ -137,7 +137,7 @@
 				color: #5F0080;
 				font-size: 25px;
 				border-color: #5F0080;
-			}
+			} */
 		</style>
 	</head>
 
@@ -180,7 +180,7 @@
 							<div class="clubPostTitle">
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
-							<textarea id="summernote" name="clubPostContent">
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent">
 							</textarea>
 							<input type="button" class="plain button red" value="등록완료">
 							<input type="button" class="plain button red cancle" value="이전으로">

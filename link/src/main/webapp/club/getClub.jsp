@@ -45,15 +45,31 @@
 		background-color: #f0f2f5 !important;
 	}
 	
-	#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #f0f2f5;
+	.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
 	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+	
+
 	a {
     	color: #bd76ff;
     	text-decoration: underline;
@@ -116,13 +132,6 @@
     	margin-bottom: 100px !important;
 	}
 		
-	
-	
-	
-	
-	
-	
-	
 	</style>
 	
 	<!-- ?? -->
@@ -154,17 +163,17 @@
 				.submit();	    
 			  }
 			})
-		
-		
-		
-/* 		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
-			.submit(); */
 	}
 	
 	$(function() {
+		$("#addMeeting").on("click", function() {
+			self.location="/club/addMeetingView.jsp"
+		});
+	});
+	
+	$(function() {
 
-		$("button.btn.btn-delete").on("click", function() {
-			//alert("눌리나?");
+		$("#deleteClub").on("click", function() {
 			fncDeleteClub();
 			
 		});
@@ -172,7 +181,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -189,16 +198,16 @@
 	
 	$(function() {
 
-		$("button.btn.btn-update").on("click", function() {
+		$("#updateClub").on("click", function() {
 			self.location="/club/updateClubView?clubNo="+${ club.clubNo };
 
 		});
 	});
 	
 	$(function() {
-		$("button.btn.btn-addApproval").on("click", function() {
-			self.location="/club/applyClub.jsp"
-			//popup();
+		$("#addApproval").on("click", function() {
+			//self.location="/club/applyClub.jsp"
+			popup();
 		});
 	}); 
 	
@@ -269,11 +278,7 @@
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
-			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
 					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 310px;">
 						<li data-group="advertising">
 							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
@@ -287,9 +292,6 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
 					</ul>
 		
 		<button type="button" class="live">모임 화상채팅</button>
@@ -348,61 +350,22 @@
 		
 		</div>
 		<!-- 달력 영역 -->
+		
+		
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+		<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
 		
 		
 		</div>
 		
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -151px;">
 		      		
-		      		<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel">이&nbsp;전</button>			
-					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
-					<!-- 모달을 열기 위한 버튼 -->
-					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-				
-					<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
-					
-					<!-- 모달 영역 -->
-		<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class = "modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-									<h4 class="modal-title" id="exampleModalLabel">모임 수정</h4>
-								</div>
-								
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="recipient-name" class="control-label">모임 제목</label>
-											<input type="text" class="form-control" id="clubTitle" value="${club.clubTitle}">
-										</div>
-										
-										<div class="form-group">
-											
-										</div>
-									</form>
-									
-								</div>
-								
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">수 정</button>
-									<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
-								</div> 
-							</div>
-						</div>
-					</div>	 --%>	
+		      		<button type="button" class="plain button red cancel" id="addApproval">가입신청</button>
+					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
+					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
 					
 					
 						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
@@ -411,9 +374,7 @@
 						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
-			</form>		
 			</div>
-	</div>
 	
 	
 	

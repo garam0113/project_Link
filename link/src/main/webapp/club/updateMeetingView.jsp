@@ -54,6 +54,30 @@
 			resize: none;
 		}
 		
+		.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+		
 		
       
     </style>
@@ -129,7 +153,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-updateMeeting").on("click", function() {
+		$("#updateMeeting").on("click", function() {
 			
 			fncUpdateMeeting();
 		});
@@ -137,7 +161,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -208,7 +232,7 @@
 	<form>
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top:150px;">
 					<h2 class="sub_tit_txt">모 임 일 정 수 정</h2>
 					<p class="exTxt">일정을 수정해보세요...</p>
 					<div class="join_form">
@@ -268,9 +292,9 @@
 			</form>
 				
 			<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-updateMeeting" style="background-color:#f0f2f5; color:#BD76FF; border-color: #BD76FF; border-radius: 10px;">수 &nbsp;정</button>
-					<button type="button" class="btn btn-cancel" style="background-color:#f0f2f5; color:#BD76FF; border-color: #BD76FF; border-radius: 10px;">취&nbsp;소</button>
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 25%;">
+		      		<button type="button" class="plain button red cancel" id="updateMeeting">수 &nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 			    </div>
 			</div>
 			
