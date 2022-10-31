@@ -159,6 +159,8 @@
 								
 								// 이렇게 가져와야 summernote에서 수정 가능한 형태로 들어간다
 								$('#summernote').summernote('pasteHTML', JSONData.clubPostContent);
+								//$(".note-editable").summernote('pasteHTML', JSONData.clubPostContent);
+								
 								
 							}//end of success
 						});// end of ajax
@@ -200,7 +202,7 @@
 			});
 
 			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
-			/* $(".clubPost-header-heart").bind("click", function(){
+			$(".clubPost-header-heart").bind("click", function(){
 				//alert("모임게시물 좋아요");
 				$.ajax( "/clubPostRest/json/updateClubPost",
 						{
@@ -236,7 +238,7 @@
 								}
 							}
 						});
-			}); // end of 하트 */
+			}); // end of 하트
 			
 			
 			
@@ -549,13 +551,13 @@
 													
 													+"<p>"+JSONData.commentContent+"</p>"
 													
-													+"<c:if test='"+JSONData.commentCount+">0'>"
-															+"<div class='comment-author'>"
-																+"<cite>"
-																	+"<a class='recommentList'>댓글 "+JSONData.commentCount+"개</a>"
-																+"<cite>"
-															+"</div>"
-													+"</c:if>"
+													<%-- 댓글 등록시 추가 대댓글 등록시는 안 추가 --%>
+													+"<div class='comment-author'>"
+														+"<cite>"
+															+"<a class='recommentList'><b class='recomment_count'></b></a>"
+														+"<cite>"
+													+"</div>"
+													
 												+"</div>"
 												<%-- class='single-comment' --%>
 												
@@ -592,7 +594,8 @@
 										+"</div>";
 										<%-- class='comment-parent' --%>
 										
-										
+										//게시물 댓글 개수 증가
+										$("b[class='comment_count']").text( parseInt ($("b[class='comment_count']").text()) + 1 );
 											
 								if( depth == 0 ){
 									//alert( "게시물의 댓글등록" );
@@ -600,6 +603,17 @@
 								}else if( depth == 1 ){
 									//alert( "댓글의 댓글등록" );
 									$(".children.plain"+clubPostCommentNo).append( display );
+									var commentCount = $(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recomment_count").text();
+									//alert(commentCount);
+									if( commentCount == '' ){
+										//alert('여기로 오나?');
+										//var displayComment = "댓글 <b class='recomment_count'>1</b>개";
+										//$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recommentList").empty();
+										//$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recommentList").append( displayComment );
+									}else{
+										$(".children.plain"+clubPostCommentNo).parent().parent().parent().children(".single-comment"+clubPostCommentNo).find(".recomment_count").text( parseInt(commentCount) + 1 );
+									}
+									
 								}
 								//alert( display );
 							}// end of success
@@ -848,6 +862,18 @@
 				});
 				
 				$("#summernoteCancle").bind("click", function(){
+					alert('수정완료 이전으로');
+					
+					// 제목과 내용 초기화
+					$("input[name='clubPostTitle']").val("");
+					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
+					$(".note-editable").text("");
+					
+					// 모달창 닫기
+					$('#club-post-update-modal').modal("hide");
+				});
+				
+				$("button[class='close']").bind("click", function(){
 					alert('수정완료 이전으로');
 					
 					// 제목과 내용 초기화
@@ -1194,6 +1220,11 @@
 																<a class="recommentList">댓글 <b class="recomment_count">${ clubPost.getClubPostCommentList[i].commentCount }</b>개</a>
 															<cite>
 														</c:when>
+														<c:otherwise>
+															<cite>
+																<a class="recommentList"><b class="recomment_count"></b></a>
+															<cite>
+														</c:otherwise>
 													</c:choose>
 													</div>
 												</div><!-- single-comment -->
