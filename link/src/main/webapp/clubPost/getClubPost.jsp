@@ -20,20 +20,10 @@
 		
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
-		<!-- 수정, 삭제, 신고 아이콘 가져올 수 있다 -->
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
-		
 		<!--  ///////////////////////// jQuery CDN, bootstrap CDN ////////////////////////// -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
 		
 		<!--  font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +36,11 @@
 		<!-- include summernote css/js -->
 		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
 		<script src="/resources/summernote/summernote-lite.js"></script>
+	
+		<!-- 템플릿에 있던 코드 -->
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+		<script src="/resources/javascript/plugins.js"></script>
+		<script src="/resources/javascript/beetle.js"></script>
 		
 		<script type="text/javascript">
 		$(function(){
@@ -984,6 +979,26 @@
 			};//end of textEdit
 		</script>
 		
+		<%-- 채팅 --%>
+		<script type="text/javascript">
+		$(function(){
+			$("#chat-icon").bind("click", function(){
+				$("#chat-icon").attr("style", "display:none");
+				$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+			});
+			
+			$("#allChat-toolbar-close").bind("click", function (){
+				$("#allChat").attr("style", "display: none;");
+				$("#chat-icon").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+			});
+			
+			$(".chat.chat-content").bind("click", function(){
+				$(this).next().attr("condition") == 1 ? $(this).next().attr("style", "display: none"): $(this).next().removeAttr("style");
+				$(this).next().attr("condition") == 1 ? $(this).next().attr("condition", "0"): $(this).next().attr("condition", "1");
+			});
+		});
+		</script>
+		
 		<style type="text/css">
 		.modal{ 
 			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
@@ -1010,64 +1025,74 @@
 	</head>
 
 	<body class="single single-post">
-
-	<!-- 템플릿에 있던 코드 -->
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
-	<script src="js/plugins.js"></script>
-	<script src="js/beetle.js"></script>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<form name="clubPostReport" method="post" action="/serviceCenter/addReport">
-		<%-- 모임게시물 신고 --%>
-		<input type="hidden" name="reportSource" value="1">
-		<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
-		<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
-		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
-		<%-- 모임게시물 신고 --%>
-	</form>
-	
-	<form name="commentReport" method="post" action="/serviceCenter/addReport">
-		<%-- 모임게시물 댓글 신고 --%>
-		<input type="hidden" name="reportSource" value="2">
-		<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
-		<input type="hidden" name="userId" id="revUserId" value="">
-		<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
-		<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
-		<%-- 모임게시물 댓글 신고 --%>
-	</form>
+	<br><br>
 
 		<main role="main">
-			<div id="intro-wrap">
-				<div id="intro" class="preload darken" data-autoplay="5000" data-navigation="true" data-pagination="true" data-transition="fade">
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="photocaption">
-							<h4>Photography by <a href="http://danielezedda.com/">Daniele Zedda</a></h4>
-						</div><!-- photocaption -->
-					</div>
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="photocaption">
-							<h4>Photography by <a href="http://danielezedda.com/">Daniele Zedda</a></h4>
-						</div><!-- photocaption -->
-					</div>	
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="photocaption">
-							<h4>Photography by <a href="http://danielezedda.com/">Daniele Zedda</a></h4>
-						</div><!-- photocaption -->
-					</div>	
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="photocaption">
-							<h4>Photography by <a href="http://danielezedda.com/">Daniele Zedda</a></h4>
-						</div><!-- photocaption -->
-					</div>															
-				</div><!-- intro -->				
-			</div><!-- intro-wrap -->
+
+
 
 			<div id="main" class="row">
 				<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
 				<!-- <div class="row-content buffer-left buffer-right buffer-bottom"> -->
+	
+					<form name="clubPostReport" method="post" action="/serviceCenter/addReport">
+						<%-- 모임게시물 신고 --%>
+						<input type="hidden" name="reportSource" value="1">
+						<input type="hidden" name="sourceNumber" value="${ clubPost.getClubPost.clubPostNo }">
+						<input type="hidden" name="userId" value="${ clubPost.getClubPost.user.userId }">
+						<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
+						<%-- 모임게시물 신고 --%>
+					</form>
+					
+					<form name="commentReport" method="post" action="/serviceCenter/addReport">
+						<%-- 모임게시물 댓글 신고 --%>
+						<input type="hidden" name="reportSource" value="2">
+						<input type="hidden" name="sourceNumber" id="sourceNumber" value="">
+						<input type="hidden" name="userId" id="revUserId" value="">
+						<input type="hidden" name="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
+						<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
+						<%-- 모임게시물 댓글 신고 --%>
+					</form>
+		
+		
+		
+		
+				
+					<!-- 채팅 이미지 -->
+					<div>
+						<img id="chat-icon" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
+					</div>
+		
+					<!-- 채팅 start -->
+					<div id="allChat" style="display: none;">
+						<div id="allChat-toolbar">
+							<span id="allChat-toolbar-close">X</span>
+						</div>
+						<div id="allChat-content">
+							<div class="chat chat-content">모임채팅</div>
+							<div class="chat chidren" style="display: none;" condition="0">
+								<div class="chat-content" roomId="68">111</div>
+								<div class="chat-content" roomId="63">222</div>
+							</div>
+							<div class="chat chat-content">1:1채팅</div>
+							<div class="chat chidren" style="display: none;" condition="0">
+								<div class="chat-content">111</div>
+								<div class="chat-content">222</div>
+							</div>
+							<div id="input-chatLog">
+								<span><input type="text"></span>
+								<span><button type="button">전송</button></span>
+							</div>
+						</div>
+					</div>
+					<!-- 채팅 end -->
+				
+				
 				
 				
 				
@@ -1506,7 +1531,7 @@
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
 							<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
-							<input type="button" id="summernoteUpdate" value="게시물 수정완료">
+							<input type="button" id="summernoteUpdate" value="게시물 수정">
 							<input type="button" id="summernoteCancle" value="이전으로">
 						</form>
 					</div>
@@ -1514,7 +1539,9 @@
 			</div>
 		</div>
 		<!-- 모달창 end -->
-
+		
+		
+				
 	</body>
 
 </html>

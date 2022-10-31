@@ -6,9 +6,6 @@
 <head>
 <meta charset="UTF-8">
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>		
-		<script src="js/plugins.js"></script>
-		<script src="js/beetle.js"></script>
 		
 		<!-- 사용자 정의 css -->
 		<link href="/resources/css/chat/chat.css" rel="stylesheet">
@@ -22,6 +19,10 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+	
+		<!-- 템플릿에 있던 코드 -->
+		<script src="/resources/javascript/plugins.js"></script>
+		<script src="/resources/javascript/beetle.js"></script>
 		
 		<style>
 		    * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +55,8 @@
 		query: {
 			userId : '${ user.userId }',
 			profileImage : '${ sessionScope.user.profileImage }',
-			nickName : '${ sessionScope.user.nickName }'
+			nickName : '${ sessionScope.user.nickName }'//,
+			//roomId : '${ roomId }'
 		}
 	});
 	
@@ -127,8 +129,6 @@
 
 
 		<main role="main">
-			<div id="intro-wrap">
-			</div><!-- intro-wrap -->
 
 			<div id="main" class="row" style="background-color: #EBEDF0;">
 				<div class="row-content buffer-left buffer-right buffer-bottom">
