@@ -115,7 +115,6 @@
 						</div>
 					</div>
 				</section>	
-<jsp:include page="/myHome/followList.jsp" />
 				<section class="row section">
 					<div class="row-content buffer even clear-after">					
 						<div class="section-title"><h3>Latest News</h3></div>

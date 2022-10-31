@@ -12,22 +12,17 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-	
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">ss
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script type="text/javascript">
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
@@ -40,6 +35,60 @@
 	}
 </script>
 <script type="text/javascript">
+
+$(function(){
+	
+	//$("img.").hover(function(){
+	$("img").hover(function(){
+	//alert( $(this).parent().parent().attr("id") );
+	var user_Id = $(this).parent().parent().attr("id");
+	  
+	
+	///*
+	$.ajax("/userRest/json/getUser", {
+
+		type : "POST",
+		data : JSON.stringify({
+			userId : user_Id
+		}),
+		dataType : "json",
+		contentType : "application/json",
+		headers : {
+			"Accept" : "application/json"
+		},
+		success : function(Data, status) {
+			
+			
+			var nickName = Data.nickName;
+			var profileImage = Data.profileImage;
+			var profileWriting = Data.profileWriting;
+			
+			$("#ajaxImage").text(profileImage)
+			$("#ajaxNickName").text(nickName)
+			$("#ajaxWriting").text(profileWriting)
+
+			
+				$("#" + nickName).dialog({
+					modal : true,
+					open : true
+				});
+				$("#" + nickName).dialog("open");
+				
+				
+		    
+			
+		}//end of successs
+	});
+
+
+}, function() {
+
+	$("#" + nickName).dialog("close");
+});
+	
+	
+});
+
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
@@ -211,7 +260,6 @@ $(function(){
 	<%-- CALL REPORT --%>
 	
 })
-	
 
 
 
@@ -791,7 +839,8 @@ margin-left:65px;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div style="display: inline-block; margin-left :-50px;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			<div id="${list.receiveId.nickName}">1234</div>
+			<div style="display: inline-block; margin-left :-50px;"><img userId="${list.receiveId.userId }" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
 					
 				</div>
@@ -802,6 +851,7 @@ margin-left:65px;
 				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
      <div class="col-md-4" id="fl">
 					 		<br />
+	
 		
 			
 								
@@ -1000,11 +1050,7 @@ margin-left:65px;
 			</div>
 		</div>
 	</main>
-
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     
-	 
 	<script type="text/javascript">
 $(function() {
 	$(".tab_item2").on("click" , function(e) {
@@ -1163,6 +1209,9 @@ $(function() {
 
 </script>
 
+<div id="">
+
+</div>
 
 </body>
 
