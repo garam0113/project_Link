@@ -161,7 +161,7 @@
 	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 수 정</h2>
 					<p class="exTxt">모임을 수정해보세요...</p>
 					<div class="join_form">

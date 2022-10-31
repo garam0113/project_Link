@@ -174,7 +174,7 @@
 				<div class="col-sm-2">
 					<select class="form-control" name="memberRole" id="memberRole" style="border-color:#BD76FF;">
 						<option value="1">모임부대표</option>
-						<option value="0">모임원</option>
+						<option value="0" selected>모임원</option>
 					</select>
 				</div>
 			</div>

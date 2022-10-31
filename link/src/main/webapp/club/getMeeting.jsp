@@ -128,43 +128,6 @@
 			fncAddMeetingMember();
 		});
 	});
-	
-	
-	<%--	/* $(function() {
-
-			$("input[value='신청']").bind("click", function(){
-				alert("신청하였습니다.");
-				$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
-			});
-			
-			$(document).on("click", "input[value='신청']", function(){
-				alert("신청");
-				var meetingNo = $("#meetingNo").val();
-				var participantUserId = $("#userId").val();
-				
-				alert(meetingNo);
-				alert(participantUserId);
-				
-				$.ajax("/clubRest/json/addMeetingMember",
-						{
-							method : "POST" ,
-							data : JSON.stringify({
-								meetingNo : meetingNo ,
-								participantUserId : userId
-							}) ,
-							headers : 
-							{
-								"Accept" : "application/json" ,
-								"Content-Type" : "application/json"
-							},
-							dataType : "json" ,
-							success : function
-					
-						}
-						
-				)
-				
-			}); */	--%>
 
 	</script>	
 
@@ -172,11 +135,12 @@
 
 <body class="blog masonry-style">
 
-	<jsp:include page="/toolbar.jsp" />
+	
+	<jsp:include page="/toolbar.jsp" />	
 		
-	<main role="main">
+	
 		
-			<div id="intro-wrap" data-height="15"><!-- 상단 검은색 공통 영역 -->
+	<!-- 		<div id="intro-wrap" data-height="15">상단 검은색 공통 영역
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -184,8 +148,8 @@
 							<p>New encounters are always fun...</p>
 						</div>
 					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+				</div>intro
+			</div>intro-wrap -->
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -194,7 +158,7 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 176px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 176px; margin-top: 150px;">
 						<li data-group="advertising">
 							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
@@ -207,9 +171,6 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
 					</ul>	
 		
 		
@@ -285,19 +246,16 @@
 		
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 26%;">
-				
 					<button type="button" class="plain button red cancel" id="addParticipant"  >참가신청</button>
 					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
 					<button type="button" class="plain button red cancel" id="updateMeeting" >수&nbsp;정</button>
 		      		<button type="button" class="plain button red cancel" id="deleteMeeting" >삭&nbsp;제</button>
-					
-					
 		 	   </div>
 			</div>		
 			
 		</div>
 		</div>
 	</div>
-	</main>
+	
 </body>
 </html>

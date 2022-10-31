@@ -160,10 +160,10 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
-		<main role="main">
-			<div id="intro-wrap" data-height="17.35"><!-- 상단 검은색 공통 영역 -->
+		<!-- <main role="main">
+			<div id="intro-wrap" data-height="17.35">상단 검은색 공통 영역
 				<div id="intro" class="preload darken">					
-					<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 					<div class="intro-item">
 					
 						<div class="club-wrap">
@@ -175,8 +175,8 @@
 							</div>							
 						</div>
 					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+				</div>intro
+			</div>intro-wrap -->
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -251,7 +251,7 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
 	</div>
-	</main>
+	<!-- </main> -->
 </body>
 
 </html>

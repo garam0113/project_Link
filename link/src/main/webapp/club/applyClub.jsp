@@ -82,12 +82,28 @@
 <script type="text/javascript">
 
 
+
+
+
+	$(function() {
+	
+		$("#apply").on("click", function() {
+			fncAddApprovalCondition();
+			
+			opener.document.location.reload();
+			self.close();
+		});
+		
+	
+	$(function() {
+	
+		$("#cancel").bind("click", function() {
+			window.close();
+		});
+	});
+
 	function fncAddApprovalCondition() {
 
-		////////////////////////////////////////////////////
-		//document.detailForm.action = '/addProduct.do';
-		///////////////////////////////////////////////////
-		
 		var joinGreeting = $("textarea[name='joinGreeting']").val();
 		
 		if ( joinGreeting == null || joinGreeting.length < 1 ) {
@@ -97,38 +113,11 @@
 			});
 			return;
 		}
-		
-		
-
 		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition").submit();
-		
-		
-			}
-
-
-	$(function() {
-
-		$("#apply").on("click", function() {
-			
-			fncAddApprovalCondition();
-			
-		});
-	});	
-
-	$(function() {
-
-		$("#cancel").bind("click", function() {
-			history.go(-1);
-			//window.close();
-		});
+	}
 	});
-	
-/* 	window.addEventListener('beforeunload', function(event) {
 
-		event.preventDefault();
-		
-		event.returnValue = '';
-	}); */
+	
 
 </script>
 </head>

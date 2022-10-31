@@ -283,7 +283,7 @@
 	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 등 록</h2>
 					<p class="exTxt">새로운 모임을 등록해보세요...</p>
 					<div class="join_form">

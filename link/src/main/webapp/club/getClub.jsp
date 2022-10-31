@@ -132,13 +132,6 @@
     	margin-bottom: 100px !important;
 	}
 		
-	
-	
-	
-	
-	
-	
-	
 	</style>
 	
 	<!-- ?? -->
@@ -170,11 +163,6 @@
 				.submit();	    
 			  }
 			})
-		
-		
-		
-/* 		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
-			.submit(); */
 	}
 	
 	$(function() {
@@ -186,7 +174,6 @@
 	$(function() {
 
 		$("#deleteClub").on("click", function() {
-			//alert("눌리나?");
 			fncDeleteClub();
 			
 		});
@@ -219,8 +206,8 @@
 	
 	$(function() {
 		$("#addApproval").on("click", function() {
-			self.location="/club/applyClub.jsp"
-			//popup();
+			//self.location="/club/applyClub.jsp"
+			popup();
 		});
 	}); 
 	
@@ -291,11 +278,7 @@
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
-			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
 					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 310px;">
 						<li data-group="advertising">
 							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
@@ -309,9 +292,6 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
 					</ul>
 		
 		<button type="button" class="live">모임 화상채팅</button>
@@ -377,14 +357,6 @@
 		<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		</div>
 		
 			<div class="form-group" id="btn_group">
@@ -394,40 +366,6 @@
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
-					<!-- 모달을 열기 위한 버튼 -->
-					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-				
-					
-					<!-- 모달 영역 -->
-		<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class = "modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-									<h4 class="modal-title" id="exampleModalLabel">모임 수정</h4>
-								</div>
-								
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="recipient-name" class="control-label">모임 제목</label>
-											<input type="text" class="form-control" id="clubTitle" value="${club.clubTitle}">
-										</div>
-										
-										<div class="form-group">
-											
-										</div>
-									</form>
-									
-								</div>
-								
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">수 정</button>
-									<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
-								</div> 
-							</div>
-						</div>
-					</div>	 --%>	
 					
 					
 						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
