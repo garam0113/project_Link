@@ -28,95 +28,105 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<<<<<<< HEAD
-
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <style>
-body {
-	padding-top: 70px;
-}
+	body {
+		padding-top: 70px;
+	}
+	
+	#main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	main {
+		background-color: #f0f2f5 !important;
+	}
+	
+	.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+	
+	a {
+		color: #bd76ff;
+		text-decoration: underline;
+	}
+	
+	.darkover {
+		position: sticky;
+		top: auto;
+		bottom: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.35);
+	}
+	
+	.club-wrap {
+		width: 100%;
+		margin: 10px auto;
+		position: relative;
+	}
+	
+	.club-wrap img {
+		width: 100%;
+		vertical-align: middle;
+		filter: brightness(1.1);
+	}
 
-#main {
-	background-color: #f0f2f5 !important;
-}
-
-main {
-	background-color: #f0f2f5 !important;
-}
-
-#btn_group button {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	color: #BD76FF;
-	border-color: #BD76FF;
-	background-color: #f0f2f5;
-}
-
-a {
-	color: #bd76ff;
-	text-decoration: underline;
-}
-
-.darkover {
-	position: sticky;
-	top: auto;
-	bottom: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.35);
-}
-
-.club-wrap {
-	width: 100%;
-	margin: 10px auto;
-	position: relative;
-}
-
-.club-wrap img {
-	width: 100%;
-	vertical-align: middle;
-	filter: brightness(1.1);
-}
-
-.club-text {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 100%;
-	transform: translate(-50%, -50%);
-	font-size: 20px;
-	text-align: center;
-}
-
-.h2-color {
-	color: yellow;
-}
-
-.p-color {
-	color: yellow;
-}
-
-.row-content.buffer, .row-content.buffer-left {
-	padding-left: 0% !important;
-}
-
-.row-content.buffer, .row-content.buffer-right {
-	padding-right: 0% !important;
-}
-
-row-content.buffer, .row-content.buffer-bottom {
-	padding-bottom: 10% !important;
-}
-
-element.style {
-	margin-bottom: 100px !important;
-}
+	.club-text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		transform: translate(-50%, -50%);
+		font-size: 20px;
+		text-align: center;
+	}
+	
+	.h2-color {
+		color: yellow;
+	}
+	
+	.p-color {
+		color: yellow;
+	}
+	
+	.row-content.buffer, .row-content.buffer-left {
+		padding-left: 0% !important;
+	}
+	
+	.row-content.buffer, .row-content.buffer-right {
+		padding-right: 0% !important;
+	}
+	
+	row-content.buffer, .row-content.buffer-bottom {
+		padding-bottom: 10% !important;
+	}
+	
+	element.style {
+		margin-bottom: 100px !important;
+	}
 </style>
 
 <!-- ?? -->
@@ -460,7 +470,6 @@ element.style {
 					</div>
 					<!-- 클럽상세 -->
 
-
 					<!-- 달력영역 -->
 					<div class="calendarArea">
 
@@ -469,107 +478,10 @@ element.style {
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-			</div>
-
-=======
-		<hr/>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
+				</div>
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 카 테 고 리</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-			<div class="col-s-4 col-md-6 "><strong>모임원 수</strong></div>
-			<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
-		</div>
-		
-		</div>
-		
-		</form>
-		
-		</div> <!-- 클럽상세 -->
-		
-		
-		<!-- 달력영역 -->
-		<div class="calendarArea">
-		
-		<jsp:include page="/club/calendar.jsp" />
-		
-		</div>
-		<!-- 달력 영역 -->
-		
-		
-		</div>
-
-		<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
-		
-		
-		</div>
-		
->>>>>>> refs/remotes/origin/master
 			<div class="form-group" id="btn_group">
-<<<<<<< HEAD
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-
-					<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel">이&nbsp;전</button>
-					<button type="button" class="btn btn-update">수&nbsp;정</button>
-					<!-- 모달을 열기 위한 버튼 -->
-					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-
-					<button type="button" class="btn btn-delete">삭&nbsp;제</button>
-
-					<!-- 모달 영역 -->
-					<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class = "modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-									<h4 class="modal-title" id="exampleModalLabel">모임 수정</h4>
-								</div>
-								
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="recipient-name" class="control-label">모임 제목</label>
-											<input type="text" class="form-control" id="clubTitle" value="${club.clubTitle}">
-										</div>
-										
-										<div class="form-group">
-											
-										</div>
-									</form>
-									
-								</div>
-								
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">수 정</button>
-									<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
-								</div> 
-							</div>
-						</div>
-					</div>	 --%>
 
 
 					<!-- <button type="button" class="joinLi"></button> -->
@@ -578,8 +490,7 @@ element.style {
 					<input type="hidden" id="profile" value="${user.profileImage }">
 					<input type="hidden" id="no" value="${clubNo}">
 				</div>
-=======
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -151px;">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
 		      		<button type="button" class="plain button red cancel" id="addApproval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
@@ -593,22 +504,7 @@ element.style {
 						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
->>>>>>> refs/remotes/origin/master
-			</div>
-<<<<<<< HEAD
-			</form>
-		</div>
-		</div>
-
-
-
 	</main>
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
-=======
-	
-	
-	
-		</main>
->>>>>>> refs/remotes/origin/master
 </body>
 </html>
