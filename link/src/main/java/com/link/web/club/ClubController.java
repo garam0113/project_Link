@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,6 +71,14 @@ public class ClubController {
 		club.setUser(user);
 		club.setCurrentMember(1);
 		club.setClubMaxMember(10);
+
+		////////////////////////////////////////////////////////////////
+		// 모임 생성시 해당 모임의 고유한 채팅방 번호를 생성해서 DB에 넣어준다
+		String roomId = UUID.randomUUID()+"";
+		club.setRoomId(roomId);
+		clubUser.setRoomId(roomId);
+		////////////////////////////////////////////////////////////////
+		
 		clubUser.setUser(user);
 		clubUser.setMemberRole("2");
 		clubUser.setApprovalCondition("1");
@@ -77,7 +86,7 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File("C:\\Users\\903-12\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		

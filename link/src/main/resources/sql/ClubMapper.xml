@@ -22,6 +22,7 @@
 		<result property="user.nickName"		column="nickname"				jdbcType="VARCHAR" />
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
 		<result property="approvalCondition" column="approval_condition"		jdbcType="CHAR" />
+		<result property="roomId"			column="roomId"					jdbcType="VARCHAR"/>
 
 	</resultMap>
 	
@@ -38,6 +39,7 @@
 		<result property="user.nickName"		column="nickname"						jdbcType="VARCHAR" />
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
 		<result property="club.clubMaxMember"		column="club_max_member"				jdbcType="NUMERIC" />
+		<result property="roomId"					column="roomId"								jdbcType="VARCHAR"/>
 			
 	</resultMap>
 	
@@ -86,7 +88,8 @@
 		   			club_max_member , 
 		   			club_category , 
 		   			club_area ,
-		   			club_reg_date)
+		   			club_reg_date,
+		   			roomId)
 		VALUES ( 
 					seq_club_no.NEXTVAL , 
 					#{user.userId} , 
@@ -97,7 +100,8 @@
 					#{clubMaxMember:NUMERIC} , 
 					#{clubCategory} , 
 					#{clubArea} ,
-					SYSDATE)
+					SYSDATE,
+					#{roomId})
 	
 	</insert>
 
@@ -280,7 +284,8 @@
 			join_reg_date ,
 			member_role ,
 			approval_condition ,
-			join_greeting
+			join_greeting ,
+			roomId
 		)		 		 
 		VALUES (
 			seq_club_user_no.nextval ,
@@ -290,7 +295,8 @@
 			SYSDATE ,
 			#{memberRole} ,
 			#{approvalCondition} ,
-			#{joinGreeting}
+			#{joinGreeting} ,
+			#{roomId}
 		)
 		
 	</insert>
@@ -335,7 +341,11 @@
 		WHERE CLUB_NO = ${ clubNo } AND JOIN_REG_DATE IS NOT NULL
 		ORDER BY club_user_no ASC
 	 </select>
-	
+	 
+	 <!-- 로그인한 회원이 속해있는 모임의 채팅방 번호를 찾는 Query -->
+	<select id="getRoomIdList" parameterType="user" resultMap="clubUserSelectMap">
+		SELECT ROOMID FROM CLUB_USER WHERE USER_ID = #{ userId } AND JOIN_REG_DATE IS NOT NULL
+	</select>
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
 			
