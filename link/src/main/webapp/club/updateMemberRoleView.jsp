@@ -69,11 +69,14 @@
     $(function() {
 		$("#change").on("click", function() {
 			fncUpdateMemberRole();
-			window.close();
+			
+			opener.document.location.reload();
+			self.close();
+			
+			//window.close();
 		});
 		
 		$("#cancel").on("click", function() {
-			//alert('´­¸®³ª?');
 			window.close();
 		});
 	});
