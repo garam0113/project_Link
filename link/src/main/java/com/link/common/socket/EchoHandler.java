@@ -44,6 +44,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		String senderId = getMemberId(session);
+		String senderNickName = getMemberNickName(session);
 		
 		// 모든 유저에게 보내기
 		for(WebSocketSession sess : sessions) {
@@ -52,7 +53,7 @@ public class EchoHandler extends TextWebSocketHandler {
 			WebSocketSession ownerSession = users.get(senderId);
 			
 			if(!sess.equals(ownerSession)) {
-				sess.sendMessage(new TextMessage(senderId + message.getPayload()));
+				sess.sendMessage(new TextMessage(senderNickName + message.getPayload()));
 			}
 		}
 		
@@ -144,6 +145,19 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		
 		return m_id == null? null : m_id;
+	}
+	
+	private String getMemberNickName(WebSocketSession session) {
+		// TODO Auto-generated method stub
+		Map<String, Object> httpSession = session.getAttributes();
+		
+		String m_nickName = null;
+		
+		if((User)httpSession.get("user") != null) {
+			m_nickName = ((User)httpSession.get("user")).getNickName();
+		}
+		
+		return m_nickName == null? null : m_nickName;
 	}
 	
 }

@@ -292,18 +292,66 @@ SELECT
 		WHERE ROWNUM = 1
 
 
-SELECT
-*
-FROM REPORT_PUSH rp 
-WHERE rp.type = 2
-AND rp.user_id1 IN (
+SELECT 
+f.feed_no, f.user_id, u.nickName, u.profile_image, f.feed_open_condition, f.feed_full_content, f.feed_content, 
+f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, 
+f.feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition, isLike.EXIST 
+
+FROM users u, feed f, (
 							SELECT
-							recv_user_id AS NAME
-							FROM FOLLOW_BLOCK
-							WHERE send_user_id = 'user04' 
-							AND STATE = '1'
-							AND TYPE = '1'	) 
-ORDER BY rp.no DESC
+							source_no as EXIST
+							FROM HEART
+							WHERE TRIM(source)		= '0'
+							AND user_id				= 'user05'
+																		) isLike
+
+SELECT * FROM REPORT_PUSH rp WHERE TYPE = 2 AND feed_no IS NOT NULL OR club_post_no is NOT NULL AND rp.user_id1 IN ( SELECT recv_user_id AS NAME FROM FOLLOW_BLOCK WHERE send_user_id = 'user05' AND STATE = '1' AND TYPE = '1' )
+
+
+
+
+
+
+
+
+
+
+ 	SELECT
+ 	*
+ 	FROM REPORT_PUSH rp
+WHERE TYPE = 2
+	 		AND rp.user_id1 IN (
+									SELECT
+									recv_user_id AS NAME
+									FROM FOLLOW_BLOCK
+									WHERE send_user_id = 'user05'
+									AND STATE = '1'
+									AND TYPE = '1'	)
+			AND feed_no IS NOT NULL OR club_post_no is NOT NULL 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT
+recv_user_id AS NAME
+FROM FOLLOW_BLOCK
+WHERE send_user_id = 'user05'
+AND STATE = '1'
+AND TYPE = '1'
+
 
 
 
