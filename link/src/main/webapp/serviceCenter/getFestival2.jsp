@@ -20,37 +20,112 @@
 <script type="text/javascript">
  // 데이터를 aJax로 받기
  
- 
-$.ajax({
-	url  : "/serviceCenterRest/json/getFestivalList",
-		contentType: 'application/json',
-		method : "GET",
-		dataType: "json",			
-		 success: function(msg){
-			 console.log(msg.reponse.body.items.item);
-			 var myItem = msg.response.body.items.item; 
-		 }
-		  	console.log(myItem.length);
-		    output += '<h3>'+ i + '번째 서울 축제 데이터' +'</h3>';
-            output += '<h4>'+myItem[i].addr1+'</h4>';
-            output += '<h4>'+myItem[i].title+'</h4>';
-            output += '<h4>'+myItem[i].tel+'</h4>';
-            document.body.innerHTML += output;
-		})<!-- ajax ( ReportAdd) 끝 --> 
+$(function(){
 
+		
+		$.ajax({  //화면 나타내기
+				url  : "/serviceCenterRest/json/getFestivalList",
+				type : "get",
+				data : {"contentTypeId" : 15},
+				dataType: "json",
+				success:function(msg){
+					var myItem =msg.response.body.items.item;
+			 		var addHtml ="";
+			 		
+					$.each(myItem,function(index,item){
+					
+						const firstimage1 =$.trim(item.firstimage);
+						const firstimage2 =$.trim(item.firstimage2);
+						
+					<%--	document.write(item.title);   --%>
+			  if(firstimage1!=""){    //이미지 없는 거 거르기
+					addHtml+=	"<div class=card style = 'width:300px;'>"+
+						 	 		"<div class=card-header style= 'text-align: center;'>"+
+						 	  		 item.title+
+							 		 "</div>"+
+							  "<img src="+item.firstimage+" style= width:300px; height:300px;/>"+
+							  "<div class=card-body>"+
+						 	   "<h5 class=card-title style='text-align:center;'>"+ item.title+"</h5>"+
+						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"+
+						 	   
+						 	   "<button class='custom-btn btn-13'style='margin-left: 83px;'>"+"살펴보기"+"</button>"+
+							  "</div>"+
+							"</div>"
+								
+							
+	
+							
+					  }//if문 끝
+								
+					}) //each 끝
+						
+					  
+					$(".festival").html(addHtml);
+					
+				
+					 $("button:contains('살펴보기')").bind("click", function() {
+					<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
+							$.ajax({
+							url  : "/serviceCenterRest/json/getFestival",
+							type : "get",
+							data : {"contentid":$(this).parent().find('input[name="contentid"]').val()},
+							dataType: "json",
+							success:function(msg2){
+								alert(1);
+								var homepage =msg.response.body.items.item.homepage;
+								alert(homepage);
+								
+									}//안의 success
+						 
+								})//개인 이미지 찾아오기
+							})//버튼 펑션
+							} //ssuccess끝		 
+
+			 
+		 }) //화면 찾아오기 끝
+
+		 
+	});//펑션 끝	 
+		 
+		 
 </script>
+<style>
+.btn-13 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: solid 2px;
+  box-shadow:none !important;
+  outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
+}
+
+.btn-13:hover { 
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+}
+
+</style>
 <title>Insert title here</title>
 </head>
 <body>
-	<table class="table table-hover table-striped"  style="text-align-last: center;">
-				<div class="row2">
-				<thead>
-
-				</thead>
-				
-			<p id="demo"></p><br>
-				<c:forEach var="data" items="${data}">
-			data
-				</c:forEach>
+<div class="container">
+	<div class="festival"> 
+	
+	</div>
+</div>	
 </body>
 </html>

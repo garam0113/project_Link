@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,59 +18,95 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
+ // 데이터를 aJax로 받기
+ 
+$(function(){
 
-var xhr = new XMLHttpRequest();
-var url = 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api'; /*URL*/
-var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('5'); /**/
-queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); 
+		
+		$.ajax({  //화면 나타내기
+				url  : "/serviceCenterRest/json/getFestivalList",
+				type : "get",
+				data : {"contentTypeId" : 15},
+				dataType: "json",
+				success:function(msg){
+					var myItem =msg.response.body.items.item;
+			 		var addHtml ="";
+			 		var addHead ="";
+			 		var a = 0;
+					$.each(myItem,function(index,item){
+					
+						const firstimage1 =$.trim(item.firstimage);
+						const firstimage2 =$.trim(item.firstimage2);
 
-queryParams += '&' + encodeURIComponent('fstvlNm') + '=' + encodeURIComponent('');/* 
-queryParams += '&' + encodeURIComponent('opar') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('fstvlStartDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('fstvlEndDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('fstvlCo') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('mnnst') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('auspcInstt') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('suprtInstt') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('phoneNumber') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('homepageUrl') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('relateInfo') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('rdnmadr') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('lnmadr') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('latitude') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('longitude') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('referenceDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('instt_code') + '=' + encodeURIComponent(''); */
+					<%--	document.write(item.title);   --%>
+			  if(firstimage1!=""){    //이미지 없는 거 거르기
+				 	 a+=1
+				  	
+				  	addHead+= "<li data-target=#carousel-example-generic data-slide-to="+a+" class=active></li>"
+				  	
+				  
+				  
+					addHtml+=	"<div class=item>"+
+								"<img src="+item.firstimage+" style= width:300px; height:300px;/>"+
+								"<div class=carousel-caption>"+
+								"</div>"+
+								"</div>"
 
+								}//if문 끝
+						}) //each 끝
+							console.log(addHtml);
+					
+							
+							$(".slide").html(addHtml);
+							$(".carousel-inner").html(addHead);
+							
+							
+							
+					} //success 끝
+			 
+		 }) //화면 찾아오기 끝
 
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-        console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-    <%--     document.write(this.responseText);  --%>
-      
-          document.write(this.responseText);
-    }
-};
-
-xhr.send('');
-
-
+	
+<%--	$("button:contains('살펴보기')").bind("click", function() {	 
+		$.ajax({
+			url  : "/serviceCenterRest/json/getFestival",
+			type : "get",
+			data : {"contentId": this.item.contentId},
+				   
+			dataType: "json",
+			success:function(msg){
+						
+			}		 
+		 
+		 
+		})//개인 이미지 찾아오기
+	})    --%>
+});//펑션 끝
 </script>
-<meta charset="EUC-KR">
-<title>asdf</title>
+<style>
+.card-header{
+
+}
+
+</style>
+<title>Insert title here</title>
 </head>
 <body>
-	<table class="table table-hover table-striped"  style="text-align-last: center;">
-				<div class="row2">
-				<thead>
-
-				</thead>
-				
-			<p id="demo"></p><br>
-				
-				
+<div class="container">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+			 <div class="carousel-inner" role="listbox">
+			 </div>
+		</ol>
+	</div>
+	<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>	
 </body>
 </html>
