@@ -473,7 +473,10 @@ public class ClubPostController {
 				return "forward:/club/getClub.jsp";
 			}else {
 				// 모임리스트
-				Map<String, Object> map = clubServiceImpl.getClubList(ClubPostCommon.getSearch(search));
+				search = ClubPostCommon.getSearch(search);
+				// searchCondition = null로 가야 에러없다
+				search.setSearchCondition(null);
+				Map<String, Object> map = clubServiceImpl.getClubList(search);
 				model.addAttribute("clubList", map.get("clubList"));
 				return "forward:/club/getClubList.jsp";
 			}

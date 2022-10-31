@@ -139,12 +139,20 @@
 			var email = "${ user.email }";
 			var phoneNo = "${ user.phoneNo }";
 			var totalPrice = $(".totalPrice").text();
-			var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "1": "0";
+			var payProduct = ${ returnClub == null } ? "0": "1";
 			var pg = $("input[name='payOption']:checked").attr("pg");
 			var pay_method = $("input[name='payOption']:checked").attr("pay_method");
 			var name = payProduct===0 ? "최대 모임 수 증가" : "최대 모임원 수 증가";
 			var updateClubMemberCount = $(".payProduct-member").text();
 			var updateClubCount = $(".payProduct-club").text();
+			
+			if(pg == null){
+				Swal.fire({
+					icon: 'error',
+					title: '결제방법을 선택해주세요',
+				})
+				return;
+			}
 			
 			if( !updateClubMemberCount ){
 				updateClubMemberCount = 0;
@@ -152,6 +160,9 @@
 			if( !updateClubCount ){
 				updateClubCount = 0;
 			}
+			
+			alert( ${ returnUser == '' } );
+			alert( payProduct );
 			
 			$("input[name='payProduct']").val( payProduct );
 			$("input[name='totalPrice']").val( totalPrice );
@@ -179,28 +190,42 @@
 				if (rsp.success) {
 					//msg += '\n고유ID : ' + rsp.imp_uid;
 	    			//msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	    			msg = '결제가 성공하였습니다\n결제 금액 : ' + rsp.paid_amount;
+	    			msg = '결제가 성공하였습니다\n결제 금액 : ' + rsp.paid_amount + '원';
 	    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
 	    			//alert(msg);
 	    			
-	    			Swal.fire({
+	    			let timerInterval
+					Swal.fire({
 						title: msg,
-						showClass: {
-							popup: 'animate__animated animate__fadeInDown'
+						html: '이전 페이지로 이동합니다',
+						timer: 4000,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
 						},
-						hideClass: {
-							popup: 'animate__animated animate__fadeOutUp'
-						},
-						timer: 1500
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							//console.log('I was closed by the timer');
+							$("input[name='merchant_uid']").val( rsp.merchant_uid );
+			    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
+						}
 					})
 	    			
-					$("input[name='merchant_uid']").val( rsp.merchant_uid );
-	    			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
-	    			
 				} else {
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-					alert(msg);
+					var msg = rsp.error_msg;
+					Swal.fire({
+						icon: 'error',
+						title: msg,
+					})
+					return;
 				}
 			});
 		}
@@ -341,13 +366,13 @@
 										
 										<%-- 모임 추가일 떄 --%>
 										<c:if test="${ returnClub == null }">
-											<span class="payProduct-club" style="font-size: 60px; color: #5F0080;">${ returnUser.joinClubLimit }</span>
+											<span class="payProduct-club" style="font-size: 60px; color: #5F0080;">2</span>
 											<span class="glyphicon glyphicon-plus"></span>개
 										</c:if>
 										
 										<%-- 모임원 추가일 떄 --%>
 										<c:if test="${ returnUser == null }">
-											<span class="payProduct-member" style="font-size: 60px; color: #5F0080;">${ returnClub.clubMaxMember }</span>
+											<span class="payProduct-member" style="font-size: 60px; color: #5F0080;">10</span>
 											<span class="glyphicon glyphicon-plus"></span>명
 										</c:if>
 										
