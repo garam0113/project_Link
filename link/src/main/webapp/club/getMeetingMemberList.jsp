@@ -26,6 +26,10 @@
 	  <!-- jQuery UI toolTip 사용 JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
+ 	 <!-- alert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ 	 
+ 	 
  	 <style>
  	 
 	.club-wrap {
@@ -103,15 +107,25 @@
 
 	$(function() {
 		
-		$("#deleteParticipant").on("click", function() {
-			alert("모임일정 참가를 취소합니다.");
-			$("form").attr("method", "POST").attr("action", "/club/deleteMeetingMember").submit();
-		});
-		
-	});
-	
-	
-	$(function() {
+		$(document).on("click","#deleteParticipant", function() {
+
+			Swal.fire({
+				title: '일정 참여를 취소하시겠습니까?' ,
+				text: "취소 후에도 다시 신청이 가능합니다.",
+				icon: 'warning' ,
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '삭제',
+				cancelButtonText: '취소' ,
+			}).then((result) => {
+				if (result.value) {	
+			
+					$("form").attr("method", "POST").attr("action", "/club/deleteMeetingMember").submit();
+			
+				}
+			})
+		})
 
 		$("#cancel").bind("click", function() {
 			history.go(-1);

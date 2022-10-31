@@ -29,28 +29,29 @@
 <script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
 	
-	function fncDeleteClub() {
-		Swal.fire({
-			  title: '정말 모임을 삭제하시겠습니까?',
-			  text: "삭제한 모임은 복구가 불가능합니다.",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'delete'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-			    Swal.fire(
-			      'Deleted!',
-			      'Your file has been deleted.',
-			      'success'
-			    )
-			    $("form").attr("method", "POST").attr("action", "/club/deleteClub")
-				.submit();	    
-			  }
-			})
-	}
 	
+	
+	$(function () {
+		
+		$(document).on("click","#deleteClub", function() {
+		
+			Swal.fire({
+				  title: '정말 모임을 삭제하시겠습니까?',
+				  text: "삭제한 모임은 복구가 불가능합니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소' ,
+				}).then((result) => {
+				  if (result.value) {
+				    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteClub").submit();	    
+				  }
+				})
+		})
+	});
 	$(function() {
 		
 		$("#club-add-approval").bind("click", function() {
@@ -80,11 +81,11 @@
 		});
 	});
 	
-	$(function() {
+/* 	$(function() {
 		$("#deleteClub").on("click", function() {
 			fncDeleteClub();
 		});
-	});
+	}); */
 	
 	$(function() {
 		$("#cancel").bind("click", function() {
