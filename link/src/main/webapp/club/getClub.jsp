@@ -530,6 +530,7 @@
 					<div class="club-add-approval-view">
 						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
 							<input type="hidden" name="clubNo" value="${ clubNo }">
+							<input type="hidden" name="roomId" value="${ club.roomId }">
 							<div class="clubJoinGreeting">
 								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요">
 							</div>

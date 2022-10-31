@@ -116,7 +116,8 @@
 			current_member ,
 			club_max_member ,
 			club_category ,
-			club_area
+			club_area ,
+			roomId
 		FROM club
 		WHERE club_no = #{clubNo}	
 	
@@ -272,8 +273,12 @@
 						</if> ) countTable						
 	 </select>
 	
-	
-	
+	<!-- 로그인한 회원이 가장 최근 만든 모임번호 가져온다 -->
+	<select id="getClubNo" parameterType="user" resultType="int">
+		SELECT *
+		FROM ( SELECT club_no FROM CLUB WHERE USER_ID = #{ userId } order by club_reg_date DESC )
+		WHERE ROWNUM = 1	
+	</select>
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (

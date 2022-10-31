@@ -757,6 +757,39 @@ select roomid from club_user where user_id = 'user333' and join_reg_date is not 
 SELECT ROOMID FROM CLUB_USER WHERE USER_ID = #{ userId } AND JOIN_REG_DATE IS NOT NULL;
 
 
+SELECT ROOMID FROM CLUB WHERE USER_ID = 'user333';
+
+
+SELECT *
+FROM ( SELECT club_no FROM CLUB WHERE USER_ID = 'user888' order by club_reg_date DESC )
+WHERE ROWNUM = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

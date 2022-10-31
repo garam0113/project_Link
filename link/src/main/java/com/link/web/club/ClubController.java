@@ -75,6 +75,7 @@ public class ClubController {
 		////////////////////////////////////////////////////////////////
 		// 모임 생성시 해당 모임의 고유한 채팅방 번호를 생성해서 DB에 넣어준다
 		String roomId = UUID.randomUUID()+"";
+		System.out.println("채팅방 번호 : " + roomId);
 		club.setRoomId(roomId);
 		clubUser.setRoomId(roomId);
 		////////////////////////////////////////////////////////////////
@@ -86,7 +87,7 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\903-12\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
