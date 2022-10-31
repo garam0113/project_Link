@@ -2,12 +2,19 @@ package com.link.web.serviceCenter;
 
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.link.common.Search;
-import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
@@ -106,6 +112,55 @@ public class ServiceCenterRestController {
 		//돌려보내는 곳 신고하기 전 -1하고, alter 창? 완료 되었습니다 2개 변경
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
+/*	
+	@RequestMapping(value= "getFestivalList", method = RequestMethod.GET)
+	public String getFestivalList(@RequestBody Search search, Model model) throws Exception{
+		StringBuilder urlBuilder = new StringBuilder(
+				("http://apis.data.go.kr/B551011/KorService/areaBasedList?"
+						+ "numOfRows=12"
+						+ "&pageNo=1&"
+						+ "MobileOS=ETC"
+						+ "&MobileApp=AppTest"
+						+ "&ServiceKey=zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D"
+						+ "&listYN=Y"
+						+ "&arrange=C"
+						+ "&contentTypeId=15"
+						+ "&areaCode=1"
+						+ "&sigunguCode="
+						+ "&cat1=A02"
+						+ "&cat2=A0207"
+						+ "&cat3=A02070200")); 
+		
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		System.out.println(sb.toString());
+		System.out.println(rd.toString());
+		
+		JSONParser parser = new JSONParser();
+		JSONObject obj = (JSONObject)parser.parse(sb.toString());
+		JSONArray dataArr = (JSONArray)obj.get("data");
+		
+		model.addAttribute("data",dataArr);
+		return "forward:/serviceCenter/getFesitival2.jsp";
+	}
+	
+	*/
 	
 	
 	/*
@@ -136,16 +191,22 @@ public class ServiceCenterRestController {
 	 * return map; }
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "/json/updateReport", method = RequestMethod.POST)
+	public String updateReport(@RequestBody Report report,  String number,
+			User user, Map<String, Object> map, ClubPost clubPost, Comment comment, HttpSession httpSession, Model model) throws Exception {
+		
+		System.out.println("/ServiceCenter/updateReport : POST");
+
+			System.out.println(report+" 처음 들어온 값");
+			serviceCenterService.updateReport(report);
+			System.out.println(report);
+			report = serviceCenterService.getReport(report.getNo());
+			
+			model.addAttribute("report", report);
+		
+			return "redirect:/serviceCenter/getReportList";
+		
+	}
 	/////////////////////////////////////////////// 알림 ///////////////////////////////////////////////
 	
 	@RequestMapping(value = "/json/getPushList", method = RequestMethod.POST)

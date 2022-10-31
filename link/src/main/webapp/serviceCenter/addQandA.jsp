@@ -42,7 +42,9 @@ $(function(){
 textarea {
 	resize: none;
 }
-
+body{
+background-color: #EBEDF0 !important;
+}
 .qandATitle {
 	width: 500px;
 	height: 50px;

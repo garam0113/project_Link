@@ -55,61 +55,42 @@
 	});
 </script>
 <style> 
-
+.row {
+	margin-left : 0px !important;
+	    display: inherit;
+}
 textarea {
 	resize: none;
 }
-
-.custom-btn {
-  margin: 5px;
-  width: 80px;
-  height: 30px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+body{
+background-color: #EBEDF0 !important;
+}
+.btn-13 {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
-  background: transparent;
+  background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  border: none !important;
+  border: solid 2px;
   box-shadow:none !important;
   outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
 }
-.btn-13 {
-  background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
-  border: none;
-  z-index: 1;
-}
-.btn-13:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  border-radius: 5px;
+
+.btn-13:hover { 
    background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
-}
-.btn-13:hover { <%-- 글씨색 --%>
-  color: #fff;
-}
-.btn-13:hover:after {
-  top: 0;
-  height: 100%;
-}
-.btn-13:active {
-  top: 2px;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
 
 </style>
@@ -117,7 +98,7 @@ textarea {
 </head>
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
-<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px;">
   <h2>공지사항 상세보기</h2>
 </div>
 	
@@ -129,28 +110,19 @@ textarea {
 				</thead>
 				</div>
 				</tbody>
-					 <tr class = "body" id ="body" >
-						<th style="text-align-last: center;"></th>
-						<td align="left" style="display:flex; height: 50px;">${notice.noticeNo}번 공지사항
-						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
-						</td>
-					</tr>
-					<tr class = "content" id ="content">
-						<th style="text-align-last: center;">제목</th>
-						<td style="display: flex; height: 40px; width: 900px;">						
-						${notice.noticeTitle}	
-						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
-						</td> 
-					</tr>
 					<tr>
-						<th></th>
-						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;">${notice.noticeRegDate }</td>
-						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;">${notice.userId.nickName}</td>
+						<th>
+						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
+						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
+						</th>
+						
+						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;"><strong>${notice.noticeRegDate }</strong></td>
+						<td align="left" style="transform: translateX(-300px);" style="display: flex; height: 40px;"><strong>${notice.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td style="display: flex; min-height : 150px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white;    margin-bottom: 30px;">
 						${notice.noticeContent}
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
