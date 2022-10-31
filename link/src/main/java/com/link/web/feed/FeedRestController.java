@@ -241,7 +241,14 @@ public class FeedRestController {
 		if(feed.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		} else {
-			search.setCurrentPage(feed.getCurrentPage());
+			
+			if(feed.getCheckComment() == 1) {
+				search.setCurrentPage(1);
+				search.setOrder( feed.getCurrentPage() );
+			} else {
+				search.setCurrentPage(feed.getCurrentPage());
+			}
+			
 		}
 		
 		search.setPageSize(pageSize);

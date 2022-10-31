@@ -33,7 +33,8 @@ public interface ClubPostService {
 	// 상세보기에서 좋아요 여부
 	public int getCheckHeart(Heart heart) throws Exception;
 	
-	
+	// 내가 가입한 모임의 채팅방 번호 가져오기
+	public List<ClubUser> getRoomIdList(User user) throws Exception;
 	
 	
 	

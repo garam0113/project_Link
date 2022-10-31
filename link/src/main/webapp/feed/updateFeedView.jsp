@@ -140,6 +140,25 @@
 			margin-left:5px; 
 		}
 		
+		
+		button.btn_update {
+			background-color: white !important;
+			color: #5F0080 !important;
+			box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+			border: none !important;
+			font-weight: 700 !important;
+			border-radius: 15px;
+			height: 25px;
+			float: right
+		}
+	
+		button.btn_update:hover{
+			background-color: #5F0080 !important;
+			color: white !important;
+			transform: scale(1.1);
+			transition: transform .5s; 
+		}
+		
 	</style>
 
 </head>
@@ -177,7 +196,7 @@
 								<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" />
 								<h4>${feed.user.nickName}</h4>
 	
-								<input class="plain button purple btn_update" value="submit">
+								<button class="btn btn-primary btn_update" type="button">SUBMIT</button>
 								
 								<h5 class="meta-post">
 									<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>

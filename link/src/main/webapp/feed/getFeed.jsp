@@ -71,6 +71,94 @@
 	    
 	}
 	
+	function fncAddReport(){
+		
+		var title = $("textarea[name=title]").val();		
+		var content =$("textarea[name=content]").val();			
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+		
+		if(title == null || title.length <1){
+          	Swal.fire({
+                icon: 'error',
+                title: '신고 제목은 필수입니다.',
+            });
+				return;
+			}
+		if(content == null || content.length <1){
+			Swal.fire({
+                icon: 'error',
+                title: '신고 내용은 필수입니다.',
+                text: '가능한 상세히 적어주세요.',
+            });
+				return;
+			}
+				
+		if(checkbox==0){
+			Swal.fire({
+                icon: 'error',
+                title: '신고 사유는 필수입니다.',
+                text: '1개 이상 클릭해주세요.',
+            });
+			return;
+		}
+		
+						
+		  Swal.fire({
+	          title: '정말로 신고하시겠습니까?',
+	          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+	          icon: 'warning',
+	          showCancelButton: true,
+	          confirmButtonColor: '#3085d6',
+	          cancelButtonColor: '#d33',
+	          confirmButtonText: '신고',
+	          cancelButtonText: '취소'
+	      }).then((result) => {
+	          if (result.isConfirmed) {
+	             AddReport()
+	          }
+	      })
+	      
+	 }
+	 
+	function AddReport(){	
+	
+		var sum = 0;
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+				
+		for(var i =0 ; i<checkbox; i++){
+			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
+			sum += sum+parseInt(sum2);			
+		}
+		
+		var no = $("#No").val();
+		
+	 	$.ajax({
+		url  : "/serviceCenterRest/json/addReport?clubNo=0&clubPostNo=0",
+			//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+		contentType: 'application/json',
+		method : "POST",
+		dataType: "json",
+		data : JSON.stringify ({
+			"title":$("#title").val(),
+			"content":$("#content").val(),
+		<%--	"file": image, --%>
+			"user1":$("#user1").val(),
+			"user2":$("#user2").val(),
+			"reportSource":$("#reportSource").val(),
+			"reportReason": sum,
+			"type": $("#type").val(),
+			"no" :no,
+				
+		 success: function(){
+			 window.close();
+		 }
+		}),
+			
+		})<!-- ajax ( ReportAdd) 끝 --> 
+		
+	
+	} //funtion 끝
+
 	$(function(){
 		
 		<%-- SUMMER NOTE WEB LOADING --%>
@@ -493,6 +581,7 @@
 									$(changePoint).html(changeHtml);
 									$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
 									$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
+									$("textarea[name='mainCommentContent']").val('');
 									
 								} // success end
 								
@@ -599,6 +688,7 @@
 				var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
 				
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
+				var cPage = $("#currentPage").val();
 				
 				if(content == "" || content == " ") {
 					swal.fire("내용을 입력하세요");
@@ -615,7 +705,8 @@
 								commentContent :content,
 								parent : parentValue,
 								depth : depthValue,
-								sequence : sequenceValue
+								sequence : sequenceValue,
+								currentPage : cPage
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -689,7 +780,7 @@
 								
 								console.log(changeHtml);
 								$(changePoint).html(changeHtml);
-								$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
+								$(content).text( parseInt( $(content).text() ) + 1 );
 								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
 							} // success end
@@ -714,7 +805,9 @@
 				var sessionUser = $(this).parent().siblings(".commentInfo").find("input[name='userId']").val();
 				var depth = $(this).parent().siblings(".commentInfo").find("input[name='depth']").val();
 				
-				if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > 0) {
+				var cPage = $("#currentPage").val();
+				
+				if($(this).parents(".single-comment").next(".single-comment").find("input[name='depth']").val() > $(this).parents(".single-comment").find("input[name='depth']").val() ) {
 					
 					Swal.fire({
 						  title: '수정 불가능 합니다',
@@ -734,7 +827,8 @@
 							method : "POST",
 							data : JSON.stringify ({
 								feedNo : ${feed.feedNo},
-								feedCommentNo : commentNo
+								feedCommentNo : commentNo,
+								currentPage : cPage
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -874,7 +968,8 @@
 							data : JSON.stringify ({
 								userId : sessionUser,
 								feedNo : ${feed.feedNo},
-								currentPage : parseInt($("#currentPage").val())
+								currentPage : parseInt($("#currentPage").val()),
+								checkComment : 1
 							}),
 							contentType: 'application/json',
 							dataType : "json",
@@ -1414,7 +1509,11 @@
 				
 				console.log(reportedUser + "  " + feedNo);
 				
-				$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+				$("#user2").val(reportedUser);
+				$("#No").val(feedNo);
+				$("#reportSource").val(3);
+				$(".reportSourceDivSource").val("피드");
+				
 				$('#reportModal').modal();
 				
 			}) // .report evenet close
@@ -1432,10 +1531,20 @@
 				
 				console.log(reportedUser + "  " + feedCommentNo);
 				
-				$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=4&user2=" + reportedUser + "&sourceNumber=" + feedCommentNo);
+				$("#user2").val(reportedUser);
+				$("#No").val(feedCommentNo);
+				$("#reportSource").val(4);
+				$(".reportSourceDivSource").val("피드댓글");
+				
 				$('#reportModal').modal();
 				
 			}) // .report evenet close
+			
+			$(document).on("click", "button:contains('등록')", function(event) {
+				event.stopPropagation();
+				
+				fncAddReport();
+			})
 			
 		}) // jquery end
 	
@@ -1776,19 +1885,72 @@
 		</section>
 	</div>
 	
-	<!-- 신고 Modal -->
-		<div class="modal fade" id="reportModal" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel">
+		<!-- 신고 Modal -->
+		<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					
-					
-					
-					
+
+					<!-- form Start /////////////////////////////////////-->
+					<form class="form-horizontal" enctype="multipart/form-data" id="reportForm">
+						
+						<div class="reportTitleCover">
+							<div class="reportTitleTitle">
+								제목
+							</div>
+							<div class="reportTitle">
+							
+								<textarea class="title" id="title" name="title" maxlength="80" placeholder="신고 제목을 입력해주세요"></textarea>
+
+							</div>
+
+							<!--  화면구성 div end /////////////////////////////////////-->
+
+						</div>
+						
+						<div class="reportContentCover">
+							<div class="reportContentTitle">
+								내용
+							</div>
+							
+							<div class="reportContent">
+								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
+							</div>
+						</div>
+						
+						<div class="reportSourceDiv">
+							신고받는 ID
+							<input type="text" class="reportSourceDivId" id="user2" name="user2" value="" readonly />
+							신고 출처
+							<input type="text" class="reportSourceDivSource" value="피드" disabled />
+						</div>
+						
+						<input type="hidden" name="type" id="type" value="1">
+						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
+						<input type="hidden" id="reportSource" name="reportSource" value="">
+						<input type="hidden" name="no" id="No" value="" />
+						
+						<div class="reportModalReason">
+
+							<input type="checkbox" id="욕설" name="reportReason" value="1" >
+								욕설
+							<input type="checkbox" id="광고" name="reportReason" value="2" >
+								광고
+							<input type="checkbox" id="기타" name="reportReason" value="4" >
+								기타
+							<input type="checkbox" id="성적" name="reportReason" value="8" >
+							성적인 발언
+
+						</div>
+						
+					</form>
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close
 						</button>
+						
+						<button type="button" class="btn btn-default add add5">등록</button>
 					</div>
 				</div>
 			</div>
