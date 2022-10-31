@@ -219,16 +219,6 @@
 	
 	function fncGetClubList(currentPage) {
 		
-		/* var keyword = $("input[name='searchKeyword']").val();
-		
-		if( keyword == null || keyword.length < 1) {
-			Swal.fire({
-				icon: 'error',
-				title: '검색조건이 없습니다.',
-			});
-			return;
-		} */
-		
 		
 		$("#currentPage").val(currentPage)
 		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
@@ -284,7 +274,7 @@
 	
 	
 	//무한 페이징
-	var currentPage = 1;
+	/* var currentPage = 1;
 	$(window).scroll(function() {
 		var maxHeight = $(document).height();
 		var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
@@ -322,7 +312,7 @@
 				} // end of success
 			}); // end of ajax
 		} // end of if
-	}); // end of scroll
+	}); // end of scroll */
 	
 	</script>	
 </head>
