@@ -1010,13 +1010,6 @@
 					
 					<div class="column three">
 					
-					
-                    <div class="alarmHead" >
-						
-							<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-
-                    </div>
-					
 					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
 					
 						<div class="tabs1">

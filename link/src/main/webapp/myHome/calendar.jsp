@@ -5,12 +5,12 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script> 
 <script type="text/javascript">
 
 
@@ -110,8 +110,7 @@ border-radius: 0px 0px 0px 0px  !important;
 			    
 				var calendarEl = document.getElementById('calendar');
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
-			    	contentheight:660,
-			    	contentwidth:650,
+			    	
 			      initialView: 'dayGridMonth',
 			      headerToolbar: {
 			    	  left: 'prev,next today',
@@ -136,8 +135,7 @@ border-radius: 0px 0px 0px 0px  !important;
 		
 			var calendarEl = document.getElementById('calendar');
 		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		    	contentheight:660,
-		    	contentwidth:660,
+		    	
 		      initialView: 'dayGridMonth',
 		      headerToolbar: {
 		        left: 'prev,next today',
