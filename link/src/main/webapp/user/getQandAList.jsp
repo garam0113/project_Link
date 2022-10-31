@@ -2,7 +2,8 @@
 <%@ page pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 
@@ -10,31 +11,40 @@
 
 <head>
 <title>Q&A 목록</title>
-<meta charset="EUC-KR">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="description" content="The Page Description">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
-
+<style>
+body {
+	padding-top: 50px;
+}
+</style>
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 function fncGetList(currentPage) {
 
 	if(${search.order=='2'}){
 	$("#currentPage").val(currentPage)
-	$("form").attr("method", "GET").attr("action", "/user/getQandAList")   //전체보기
+	$("form").attr("method", "GET").attr("action", "/serviceCenter/getUserQandAList")   //전체보기
 			.submit();
 	}
 	else if(${search.order=='3'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "POST").attr("action", "/user/getQandAList")   //나만보기
+		$("form").attr("method", "POST").attr("action", "/serviceCenter/getUserQandAList")   //나만보기
 				.submit();
 	}	
 }
@@ -50,7 +60,7 @@ function fncGetList(currentPage) {
 
 		})	
 			
-
+/* 
 		$("button:contains('등록')").bind("click", function() {
 			if(${empty sessionScope.user.userId}){
 			alert("로그인 후 이용 가능합니다.");
@@ -68,7 +78,7 @@ function fncGetList(currentPage) {
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/user/serviceCenterHome.jsp";
 		})
-		
+		 */
 		
 <%-- 		$("button:contains('검색')").bind("click", function() {
 			
@@ -99,47 +109,52 @@ function fncGetList(currentPage) {
 
 </head>
 	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/sideToolbar.jsp" />
 	
 	<!-- ToolBar End /////////////////////////////////////-->
-<body>  
-<div class="page-header" align="center" style="transform: translate(-395px, 149px);">
-  <h1 >Q&A 리스트</h1>
-</div>
-
+<body style=" background-color: #EBEDF0;">  
+		<jsp:include page="/sideToolbar.jsp" />
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-			
+	<div class="container"> 
+<c:if test="${user.role == '0'}">
+			<div class="page-header text-left">
+				<h3 class=" text-info">내정보보기>내Q&A</h3>
+		</div>
+		</c:if>
+<c:if test="${user.role == '1'}">
+			<div class="page-header text-left">
+				<h3 class=" text-info">Q&A</h3>
+		</div>
+		</c:if>
 		<div class="row1">
 
 			<div class=" text-left">
-				<div class="col-md-3 col-sm-3 col-xs-6"> 
-									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text-primary" >전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
 
 			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
-			<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
+			<div class="col-md-6 left" style=" margin-left: -14px;">
 					<form class="form-inline" name="detailForm">
 						
 						<div class="form-group">
-							<select class="form-control" name="searchCondition" style="vertical-align: top;">
+							<select class="form-control" name="searchCondition">
 								<option value="0"
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
+						</div>
 
-							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">검색어</label> <input
-								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px; "
+						<div class="form-group" style="margin-top: 20px;">
+							<label class="sr-only" for="searchKeyword">검색어</label> <input
+								type="text" class="form-control" id="searchKeyword"
+								name="searchKeyword" placeholder="검색어"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :20px;">검색</button>
+							<button type="button" class="btn btn-default">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
@@ -152,32 +167,27 @@ function fncGetList(currentPage) {
 
 
 		<!--  table Start /////////////////////////////////////-->
-		<table   style="text-align-last: center; background-color:white;">
-			<div class="row2">
-				<thead class="bg-primary text-white">
+		<table class="table table-hover table-striped" style="background-color: white; border-width: thick; border: 3px solid #ddd;  border-radius: 10px;" >
+				<thead>
 					<tr class = "head" id ="head" >
 						<th align="center">No</th>
-						<td />
-						<th align="center" class="content">제목</th>
-						<td />
-						<th align="center">진행상황</th>
-						<td />
-						<th align="center">작성자</th>
-						<td />
-						<th align="center" width="140">작성 날짜</th>
+						<th align="left">제목</th>
+						<th align="left">진행상황</th>
+						<th align="left">작성자</th>
+						<th align="left">작성 날짜</th>
 					</tr>
 				</thead>
 
+<tbody>
 				<c:set var="i" value="0" />
 				<c:forEach var="getQandAList" items="${getQandAList}">
 					<c:set var="i" value="${i + 1}" />
 					<tr class="ct_list_pop">
 						<td align="left" id="bb">${getQandAList.qandANo}</td>
-						<td></td>
 						<%-- 관리자 --%>
 						<c:if test="${ user.role == '1' }">
 							<td align="left"><a
-								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
+								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
 								
 									${getQandAList.qandATitle} </a>
 									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
@@ -191,7 +201,7 @@ function fncGetList(currentPage) {
 						<c:if test="${ user.role== null }">
 							<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<td align="left"><a
-									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
+									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
 										${getQandAList.qandATitle} </a>
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 										&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
@@ -217,7 +227,7 @@ function fncGetList(currentPage) {
 							<td align="left">
 							<c:if test="${sessionScope.user.userId == getQandAList.userId.userId}">
 									
-									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
+									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
 										${getQandAList.qandATitle} <c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	</a>	
@@ -226,7 +236,7 @@ function fncGetList(currentPage) {
 							<%--세션 아이디비교  NO --%>
 							<c:if test="${sessionScope.user.userId != getQandAList.userId.userId}">
 									<c:if test="${getQandAList.qandAOpenCondition=='1'}">
-								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
+								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}">
 										${getQandAList.qandATitle} 
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
@@ -241,27 +251,26 @@ function fncGetList(currentPage) {
 									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
 									</c:if>								
 								
-							</c:if></c:if>
-							
+							</c:if>
 							</td>
+							</c:if>
+							
 							<%--세션 아이디비교 NO 끝 --%>
 						
 						<%--히원  --%>
-						<td></td>
 						<c:if test="${getQandAList.qandACondition=='1'}">
 							<td align="left">처리완료</td>
 						</c:if>
 						<c:if test="${getQandAList.qandACondition=='0'}">
 							<td align="left">대기중</td>
 						</c:if>
-						<td></td>
 						<td align="left">${getQandAList.userId.nickName}</td>
 							
+						<td align="left">${getQandAList.qandARegDate}</td>
 						<td><input type="hidden" name="order" id="order"
 							value="${search.order}">
 							<input type="hidden" name="userId" id="userId"
 							value="${getQandAList.userId.userId}"></td>
-						<td align="left">${getQandAList.qandARegDate}</td>
 					
 				</c:forEach>
 
@@ -274,39 +283,6 @@ function fncGetList(currentPage) {
 
 		<!-- PageNavigation End... -->
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
-
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-
-
-							<table border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="ct_write01"><input type="hidden" id="Quantity"
-										name="Quantity" value="1" /></td>
-								</tr>
-							</table>
-							<td width="30"></td>
-
-							<div class="col-md-3 col-sm-3 col-xs-6">
-								    <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
-									   등록</button> 
-									
-											<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
-									뒤로</button>
-							</div>
-
-
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
 

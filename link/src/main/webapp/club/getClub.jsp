@@ -225,8 +225,8 @@
 			var clubTitle = $("#clubTitle").val();
 			var profile = $("#profile").val();
 			var nickName = $("#nickName").val();
-		//	console.log("profile : "+profile);
-		//	console.log("nickName : "+nickName);
+			console.log("profile : "+profile);
+			console.log("nickName : "+nickName);
 			
 			$.ajax("/liveRest/json/getLiveList", {
 				type : "POST",
@@ -456,7 +456,7 @@
 
 								<hr />
 
-								<div class="row">
+								<div class="row"> 
 									<div class="col-s-4 col-md-6 ">
 										<strong>모임원 수</strong>
 									</div>
@@ -481,27 +481,22 @@
 					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
 				</div>
 		
+					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
+					<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
+					<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
+					<input type="hidden" id="no" value="${clubNo}">
+					<input type="hidden" id="total" value="${clubMemberCount}">
 			<div class="form-group" id="btn_group">
 
-
 					<!-- <button type="button" class="joinLi"></button> -->
-					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
-					<input type="hidden" id="nickName" value="${user.nickName }">
-					<input type="hidden" id="profile" value="${user.profileImage }">
-					<input type="hidden" id="no" value="${clubNo}">
-				</div>
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
 		      		<button type="button" class="plain button red cancel" id="addApproval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+				</div>
 					
-					
-						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
-						<input type="hidden" id="total" value="${clubMemberCount}">
-						<input type="hidden" id="nickName" value="${user.nickName }">
-						<input type="hidden" id="profile" value="${user.profileImage }">
 		    </div>
 			</div>	
 	</main>

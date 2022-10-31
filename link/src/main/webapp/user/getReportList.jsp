@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,74 +27,85 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!--  ///////////////////////// CSS ////////////////////////// -->
-<body>
+
+<style>
+body {
+	padding-top: 50px;
+}
+</style>
+
 <script type="text/javascript">
 
 function fncGetList(currentPage) {
 	
 	if(${user.role=='1'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "GET").attr("action", "/user/getReportList")   //전체보기
+		$("form").attr("method", "GET").attr("action", "/serviceCenter/getUserReportList")   //전체보기
 				.submit();
 		
 	}else if (${user.role=='0'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method","post").attr("action","/user/getReportList/${sessionScope.user.userId}").submit();   //나만보기
+		$("form").attr("method","post").attr("action","/serviceCenter/getUserReportList/${sessionScope.user.userId}").submit();   //나만보기
 				
     }
 }
-	$(function() {
-		$("td:nth-child(3)").on(
+	/* $(function() {
+		$("td:nth-child(2)").on(
 				"click",
 				function() {
-					self.location = "/user/getReport?no="+ $(this).parent().find("td:eq(0)").text()
+					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find("td:eq(0)").text()
 							});
 
-		$("button:contains('뒤로')").bind("click", function() {
-			self.location = "/uesr/serviceCenterHome.jsp";
-		})
-
-	});
+	}); */
 </script>
 
 </head>
-	<!-- ToolBar Start /////////////////////////////////////-->
-		
-<jsp:include page="/sideToolbar.jsp" />
+<!-- ToolBar Start /////////////////////////////////////-->
 
-	<!-- ToolBar End /////////////////////////////////////-->
-<body>  
+
+<!-- ToolBar End /////////////////////////////////////-->
+<body style="background-color: #EBEDF0;">
+	<jsp:include page="/sideToolbar.jsp" />
 	<div class="container">
+		<c:if test="${user.role == '0'}">
+			<div class="page-header text-left">
+				<h3 class=" text-info">내정보보기>신고내역</h3>
+			</div>
+		</c:if>
+		<c:if test="${user.role == '1'}">
+			<div class="page-header text-left">
+				<h3 class=" text-info">신고내역</h3>
+			</div>
+		</c:if>
 		<div class="row1">
 
 			<div class=" text-left">
-				<div class="col-md-3 col-sm-3 col-xs-6"></div>
-				<p class="text-primary" style="text-align-last:auto; transform: translate(10px, 75px);">전체 ${resultPage.totalCount } 건수, 현재
+				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
 
 			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
-			<div class="col-md-6 text-right"
-				style="transform: translate(600px, 0px);">
+			<div class="col-md-6 left" style=" margin-left: -14px;">
 				<form class="form-inline" name="detailForm">
 
 					<div class="form-group">
-						<select class="form-control" name="searchCondition"
-							style="vertical-align: top;">
+						<select class="form-control" name="searchCondition">
 							<option value="0"
 								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 							<option value="1"
 								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
-						</select> <label class="sr-only" for="searchKeyword">검색어</label> <input
+						</select>
+					</div>
+					<div class="form-group" style="margin-top: 20px;">
+						<label class="sr-only" for="searchKeyword">검색어</label> <input
 							type="text" class="form-control" id="searchKeyword"
 							name="searchKeyword" placeholder="검색어"
-							style="transform: translate(10px, 8px); width: 300px;"
 							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 					</div>
 
-					<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :20px;">검색</button>
+					<button type="button" class="btn btn-default">검색</button>
 
 					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					<input type="hidden" id="currentPage" name="currentPage" value="1" />
@@ -104,54 +117,44 @@ function fncGetList(currentPage) {
 
 
 		<!--  table Start /////////////////////////////////////-->
-			<table   style="text-align-last: center; background-color:white;">
-				<div class="row2">
-			  <thead class="bg-primary text-white">
-					<tr class = "head" id ="head" >
-						<th align="center">No</th>
-						<td />
-						<th align="center" class="content">제목</th>
-						<td />
-						<th align="center">진행상황</th>
-						<td />
-						<th align="center">신고받는 ID</th>
-						<td />
-						<th align="center" width="140">작성 날짜</th>
-					</tr>
-				</thead>
-				
-				
-				<tbody>
-			
-					<c:set var="i" value="0" />
-					<c:forEach var="getReportList" items="${getReportList}">
-						<c:set var="i" value="${i + 1}" />
-						<tr class="ct_list_pop">
-							<td align="center" id="bb">${getReportList.no}</td>
-							<td></td>
-							<td align="center" class="content">${getReportList.title}	
-							<c:if test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
-							<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
-							</c:if>	
-							</td>
-							<td></td>
-							<c:if test="${getReportList.reportCondition=='1'}">
-								<td align="center" >처리완료</td>
-							</c:if>
-							<c:if test="${getReportList.reportCondition=='0'}">
-								<td align="center" >대기중</td>
-							</c:if>
-							<td></td>
-							<td align="center">${getReportList.user2.userId}</td>
-							<td>
-							<input type="hidden" name="order" id="order" value="${search.order}">
-							</td>
-							<td align="left">${getReportList.regDate}</td>
-							
+		<table class="table table-hover table-striped"
+			style="background-color: white; border-width: thick; border: 3px solid #ddd; border-radius: 10px;">
+			<thead>
+				<tr>
+					<th align="center">No</th>
+					<th align="left">제목</th>
+					<th align="left">진행상황</th>
+					<th align="left">신고받는 ID</th>
+					<th align="left">작성 날짜</th>
+				</tr>
+			</thead>
 
-							
-					</c:forEach>
-				</tbody>
+
+			<tbody>
+
+				<c:set var="i" value="0" />
+				<c:forEach var="getReportList" items="${getReportList}">
+					<c:set var="i" value="${i + 1}" />
+					<tr>
+						<td align="center" id="bb">${getReportList.no}</td>
+						<td align="center" class="content">${getReportList.title}<c:if
+								test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
+								<img src="/resources/image/uploadFiles/파일.png"
+									style="width: 15px; height: 15px; display: inline;">
+							</c:if>
+						</td>
+						<c:if test="${getReportList.reportCondition=='1'}">
+							<td align="center">처리완료</td>
+						</c:if>
+						<c:if test="${getReportList.reportCondition=='0'}">
+							<td align="center">대기중</td>
+						</c:if>
+						<td align="center">${getReportList.user2.userId}</td>
+						<td align="left">${getReportList.regDate}</td>
+						<td><input type="hidden" name="order" id="order"
+							value="${search.order}"></td>
+				</c:forEach>
+			</tbody>
 		</table>
 		<!--  table End /////////////////////////////////////-->
 		<!-- PageNavigation Start... -->
@@ -160,38 +163,6 @@ function fncGetList(currentPage) {
 
 		<!-- PageNavigation End... -->
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			style="margin-top: 10px;">
-			<tr>
-				<td width="53%"></td>
-				<td align="right">
-
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-
-
-							<table border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="ct_write01"><input type="hidden" id="Quantity"
-										name="Quantity" value="1" /></td>
-								</tr>
-							</table>
-							<td width="30"></td>
-
-
-							<div class="col-md-3 col-sm-3 col-xs-6">
-
-								<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
-									뒤로</button>
-							</div>
-
-
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-		</table>
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
 

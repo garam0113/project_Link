@@ -25,7 +25,7 @@
 		});
 
 		$("li:contains('내 Q&A')").on("click", function() {
-			$("form").attr("method","post").attr("action","/serviceCenter/getUserQandAList").submit();
+			$("form").attr("method","post").attr("action","/serviceCenter/getUserQandAList/${sessionScope.user.userId}").submit();
 		 
 		});
 
@@ -77,8 +77,8 @@
 	</c:if>
 
 	<c:if test="${ user.role == '1' }">
-		<div id="main" class="row">
-			<div class="row-content buffer clear-after">
+		<div id="main" class="row" style="background-color: #EBEDF0;">
+			<div class="row-content buffer clear-after" style="margin-bottom: -100px;">
 				<ul class="inline cats filter-options">
 					<li data-group="icons">회원정보수정</li>
 					<li data-group="infographics">신고내역조회</li>
