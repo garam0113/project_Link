@@ -341,7 +341,7 @@ public class ServiceCenterController {
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
 	//정민이형 요구사항
-	@RequestMapping(value = "getQandAList/{userId}", method = RequestMethod.POST)
+	@RequestMapping(value = "getUserQandAList/{userId}", method = RequestMethod.POST)
 	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model,
 			@PathVariable String userId, HttpSession httpSession) throws Exception {
 		System.out.println("/serviceCenter/getQandAList :POST");
@@ -369,7 +369,7 @@ public class ServiceCenterController {
 	}
 	
 	//정민이형 요구사항 
-	@RequestMapping(value = "getQandAList", method = RequestMethod.GET)
+	@RequestMapping(value = "getUserQandAList", method = RequestMethod.GET)
 	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model,
 			@RequestParam(value = "menu", defaultValue = "search") String menu) throws Exception {
 
@@ -530,7 +530,7 @@ public class ServiceCenterController {
 	}
 	
 	//정민이형 요구사항
-	@RequestMapping(value = "getReportList/{userId}", method = RequestMethod.POST)
+	@RequestMapping(value = "getUserReportList/{userId}", method = RequestMethod.POST)
 	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model,
 			@PathVariable String userId) throws Exception {
 
@@ -553,7 +553,7 @@ public class ServiceCenterController {
 		return "forward:/user/getReportList.jsp";
 	}
 	//정민이형 요구사항
-	@RequestMapping(value = "getReportList", method = RequestMethod.GET)
+	@RequestMapping(value = "getUserReportList", method = RequestMethod.GET)
 	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");

@@ -31,10 +31,11 @@ $.ajax({
 			 var myItem = msg.response.body.items.item; 
 		 }
 		  	console.log(myItem.length);
-		  	output += '<h3>'+i+'번째 서울 축제 데이터'+'</h3>';
-		  	output += '<h4>'+myItem[i].addr1+
-		
-			
+		    output += '<h3>'+ i + '번째 서울 축제 데이터' +'</h3>';
+            output += '<h4>'+myItem[i].addr1+'</h4>';
+            output += '<h4>'+myItem[i].title+'</h4>';
+            output += '<h4>'+myItem[i].tel+'</h4>';
+            document.body.innerHTML += output;
 		})<!-- ajax ( ReportAdd) 끝 --> 
 
 </script>
