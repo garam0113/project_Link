@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,6 +71,15 @@ public class ClubController {
 		club.setUser(user);
 		club.setCurrentMember(1);
 		club.setClubMaxMember(10);
+
+		////////////////////////////////////////////////////////////////
+		// 모임 생성시 해당 모임의 고유한 채팅방 번호를 생성해서 DB에 넣어준다
+		String roomId = UUID.randomUUID()+"";
+		System.out.println("채팅방 번호 : " + roomId);
+		club.setRoomId(roomId);
+		clubUser.setRoomId(roomId);
+		////////////////////////////////////////////////////////////////
+		
 		clubUser.setUser(user);
 		clubUser.setMemberRole("2");
 		clubUser.setApprovalCondition("1");

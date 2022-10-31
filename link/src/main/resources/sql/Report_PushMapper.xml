@@ -333,13 +333,14 @@
 	 	FROM REPORT_PUSH rp
 	 	<if test="userId != null">
 	 		WHERE TYPE = 2
-	 		AND rp.user_id1 IN (
+	 		AND (rp.user_id1 IN (
 									SELECT
 									recv_user_id AS NAME
 									FROM FOLLOW_BLOCK
 									WHERE send_user_id = #{userId}
 									AND STATE = '1'
-									AND TYPE = '1'	) 
+									AND TYPE = '1'	))
+			AND (feed_no IS NOT NULL OR club_post_no is NOT NULL)
 	 	</if>
 	 	
 	 	<if test="userId == null">
@@ -360,13 +361,14 @@
 		 	FROM REPORT_PUSH rp
 		 	<if test="userId != null">
 	 		WHERE TYPE = 2
-	 		AND rp.user_id1 IN (
+	 		AND (rp.user_id1 IN (
 									SELECT
 									recv_user_id AS NAME
 									FROM FOLLOW_BLOCK
 									WHERE send_user_id = #{userId}
 									AND STATE = '1'
-									AND TYPE = '1'	) 
+									AND TYPE = '1'	))
+			AND (feed_no IS NOT NULL OR club_post_no is NOT NULL) 
 		 	</if>
 		 	
 		 	<if test="userId == null">

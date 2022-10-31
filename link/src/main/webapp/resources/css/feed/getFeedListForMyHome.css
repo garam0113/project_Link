@@ -1,30 +1,5 @@
 
-	/* ·£´ý Å¬·´ °¡Á®¿À±â */
-
-	.clubRandomCover {
-		margin-top: 475px;
-	}
-
-	.clubRandomName {
-		font-size: 1rem;
-    	font-weight: 700;
-	}
-
-	.clubRandomTitle {
-		display: flex;
-		justify-content: center;
-		font-weight: bold;
-		font-size: 1.3rem;
-	}
-
-	a {
-		text-decoration: auto;
-	}
-
-
-	/* ·£´ý Å¬·´ °¡Á®¿À±â */
-
-	/* ½ºÅ©·Ñ¹Ù ¾Èº¸ÀÌÁö¸¸ µ¿ÀÛ */
+	/* ï¿½ï¿½Å©ï¿½Ñ¹ï¿½ ï¿½Èºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 	html {
 		-ms-overflow-style:none !important; 
@@ -34,9 +9,9 @@
 		display:none !important;
 	}
 
-	/* ½ºÅ©·Ñ¹Ù ¾Èº¸ÀÌÁö¸¸ µ¿ÀÛ */
+	/* ï¿½ï¿½Å©ï¿½Ñ¹ï¿½ ï¿½Èºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
-	/* ¹ÙÅÁ»ö */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
 	#main {
 		background-color: #EBEDF0 !important;
@@ -45,14 +20,14 @@
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 
-	/* ¼­¸Ó³ëÆ® ÀÎ¼­Æ®Ã¢ À§Ä¡ Á¶Àý */
+	/* ï¿½ï¿½ï¿½Ó³ï¿½Æ® ï¿½Î¼ï¿½Æ®Ã¢ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ */
 
 	.note-modal-content {
 		top: 200px !important;
 		height: auto;
 	}
 
-	/* ¼­¸Ó³ëÆ® ÀÎ¼­Æ®Ã¢ À§Ä¡ Á¶Àý */
+	/* ï¿½ï¿½ï¿½Ó³ï¿½Æ® ï¿½Î¼ï¿½Æ®Ã¢ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ */
 
 	/* SUMMERNOTE border: 2px solid rgba(171,148,233,1) !important; */
 
@@ -289,15 +264,15 @@
 
 	/* MOUSE CUROSR CHANGE */
 
-	/* ÇÇµå ³»ºÎ ³»¿ë & »çÁø°úÀÇ °Å¸® */
+	/* ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ & ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ */
 
 	div.carousel-inner {
 	    margin-top: 10px;
 	}
 
-	/* ÇÇµå ³»ºÎ ³»¿ë & »çÁø°úÀÇ °Å¸® */
+	/* ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ & ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ */
 
-	/* ÇÇµå ÀÛ¼ºÀÚ ÀÌ¹ÌÁö */
+	/* ï¿½Çµï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ */
 
 	.feedForm > img {
 		vertical-align: sub; 
@@ -309,9 +284,9 @@
 		border-radius: 25% !important;
 	}
 	
-	/* ÇÇµå ÀÛ¼ºÀÚ ÀÌ¹ÌÁö */
+	/* ï¿½Çµï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ */
 
-	/* °Ë»öÃ¢ */
+	/* ï¿½Ë»ï¿½Ã¢ */
 
 	#searchKeyword {
 		width: 100%;
@@ -327,17 +302,17 @@
 		transition: transform .5s; 
 	}
 
-	/* °Ë»öÃ¢ */
+	/* ï¿½Ë»ï¿½Ã¢ */
 
-	/* È­¸é Ä¿Æ® ³ª´©±â */
+	/* È­ï¿½ï¿½ Ä¿Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
 	div.buffer {
 		display: flex;
 	}
 
-	/* È­¸é Ä¿Æ® ³ª´©±â */
+	/* È­ï¿½ï¿½ Ä¿Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
-	/* ÁÖº¯°Ë»ö */
+	/* ï¿½Öºï¿½ï¿½Ë»ï¿½ */
 
 	.searchPlace {
 		width: -webkit-fill-available;
@@ -357,24 +332,24 @@
 		transition: transform .5s; 
 	}
 
-	/* ÁÖº¯ °Ë»ö */
+	/* ï¿½Öºï¿½ ï¿½Ë»ï¿½ */
 
 	.modal {
 
-		top: 150px !important;
+		top: 250px !important;
 
 	}
 
-	/* À§¿¡ ¸Þ´º ¿À·ù */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 	#menu-toggle {
 		width: auto !important;
 	}
 
-	/* À§¿¡ ¸Þ´º ¿À·ù */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 
-	/* ¾Ë¸² ÀÌ¹ÌÁö */
+	/* ï¿½Ë¸ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ */
 
 	.alarmImg {
 		display: inline-flex; 
@@ -392,7 +367,7 @@
 		align-items: center;
 	}
 
-	/* ±Û¾²±â ´Ð³×ÀÓ°ú »çÁøÀ» °¨½Î´Â DIV */
+	/* ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½Ó°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½ DIV */
 
 	.addHeaderInner {
 		display: flex;
@@ -405,9 +380,9 @@
 		cursor:pointer !important;
 	}
 
-	/* ±Û¾²±â ¶õÀÇ ´Ð³×ÀÓ */
+	/* ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½ */
 
-	/* ±Û¾²±â ¶õÀÇ »çÁø */
+	/* ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 	.sessionProfileImage {
 		vertical-align: sub !important; 
@@ -431,9 +406,9 @@
 		display: flex;
 	}
 
-	/* ±Û¾²±â ¶õÀÇ »çÁø */
+	/* ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
-	/* ÀÛ¼ºµÈ ÇÇµå ³»¿ë */
+	/* ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 	.feedHeader {
 		display: flex;
@@ -477,9 +452,9 @@
 	}
 
 
-	/* ÀÛ¼ºµÈ ÇÇµå ³»¿ë */
+	/* ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
-	/* ÇÏ´Ü ¹Ù ¼ýÀÚ */
+	/* ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 	.col-xs-1 {
 		font-size: 15px;
@@ -487,295 +462,7 @@
 		padding-left: 0px !important;
 	}
 
-	/* ÇÏ´Ü ¹Ù ¼ýÀÚ */
-
-	/* »çÀÌµå¹Ù¿¡ ÀÖ´Â ÆÈ·Î¿ì ¸ñ·Ï */
-
-	/* ¼±ÅÃ µÈ ÅÇ ÄÜÅÙÃ÷¸¦ Ç¥½Ã */
-	#all:checked ~ #all_content,
-	#programming:checked ~ #programming_content,
-	#design:checked ~ #design_content {
-	  display: block;
-	}
-	#all-follow:checked ~ #all-follow_content,
-	#programming-follow:checked ~ #programming-follow_content,
-	#design:checked ~ #design_content {
-	  display: block;
-	}
-	
-	.tab{
-		display: block;
-	}
-	
-	/* ÅÇ ÀüÃ¼ ½ºÅ¸ÀÏ position: fixed; */
-	.tabs1 {
-		position: fixed;
-		width:200px;
-		margin-bottom: 100px;
-		background-color: #ffffff;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-		display:inline-block;
-		height:500px;
-		border-radius: 15px;
-	}
-		
-	
-	/* ÅÇ ½ºÅ¸ÀÏ */
-	.tab_item1 {
-		width: calc(100%/3);
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: block;
-		float: left;
-		width:400px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-	}
-	.tab_item-following {
-		width: 100px !important;
-		height: 50px;
-		background-color: #F5F6F7;
-		border-bottom: 3px solid #EBEDF0;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: inline-block;
-		width:200px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-		border-radius: 15px 15px 0px 0px ;
-	}
-	.tab_item-follow {
-		width: 100px !important;
-		height: 50px;
-		background-color: #F5F6F7;
-		border-bottom: 3px solid #EBEDF0;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: block;
-		float: left;
-		width:200px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-		border-radius: 15px 15px 0px 0px ;
-	}
-	
-	.tab_item2 {
-		width: calc(100%/3);
-		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
-		line-height: 50px;
-		font-size: 16px;
-		text-align: center;
-		color: #333333;
-		display: inline-block;
-		width:400px;
-		text-align: center;
-		font-weight: bold;
-		transition: all 0.2s ease;
-	}
-	
-	.tab_item1:hover {
-		opacity: 0.75;
-	}
-	.tab_item2:hover {
-		opacity: 0.75;
-	}
-	
-	/* ¶óµð¿À ¹öÆ° UI»èÁ¦*/
-	input[name="tab_item"] {
-		display: none;
-	}
-	input[name="tab_item-follow"] {
-		display: none;
-	}
-	
-	/* ÅÇ ÄÁÅÙÃ÷ ½ºÅ¸ÀÏ */
-	.tab_content {
-		position: fixed;
-		display: none;
-		height: 400px;
-		clear: both;
-		overflow: hidden;
-		overflow-y: auto;
-		scrollbar-width: none;
-	    width: inherit;
-	}
-	.tab_content-follow {
-		position: fixed;
-		display: none;
-		height: 400px;
-		clear: both;
-		overflow: hidden;
-		overflow-y: auto;
-		scrollbar-width: none;
-		width: inherit;
-	}
-	
-	/* ½ºÅ©·Ñ¹Ù ¾Èº¸ÀÌ±â */
-	
-	.tab_content::-webkit-scrollbar {
-	    display: none; /* Chrome, Safari, Opera*/
-	}
-	
-	.tab_content-follow::-webkit-scrollbar {
-	    display: none; /* Chrome, Safari, Opera*/
-	}
-	
-	#fll {
-	    display: contents;
-	}
-	
-	#fl {
-	    display: contents;
-	}
-
-	.follow-section {
-		margin: 0px;
-	    display: flex;
-	    justify-content: space-around;
-	    align-items: center;
-	    margin-bottom: 20px;
-	}
-	
-	.following-section {
-		margin: 0px;
-	    display: flex;
-	    justify-content: space-around;
-	    align-items: center;
-	    margin-bottom: 20px;
-	}
-
-	.follow-section img {
-		border-radius: 15px;
-	}
-
-	.following-section img {
-		border-radius: 15px;
-	}
-
-	label.tab_item-follow:hover {
-		background-color: #5F0080 !important;
-		color: white !important;
-	}
-
-	label.tab_item-follow:checked {color: red;}
-	
-	label.tab_item-following:hover {
-		background-color: #5F0080 !important;
-		color: white !important;
-	}
-
-	label.tab_item-following:checked {color: red;}
-
-
-
-	/* »çÀÌµå¹Ù¿¡ ÀÖ´Â ÆÈ·Î¿ì ¸ñ·Ï */
-
-
-
-	/* ½Å°í ¸ð´Þ °ü·Ã */
-
-	#reportModal .form-horizontal {
-		margin: 30px;
-	}
-
-	#reportModal {
-		font-size: 1rem;
-	}
-
-	.reportSourceDiv {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-	}
-
-	.reportSourceDivId {
-		margin-top: 15px;
-		margin-bottom: 15px;
-		width: 100px !important;
-	}
-
-	.reportSourceDivSource {
-		margin-top: 15px;
-		margin-bottom: 15px;
-		width: 100px !important;
-	}
-
-	.reportTitleTitle {
-		display: flex;
-		justify-content: center;
-		font-weight: 700 !important;
-	}
-
-	.reportTitle {
-		display: flex;
-		justify-content: center;
-	}
-
-	.reportContentTitle {
-		display: flex;
-		justify-content: center;
-		font-weight: 700 !important;
-	}
-
-	.reportContent {
-		display: flex;
-		justify-content: center;
-	}
-
-	.reportModalReason {
-		display: flex;
-		justify-content: space-evenly;
-	}
-
-	#title {
-		height: 50px;
-		width: 100%;
-		resize: none;
-	}
-
-	#content {
-		resize: none;
-		width: 100%;
-	}
-
-
-	/* ½Å°í ¸ð´Þ °ü·Ã */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	/* ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
 
 

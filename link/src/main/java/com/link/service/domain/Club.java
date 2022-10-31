@@ -16,6 +16,7 @@ public class Club {
 	private String clubArea;
 	private String approvalCondition;
 	private int currentPage;
+	private String roomId;
 	
 	
 	public String getApprovalCondition() {
@@ -90,6 +91,12 @@ public class Club {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -117,6 +124,8 @@ public class Club {
 		builder.append(approvalCondition);
 		builder.append(", currentPage=");
 		builder.append(currentPage);
+		builder.append(", roomId=");
+		builder.append(roomId);
 		builder.append("]");
 		return builder.toString();
 	}
