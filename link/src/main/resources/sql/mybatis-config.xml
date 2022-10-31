@@ -26,7 +26,6 @@
 		<typeAlias alias="meeting" type="com.link.service.domain.Meeting" />
 		<typeAlias alias="comment" type="com.link.service.domain.Comment" />
 		<typeAlias alias="clubUser" type="com.link.service.domain.ClubUser" />
-		<typeAlias alias="block" type="com.link.service.domain.Block" />
 		<typeAlias alias="heart" type="com.link.service.domain.Heart" />
 		<typeAlias alias="participant" type="com.link.service.domain.Participant"/>
 	</typeAliases>
@@ -38,7 +37,6 @@
 		<mapper resource="sql/ClubMapper.xml"/>
 		<mapper resource="sql/ClubPostCommentMapper.xml"/>
 		<mapper resource="sql/ClubPostMapper.xml"/>
-		<mapper resource="sql/ServiceCenterMapper.xml"/>
 		<mapper resource="sql/NoticeMapper.xml"/>
 		<mapper resource="sql/QandAMapper.xml"/>
 		<mapper resource="sql/Report_PushMapper.xml"/>

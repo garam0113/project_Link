@@ -77,6 +77,125 @@
 		});
 	}
 	
+	function fncAddReport(){
+			
+			var title = $("textarea[name=title]").val();		
+			var content =$("textarea[name=content]").val();			
+			var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+			
+			if(title == null || title.length <1){
+	          	Swal.fire({
+	                icon: 'error',
+	                title: '신고 제목은 필수입니다.',
+	            });
+					return;
+				}
+			if(content == null || content.length <1){
+				Swal.fire({
+	                icon: 'error',
+	                title: '신고 내용은 필수입니다.',
+	                text: '가능한 상세히 적어주세요.',
+	            });
+					return;
+				}
+					
+			if(checkbox==0){
+				Swal.fire({
+	                icon: 'error',
+	                title: '신고 사유는 필수입니다.',
+	                text: '1개 이상 클릭해주세요.',
+	            });
+				return;
+			}
+			
+							
+		  Swal.fire({
+	          title: '정말로 신고하시겠습니까?',
+	          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+	          icon: 'warning',
+	          showCancelButton: true,
+	          confirmButtonColor: '#3085d6',
+	          cancelButtonColor: '#d33',
+	          confirmButtonText: '신고',
+	          cancelButtonText: '취소'
+	      }).then((result) => {
+	          if (result.isConfirmed) {
+	             AddReport()
+	          }
+	      })
+	 }
+	 
+	function AddReport(){	
+
+		var sum = 0;
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+				
+		for(var i =0 ; i<checkbox; i++){
+			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
+			sum += sum+parseInt(sum2);			
+		}
+
+			
+		var no = 0;	
+			
+		 if( $("#clubPostNo").val()!=null){
+			 no = $("#clubPostNo").val();
+		}else if($("#clubPostCommentNo").val()!=null){
+			 no = $("#clubPostCommentNo").val();
+		}else if($("#feedNo").val()!=null){
+			 no = $("#feedNo").val();
+		}else if($("#feedCommentNo").val()!=null){
+			  no = $("#feedCommentNo").val();
+		}
+		
+		var clubNo = 0;
+		
+		if( $("#clubNo2").val()!=null ){
+			clubNo = $("#clubNo2").val();
+		}else if( $("#clubNo3").val()!=null){
+			clubNo = $("#clubNo3").val();
+		}
+		
+		var clubPostNo = 0;
+		
+		
+		if ( $("#clubPostNo2").val()!=0){
+			
+			clubPostNo = $("#clubPostNo2").val();
+			if(clubPostNo == undefined){
+				clubPostNo = 0;
+			}
+			
+		}
+		
+	 	$.ajax({
+		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
+ 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+		contentType: 'application/json',
+		method : "POST",
+		dataType: "json",
+		data : JSON.stringify ({
+			"title":$("#title").val(),
+			"content":$("#content").val(),
+		<%--	"file": image, --%>
+			"user1":$("#user1").val(),
+			"user2":$("#user2").val(),
+			"reportSource":$("#reportSource").val(),
+			"reportReason": sum,
+			"type": $("#type").val(),
+			"no" :no,
+				
+		 success: function(){
+			 window.close();
+		 }
+		}),
+			
+		})<!-- ajax ( ReportAdd) 끝 --> 
+		
+
+	} //funtion 끝
+		
+	
 	$(function(){
 		
 	<%-- 피드 폼에서 아이디에 호버시 --%>
@@ -250,14 +369,25 @@
 							
 							var alarm = data.alarm;
 							var alarmCount = data.alarmCount;
-							var addHtml = 	"<div>총 알림 갯수" +
-												"<div>" + alarmCount + "</div>" +
-											"</div>";
+							var addHtml = "";
 							
+							$("#myModalAlarmLabel").html("알림 개수 : " + alarmCount);
+							console.log(data)
 							$.each(alarm, function(index, item){
-								addHtml += 	"<div>알림 내용" + 
-												"<div>" + item.content + "</div>" + 
-											"</div>"
+								
+								if(item.feed != null) {
+									addHtml += 	"<div style='display: flex; justify-content: space-between;'>" + 
+										"<div>알림 내용</div>" + 
+										"<div><a href='/feed/getFeed?feedNo=" + item.feed.feedNo + "' />" + item.content + "</a></div>" + 
+									"</div>"
+								} else if(item.clubPost != null) {
+									addHtml += 	"<div style='display: flex; justify-content: space-between;'>" + 
+										"<div>알림 내용</div>" + 
+										"<div><a href='/clubPost/getClubPost?clubPostNo=" + item.clubPost.clubPostNo + "' />" + item.content + "</a></div>" + 
+									"</div>"
+								} 
+								
+								
 							}) // each close
 							
 							$(".alarmModalBody").html(addHtml);
@@ -735,14 +865,73 @@
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
 			// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			
+			$("#user2").val(reportedUser);
+			$("#feedNo").val(feedNo);
+			
 			$('#reportModal').modal();
 
 			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		})	// .report evenet close
+		
+		
+		$(document).on("click", "button:contains('등록')", function(event) {
+			event.stopPropagation();
+			
+			fncAddReport();
+		})
+		
 		<%-- CALL REPORT --%>
 		
 	})
 	
+	<%-- 추천 모임 보이기 --%>
+	
+	$(window).on("load", function() {
+		
+		$.ajax(
+				{
+					url : "/clubRest/json/getClubList",
+					method : "POST",
+					data : JSON.stringify ({
+						currentPage: 1
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						var addHtml = "";
+						
+						$.each(data.clubList, function(index, item){
+
+							if(index > 4) {
+								return false;
+							}
+							
+							addHtml += "<div>" +
+											"<a href='/club/getClub?clubNo=" +
+												item.clubNo +
+											"'>" + item.clubTitle + "</a>" +
+										"</div>";
+							
+						}) // each close
+						
+						$(".clubRandomName").html(addHtml);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+		
+	})
+	
+	<%-- 추천 모임 보이기 --%>
 	
 	
 	</script>
@@ -1037,11 +1226,11 @@
 								src="/resources/javascript/myHome/followListForFeed.js"></script>
 
 							<div class="tabs1">
-								<input id="all-follow" type="radio" name="tab_item-follow"
-									checked> <label class="tab_item-follow"
-									for="all-follow">Follow</label> <input id="programming-follow"
-									type="radio" name="tab_item-follow"> <label
-									class="tab_item-following" for="programming-follow">Follower</label>
+								<input id="all-follow" type="radio" name="tab_item-follow" checked>
+								<label class="tab_item-follow" for="all-follow">팔로우</label>
+								
+								<input id="programming-follow" type="radio" name="tab_item-follow">
+								<label class="tab_item-following" for="programming-follow">팔로워</label>
 
 								<div class="tab_content-follow" id="all-follow_content">
 									<div class="col-md-4" id="fll">
@@ -1053,8 +1242,24 @@
 										<br />
 									</div>
 								</div>
+								<div class="clubRandomCover" >
+								
+									<div class="clubRandom">
+									
+										<div class="clubRandomTitle">
+											최신 모임
+										</div>
+									
+										<div class="clubRandomName">
+										
+										</div>
+									</div>
+								</div>
+								
 							</div>
-
+							
+								
+							
 						</div>
 
 						<%-- 현재 페이지 --%>
@@ -1080,7 +1285,7 @@
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">title</h4>
+						<h4 class="modal-title" id="myModalCommentLabel">title</h4>
 					</div>
 					<div class="modal-body">여기는 내용</div>
 					<div class="modal-footer">
@@ -1104,7 +1309,7 @@
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">알림</h4>
+						<h4 class="modal-title" id="myModalAlarmLabel">알림</h4>
 					</div>
 					<div class="modal-body alarmModalBody">여기는 알람모달</div>
 					<div class="modal-footer">
@@ -1123,16 +1328,14 @@
 
 					<!-- form Start /////////////////////////////////////-->
 					<form class="form-horizontal" enctype="multipart/form-data" id="reportForm">
-						<input type="hidden" name="type" id="type" value="1">
-						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
-						<div>
-							<div class="reportTitle">
+						
+						<div class="reportTitleCover">
+							<div class="reportTitleTitle">
 								제목
 							</div>
 							<div class="reportTitle">
-								<textarea class="title" id="title" name="title" value=""
-									maxlength="80" placeholder="신고 제목을 입력해주세요">
-								</textarea>
+							
+								<textarea class="title" id="title" name="title" maxlength="80" placeholder="신고 제목을 입력해주세요"></textarea>
 
 							</div>
 
@@ -1140,59 +1343,49 @@
 
 						</div>
 						
-						<div class="form-group">
-							<div class="reportContent">
+						<div class="reportContentCover">
+							<div class="reportContentTitle">
 								내용
 							</div>
 							
 							<div class="reportContent">
-								<textarea class="content" id="content" name="content" value=""
-									placeholder="신고 내용을 입력해주세요." maxlength="500">
-								</textarea>
+								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<div>
-								신고받는 ID
-								<input type="text" class="" id="user2" name="user2" value="user999" readonly style="width: 150px;" readonly />
-								신고 출처
-								<input type="text" class="" value="피드" style="width: 150px;" disabled />
-							</div>
-							
-							<input type="hidden" id="reportSource" name="reportSource" value="3">
-							<input type="hidden" name="no" id="feedNo" value="111" />
+						<div class="reportSourceDiv">
+							신고받는 ID
+							<input type="text" class="reportSourceDivId" id="user2" name="user2" value="" readonly />
+							신고 출처
+							<input type="text" class="reportSourceDivSource" value="피드" disabled />
+						</div>
+						
+						<input type="hidden" name="type" id="type" value="1">
+						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
+						<input type="hidden" id="reportSource" name="reportSource" value="3">
+						<input type="hidden" name="no" id="feedNo" value="" />
+
+						<div class="reportModalReason">
+
+							<input type="checkbox" id="욕설" name="reportReason" value="1" >
+								욕설
+							<input type="checkbox" id="광고" name="reportReason" value="2" >
+								광고
+							<input type="checkbox" id="기타" name="reportReason" value="4" >
+								기타
+							<input type="checkbox" id="성적" name="reportReason" value="8" >
+							성적인 발언
 
 						</div>
-
-						<div class="form-group">
-							<label for="Reason"
-								class="col-sm-offset-1 col-sm-3 control-label">신고 사유</label>
-							<div class="col-sm-4" id="Reason" style="width: 400px;">
-
-								<input type="checkbox" id="욕설" name="reportReason" value="1"
-									style="margin-left: 55px">욕설 <input type="checkbox"
-									id="광고" name="reportReason" value="2" style="margin-left: 30px">광고
-								<input type="checkbox" id="기타" name="reportReason" value="4"
-									style="margin-left: 30px">기타 <input type="checkbox"
-									id="성적" name="reportReason" value="8" style="margin-left: 30px">성적인
-								발언
-
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-sm-offset-4  col-sm-4 text-center"
-								style="left: 30px;">
-								<button type="button" class="add add5">등록</button>
-							</div>
-						</div>
-
+						
 					</form>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
+							Close
+						</button>
+						
+						<button type="button" class="btn btn-default add add5">등록</button>
 					</div>
 				</div>
 			</div>
