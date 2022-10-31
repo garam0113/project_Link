@@ -12,6 +12,7 @@ import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Notice;
@@ -104,6 +105,22 @@ public class ClubPostServiceImpl implements ClubPostService {
 		return clubPostDAOImpl.getClubPostListMyHome(userId);
 	}// end of getClubPostListMyHome(String userId)
 
+	
+	
+	
+	
+///////////////////////////////////////////////////////////////////////////////////// chat /////////////////////////////////////////////////////////////////////////////////////
+
+
+	
+	
+
+	@Override
+	public List<ClubUser> getRoomIdList(User user) throws Exception {
+		System.out.println(getClass() + ".getRoomIdList(User user) 도착");
+		return clubPostDAOImpl.getRoomIdList(user);
+	}
+	
 	
 	
 	

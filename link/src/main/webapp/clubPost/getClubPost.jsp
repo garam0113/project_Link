@@ -1076,8 +1076,11 @@
 						<div id="allChat-content">
 							<div class="chat chat-content">모임채팅</div>
 							<div class="chat chidren" style="display: none;" condition="0">
-								<div class="chat-content" roomId="68">111</div>
-								<div class="chat-content" roomId="63">222</div>
+								<c:if test="${ fn:length(roomList) > 0 }">
+									<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
+										<div class="chat-content" roomId="${ roomList[i].roomId }">${ roomList[i].roomId }</div>
+									</c:forEach>
+								</c:if>
 							</div>
 							<div class="chat chat-content">1:1채팅</div>
 							<div class="chat chidren" style="display: none;" condition="0">
