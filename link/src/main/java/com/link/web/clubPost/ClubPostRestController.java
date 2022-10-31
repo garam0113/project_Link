@@ -14,6 +14,8 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,25 +74,24 @@ public class ClubPostRestController {
 	
 	
 	
-	
-	/*
-	@RequestMapping(value = "json/getClubPostList", method = RequestMethod.GET)
-	public Map<String, Object> getClubPostList(@RequestParam int order, @RequestParam int clubNo, ClubPost clubPost, Map<String, Object> map, HttpSession session, Search search) throws Exception {
-		System.out.println("/getClubPostList : GET : 특정 모임에서 모임게시물 리스트, 개수");
-		// search.order => 0 : 최신순, 1 : 역최신순, 2 : 좋아요 많은순, 3 : 내가 작성한 게시물
+	@RequestMapping(value = "json/getClubPost", method = RequestMethod.POST)
+	public ClubPost getClubPost(@RequestBody ClubPost clubPost, Map<String, Object> map, HttpSession session) throws Exception {
+		System.out.println("/getClubPost : POST : 상세보기에서 모달창으로 게시물정보 가져오기");
 
-		System.out.println(search);
-		System.out.println(clubPost);
+		// 전달받은 게시물 번호
+		System.out.println("모임 번호 : " + clubPost.getClubNo() + ", 모임 게시물 번호 : " + clubPost.getClubPostNo());
 		
-		//clubPost.setUser((User) session.getAttribute("user"));
-		clubPost.setUser(new User("user03"));	
-		map.put("search", search);
-		map.put("clubPost", clubPostServiceImpl.getClubPostList(ClubPostCommon.getSearch(search), clubPost));
-		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount	
+		////////////////////////////////////// DATA /////////////////////////////////////////
+
+		clubPost.setUser((User)session.getAttribute("user"));
+		map.put("clubPost", clubPost);
 		
-		return map;
+		////////////////////////////////////// Business Logic /////////////////////////////////////////
+		
+		map = clubPostServiceImpl.getClubPost(map);
+		
+		return (ClubPost)map.get("getClubPost");
 	}
-	*/
 	
 	@RequestMapping(value = "json/getClubPostList", method = RequestMethod.POST)
 	public Map<String, Object> getClubPostList(@RequestBody Search search, ClubPost clubPost, Map<String, Object> map, HttpSession session) throws Exception {
@@ -141,6 +142,71 @@ public class ClubPostRestController {
 		
 		// ServiceImpl에서 좋아요인지 좋아요 취소인지 구분해 DAOImpl에 보낸준다
 		return ((ClubPost)clubPostServiceImpl.updateClubPost(map).get("getClubPost"));
+	}
+
+	@RequestMapping(value = "/json/updateClubPostSummernote", method = RequestMethod.POST)
+	public ClubPost updateClubPostSummernote(@RequestBody ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
+		System.out.println("/updateClubPostSummernote : POST : 상세보기에서 모달로 게시물 수정 했을때");
+		
+		System.out.println("게시물번호 : " + clubPost.getClubPostNo() + ", 게시물제목 : " + clubPost.getClubPostTitle() + ", 게시물내용 : " + clubPost.getClubPostContent());
+
+		////////////////////////////////////// DATA /////////////////////////////////////////
+		
+		// session으로 로그인한 회원 정보를 가져온다
+		clubPost.setUser((User)session.getAttribute("user"));
+
+		
+		
+		// specificImage 문자열이 있다면 summernote로 받아온 clubPostContent안에 이미지가 있다는 것
+		String specificImage = "/resources/image/uploadFiles/";
+		// specificVideo 문자열이 있다면 summernote로 받아온 clubPostContent안에 영상이 있다는 것
+		String specificVideo = "embed/";
+		
+		
+		
+		// isIndexImage가 -1이면 이미지가 없다
+		int isIndexImage = clubPost.getClubPostContent().indexOf(specificImage);
+		// isIndexVideo가 -1이면 영상이 없다
+		int isIndexVideo = clubPost.getClubPostContent().indexOf(specificVideo);
+		
+		
+
+		if( isIndexImage != -1) {
+			System.out.println("이미지가 있다");
+			
+			int startIndex = isIndexImage+specificImage.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			// 파일명.확장자
+			System.out.println("시작 index : " + startIndex + ", 시작부터 마지막 index : " + endIndexFromStartIndex);
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setImage1(str);
+		}
+		
+		if( isIndexVideo != -1) {
+			System.out.println("영상이 있다");
+			
+			int startIndex = isIndexVideo+specificVideo.length();
+			int endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("\"");
+			if(clubPost.getClubPostContent().substring(startIndex).indexOf("?") != -1) {
+				endIndexFromStartIndex = clubPost.getClubPostContent().substring(startIndex).indexOf("?");
+			}
+			// 파일명.확장자
+			System.out.println("시작 index : " + startIndex + ", 시작부터 마지막 index : " + endIndexFromStartIndex);
+			String str = clubPost.getClubPostContent().substring(startIndex).substring(0, endIndexFromStartIndex);
+			clubPost.setClubPostVideo1(str);
+		}
+		
+		System.out.println("모임 게시물 대표 영상 썸네일 : " + clubPost.getClubPostVideo1() + ", 모임 게시물 대표 이미지 : " + clubPost.getImage1() + ", 모임 게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
+		
+		
+		
+		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+		
+		
+		
+		map.put("report", report);
+		map.put("clubPost", clubPost);
+		return (ClubPost) clubPostServiceImpl.updateClubPost(map).get("getClubPost");
 	}
 	
 	@RequestMapping(value="/json/uploadSummernoteImageFile", produces = "application/json; charset=utf8")

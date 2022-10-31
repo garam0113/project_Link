@@ -119,10 +119,11 @@ public class ClubController {
 //	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
+		user = (User) session.getAttribute("user");
 		//Business Logic
 		Map<String, Object> map = clubService.getClub(Integer.parseInt(clubNo));
 		
@@ -133,6 +134,8 @@ public class ClubController {
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		session.setAttribute("clubNo", clubNo);
 		
+		
+		System.out.println("유저 세션 뭐지? : " +user);
 		System.out.println("클럽 맵에 뭐 들어갔지? : "+map.get("club"));
 
 		System.out.println("클럽 넘버 세션은? : "+clubNo);
@@ -411,7 +414,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="addMeeting", method=RequestMethod.POST)
-	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, Participant participant, String meetingNo) throws Exception {
+	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, Participant participant, String meetingNo, Map<String, Object> map) throws Exception {
 		
 		System.out.println("club/addMeeting : POST ");
 		
@@ -429,12 +432,23 @@ public class ClubController {
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
 		
-//		participant.setUser(user);
-//		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
-		clubService.addMeeting(meeting);
-//		clubService.addMeetingMember(participant);
-		return "forward:/club/getMeetingList";
 		
+		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
+
+		clubService.addMeeting(meeting);
+		map = clubService.getClub(Integer.parseInt(clubNo));
+		
+		
+		model.addAttribute("club", map.get("club"));
+		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
+		session.setAttribute("clubNo", clubNo);
+		
+		
+		System.out.println("유저 세션 뭐지? : " +user);
+		System.out.println("클럽 맵에 뭐 들어갔지? : "+map.get("club"));
+		System.out.println("클럽 넘버 세션은? : "+clubNo);
+		
+		return "forward:/club/getClub.jsp";
 	}
 	
 	@RequestMapping(value="addMeetingMember", method=RequestMethod.POST)
@@ -560,7 +574,7 @@ public class ClubController {
 		//Business Logic
 		clubService.updateMeeting(meeting);
 		
-		return "forward:/club/getMeetingList";
+		return "forward:/club/getMeeting.jsp";
 	}
 	
 	@RequestMapping(value="deleteMeeting")

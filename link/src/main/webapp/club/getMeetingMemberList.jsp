@@ -52,6 +52,30 @@
 			
 	}
 	
+	.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+	
 	main {
 		background-color: #f0f2f5 !important;
 	}
@@ -116,7 +140,7 @@
 	
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -136,10 +160,10 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
-		<main role="main">
-			<div id="intro-wrap" data-height="17.35"><!-- 상단 검은색 공통 영역 -->
+		<!-- <main role="main">
+			<div id="intro-wrap" data-height="17.35">상단 검은색 공통 영역
 				<div id="intro" class="preload darken">					
-					<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
+					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 					<div class="intro-item">
 					
 						<div class="club-wrap">
@@ -151,8 +175,8 @@
 							</div>							
 						</div>
 					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+				</div>intro
+			</div>intro-wrap -->
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -161,18 +185,18 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 200px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
+							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
+							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임 게시물</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
+							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">모임 채팅</a>
+							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임 채팅</a>
 						</li>
 						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
@@ -216,9 +240,9 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
 		<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-deleteParticipant" id="deleteParticipant" style="border-color: #BD76FF; color: #BD76FF; background-color: #f0f2f5; border-radius: 10px;">신&nbsp;청&nbsp;취&nbsp;소</button>
-					<button type="button" class="btn btn-cancel" style="border-color: #BD76FF; color: #BD76FF; background-color: #f0f2f5; border-radius: 10px;">닫&nbsp;기</button>					
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 30%;">
+					<button type="button" class="plain button red cancel" id="deleteParticipant">신청취소</button>
+					<button type="button" class="plain button red cancel" id="cancel">닫&nbsp;기</button>					
 		    </div>
 			</div>		
 	  
@@ -227,7 +251,7 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
 	</div>
-	</main>
+	<!-- </main> -->
 </body>
 
 </html>

@@ -47,8 +47,31 @@
 		
 		textarea {
 		resize: none;
+		}
+		
+		.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
 	
-}
+		.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
 		
         
         
@@ -59,12 +82,28 @@
 <script type="text/javascript">
 
 
+
+
+
+	$(function() {
+	
+		$("#apply").on("click", function() {
+			fncAddApprovalCondition();
+			
+			opener.document.location.reload();
+			self.close();
+		});
+		
+	
+	$(function() {
+	
+		$("#cancel").bind("click", function() {
+			window.close();
+		});
+	});
+
 	function fncAddApprovalCondition() {
 
-		////////////////////////////////////////////////////
-		//document.detailForm.action = '/addProduct.do';
-		///////////////////////////////////////////////////
-		
 		var joinGreeting = $("textarea[name='joinGreeting']").val();
 		
 		if ( joinGreeting == null || joinGreeting.length < 1 ) {
@@ -74,38 +113,11 @@
 			});
 			return;
 		}
-		
-		
-
 		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition").submit();
-		
-		
-			}
-
-
-	$(function() {
-
-		$("button.btn.btn-apply").on("click", function() {
-			
-			fncAddApprovalCondition();
-			
-		});
-	});	
-
-	$(function() {
-
-		$("button.btn.btn-cancel").bind("click", function() {
-			history.go(-1);
-			//window.close();
-		});
+	}
 	});
-	
-/* 	window.addEventListener('beforeunload', function(event) {
 
-		event.preventDefault();
-		
-		event.returnValue = '';
-	}); */
+	
 
 </script>
 </head>
@@ -136,8 +148,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-apply" style="background-color: #fbfbfb; color:#BD76FF; border-color: #BD76FF;">脚&nbsp;没</button>
-					<button type="button" class="btn btn-cancel" style="background-color: #fbfbfb; color:#BD76FF; border-color: #BD76FF;">秒&nbsp;家</button>
+		      		<button type="button" class="plain button red cancel" id="apply">脚&nbsp;没</button>
+					<button type="button" class="plain button red cancel" id="cancel">秒&nbsp;家</button>
 		    </div>
 			</div>
 		</form>	

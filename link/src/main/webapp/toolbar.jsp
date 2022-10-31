@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The Page Description">
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
-		<title>Beetle - Home page</title>
+		<title>LINK</title>
 		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
 		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
@@ -51,7 +51,6 @@
 				sock.onmessage = onMessage;
 	
 				sock.onclose = function () {
-					console.log("체크" + sock);
 					console.log('close');
 				};
 	
@@ -91,7 +90,15 @@
 </head>
 
 <style>
+	.alarmHead {
+		float: right;
+	}
 
+	.alarmImg {
+		display: inline-flex; 
+		width:25px; 
+		height:25px;
+	}
 </style>
 		
 	</head>
@@ -107,7 +114,7 @@
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/main.jsp">Link</a>
+                  <a href="/main.jsp">LINK</a>
                </h1>
             </div>
             <!-- brand -->
@@ -130,6 +137,7 @@
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
                            href="/user/getUser?userId=${sessionScope.user.userId}">내정보보기</a></li>
+                           
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
@@ -137,8 +145,17 @@
                      
                      
                   </c:if>
+                  
                </ul>
+               
             </nav>
+            
+            <div class="alarmHead" >
+						
+				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+			</div>
+                    
          </div>
          <!-- row-content -->
       </div>
