@@ -131,7 +131,7 @@
 			
 			<%-- 모임 게시물 수정 --%>
 			$(".clubPost-header-update").bind("click", function(){
-				alert("모임게시물 수정");
+				//alert("모임게시물 수정");
 				//$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 				
 				var clubNo = $("#clubNo").val();
@@ -806,7 +806,40 @@
 				textEdit();
 				
 				$("#summernoteUpdate").bind("click", function(){
-					alert("게시물 수정완료");
+					//alert("게시물 수정완료");
+					
+					if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '제목은 필수입니다'
+							})
+							return;
+					}
+					
+					if( $("input[name='clubPostTitle']").val().length > 40 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '제목은 40자까지 가능합니다'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '이미지나 동영상 1개 필수입니다'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().length > 1000 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '내용이 너무 깁니다'
+							})
+							return;
+					}
+					
 					/* $("form[name='summernoteUpdateClubPost']").attr("method", "post").attr("enctype", "multipart/form-data")
 					.attr("action", "/clubPost/updateClubPost?clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&clubPostTitle="+$("input[name='clubPostTitle']").val()
 					+"&clubPostContent="+$("#summernote").val()).attr("accept-charset", "EUC-KR").submit(); */
@@ -862,24 +895,26 @@
 				});
 				
 				$("#summernoteCancle").bind("click", function(){
-					alert('수정완료 이전으로');
+					//alert('수정완료 이전으로');
 					
 					// 제목과 내용 초기화
 					$("input[name='clubPostTitle']").val("");
 					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
 					$(".note-editable").text("");
+					$("#summernote").val("");
 					
 					// 모달창 닫기
 					$('#club-post-update-modal').modal("hide");
 				});
 				
 				$("button[class='close']").bind("click", function(){
-					alert('수정완료 이전으로');
+					//alert('수정완료 이전으로');
 					
 					// 제목과 내용 초기화
 					$("input[name='clubPostTitle']").val("");
 					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
 					$(".note-editable").text("");
+					$("#summernote").val("");
 					
 					// 모달창 닫기
 					$('#club-post-update-modal').modal("hide");

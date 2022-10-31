@@ -68,15 +68,18 @@
 							return;
 					}
 					
-					alert( $("#summernote").val() );
-					alert( $("#summernote").val().match("img") );
-					alert( $("#summernote").val().match("iframe") );
-					
 					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
-						alert("없어요");
 						Swal.fire({
 							  icon: 'error',
 							  title: '이미지나 동영상 1개 필수입니다'
+							})
+							return;
+					}
+					
+					if( $("#summernote").val().length > 1000 ){
+						Swal.fire({
+							  icon: 'error',
+							  title: '내용이 너무 깁니다'
 							})
 							return;
 					}
@@ -97,9 +100,24 @@
 					$("input[name='clubPostTitle']").val("");
 					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
 					$(".note-editable").text("");
+					$("#summernote").val("");
 					
 					// 모달창 닫기
 					$('#club-post-add-modal').modal("hide");
+				});
+				
+				// 모달창 x 클릭시 이벤트
+				$("button[class='close']").bind("click", function(){
+					//alert('수정완료 이전으로');
+					
+					// 제목과 내용 초기화
+					$("input[name='clubPostTitle']").val("");
+					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
+					$(".note-editable").text("");
+					$("#summernote").val("");
+					
+					// 모달창 닫기
+					$('#club-post-update-modal').modal("hide");
 				});
 				
 				$("b:contains('최신순')").bind("click", function() {
@@ -117,6 +135,15 @@
 				$("input[value='검색']").bind("click", function() {
 					$("input[name='currentPage']").val("1");
 					//$("form").submit();
+				});
+				$("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
+					location.href = "/clubPost/addPayView";
+				});
+				$("b:contains('모임대표가 가입승인시 - 모임원 추가')").bind("click", function() {
+					location.href = "/clubPost/addPayView?clubNo="+${ clubNo };
+				});
+				$("b:contains('모임신청시 - 모임추가')").bind("click", function() {
+					location.href = "/clubPost/addPayView?payNavigation=1";
 				});
 				
 				//무한 페이징
@@ -359,7 +386,10 @@
 											<b class="club-post-list-order">최신순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">오래된순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">좋아요 많은순</b>&nbsp;/&nbsp;
-											<b class="club-post-list-order">내가 작성한 게시물</b>
+											<b class="club-post-list-order">내가 작성한 게시물</b><br>
+											<b class="club-post-list-order">모임등록시 - 모임 추가</b><br>
+											<b class="club-post-list-order">모임대표가 가입승인시 - 모임원 추가</b><br>
+											<b class="club-post-list-order">모임신청시 - 모임추가</b><br>
 											<!-- <a href="/clubPost/getClubNoticeList">공지사항</a> -->
 											<button type="button" class="plain button red" id="club-post-add">등록하기</button>
 								    	</p>
