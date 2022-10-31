@@ -252,7 +252,7 @@ body>div.container {
 </head>
 
 <body>
-	<form>
+	<form style="background-color: #EBEDF0;">
 		<div class="wrap wd668">
 			<div class="container">
 				<div class="form_txtInput">

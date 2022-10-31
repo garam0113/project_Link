@@ -1,11 +1,13 @@
 package com.link.service.domain;
 
 public class Live {
-	
+
 	private String roomName;
-	private String nickName;
+	private String viewRoomName;
+	private String profileImage;
 	private int limit;
 	private int member;
+	private String type;
 
 	public String getRoomName() {
 		return roomName;
@@ -13,14 +15,26 @@ public class Live {
 
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
+		
+		if(roomName != null && roomName != "") {
+			this.viewRoomName = roomName.split(":")[1];
+		}
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getViewRoomName() {
+		return viewRoomName;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setViewRoomName(String viewRoomName) {
+		this.viewRoomName = viewRoomName;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	public int getLimit() {
@@ -39,10 +53,18 @@ public class Live {
 		this.member = member;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		return "Live [roomName=" + roomName + ", nickName=" + nickName + ", limit=" + limit + ", member=" + member
-				+ "]";
+		return "Live [roomName=" + roomName + ", viewRoomName=" + viewRoomName + ", profileImage=" + profileImage
+				+ ", limit=" + limit + ", member=" + member + ", type=" + type + "]";
 	}
 
 }

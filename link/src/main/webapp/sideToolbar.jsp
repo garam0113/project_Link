@@ -56,31 +56,17 @@
 
 <body class="portfolio">
 	<jsp:include page="/toolbar.jsp" />
-	<main role="main">
-		<div id="intro-wrap" class="topbar" data-height="13.222">
-			<div id="intro" class="preload darken">
-			<div class="intro-item">
-					<div class="caption">
-						<h2 style="
-    margin-top: 10px;">MyPage</h2>
-					</div>
-					<!-- caption -->
-				</div>
-			</div>
-			<!-- intro -->
-		</div>
-		<!-- intro-wrap -->
-	</main>
+	
 	<!-- main -->
 <form>
+<br/><br/>
 <input type="hidden" class="currentPage" id="currentPage" name="currentPage" value="1" />
 	<c:if test="${ user.role == '0' }">
-		<div id="main" class="row">
-			<div class="row-content buffer clear-after">
+		<div id="main" class="row"style="background-color: #EBEDF0;">
+			<div class="row-content buffer clear-after" style="margin-bottom: -80px;">
 				<ul class="inline cats filter-options">
 					<li data-group="advertising">내정보보기</li>
 					<li data-group="fun">내정보수정</li>
-					<li data-group="icons">차단리스트</li>
 					<li data-group="infographics">내 신고내역</li>
 					<li data-group="lightbox">내 Q&A</li>
 				</ul>

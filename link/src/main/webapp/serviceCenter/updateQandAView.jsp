@@ -43,7 +43,7 @@
             });
 				return;
 			}
-		
+		alert("2");
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateQandA").submit();
 	}
 			
@@ -53,10 +53,12 @@
 		
 		$("button:contains('수정')").bind("click", function(){
 			fncUpdateQandA();
+			alert("3");
 		});
 		
-		$("button:contains('뒤로')").bind("click", function(){
-			history.go(-1);
+		$("#back").bind("click", function(){
+			alert("4");
+			window.history.back(-1);
 		});
 
 		
@@ -65,61 +67,45 @@
 	
 </script>
 <style>
+.row {
+	margin-left : 0px !important;
+	    display: inherit;
+}
+body{
+background-color: #EBEDF0 !important;
+}
 textarea {
 	resize: none;
 }
 
-.custom-btn {
-  margin: 5px;
-  width: 80px;
-  height: 30px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+.btn-13 {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
-  background: transparent;
+  background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  border: none !important;
+  border: solid 2px;
   box-shadow:none !important;
   outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
 }
-.btn-13 {
-  background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
-  border: none;
-  z-index: 1;
-}
-.btn-13:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  border-radius: 5px;
+
+.btn-13:hover { 
    background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
-.btn-13:hover { <%-- 글씨색 --%>
-  color: #fff;
-}
-.btn-13:hover:after {
-  top: 0;
-  height: 100%;
-}
-.btn-13:active {
-  top: 2px;
-}
+
 
 
 </style>
@@ -161,7 +147,7 @@ textarea {
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandARegDate" id="qandARegDate">${qandA.qandARegDate }</td>
+						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong></td>
 						<td align="left" style="transform: translateX(-370px);">${qandA.userId.nickName}</td>
 						
 					</tr>
@@ -220,7 +206,7 @@ textarea {
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
 							 style ="width:auto; height:auto;" checked>전체 보기</td></c:if>
 					</tr>
-			</table>
+			</table></form>
 			<!--  table End /////////////////////////////////////-->
 	
 
@@ -228,10 +214,10 @@ textarea {
 		
 						
 									<div> 
-			 						 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
-									   수정</button></form> 
+			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
+									   수정</button> 
 
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
 									뒤로</button>
 									
 									</div>

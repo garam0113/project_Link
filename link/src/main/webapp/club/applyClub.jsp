@@ -16,15 +16,15 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-   
-   <!-- jQuery UI toolTip 사용 CSS-->
+<!--    
+   jQuery UI toolTip 사용 CSS
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
-  	<!--  	jQuery UI toolTip 사용 JS -->
+  	 	jQuery UI toolTip 사용 JS
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
+  <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
-
+ -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -81,27 +81,20 @@
     
 <script type="text/javascript">
 
-
-
-
-
 	$(function() {
 	
 		$("#apply").on("click", function() {
 			fncAddApprovalCondition();
 			
-			opener.document.location.reload();
-			self.close();
+			//opener.document.location.reload();
+			//window.close();
 		});
-		
-	
-	$(function() {
 	
 		$("#cancel").bind("click", function() {
 			window.close();
 		});
 	});
-
+	
 	function fncAddApprovalCondition() {
 
 		var joinGreeting = $("textarea[name='joinGreeting']").val();
@@ -113,9 +106,13 @@
 			});
 			return;
 		}
-		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition").submit();
+		$("form").attr("method", "POST").attr("action", "/club/addApprovalCondition")
+			.submit();
+		
+		opener.document.location.reload();
+		/* self.close(); */
 	}
-	});
+
 
 	
 
@@ -140,7 +137,7 @@
 			<div class="form-group">
 				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> 가 입 인 사</label>
 				<div class="col-sm-4">
-					<textarea class="joinGreeting" id="joinGreeting" name="joinGreeting" value="" maxlength="100" style="width: 300px; height: 50px;" placeholder="가입인사는 필수입니다."></textarea>
+					<textarea class="joinGreeting" id="joinGreeting" name="joinGreeting" maxlength="100" style="width: 300px; height: 50px;" placeholder="가입인사는 필수입니다."></textarea>
 				</div>		
 			</div>
 			

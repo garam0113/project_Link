@@ -141,6 +141,7 @@ CREATE TABLE club (
 	club_category					VARCHAR2(500)										NOT NULL,
 	club_area						VARCHAR2(500)										NOT NULL,
 	club_image         				VARCHAR2(500)          								NOT NULL,
+	roomId							VARCHAR2(500),
 	PRIMARY KEY(club_no)
 );
 
@@ -156,6 +157,7 @@ CREATE TABLE club_user (
 	member_role						CHAR(3),
 	approval_condition				CHAR(3),	
 	join_greeting					VARCHAR2(500)										NOT NULL,
+	roomId							VARCHAR2(500),
 	PRIMARY KEY(club_user_no)
 );
 

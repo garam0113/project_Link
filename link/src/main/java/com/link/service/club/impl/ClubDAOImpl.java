@@ -170,7 +170,11 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addApprovalCondition(ClubUser clubUser) throws Exception {
 		
 		System.out.println("모임가입신청 DAOImpl 왔나?? ");
-		sqlSession.insert("ClubMapper.addApprovalCondition",clubUser);
+		if (clubUser.getMemberRole().equals("2")) {
+			int clubNo = sqlSession.selectOne("ClubMapper.getClubNo", clubUser.getUser());
+			clubUser.setClubNo(clubNo);
+		}
+		sqlSession.insert("ClubMapper.addApprovalCondition", clubUser);
 	}
 	
 	//JUNIT TEst

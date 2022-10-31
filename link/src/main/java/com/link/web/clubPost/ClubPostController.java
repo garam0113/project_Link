@@ -379,8 +379,10 @@ public class ClubPostController {
 	public String chatClubList(HttpSession session, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
 		//return "forward:/chat/chatRoomList.jsp";
+		UUID roomId = UUID.randomUUID();
+		System.out.println(roomId);
+		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
-		//return "forward:/chat/index3.jsp";
 	}
 	
 	@RequestMapping(value = "/chatRoom", method = RequestMethod.GET)
