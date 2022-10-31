@@ -114,12 +114,6 @@
 		 	clear: none;
 		 }
 		 
-	 	/*  .btn {
-		 	background-color: #fbfbfb;
-		 	color: #BD76FF;
-		 	border-color: #BD76FF;
-		 } */
-		 
 		 .club-cT {
 		 		font-size: 
 		 }
@@ -250,7 +244,6 @@
 	
 	function enterkey() {
 		if(window.event.keyCode == 13) {
-			//fncGetClubList(currentPage);
 			fncGetClubList(1);
 		}
 	}

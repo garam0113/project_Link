@@ -61,6 +61,14 @@
 		
 		$("input[value='신청']").bind("click", function() {
 			
+			if($.trim($("input[name='joinGreeting']").val()) == '' ){
+				Swal.fire({
+					icon: 'error' ,
+					title: '제목은 필수입니다'
+				})
+				return;
+			}
+			
 			$("form").attr("accept-charset" , "EUC-KR").submit();
 		});
 		
@@ -325,29 +333,14 @@
 		}
 		
 		.club-wrap img {
-			width: 100%;
+			width: 50%;
 			vertical-align: middle;
 			filter: brightness(1.1);
+			margin-left: 450px;
+			/* margin-top: -23px;
+			height: 0%; */
 		}
 	
-		.club-text {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 100%;
-			transform: translate(-50%, -50%);
-			font-size: 20px;
-			text-align: center;
-		}
-		
-		.h2-color {
-			color: yellow;
-		}
-		
-		.p-color {
-			color: yellow;
-		}
-		
 		.row-content.buffer, .row-content.buffer-left {
 			padding-left: 0% !important;
 		}
@@ -366,7 +359,7 @@
 		
 		
 		.modal { 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none; margin-top: 350px;
 		}
 			
 		.modal_content{
@@ -383,8 +376,6 @@
 			position: static !important;
 		
 		}
-		
-		
 		
 		
 	</style>
@@ -413,20 +404,13 @@
 						<div class="club-image">
 							<a href="/club/getClub?clubNo=${clubNo}"><img
 								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="1500" height="300" name="file" id="clubImage"></a>
+								width="800" height="300" name="file" id="clubImage"></a>
 						</div>
-
-						<div class="club-text">
-							<h2 class="h2-color">
-								<a href="/club/getClub?clubNo=${clubNo}"></a>CLUB
-							</h2>
-							<p class="p-color">Make good memories with the members...</p>
 						</div>
 					</div>
 				</div>
+				<!-- intro -->
 			</div>
-			<!-- intro -->
-		</div>
 		<!-- intro-wrap -->
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -444,9 +428,11 @@
 						<li data-group="infographics">
 							<a href="/clubPost/chatRoomList?roomId=${ club.roomId }" style="color: #BD76FF;">모임채팅</a>
 						</li>
+						<button type="button" class="live">
+						<span class="glyphicon glyphicon-facetime-video" aria-hidden="true" style="font-size:35px;">화상채팅</span>
+						</button>
 					</ul>
 		
-				<button type="button" class="live">모임 화상채팅</button>
 
 
 				<div class="mainForm" style="display: inline-flex;">
@@ -458,7 +444,7 @@
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
 									<div class="col-xs-4 col-md-6">
-										<strong>모 임 제 목</strong> <button type="button" class="plain button red cancel" id="club-add-approval">가신2</button>
+										<strong>모 임 제 목</strong>
 									</div>
 									<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
 								</div>
@@ -514,13 +500,13 @@
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 756px;">일정생성</button>
 				</div>
 				
 			
 			<!-- 모달영역 -->
 			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog" role="document" style="margin-top: 100px;">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -555,7 +541,7 @@
 					<!-- <button type="button" class="joinLi"></button> -->
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
-		      		<!-- <button type="button" class="plain button red cancel" id="addApproval">가입신청</button> -->
+		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
