@@ -1,4 +1,29 @@
 
+	/* 랜덤 클럽 가져오기 */
+
+	.clubRandomCover {
+		margin-top: 475px;
+	}
+
+	.clubRandomName {
+		font-size: 1rem;
+    	font-weight: 700;
+	}
+
+	.clubRandomTitle {
+		display: flex;
+		justify-content: center;
+		font-weight: bold;
+		font-size: 1.3rem;
+	}
+
+	a {
+		text-decoration: auto;
+	}
+
+
+	/* 랜덤 클럽 가져오기 */
+
 	/* 스크롤바 안보이지만 동작 */
 
 	html {
@@ -490,7 +515,7 @@
 		background-color: #ffffff;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 		display:inline-block;
-		height:700px;
+		height:500px;
 		border-radius: 15px;
 	}
 		
@@ -515,8 +540,8 @@
 	.tab_item-following {
 		width: 100px !important;
 		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
+		background-color: #F5F6F7;
+		border-bottom: 3px solid #EBEDF0;
 		line-height: 50px;
 		font-size: 16px;
 		text-align: center;
@@ -526,13 +551,13 @@
 		text-align: center;
 		font-weight: bold;
 		transition: all 0.2s ease;
-		border-radius: 15px;
+		border-radius: 15px 15px 0px 0px ;
 	}
 	.tab_item-follow {
 		width: 100px !important;
 		height: 50px;
-		border-bottom: 3px solid #333333;
-		background-color: #f8f8f8;
+		background-color: #F5F6F7;
+		border-bottom: 3px solid #EBEDF0;
 		line-height: 50px;
 		font-size: 16px;
 		text-align: center;
@@ -543,7 +568,7 @@
 		text-align: center;
 		font-weight: bold;
 		transition: all 0.2s ease;
-		border-radius: 15px;
+		border-radius: 15px 15px 0px 0px ;
 	}
 	
 	.tab_item2 {
@@ -581,7 +606,7 @@
 	.tab_content {
 		position: fixed;
 		display: none;
-		height: 630px;
+		height: 400px;
 		clear: both;
 		overflow: hidden;
 		overflow-y: auto;
@@ -591,7 +616,7 @@
 	.tab_content-follow {
 		position: fixed;
 		display: none;
-		height: 630px;
+		height: 400px;
 		clear: both;
 		overflow: hidden;
 		overflow-y: auto;
@@ -659,6 +684,76 @@
 
 	/* 사이드바에 있는 팔로우 목록 */
 
+
+
+	/* 신고 모달 관련 */
+
+	#reportModal .form-horizontal {
+		margin: 30px;
+	}
+
+	#reportModal {
+		font-size: 1rem;
+	}
+
+	.reportSourceDiv {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
+	.reportSourceDivId {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		width: 100px !important;
+	}
+
+	.reportSourceDivSource {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		width: 100px !important;
+	}
+
+	.reportTitleTitle {
+		display: flex;
+		justify-content: center;
+		font-weight: 700 !important;
+	}
+
+	.reportTitle {
+		display: flex;
+		justify-content: center;
+	}
+
+	.reportContentTitle {
+		display: flex;
+		justify-content: center;
+		font-weight: 700 !important;
+	}
+
+	.reportContent {
+		display: flex;
+		justify-content: center;
+	}
+
+	.reportModalReason {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	#title {
+		height: 50px;
+		width: 100%;
+		resize: none;
+	}
+
+	#content {
+		resize: none;
+		width: 100%;
+	}
+
+
+	/* 신고 모달 관련 */
 
 
 
