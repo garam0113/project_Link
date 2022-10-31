@@ -44,6 +44,12 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.insert("FeedMapper.addFeed", feed);
 	}
 	
+	@Override
+	public Feed getFeedLast() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getFeedLast");
+	}
+	
 	// 사용
 	@Override
 	public Feed getFeed(Map<String, Object> map) throws Exception {
@@ -81,6 +87,12 @@ public class FeedDAOImpl implements FeedDAO {
 	public Comment getFeedComment(int feedCommentNo) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("FeedMapper.getFeedComment", feedCommentNo);
+	}
+	
+	@Override
+	public Comment getFeedLastComment() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("FeedMapper.getFeedLastComment");
 	}
 
 	@Override

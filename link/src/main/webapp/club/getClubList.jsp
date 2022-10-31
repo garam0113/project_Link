@@ -31,6 +31,10 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 
+ 	 <!-- alert! -->
+ 	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
+ 	 
+ 	 
  	 <!-- 따로 가능?? -->
  	 	<meta name="description" content="The Page Description">
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
@@ -81,7 +85,7 @@
 		}
 		
 		header.transparent {
-    		background-color: #23242b;
+    		/* background-color: #23242b; */
 		    -webkit-box-shadow: none;
 		    -moz-box-shadow: none;
  	   		box-shadow: none;
@@ -89,11 +93,11 @@
 		.thumbnail {
 			    display: block;
 			    padding: 0px;
-			    margin-bottom: 20px;
+			    margin-bottom: 40px;
 			    line-height: 1;
-			    background-color: #fbfbfb;
-			    border: 1px solid #5F0080;
-			    border-radius: 4px;
+			    background-color: #ffffff;
+			    /* border: 1px solid #5F0080; */
+			    border-radius: 10px;
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
 			    transition: border .2s ease-in-out;
@@ -102,39 +106,55 @@
 		.thumbnail img { 
 			min-height:200px;
 			height:100px;
-		    width: 250px;
+		    width: 254px;
+		    border-radius: 20px;
 		 }     
 		 
 		 div {
 		 	clear: none;
 		 }
 		 
-		 .btn {
+	 	/*  .btn {
 		 	background-color: #fbfbfb;
 		 	color: #BD76FF;
 		 	border-color: #BD76FF;
-		 }
+		 } */
 		 
 		 .club-cT {
 		 		font-size: 
 		 }
+		 
+		 element.style {
+	    float: left;
+	    border: 1px solid !important;
+		}
 		
-		 
-/* 		 input[type=""], input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, textarea.plain {
-    display: block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin-bottom: 0em;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    -webkit-border-radius: 0.333em;
-    -moz-border-radius: 0.333em;
-    border-radius: 0.333em;
-    color: #333;
-} */
-		 
+		.btn{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 83px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.btn:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 83px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
+		
 		 #pageNav {
-		 	float: center;
+		 	float: none;
 		 }
 		 
 		 #toolbar {
@@ -155,7 +175,7 @@
 	.keyword_search_area {
     padding: 18px 0 10px 20px;
     border: solid 1px #d8d8d8;
-    background-color: #f8f8 !important;
+    background-color: #e1bfff00 !important;
     font-size: 12px;
 	}
 	
@@ -163,6 +183,27 @@
 		background-color: #cf0cc90d !important;
 		border: solid 1px #d8d8d8 !important;
 		margin: 10px;
+	}
+	
+	
+	/*썸네일 애니메이션*/
+	@keyframes post-ani {
+	
+    25% {
+        transform: rotate(2deg) scale(1.01);
+	    }
+ 
+    50% {
+        transform: rotate(0deg) scale(1);
+    	}
+ 
+    75% {
+        transform: rotate(-2deg) scale(1.01);
+    	}
+	}
+	.thumbnail:hover {
+	opacity: 0.9;
+	animation: post-ani 0.8s linear 1;
 	}
 	
 		 
@@ -177,6 +218,8 @@
 	
 	
 	function fncGetClubList(currentPage) {
+		
+		
 		$("#currentPage").val(currentPage)
 		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
 	}
@@ -199,7 +242,7 @@
 	
 	$(function() {
 		
-		$("button.btn.btn-addClub").on("click", function() {
+		$("#addClubBtn").on("click", function() {
 			self.location="/club/addClubView.jsp"
 		});
 	});
@@ -213,15 +256,15 @@
 	}
 	
 	function changeFn() {
-		var category = document.getElementById("category");
+		var category = document.getElementById("clubCategory");
 		var value = (category.options[category.selectedIndex].value);
-		alert("value = "+value);
+		//alert("value = "+value);
 	}
 	
 	function changeFn2() {
-		var area = document.getElementById("area");
+		var area = document.getElementById("clubArea");
 		var value = (area.options[area.selectedIndex].value);
-		alert("value = "+value);
+		//alert("value = "+value);
 	}
 	
 	function resetBtn() {
@@ -231,7 +274,7 @@
 	
 	
 	//무한 페이징
-	var currentPage = 1;
+	/* var currentPage = 1;
 	$(window).scroll(function() {
 		var maxHeight = $(document).height();
 		var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
@@ -269,7 +312,7 @@
 				} // end of success
 			}); // end of ajax
 		} // end of if
-	}); // end of scroll
+	}); // end of scroll */
 	
 	</script>	
 </head>
@@ -332,7 +375,7 @@
 
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="20">
+			<!-- <div id="intro-wrap" data-height="20">
 				<div id="intro" class="preload darken">
 					<div class="intro-item"
 						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
@@ -340,13 +383,13 @@
 							<h2>CLUB LIST</h2>
 							<p>The meeting is waiting for you.. </p>
 						</div>
-						<!-- caption -->
+						caption
 					</div>
-					<!-- intro -->
+					intro
 				</div>
-				<!-- intro -->
+				intro
 			</div>
-			<!-- intro-wrap -->
+			intro-wrap -->
 			
 			
 	
@@ -356,24 +399,73 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  	  <div id="main" class="row">
 	    
-		   <section class="keyword_search_area"> 
-		    <div class="col-md-8 text-right" style="float: right;">
-			    <form class="form-inline" name="detailForm" id="searchArea">
+		   
+		    <div class="col-md-8 text-right" style="float: left;">
+			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;">
 			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" style="border-color: #BD76FF;">
+				  <div class="form-group" id="selectTitle">
+				    <select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
-						<%-- <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>모임카테고리</option> --%>
 					</select>
+					
+					<p><label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">지 역</label></p>
+					
+					<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
+					
 				  </div>
 				  
-				  <div class="form-group">
+				  <div class="form-group" id="selects" style="text-align: left;">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" onkeyup="enterkey()"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-color: #BD76FF; border-width: thin; margin-top: 14px;">
-	    			<button type="button" class="btn btn-search">검색</button>
-	    			<button type="button" class="btn btn-myList">내 모임 보기</button>
-				  	<button type="button" class="btn btn-addClub">모임등록</button>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="모임 검색" onkeyup="enterkey()"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 5px;">
+				    			 
+					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
+	    					<option value="">지역</option>
+	    					<option value="강남구">강남구</option>
+							<option value="강동구">강동구</option>
+							<option value="강북구">강북구</option>
+							<option value="강서구">강서구</option>
+							<option value="관악구">관악구</option>
+							<option value="광진구">광진구</option>
+							<option value="구로구">구로구</option>
+							<option value="금천구">금천구</option>
+							<option value="노원구">노원구</option>
+							<option value="도봉구">도봉구</option>
+							<option value="동대문구">동대문구</option>
+							<option value="동작구">동작구</option>
+							<option value="마포구">마포구</option>
+							<option value="서대문구">서대문구</option>
+							<option value="서초구">서초구</option>
+							<option value="성동구">성동구</option>
+							<option value="성북구">성북구</option>
+							<option value="송파구">송팡구</option>
+							<option value="양천구">양천구</option>
+							<option value="영등포구">영등포구</option>
+							<option value="용산구">용산구</option>
+							<option value="은평구">은평구</option>
+							<option value="종로구">종로구</option>
+							<option value="중구">중구</option>
+							<option value="중랑구">중랑구</option>
+	    				</select>	
+	    				
+	    				<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
+	    					<option value="">카테고리</option>
+	    					<option value="운동">운동</option>
+	  						<option value="봉사활동">봉사활동</option>
+	  						<option value="음식">음식</option>
+							<option value="여행">여행</option>
+							<option value="반려동물">반려동물</option>
+							<option value="게임">게임</option>
+							<option value="음악/댄스">음악/댄스</option>
+							<option value="독서">독서</option>
+							<option value="기타">기타</option>
+	    				</select>			    			 
+					<p>
+					
+					<p>
+					
+						<button type="button" class="btn btn-search" >검색</button>
+	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
 				  </div>
 				  
 				  <!-- <div class="form-group">
@@ -383,85 +475,32 @@
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-					
-	    
-	    	
-	    	<table>
-	    		<colgroup span="4" class="columns"></colgroup>
-	    		<tr>
-	    			<th>
-	    				<select class="form-control" name="category" id="category" onchange="changeFn()" style="border-color: #BD76FF;">
-	    					<option name="category" value="">카테고리</option>
-	    					<option name="category" value="운동">운동</option>
-	  						<option name="category" value="봉사활동">봉사활동</option>
-	  						<option name="category" value="음식">음식</option>
-							<option name="category" value="여행">여행</option>
-							<option name="category" value="반려동물">반려동물</option>
-							<option name="category" value="게임">게임</option>
-							<option name="category" value="음악/댄스">음악/댄스</option>
-							<option name="category" value="독서">독서</option>
-							<option name="category" value="기타">기타</option>
-	    				</select>
-	    			</th>
-	    			<th>
-	    				<select class="form-control" name="area" id="area" onchange="changeFn2()" style="border-color: #BD76FF;">
-	    					<option name="area" value="">지역</option>
-	    					<option name="area" value="강남구">강남구</option>
-							<option name="area" value="강동구">강동구</option>
-							<option name="area" value="강북구">강북구</option>
-							<option name="area" value="강서구">강서구</option>
-							<option name="area" value="관악구">관악구</option>
-							<option name="area" value="광진구">광진구</option>
-							<option name="area" value="구로구">구로구</option>
-							<option name="area" value="금천구">금천구</option>
-							<option name="area" value="노원구">노원구</option>
-							<option name="area" value="도봉구">도봉구</option>
-							<option name="area" value="동대문구">동대문구</option>
-							<option name="area" value="동작구">동작구</option>
-							<option name="area" value="마포구">마포구</option>
-							<option name="area" value="서대문구">서대문구</option>
-							<option name="area" value="서초구">서초구</option>
-							<option name="area" value="성동구">성동구</option>
-							<option name="area" value="성북구">성북구</option>
-							<option name="area" value="송파구">송팡구</option>
-							<option name="area" value="양천구">양천구</option>
-							<option name="area" value="영등포구">영등포구</option>
-							<option name="area" value="용산구">용산구</option>
-							<option name="area" value="은평구">은평구</option>
-							<option name="area" value="종로구">종로구</option>
-							<option name="area" value="중구">중구</option>
-							<option name="area" value="중랑구">중랑구</option>
-	    				</select>
-	    			</th>
-	    			<th>
-	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>초기화</button>
-	    			
-	    			</th>
-	    		</tr>
-	    
-	    			    	
-	    	</table>
+	    	    			
 	    	</form>
 	    	</div>
-	    </section>
 	    	
-		
+	    	
+	    <!-- <div class="col-md-6 text-right" style="float: right;"> -->
+	    	<!-- <button type="button" class="btn btn-myList" style="">내 모임 보기</button> -->
+	  		<button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임등록</button>
+	    <!-- </div> -->
+	    	
+	</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
 
 	<div id="main" class="row">
 		  <c:forEach var="i" items="${clubList}">
 		  	<div class="col-xs-4 col-md-3">	
-				<div class="thumbnail" style="">
+				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT"><strong>모임제목 : ${i.clubTitle}</strong></p>
+			  			<p class="club-cT"><strong>${i.clubTitle}</strong></p>
 				  		<p>${i.clubArea}</p>
 				  		<%-- <p>현재인원 : ${i.currentMember}</p> --%>				  		
 				  		<p>최대인원 : ${i.clubMaxMember}</p>
-				  		<p>카테고리 : ${i.clubCategory }</p>
-				  		<p>모임생성날짜 : ${i.clubRegDate}</p>
-				  		<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">모임보기</a></p>			  	
+				  		<p>${i.clubCategory }</p>
+				  		<p>모임생성일 : ${i.clubRegDate}</p>
+				  		<%-- <p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px; box-shadow: 2px 2px;">모임보기</a></p> --%>			  	
 				 </div>
 				</div>						
 	    	 </c:forEach>
@@ -470,7 +509,7 @@
       
 	</div>
 	  
- 	</div>
+ 	
  	<!--  화면구성 div End /////////////////////////////////////-->
 	
 	<div id="pageNav" >

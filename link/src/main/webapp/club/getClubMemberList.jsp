@@ -27,20 +27,37 @@
 	  <!-- jQuery UI toolTip 사용 JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
+ 	 <!-- alert -->
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ 	 
  	 <style>
 	body {
 		padding-top : 70px;
 	}
 	
-	#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #f0f2f5;
-		}    
+	.plain1.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain1.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}   
 	
 	td {
 		text-align: center;
@@ -81,12 +98,6 @@
 		.submit();
 	}
 	
-	function fncDeleteClub() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/deleteClub")
-		.submit();
-	}
-	
 	function refreshMemList(){
 		location.reload();
 	}
@@ -96,33 +107,53 @@
 		location.href = "/myHome/getYourHome?userId="+userId;
 	}
 	
+	
+	/* function deleteClubMember() {
+			
+			Swal.fire({
+			  title: '모임원을 추방하시겠습니까?',
+			  text: "삭제한 모임은 복구가 불가능합니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'delete'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire(
+			      'Deleted!',
+			      'Your file has been deleted.',
+			      'success'
+			    )	
+			
+			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+			 }
+		});
+	}
+	
 	$(function() {
-
-		$("button.btn.btn-delete").on("click", function() {
-			alert("모임을 삭제하시겠습니까?");
-			fncDeleteClub();
+		$("#banMember").on("click", function() {
+			deleteClubMember();
 		});
 	});
+	 */
+	
+	
+	
+	
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
 		$("#banMember").on("click", function() {
-			alert("모임원을 추방합니다 : ");
+			//alert("모임원을 추방합니다 : ");
+			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
-		}); 
-		
-		$(function() {
-			$("#updateApprovalCondition").on("click", function() {
-				//alert("모임원을 승인합니다 : ");
-				$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
-		});
-		
-		
+		 });
+ 
+
 			//추방 그냥 컨트롤러	
 			$(document).on("click", "#banMember", function(){
-			//alert('추방');
 			var clubUserNo = $(this).val();
-			//alert(clubUserNo);
 			$.ajax("/clubRest/json/deleteClubMember",
 					{
 						method : "POST" ,
@@ -140,34 +171,13 @@
 					}); //end of ajax
 					refreshMemList();
 			}); //모임원 추방 
-		
+	 	});
 			
-			
-			/* $(function() {
-				$("#banMember").on("click", function(e){
-					var clubUserNo = $(this).val();
-					$("banMember").off(e);
-				$.ajax({
-					url : "/clubRest/json/deleteClubMember",
-					type : "POST",
-					datatype : "json"
-					data : JSON.stringify({
-						clubUserNo : clubUserNo
-					}),
-					
-					contentType : "application/json",
-					success : function(data) {
-						console.log(data.clubMemberList);
-						
-					}
-					
-				})
-					
-				})
-			}) */
-			
-
-		
+			$(function() {
+				$("#updateApprovalCondition").on("click", function() {
+					//alert("모임원을 승인합니다 : ");
+					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+			});
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
 				//alert('승인');
@@ -193,19 +203,19 @@
 						}); // end of ajax
 						refreshMemList();
 				}); // end of 승인
+			});
 
 	
 	
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
 	
 	$(function() {
-
-		$("button.btn.btn-update").on("click", function() {
+		$("plain1.button.red-cancel").on("click", function() {
 			self.location="/club/updateClubView.jsp"
 		});
 	});
@@ -229,9 +239,7 @@
 			openWin.document.getElementById("userId").value = $(this).attr("userId");
 		});
 	});
-	
-		});
-	 });
+
 	</script>
 </head>
 
@@ -242,9 +250,9 @@
 	
 	<jsp:include page="/toolbar.jsp" />
 	
-	<main role="main">
+	<!-- <main role="main">
 		
-			<div id="intro-wrap" data-height="20"><!-- 상단 검은색 공통 영역 -->
+			<div id="intro-wrap" data-height="20">상단 검은색 공통 영역
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -252,8 +260,8 @@
 							<p>Manage the members of the club...</p>
 						</div>
 					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
+				</div>intro
+			</div>intro-wrap -->
 			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
@@ -262,18 +270,18 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
+					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px; margin-top: 150px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
+							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
+							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
+							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">모임 채팅</a>
+							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
 						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
@@ -293,10 +301,8 @@
 				  
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
 										
-						<button type="button" class="btn btn-updateMemberRole" id="updateMemberRole">직&nbsp;책&nbsp;수&nbsp;정</button>
-						<button type="button" class="btn btn-cancel">이&nbsp;전</button>
-						<button type="button" class="btn btn-update"  >모&nbsp;임&nbsp;수&nbsp;정</button>
-						<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
+						<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+						<button type="button" class="plain1 button red cancel" id="cancel">이&nbsp;전</button>
 		  			</div>
 				</div>	
 	    	
@@ -360,7 +366,7 @@
 	</div>
 	</div>
 	</div>
-	</main>
+	<!-- </main> -->
 </body>
 
 </html>

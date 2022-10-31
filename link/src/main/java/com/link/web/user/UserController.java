@@ -320,7 +320,7 @@ public class UserController {
 		if (sessionId.equals(getUser.getUserId())) {
 			session.setAttribute("user", getUser);
 		}
-
+		
 		return "forward:/main.jsp";
 	}
 

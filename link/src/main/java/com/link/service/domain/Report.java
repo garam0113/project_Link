@@ -23,6 +23,7 @@ public class Report{
 	private Feed feed;					// 피드
 	private Comment feedComment; 		// 피드 댓글	
 	private Live live;	  				// 라이브
+	private int readingStatus;			// 읽음 여부
 	
 	
 	/* private Chatting chatiing; */    //채팅은 안 들어감
@@ -46,6 +47,7 @@ public class Report{
 	public Report() {
 	}
 
+	// clubPost에서 게시물 등록시 사용
 	public Report(String content, int reportSource, User user1, User user2, int type, ClubPost clubPost) {
 		super();
 		this.content = content;
@@ -54,6 +56,18 @@ public class Report{
 		this.user2 = user2;
 		this.type = type;
 		this.clubPost = clubPost;
+	}
+	
+	// clubPost에서 댓글 등록시 사용
+	public Report(String content, int reportSource, User user1, User user2, int type, ClubPost clubPost, Comment comment) {
+		super();
+		this.content = content;
+		this.reportSource = reportSource;
+		this.user1 = user1;
+		this.user2 = user2;
+		this.type = type;
+		this.clubPost = clubPost;
+		this.comment = comment;
 	}
 
 	public Report(String content, int reportSource, User user1, User user2, int type,
@@ -264,6 +278,14 @@ public class Report{
 	}
 
 
+	public int getReadingStatus() {
+		return readingStatus;
+	}
+
+	public void setReadingStatus(int readingStatus) {
+		this.readingStatus = readingStatus;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -303,15 +325,10 @@ public class Report{
 		builder.append(feedComment);
 		builder.append(", live=");
 		builder.append(live);
+		builder.append(", readingStatus=");
+		builder.append(readingStatus);
 		builder.append("]");
 		return builder.toString();
 	}
 	
-	
- 	
-
- 	
-
-
-
 }

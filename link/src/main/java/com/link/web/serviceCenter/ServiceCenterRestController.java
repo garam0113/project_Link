@@ -210,11 +210,11 @@ public class ServiceCenterRestController {
 	/////////////////////////////////////////////// 알림 ///////////////////////////////////////////////
 	
 	@RequestMapping(value = "/json/getPushList", method = RequestMethod.POST)
-	public List<Report> getPushList(@RequestBody User user, HttpSession httpSession) throws Exception {
+	public Map<String, Object> getPushList(@RequestBody User user, HttpSession httpSession) throws Exception {
 		
 		user = (User) httpSession.getAttribute("user");
 		
-		return null;
+		return serviceCenterService.getPushList(user);
 		
 	}
 	

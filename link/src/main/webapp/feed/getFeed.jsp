@@ -34,15 +34,221 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<%-- ALERT --%>
 	
+	<%-- ICON --%>
+	<script src="https://kit.fontawesome.com/ebd5a092f1.js"></script>
+	<%-- ICON --%>
+	
 	<script type="text/javascript">
-
 	
+	function uploadSummernoteImageFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/feedRest/json/uploadImage",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
 	
-		$(function(){
+	function formatDate(date) {
+	    
+	    var d = new Date(date),
+	    
+	    month = '' + (d.getMonth() + 1) , 
+	    day = '' + d.getDate(), 
+	    year = d.getFullYear();
+	    
+	    if (month.length < 2) month = '0' + month; 
+	    if (day.length < 2) day = '0' + day; 
+	    
+	    return [year, month, day].join('-');
+	    
+	}
+	
+	$(function(){
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernote').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Insert', ['picture', 'video']],
+            ],
+            
+            disableResizeEditor: true,
+			height: 600,                 // 에디터 높이
+			minHeight: null,             // 최소 높이
+			maxHeight: null,             // 최대 높이
+			focus: true,                 // 에디터 로딩후 포커스를 맞출지 여부
+			lang : 'ko-KR',
+	        
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// 파일 업로드(다중업로드를 위해 반복문 사용)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
+		
+		});
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		
+		<%-- 댓글에서 아이디 혹은 사진에 호버시 --%>
+		
+		$(document).on("click", ".comment-author img", function(event) {
 			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
 			
+			$.ajax (
+					{
+						url : "/userRest/json/getUser",
+						method : "POST",
+						data : JSON.stringify ({
+							nickName : $(this).siblings("cite").text().trim()
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							if(data.userId == '${sessionScope.user.userId}'){
+								location.href = "/myHome/getMyHome?userId=" + data.userId;
+							} else {
+								location.href = "/myHome/getYourHome?userId=" + data.userId;
+							}
+							
+						}
+					}
+				
+				)
+		})
+		
+		$(document).on("click", "cite", function(event) {
 			
-			<%-- 무한 스크롤 --%>
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+					{
+						url : "/userRest/json/getUser",
+						method : "POST",
+						data : JSON.stringify ({
+							nickName : $(this).text()
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							if(data.userId == '${sessionScope.user.userId}'){
+								location.href = "/myHome/getMyHome?userId=" + data.userId;
+							} else {
+								location.href = "/myHome/getYourHome?userId=" + data.userId;
+							}
+							
+						}
+					}
+				
+				)
+		})
+		
+		<%-- 댓글에서 아이디 혹은 사진에 호버시 --%>
+		
+		<%-- 피드 폼에서 아이디에 호버시 --%>
+		
+		$(document).on("click", ".feedProfileImage", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).parents(".feedCover").siblings(".feedName").text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		$(document).on("click", ".feedName", function(event) {
+			
+			if('${sessionScope.user.userId}' == null) {
+				return false;
+			}
+			
+			$.ajax (
+						{
+							url : "/userRest/json/getUser",
+							method : "POST",
+							data : JSON.stringify ({
+								nickName : $(this).text().trim()
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(data.userId == '${sessionScope.user.userId}'){
+									location.href = "/myHome/getMyHome?userId=" + data.userId;
+								} else {
+									location.href = "/myHome/getYourHome?userId=" + data.userId;
+								}
+								
+							}
+						}
+					
+					)
+			
+		})
+		
+		<%-- 피드 폼에서 아이디에 호버시 --%>
+		
+		<%-- 무한 스크롤 --%>
 			
 			$(window).scroll(function() {
 				console.log(($("#pageFlag").val()));
@@ -81,16 +287,16 @@
 										
 										$.each(data, function(index, item) {
 											
-											addHtml += '<div class="single-comment" style="margin-left: ' + 25 * item.depth + '"px;">' +
+											addHtml += '<div class="single-comment" style="margin-left: ' + 25 * item.depth + 'px;">' +
 														'<div class="comment-author">' +
 														'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-														'		<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-														'		<span class="says">says:</span>' +
+														'		<cite>' + item.user.nickName + '</cite>' +
+														'		<span class="says">says</span>' +
 														'</div>' +
 														'<div class="comment-meta">' +
 														'	<time datetime="' + item.commentRegDate + '">' + item.commentRegDate + '</time> / '
 														if(item.depth < 2) {
-															addHtml += '<a class="btn_createRecomment">Reply </a>'
+															addHtml += '<a class="btn_createRecomment">Reply</a>'
 														}
 														
 														if(sessionUser == item.user.userId) {
@@ -138,7 +344,7 @@
 																	'</form>' +
 																	'<div class="btn_recommentCheck" style="display: none;">' +
 																	'<textarea name="commentContent" placeholder="작성"></textarea>' +
-																	'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
+																	'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 																	'</div>' +
 																	'</div>' +
 																	'</li>' +
@@ -182,7 +388,7 @@
 				console.log("댓글 수 : " + $(this).parents(".section").find(".commentCount").text().trim());
 				console.log("댓글 작성자 : " + $(this).siblings("input[name='userId']").val());
 				console.log("피드 번호 : " + $(this).siblings("input[name='feedNo']").val());
-				console.log("내용 : " + $(this).siblings("textarea[name='commentContent']").val());
+				console.log("내용 : " + $(this).siblings("textarea[name='mainCommentContent']").val());
 				console.log("부모 번호 : " + $(this).siblings("input[name='parent']").val());
 				console.log("깊이 : " + $(this).siblings("input[name='depth']").val());
 				console.log("시퀀시 : " + $(this).siblings("input[name='sequence']").val());
@@ -206,7 +412,7 @@
 								data : JSON.stringify ({
 									userId : $(this).siblings("input[name='userId']").val(),
 									feedNo : $(this).siblings("input[name='feedNo']").val(),
-									commentContent : $(this).siblings("textarea[name='commentContent']").val(),
+									commentContent : $(this).siblings("textarea[name='mainCommentContent']").val(),
 									parent : $(this).siblings("input[name='parent']").val(),
 									depth : $(this).siblings("input[name='depth']").val(),
 									sequence : parseInt($(this).siblings("input[name='sequence']").val())
@@ -231,8 +437,8 @@
 										changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 										'<div class="comment-author">' +
 										'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-										'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-										'<span class="says"> says:</span>' +
+										'<cite>' + item.user.nickName + '</cite>' +
+										'<span class="says"> says</span>' +
 										'</div>' +
 										'<div class="comment-meta">' +
 										'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -277,7 +483,7 @@
 											'</div>' +
 											'<div class="btn_recommentCheck" style="display: none;" >' +
 											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-											'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+											'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 											'</div>' +
 											'</div>'
 										
@@ -304,9 +510,15 @@
 				event.stopPropagation();
 				console.log("피드 수정");
 				
-				$("form").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
+				$('#updateModal').modal();
 			})
 			
+			
+			$(document).on("click", ".btn_updateFeed", function(event) {
+				console.log("수정하기");
+				$("#updateFeedForm").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+			})
+
 			
 			
 			// 피드 삭제
@@ -315,7 +527,29 @@
 				event.stopPropagation();
 				console.log("피드 삭제");
 				
-				$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+				Swal.fire({
+					  title: '글을 삭제하시겠습니까?',
+					  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+					  width: 500,
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '삭제',
+					  cancelButtonText: '취소'
+				}).then((result) => {
+					if (result.value) {
+			       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
+						$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
+						
+						if(sock) {
+							var Msg = "가 피드를 삭제했습니다.";
+							
+							sock.send(Msg);
+						}
+					}
+				})
+				
 			})
 			
 			
@@ -326,7 +560,7 @@
 				event.stopPropagation();
 				
 				var view = $(this).parents(".single-comment").find(".btn_recommentCheck");
-
+		
 				if ($(view).css('display') == 'none') {
 					
 					$(view).show();
@@ -401,8 +635,8 @@
 									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 									'<div class="comment-author">' +
 									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-									'<span class="says"> says:</span>' +
+									'<cite>' + item.user.nickName + '</cite>' +
+									'<span class="says"> says</span>' +
 									'</div>' +
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -447,7 +681,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -472,7 +706,7 @@
 			
 			$(document).on("click", ".updateCommentView", function(event) {
 				event.stopPropagation();
-
+		
 				console.log("피드 번호 : " + ${feed.feedNo} + " 댓글 번호 : " + $(this).parent().siblings(".commentInfo").find("input[name='feedCommentNo']").val());
 				
 				var changePoint = $(this).parent().siblings(".commentContent");
@@ -514,8 +748,8 @@
 								var width = 427 - (parseInt(depth) * 50);
 								
 								var changeHtml = "<textarea style='width:" + width + "px; resize:none;' name='commentContent'>" + data.commentContent + "</textarea>" +
-													"<input class='button purple updateFeedComment' margin-right: 0px; float:right; display: inline-block;' value='Update'>" + 
-													"<input class='button purple cancel' name='updateCommentCancel' style='float:right; display: inline-block;' value='Cancel'>";
+													"<button class='btn btn-primary updateFeedComment' type='button'>UPDATE</button>" + 
+													"<button class='btn btn-primary cancel' name='updateCommentCancel' type='button'>CANCEL</button>";
 													
 								$(changePoint).html(changeHtml);
 								
@@ -555,8 +789,8 @@
 															changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 															'<div class="comment-author">' +
 															'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-															'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-															'<span class="says"> says:</span>' +
+															'<cite>' + item.user.nickName + '</cite>' +
+															'<span class="says"> says</span>' +
 															'</div>' +
 															'<div class="comment-meta">' +
 															'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -577,7 +811,7 @@
 																				'	<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />' +
 																				'	<div class="heartCountPosition">' +
 																				item.commentHeartCount + 
-																				'	</div>' +
+																				'	</div>' + 
 																				'</div>'
 															} else {
 																changeHtml +=	'<div class="heartPosition">' + 
@@ -601,7 +835,7 @@
 																'</div>' +
 																'<div class="btn_recommentCheck" style="display: none;" >' +
 																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-																'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+																'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 																'</div>' +
 																'</div>'
 															
@@ -609,7 +843,7 @@
 														
 														console.log(changeHtml);
 														$(changePoint).html(changeHtml);
-
+														
 													} // success close
 													
 												} // ajax inner close
@@ -629,7 +863,7 @@
 			
 			// 댓글 수정 화면에서 cancel을 눌렀을 경우
 			
-			$(document).on("click", "input[name='updateCommentCancel']", function(event) {
+			$(document).on("click", "button[name='updateCommentCancel']", function(event) {
 				
 				var sessionUser = '${sessionScope.user.userId}';
 				
@@ -662,13 +896,13 @@
 									addHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 												'<div class="comment-author">' +
 												'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-												'		<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-												'		<span class="says">says:</span>' +
+												'		<cite>' + item.user.nickName + '</cite>' +
+												'		<span class="says">says</span>' +
 												'</div>' +
 												'<div class="comment-meta">' +
 												'	<time datetime="' + item.commentRegDate + '">' + item.commentRegDate + '</time> / '
 												if(item.depth < 2) {
-													addHtml += '<a class="btn_createRecomment">Reply </a>'
+													addHtml += '<a class="btn_createRecomment">Reply</a>'
 												}
 												
 												if(sessionUser == item.user.userId) {
@@ -716,7 +950,7 @@
 															'</form>' +
 															'<div class="btn_recommentCheck" style="display: none;">' +
 															'<textarea name="commentContent" placeholder="작성"></textarea>' +
-															'<input class="plain button purple btn_addRecomment" type="submit" value="Submit">' +
+															'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 															'</div>' +
 															'</div>' +
 															'</li>' +
@@ -797,7 +1031,7 @@
 									}, // header end
 									
 									success : function(data, status) {
-
+		
 										var changeHtml = "";
 										
 										$.each(data, function(index, item) {
@@ -807,8 +1041,8 @@
 											changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 											'<div class="comment-author">' +
 											'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-											'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-											'<span class="says"> says:</span>' +
+											'<cite>' + item.user.nickName + '</cite>' +
+											'<span class="says"> says</span>' +
 											'</div>' +
 											'<div class="comment-meta">' +
 											'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -853,7 +1087,7 @@
 												'</div>' +
 												'<div class="btn_recommentCheck" style="display: none;" >' +
 												'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-												'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+												'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 												'</div>' +
 												'</div>'
 											
@@ -863,7 +1097,7 @@
 										$(changePoint).html(changeHtml);
 										$(commentCount).text( parseInt( $(commentCount).text() ) - 1 );
 										$(htmlSequence).val( parseInt($(htmlSequence).val()) - 1);
-
+		
 									} // success close
 									
 								} // ajax inner close
@@ -919,8 +1153,8 @@
 									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 									'<div class="comment-author">' +
 									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-									'<span class="says"> says:</span>' +
+									'<cite>' + item.user.nickName + '</cite>' +
+									'<span class="says"> says</span>' +
 									'</div>' +
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -965,7 +1199,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -1023,8 +1257,8 @@
 									changeHtml += '<div class="single-comment" style="margin-left: ' + depth + 'px;">' +
 									'<div class="comment-author">' +
 									'<img src="/resources/image/uploadFiles/' + item.user.profileImage + '" class="avatar" alt="">' +
-									'<cite><a href="#">' + item.user.nickName + '</a></cite>' +
-									'<span class="says"> says:</span>' +
+									'<cite>' + item.user.nickName + '</cite>' +
+									'<span class="says"> says</span>' +
 									'</div>' +
 									'<div class="comment-meta">' +
 									'<time datetime="' + item.commentRegDate + '" + >' + item.commentRegDate + '</time> / ';
@@ -1069,7 +1303,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<input class="plain button purple btn_addRecomment" style="float:right;" type="submit" value="Submit">' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -1172,9 +1406,16 @@
 			// 피드 신고
 			
 			$(document).on("click", ".report", function(event) {
-				event.stopPropagation();
 				
-				$(this).parents(".section").siblings("#feedInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				// $(this).parents(".section").siblings("#feedInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				
+				var reportedUser = $(this).parents(".lastBar").siblings("#feedInfo").find("input[name='user2']").val();
+				var feedNo = $(this).parents(".lastBar").siblings("#feedInfo").find("input[name='feedNo']").val();
+				
+				console.log(reportedUser + "  " + feedNo);
+				
+				$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+				$('#reportModal').modal();
 				
 			}) // .report evenet close
 			
@@ -1183,15 +1424,18 @@
 			// 댓글 신고
 			
 			$(document).on("click", ".commentReport", function(event) {
-				event.stopPropagation();
 				
-				$(this).parents(".comment-meta").siblings(".commentInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				// $(this).parents(".comment-meta").siblings(".commentInfo").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				
+				var reportedUser = $(this).parents(".comment-meta").siblings(".commentInfo").find("input[name='user2']").val();
+				var feedCommentNo = $(this).parents(".comment-meta").siblings(".commentInfo").find("input[name='feedCommentNo']").val();
+				
+				console.log(reportedUser + "  " + feedCommentNo);
+				
+				$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=4&user2=" + reportedUser + "&sourceNumber=" + feedCommentNo);
+				$('#reportModal').modal();
 				
 			}) // .report evenet close
-			
-			
-			
-			
 			
 		}) // jquery end
 	
@@ -1208,34 +1452,28 @@
 <body class="single single-post">
 
 	<jsp:include page="/toolbar.jsp" />
-	
-	<div id="intro-wrap" data-height="12.222">
-		<div id="intro" class="preload darken">					
-			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-				<div class="caption">
-					<h2>Feed</h2>
-					<p>If you’re any good at all, you know you can be better.</p>
-				</div><!-- caption -->					
-			</div>								
-		</div><!-- intro -->
-	</div><!-- intro-wrap -->
-	
+
 	<div id="main">
-	
-		<div class="container">
-		
+
 		<section class="row section">
+		<div class="container">
 			<div class="row-content buffer even clear-after">
 			
 				<div id="post-nav">
 					<ul class="clear-after reset plain">
-						<li id="prev-items" class="post-nav"><a href="#"><i class="fa fa-chevron-left"></i><span class="label">Prev</span></a></li> 
-						<li id="all-items" class="post-nav"><a href="#"><i class="icon icon-images"></i></a></li> 							 
+						<li id="prev-items" class="post-nav">
+							<a href="#" onClick="javascript:history.go(-1); return false">
+								<i class="fa fa-chevron-left"></i>
+								<span class="label">Prev</span>
+							</a>
+						</li> 
 					</ul>
 				</div>
 				
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">길찾기</a>
+					
+					<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+						
 				</div>
 				
 				<div class="column six">
@@ -1243,90 +1481,104 @@
 					<!-- 피드 내용 -->
 					<div class="post-area clear-after">
 					
-						<article role="main">
+						<div class="feedHeader">
+							<div class="feedLeft">
+								<div class="feedInner">
+									<div class="feedCover">
+										<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}"/>
+									</div>
+									<div class="feedName">
+										${feed.user.nickName}
+									</div>
+								</div>
+									
+								<div class="feedDate">
+									<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+									<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+								</div>
+							</div>
+									
+							<c:if test="${sessionScope.user.userId eq feed.user.userId}">
 							
-							<img src="/resources/image/uploadFiles/${feed.user.profileImage}" width="50" height="50" /><h4>${feed.user.nickName}</h4>
+							<div class="udIcon">
+								<%-- 수정 버튼 --%>
+								<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
+								<%-- 수정 버튼 --%>
 							
-							<nav>
-								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-									<%-- 수정 버튼 --%>
-									<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
-									<%-- 수정 버튼 --%>
-								
-									<%-- 삭제 버튼 --%>
-									<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
-									<%-- 삭제 버튼 --%>
-								</c:if>
-							</nav>
+								<%-- 삭제 버튼 --%>
+								<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
+								<%-- 삭제 버튼 --%>
+							</div>
 							
-							<h5 class="meta-post">
-								<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-								<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
-							</h5>
+							</c:if>
+						</div>
 							
-							<div class="feedContent">
+						<div class="feedContent">
+						
+						<c:if test="${!empty feed.video}">
+							<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+						</c:if>
+						
+						<%-- 이미지 --%>
+						
+							<c:if test="${!empty feed.image1}">
+							<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+								<ol class="carousel-indicators">
+									<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+									
+									<c:if test="${!empty feed.image2}">
+										<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+									</c:if>
+									<c:if test="${!empty feed.image3}">
+										<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+									</c:if>
+									<c:if test="${!empty feed.image4}">
+										<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+									</c:if>
+								</ol>
+							
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" role="listbox">
+									<div class="item active">
+										<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+									</div>
+									
+									<c:if test="${!empty feed.image2}">
+										<div class="item">
+											<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+										</div>
+											<c:if test="${!empty feed.image3}">
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+												</div>
+												<c:if test="${!empty feed.image4}">
+													<div class="item">
+														<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+													</div>
+												</c:if>
+											</c:if>														
+									</c:if>
+								</div>
+
+								<!-- Controls -->
+								<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+							</c:if>
+							
 							
 							<%-- 이미지 --%>
-								<c:if test="${!empty feed.image1}">
-								<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
-									<ol class="carousel-indicators">
-										<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-										
-										<c:if test="${!empty feed.image2}">
-											<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-										</c:if>
-										<c:if test="${!empty feed.image3}">
-											<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-										</c:if>
-										<c:if test="${!empty feed.image4}">
-											<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
-										</c:if>
-									</ol>
-								
-									<!-- Wrapper for slides -->
-									<div class="carousel-inner" role="listbox">
-										<div class="item active">
-											<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
-										</div>
-										
-										<c:if test="${!empty feed.image2}">
-											<div class="item">
-												<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
-											</div>
-												<c:if test="${!empty feed.image3}">
-													<div class="item">
-														<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-													</div>
-													<c:if test="${!empty feed.image4}">
-														<div class="item">
-															<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
-														</div>
-													</c:if>
-												</c:if>														
-										</c:if>
-									</div>
-	
-									<!-- Controls -->
-									<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
-										<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</a>
-									<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
-										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</a>
-								</div>
-								</c:if>
-								
-								
-								<%-- 이미지 --%>
-													
-								<p>${feed.content}</p>
-								
-								</div>
+												
+							<p>${feed.content}</p>
 							
-						</article>
-
+						</div>
+							
 					</div>
 					<!-- 피드 내용 -->
 					
@@ -1347,11 +1599,11 @@
 					<!-- 피드 해시태그 -->
 					
 					<!-- 피드 좋아요 댓글수 신고 -->
-					<section class="row section">
+					<section class="row section lastBar">
 						<div class="row">
 						
 							<%-- 여백 --%>
-							<div class="col-xs-1"></div>
+							<div class="col-xs-2"></div>
 							<%-- 여백 --%>
 							
 							<c:if test="${feed.checkHeart eq 0}">
@@ -1369,9 +1621,6 @@
 								${feed.heartCount}
 							</div>
 							
-							<div class="col-xs-1">
-							</div>
-							
 							<div class="col-xs-2 comment">
 								<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
 							</div>
@@ -1379,10 +1628,6 @@
 							<div class="col-xs-1 commentCount">
 								 ${feed.commentCount}
 							</div>
-							
-							<%-- 여백 --%>
-							<div class="col-xs-1"></div>
-							<%-- 여백 --%>
 								
 							<!-- 신고 아이콘 -->
 							<div class="col-xs-2 report">
@@ -1391,7 +1636,7 @@
 							<!-- 신고 아이콘 -->
 							
 							<%-- 여백 --%>
-							<div class="col-xs-1"></div>
+							<div class="col-xs-2"></div>
 							<%-- 여백 --%>
 							
 						</div>
@@ -1414,8 +1659,8 @@
 						<input type="hidden" name="parent" value="0">
 						<input type="hidden" name="depth" value="0">
 						<input type="hidden" name="sequence" value="${feed.commentCount}">
-						<textarea name="commentContent" placeholder="댓글작성"></textarea>
-						<input class="plain button purple btn_addComment" style="float:right;" value="Submit">
+						<textarea name="mainCommentContent" placeholder="댓글작성"></textarea>
+						<button class="btn btn-primary btn_addComment" type="button">SUBMIT</button>
 						<!-- 댓글 관련 hidden -->
 					</form>
 					
@@ -1432,8 +1677,8 @@
 									<div class="comment-author">
 										
 											<img src="/resources/image/uploadFiles/${comment.user.profileImage}" class="avatar" alt="">
-											<cite><a href="#">${comment.user.nickName}</a></cite>
-											<span class="says">says:</span>
+											<cite>${comment.user.nickName}</cite>
+											<span class="says">says</span>
 										
 									</div><!-- comment-author -->
 									
@@ -1491,10 +1736,10 @@
 										<input type="hidden" name="user2" value="${comment.user.userId}">
 										<%-- 피드 댓글 신고 --%>
 									
-										<input type='hidden' name='source' value='1'>
-										<input type='hidden' name='userId' value='${sessionScope.user.userId}'>
-										<input type='hidden' name='feedNo' value='${feed.feedNo}'>
-										<input type='hidden' name='feedCommentNo' value='${comment.feedCommentNo}'>
+										<input type="hidden" name="source" value="1">
+										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+										<input type="hidden" name="feedNo" value="${feed.feedNo}">
+										<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
 										
 										<input type="hidden" name="parent" value="${comment.parent}">
 										<input type="hidden" name="depth" value="${comment.depth}">
@@ -1506,7 +1751,7 @@
 								
 									<div class='btn_recommentCheck' style="display: none;">
 										<textarea name='commentContent' placeholder='작성'></textarea>
-										<input class="plain button purple btn_addRecomment" type="submit" value="Submit">
+										<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>
 									</div>
 								
 								</div><!-- single-comment -->
@@ -1527,10 +1772,86 @@
 				<%-- 현재 페이지 --%>
 				
 			</div>
-		</section>
-		
 		</div>
+		</section>
 	</div>
+	
+	<!-- 신고 Modal -->
+		<div class="modal fade" id="reportModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					
+					
+					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 수정 Modal -->
+		<div class="modal fade" id="updateModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				
+					<form id="updateFeedForm">
+						
+						<!-- 피드 내용 -->
+						<div class="post-area clear-after">
+						
+							<article role="main">
+								<div class="updateModalHeader">
+									<div class="updateModalLeft">
+										<div class="updateModalInner">
+											<div class="updateCover">
+												<img class="updateFeedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+											</div>
+												
+											<div class="updateFormName">
+												${feed.user.nickName}
+											</div>
+										</div>
+										
+										<div class="updateFeedDate">
+											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+										</div>
+									</div>
+								</div>
+								
+								<textarea id="summernote" name="fullContent">${feed.fullContent}</textarea>
+								
+							</article>
+	
+						</div>
+						
+						<!-- 댓글 관련 hidden -->
+						<input type="hidden" name="source" value="0">
+						<input type="hidden" name="openCondition" value="3">
+						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+						<input type="hidden" name="feedNo" value="${feed.feedNo}">
+						
+						<!-- 댓글 관련 hidden -->
+					</form>
+					
+					<div class="modal-footer">
+						<button class="btn btn-primary btn_updateFeed" type="button">
+							UPDATE
+						</button>
+						<button type="button" class="btn btn-default btn_updateFeedCancel" data-dismiss="modal">
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 </body>
 </html>

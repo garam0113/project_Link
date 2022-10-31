@@ -118,6 +118,16 @@
 		</choose>
 	</select>
 	
+	<select		id="getFeedLast"				resultMap="feedSelectMap">
+		SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED
+					ORDER BY feed_no DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
 	
 	
 	<update		id="updateFeed"					parameterType="feed">
@@ -230,6 +240,16 @@
 		AND c.user_id			= u.user_id
 	</select>
 	<!-- 사용 : 댓글 수정시 -->
+	
+	<select 	id="getFeedLastComment"			resultMap="feedCommentSelectMap">
+		SELECT
+		*
+		FROM	(	SELECT
+					*
+					FROM FEED_COMMENT
+					ORDER BY feed_comment_no DESC)
+		WHERE ROWNUM = 1
+	</select>
 	
 	
 	

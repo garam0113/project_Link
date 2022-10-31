@@ -31,7 +31,7 @@ WHERE user_id = '';
 
 UPDATE users
 SET out_user_state = '0'
-WHERE user_id = 'user03';
+WHERE user_id = 'user555';
 
 UPDATE users
 SET out_user_date = SYSDATE
@@ -59,7 +59,7 @@ WHERE user_id = 'user001';
 
 UPDATE users
 SET penalty_type = '0'
-WHERE user_id = 'user333';
+WHERE user_id = 'user555';
 
 UPDATE users
 SET total_visit_count = 1

@@ -1,7 +1,6 @@
 package com.link.common.socket;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +32,8 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 로그인 값이 있는 경우만
 		
 		if(senderId != null) {
-			System.out.println("★★★★★ " + senderId + " 연결 ★★★★★");
 			users.put(senderId, session);	// 로그인중 개별 유저 저장
 		} else {
-			log("★★★★★ " + senderId + " 연결 종료 ★★★★★");
 			users.remove(senderId);
 			sessions.remove(session);
 		}
@@ -51,7 +48,12 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 모든 유저에게 보내기
 		for(WebSocketSession sess : sessions) {
 			System.out.println("핸들러 텍스트 메세지 : " + senderId);
-			sess.sendMessage(new TextMessage(senderId + message.getPayload()));
+			
+			WebSocketSession ownerSession = users.get(senderId);
+			
+			if(!sess.equals(ownerSession)) {
+				sess.sendMessage(new TextMessage(senderId + message.getPayload()));
+			}
 		}
 		
 //		// 특정 유저에게 보내기
@@ -117,7 +119,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		// TODO Auto-generated method stub
 		String senderId = getMemberId(session);
 		if(senderId!=null) {	// 로그인 값이 있는 경우만
-			log("★★★★★" + senderId + " 연결 종료 ★★★★★");
 			users.remove(senderId);
 			sessions.remove(session);
 		}
@@ -129,7 +130,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 		// TODO Auto-generated method stub
-		log(session.getId() + " 오류 발생 : " + exception.getMessage());
+		System.out.println(session.getId() + " 오류 발생 : " + exception.getMessage());
 	}
 
 	private String getMemberId(WebSocketSession session) {
@@ -145,8 +146,4 @@ public class EchoHandler extends TextWebSocketHandler {
 		return m_id == null? null : m_id;
 	}
 	
-	private void log(String logmsg) {
-		System.out.println(new Date() + " : " + logmsg);
-	}
-
 }

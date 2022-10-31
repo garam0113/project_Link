@@ -10,6 +10,9 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/beetle.js"></script>
 		
+		<!-- 사용자 정의 css -->
+		<link rel="stylesheet" href="/resources/css/clubPost/clubPost.css" type="text/css" media="screen" title="no title">
+		
 		<!-- include libraries(jQuery, bootstrap) -->
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -67,7 +70,7 @@
 							success : function(data) {
 								//alert(data.responseCode);
 								//alert(data.url);
-								alert("업로드 하였습니다");
+								//alert("업로드 하였습니다");
 								$(el).summernote('editor.insertImage', data.url);
 								//jsonArray.push(json["url"]);
 								//jsonFn(jsonArray);
@@ -88,8 +91,8 @@
 				$("input[value='수정완료']").bind("click", function(){
 					$("form").attr("accept-charset", "EUC-KR").submit();
 				});
-				$("input[value='리스트로이동']").bind("click", function(){
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
+				$("input[value='이전으로']").bind("click", function(){
+					location.href = "/clubPost/getClubPost?clubNo="+${ clubNo }+"&clubPostNo="+${ getClubPost.clubPostNo };
 				});
 			});
 		</script>
@@ -163,10 +166,10 @@
 							<input type="hidden" name="clubPostNo" value="${ getClubPost.clubPostNo }"><br>
 							<input type="hidden" name="clubNo" value="${ clubNo }"><br>
 							<input type="text" name="clubPostTitle" placeholder="제목" value="${ getClubPost.clubPostTitle }"><br>
-							<textarea id="summernote" name="clubPostContent">${ getClubPost.clubPostContent }
+							<textarea id="summernote" aria-multiline="true" name="clubPostContent">${ getClubPost.clubPostContent }
 							</textarea>
-							<input type="button" class="club-post-update-submit" value="수정완료">
-							<input type="button" class="list-navigation" value="이전으로">
+							<input type="button" class="plain button red update" value="수정완료">
+							<input type="button" class="plain button red cancle" value="이전으로">
 						</form>
 					</div>
 					

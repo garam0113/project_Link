@@ -185,7 +185,7 @@ public class MyHomeController {
 	
 	    if(cutUserId.get("block") != null ) {
 	    
-	    	return "forward:/feed/getFeedList.jsp";
+	    	return "forward:/feed/getFeedList";
 	 
 	    }else {
 		
@@ -336,6 +336,27 @@ public class MyHomeController {
 		return "forward:/pay/getPayList.jsp";
 	}
 	
+	@RequestMapping(value = "getBlockList")
+	public String getBlockList(@ModelAttribute User user,HttpSession session,Search search,String userId, Model model) throws Exception {
+	
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
+		user.setUserId(sessionId);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("user", (User)session.getAttribute("user"));
+		map.put("search", search);
+		
+		search.setSearchKeyword(sessionId);
+		map.put("blockList",myHomeService.getBlockList(search).get("list"));
+		
+		model.addAttribute("blockList", map.get("blockList"));
+		model.addAttribute("search", search);
+		
+		System.out.println("............ "+myHomeService.getBlockList(search).get("list"));
+		
+		return "forward:/myHome/getBlockList.jsp";
+	}
 	
 	
 	

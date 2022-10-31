@@ -110,6 +110,7 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
 
+	/*
 	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
 	public String addClubPostView(@RequestParam int clubNo, Model model) throws Exception {
 		System.out.println("/addClubPostView : GET : 모임번호 갖고 모임게시물 등록 화면으로 이동");
@@ -123,6 +124,7 @@ public class ClubPostController {
 		model.addAttribute("clubNo", clubNo);
 		return "forward:/clubPost/addClubPostView.jsp";
 	}
+	*/
 	
 	/*
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
@@ -283,6 +285,7 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
+	/*
 	@RequestMapping(value = "updateClubPostView", method = RequestMethod.POST)
 	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, HttpSession session, Map<String, Object> map) throws Exception {
 		System.out.println("/updateClubPostView : POST : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
@@ -306,6 +309,7 @@ public class ClubPostController {
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		return "forward:/clubPost/updateClubPostView.jsp";
 	}
+	*/
 
 	@RequestMapping(value = "updateClubPost")
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
@@ -374,7 +378,8 @@ public class ClubPostController {
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
 	public String chatClubList(HttpSession session, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		return "forward:/chat/chatRoomList.jsp";
+		//return "forward:/chat/chatRoomList.jsp";
+		return "forward:/chat/chatRoom.jsp";
 		//return "forward:/chat/index3.jsp";
 	}
 	
@@ -403,20 +408,20 @@ public class ClubPostController {
 		int maxPay = 0;
 		// 모임번호 + navigation이 1이면 모임 상세보기로 간다
 		// pay.setPayNavigation(1);
-		// pay.setClubNo(22);
+		// pay.setClubNo(1);
 		
 		// 모임번호만 있으면 모임원리스트로 간다
-		 pay.setClubNo(22);
+		// pay.setClubNo(1);
 			
 		// 둘 다 없으면 모임리스트로 간다
 				
-		System.out.println("모임번호 : " + pay.getClubNo() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
-		if( (pay.getClubNo() != 0 && pay.getPayNavigation() != 0) || (pay.getClubNo() != 0 && pay.getPayNavigation() == 0) ) {
+		System.out.println("모임번호 : " + pay.getClubNo() + ", 네비게시션 : " + pay.getPayNavigation() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
+		if( pay.getClubNo() != 0 && pay.getPayNavigation() == 0 ) {
 			// 모임대표가 가입승인 클릭시
 			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
 			Map<String, Object> map = clubServiceImpl.getClub(pay.getClubNo());
 			Club returnClub = (Club)map.get("club");
-			returnClub.setClubMaxMember(returnClub.getClubMaxMember());
+			System.out.println("전달받은 모임 정보 : " + returnClub);
 			model.addAttribute("returnClub", returnClub);
 			
 			switch (returnClub.getClubMaxMember()) {
@@ -429,7 +434,7 @@ public class ClubPostController {
 			// 모임등록시 모임가입신청시
 			// 해당 회원의 최대 가입수까지의 최대 결제금액을 가져간다
 			User returnUser = userServiceImpl.getUser((User)sesstion.getAttribute("user"));
-			returnUser.setJoinClubLimit(returnUser.getJoinClubLimit());
+			System.out.println("전달받은 회원 정보 : " + returnUser);
 			model.addAttribute("returnUser", returnUser);
 			
 			switch (returnUser.getJoinClubLimit()) {
@@ -468,7 +473,10 @@ public class ClubPostController {
 				return "forward:/club/getClub.jsp";
 			}else {
 				// 모임리스트
-				Map<String, Object> map = clubServiceImpl.getClubList(ClubPostCommon.getSearch(search));
+				search = ClubPostCommon.getSearch(search);
+				// searchCondition = null로 가야 에러없다
+				search.setSearchCondition(null);
+				Map<String, Object> map = clubServiceImpl.getClubList(search);
 				model.addAttribute("clubList", map.get("clubList"));
 				return "forward:/club/getClubList.jsp";
 			}
@@ -512,6 +520,7 @@ public class ClubPostController {
 		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostCommon.getSearch(search), notice, ((User)session.getAttribute("user")).getUserId()));
 		// 모임 공지사항 리슽 : getClubNoticeList, 모임 공지사항 리스트 개수 : getClubNoticeListCount
 		return "forward:/clubPost/getClubNoticeList.jsp";
+		//return "forward:/clubPost/test.jsp";
 	}
 	
 	@RequestMapping(value = "updateClubNoticeView", method = RequestMethod.POST)

@@ -54,15 +54,29 @@
 			margin-top: 10px;
 		}
 
-		#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #ffffff;
-		}
+		.plain.button.red.cancel{
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: #5F0080 !important;
+	   font-size: 16px !important;
+	   text-align: center;
+	   border: solid 2px;
+	}
+	
+	.plain.button.red.cancel:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border-radius: 10px;
+	   margin: 1rem;
+	   padding: 0px;
+	   width: 65px !important;
+	   color: white !important;
+	   font-size: 16px !important;
+	}
 		
 		
 		textarea {
@@ -74,6 +88,18 @@
 			width: 500px;
 			height: 50px;
 		}
+		
+	/* 	#imageArea{
+		outline: 2px dashed #92b0b3 ;
+	    outline-offset:-10px;  
+	    text-align: center;
+	    transition: all .15s ease-in-out;
+	    width: 300px;
+	    height: 300px;
+	    background-color: gray;
+		}
+		 */
+		
         
     </style>
     
@@ -116,7 +142,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-addClub").on("click", function() {
+		$("#addClub").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			fncAddClub();
 		});
@@ -128,7 +154,7 @@
 
 	$(function() {
 
-		$("button.btn.btn-cancel").bind("click", function() {
+		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
@@ -195,6 +221,56 @@
 		timeout           : 3000
 	};
 	
+	
+	//파일 드래그 앤 드롭
+	
+	$('#imageArea')
+		.on("dragover", dragOver)
+		.on("dragleave", dragOver)
+		.on("drop", uploadFiles);
+	
+		function dragOver(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    if (e.type == "dragover") {
+	        $(e.target).css({
+	            "background-color": "black",
+	            "outline-offset": "-20px"
+	        });
+	    } else {
+	     $(e.target).css({
+	            "background-color": "gray",
+	            "outline-offset": "-10px"
+	        });
+	    }
+	}
+
+		 
+		function uploadFiles(e) {
+		    e.stopPropagation();
+		    e.preventDefault();
+		    dragOver(e); //1
+		 
+		    e.dataTransfer = e.originalEvent.dataTransfer; //2
+		    var files = e.target.files || e.dataTransfer.files;
+		 
+		    if (files.length > 1) {
+		        alert('하나만 올려라.');
+		        return;
+		    }
+		    
+		    if (files[0].type.match(/image.*/)) {
+                $(e.target).css({
+            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+            "outline": "none",
+            "background-size": "100% 100%"
+		        });
+		    }else{
+		      alert('이미지가 아닙니다.');
+		      return;
+		    }
+		}
+
 
 </script>
 </head>
@@ -207,7 +283,7 @@
 	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 등 록</h2>
 					<p class="exTxt">새로운 모임을 등록해보세요...</p>
 					<div class="join_form">
@@ -284,7 +360,7 @@
 				</div>		
 			</div>			
 			
-			<div class="form-group">
+			<div class="form-group" id="imageArea">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <input type="file" name="file" class="file" id="clubImage" multiple="multiple"> -->
@@ -296,9 +372,9 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-addClub">등 &nbsp;록</button>
-					<button type="button" class="btn btn-cancel">취&nbsp;소</button>
+				<div class="col-sm-offset-6  col-sm-6 text-center">
+		      		<button type="button" class="plain button red cancel" id="addClub">등 &nbsp;록</button>
+					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
 			</div>
 			</div>
