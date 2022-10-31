@@ -281,7 +281,7 @@
 							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
+							<a href="/clubPost/chatRoomList style="color: #BD76FF;">모임채팅</a>
 						</li>
 						<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>

@@ -753,6 +753,37 @@ VALUES (5, 'user555', 22, '모임원 추가', '실시간 계좌이체', 5000, SY
 
 
 
+select roomid from club_user where user_id = 'user333' and join_reg_date is not null;
+SELECT ROOMID FROM CLUB_USER WHERE USER_ID = #{ userId } AND JOIN_REG_DATE IS NOT NULL;
+
+
+SELECT ROOMID FROM CLUB WHERE USER_ID = 'user333';
+
+
+SELECT *
+FROM ( SELECT club_no FROM CLUB WHERE USER_ID = 'user888' order by club_reg_date DESC )
+WHERE ROWNUM = 1
+
+SELECT * FROM CLUB_USER WHERE USER_ID = 'user333' AND ROOMID IS NOT NULL;
+
+SELECT ROOMID FROM CLUB WHERE CLUB_NO = 40;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

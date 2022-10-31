@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.link.common.Search;
 import com.link.service.club.ClubService;
@@ -277,6 +276,7 @@ public class ClubPostController {
 
 		
 		
+		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList, 좋아요 여부 : getClubPost.heartCondition, 모임 직책 : getClubPost.clubRole
 		
@@ -370,17 +370,24 @@ public class ClubPostController {
 	
 	
 	
-///////////////////////////////////////////////////////////////////////////////////// chat /////////////////////////////////////////////////////////////////////////////////////	
+///////////////////////////////////////////////////////////////////////////////////// chat /////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	
 	
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
-	public String chatClubList(HttpSession session, Model model) throws Exception {
+	public String chatClubList(HttpSession session, String roomId, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
-		//return "forward:/chat/chatRoomList.jsp";
+		
+		System.out.println("채팅방 번호 : " + roomId);
+		
+		model.addAttribute("roomId", roomId);
+		
+		// 모임 40번
+		//model.addAttribute("roomId", "0162812f-1c51-41f5-938a-335ed02ed20b");
+		// 모임 41번
+		//model.addAttribute("roomId", "09b98129-4fa6-4947-8a5f-104606924784");
 		return "forward:/chat/chatRoom.jsp";
-		//return "forward:/chat/index3.jsp";
 	}
 	
 	@RequestMapping(value = "/chatRoom", method = RequestMethod.GET)
@@ -391,7 +398,6 @@ public class ClubPostController {
 		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
 	}
-	
 	
 	
 

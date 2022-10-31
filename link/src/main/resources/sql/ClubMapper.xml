@@ -22,6 +22,7 @@
 		<result property="user.nickName"		column="nickname"				jdbcType="VARCHAR" />
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
 		<result property="approvalCondition" column="approval_condition"		jdbcType="CHAR" />
+		<result property="roomId"			column="roomId"					jdbcType="VARCHAR"/>
 
 	</resultMap>
 	
@@ -38,6 +39,7 @@
 		<result property="user.nickName"		column="nickname"						jdbcType="VARCHAR" />
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
 		<result property="club.clubMaxMember"		column="club_max_member"				jdbcType="NUMERIC" />
+		<result property="roomId"					column="roomId"								jdbcType="VARCHAR"/>
 			
 	</resultMap>
 	
@@ -86,7 +88,8 @@
 		   			club_max_member , 
 		   			club_category , 
 		   			club_area ,
-		   			club_reg_date)
+		   			club_reg_date,
+		   			roomId)
 		VALUES ( 
 					seq_club_no.NEXTVAL , 
 					#{user.userId} , 
@@ -97,7 +100,8 @@
 					#{clubMaxMember:NUMERIC} , 
 					#{clubCategory} , 
 					#{clubArea} ,
-					SYSDATE)
+					SYSDATE,
+					#{roomId})
 	
 	</insert>
 
@@ -112,7 +116,8 @@
 			current_member ,
 			club_max_member ,
 			club_category ,
-			club_area
+			club_area ,
+			roomId
 		FROM club
 		WHERE club_no = #{clubNo}	
 	
@@ -268,8 +273,12 @@
 						</if> ) countTable						
 	 </select>
 	
-	
-	
+	<!-- 로그인한 회원이 가장 최근 만든 모임번호 가져온다 -->
+	<select id="getClubNo" parameterType="user" resultType="int">
+		SELECT *
+		FROM ( SELECT club_no FROM CLUB WHERE USER_ID = #{ userId } order by club_reg_date DESC )
+		WHERE ROWNUM = 1	
+	</select>
 
 	<insert id="addApprovalCondition" parameterType="clubUser">
 		INSERT INTO club_user (
@@ -280,7 +289,8 @@
 			join_reg_date ,
 			member_role ,
 			approval_condition ,
-			join_greeting
+			join_greeting ,
+			roomId
 		)		 		 
 		VALUES (
 			seq_club_user_no.nextval ,
@@ -290,7 +300,8 @@
 			SYSDATE ,
 			#{memberRole} ,
 			#{approvalCondition} ,
-			#{joinGreeting}
+			#{joinGreeting} ,
+			#{roomId}
 		)
 		
 	</insert>
@@ -335,7 +346,11 @@
 		WHERE CLUB_NO = ${ clubNo } AND JOIN_REG_DATE IS NOT NULL
 		ORDER BY club_user_no ASC
 	 </select>
-	
+	 
+	 <!-- 로그인한 회원이 속해있는 모임의 채팅방 번호를 찾는 Query -->
+	<select id="getRoomIdList" parameterType="user" resultMap="clubUserSelectMap">
+		SELECT ROOMID FROM CLUB_USER WHERE USER_ID = #{ userId } AND JOIN_REG_DATE IS NOT NULL
+	</select>
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">
 			

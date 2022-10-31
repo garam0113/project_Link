@@ -18,15 +18,14 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-
-   
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+	<!-- alert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 	<style>
 	body {
@@ -66,14 +65,6 @@
 		background-color: #f0f2f5 !important;
 	}
 	
-	#menu_wrap {
-		display: none !important;
-	}
-	
-	.map_wrap {
-		width: 50% !important;
-	}
-	
 	
 	</style>
 
@@ -83,48 +74,69 @@
 	<script src="/resources/javascript/beetle.js"></script>
 	<script type="text/javascript">
 	
-	
-	function fncDeleteMeeting() {
 		
-		$("form").attr("method", "POST").attr("action", "/club/deleteMeeting")
-			.submit();
+	$(function() {
+		
+		<%-- 일정삭제 --%>
+		$("#deleteMeeting").bind("click", function() {
+			
+			Swal.fire({
+				title: '정말 일정을 삭제하시겠습니까?' ,
+				text: "삭제한 일정은 복구되지 않습니다.",
+				icon: 'warning' ,
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '삭제',
+				cancelButtonText: '취소' ,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire(
+						'삭제완료!',
+						'일정이 삭제되었습니다',
+						'success'
+					)
+					
+					//$("form").attr("method", "POST").attr("action", "/club/deleteMeeting").submit();
+					
+					fncDeleteMeeting();
+				}
+			})
+		});
+	
+	//일정 참가
+	function fncAddMeetingMember() {
+		
+		Swal.fire({
+			title: '일정에 참여합니다' ,
+			text: '즐거운 만남하세요' ,
+			icon: 'success' ,
+			showConfirmButton: true
+		})	
+		
+		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
 	}
 	
 	$(function() {
-
 		$("#deleteMeeting").on("click", function() {
-			alert("눌리나?");
 			fncDeleteMeeting();
-			
 		});
 	});
 	
 	$(function() {
-
 		$("#cancel").bind("click", function() {
 			history.go(-1);
 		});
 	});
 	
 	$(function() {
-
 		$("#updateMeeting").on("click", function() {
-			//self.location="/club/updateMeetingView.jsp"
 			self.location="/club/updateMeetingView?meetingNo="+${meeting.meetingNo};
 		});
 	});
 	
-	function fncAddMeetingMember() {
-		
-		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember")
-			.submit();
-	}
-	
-	
 	$(function() {
-		
-		$("#addParticipant").on("click", function() {
-			alert("가입신청 되었습니다.");
+		$("#addMeetingMember").on("click", function() {
 			fncAddMeetingMember();
 		});
 	});
@@ -133,24 +145,12 @@
 
 </head>
 
-<body class="blog masonry-style">
+<body>
 
 	
 	<jsp:include page="/toolbar.jsp" />	
 		
 	
-		
-	<!-- 		<div id="intro-wrap" data-height="15">상단 검은색 공통 영역
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>MEETING</h2>
-							<p>New encounters are always fun...</p>
-						</div>
-					</div>								
-				</div>intro
-			</div>intro-wrap -->
-			
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
@@ -172,12 +172,6 @@
 							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
 						</li>
 					</ul>	
-		
-		
-		
-		
-		
-		
 		
 	<div class="container">
 	
@@ -213,7 +207,7 @@
 				
 				<div>
 			  		<div class="col-xs-4 col-md-6 "><strong>일정장소</strong></div>
-					<div class="col-xs-8 col-md-6"><a href="https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=${meeting.meetingPlace}"></a>${meeting.meetingPlace}</div>
+					<div class="col-xs-8 col-md-6">${meeting.meetingPlace}</div>
 				</div>
 				
 				<p>
@@ -237,22 +231,22 @@
 				</div> <!-- detailForm 종료 -->			
 			<!-- </form>	 -->
 			
-			<div class="mapArea">
+		<%-- 	<div class="mapArea">
 				<jsp:include page="/club/searchPlace.jsp"/>			
-			</div>
+			</div> --%>
 		
 		<!-- 합치자~ -->		
 		</div>	
-		
-			<div class="form-group" id="btn_group">
+		<form>
+			<div class="btn_group" id="btn_group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 26%;">
-					<button type="button" class="plain button red cancel" id="addParticipant"  >참가신청</button>
+					<button type="button" class="plain button red cancel" id="addMeetingMember">참가신청</button>
 					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
-					<button type="button" class="plain button red cancel" id="updateMeeting" >수&nbsp;정</button>
-		      		<button type="button" class="plain button red cancel" id="deleteMeeting" >삭&nbsp;제</button>
+					<button type="button" class="plain button red cancel" id="updateMeeting">수&nbsp;정</button>
+		      		<button type="button" class="plain button red cancel" id="deleteMeeting">삭&nbsp;제</button>
 		 	   </div>
 			</div>		
-			
+		</form>	
 		</div>
 		</div>
 	</div>

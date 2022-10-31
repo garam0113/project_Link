@@ -2,19 +2,21 @@ package com.link.web.serviceCenter;
 
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
+import org.apache.commons.compress.utils.IOUtils;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -113,53 +115,93 @@ public class ServiceCenterRestController {
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
 	
-	@RequestMapping(value= "/json/getFestivalList", method = RequestMethod.GET)
-	public JSONArray getFestivalList(@RequestBody Search search, Model model) throws Exception{
-		StringBuilder urlBuilder = new StringBuilder(
-				("http://apis.data.go.kr/B551011/KorService/areaBasedList?"
-						+ "numOfRows=12"
-						+ "&pageNo=1&"
-						+ "MobileOS=ETC"
-						+ "&MobileApp=AppTest"
-						+ "&ServiceKey=zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D"
-						+ "&listYN=Y"
-						+ "&arrange=C"
-						+ "&contentTypeId=15"
-						+ "&areaCode=1"
-						+ "&sigunguCode="
-						+ "&cat1=A02"
-						+ "&cat2=A0207"
-						+ "&cat3=A02070200")); 
+	@RequestMapping(value= "/json/getFestivalList")   // 축제 리스트가져오기 
+	public String getFestivalList(HttpServletRequest request, HttpServletResponse response, @RequestParam String contentTypeId) throws Exception{
 		
-		URL url = new URL(urlBuilder.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
-		}
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		System.out.println(sb.toString());
-		System.out.println(rd.toString());
 		
-		JSONParser parser = new JSONParser();
-		JSONObject obj = (JSONObject)parser.parse(sb.toString());
-		JSONArray dataArr = (JSONArray)obj.get("data");
+		String addr = "http://apis.data.go.kr/B551011/KorService/searchFestival?ServiceKey=";
+		String serviceKey="zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D";
+		String parameter ="";
+		String pattern = "yyyyMMdd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String date = simpleDateFormat.format(new Date());
+		System.out.println(date);
 		
-		return dataArr;
+		parameter = parameter + "&" +"numOfRows=20";
+		parameter = parameter + "&" +"pageNo=1";
+		parameter = parameter + "&" +"MobileOS=ETC";
+		parameter = parameter + "&" +"MobileApp=AppTest";
+		parameter = parameter + "&" +"_type=json";
+		parameter = parameter + "&" +"listYN=Y";
+		parameter = parameter + "&" +"arrange=A";
+		parameter = parameter + "&" +"eventStartDate="+date;
+		parameter = parameter + "&" +"eventEndDate=20221230";
+		parameter = parameter + "&" +"areaCode=1";
+		
+		
+		addr = addr + serviceKey + parameter;
+		URL url = new URL(addr);
+		
+		System.out.println(addr);
+		
+		InputStream in = url.openStream();
+		
+		ByteArrayOutputStream bos1 = new ByteArrayOutputStream();
+		IOUtils.copy(in, bos1);
+		in.close();
+		bos1.close();
+		
+		String mbos = bos1.toString("UTF-8");
+		
+		System.out.println("나다"+mbos);
+	
+		
+		
+		return mbos;
 	}
 	
-	
+	@RequestMapping(value= "/json/getFestival")  //축제 하나씩 설명 가져오기
+	public String getFestival(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam String contentid) throws Exception{
+		
+		
+		String addr = "http://apis.data.go.kr/B551011/KorService/detailCommon?ServiceKey=";
+		String serviceKey="zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D";
+		String parameter ="";
+		System.out.println(contentid);
+		parameter = parameter + "&" +"contentTypeId=15";
+		parameter = parameter + "&" +"contentId="+contentid;
+		parameter = parameter + "&" +"MobileOS=ETC";
+		parameter = parameter + "&" +"MobileApp=AppTest";
+		parameter = parameter + "&" +"defaultYN=Y";
+		parameter = parameter + "&" +"firstImageYN=Y";
+		parameter = parameter + "&" +"areacodeYN=Y";
+		parameter = parameter + "&" +"catcodeYN=Y";
+		parameter = parameter + "&" +"addrinfoYN=Y";
+		parameter = parameter + "&" +"mapinfoYN=Y";
+		parameter = parameter + "&" +"overviewYN=Y";
+
+
+		
+		addr = addr + serviceKey + parameter;
+		URL url = new URL(addr);
+		
+		System.out.println(addr);
+		
+		InputStream in = url.openStream();
+		
+		ByteArrayOutputStream bos1 = new ByteArrayOutputStream();
+		IOUtils.copy(in, bos1);
+		in.close();
+		bos1.close();
+		
+		String mbos = bos1.toString("UTF-8");
+		
+		System.out.println("나다222"+mbos);
+			
+		
+		return mbos;
+	}
 	
 	
 	/*

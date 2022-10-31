@@ -163,7 +163,7 @@ $(function() {
 <body style="overflow-x: hidden">
 	<%--검은색 화면 --%>
 
-
+<jsp:include page="/serviceCenter/getFestival2.jsp"/>
 	<%-- --%>
 	<div style="transform: translate(800px, 50px);">
 	<h1 >&nbsp;&nbsp;&nbsp;고  객  센  터</h1>
