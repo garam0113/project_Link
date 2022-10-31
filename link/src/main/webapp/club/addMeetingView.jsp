@@ -256,7 +256,7 @@
 	<form>
 		<div class="wrap wd668">
 			<div class="container">
-				<div class="form_txtInput">
+				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모임일정등록</h2>
 					<p class="exTxt">새로운 일정을 등록해보세요...</p>
 					<div class="join_form">
