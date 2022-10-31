@@ -97,22 +97,6 @@ body>div.container {
 
 <body>
 	<jsp:include page="/toolbar.jsp" />
-	<c:if test="${! empty getUser.nickName }">
-		<div id="intro-wrap" data-height="27.778">
-			<div id="intro" class="preload darken">
-				<div class="intro-item"
-					style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-					<div class="caption">
-						<h2>MyBlog</h2>
-						<p>Write down your daily life</p>
-					</div>
-					<!-- caption -->
-				</div>
-				<!-- intro -->
-			</div>
-			<!-- intro -->
-		</div>
-	</c:if>
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -130,7 +114,7 @@ body>div.container {
 								<col width="auto" />
 							</colgroup>
 							<tbody>
-								<tr>
+								<tr> 
 									<td><input type="hidden" class="form-control" id="userId"
 										name="userId" value="${ getUser.userId }"></td>
 								</tr>
