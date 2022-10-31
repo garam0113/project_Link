@@ -117,7 +117,7 @@
 					$("#summernote").val("");
 					
 					// 모달창 닫기
-					$('#club-post-update-modal').modal("hide");
+					$('#club-post-add-modal').modal("hide");
 				});
 				
 				$("b:contains('최신순')").bind("click", function() {
