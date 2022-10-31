@@ -149,14 +149,15 @@
                   
                </ul>
                
+               <%--
+               	<div class="alarmHead" >
+						
+					<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+				</div>
+                --%>
             </nav>
             
-            <div class="alarmHead" >
-						
-				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-
-			</div>
-                    
          </div>
          <!-- row-content -->
       </div>

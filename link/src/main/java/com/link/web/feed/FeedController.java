@@ -423,7 +423,7 @@ public class FeedController {
 		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
 		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
-		return "forward:/feed/getFeedList.jsp";
+		return "forward:/main.jsp";
 	}
 	
 	

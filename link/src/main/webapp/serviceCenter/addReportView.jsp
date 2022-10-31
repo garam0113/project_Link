@@ -165,7 +165,9 @@
 textarea {
 	resize: none;
 }
-
+body{
+background-color: #EBEDF0 !important;
+}
 .title {
 	width: 400px;
 }
