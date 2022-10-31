@@ -11,126 +11,119 @@
 
 <title>모임상세조회</title>
 
-	<meta charset="EUC-KR">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
-   
-   <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-  
-  
-  <!-- alert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<meta charset="EUC-KR">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- jQuery UI toolTip 사용 CSS-->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI toolTip 사용 JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-	<style>
-	body {
-		padding-top : 70px;
-	}
-	
-	#main {
-		background-color: #f0f2f5 !important;
-	}
-	
-	main {
-		background-color: #f0f2f5 !important;
-	}
-	
-	#btn_group button{
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		color: #BD76FF;
-    	border-color: #BD76FF;
-    	background-color: #f0f2f5;
-	}
-	a {
-    	color: #bd76ff;
-    	text-decoration: underline;
-	}
-	
-	.darkover {
-    position: sticky;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    background: rgba(0,0,0,0.35);
-	}
-	
-	.club-wrap {
-			width : 100%;
-			margin: 10px auto;
-			position: relative;
-	}
-	
-	.club-wrap img {
-			width: 100%;
-			vertical-align: middle;
-			filter: brightness(1.1);
-	}
-	
-	.club-text {
-			
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 100%;
-			transform: translate(-50%, -50%);
-			font-size: 20px;
-			text-align: center;
-			
-	}
-	
-	.h2-color {
-		color: yellow;
-	}
-	
-	.p-color {
-		color: yellow;
-	}
-	
-	.row-content.buffer, .row-content.buffer-left {
-    	padding-left: 0% !important;
-	}
-	
-	.row-content.buffer, .row-content.buffer-right {
-    padding-right: 0% !important;
-	}
-	
-	row-content.buffer, .row-content.buffer-bottom {
-    padding-bottom: 10% !important;
-	}
-	
-	
-	element.style {
-    	margin-bottom: 100px !important;
-	}
-		
-	
-	
-	
-	
-	
-	
-	
-	</style>
-	
-	<!-- ?? -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
-	
-	<script type="text/javascript">
+
+<!-- alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<style>
+body {
+	padding-top: 70px;
+}
+
+#main {
+	background-color: #f0f2f5 !important;
+}
+
+main {
+	background-color: #f0f2f5 !important;
+}
+
+#btn_group button {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	color: #BD76FF;
+	border-color: #BD76FF;
+	background-color: #f0f2f5;
+}
+
+a {
+	color: #bd76ff;
+	text-decoration: underline;
+}
+
+.darkover {
+	position: sticky;
+	top: auto;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.club-wrap {
+	width: 100%;
+	margin: 10px auto;
+	position: relative;
+}
+
+.club-wrap img {
+	width: 100%;
+	vertical-align: middle;
+	filter: brightness(1.1);
+}
+
+.club-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%, -50%);
+	font-size: 20px;
+	text-align: center;
+}
+
+.h2-color {
+	color: yellow;
+}
+
+.p-color {
+	color: yellow;
+}
+
+.row-content.buffer, .row-content.buffer-left {
+	padding-left: 0% !important;
+}
+
+.row-content.buffer, .row-content.buffer-right {
+	padding-right: 0% !important;
+}
+
+row-content.buffer, .row-content.buffer-bottom {
+	padding-bottom: 10% !important;
+}
+
+element.style {
+	margin-bottom: 100px !important;
+}
+</style>
+
+<!-- ?? -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+
+<script type="text/javascript">
 	
 	function fncDeleteClub() {
 		
@@ -203,38 +196,153 @@
 	}); 
 	
 	$(function() {
+		
+		//alert("123");
 		var options = {
-				"forcNew" : true
+			"forcNew" : true
 		};
 		var url = "https://192.168.0.183:4000";
-		
+
 		socket = io.connect(url, options);
-		
+
 		socket.on("connect", function() {
-			//alert("소켓연결 완료");
+			alert("소켓연결 완료");
 		});
 		
 		$(".live").on("click", function() {
-			console.log($("#addName").val());
-			console.log($("#total").val());
-			console.log($("#nickName").val());
-			console.log($("#profile").val());
-			if(socket == undefined){
-			//	alert("서버가 연결되어 있지 않습니다.");
-				return;
-			}
-			socket.emit("name", $("#addName").val());
-			socket.emit("total", $("#total").val());
-			socket.emit("nickName", $("#nickName").val());
-			socket.emit("profile", $("#profile").val());
-			$("form").attr("method", "POST").attr("action", "/live/addLive").submit();
+			var clubNo = $("#no").val();
+			var clubTitle = $("#clubTitle").val();
+			var profile = $("#profile").val();
+			var nickName = $("#nickName").val();
+		//	console.log("profile : "+profile);
+		//	console.log("nickName : "+nickName);
+			
+			$.ajax("/liveRest/json/getLiveList", {
+				type : "POST",
+				data : JSON.stringify({
+					type : '2'
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(Data) {
+					console.log(Data);
+					var roomName = "";
+					$.each (Data, function(index, data) {
+						roomName += "<div style='margin-top: 10px;' id='"+data.roomName+"'><span style='font-size: larger; font-weight: bold; color: black;'>"
+						+(index+1)+". "+data.viewRoomName+"</span><span style='font-size: larger; font-weight: bold;" 
+						+"color: black;'>("+data.member+"/"+data.limit+")</span><button type='button'" 
+						+"class='joinLive' style=' margin-left: 20px;'><input type='hidden'"
+						+"value='"+data.viewRoomName+"'/>입장</button></div>";
+					})
+					swal.fire({
+						title : clubTitle+"모임의 채팅방",
+						showCancelButton : true,
+						cancelButtonText : '취소',
+						confirmButtonText : '채팅방개설',
+						html: "<div id='roomNameList' style='text-align-last: left; margin-left: 70px;'></div>",
+					}).then((result) => { 
+						var viewName;
+						if(result.isConfirmed){
+						swal.fire({
+							title : "채팅방개설",
+							html : "<input type='text' id='roomName' class='swal2-input' placeholder='방제목'>" +
+							"<input type='text' id='total' class='swal2-input' placeholder='인원수'>",
+							showCancelButton : true,
+							cancelButtonText : '취소',
+							confirmButtonText : '개설',
+							preConfirm : () => {
+								var total = Swal.getPopup().querySelector('#total').value
+								var roomName = Swal.getPopup().querySelector('#roomName').value
+							$.ajax("/liveRest/json/addLive", {
+						 		type : "POST",
+								data : JSON.stringify({
+									roomName : clubNo+"_"+clubTitle+":"+roomName,
+									type : '2',
+									limit : total
+								}),
+								dataType : "json",
+								contentType : "application/json",
+								headers : {
+									"Accept" : "application/json"
+								}, 
+								success : function(json) {
+									console.log(json);
+									var name = clubNo+"_"+clubTitle+":"+roomName;
+									socket.emit("info", {
+										roomName : name,
+										viewName : roomName,
+										total : total,
+										profile : profile,
+										nickName : nickName
+										});
+									self.location = "https://192.168.0.183:4040";
+								}
+							}) 
+						}
+					})
+						}
+					})
+					$("#roomNameList").append(roomName);
+					
+					$("button.joinLive").on("click", function() {
+						//alert("asdf");
+						var roomName = $(this).parent().attr("id");
+						var viewName = $(this).children().val();
+						console.log(roomName);
+						$.ajax("/liveRest/json/getLive",{
+							method : "POST",
+							data : JSON.stringify({
+								roomName : roomName,
+								type : '2'
+							}),
+							dataType : "json",
+							contentType : "application/json",
+							headers : {
+								"Accept" : "application/json"
+							},
+							success : function (data) {
+								console.log(data);
+								socket.emit("info", {
+									roomName : roomName,
+									viewName : viewName,
+									profile : profile,
+									nickName : nickName
+								});
+								self.location = "https://192.168.0.183:4040";
+							}
+						})
+					})
+				} 
+			})
 		})
+		
+		socket.on("reRoomName", function(data) {
+			console.log("socket서버에서 받은 Data : "+data);
+			if(data != null){
+			$.ajax("/liveRest/json/exitLive", {
+				method : "POST",
+				data : JSON.stringify({
+					roomName : data,
+					type : '2'
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(Data) {
+					console.log(Data);
+				}
+			})
+			}
+		})
+		
 	})
-
 	
-	  
-	
-	</script>	 
+	</script>
 
 </head>
 
@@ -245,136 +353,154 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
-		<main role="main">
-		
-			<div id="intro-wrap" data-height="17.35"><!-- 상단 검은색 공통 영역 -->
-				<div id="intro" class="preload darken">					
-					<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
-					<div class="intro-item">
-					
-						<div class="club-wrap">
-						
-							<div class="club-image">
-								<a href="/club/getClub?clubNo=${clubNo}"><img src="/resources/image/uploadFiles/${club.clubImage}" width="1500" height="300" name="file" id="clubImage"></a>
-							</div>
-							
-							<div class="club-text">
-							<h2 class="h2-color"><a href="/club/getClub?clubNo=${clubNo}"></a>CLUB</h2>
-							<p class="p-color">Make good memories with the members...</p>
-							</div>							
+	<main role="main">
+
+		<div id="intro-wrap" data-height="17.35">
+			<!-- 상단 검은색 공통 영역 -->
+			<div id="intro" class="preload darken">
+				<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
+				<div class="intro-item">
+
+					<div class="club-wrap">
+
+						<div class="club-image">
+							<a href="/club/getClub?clubNo=${clubNo}"><img
+								src="/resources/image/uploadFiles/${club.clubImage}"
+								width="1500" height="300" name="file" id="clubImage"></a>
 						</div>
-					</div>								
-				</div><!-- intro -->
-			</div><!-- intro-wrap -->
-			
-		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
-			
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 310px;">
-						<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
-						</li>
-						<%-- <li data-group="infographics">
+
+						<div class="club-text">
+							<h2 class="h2-color">
+								<a href="/club/getClub?clubNo=${clubNo}"></a>CLUB
+							</h2>
+							<p class="p-color">Make good memories with the members...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- intro -->
+		</div>
+		<!-- intro-wrap -->
+
+
+		<div id="main" class="row">
+			<!-- 중간 개별영역 -->
+
+			<div class="row-content buffer-left buffer-right buffer-bottom">
+
+
+
+				<ul class="inline cats filter-options"
+					style="font-size: 40px; margin-left: 310px;">
+					<li data-group="advertising"><a
+						href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
+					</li>
+					<li data-group="fun"><a href="/clubPost/getClubPostList"
+						style="color: #BD76FF;">모임게시물</a></li>
+					<li data-group="icons"><a href="/club/getClubMemberList"
+						style="color: #BD76FF;">모임원</a></li>
+					<li data-group="infographics"><a href="/clubPost/chatRoomList"
+						style="color: #BD76FF;">모임채팅</a></li>
+					<%-- <li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
 						</li> --%>
-					</ul>
-		
-		<button type="button" class="live">모임 화상채팅</button>
-		
-		
-		<div class="mainForm" style="display: inline-flex;">
-		<!-- 클럽상세 -->	
-		<div>	
-		<form class="form-horizontal" enctype="multipart/form-data" style="width:443px;">
-		
-		<div class="col-xs 6 col-md-6" style="display: contents;">
-		<div class="row">
-			<div class="col-xs-4 col-md-6"><strong>모 임 제 목</strong></div>
- 			<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
-		</div>
-		
-		<hr/>
-				
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 설 명</strong></div>
-			<div class="col-xs-8 col-md-8">${club.clubDetail}</div>
-		</div>
+				</ul>
 
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 카 테 고 리</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-6 "><strong>모 임 활 동 영 역</strong></div>
-			<div class="col-xs-8 col-md-4">${club.clubArea}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-			<div class="col-s-4 col-md-6 "><strong>모임원 수</strong></div>
-			<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
-		</div>
-		
-		</div>
-		
-		</form>
-		
-		</div> <!-- 클럽상세 -->
-		
-		
-		<!-- 달력영역 -->
-		<div class="calendarArea">
-		
-		<jsp:include page="/club/calendar.jsp" />
-		
-		</div>
-		<!-- 달력 영역 -->
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		</div>
-		
+				<button type="button" class="live">모임 화상채팅</button>
+
+
+				<div class="mainForm" style="display: inline-flex;">
+					<!-- 클럽상세 -->
+					<div>
+						<form class="form-horizontal" enctype="multipart/form-data"
+							style="width: 443px;">
+
+							<div class="col-xs 6 col-md-6" style="display: contents;">
+								<div class="row">
+									<div class="col-xs-4 col-md-6">
+										<strong>모 임 제 목</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
+								</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-xs-4 col-md-6 ">
+										<strong>모 임 설 명</strong>
+									</div>
+									<div class="col-xs-8 col-md-8">${club.clubDetail}</div>
+								</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-xs-4 col-md-6 ">
+										<strong>모 임 카 테 고 리</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
+								</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-xs-4 col-md-6 ">
+										<strong>모 임 활 동 영 역</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${club.clubArea}</div>
+								</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-s-4 col-md-6 ">
+										<strong>모임원 수</strong>
+									</div>
+									<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
+								</div>
+
+							</div>
+
+						</form>
+
+					</div>
+					<!-- 클럽상세 -->
+
+
+					<!-- 달력영역 -->
+					<div class="calendarArea">
+
+						<jsp:include page="/club/calendar.jsp" />
+
+					</div>
+					<!-- 달력 영역 -->
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		
-		      		<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
-					<button type="button" class="btn btn-cancel">이&nbsp;전</button>			
-					<button type="button" class="btn btn-update"  >수&nbsp;정</button>
+
+					<button type="button" class="btn btn-addApproval">가&nbsp;입&nbsp;신&nbsp;청</button>
+					<button type="button" class="btn btn-cancel">이&nbsp;전</button>
+					<button type="button" class="btn btn-update">수&nbsp;정</button>
 					<!-- 모달을 열기 위한 버튼 -->
 					<!-- <button type="button" class="btn btn-default" id="openModalBtn" data-togle="modal" data-target="#exampleModal" data-whatever="@mdo">수&nbsp;정</button> -->
-				
-					<button type="button" class="btn btn-delete"  >삭&nbsp;제</button>
-					
+
+					<button type="button" class="btn btn-delete">삭&nbsp;제</button>
+
 					<!-- 모달 영역 -->
-		<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+					<%-- 			<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class = "modal-header">
@@ -402,21 +528,23 @@
 								</div> 
 							</div>
 						</div>
-					</div>	 --%>	
-					
-					
-						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
-						<input type="hidden" id="total" value="${clubMemberCount}">
-						<input type="hidden" id="nickName" value="${user.nickName }">
-						<input type="hidden" id="profile" value="${user.profileImage }">
-		    </div>
-			</div>	
-			</form>		
+					</div>	 --%>
+
+
+					<!-- <button type="button" class="joinLi"></button> -->
+					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
+					<input type="hidden" id="nickName" value="${user.nickName }">
+					<input type="hidden" id="profile" value="${user.profileImage }">
+					<input type="hidden" id="no" value="${clubNo}">
+				</div>
 			</div>
-	</div>
-	
-	
-	
-		</main>
+			</form>
+		</div>
+		</div>
+
+
+
+	</main>
+	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
 </body>
 </html>

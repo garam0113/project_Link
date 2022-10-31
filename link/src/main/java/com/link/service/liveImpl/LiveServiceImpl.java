@@ -34,7 +34,7 @@ public class LiveServiceImpl implements LiveService {
 	@Override
 	public void updateLive(Live live) throws Exception {
 		// TODO Auto-generated method stub
-		
+		liveDAO.updateLive(live);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class LiveDAOImpl implements LiveDAO {
 	@Override
 	public void updateLive(Live live) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sqlSession.update("LiveMapper.updateLive", live);
 	}
 
 	@Override

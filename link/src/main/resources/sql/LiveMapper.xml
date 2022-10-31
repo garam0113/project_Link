@@ -13,8 +13,9 @@
 		<result property="limit" column="limit" jdbcType="NUMERIC" />
 		<result property="member" column="member" jdbcType="NUMERIC" />
 		<result property="profileImage" column="profile_image"
-			jdbcType="NUMERIC" />
-	</resultMap>
+			jdbcType="NUMERIC" /> 
+		<result property="type" column="type" jdbcType="CHAR" />
+	</resultMap>  
 	<!-- <sql id="select-list"> SELECT roomid , limit , member FROM live <where> 
 		<if test="(searchCondition == 0 and searchKeyword != '')"> user_id LIKE(#{searchKeyword}||'%') 
 		</if> <if test="(searchCondition == 1 and searchKeyword != '')"> nickname 
@@ -25,33 +26,34 @@
 	<insert id="addLive" parameterType="live">
 		INSERT 
 		INTO live (
-		live_no ,roomid , limit , member, profile_image
+		live_no ,roomid , limit , member, profile_image, type
 		)
 		VALUES 
 		(
 		seq_club_post_no.NEXTVAL, #{roomName:VARCHAR},
-		#{limit:NUMERIC}, #{member:NUMERIC}, #{profileImage:VARCHAR}
+		#{limit:NUMERIC}, #{member:NUMERIC}, #{profileImage:VARCHAR}, #{type:CHAR}
 		)
 	</insert>
   
 	<select id="getLive" parameterType="live"
 		resultMap="liveSelectMap">
 		SELECT
-		roomid , limit , member, profile_image
+		roomid , limit , member, profile_image, type
 		FROM live
-		WHERE roomid = #{roomName}
+		WHERE roomid = #{roomName} AND type = #{type}
 	</select>
 
 	<select id="getLiveList" parameterType="live"
 		resultMap="liveSelectMap">
 		SELECT
-		roomid , limit , member, profile_image
+		roomid , limit , member, profile_image, type
 		FROM live
+		WHERE type = #{type}
 	</select>
 
 	<delete id="deleteLive" parameterType="live">
 		DELETE live
-		WHERE roomid = ${roomName}
+		WHERE roomid = #{roomName} and type = #{type}
 	</delete>
 
 	<update id="updateLive" parameterType="live">
@@ -59,9 +61,9 @@
 		<set>
 			member = #{member:NUMERIC}
 		</set>
-		WHERE roomid = #{roomName}
+		WHERE roomid = #{roomName} and type = #{type}
 	</update>
-
+ 
 	<!-- <select id="getUserList" parameterType="search" resultMap="userSelectMap"> 
 		SELECT * FROM ( SELECT inner_table.* , ROWNUM AS row_seq FROM ( <include 
 		refid="select-list"></include>) inner_table WHERE ROWNUM &lt;= #{endRowNum} 

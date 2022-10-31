@@ -73,14 +73,14 @@
 </script>
 </head>
 
-<body>
+<body style=" background-color: #EBEDF0;">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/sideToolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class="container" style="margin-left: 400px;">
 		<div class="page-header text-left">
 			<c:if test="${user.role == '0'}">
 				<h3 class=" text-info">내정보보기</h3>
