@@ -40,7 +40,7 @@
 		});
 		
 		$("button:contains('뒤로')").bind("click", function(){
-				self.location = "/serviceCenter/getReportList";
+			window.history.back(-1);
 		});
 		
 	
@@ -101,14 +101,14 @@ textarea {
 
 </style>
 </head>
-<jsp:include page="/toolbar.jsp" /><form>
+<jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
   <h2>신고 처리하기</h2>
 </div>
 	
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
+		<form>	<table>
 			
 				<div class="row2">
 				<thead>
@@ -189,10 +189,10 @@ textarea {
 					<tr>
 						<th style="text-align-last: center;"></th>
 					</tr>
-			</table>
+				</table></form>
 			<!--  table End /////////////////////////////////////-->
 	
-</form>	
+
 		
 						
 									<div> 

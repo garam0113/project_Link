@@ -112,9 +112,9 @@ public class ServiceCenterRestController {
 		//돌려보내는 곳 신고하기 전 -1하고, alter 창? 완료 되었습니다 2개 변경
 		return "forward:/serviceCenter/serviceCenterHome.jsp";
 	}
-/*	
-	@RequestMapping(value= "getFestivalList", method = RequestMethod.GET)
-	public String getFestivalList(@RequestBody Search search, Model model) throws Exception{
+	
+	@RequestMapping(value= "/json/getFestivalList", method = RequestMethod.GET)
+	public JSONArray getFestivalList(@RequestBody Search search, Model model) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder(
 				("http://apis.data.go.kr/B551011/KorService/areaBasedList?"
 						+ "numOfRows=12"
@@ -156,11 +156,10 @@ public class ServiceCenterRestController {
 		JSONObject obj = (JSONObject)parser.parse(sb.toString());
 		JSONArray dataArr = (JSONArray)obj.get("data");
 		
-		model.addAttribute("data",dataArr);
-		return "forward:/serviceCenter/getFesitival2.jsp";
+		return dataArr;
 	}
 	
-	*/
+	
 	
 	
 	/*

@@ -57,10 +57,10 @@
 
 		$("button:contains('µÚ·Î')").bind("click", function(){
 			if(${empty sessionScope.user.userId}){
-				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList").submit();
+				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit();
 			}
-			if(${!empty sessionScope.user.userId}){
-				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
+			else if(${!empty sessionScope.user.userId}){
+				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
 			}
 		})
 		

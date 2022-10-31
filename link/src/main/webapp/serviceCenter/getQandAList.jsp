@@ -28,8 +28,10 @@
 	    display: inherit;
 }
 body {
+	margin-top: 76px;
 	padding-top: -75px;
 	background-color: #EBEDF0 !important;
+    margin-top: -54px !important;
 }
 
 .head {
@@ -106,7 +108,7 @@ function fncGetList(currentPage) {
 	}
 	else if(${search.order=='3'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "POST").attr("action", "/serviceCenter/getQandAList")   //나만보기
+		$("form").attr("method", "POST").attr("action", "/serviceCenter/getQandAList/${sessionScope.user.userId}")   //나만보기
 				.submit();
 	}	
 }
@@ -211,7 +213,7 @@ function fncGetList(currentPage) {
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :20px;">검색</button>
+							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
