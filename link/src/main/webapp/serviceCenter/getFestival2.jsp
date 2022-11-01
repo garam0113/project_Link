@@ -10,8 +10,7 @@
 <script src="/resources/javascript/beetle.js"></script>
 
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
 	rel="stylesheet">
 
@@ -28,6 +27,7 @@ $(function(){
 				type : "get",
 				data : {"contentTypeId" : 15},
 				dataType: "json",
+				contentType: "application/json; charset=utf-8",
 				success:function(msg){
 					var myItem =msg.response.body.items.item;
 					
@@ -41,24 +41,26 @@ $(function(){
 						
 					<%--	document.write(item.title);   --%>
 			  if(firstimage1!=""){    //이미지 없는 거 거르기
-						<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
+					addHtml+=	"<div class=card style = 'width:230px; margin-bottom:20px;'>"+
+						 	 		"<div class=card-header style= 'text-align: center;'>"+
+						 	  		 item.title+
+							 		 "</div>"+
+							  "<img src="+item.firstimage+" style= width:230px; height:300px;/>"+
+							  "<div class=card-body style='text-align:center;'>"+
+						 	   "<h5 class=card-title>"+ item.title+"</h5>"+
+						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"
+								
+							<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
 										$.ajax({
 										url  : "/serviceCenterRest/json/getFestival",
 										type : "get",
 										data : {"contentid":item.contentid},
 										datatype: "json",
+										contentType: "application/json; charset=utf-8",
 										async: false,
 										success:function(msg2){
 											const msg2data = JSON.parse(msg2)
-											addHtml+="<div class=card style = 'width:300px;'>"+
-								 	 		"<div class=card-header style= 'text-align: center;'>"+
-								 	  		 item.title+
-									 		 "</div>"+
-									  "<img src="+item.firstimage+" style= width:300px; height:300px;/>"+
-									  "<div class=card-body style='text-align:center;'>"+
-								 	   "<h5 class=card-title>"+ item.title+"</h5>"+
-								 	   "<input type='hidden' name='contentid' value="+item.contentid+">"+ 
-												msg2data.response.body.items.item[0].homepage+
+											addHtml+= msg2data.response.body.items.item[0].homepage+
 												 "</div>"+
 												  "</div>";
 											console.log(msg2data.response.body.items.item[0].homepage);
@@ -85,19 +87,18 @@ $(function(){
 </script>
 <style>
 .box{
-overflow:auto;
-
+overflow:scroll;
+overflow-x:hidden;
 }
-.no-scroll::-webkit-scrollbar {
-  display: none; 
+.box::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<div class="box festival" style="width:320px; height: 610px;"> 
+	<div class="box festival" style="width:230px; height: 522px;"> 
 	
 	</div>
-
 </body>
 </html>

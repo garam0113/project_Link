@@ -482,6 +482,8 @@
 				console.log("시퀀시 : " + $(this).siblings("input[name='sequence']").val());
 				
 				var cPage = $("#currentPage").val();
+				var feedNumber = $(this).siblings("input[name='feedNo']").val();
+				var feedWriter = $(this).parents("#feedInfo").find("input[name='user2']").val();
 				
 				if(content == "") {
 					Swal.fire({
@@ -585,6 +587,12 @@
 									$(commentCount).text( parseInt( $(commentCount).text() ) + 1 );
 									$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 									$("textarea[name='mainCommentContent']").val('');
+									
+									if(sock) {
+										var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 댓글을 작성했습니다.";
+
+										sock.send(Msg);
+									}
 									
 								} // success end
 								
@@ -1903,7 +1911,7 @@
 							</div>
 							<div class="reportTitle">
 							
-								<textarea class="title" id="title" name="title" maxlength="80" placeholder="신고 제목을 입력해주세요"></textarea>
+								<textarea class="title" id="title" name="title" maxlength="66" placeholder="신고 제목을 입력해주세요"></textarea>
 
 							</div>
 

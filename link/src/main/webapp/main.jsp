@@ -2793,3 +2793,4 @@
 
 </body>
 </html>
+<jsp:include page="feed/getFeedList.jsp" />

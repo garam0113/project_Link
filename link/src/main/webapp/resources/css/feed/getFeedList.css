@@ -23,7 +23,7 @@
 
 	#carousel-club img {
 		width: 200px;
-		height: 200px;
+		height: 150px;
 		border-radius: 25px
 	}
 
@@ -44,10 +44,15 @@
 
 	/* ¹ÙÅÁ»ö */
 
+	html {
+		background-color: #EBEDF0 !important;
+	}
+
 	#main {
 		background-color: #EBEDF0 !important;
 	}
-	
+
+	/* ¹ÙÅÁ»ö */
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 

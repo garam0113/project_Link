@@ -27,8 +27,7 @@ body{
 background-color: #EBEDF0 !important;
 }
 .row {
-	margin-left : 0px !important;
-	display: inherit !important;
+display: initial !important;
 }
 
 .card{
@@ -163,8 +162,8 @@ $(function() {
 <body style="overflow-x: hidden">
 	<%--검은색 화면 --%>
 	<%-- --%>
-	<div style="transform: translate(800px, 50px);">
-	<h1 >&nbsp;&nbsp;&nbsp;고  객  센  터</h1>
+	<div style="text-align: center;">
+	<h1 >고  객  센  터</h1>
 	<h4>
 		고객센터를 통해 궁금증을 해결하세요
 	<h4>
@@ -174,7 +173,7 @@ $(function() {
    <div class="container" style="transform: translate(300px, -200px);">
    
    
-      <div class="row">
+      <div class="row2" style="display:flex;">
         <div class="col-4" style ="">
           
           <div class="card" style="transform: translate(-320px, 280px);">
