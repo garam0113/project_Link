@@ -88,6 +88,7 @@ public class ClubPostController {
 		// club 상세보기에서 모임번호를 session으로 가져온다 어떤 모임의 게시물인지 알기위해 필요하다
 		clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
 		//clubPost.setClubNo(1);
+		System.out.println("clubNo : " + clubPost.getClubNo());
 
 		// meta 데이터인 pageSize = 10 화면에 게시물이 10개 나온다
 		search.setPageSize(pageSize);
@@ -101,12 +102,17 @@ public class ClubPostController {
 		
 		
 		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
-		model.addAttribute("clubNo", 1);
 		//model.addAttribute("clubNo", Integer.parseInt((String)session.getAttribute("clubNo")));
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		
+		
+		
+		// 알림
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
 		
 		
@@ -244,9 +250,13 @@ public class ClubPostController {
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		
+		
+		
 		// 알림
-		model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
-		model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
+		
+		
 		
 		return "forward:/clubPost/getClubPost.jsp";
 	}
