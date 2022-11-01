@@ -132,6 +132,32 @@
 		});
 	});
 	
+	//홈버튼
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo="+${clubNo};
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+	
+	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
+		});
+	});
+	
 	
 	
 	
