@@ -589,7 +589,7 @@
 									$("textarea[name='mainCommentContent']").val('');
 									
 									if(sock) {
-										var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 댓글을 작성했습니다.";
+										var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 가 댓글을 작성했습니다.";
 
 										sock.send(Msg);
 									}
@@ -681,13 +681,8 @@
 				event.stopPropagation();
 				
 				console.log($(this).parents().siblings(".commentInfo").find("input[name='userId']").val())
-				console.log($(this).parents().siblings(".commentInfo").find("input[name='feedNo']").val())
-				console.log($(this).parents().siblings(".commentInfo").find("input[name='feedCommentNo']").val())
-				console.log($(this).parents().siblings(".commentInfo").find("input[name='depth']").val())
-				console.log($(this).parents().siblings(".commentInfo").find("input[name='sequence']").val())
-				console.log($(this).prev().val())
-				
 				console.log($(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']").val());
+				console.log($(this).prev().val())
 				
 				var feedNumber = parseInt($(this).parents().siblings(".commentInfo").find("input[name='feedNo']").val())
 				var parentValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='feedCommentNo']").val())
@@ -700,6 +695,8 @@
 				
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
 				var cPage = $("#currentPage").val();
+				
+				var feedWriter = $(this).parents().siblings(".commentInfo").find("input[name='user2']").val();
 				
 				if(content == "" || content == " ") {
 					swal.fire("내용을 입력하세요");
@@ -793,6 +790,12 @@
 								$(changePoint).html(changeHtml);
 								$(content).text( parseInt( $(content).text() ) + 1 );
 								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
+								
+								if(sock) {
+									var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 가 댓글을 작성했습니다.";
+
+									sock.send(Msg);
+								}
 								
 							} // success end
 							

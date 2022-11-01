@@ -42,6 +42,8 @@
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
+		
+		
 		<script type="text/javascript">
 		$(function(){
 			
@@ -992,12 +994,183 @@
 				$("#chat-icon").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
 			});
 			
-			$(".chat.chat-content").bind("click", function(){
+			$(".chatdiv.chat-content").bind("click", function(){
 				$(this).next().attr("condition") == 1 ? $(this).next().attr("style", "display: none"): $(this).next().removeAttr("style");
 				$(this).next().attr("condition") == 1 ? $(this).next().attr("condition", "0"): $(this).next().attr("condition", "1");
 			});
+			
+			
+			
+			var room_Id = "";
+			var socket = "";
+			
+			
+			
+			$(".chat-content-onechat").bind("click", function(){
+				//alert("하나의 채팅 클릭시");
+				
+				$("#allChat-toobar-title").attr("style", "display: none");
+				$("#allChat-toobar-back").removeAttr("style");
+				
+				$("#allChat-content").attr("style", "display: none");
+				$("#allChat-content-child").removeAttr("style");
+
+
+				
+				roomId = $(this).attr("roomId");
+				room_Id = roomId;
+
+				
+				
+				//소켓서버에 접속시킨다.
+				socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+					cors: { origin: "*" },
+					path: '/socket.io',
+					query: {
+						userId : '${ user.userId }',
+						profileImage : '${ sessionScope.user.profileImage }',
+						nickName : '${ sessionScope.user.nickName }',
+						roomId : roomId,
+					}
+				});
+				
+				
+				
+				//사용자 참가
+				socket.on('join', data => {
+				    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');
+				});
+				
+				
+				
+				//server message 라는 이벤트명으로 대기
+				socket.on('server message', function(data){
+				    console.log(data);
+				    
+				    var display = "";
+					    
+					    if( '${ sessionScope.user.nickName }' != data.username ){
+					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+										+"<div>"
+											+"<div>"+data.username+"</div>"
+											+"<div>"
+												+"<div>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+									+"</div>";
+					    		
+					    }else{
+					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
+										+"<div>"
+											+"<div style='float: right;'>"+data.username+"</div>"
+											+"<div>"
+												+"<div style='float: right;'>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+									+"</div>";
+					    }
+				    					    
+				    
+				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
+				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
+				   
+				    //alert( "/////////////////" + data.userId );
+				    //alert( '${ sessionScope.user.userId }' );
+				    
+					   $('#chatLog').append(display);
+				    
+				});
+
+				
+				
+			});
+			
+			
+			
+			$("#allChat-toobar-back").bind("click", function(){
+				//alert("back 클릭시");
+				
+				$("#allChat-toobar-back").attr("style", "display: none");
+				$("#allChat-toobar-title").removeAttr("style");
+				
+				$("#allChat-content-child").attr("style", "display: none");
+				$("#allChat-content").removeAttr("style");
+				
+				alert( socket );
+				alert( room_Id );
+				
+				
+				
+				//사용자 종료
+				socket.on('leave', data => {
+				    $('#chatLog').append('<li style="font-size: 25px;">' + data.username + '님이 나가셨습니다</li>');
+				});
+				
+				
+				
+				//server message 라는 이벤트명으로 대기
+				socket.on('server message', function(data){
+				    console.log(data);
+				    
+				    var display = "";
+					    
+					    if( '${ sessionScope.user.nickName }' != data.username ){
+					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+										+"<div>"
+											+"<div>"+data.username+"</div>"
+											+"<div>"
+												+"<div>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+									+"</div>";
+					    		
+					    }else{
+					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
+										+"<div>"
+											+"<div style='float: right;'>"+data.username+"</div>"
+											+"<div>"
+												+"<div style='float: right;'>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+									+"</div>";
+					    }
+				    					    
+				    
+				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
+				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
+				    $('#chatLog').append(display);
+				    
+				});
+				
+				
+				
+			});
+			
+
+			
+			$(document).ready(function(){
+			    $('#chat_send_button').bind("click", function(){
+			        var message = $('#sendForm input[name=message]');
+			        //소켓 서버의 'client message' 라는 이벤트명으로 메세지를 송신한다.
+			        socket.emit('client message', { message : message.val()});
+			        //input 박스 초기화
+			        message.val('');
+			        return false;
+			    });
+			});
+			
+			
+			
 		});
+		
+		
 		</script>
+		
+		
 		
 		<style type="text/css">
 		.modal{ 
@@ -1029,6 +1202,10 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+		
+	<!-- 모임채팅 -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 	
 	<br><br>
 
@@ -1071,26 +1248,57 @@
 					<!-- 채팅 start -->
 					<div id="allChat" style="display: none;">
 						<div id="allChat-toolbar">
-							<span id="allChat-toolbar-close">X</span>
+							<div>
+								<span id="allChat-toobar-title">LINK</span>
+								<span id="allChat-toobar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
+							</div>
+							<div></div>
+							<div>
+								<span id="allChat-toolbar-close">X</span>
+							</div>
 						</div>
 						<div id="allChat-content">
-							<div class="chat chat-content">모임채팅</div>
-							<div class="chat chidren" style="display: none;" condition="0">
+							<div class="chatdiv chat-content">모임채팅</div>
+							<div class="chatdiv chidren" style="display: none;" condition="0">
 								<c:if test="${ fn:length(roomList) > 0 }">
 									<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-										<div class="chat-content" roomId="${ roomList[i].roomId }">${ roomList[i].clubTitle }</div>
+										<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }">${ roomList[i].clubTitle } / ${ roomList[i].roomId }</div>
 									</c:forEach>
 								</c:if>
 							</div>
-							<div class="chat chat-content">1:1채팅</div>
-							<div class="chat chidren" style="display: none;" condition="0">
-								<div class="chat-content" userId="">닉네임</div>
-								<div class="chat-content" userId="">닉네임</div>
+							<div class="chatdiv chat-content">1:1채팅</div>
+							<div class="chatdiv chidren" style="display: none;" condition="0">
+								<div class="chat-content chat-content-onechat" userId="">닉네임</div>
+								<div class="chat-content chat-content-onechat" userId="">닉네임</div>
 							</div>
+						</div>
+						<div id="allChat-content-child" style="display: none;">
+							<div id="club-post-chatRoom" class="chatdiv chat-content">
+								<div id="chatLog" style="padding: 10px;">
+									<!-- <div style="display: grid; grid-template-columns: 1fr 6fr;">
+										<div><img src="/resources/image/uploadFiles/robin.jpg" height="50px" width="50px" style="border-radius: 100px;"></div>
+										<div>
+											<div>닉네임</div>
+											<div style="position: relative; height: auto; background-color: red;">
+												<img src="/resources/image/uploadFiles/no_heart.jpg" style="vertical-align: middle;">
+												<div style="text-align: center; position: absolute; top: 3%; left: 5%; right: 13%;">루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
+											</div>
+										</div>
+										<div>
+											<div>로빈</div>
+											<div>
+												<div>루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
+											</div>
+										</div>
+									</div> -->
+								</div>
+							</div>
+							<form action="" id="sendForm">
 							<div id="input-chatLog">
-								<span><input type="text"></span>
-								<span><button type="button">전송</button></span>
+								<div style="width: 270px; height: 40px;"><input type="text" name="message" autocomplete="off" style="width: 100%;"></div>
+								<div style="width: 50px; height: 40px;"><button id="chat_send_button" style="border-radius: 10px;">전송</button></div>
 							</div>
+							</form>
 						</div>
 					</div>
 					<!-- 채팅 end -->
