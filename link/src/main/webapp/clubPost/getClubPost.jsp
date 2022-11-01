@@ -42,10 +42,6 @@
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
-		<!-- 모임채팅 -->
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-		<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-		
 		
 		
 		<script type="text/javascript">
@@ -1206,6 +1202,10 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+		
+	<!-- 모임채팅 -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 	
 	<br><br>
 
