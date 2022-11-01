@@ -75,7 +75,7 @@ public class MyHomeRestController {
 		int pageUnit;
 	
 	
-	@RequestMapping(value = "json/getFollowList", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/getFollowList", method = RequestMethod.POST)
 	 public Map<String, Object> getFollowList(@RequestBody Search search, User user, HttpSession session) throws Exception{
 		 System.out.println("/myHomeRest/json/getFollowList : POST");
 		 
@@ -336,7 +336,7 @@ public class MyHomeRestController {
 			
 		}
 
-		@RequestMapping(value = "json/getBlockList", method = RequestMethod.POST)
+		@RequestMapping(value = "/json/getBlockList", method = RequestMethod.POST)
 		 public Map<String, Object> getBlockList(@RequestBody Search search, User user, HttpSession session) throws Exception{
 			 System.out.println("/myHomeRest/json/getBlockList : POST");
 			 
