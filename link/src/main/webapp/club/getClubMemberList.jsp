@@ -108,7 +108,9 @@
 	}
 	
 	
-	/* function deleteClubMember() {
+		$(document).on("click", "#banMember", function() {
+			
+		})
 			
 			Swal.fire({
 			  title: '모임원을 추방하시겠습니까?',
@@ -172,6 +174,23 @@
 					refreshMemList();
 			}); //모임원 추방 
 	 	});
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 			
 			$(function() {
 				$("#updateApprovalCondition").on("click", function() {
@@ -239,6 +258,38 @@
 			openWin.document.getElementById("userId").value = $(this).attr("userId");
 		});
 	});
+	
+	
+	//홈버튼
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo="+${clubNo};
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+	
+	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
+		});
+	});
+	
+	
+	
+	
+	
 
 	</script>
 </head>
@@ -266,31 +317,38 @@
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px; margin-top: 150px;">
-						<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList style="color: #BD76FF;">모임채팅</a>
-						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
-					</ul>
-
+				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px;">
+					
+				<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+				</div>
 		
 
 	<div class="container">
+	
+		<div class="form_txtInput" style="margin-top: 50px;">
+			<h2 class="sub_tit_txt">모임원 리스트</h2>
+		</div>
+	
+	
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">

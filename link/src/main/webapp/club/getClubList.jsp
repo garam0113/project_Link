@@ -114,12 +114,6 @@
 		 	clear: none;
 		 }
 		 
-	 	/*  .btn {
-		 	background-color: #fbfbfb;
-		 	color: #BD76FF;
-		 	border-color: #BD76FF;
-		 } */
-		 
 		 .club-cT {
 		 		font-size: 
 		 }
@@ -250,7 +244,6 @@
 	
 	function enterkey() {
 		if(window.event.keyCode == 13) {
-			//fncGetClubList(currentPage);
 			fncGetClubList(1);
 		}
 	}
@@ -492,11 +485,11 @@
 		  	<div class="col-xs-4 col-md-3">	
 				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT" style="margin-left:5px;"><strong>${i.clubTitle}</strong></p>
-				  		<p style="margin-left:5px;">${i.clubArea}</p>
-				  		<p style="margin-left:5px;">최대인원 : ${i.clubMaxMember}</p>
-				  		<p style="margin-left:5px;">${i.clubCategory }</p>
-				  		<p style="margin-left:5px;">모임생성일 : ${i.clubRegDate}</p>
+			  			<p class="club-cT" style="margin-left:10px;"><strong>${i.clubTitle}</strong></p>
+				  		<p style="margin-left:10px;">${i.clubArea}</p>
+				  		<p style="margin-left:10px;">최대인원 : ${i.clubMaxMember}</p>
+				  		<p style="margin-left:10px;">${i.clubCategory }</p>
+				  		<p style="margin-left:10px;">모임생성일 : ${i.clubRegDate}</p>
 				</div>
 				</div>						
 	    	 </c:forEach>
