@@ -391,10 +391,13 @@ public class ClubController {
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
 		
-		
+		//participant 들어가나?
+		participant.setUser(user);
+		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
+		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		
