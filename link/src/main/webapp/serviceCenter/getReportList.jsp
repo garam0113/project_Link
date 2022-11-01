@@ -18,12 +18,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--페이지 네비게이션 css --%>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body {
 	padding-top: 50px;
@@ -212,7 +212,7 @@ function fncGetList(currentPage) {
 						<tr class="ct_list_pop">
 							<td align="center" id="bb">${getReportList.no}</td>
 							<td></td>
-							<td align="center" class="content">${getReportList.title}	
+							<td align="center" class="content" style="cursor:pointer;">${getReportList.title}	
 							<c:if test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
 							<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
 							</c:if>	

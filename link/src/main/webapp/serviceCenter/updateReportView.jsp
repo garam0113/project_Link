@@ -31,7 +31,10 @@
 
 		alert($($("form")[0]));
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateReport").submit();
-	
+		
+		if(sock) {
+			   var Msg = "service,"+$(#user1.userId).val()+" +"+(#no).val()+"+ "의 신고가 처리되었습니다."sock.send(Msg);
+			                     }
 	}
 	$(function(){
 		
@@ -42,11 +45,7 @@
 		$("button:contains('뒤로')").bind("click", function(){
 			window.history.back(-1);
 		});
-		
-	
-		
 
-		
 	})
 	
 
@@ -54,7 +53,7 @@
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body{
 background-color: #EBEDF0 !important;
@@ -121,11 +120,13 @@ textarea {
 						<input type="hidden" name="no" id="no" value="${report.no}">
 						</td>
 					</tr>
+								
 					<tr class = "content" id ="content" >
 						<th style="text-align-last: center;">제목</th>
 						<td style="display: flex; height: 40px; width: 900px;">						
 						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
+						<input type="hidden" id="user1.userId" name="user1.userId" value="${report.user1.userId}">
 						</td> 
 					</tr>
 					<tr>

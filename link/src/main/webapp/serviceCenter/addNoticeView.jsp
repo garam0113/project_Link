@@ -38,7 +38,18 @@
 
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
-
+	
+	function readURL(input) {
+		  if (input.files && input.files[0]) {
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('preview').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		  } else {
+		    document.getElementById('preview').src = "";
+	}
+}	//function readURL 끝 사진 미리보기  
 	$(function() {
 
 		$("button:contains('등록')").bind("click", function() {
@@ -56,7 +67,7 @@
 <style><%--CSS 추가 --%>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 textarea {
 	resize: none;
@@ -123,7 +134,7 @@ background-color: #EBEDF0 !important;
 				<strong>제목</strong> <label for="title"></label>
 				<div class="col-sm-4">
 					<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle" value=""
-						maxlength="80" placeholder="제목을 입력해주세요"></textarea>
+						maxlength="66" placeholder="제목을 입력해주세요"></textarea>
 
 
 				</div>
@@ -141,9 +152,9 @@ background-color: #EBEDF0 !important;
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label"><strong>첨부파일</strong></label>
 			<div class="col-sm-4">
-				<input multiple="multiple" type="file" name="image" id="file"
+				<input multiple="multiple" type="file" name="image" id="file" onchange="readURL(this);"
 					class="ct_input_g" style="width: 200px; height: 50px" />
-
+				<img id="preview"/>
 
 			</div></form>
 			<span id="helpBlock" class="help-block"> <strong
