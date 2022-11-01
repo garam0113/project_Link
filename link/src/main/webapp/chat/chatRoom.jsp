@@ -56,7 +56,7 @@
 			userId : '${ user.userId }',
 			profileImage : '${ sessionScope.user.profileImage }',
 			nickName : '${ sessionScope.user.nickName }',
-			roomId : roomId
+			roomId : '${ roomId }'
 		}
 	});
 	

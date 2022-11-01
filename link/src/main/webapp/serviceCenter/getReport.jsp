@@ -47,7 +47,7 @@
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body{
 background-color: #EBEDF0 !important;
@@ -115,7 +115,7 @@ textarea {
 					</tr>
 					<tr class = "content" id ="content" >
 						<th style="text-align-last: center;">Á¦¸ñ</th>
-						<td style="display: flex; height: 40px; width: 500px; background-color:white; text-align : center; ">				
+						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; ">				
 						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 

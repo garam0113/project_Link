@@ -107,7 +107,7 @@ public class FeedServiceImpl implements FeedService {
 			
 			for(int i = 0 ; i < children ; i++) {
 				Comment comment = feedDAO.getFeedCommentBySequence(map);
-				comment.setCurrentPage(1);
+				comment.setClubNo(1);
 				map.put("comment", comment);
 				
 				comment.setSequence(comment.getSequence() + feedDAO.getChildrenCommentCount(map) + 1);

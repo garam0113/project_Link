@@ -149,6 +149,7 @@ public class ServiceCenterDAOImpl implements ServiceCenterDAO {
 	@Override
 	public void updateReport(Report report) throws Exception {
 		// TODO Auto-generated method stub
+		sqlSession.insert("Report_PushMapper.addPush", report);
 	 if(report.getReportReason()!=0){ //신고처리 혐의 OK
 		sqlSession.update("Report_PushMapper.handleReportCondition", report); //신고처리 플래그 변경
 		Report report2 = getReport(report.getNo());

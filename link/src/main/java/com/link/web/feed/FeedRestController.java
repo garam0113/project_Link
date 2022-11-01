@@ -65,15 +65,10 @@ public class FeedRestController {
 	
 	///////////////////////////////////////////////////// Feed /////////////////////////////////////////////////////
 	
-	public Feed getFeed(@RequestBody Feed feed, User user) throws Exception {
+	@RequestMapping(value = "/json/getFeedLastNo", method = RequestMethod.POST)
+	public int getFeed() throws Exception {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feedNo", feed.getFeedNo());
-		map.put("user", user);
-		
-		feed = ((Feed)(feedService.getFeed(map)).get("feed"));
-		
-		return feed;
+		return feedService.getFeedLast().getFeedNo();
 	}
 	
 	
@@ -91,6 +86,8 @@ public class FeedRestController {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
+		} else {
+			search.setOrder(1);
 		}
 		
 		search.setPageSize(pageSize);

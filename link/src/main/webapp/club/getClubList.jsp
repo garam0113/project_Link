@@ -31,6 +31,10 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 
+ 	 <%-- SOCKET IO --%>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+	<%-- SOCKET IO --%>
+ 	 
  	 <!-- alert! -->
  	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
  	 
@@ -113,12 +117,6 @@
 		 div {
 		 	clear: none;
 		 }
-		 
-	 	/*  .btn {
-		 	background-color: #fbfbfb;
-		 	color: #BD76FF;
-		 	border-color: #BD76FF;
-		 } */
 		 
 		 .club-cT {
 		 		font-size: 
@@ -206,6 +204,24 @@
 	animation: post-ani 0.8s linear 1;
 	}
 	
+	/* 알림부분 */
+	header {
+		display: flex;
+	}
+
+	.alarmHead {
+		float: right;
+		display: flex;
+		align-items: center;
+		margin: 5px;
+	}
+
+	.alarmImg {
+		display: inline-flex; 
+		width:25px; 
+		height:25px;
+	}
+	
 		 
 		 
 	
@@ -250,7 +266,6 @@
 	
 	function enterkey() {
 		if(window.event.keyCode == 13) {
-			//fncGetClubList(currentPage);
 			fncGetClubList(1);
 		}
 	}
@@ -314,6 +329,68 @@
 		} // end of if
 	}); // end of scroll */
 	
+	
+	var sock = null;
+	
+	$(document).ready(function () {
+		connectWs();
+	});
+
+	function connectWs() {
+
+		sock = new SockJS("<c:url value="/echo"/>");
+		
+		sock.onopen = function () {
+			console.log('open');
+
+		};
+
+		sock.onmessage = onMessage;
+
+		sock.onclose = function () {
+			console.log('close');
+		};
+
+	};
+
+	function getContextPath() {
+		var hostIndex = location.href.indexOf(location.host) + location.host.length;
+
+		return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+	};
+	
+	function onMessage(evt){
+		var data = evt.data;
+	    
+	    const Toast = Swal.mixin({
+	    	  toast: true,
+	    	  position: 'bottom-end',
+	    	  showConfirmButton: false,
+	    	  timer: 3000,
+	    	  timerProgressBar: true,
+	    	  didOpen: (toast) => {
+	    	    toast.addEventListener('mouseenter', Swal.stopTimer)
+	    	    toast.addEventListener('mouseleave', Swal.resumeTimer)
+	    	  }
+	    	})
+
+	    	Toast.fire({
+	    	  icon: 'info',
+	    	  title: data
+	    	})
+	    
+	    
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</script>	
 </head>
 
@@ -329,14 +406,14 @@
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/main.jsp">Link</a>
+                  <a href="/main.jsp">LINK</a>
                </h1>
             </div>
             <!-- brand -->
             <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-            <nav id="toolbar">
+            <nav>
                <ul class="reset" role="navigation">
-                  <li class="menu-item"><a href="/main.jsp">Home</a></li>
+                  <li class="menu-item" style="margin-left: 320px;"><a href="/main.jsp">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
                   <li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   <li class="menu-item"><a
@@ -345,24 +422,42 @@
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
                      <li class="menu-item"><a href="/user/login">로그인</a></li>
-                     <li class="menu-item"><a href="/user/addUser">회원가입</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a
-                        href="/user/logout?userId=${user.userId}">로그아웃</a></li>
+                        href="/user/logout?userId=${sessionScope.user.userId}">로그아웃</a></li>
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
-                           href="/user/getUser?userId=${user.userId}">내정보보기</a></li>
+                           href="/user/getUser?userId=${sessionScope.user.userId}">내정보보기</a></li>
+                           
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
                         <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
                      </c:if>
+                     
+                     
                   </c:if>
+                  
                </ul>
+               
+               <%--
+               	<div class="alarmHead" >
+						
+					<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+
+				</div>
+                --%>
             </nav>
+            
          </div>
          <!-- row-content -->
       </div>
+      
+		<div class="alarmHead" >
+						
+			<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+		
+		</div>
       <!-- row -->
    </header>
  
@@ -372,31 +467,12 @@
 	
 
 	<main role="main">
-		
-			<!-- <div id="intro-wrap" data-height="20">
-				<div id="intro" class="preload darken">
-					<div class="intro-item"
-						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>CLUB LIST</h2>
-							<p>The meeting is waiting for you.. </p>
-						</div>
-						caption
-					</div>
-					intro
-				</div>
-				intro
-			</div>
-			intro-wrap -->
-			
-			
 	
 		<!--  화면구성 div Start /////////////////////////////////////-->
-		<div class="container">
+		<div class="container" style="margin-top:150px;">
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	  	  <div id="main" class="row">
-	    
+	  	  <div id="main" class="row" style="width: 824px;">
 		   
 		    <div class="col-md-8 text-right" style="float: left;">
 			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;">
@@ -477,14 +553,18 @@
 	    	</form>
 	    	</div>
 	    	
-	    	
-	    <!-- <div class="col-md-6 text-right" style="float: right;"> -->
-	    	<!-- <button type="button" class="btn btn-myList" style="">내 모임 보기</button> -->
-	  		<button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임등록</button>
+	  		<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임개설
+	  		
+	  		</button> -->
 	    <!-- </div> -->
 	    	
 	</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+		
+	   <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'">
+	    	<img src="/resources/image/uploadFiles/plusIcon.png" style="width: 308px;">
+	    	<p>모임개설
+	    </div>	
 
 
 	<div id="main" class="row">
@@ -492,11 +572,11 @@
 		  	<div class="col-xs-4 col-md-3">	
 				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
 			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT" style="margin-left:5px;"><strong>${i.clubTitle}</strong></p>
-				  		<p style="margin-left:5px;">${i.clubArea}</p>
-				  		<p style="margin-left:5px;">최대인원 : ${i.clubMaxMember}</p>
-				  		<p style="margin-left:5px;">${i.clubCategory }</p>
-				  		<p style="margin-left:5px;">모임생성일 : ${i.clubRegDate}</p>
+			  			<p class="club-cT" style="margin-left:10px;"><strong>${i.clubTitle}</strong></p>
+				  		<p style="margin-left:10px;">${i.clubArea}</p>
+				  		<p style="margin-left:10px;">최대인원 : ${i.clubMaxMember}</p>
+				  		<p style="margin-left:10px;">${i.clubCategory }</p>
+				  		<p style="margin-left:10px;">모임생성일 : ${i.clubRegDate}</p>
 				</div>
 				</div>						
 	    	 </c:forEach>
