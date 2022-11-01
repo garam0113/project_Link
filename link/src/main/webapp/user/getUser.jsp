@@ -32,6 +32,12 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
+<style type="text/css">
+.row{
+    display: flex;
+}
+</style>
+
 <script type="text/javascript">
 	$(function() {
 		$("#update").on("click", function() {

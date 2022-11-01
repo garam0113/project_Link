@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -76,9 +77,9 @@
 	
 		
 	$(function() {
+		<%-- 일정삭제 --%>		
 		
-		<%-- 일정삭제 --%>
-		$("#deleteMeeting").bind("click", function() {
+		$(document).on("click", "#deleteMeeting", function() {
 			
 			Swal.fire({
 				title: '정말 일정을 삭제하시겠습니까?' ,
@@ -90,32 +91,32 @@
 				confirmButtonText: '삭제',
 				cancelButtonText: '취소' ,
 			}).then((result) => {
-				if (result.isConfirmed) {
-					Swal.fire(
-						'삭제완료!',
-						'일정이 삭제되었습니다',
-						'success'
-					)
+				if (result.value) {
 					
-					//$("form").attr("method", "POST").attr("action", "/club/deleteMeeting").submit();
-					
-					fncDeleteMeeting();
-				}
-			})
-		});
-	
+					$("form").attr("method", "POST").attr("action", "/club/deleteMeeting").submit();
+					//fncDeleteMeeting();
+				} // end of if
+			})// end of swal
+		})
+		
 	//일정 참가
-	function fncAddMeetingMember() {
+
+		$(document).on("click", "#addMeetingMember", function() {
 		
-		Swal.fire({
-			title: '일정에 참여합니다' ,
-			text: '즐거운 만남하세요' ,
-			icon: 'success' ,
-			showConfirmButton: true
+			Swal.fire({
+				title: '일정에 참여합니다' ,
+				text: '즐거운 만남하세요' ,
+				icon: 'warning' ,
+				showConfirmButton: true,
+				confirmButtonText: '참가',
+				cancelButtonText: '취소' ,
+			}).then((result) => {
+				if(result.value) {
+				
+			$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
+			}
 		})	
-		
-		$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
-	}
+	})
 	
 	$(function() {
 		$("#deleteMeeting").on("click", function() {
@@ -135,12 +136,7 @@
 		});
 	});
 	
-	$(function() {
-		$("#addMeetingMember").on("click", function() {
-			fncAddMeetingMember();
-		});
 	});
-
 	</script>	
 
 </head>
