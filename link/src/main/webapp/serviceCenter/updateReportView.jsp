@@ -21,6 +21,10 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
+	<%-- ALERT --%>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<%-- ALERT --%>
+
 <title>신고내용 처리</title>
 	
 	
@@ -33,7 +37,8 @@
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateReport").submit();
 		
 		if(sock) {
-			   var Msg = "service,"+$(#user1.userId).val()+" +"+(#no).val()+"+ "의 신고가 처리되었습니다."sock.send(Msg);
+			var Msg = "service,"+$("#user1").val()+","+$("#no").val()+",의 신고가 처리되었습니다."
+            sock.send(Msg);
 			                     }
 	}
 	$(function(){
@@ -126,7 +131,7 @@ textarea {
 						<td style="display: flex; height: 40px; width: 900px;">						
 						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
-						<input type="hidden" id="user1.userId" name="user1.userId" value="${report.user1.userId}">
+						<input type="hidden" id="user1" name="user1.userId" value="${report.user1.userId}">
 						</td> 
 					</tr>
 					<tr>

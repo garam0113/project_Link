@@ -69,7 +69,7 @@
 			    	  toast: true,
 			    	  position: 'bottom-end',
 			    	  showConfirmButton: false,
-			    	  timer: 3000,
+			    	  timer: 10000,
 			    	  timerProgressBar: true,
 			    	  didOpen: (toast) => {
 			    	    toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -78,10 +78,11 @@
 			    	})
 
 			    	Toast.fire({
-			    	  icon: 'info',
-			    	  title: data
+						icon: 'info',
+						title: data
 			    	})
 			    
+			    $(".badge").text( parseInt($(".badge").text()) + 1);
 			    
 			};	
 		
