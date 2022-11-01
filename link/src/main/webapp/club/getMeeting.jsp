@@ -140,26 +140,26 @@
 	
 	$(function() {
 		$(".homeBtn").on("click", function() {
-			self.location="/club/getClub?clubNo="+${clubNo};
+			self.location="/club/getClub?clubNo=${clubNo}";
 		});
 	});
 	
 	$(function() {
 		$(".clubPostBtn").on("click", function() {
-			self.location="/clubPost/getClubPostList"
+			self.location="/clubPost/getClubPostList";
 		});
 	});
 	
 	$(function() {
 		$(".clubMemberBtn").on("click", function() {
-			self.location="/club/getClubMemberList"
+			self.location="/club/getClubMemberList";
 		});
 	});
 	
 	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
 		});
 	});
 	
@@ -276,8 +276,12 @@
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 20%;">
 					<button type="button" class="plain button red cancel" id="addMeetingMember">참가신청</button>
 					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
-					<button type="button" class="plain button red cancel" id="updateMeeting">수&nbsp;정</button>
-		      		<button type="button" class="plain button red cancel" id="deleteMeeting">삭&nbsp;제</button>
+					
+					<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(meeting.user.userId) }">
+						<button type="button" class="plain button red cancel" id="updateMeeting">수&nbsp;정</button>
+			      		<button type="button" class="plain button red cancel" id="deleteMeeting">삭&nbsp;제</button>
+			      	</c:if>
+		      		
 		 	   </div>
 			</div>		
 		</form>	

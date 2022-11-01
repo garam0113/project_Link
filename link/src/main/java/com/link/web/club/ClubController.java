@@ -325,13 +325,15 @@ public class ClubController {
 //		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
+		Map<String, Object> map1 = clubService.getClub(Integer.parseInt(clubNo));
 		
 		System.out.println("유저 세션에 뭐 있지? : "+user);
 		System.out.println("클럽 번호 왔나? : "+session.getAttribute("clubNo"));
+		System.out.println("클럽 맵에 뭐 있나? : "+map1.get("club"));
 		System.out.println("총 클럽원은? : "+map.get("totalClubMemberCount"));
 		System.out.println("유저 닉네임 어케 가져오지 : "+user.getNickName());
 
-		model.addAttribute("club",map.get("club"));
+		model.addAttribute("club",map1.get("club"));
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 //		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
@@ -492,7 +494,7 @@ public class ClubController {
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
 		session.setAttribute("meetingNo", meetingNo);
 		
-		System.out.println("모델과 뷰 연결 되었나? " + map.get("meeting"));
+		System.out.println("미팅 맵에 뭐 있나? : " + map.get("meeting"));
 		System.out.println("겟에서 세션에 들어갔나? :"+meetingNo);
 		return "forward:/club/getMeeting.jsp";
 	}

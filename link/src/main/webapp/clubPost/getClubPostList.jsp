@@ -494,7 +494,7 @@
 					</div>
 					<div class="club-post-add-view">
 						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
-							<input type="hidden" name="clubNo" value="${ clubNo }">
+							<input type="hidden" name="clubNo" value="${ sessionScope.clubNo }">
 							<div class="clubPostTitle">
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>

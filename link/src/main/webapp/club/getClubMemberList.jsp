@@ -305,7 +305,7 @@
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px;">
+				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px; padding-bottom: 20%;">
 					
 				<div class="homeBtn_group">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
@@ -339,15 +339,17 @@
 	
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
+	  		  <div class="row">
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
 				  
 				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
 				  
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
-										
-						<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+						
+						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+							<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+						</c:if>
 						<button type="button" class="plain1 button red cancel" id="cancel">이&nbsp;전</button>
 		  			</div>
 				</div>	
@@ -356,7 +358,8 @@
 	
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-		
+	
+	<div class="listForm" style="margin-top: 35px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >	
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
@@ -369,11 +372,14 @@
             <th align="left">마지막 접속시간</th>
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
-            <th align="left">직책수정</th>
-            <th align="left">추방</th>
-            <th align="left">승인/거절</th>
-            <th align="left">Max</th>
-          </tr>
+	            <c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+		            <th align="left">직책수정</th>
+		            <th align="left">추방</th>
+		            <th align="left">승인/거절</th>
+		            <th align="left">Max</th>
+		        </c:if>
+          	</tr>
+          	
         </thead>
        
 		<tbody>
@@ -394,10 +400,13 @@
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "승인완료" : ""}</td> 
 <%-- 			  <td align="center">${i.approvalCondition}</td> --%>
-			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button>
-			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
-			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
-			  <td>${i.club.clubMaxMember}</td>
+				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
+			  	
+			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button></td>
+					<td>${i.club.clubMaxMember}</td>
+				</c:if>
 			</tr>
           </c:forEach>
         </tbody>
@@ -405,10 +414,9 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
-
+	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
 	</div>
 	</div>
 	</div>
