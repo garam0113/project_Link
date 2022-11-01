@@ -444,19 +444,6 @@
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 				<div class="row-content buffer-left buffer-right buffer-bottom">
-					
-					<%-- 	<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList?roomId=${ club.roomId }" style="color: #BD76FF;">모임채팅</a>
-						</li> --%>
 					<div class="homeBtn_group">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
