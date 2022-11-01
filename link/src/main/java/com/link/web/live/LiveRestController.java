@@ -98,7 +98,7 @@ public class LiveRestController {
 		
 		System.out.println("count한 Member 값 : "+live.getMember());
 		
-		if(limit.getLimit() > live.getMember()) {
+		if(limit.getLimit() >= live.getMember()) {
 		
 		System.out.println("update 시작");
 		
