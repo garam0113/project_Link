@@ -481,6 +481,8 @@
 				console.log("깊이 : " + $(this).siblings("input[name='depth']").val());
 				console.log("시퀀시 : " + $(this).siblings("input[name='sequence']").val());
 				
+				var cPage = $("#currentPage").val();
+				
 				if(content == "") {
 					Swal.fire({
 						  title: '내용을 입력하세요',
@@ -503,7 +505,8 @@
 									commentContent : $(this).siblings("textarea[name='mainCommentContent']").val(),
 									parent : $(this).siblings("input[name='parent']").val(),
 									depth : $(this).siblings("input[name='depth']").val(),
-									sequence : parseInt($(this).siblings("input[name='sequence']").val())
+									sequence : parseInt($(this).siblings("input[name='sequence']").val()),
+									currentPage : cPage
 								}),
 								contentType: 'application/json',
 								dataType : "json",

@@ -108,9 +108,10 @@
 	}
 	
 	
+	$(function() {
+		
+	
 		$(document).on("click", "#banMember", function() {
-			
-		})
 			
 			Swal.fire({
 			  title: '모임원을 추방하시겠습니까?',
@@ -119,30 +120,30 @@
 			  showCancelButton: true,
 			  confirmButtonColor: '#3085d6',
 			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'delete'
+			  confirmButtonText: '추방',
+			  cancelButtonText: '취소',
 			}).then((result) => {
-			  if (result.isConfirmed) {
-			    Swal.fire(
-			      'Deleted!',
-			      'Your file has been deleted.',
-			      'success'
-			    )	
+			  if (result.value) {
 			
-			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+				$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+				
 			 }
-		});
-	}
+		})
+		//refreshMemList();
+	})
 	
+});	
+
 	$(function() {
 		$("#banMember").on("click", function() {
 			deleteClubMember();
 		});
 	});
-	 */
+	 
 	
 	
 	
-	
+/* 	
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
@@ -151,9 +152,11 @@
 			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		 });
- 
+  */
 
 			//추방 그냥 컨트롤러	
+			
+		$(function() {	
 			$(document).on("click", "#banMember", function(){
 			var clubUserNo = $(this).val();
 			$.ajax("/clubRest/json/deleteClubMember",
@@ -174,21 +177,6 @@
 					refreshMemList();
 			}); //모임원 추방 
 	 	});
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
 	 
 	 
 			
@@ -282,7 +270,7 @@
 	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
 		});
 	});
 	

@@ -165,8 +165,9 @@
 	
 </head>
 
-<body class="blog masonry-style">
-		
+<body>
+	
+	<div class="container">	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
@@ -218,7 +219,7 @@
 	  </form>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	
+ 	</div>
 	</div>
 	<!-- </main> -->
 </body>

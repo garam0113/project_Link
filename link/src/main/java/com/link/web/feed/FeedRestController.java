@@ -91,6 +91,8 @@ public class FeedRestController {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
+		} else {
+			search.setOrder(1);
 		}
 		
 		search.setPageSize(pageSize);
