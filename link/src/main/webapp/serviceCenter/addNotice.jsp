@@ -47,6 +47,10 @@
 	
 	</script>
 <style>
+.row {
+	margin-left : 0px !important;
+	   display: initial !important;
+}
 .body{
 background-color: #EBEDF0 !important;
 }
@@ -109,7 +113,7 @@ textarea {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left"><strong>${notice.noticeNo}번 공지사항</strong>
+						<td align="left">
 						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 						</td>
 					</tr>

@@ -31,6 +31,7 @@ import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
 import com.link.service.domain.User;
+import com.link.service.serviceCenter.ServiceCenterService;
 
 @Controller
 @RequestMapping("/club/*")
@@ -39,6 +40,10 @@ public class ClubController {
 	@Autowired
 	@Qualifier("clubServiceImpl")
 	private ClubService clubService;
+	
+	@Autowired
+	@Qualifier("ServiceCenterServiceImpl")
+	private ServiceCenterService serviceCenterService;
 	
 	public ClubController() {
 		// TODO Auto-generated constructor stub
@@ -87,7 +92,7 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File("C:\\Users\\903-12\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
@@ -105,28 +110,6 @@ public class ClubController {
 		
 		return "forward:/club/getClub.jsp";
 	}
-	
-	//getClub bak!
-//	@RequestMapping(value="getClub", method=RequestMethod.GET)
-//	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session) throws Exception {
-//		
-//		System.out.println("/club/getClub : GET");
-//		
-//		//Business Logic
-//		Club club = clubService.getClub(Integer.parseInt(clubNo));
-//		
-//		//Model 과 View 연결
-//		System.out.println("MODEL VIEW 연결 전");
-//		
-//		session.setAttribute("club", club);
-//		session.setAttribute("clubNo", clubNo);
-//		
-//		System.out.println("클럽 세션에 뭐 들어갔지? : "+club);
-//		System.out.println("클럽 넘버 세션은? : "+clubNo);
-//		
-//		return "forward:/club/getClub.jsp";
-//		
-//	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
 	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user) throws Exception {
@@ -193,9 +176,16 @@ public class ClubController {
 			club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
-		clubService.updateClub(club);
 		
-		return "forward:/club/getClubList";
+		///////////////////////////////////////// Business Logic //////////////////////////////////////////				
+		
+		clubService.updateClub(club);
+		 map = clubService.getClub(Integer.parseInt(clubNo));
+		 
+		 model.addAttribute("club", map.get("club"));
+		 model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
+		
+		return "forward:/club/getClub.jsp";
 	}
 	
 	@RequestMapping(value="deleteClub")
@@ -216,11 +206,12 @@ public class ClubController {
 		return "forward:/club/getClubList";
 	}
 	
-	//clubList bak!
 	@RequestMapping(value="getClubList")
-	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user) throws Exception {
 		
 		System.out.println("/club/getClubList : GET/POST");
+		
+		user = (User) session.getAttribute("user");
 		
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -237,35 +228,12 @@ public class ClubController {
 		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
+		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
+		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
+		
 		
 		return "forward:/club/getClubList.jsp";
 	}
-	
-//	@RequestMapping(value="getClubList")
-//	public String getClubList(@ModelAttribute("search") Search search, Model model) throws Exception {
-//		
-//		System.out.println("/club/getClubList : GET/POST");
-//		
-//		if(search.getCurrentPage()==0) {
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		
-//		Map<String, Object> map = clubService.getClubList(search);
-//		
-//		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);
-//		
-//		
-//		System.out.println("resultPage : "+resultPage);
-//		
-//		model.addAttribute("clubList",map.get("clubList"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search",search);
-//		
-//		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
-//		
-//		return "forward:/club/getClubList.jsp";
-//	}
 	
 	@RequestMapping(value="getApprovalConditionList")
 	public String getMyClubList(@ModelAttribute("search") Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser, String userId) throws Exception {
@@ -357,13 +325,15 @@ public class ClubController {
 //		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
+		Map<String, Object> map1 = clubService.getClub(Integer.parseInt(clubNo));
 		
 		System.out.println("유저 세션에 뭐 있지? : "+user);
 		System.out.println("클럽 번호 왔나? : "+session.getAttribute("clubNo"));
+		System.out.println("클럽 맵에 뭐 있나? : "+map1.get("club"));
 		System.out.println("총 클럽원은? : "+map.get("totalClubMemberCount"));
 		System.out.println("유저 닉네임 어케 가져오지 : "+user.getNickName());
 
-		model.addAttribute("club",map.get("club"));
+		model.addAttribute("club",map1.get("club"));
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 //		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
@@ -524,7 +494,7 @@ public class ClubController {
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
 		session.setAttribute("meetingNo", meetingNo);
 		
-		System.out.println("모델과 뷰 연결 되었나? " + map.get("meeting"));
+		System.out.println("미팅 맵에 뭐 있나? : " + map.get("meeting"));
 		System.out.println("겟에서 세션에 들어갔나? :"+meetingNo);
 		return "forward:/club/getMeeting.jsp";
 	}

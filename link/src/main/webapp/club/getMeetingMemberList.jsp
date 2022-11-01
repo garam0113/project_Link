@@ -132,10 +132,10 @@
 		});
 	});
 	
-	//홈버튼
+/* 	//홈버튼
 	$(function() {
 		$(".homeBtn").on("click", function() {
-			self.location="/club/getClub?clubNo="+${clubNo};
+			self.location="/club/getClub?clubNo=${clubNo}"
 		});
 	});
 	
@@ -156,7 +156,7 @@
 		$(".clubChatBtn").on("click", function() {
 			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
 		});
-	});
+	}); */
 	
 	
 	
@@ -165,28 +165,35 @@
 	
 </head>
 
-<body class="blog masonry-style">
-		
+<body>
+	
+	<div class="container">	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
+		<div class="form_txtInput" style="margin-top: 150px;">
+			<h2 class="sub_tit_txt">모임원 리스트</h2>
+		</div>
 		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<!-- <div id="main" class="row" style="padding-bottom: 20%;">중간 개별영역 -->
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-
-			  <form class="form-horizontal" style="margin-top:230px;">  
-		      <!--  table Start /////////////////////////////////////-->
-		      <table class="table table-hover table-striped" >
-		      
-		        <thead>
-		          <tr>
-		          	<th align="left">회원 프로필사진</th>
-		            <th align="left" >회원 아이디</th>
-		            <th align="left">회원 닉네임</th>
-		          </tr>
-		        </thead>
+			
+				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
+			
+					<div class="row-content buffer-left buffer-right buffer-bottom" style="padding-bottom: 20%;">
+	
+				  <form class="form-horizontal" style="margin-top:150px;">  
+			      <!--  table Start /////////////////////////////////////-->
+			      <table class="table table-hover table-striped" >
+			      
+			        <thead>
+			          <tr>
+			          	<th align="left">회원 프로필사진</th>
+			            <th align="left" >회원 아이디</th>
+			            <th align="left">회원 닉네임</th>
+			          </tr>
+			        </thead>
 		       
 		<tbody>
 		<tr>
@@ -218,8 +225,9 @@
 	  </form>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	
-	</div>
+ 	</div>
+ 	</div>
+	<!-- </div> -->
 	<!-- </main> -->
 </body>
 

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.common.socket.EchoHandler;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
@@ -32,7 +33,6 @@ import com.link.service.user.UserService;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
-@RequestMapping("/feed/*")
 public class FeedController {
 
 	@Autowired
@@ -67,7 +67,7 @@ public class FeedController {
 	
 	
 	// 사용
-	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
+	@RequestMapping(value = "/feed/addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, MultipartFile file,
 							User user, Report report, Model model, HttpSession httpSession) throws Exception {
 		
@@ -198,7 +198,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "getFeed")
+	@RequestMapping(value = "/feed/getFeed")
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
 		
@@ -240,7 +240,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "/feed/updateFeed", method = RequestMethod.GET)
 	public String updateFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -256,7 +256,7 @@ public class FeedController {
 		return "forward:/feed/updateFeedView.jsp";
 	}
 	
-	@RequestMapping(value = "updateFeedModal", method = RequestMethod.GET)
+	@RequestMapping(value = "/feed/updateFeedModal", method = RequestMethod.GET)
 	public String updateFeedModal(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -273,7 +273,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
+	@RequestMapping(value = "/feed/updateFeed", method = RequestMethod.POST)
 	public String updateFeed(@ModelAttribute Feed feed, MultipartFile file, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -393,7 +393,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "/feed/deleteFeed", method = RequestMethod.GET)
 	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) throws Exception {
 		
 		feedService.deleteFeed(feedNo);
@@ -411,7 +411,7 @@ public class FeedController {
 	
 	
 	// 사용
-	@RequestMapping(value = "getFeedList")
+	@RequestMapping(value = {"/", "/feed/getFeedList"})
 	public String getFeedList(@ModelAttribute Search search, Heart heart,
 								User user, HttpSession httpSession, Map<String, Object> map, Model model) throws Exception {
 		
@@ -439,8 +439,10 @@ public class FeedController {
 		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
 		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
-		return "forward:/main.jsp";
+		return "forward:/feed/getFeedList.jsp";
 	}
+	
+	
 	
 	
 	

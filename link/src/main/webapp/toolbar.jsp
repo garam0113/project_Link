@@ -69,7 +69,7 @@
 			    	  toast: true,
 			    	  position: 'bottom-end',
 			    	  showConfirmButton: false,
-			    	  timer: 3000,
+			    	  timer: 10000,
 			    	  timerProgressBar: true,
 			    	  didOpen: (toast) => {
 			    	    toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -78,10 +78,11 @@
 			    	})
 
 			    	Toast.fire({
-			    	  icon: 'info',
-			    	  title: data
+						icon: 'info',
+						title: data
 			    	})
 			    
+			    $(".badge").text( parseInt($(".badge").text()) + 1);
 			    
 			};	
 		
@@ -121,14 +122,14 @@
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/main.jsp">LINK</a>
+                  <a href="/">LINK</a>
                </h1>
             </div>
             <!-- brand -->
             <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
             <nav>
                <ul class="reset" role="navigation">
-                  <li class="menu-item"><a href="/main.jsp">Home</a></li>
+                  <li class="menu-item"><a href="/">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
                   <li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   <li class="menu-item"><a
@@ -168,10 +169,12 @@
          <!-- row-content -->
       </div>
       
-		<div class="alarmHead" >
-						
-			<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-		
-		</div>
+		<c:if test="${!empty sessionScope.user }">
+			<div class="alarmHead" >
+							
+				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+			
+			</div>
+		</c:if>
       <!-- row -->
    </header>

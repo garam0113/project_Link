@@ -21,6 +21,12 @@
 		text-decoration: auto;
 	}
 
+	#carousel-club img {
+		width: 200px;
+		height: 150px;
+		border-radius: 25px
+	}
+
 
 	/* 랜덤 클럽 가져오기 */
 
@@ -38,10 +44,15 @@
 
 	/* 바탕색 */
 
+	html {
+		background-color: #EBEDF0 !important;
+	}
+
 	#main {
 		background-color: #EBEDF0 !important;
 	}
-	
+
+	/* 바탕색 */
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 

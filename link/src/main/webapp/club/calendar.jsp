@@ -179,7 +179,6 @@ border-radius: 0px 0px 0px 0px  !important;
 		  
 		    calendar.render();
 			
-			
 		}
 		
 	});

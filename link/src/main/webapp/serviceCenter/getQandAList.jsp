@@ -13,6 +13,7 @@
 <meta charset="EUC-KR">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--페이지 네비게이션 css --%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -25,7 +26,7 @@
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body {
 	margin-top: 76px;
@@ -246,7 +247,7 @@ function fncGetList(currentPage) {
 				<c:forEach var="getQandAList" items="${getQandAList}">
 					<c:set var="i" value="${i + 1}" />
 					<tr class="ct_list_pop">
-						<td align="left" id="bb">${getQandAList.qandANo}</td>
+						<td align="left" id="bb" style="vertical-align: middle;">${getQandAList.qandANo}</td>
 						<td></td>
 						<%-- 관리자 --%>
 						<c:if test="${ user.role == '1' }">
@@ -323,19 +324,19 @@ function fncGetList(currentPage) {
 						<%--히원  --%>
 						<td></td>
 						<c:if test="${getQandAList.qandACondition=='1'}">
-							<td align="left">처리완료</td>
+							<td align="left" style="vertical-align: middle;">처리완료</td>
 						</c:if>
 						<c:if test="${getQandAList.qandACondition=='0'}">
-							<td align="left">대기중</td>
+							<td align="left" style="vertical-align: middle;">대기중</td>
 						</c:if>
 						<td></td>
-						<td align="left">${getQandAList.userId.nickName}</td>
+						<td align="left" style="vertical-align: middle;">${getQandAList.userId.nickName}</td>
 							
 						<td><input type="hidden" name="order" id="order"
 							value="${search.order}">
 							<input type="hidden" name="userId" id="userId"
 							value="${getQandAList.userId.userId}"></td>
-						<td align="left">${getQandAList.qandARegDate}</td>
+						<td align="left" style="vertical-align: middle;">${getQandAList.qandARegDate}</td>
 					
 				</c:forEach>
 
