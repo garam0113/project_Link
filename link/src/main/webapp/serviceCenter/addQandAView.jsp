@@ -69,6 +69,10 @@
 	
 	</script>
 <style>
+.row {
+	margin-left : 0px !important;
+	   display: initial !important;
+}
 textarea {
 	resize: none;
 }
@@ -159,7 +163,7 @@ background-color: #EBEDF0 !important;
 				<strong>제목</strong> <label for="title"></label>
 				<div class="col-sm-4">
 					<textarea class="qandATitle" id="qandATitle" name="qandATitle" value=""
-						maxlength="80" placeholder="제목을 입력해주세요"></textarea>
+						maxlength="66" placeholder="제목을 입력해주세요"></textarea>
 
 
 				</div>
@@ -174,11 +178,11 @@ background-color: #EBEDF0 !important;
 				</div>
 			</div>
 
-			<label  style= "display:flex; height: 30px;">
+			<div  style= "display:flex; height: 30px;">
 				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
 				<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" style ="margin-left: 60px; width:auto; height:auto;" checked>나만 보기
 			 	<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1" style ="margin-left: 20px; width:auto; height:auto;">전체 보기
-				</label></form> 
+				</div></form> 
 			
 			<span id="helpBlock" class="help-block"> <strong
 				class="text-danger">사진은 2장까지 가능합니다.</strong>
