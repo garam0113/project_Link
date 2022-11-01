@@ -25,9 +25,9 @@ $(function(){
 						
 					<%--	document.write(item.title);   --%>
 			  if(firstimage1!=""){    //이미지 없는 거 거르기
-					addHtml+=	"<div class=card style = 'width:230px; margin-bottom:20px;'>"+
-						 	 		"<div class=card-header style= 'text-align: center;'>"+
-						 	  		 item.title+
+					addHtml+=	"<div class=card style='margin-bottom:20px;' >"+
+						 	 		"<div class=card-header style= 'text-align: center; background-color: #F5F6F7; border-radius: 15px;'>"+
+						 	  		 "<strong>"+item.title+"</strong>"+
 							 		 "</div>"+
 							  "<img src="+item.firstimage+" style= width:230px; height:300px;/>"+
 							  "<div class=card-body style='text-align:center;'>"+
@@ -47,9 +47,7 @@ $(function(){
 											addHtml+= msg2data.response.body.items.item[0].homepage+
 												 "</div>"+
 												  "</div>";
-											console.log(msg2data.response.body.items.item[0].homepage);
-
-											
+												
 												}//안의 success
 									 		
 											})//개인 이미지 찾아오기
@@ -77,11 +75,19 @@ overflow-x:hidden;
 .box::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
+.card{
+width:210px; 
+background:white;
+border: 1px solid white;
+border-radius: 15px;
+box-shadow: 0 0 10px rgb(0 0 0 / 20%);'
+
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="box festival" style="width:230px; height: 522px;"> 
+	<div class="box festival" style="width:230px; height: 470px; border-radius:15px;"> 
 	
 	</div>
 </body>

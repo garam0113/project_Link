@@ -157,12 +157,12 @@
  	$(function() {
 		
 		//alert("123");
-		var options = {
+/* 		var options = {
 			"forcNew" : true
-		};
+		}; */
 		var url = "https://192.168.0.183:4000";
 
-		socket = io.connect(url, options);
+		socket = io.connect(url);
 
 		socket.on("connect", function() {
 			//alert("소켓연결 완료");
@@ -173,6 +173,7 @@
 			var clubTitle = $("#clubTitle").val();
 			var profile = $("#profile").val();
 			var nickName = $("#nickName").val();
+			var num;
 			console.log("profile : "+profile);
 			console.log("nickName : "+nickName);
 			
@@ -235,7 +236,8 @@
 										viewName : roomName,
 										total : total,
 										profile : profile,
-										nickName : nickName
+										nickName : nickName,
+										member : 1
 										});
 									self.location = "https://192.168.0.183:4040";
 								}
@@ -268,7 +270,8 @@
 									roomName : roomName,
 									viewName : viewName,
 									profile : profile,
-									nickName : nickName
+									nickName : nickName,
+									member : data.member
 								});
 								self.location = "https://192.168.0.183:4040";
 							}
