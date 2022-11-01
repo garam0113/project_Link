@@ -19,11 +19,8 @@
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
@@ -689,11 +686,30 @@
 			} else {
 				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
-				if(sock) {
-					var Msg = "가 피드를 작성했습니다.";
-					
-					sock.send(Msg);
-				}
+				$.ajax (
+						{
+							url : "/feedRest/json/getFeedLastNo",
+							method : "POST",
+							data : JSON.stringify ({
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(sock) {
+									var Msg = "feed,follower," + parseInt(data + 1) + ",피드를 작성했습니다.";
+									alert(Msg);
+									sock.send(Msg);
+								}
+							}
+						}		
+				)
+				
 			}
 		});
 		<%-- ADD_FEED --%>
@@ -783,14 +799,11 @@
 						
 						success : function(data, status) {
 							
-							console.log("피드 좋아요 성공 : " + data);
-
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "가 피드 좋아요를 눌렀습니다.";
-								
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 눌렀습니다."
 								sock.send(Msg);
 							}
 							
@@ -836,8 +849,8 @@
 							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "가 피드 좋아요 취소 했습니다.";
-								
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 취소했습니다."
+
 								sock.send(Msg);
 							}
 							
@@ -916,7 +929,7 @@
 							} else if(index == 0 ){
 								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
 								addImg += 	'<div class="item active">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" target="_blank">' +
+												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
 													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
 												'</a>' +
 												'<div class="carousel-caption">' +
@@ -925,7 +938,7 @@
 							} else {
 								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
 								addImg += 	'<div class="item">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" target="_blank">' +
+												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
 													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
 												'</a>' +
 												'<div class="carousel-caption">' +
@@ -988,6 +1001,8 @@
 									name="searchKeyword" value="${search.searchKeyword}">
 
 							</form>
+							
+							<jsp:include page="/serviceCenter/getFestival.jsp" />
 							<%-- 검색 --%>
 
 						</div>
@@ -1239,8 +1254,7 @@
 
 						<div class="column three">
 
-							<script type="text/javascript" charset="utf-8"
-								src="/resources/javascript/myHome/followListForFeed.js"></script>
+							<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
 
 							<div class="tabs1">
 								<input id="all-follow" type="radio" name="tab_item-follow" checked>
@@ -1250,12 +1264,12 @@
 								<label class="tab_item-following" for="programming-follow">팔로워</label>
 
 								<div class="tab_content-follow" id="all-follow_content">
-									<div class="col-md-4" id="fll-club">
+									<div class="col-md-4" id="fll">
 										<br />
 									</div>
 								</div>
 								<div class="tab_content-follow" id="programming-follow_content">
-									<div class="col-md-4" id="fl-club">
+									<div class="col-md-4" id="fl">
 										<br />
 									</div>
 								</div>
@@ -1369,7 +1383,7 @@
 							</div>
 							<div class="reportTitle">
 							
-								<textarea class="title" id="title" name="title" maxlength="80" placeholder="신고 제목을 입력해주세요"></textarea>
+								<textarea class="title" id="title" name="title" maxlength="66" placeholder="신고 제목을 입력해주세요"></textarea>
 
 							</div>
 

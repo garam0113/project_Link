@@ -82,13 +82,10 @@ public class MyHomeController {
 		
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
-
         search.setSearchCondition("1");
+  
+     
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-	
-		
-		
 		map.put("user", (User)session.getAttribute("user"));
 	    map.put("heart", heart);
 		map.put("myHome", 1);

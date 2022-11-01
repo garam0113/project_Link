@@ -1,45 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="The Page Description">
-
-<title>Feed</title>
-
-<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
-
-<%-- SUMMER NOTE --%>
-<script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-<%-- SUMMER NOTE --%>
-
-<%-- ALERT --%>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<%-- ALERT --%>
-
-<%-- BOOTSTRAP ICON --%>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<%-- BOOTSTRAP ICON --%>
 <script type="text/javascript">
  // 데이터를 aJax로 받기
  
@@ -65,11 +25,11 @@ $(function(){
 						
 					<%--	document.write(item.title);   --%>
 			  if(firstimage1!=""){    //이미지 없는 거 거르기
-					addHtml+=	"<div class=card style = 'width:230px; margin-bottom:20px; border:2px solid black;'>"+
+					addHtml+=	"<div class=card style = 'width:230px; margin-bottom:20px;'>"+
 						 	 		"<div class=card-header style= 'text-align: center;'>"+
 						 	  		 item.title+
 							 		 "</div>"+
-							  "<img src="+item.firstimage+" style= width:226px; height:300px;/>"+
+							  "<img src="+item.firstimage+" style= width:230px; height:300px;/>"+
 							  "<div class=card-body style='text-align:center;'>"+
 						 	   "<h5 class=card-title>"+ item.title+"</h5>"+
 						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"
@@ -87,7 +47,8 @@ $(function(){
 											addHtml+= msg2data.response.body.items.item[0].homepage+
 												 "</div>"+
 												  "</div>";
-											
+											console.log(msg2data.response.body.items.item[0].homepage);
+
 											
 												}//안의 success
 									 		
@@ -124,4 +85,3 @@ overflow-x:hidden;
 	
 	</div>
 </body>
-</html>
