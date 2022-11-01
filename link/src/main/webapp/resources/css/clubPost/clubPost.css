@@ -259,6 +259,7 @@
 
 #allChat{
 	background-color: white;
+	 z-index: 10;
 }
 
 #allChat-content{

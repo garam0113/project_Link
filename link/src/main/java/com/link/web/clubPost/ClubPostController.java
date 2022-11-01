@@ -394,8 +394,8 @@ public class ClubPostController {
 		model.addAttribute("roomId", roomId);
 		
 		// 알림
-		model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
-		model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
 		// 모임 40번
 		//model.addAttribute("roomId", "0162812f-1c51-41f5-938a-335ed02ed20b");

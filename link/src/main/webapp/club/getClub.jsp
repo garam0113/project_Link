@@ -426,7 +426,7 @@
 							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList?roomId=${ club.roomId }" style="color: #BD76FF;">모임채팅</a>
+							<a href="/clubPost/chatRoomList?roomId=${ club.roomId }&clubTitle=${club.clubTitle}" style="color: #BD76FF;">모임채팅</a>
 						</li>
 						<button type="button" class="live">
 						<span class="glyphicon glyphicon-facetime-video" aria-hidden="true" style="font-size:35px;">화상채팅</span>

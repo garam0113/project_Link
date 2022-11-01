@@ -1084,8 +1084,8 @@
 							</div>
 							<div class="chat chat-content">1:1채팅</div>
 							<div class="chat chidren" style="display: none;" condition="0">
-								<div class="chat-content">111</div>
-								<div class="chat-content">222</div>
+								<div class="chat-content" userId="">닉네임</div>
+								<div class="chat-content" userId="">닉네임</div>
 							</div>
 							<div id="input-chatLog">
 								<span><input type="text"></span>
