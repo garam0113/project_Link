@@ -25,6 +25,7 @@ import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
+import com.link.service.serviceCenter.ServiceCenterService;
 import com.link.service.user.UserService;
 
 @Controller
@@ -42,6 +43,10 @@ public class ClubPostController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	UserService userServiceImpl;
+	
+	@Autowired
+	@Qualifier("ServiceCenterServiceImpl")
+	private ServiceCenterService serviceCenterService;
 	
 	public ClubPostController() {
 		System.out.println(getClass() + " default 생성자 호출");
@@ -81,8 +86,9 @@ public class ClubPostController {
 		clubPost.setUser((User)session.getAttribute("user"));
 		
 		// club 상세보기에서 모임번호를 session으로 가져온다 어떤 모임의 게시물인지 알기위해 필요하다
-		//clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
-		clubPost.setClubNo(1);
+		clubPost.setClubNo(Integer.parseInt((String)session.getAttribute("clubNo")));
+		//clubPost.setClubNo(1);
+		System.out.println("clubNo : " + clubPost.getClubNo());
 
 		// meta 데이터인 pageSize = 10 화면에 게시물이 10개 나온다
 		search.setPageSize(pageSize);
@@ -96,12 +102,17 @@ public class ClubPostController {
 		
 		
 		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
-		model.addAttribute("clubNo", 1);
 		//model.addAttribute("clubNo", Integer.parseInt((String)session.getAttribute("clubNo")));
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+		
+		
+		
+		// 알림
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
 		
 		
@@ -238,6 +249,15 @@ public class ClubPostController {
 		System.out.println("모임 게시물 대표 영상 썸네일 : " + clubPost.getClubPostVideo1() + ", 모임 게시물 대표 이미지 : " + clubPost.getImage1() + ", 모임 게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
+		
+		
+		
+		// 알림
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
+		
+		
+		
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
@@ -376,12 +396,16 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
-	public String chatClubList(HttpSession session, String roomId, Model model) throws Exception {
+	public String chatClubList(HttpSession session, String roomId, String clubTitle, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
 		
 		System.out.println("채팅방 번호 : " + roomId);
 		
 		model.addAttribute("roomId", roomId);
+		
+		// 알림
+		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
+		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
 		// 모임 40번
 		//model.addAttribute("roomId", "0162812f-1c51-41f5-938a-335ed02ed20b");

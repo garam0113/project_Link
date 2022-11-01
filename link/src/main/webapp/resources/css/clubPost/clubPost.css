@@ -257,12 +257,20 @@
 	font-size: 40px;
 }
 
+
+
+
+
+
+/* 채팅 css */
 #allChat{
 	background-color: white;
+	z-index: 10;
 }
 
 #allChat-content{
 	overflow: auto;
+	margin-right: 10px;
 }
 
 #chat-icon{
@@ -275,15 +283,16 @@
 }
 
 #allChat-toolbar{
-	background-color: red;
 	margin-left: 10px;
 	margin-right: 10px;
+	/* background-color: red; */
+	display: grid;
+	grid-template-columns: 2fr 5fr 1fr;
 }
 
-#allChat-content{
-	/* background-color: yellow; */
-	margin-left: 10px;
-	margin-right: 10px;
+#allChat-toobar-title{
+	font-size: 30px;
+	font-family: fantasy;
 }
 
 #allChat-toolbar-close{
@@ -301,19 +310,32 @@
 }
 
 .chat-content{
-	height: 80px; margin-bottom: 10px;
+	height: 80px;
+	margin-bottom: 10px;
+}
+
+#club-post-chatRoom{
+	overflow: auto;
+	height: 540px;
+	margin-right: 10px;
 }
 
 #input-chatLog{
-	display: none;
+	/* background-color: red; */
+	border-radius: 10px;
+	width: 320px;
+	display: grid;
+	grid-template-columns: 13fr 1fr;
+	margin-bottom: 20px;
 }
 
-.chat.chat-content{
+.chatdiv.chat-content{
 	background-color: #f7eef9;
-	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
+	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px;
+	border-radius: 10px;
 }
 
-.chat:hover{
+.chatdiv:hover{
 	cursor: pointer;
 }
 
@@ -322,6 +344,7 @@
 	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
 }
 
+/* 채팅 css */
 
 
 

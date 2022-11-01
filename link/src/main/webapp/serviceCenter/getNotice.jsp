@@ -57,7 +57,7 @@
 <style> 
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 textarea {
 	resize: none;

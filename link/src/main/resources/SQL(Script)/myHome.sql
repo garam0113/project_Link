@@ -63,11 +63,12 @@ SELECT
 	 					
 	 					 
 	 					FROM users u, follow_block f
-	 					where u.user_id = f.send_user_id and f.recv_user_id = 'user04'
+	 					where u.user_id = f.send_user_id and f.recv_user_id = 'user555'
 	 					) deep_table
 	 					) inner_table;
 	 						 					
-	 					
+DELETE FROM Follow_Block
+     WHERE send_user_id = recv_user_id;	 					
 	 					
 	 					
 SELECT

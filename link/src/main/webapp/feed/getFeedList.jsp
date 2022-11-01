@@ -1,45 +1,47 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="description" content="The Page Description">
-	
-	<title>Feed</title>
-	
-	<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
-	
-	<%-- SUMMER NOTE --%>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	<%-- SUMMER NOTE --%>
-	
-	<%-- ALERT --%>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<%-- ALERT --%>
-	
-	<%-- BOOTSTRAP ICON --%>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-	<%-- BOOTSTRAP ICON --%>
-		
-	
-	<script type="text/javascript">
+<meta charset="UTF-8">
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
+
+<title>Feed</title>
+
+<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+
+<%-- SUMMER NOTE --%>
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+<%-- SUMMER NOTE --%>
+
+<%-- ALERT --%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<%-- ALERT --%>
+
+<%-- BOOTSTRAP ICON --%>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<%-- BOOTSTRAP ICON --%>
+
+
+<script type="text/javascript">
 	
 	function formatDate(date) {
 	    
@@ -71,6 +73,125 @@
 			}
 		});
 	}
+	
+	function fncAddReport(){
+			
+			var title = $("textarea[name=title]").val();		
+			var content =$("textarea[name=content]").val();			
+			var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+			
+			if(title == null || title.length <1){
+	          	Swal.fire({
+	                icon: 'error',
+	                title: '신고 제목은 필수입니다.',
+	            });
+					return;
+				}
+			if(content == null || content.length <1){
+				Swal.fire({
+	                icon: 'error',
+	                title: '신고 내용은 필수입니다.',
+	                text: '가능한 상세히 적어주세요.',
+	            });
+					return;
+				}
+					
+			if(checkbox==0){
+				Swal.fire({
+	                icon: 'error',
+	                title: '신고 사유는 필수입니다.',
+	                text: '1개 이상 클릭해주세요.',
+	            });
+				return;
+			}
+			
+							
+		  Swal.fire({
+	          title: '정말로 신고하시겠습니까?',
+	          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+	          icon: 'warning',
+	          showCancelButton: true,
+	          confirmButtonColor: '#3085d6',
+	          cancelButtonColor: '#d33',
+	          confirmButtonText: '신고',
+	          cancelButtonText: '취소'
+	      }).then((result) => {
+	          if (result.isConfirmed) {
+	             AddReport()
+	          }
+	      })
+	 }
+	 
+	function AddReport(){	
+
+		var sum = 0;
+		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+				
+		for(var i =0 ; i<checkbox; i++){
+			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
+			sum += sum+parseInt(sum2);			
+		}
+
+			
+		var no = 0;	
+			
+		 if( $("#clubPostNo").val()!=null){
+			 no = $("#clubPostNo").val();
+		}else if($("#clubPostCommentNo").val()!=null){
+			 no = $("#clubPostCommentNo").val();
+		}else if($("#feedNo").val()!=null){
+			 no = $("#feedNo").val();
+		}else if($("#feedCommentNo").val()!=null){
+			  no = $("#feedCommentNo").val();
+		}
+		
+		var clubNo = 0;
+		
+		if( $("#clubNo2").val()!=null ){
+			clubNo = $("#clubNo2").val();
+		}else if( $("#clubNo3").val()!=null){
+			clubNo = $("#clubNo3").val();
+		}
+		
+		var clubPostNo = 0;
+		
+		
+		if ( $("#clubPostNo2").val()!=0){
+			
+			clubPostNo = $("#clubPostNo2").val();
+			if(clubPostNo == undefined){
+				clubPostNo = 0;
+			}
+			
+		}
+		
+	 	$.ajax({
+		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
+ 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+		contentType: 'application/json',
+		method : "POST",
+		dataType: "json",
+		data : JSON.stringify ({
+			"title":$("#title").val(),
+			"content":$("#content").val(),
+		<%--	"file": image, --%>
+			"user1":$("#user1").val(),
+			"user2":$("#user2").val(),
+			"reportSource":$("#reportSource").val(),
+			"reportReason": sum,
+			"type": $("#type").val(),
+			"no" :no,
+				
+		 success: function(){
+			 window.close();
+		 }
+		}),
+			
+		})<!-- ajax ( ReportAdd) 끝 --> 
+		
+
+	} //funtion 끝
+		
 	
 	$(function(){
 		
@@ -245,14 +366,25 @@
 							
 							var alarm = data.alarm;
 							var alarmCount = data.alarmCount;
-							var addHtml = 	"<div>총 알림 갯수" +
-												"<div>" + alarmCount + "</div>" +
-											"</div>";
+							var addHtml = "";
 							
+							$("#myModalAlarmLabel").html("알림 개수 : " + alarmCount);
+							console.log(data)
 							$.each(alarm, function(index, item){
-								addHtml += 	"<div>알림 내용" + 
-												"<div>" + item.content + "</div>" + 
-											"</div>"
+								
+								if(item.feed != null) {
+									addHtml += 	"<div style='display: flex; justify-content: space-between;'>" + 
+										"<div>알림 내용</div>" + 
+										"<div><a href='/feed/getFeed?feedNo=" + item.feed.feedNo + "' />" + item.content + "</a></div>" + 
+									"</div>"
+								} else if(item.clubPost != null) {
+									addHtml += 	"<div style='display: flex; justify-content: space-between;'>" + 
+										"<div>알림 내용</div>" + 
+										"<div><a href='/clubPost/getClubPost?clubPostNo=" + item.clubPost.clubPostNo + "' />" + item.content + "</a></div>" + 
+									"</div>"
+								} 
+								
+								
 							}) // each close
 							
 							$(".alarmModalBody").html(addHtml);
@@ -554,11 +686,30 @@
 			} else {
 				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
-				if(sock) {
-					var Msg = "가 피드를 작성했습니다.";
-					
-					sock.send(Msg);
-				}
+				$.ajax (
+						{
+							url : "/feedRest/json/getFeedLastNo",
+							method : "POST",
+							data : JSON.stringify ({
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								if(sock) {
+									var Msg = "feed,follower," + parseInt(data + 1) + ",피드를 작성했습니다.";
+									alert(Msg);
+									sock.send(Msg);
+								}
+							}
+						}		
+				)
+				
 			}
 		});
 		<%-- ADD_FEED --%>
@@ -648,14 +799,11 @@
 						
 						success : function(data, status) {
 							
-							console.log("피드 좋아요 성공 : " + data);
-
 							$(html).parents(".row").children(".likeCount").text(data);
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "가 피드 좋아요를 눌렀습니다.";
-								
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 눌렀습니다."
 								sock.send(Msg);
 							}
 							
@@ -701,8 +849,8 @@
 							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "가 피드 좋아요 취소 했습니다.";
-								
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 취소했습니다."
+
 								sock.send(Msg);
 							}
 							
@@ -729,15 +877,91 @@
 			var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
-			$('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			
+			$("#user2").val(reportedUser);
+			$("#feedNo").val(feedNo);
+			
 			$('#reportModal').modal();
 
 			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		})	// .report evenet close
+		
+		
+		$(document).on("click", "button:contains('등록')", function(event) {
+			event.stopPropagation();
+			
+			fncAddReport();
+		})
+		
 		<%-- CALL REPORT --%>
 		
 	})
 	
+	<%-- 추천 모임 보이기 --%>
+	
+	$(window).on("load", function() {
+		
+		$.ajax(
+				{
+					url : "/clubRest/json/getClubList",
+					method : "POST",
+					data : JSON.stringify ({
+						currentPage: 1
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						var addHtml = "";
+						var addImg = "";
+						var count = 0;
+						
+						$.each(data.clubList, function(index, item){
+
+							if(index > 4) {
+								return false;
+							} else if(index == 0 ){
+								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
+								addImg += 	'<div class="item active">' +
+												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+												'</a>' +
+												'<div class="carousel-caption">' +
+												'</div>' +
+										    '</div>'
+							} else {
+								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
+								addImg += 	'<div class="item">' +
+												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+												'</a>' +
+												'<div class="carousel-caption">' +
+												'</div>' +
+										    '</div>'
+							}
+							
+							
+							
+						}) // each close
+						
+						// $(".carousel-club-indicators").html(addHtml);
+						$(".carousel-club-inner").html(addImg);
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+		
+	})
+	
+	<%-- 추천 모임 보이기 --%>
 	
 	
 	</script>
@@ -745,15 +969,12 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
-
-	
-  
 </style>
 
 <!------------------------------ CSS ------------------------------>
 
 
-	
+
 </head>
 
 <body>
@@ -763,354 +984,462 @@
 	<main role="main">
 
 		<div id="main">
-		
+
 			<section class="row section">
-			<div class="container">
-			
-				<div class="row-content buffer even clear-after">
-					<div class="column three">
-						<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
-							
-						<%-- 검색 --%>
-						<form id="searchForm" method="POST" action="/feed/getFeedList" accept-charset="euc-kr">
-							
-							<input type="text" id="searchKeyword" placeholder="검색" name="searchKeyword" value="${search.searchKeyword}">
-							
-						</form>
-						<%-- 검색 --%>
-						
-					</div>
-					
-					<div class="column six">
-						<div class="post-area clear-after addFeedForm">
-							<form id="addForm">
-							
-							<c:if test="${!empty sessionScope.user}">
-							
-								<article role="main">
-								
-								<div class="addHeader">
-									<div class="addHeaderInner">
-										<div class="addFormImage">
-											<img class="sessionProfileImage" src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" />
-										</div>
-										
-										<div class="addFormName">
-											${sessionScope.user.nickName}
-										</div>
-									</div>
-									
-									<div>
-										<button class="btn btn-primary addFeed" type="button">SUBMIT</button>
-									</div>
-									
-								</div>
-								
-								<div class="addBody">
-									
-									<textarea id="summernote" name="fullContent"></textarea>
-								</div>
-								
-								</article>
-								
-							</c:if>
-		
-							<input type="hidden" name="openCondition" value="3">
-							
+				<div class="container">
+
+					<div class="row-content buffer even clear-after">
+						<div class="column three">
+							<button class="btn btn-primary searchPlace" type="button"
+								onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+
+							<%-- 검색 --%>
+							<form id="searchForm" method="POST" action="/feed/getFeedList"
+								accept-charset="euc-kr">
+
+								<input type="text" id="searchKeyword" placeholder="검색"
+									name="searchKeyword" value="${search.searchKeyword}">
+
 							</form>
+							
+							<jsp:include page="/serviceCenter/getFestival.jsp" />
+							<%-- 검색 --%>
+
 						</div>
 
-						<c:set var="i" value="0"></c:set>
-						<c:forEach var="feed" items="${feedList}">
-							<c:set var="i" value="${i + 1}"></c:set>
+						<div class="column six">
+							<div class="post-area clear-after addFeedForm">
+								<form id="addForm">
 
-							<c:if test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
+									<c:if test="${!empty sessionScope.user}">
 
-								<div class="showFeedForm">
-									<form class="feedForm">
-										<div class="feedHeader">
-											<div class="feedLeft">
-												<div class="feedInner">
-													<div class="feedCover">
-														<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+										<article role="main">
+
+											<div class="addHeader">
+												<div class="addHeaderInner">
+													<div class="addFormImage">
+														<img class="sessionProfileImage"
+															src="/resources/image/uploadFiles/${sessionScope.user.profileImage}" />
 													</div>
-													<div class="feedName">
-														${feed.user.nickName}
-													</div>
+
+													<div class="addFormName">
+														${sessionScope.user.nickName}</div>
 												</div>
-												
-												<div class="feedDate">
-													<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-													<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+
+												<div>
+													<button class="btn btn-primary addFeed" type="button">SUBMIT</button>
 												</div>
+
 											</div>
-												
-											<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-											
-											<div class="udIcon">
-												<%-- 수정 버튼 --%>
-												<%-- <span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> --%>
-												<%-- 수정 버튼 --%>
-											
-												<%-- 삭제 버튼 --%>
-												<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>
-												<%-- 삭제 버튼 --%>
+
+											<div class="addBody">
+
+												<textarea id="summernote" name="fullContent"></textarea>
 											</div>
-												
-											</c:if>
-										</div>
-										<div class="feedContent">
-											<div class="feedLetter">
-												${feed.content}
-											</div>
-											
-											<c:if test="${!empty feed.video}">
-											<div class="feedVideo">
-												<iframe width="560" height="315" src="http://${feed.video}"></iframe>
-											</div>
-											</c:if>
-											
-											<%-- 이미지 --%>
-											
-											<c:if test="${!empty feed.image1}">
-											<div class="feedImage">
-												<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-														
-														<c:if test="${!empty feed.image2}">
-															<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-														</c:if>
-														<c:if test="${!empty feed.image3}">
-															<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-														</c:if>
-														<c:if test="${!empty feed.image4}">
-															<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
-														</c:if>
-													</ol>
-												
-													<!-- Wrapper for slides -->
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+
+										</article>
+
+									</c:if>
+
+									<input type="hidden" name="openCondition" value="3">
+
+								</form>
+							</div>
+
+							<c:set var="i" value="0"></c:set>
+							<c:forEach var="feed" items="${feedList}">
+								<c:set var="i" value="${i + 1}"></c:set>
+
+								<c:if
+									test="${fn:trim(feed.deleteCondition) eq '0' and fn:trim(feed.reportCondition) eq '0'}">
+
+									<div class="showFeedForm">
+										<form class="feedForm">
+											<div class="feedHeader">
+												<div class="feedLeft">
+													<div class="feedInner">
+														<div class="feedCover">
+															<img class="feedProfileImage"
+																src="/resources/image/uploadFiles/${feed.user.profileImage}" />
 														</div>
-														
-														<c:if test="${!empty feed.image2}">
-															<div class="item">
-																<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
-															</div>
+														<div class="feedName">${feed.user.nickName}</div>
+													</div>
+
+													<div class="feedDate">
+														<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+														<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+													</div>
+												</div>
+
+												<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+
+													<div class="udIcon">
+														<%-- 수정 버튼 --%>
+														<%-- <span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> --%>
+														<%-- 수정 버튼 --%>
+
+														<%-- 삭제 버튼 --%>
+														<span class="glyphicon glyphicon-trash btn_delete"
+															aria-hidden="true"></span>
+														<%-- 삭제 버튼 --%>
+													</div>
+
+												</c:if>
+											</div>
+											<div class="feedContent">
+												<div class="feedLetter">${feed.content}</div>
+
+												<c:if test="${!empty feed.video}">
+													<div class="feedVideo">
+														<iframe width="560" height="315"
+															src="http://${feed.video}"></iframe>
+													</div>
+												</c:if>
+
+												<%-- 이미지 --%>
+
+												<c:if test="${!empty feed.image1}">
+													<div class="feedImage">
+														<div id="carousel-example-generic${i}"
+															class="carousel slide" data-ride="carousel">
+															<ol class="carousel-indicators">
+																<li data-target="#carousel-example-generic${i}"
+																	data-slide-to="0" class="active"></li>
+
+																<c:if test="${!empty feed.image2}">
+																	<li data-target="#carousel-example-generic${i}"
+																		data-slide-to="1"></li>
+																</c:if>
 																<c:if test="${!empty feed.image3}">
+																	<li data-target="#carousel-example-generic${i}"
+																		data-slide-to="2"></li>
+																</c:if>
+																<c:if test="${!empty feed.image4}">
+																	<li data-target="#carousel-example-generic${i}"
+																		data-slide-to="3"></li>
+																</c:if>
+															</ol>
+
+															<!-- Wrapper for slides -->
+															<div class="carousel-inner" role="listbox">
+																<div class="item active">
+																	<img src="/resources/image/uploadFiles/${feed.image1}"
+																		alt="${feed.image1}">
+																</div>
+
+																<c:if test="${!empty feed.image2}">
 																	<div class="item">
-																		<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+																		<img src="/resources/image/uploadFiles/${feed.image2}"
+																			alt="${feed.image2}">
 																	</div>
-																	<c:if test="${!empty feed.image4}">
+																	<c:if test="${!empty feed.image3}">
 																		<div class="item">
-																			<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+																			<img
+																				src="/resources/image/uploadFiles/${feed.image3}"
+																				alt="${feed.image3}">
 																		</div>
+																		<c:if test="${!empty feed.image4}">
+																			<div class="item">
+																				<img
+																					src="/resources/image/uploadFiles/${feed.image4}"
+																					alt="${feed.image4}">
+																			</div>
+																		</c:if>
 																	</c:if>
-																</c:if>														
-														</c:if>
+																</c:if>
+															</div>
+
+															<!-- Controls -->
+															<a class="left carousel-control carousel_prev"
+																href="#carousel-example-generic${i}" role="button"
+																data-slide="prev"> <span
+																class="glyphicon glyphicon-chevron-left"
+																aria-hidden="true"></span> <span class="sr-only">Previous</span>
+															</a> <a class="right carousel-control carousel_next"
+																href="#carousel-example-generic${i}" role="button"
+																data-slide="next"> <span
+																class="glyphicon glyphicon-chevron-right"
+																aria-hidden="true"></span> <span class="sr-only">Next</span>
+															</a>
+														</div>
 													</div>
-		
-													<!-- Controls -->
-													<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
-														<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-														<span class="sr-only">Previous</span>
-													</a>
-													<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
-														<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-														<span class="sr-only">Next</span>
-													</a>
-												</div>
+												</c:if>
+
+												<%-- 이미지 --%>
+
 											</div>
+
+											<c:if test="${!empty feed.hashtag}">
+												<div class="hashtagContent">
+
+													<c:set var="text" value="${fn:split(feed.hashtag, '#')}" />
+													tag :
+													<c:forEach var="textValue" items="${text}"
+														varStatus="varStatus">
+														<span class="searchByHashtag"> #${textValue} </span>
+													</c:forEach>
+
+												</div>
 											</c:if>
-											
-											<%-- 이미지 --%>
-											
-										</div>
-										
-										<c:if test="${!empty feed.hashtag}">
-											<div class="hashtagContent">
-												
-												<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
-												tag : 
-												<c:forEach var="textValue" items="${text}" varStatus="varStatus">
-													<span class="searchByHashtag">
-														#${textValue}
-													</span>
-												</c:forEach>
-												
-											</div>
-										</c:if>
-										
-										<%-- 피드 댓글 신고 --%>
-										<input type="hidden" name="reportSource" value="3">
-										<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
-										<input type="hidden" name="user2" value="${feed.user.userId}">
-										<%-- 피드 댓글 신고 --%>
-										
-										<input type="hidden" name="source" value="0">
-										<input type="hidden" name="feedNo" value="${feed.feedNo}">
-										<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
-										<input type="hidden" name="openCondition" value="3">
 
-										<!-- 피드 좋아요 댓글수 신고 -->
-										<section class="row section lastBar">
-											<div class="row">
-												<%-- 여백 --%>
-												<div class="col-xs-2"></div>
-												<%-- 여백 --%>
-											
-												<c:if test="${feed.checkHeart eq 0}">
-													<div class="col-xs-2">
-														<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" aria-hidden="true"/>
+											<%-- 피드 댓글 신고 --%>
+											<input type="hidden" name="reportSource" value="3"> <input
+												type="hidden" name="sourceNumber" value="${feed.feedNo}">
+											<input type="hidden" name="user2" value="${feed.user.userId}">
+											<%-- 피드 댓글 신고 --%>
+
+											<input type="hidden" name="source" value="0"> <input
+												type="hidden" name="feedNo" value="${feed.feedNo}">
+											<input type="hidden" id="userId" name="userId"
+												value="${sessionScope.user.userId}"> <input
+												type="hidden" name="openCondition" value="3">
+
+											<!-- 피드 좋아요 댓글수 신고 -->
+											<section class="row section lastBar">
+												<div class="row">
+													<%-- 여백 --%>
+													<div class="col-xs-2"></div>
+													<%-- 여백 --%>
+
+													<c:if test="${feed.checkHeart eq 0}">
+														<div class="col-xs-2">
+															<img class="feedLike"
+																src="/resources/image/uploadFiles/no_heart.jpg"
+																aria-hidden="true" />
+														</div>
+													</c:if>
+													<c:if test="${feed.checkHeart ne 0}">
+														<div class="col-xs-2">
+															<img class="feedDislike"
+																src="/resources/image/uploadFiles/heart.jpg"
+																aria-hidden="true" />
+														</div>
+													</c:if>
+
+													<div class="col-xs-1 likeCount">${feed.heartCount}</div>
+
+													<div class="col-xs-2 comment">
+														<img src="/resources/image/uploadFiles/comment2.jpg"
+															class="commentImg" aria-hidden="true" data-toggle="modal"
+															data-target="#myModal" />
 													</div>
-												</c:if>
-												<c:if test="${feed.checkHeart ne 0}">
-													<div class="col-xs-2">
-														<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" aria-hidden="true"/>
+
+													<div class="col-xs-1 commentCount">
+														${feed.commentCount}</div>
+
+													<!-- 신고 아이콘 -->
+													<div class="col-xs-2 report">
+														<img src="/resources/image/uploadFiles/report.jpg"
+															aria-hidden="true" />
 													</div>
-												</c:if>
-												
-												<div class="col-xs-1 likeCount">
-													${feed.heartCount}
-												</div>
-												
-												<div class="col-xs-2 comment">
-													<img src="/resources/image/uploadFiles/comment2.jpg" class="commentImg" aria-hidden="true" data-toggle="modal" data-target="#myModal"/>
-												</div>
-												
-												<div class="col-xs-1 commentCount">
-													 ${feed.commentCount}
-												</div>
-												
-												<!-- 신고 아이콘 -->
-												<div class="col-xs-2 report">
-													<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
-												</div>
-												<!-- 신고 아이콘 -->
-												
-												<%-- 여백 --%>
-												<div class="col-xs-2"></div>
-												<%-- 여백 --%>
-												
-											</div>
-										</section>
-										<!-- 피드 좋아요 댓글수 신고 -->
+													<!-- 신고 아이콘 -->
 
-									</form>
+													<%-- 여백 --%>
+													<div class="col-xs-2"></div>
+													<%-- 여백 --%>
 
-								</div>
+												</div>
+											</section>
+											<!-- 피드 좋아요 댓글수 신고 -->
 
-							</c:if>
-							
-						</c:forEach>
+										</form>
 
-					</div>
-					
-					<div class="column three">
-					
-					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
-					
-						<div class="tabs1">
-							<input id="all-follow" type="radio" name="tab_item-follow" checked>
-						    <label class="tab_item-follow" for="all-follow">Follow</label>
-						    <input id="programming-follow" type="radio" name="tab_item-follow">
-						    <label class="tab_item-following" for="programming-follow">Follower</label>
-						    
-							 <div class="tab_content-follow" id="all-follow_content" >
-							     <div class="col-md-4" id="fll">
-												 		<br />
-								</div>
-							</div>		
-								 <div class="tab_content-follow" id="programming-follow_content">
-							    	 <div class="col-md-4" id="fl">
-												 		<br />
+									</div>
+
+								</c:if>
+
+							</c:forEach>
+
+						</div>
+
+						<div class="column three">
+
+							<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
+
+							<div class="tabs1">
+								<input id="all-follow" type="radio" name="tab_item-follow" checked>
+								<label class="tab_item-follow" for="all-follow">팔로우</label>
+								
+								<input id="programming-follow" type="radio" name="tab_item-follow">
+								<label class="tab_item-following" for="programming-follow">팔로워</label>
+
+								<div class="tab_content-follow" id="all-follow_content">
+									<div class="col-md-4" id="fll">
+										<br />
 									</div>
 								</div>
-						</div>
-						
-					</div>
-					
-					<%-- 현재 페이지 --%>
-					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
-					<input type="hidden" id="pageFlag" value=true>
-					<%-- 현재 페이지 --%>
-					
-				</div>
+								<div class="tab_content-follow" id="programming-follow_content">
+									<div class="col-md-4" id="fl">
+										<br />
+									</div>
+								</div>
+								<div class="clubRandomCover" >
+								
+									<div class="clubRandom">
+									
+										<div class="clubRandomTitle">
+											최신 모임
+										</div>
 
-			</div>
+										<div id="carousel-club" class="carousel slide" data-ride="carousel">
+											<!-- Indicators -->
+											<ol class="carousel-indicators carousel-club-indicators">
+
+											</ol>
+
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner carousel-club-inner" role="listbox">
+												
+											</div>
+
+											<!-- Controls -->
+											<a class="left carousel-control" href="#carousel-club" role="button" data-slide="prev">
+												<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+											</a> <a class="right carousel-control" href="#carousel-club" role="button" data-slide="next">
+												<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+												<span class="sr-only">Next</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+								
+							
+						</div>
+
+						<%-- 현재 페이지 --%>
+						<input type="hidden" id="currentPage" name="currentPage"
+							value="${resultPage.currentPage}"> <input type="hidden"
+							id="pageFlag" value=true>
+						<%-- 현재 페이지 --%>
+
+					</div>
+
+				</div>
 			</section>
 
 		</div>
-		
-	<!-- COMMENT Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">
-						title
-					</h4>
-				</div>
-				<div class="modal-body">여기는 내용</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Close
-					</button>
-					<button type="button" class="btn btn-primary">
-						Save changes
-					</button>
+
+		<!-- COMMENT Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalCommentLabel">title</h4>
+					</div>
+					<div class="modal-body">여기는 내용</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+						<button type="button" class="btn btn-primary">Save
+							changes</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	
-	<!-- 알림 Modal -->
-	<div class="modal fade" id="alarmModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">
-						알림
-					</h4>
-				</div>
-				<div class="modal-body alarmModalBody">여기는 알람모달</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Close
-					</button>
+
+
+		<!-- 알림 Modal -->
+		<div class="modal fade" id="alarmModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalAlarmLabel">알림</h4>
+					</div>
+					<div class="modal-body alarmModalBody">여기는 알람모달</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<!-- 신고 Modal -->
-	<div class="modal fade" id="reportModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				
-				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Close
-					</button>
+
+		<!-- 신고 Modal -->
+		<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+
+					<!-- form Start /////////////////////////////////////-->
+					<form class="form-horizontal" enctype="multipart/form-data" id="reportForm">
+						
+						<div class="reportTitleCover">
+							<div class="reportTitleTitle">
+								제목
+							</div>
+							<div class="reportTitle">
+							
+								<textarea class="title" id="title" name="title" maxlength="66" placeholder="신고 제목을 입력해주세요"></textarea>
+
+							</div>
+
+							<!--  화면구성 div end /////////////////////////////////////-->
+
+						</div>
+						
+						<div class="reportContentCover">
+							<div class="reportContentTitle">
+								내용
+							</div>
+							
+							<div class="reportContent">
+								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
+							</div>
+						</div>
+						
+						<div class="reportSourceDiv">
+							신고받는 ID
+							<input type="text" class="reportSourceDivId" id="user2" name="user2" value="" readonly />
+							신고 출처
+							<input type="text" class="reportSourceDivSource" value="피드" disabled />
+						</div>
+						
+						<input type="hidden" name="type" id="type" value="1">
+						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
+						<input type="hidden" id="reportSource" name="reportSource" value="3">
+						<input type="hidden" name="no" id="feedNo" value="" />
+
+						<div class="reportModalReason">
+
+							<input type="checkbox" id="욕설" name="reportReason" value="1" >
+								욕설
+							<input type="checkbox" id="광고" name="reportReason" value="2" >
+								광고
+							<input type="checkbox" id="기타" name="reportReason" value="4" >
+								기타
+							<input type="checkbox" id="성적" name="reportReason" value="8" >
+							성적인 발언
+
+						</div>
+						
+					</form>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close
+						</button>
+						
+						<button type="button" class="btn btn-default add add5">등록</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 	</main>
-	
+
 </body>
 </html>

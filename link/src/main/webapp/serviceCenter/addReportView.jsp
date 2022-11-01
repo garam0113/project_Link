@@ -162,6 +162,10 @@
 	
 	</script>
 <style>
+.row {
+	margin-left : 0px !important;
+	   display: initial !important;
+}
 textarea {
 	resize: none;
 }
@@ -227,7 +231,7 @@ background-color: #EBEDF0 !important;
 				<label for="title" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 				<div class="col-sm-4">
 					<textarea class="title" id="title" name="title" value=""
-						maxlength="80" placeholder="신고 제목을 입력해주세요"
+						maxlength="66" placeholder="신고 제목을 입력해주세요"
 						style="position: fixed;"></textarea>
 
 				</div>

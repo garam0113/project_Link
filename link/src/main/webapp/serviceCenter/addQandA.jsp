@@ -39,6 +39,10 @@ $(function(){
 	
 </script>
 <style>
+.row {
+	margin-left : 0px !important;
+	   display: initial !important;
+}
 textarea {
 	resize: none;
 }
@@ -125,7 +129,7 @@ background-color: #EBEDF0 !important;
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left">${qandA.qandANo}번 공지사항
+						<td align="left">
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>

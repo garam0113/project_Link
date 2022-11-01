@@ -127,7 +127,7 @@ public class ServiceCenterRestController {
 		String date = simpleDateFormat.format(new Date());
 		System.out.println(date);
 		
-		parameter = parameter + "&" +"numOfRows=20";
+		parameter = parameter + "&" +"numOfRows=7";
 		parameter = parameter + "&" +"pageNo=1";
 		parameter = parameter + "&" +"MobileOS=ETC";
 		parameter = parameter + "&" +"MobileApp=AppTest";
@@ -142,7 +142,7 @@ public class ServiceCenterRestController {
 		addr = addr + serviceKey + parameter;
 		URL url = new URL(addr);
 		
-		System.out.println(addr);
+		//System.out.println(addr);
 		
 		InputStream in = url.openStream();
 		
@@ -152,15 +152,11 @@ public class ServiceCenterRestController {
 		bos1.close();
 		
 		String mbos = bos1.toString("UTF-8");
-		
-		System.out.println("나다"+mbos);
-	
-		
-		
+
 		return mbos;
 	}
 	
-	@RequestMapping(value= "/json/getFestival")  //축제 하나씩 설명 가져오기
+	@RequestMapping(value= "/json/getFestival", produces = "application/text; charset=UTF-8")  //축제 하나씩 설명 가져오기
 	public String getFestival(HttpServletRequest request, HttpServletResponse response, 
 			@RequestParam String contentid) throws Exception{
 		
@@ -172,6 +168,7 @@ public class ServiceCenterRestController {
 		parameter = parameter + "&" +"contentTypeId=15";
 		parameter = parameter + "&" +"contentId="+contentid;
 		parameter = parameter + "&" +"MobileOS=ETC";
+		parameter = parameter + "&" +"_type=json";
 		parameter = parameter + "&" +"MobileApp=AppTest";
 		parameter = parameter + "&" +"defaultYN=Y";
 		parameter = parameter + "&" +"firstImageYN=Y";
@@ -186,7 +183,7 @@ public class ServiceCenterRestController {
 		addr = addr + serviceKey + parameter;
 		URL url = new URL(addr);
 		
-		System.out.println(addr);
+		//System.out.println(addr);
 		
 		InputStream in = url.openStream();
 		
@@ -196,10 +193,7 @@ public class ServiceCenterRestController {
 		bos1.close();
 		
 		String mbos = bos1.toString("UTF-8");
-		
-		System.out.println("나다222"+mbos);
-			
-		
+
 		return mbos;
 	}
 	

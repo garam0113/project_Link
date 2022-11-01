@@ -108,7 +108,10 @@
 	}
 	
 	
-	/* function deleteClubMember() {
+	$(function() {
+		
+	
+		$(document).on("click", "#banMember", function() {
 			
 			Swal.fire({
 			  title: '모임원을 추방하시겠습니까?',
@@ -117,30 +120,30 @@
 			  showCancelButton: true,
 			  confirmButtonColor: '#3085d6',
 			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'delete'
+			  confirmButtonText: '추방',
+			  cancelButtonText: '취소',
 			}).then((result) => {
-			  if (result.isConfirmed) {
-			    Swal.fire(
-			      'Deleted!',
-			      'Your file has been deleted.',
-			      'success'
-			    )	
+			  if (result.value) {
 			
-			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+				$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
+				
 			 }
-		});
-	}
+		})
+		//refreshMemList();
+	})
 	
+});	
+
 	$(function() {
 		$("#banMember").on("click", function() {
 			deleteClubMember();
 		});
 	});
-	 */
+	 
 	
 	
 	
-	
+/* 	
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
@@ -149,9 +152,11 @@
 			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		 });
- 
+  */
 
 			//추방 그냥 컨트롤러	
+			
+		$(function() {	
 			$(document).on("click", "#banMember", function(){
 			var clubUserNo = $(this).val();
 			$.ajax("/clubRest/json/deleteClubMember",
@@ -172,6 +177,8 @@
 					refreshMemList();
 			}); //모임원 추방 
 	 	});
+	 
+	 
 			
 			$(function() {
 				$("#updateApprovalCondition").on("click", function() {
@@ -239,6 +246,38 @@
 			openWin.document.getElementById("userId").value = $(this).attr("userId");
 		});
 	});
+	
+	
+	//홈버튼
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo="+${clubNo};
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+	
+	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+		});
+	});
+	
+	
+	
+	
+	
 
 	</script>
 </head>
@@ -266,42 +305,51 @@
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-				
-				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 250px; margin-top: 150px;">
-						<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo}" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList style="color: #BD76FF;">모임채팅</a>
-						</li>
-						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">결제</a>
-						</li> --%>
-					</ul>
-
+				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px; padding-bottom: 20%;">
+					
+				<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+				</div>
 		
 
 	<div class="container">
+	
+		<div class="form_txtInput" style="margin-top: 50px;">
+			<h2 class="sub_tit_txt">모임원 리스트</h2>
+		</div>
+	
+	
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
+	  		  <div class="row">
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
 				  
 				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
 				  
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
-										
-						<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+						
+						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+							<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+						</c:if>
 						<button type="button" class="plain1 button red cancel" id="cancel">이&nbsp;전</button>
 		  			</div>
 				</div>	
@@ -310,7 +358,8 @@
 	
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-		
+	
+	<div class="listForm" style="margin-top: 35px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >	
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
@@ -323,11 +372,14 @@
             <th align="left">마지막 접속시간</th>
             <th align="left">모임가입날짜</th>
             <th align="left">승인상태</th>
-            <th align="left">직책수정</th>
-            <th align="left">추방</th>
-            <th align="left">승인/거절</th>
-            <th align="left">Max</th>
-          </tr>
+	            <c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+		            <th align="left">직책수정</th>
+		            <th align="left">추방</th>
+		            <th align="left">승인/거절</th>
+		            <th align="left">Max</th>
+		        </c:if>
+          	</tr>
+          	
         </thead>
        
 		<tbody>
@@ -348,10 +400,13 @@
 			  <td align="left">${i.joinRegDate}</td>
 			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "승인완료" : ""}</td> 
 <%-- 			  <td align="center">${i.approvalCondition}</td> --%>
-			  <td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button>
-			  <td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button>
-			  <td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button>
-			  <td>${i.club.clubMaxMember}</td>
+				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
+			  	
+			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button></td>
+					<td>${i.club.clubMaxMember}</td>
+				</c:if>
 			</tr>
           </c:forEach>
         </tbody>
@@ -359,10 +414,9 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
-
+	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	<%-- <jsp:include page="../common/pageNavigator_new2.jsp"/> --%>
 	</div>
 	</div>
 	</div>

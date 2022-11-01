@@ -10,7 +10,7 @@
 
 <div>
 
-	<nav style= "transform: translate(-500px, 0px);">
+	<nav style= "transform: translate(-380px, 0px);">
 		<!-- 크기조절 :  pagination-lg pagination-sm-->
 		<ul class="pagination" >
 

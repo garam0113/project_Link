@@ -293,7 +293,7 @@
 		
 		<style type="text/css">
 		.modal{ 
-			position: fixed; width:100%; height:100%; background: rgba(0,0,0,0.2); top: 40px; left:0; display:none;
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
 		}
 		
 		.modal_content{
@@ -494,7 +494,7 @@
 					</div>
 					<div class="club-post-add-view">
 						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
-							<input type="hidden" name="clubNo" value="${ sessionScope.clubNo }">
+							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<div class="clubPostTitle">
 								<input type="text" name="clubPostTitle" placeholder="제목">
 							</div>
