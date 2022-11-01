@@ -1,22 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
 
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
-	rel="stylesheet">
-
-<head>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
  // 데이터를 aJax로 받기
  
@@ -102,4 +85,3 @@ overflow-x:hidden;
 	
 	</div>
 </body>
-</html>
