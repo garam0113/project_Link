@@ -21,6 +21,12 @@
 		text-decoration: auto;
 	}
 
+	#carousel-club img {
+		width: 200px;
+		height: 200px;
+		border-radius: 25px
+	}
+
 
 	/* 랜덤 클럽 가져오기 */
 

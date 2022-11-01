@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.link.common.Search;
 import com.link.service.domain.User;
+import com.link.service.myHome.MyHomeService;
 
 public class EchoHandler extends TextWebSocketHandler {
 	
@@ -19,7 +23,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	// 로그인중인 개별유저
 	Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 	
-	
+	@Autowired
+	@Qualifier("myHomeServiceImpl")
+	private MyHomeService myHomeService;
 	
 	// 클라이언트가 서버로 연결 시
 	@Override
@@ -46,6 +52,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		String senderId = getMemberId(session);
 		String senderNickName = getMemberNickName(session);
 		
+		List<User> followerId = getFollowerId(session);
+		
+		System.out.println("포문 밖에서 핸들러 텍스트 메세지 : " + senderId);
+		System.out.println("포문 밖에서 리스트 : " + followerId);
+		
 		// 모든 유저에게 보내기
 		for(WebSocketSession sess : sessions) {
 			System.out.println("핸들러 텍스트 메세지 : " + senderId);
@@ -53,7 +64,23 @@ public class EchoHandler extends TextWebSocketHandler {
 			WebSocketSession ownerSession = users.get(senderId);
 			
 			if(!sess.equals(ownerSession)) {
-				sess.sendMessage(new TextMessage(senderNickName + message.getPayload()));
+				
+				if(followerId != null) {
+					
+					for(int i = 0 ; i < followerId.size() ; i++) {
+						
+						System.out.println("접속 유저 :: " + senderId);
+						
+						WebSocketSession followerSession = users.get(followerId.get(i).getUserId());
+						
+						if(sess.equals(followerSession)) {
+							sess.sendMessage(new TextMessage(senderNickName + message.getPayload()));
+						}
+						
+						
+					}
+					
+				}
 			}
 		}
 		
@@ -158,6 +185,28 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		
 		return m_nickName == null? null : m_nickName;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<User> getFollowerId(WebSocketSession session) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> httpSession = session.getAttributes();
+		
+		List<User> list = null;
+		
+		User user = (User)httpSession.get("user");
+		Search search = new Search();
+		search.setSearchKeyword(user.getUserId());
+		
+		System.out.println("서치 :: " + search);
+		
+		if(myHomeService.getFollowerList(search).get("followerList") != null) {
+			list = (List<User>) myHomeService.getFollowerList(search).get("followerList");
+		}
+		
+		System.out.println("겟팔로우 아이디 :: " + list);
+		
+		return list == null? null : list;
 	}
 	
 }

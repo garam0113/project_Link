@@ -293,7 +293,7 @@
 		
 		<style type="text/css">
 		.modal{ 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+			position: fixed; width:100%; height:100%; background: rgba(0,0,0,0.2); top: 40px; left:0; display:none;
 		}
 		
 		.modal_content{
