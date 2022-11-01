@@ -386,7 +386,7 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "/chatRoomList", method = RequestMethod.GET)
-	public String chatClubList(HttpSession session, String roomId, Model model) throws Exception {
+	public String chatClubList(HttpSession session, String roomId, String clubTitle, Model model) throws Exception {
 		System.out.println("/chatRoomList : GET : 모임번호를 가지고 모임채팅리스트 화면으로 이동");
 		
 		System.out.println("채팅방 번호 : " + roomId);
