@@ -972,7 +972,7 @@
 
 							</form>
 							<%-- 검색 --%>
-
+							<jsp:include page="serviceCenter/getFestival.jsp" />
 						</div>
 
 						<div class="column six">
