@@ -539,9 +539,13 @@
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
 		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
-					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
+					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
+					
+				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+				</c:if>
+				
 				</div>
 		    </div>
 				
