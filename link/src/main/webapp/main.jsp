@@ -1247,7 +1247,7 @@
 									<div class="clubRandom">
 									
 										<div class="clubRandomTitle">
-											최신 모임
+										최신 모임
 										</div>
 									
 										<div class="clubRandomName">
