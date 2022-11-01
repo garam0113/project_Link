@@ -95,6 +95,8 @@ public class EchoHandler extends TextWebSocketHandler {
 
 				// ex :  [XXX] 신청이 들어왔습니다.
 				
+				System.out.println("메시지 :: " + msg);
+				
 				if(type.equals("feed")) {
 					
 					System.out.println("전체");
@@ -175,19 +177,122 @@ public class EchoHandler extends TextWebSocketHandler {
 					
 				} else if(type.equals("follow")) {
 					
-					TextMessage tmpMsg = new TextMessage(target);
+					WebSocketSession targetSession = users.get(target);
+					targetSession.sendMessage(new TextMessage(senderNickName + content));
 					
 				} else if(type.equals("club")) {
 					
-					TextMessage tmpMsg = new TextMessage(target);
+					if(target.equals("all")) {
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							if(!sess.equals(ownerSession)) {
+								sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/club/getClub?clubNo="+ url + "'>이동</a>"));
+							}
+							
+						}
+						
+					} else if(target.equals("follower")) {
+						
+						System.out.println("팔로우 알림");
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							
+							if(!sess.equals(ownerSession)) {
+								if(followerId != null) {
+									
+									for(int i = 0 ; i < followerId.size() ; i++) {
+										WebSocketSession followerSession = users.get(followerId.get(i).getUserId());
+										
+										if(sess.equals(followerSession)) {
+											sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/club/getClub?clubNo="+ url + "'>이동</a>"));
+										}
+									}
+								}
+							}
+						}
+						
+					} else {
+						WebSocketSession targetSession = users.get(target);
+						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/club/getClub?clubNo="+ url + "'>이동</a>"));
+					}
 					
 				} else if(type.equals("clubPost")) {
 					
-					TextMessage tmpMsg = new TextMessage(target);
+					if(target.equals("all")) {
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							if(!sess.equals(ownerSession)) {
+								sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+							}
+							
+						}
+						
+					} else if(target.equals("follower")) {
+						
+						System.out.println("팔로우 알림");
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							
+							if(!sess.equals(ownerSession)) {
+								if(followerId != null) {
+									
+									for(int i = 0 ; i < followerId.size() ; i++) {
+										WebSocketSession followerSession = users.get(followerId.get(i).getUserId());
+										
+										if(sess.equals(followerSession)) {
+											sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+										}
+									}
+								}
+							}
+						}
+						
+					} else {
+						WebSocketSession targetSession = users.get(target);
+						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+					}
 					
 				} else if(type.equals("clubPostComment")) {
 					
-					TextMessage tmpMsg = new TextMessage(target);
+					if(target.equals("all")) {
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							if(!sess.equals(ownerSession)) {
+								sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+							}
+							
+						}
+						
+					} else if(target.equals("follower")) {
+						
+						System.out.println("팔로우 알림");
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							
+							if(!sess.equals(ownerSession)) {
+								if(followerId != null) {
+									
+									for(int i = 0 ; i < followerId.size() ; i++) {
+										WebSocketSession followerSession = users.get(followerId.get(i).getUserId());
+										
+										if(sess.equals(followerSession)) {
+											sess.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+										}
+									}
+								}
+							}
+						}
+						
+					} else {
+						WebSocketSession targetSession = users.get(target);
+						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+					}
 					
 				} else if(type.equals("service")) {
 					
@@ -196,7 +301,41 @@ public class EchoHandler extends TextWebSocketHandler {
 
 				} else if(type.equals("live")) {
 					
-					TextMessage tmpMsg = new TextMessage(target);
+					if(target.equals("all")) {
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							if(!sess.equals(ownerSession)) {
+								sess.sendMessage(new TextMessage(senderNickName + content));
+							}
+							
+						}
+						
+					} else if(target.equals("follower")) {
+						
+						System.out.println("팔로우 알림");
+						
+						for(WebSocketSession sess : sessions) {
+							WebSocketSession ownerSession = users.get(senderId);
+							
+							if(!sess.equals(ownerSession)) {
+								if(followerId != null) {
+									
+									for(int i = 0 ; i < followerId.size() ; i++) {
+										WebSocketSession followerSession = users.get(followerId.get(i).getUserId());
+										
+										if(sess.equals(followerSession)) {
+											sess.sendMessage(new TextMessage(senderNickName + content));
+										}
+									}
+								}
+							}
+						}
+						
+					} else {
+						WebSocketSession targetSession = users.get(target);
+						targetSession.sendMessage(new TextMessage(senderNickName + content));
+					}
 					
 				} 
 					
