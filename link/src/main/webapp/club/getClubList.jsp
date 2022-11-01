@@ -31,9 +31,6 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 
- 	 <%-- SOCKET IO --%>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
-	<%-- SOCKET IO --%>
  	 
  	 <!-- alert! -->
  	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
@@ -330,6 +327,20 @@
 	}); // end of scroll */
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+	
+	<script>
 	var sock = null;
 	
 	$(document).ready(function () {
@@ -381,18 +392,13 @@
 	    
 	    
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	</script>	
 </head>
+
+	 <%-- SOCKET IO --%>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+	<%-- SOCKET IO --%>
+
 
 
 <%-- <jsp:include page="/toolbar.jsp" /> --%>

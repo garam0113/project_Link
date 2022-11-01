@@ -228,8 +228,8 @@ public class ClubController {
 		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
-		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
+//		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
+//		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
 		
 		return "forward:/club/getClubList.jsp";
