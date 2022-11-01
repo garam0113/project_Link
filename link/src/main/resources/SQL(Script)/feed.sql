@@ -316,33 +316,20 @@ SELECT * FROM REPORT_PUSH rp WHERE TYPE = 2 AND feed_no IS NOT NULL OR club_post
 
 
 
- 	SELECT
- 	*
- 	FROM REPORT_PUSH rp
-WHERE TYPE = 2
-	 		AND rp.user_id1 IN (
-									SELECT
-									recv_user_id AS NAME
-									FROM FOLLOW_BLOCK
-									WHERE send_user_id = 'user05'
-									AND STATE = '1'
-									AND TYPE = '1'	)
-			AND feed_no IS NOT NULL OR club_post_no is NOT NULL 
+SELECT inner_table.* FROM ( SELECT rownum AS row_seq , deep_table.* FROM ( SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image FROM users u, follow_block f WHERE u.user_id = f.recv_user_id and f.send_user_id = 'user05' and f.type='1' and f.state='1' ) deep_table ) inner_table 
 
 
 
 
+SELECT * FROM FEED_COMMENT WHERE FEED_NO = 142
 
 
 
 
+SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 142 AND sequence = 8
 
 
-
-
-
-
-
+SELECT * FROM Users;
 
 
 SELECT

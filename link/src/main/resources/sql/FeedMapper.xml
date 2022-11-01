@@ -337,10 +337,10 @@
 	FROM feed_comment
 	WHERE feed_no			=	#{feedNo}
 	<choose>
-		<when test="comment.currentPage == 0">
+		<when test="comment.clubNo == 0">
 		AND parent			=	#{comment.parent}	
 		</when>
-		<when test="comment.currentPage == 1">
+		<when test="comment.clubNo == 1">
 		AND parent			=	#{comment.feedCommentNo}	
 		</when>
 	</choose>

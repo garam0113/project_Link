@@ -63,7 +63,7 @@
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body{
 background-color: #EBEDF0 !important;
@@ -126,7 +126,7 @@ textarea {
 					</tr>
 					<tr class = "title" id ="title">
 						<th style="text-align-last: center;">Á¦¸ñ</th>
-						<td style="display: flex; height: 40px; width: 700px; background-color:white; text-align : center; ">${qandA.qandATitle}
+						<td style="display: flex; min-height: 40px; max-height:80px; width: 700px; background-color:white; text-align : center; ">${qandA.qandATitle}
 						<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle }">		
 						</td> 
 					</tr>

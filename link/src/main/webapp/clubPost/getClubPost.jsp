@@ -1001,7 +1001,7 @@
 		
 		<style type="text/css">
 		.modal{ 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+			position: fixed ; width:100%; height:100%; background: rgba(0,0,0,0.2); top: 40px; left:0; display:none;
 		}
 		
 		.modal_content{
@@ -1078,14 +1078,14 @@
 							<div class="chat chidren" style="display: none;" condition="0">
 								<c:if test="${ fn:length(roomList) > 0 }">
 									<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-										<div class="chat-content" roomId="${ roomList[i].roomId }">${ roomList[i].roomId }</div>
+										<div class="chat-content" roomId="${ roomList[i].roomId }">${ roomList[i].clubTitle }</div>
 									</c:forEach>
 								</c:if>
 							</div>
 							<div class="chat chat-content">1:1채팅</div>
 							<div class="chat chidren" style="display: none;" condition="0">
-								<div class="chat-content">111</div>
-								<div class="chat-content">222</div>
+								<div class="chat-content" userId="">닉네임</div>
+								<div class="chat-content" userId="">닉네임</div>
 							</div>
 							<div id="input-chatLog">
 								<span><input type="text"></span>

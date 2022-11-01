@@ -69,7 +69,7 @@
 <style>
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	   display: initial !important;
 }
 body{
 background-color: #EBEDF0 !important;
@@ -142,7 +142,7 @@ textarea {
 						<th style="text-align-last: center;">Á¦¸ñ</th>
 						<td>		
 						<textarea class="text" id="qandATitle" name="qandATitle" value=""  
-						style="width: 900px; height:40px;" >${qandA.qandATitle}</textarea>
+						style="width: 900px; min-height:40px; max-height:80px;" >${qandA.qandATitle}</textarea>
 						</td> 
 					</tr>
 					<tr>

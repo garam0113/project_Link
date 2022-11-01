@@ -18,9 +18,6 @@ public interface ClubService {
 //	//JUNIT TEST
 //	public int addClub(Club club) throws Exception;
 	
-	//getClub bak
-//	public Club getClub(int clubNo) throws Exception;
-	
 	public Map<String, Object> getClub(int clubNo) throws Exception;
 
 	public void deleteClub(int clubNo) throws Exception;

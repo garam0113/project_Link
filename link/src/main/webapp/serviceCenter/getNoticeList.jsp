@@ -17,7 +17,7 @@
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--페이지 네비게이션 css --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 
@@ -27,9 +27,12 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+td{
+vertical-align: middle;
+}
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	    display: initial !important;
 }
 body{
 background-color: #EBEDF0 !important;
@@ -210,11 +213,11 @@ background-color: #EBEDF0 !important;
 					<c:forEach var="getNoticeList" items="${getNoticeList}">
 						<c:set var="i" value="${i + 1}" />
 						<tr class="ct_list_pop">
-							<td align="left" id="bb">
+							<td align="left" id="bb" style="vertical-align: middle;">
 							${getNoticeList.noticeNo}</td>
 							<td></td>
 							
-							<td align="left" class="content2" >
+							<td align="left" class="content2" style="vertical-align: middle; cursor:pointer;">
 							<fmt:formatDate value="${getNoticeList.noticeRegDate}" pattern="dd" var ="startDate" />
 							<fmt:formatDate value="${ymd}" pattern="dd" var ="nowDate" />
 							<fmt:formatNumber value="${startDate}" type="number" var ="startDate1"/>
@@ -236,12 +239,12 @@ background-color: #EBEDF0 !important;
 							</td>
 							<td></td>
 
-							<td align="left" >${getNoticeList.userId.nickName}</td>
+							<td align="left" style="vertical-align: middle;">${getNoticeList.userId.nickName}</td>
 
 							<td></td>
-							<td align="left" width ="140px">${getNoticeList.noticeRegDate}</td>
+							<td align="left" width ="140px" style="vertical-align: middle;">${getNoticeList.noticeRegDate}</td>
 							<td></td>
-							<td align="left" >${getNoticeList.noticeCount}</td>
+							<td align="left" style="vertical-align: middle;">${getNoticeList.noticeCount}</td>
 							
 
 							
