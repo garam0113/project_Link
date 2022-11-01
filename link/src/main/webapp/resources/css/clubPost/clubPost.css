@@ -258,7 +258,12 @@
 }
 
 #allChat{
-	background-color: #EBEDF0;
+	background-color: white;
+	 z-index: 10;
+}
+
+#allChat-content{
+	overflow: auto;
 }
 
 #chat-icon{
@@ -305,7 +310,7 @@
 }
 
 .chat.chat-content{
-	background-color: white;
+	background-color: #f7eef9;
 	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
 }
 
@@ -314,7 +319,7 @@
 }
 
 .chat-content{
-	background-color: white;
+	background-color: #f7f7f9;
 	box-shadow: rgba(102, 051, 102, 0.1) 0px 9px 38px, rgba(95, 0, 128, 0.1) 0px 5px 12px; border-radius: 10px;
 }
 

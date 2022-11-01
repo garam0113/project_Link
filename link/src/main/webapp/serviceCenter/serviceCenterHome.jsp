@@ -28,7 +28,7 @@ background-color: #EBEDF0 !important;
 }
 .row {
 	margin-left : 0px !important;
-	    display: inherit;
+	display: inherit !important;
 }
 
 .card{
@@ -162,8 +162,6 @@ $(function() {
 
 <body style="overflow-x: hidden">
 	<%--검은색 화면 --%>
-
-
 	<%-- --%>
 	<div style="transform: translate(800px, 50px);">
 	<h1 >&nbsp;&nbsp;&nbsp;고  객  센  터</h1>
@@ -176,7 +174,7 @@ $(function() {
    <div class="container" style="transform: translate(300px, -200px);">
    
    
-      <div class="row" style="display:flex;">
+      <div class="row">
         <div class="col-4" style ="">
           
           <div class="card" style="transform: translate(-320px, 280px);">

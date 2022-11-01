@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,59 +18,88 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
+ // 데이터를 aJax로 받기
+ 
+$(function(){
 
-var xhr = new XMLHttpRequest();
-var url = 'http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api'; /*URL*/
-var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('5'); /**/
-queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); 
+		
+		$.ajax({  //화면 나타내기
+				url  : "/serviceCenterRest/json/getFestivalList",
+				type : "get",
+				data : {"contentTypeId" : 15},
+				dataType: "json",
+				contentType: "application/json; charset=utf-8",
+				success:function(msg){
+					var myItem =msg.response.body.items.item;
+					
+			 		var addHtml ="";
+			 		
+			 		
+			$.each(myItem,function(index,item){
+					
+						const firstimage1 =$.trim(item.firstimage);
+						const firstimage2 =$.trim(item.firstimage2);
+						
+					<%--	document.write(item.title);   --%>
+			  if(firstimage1!=""){    //이미지 없는 거 거르기
+					addHtml+=	"<div class=card style = 'width:230px; margin-bottom:20px;'>"+
+						 	 		"<div class=card-header style= 'text-align: center;'>"+
+						 	  		 item.title+
+							 		 "</div>"+
+							  "<img src="+item.firstimage+" style= width:230px; height:300px;/>"+
+							  "<div class=card-body style='text-align:center;'>"+
+						 	   "<h5 class=card-title>"+ item.title+"</h5>"+
+						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"
+								
+							<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
+										$.ajax({
+										url  : "/serviceCenterRest/json/getFestival",
+										type : "get",
+										data : {"contentid":item.contentid},
+										datatype: "json",
+										contentType: "application/json; charset=utf-8",
+										async: false,
+										success:function(msg2){
+											const msg2data = JSON.parse(msg2)
+											addHtml+= msg2data.response.body.items.item[0].homepage+
+												 "</div>"+
+												  "</div>";
+											console.log(msg2data.response.body.items.item[0].homepage);
 
-queryParams += '&' + encodeURIComponent('fstvlNm') + '=' + encodeURIComponent('');/* 
-queryParams += '&' + encodeURIComponent('opar') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('fstvlStartDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('fstvlEndDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('fstvlCo') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('mnnst') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('auspcInstt') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('suprtInstt') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('phoneNumber') + '=' + encodeURIComponent('');
-queryParams += '&' + encodeURIComponent('homepageUrl') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('relateInfo') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('rdnmadr') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('lnmadr') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('latitude') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('longitude') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('referenceDate') + '=' + encodeURIComponent(''); 
-queryParams += '&' + encodeURIComponent('instt_code') + '=' + encodeURIComponent(''); */
+											
+												}//안의 success
+									 		
+											})//개인 이미지 찾아오기
+											}//if문 끝
+						}) //each 끝
+ 
+						
+						$(".festival").html(addHtml);
+					
+				} //ssuccess끝		 
+					
+			 
+		 }) //화면 찾아오기 끝
 
-
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-        console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-    <%--     document.write(this.responseText);  --%>
-      
-          document.write(this.responseText);
-    }
-};
-
-xhr.send('');
-
-
+		 
+	});//펑션 끝	 
+		 
+		 
 </script>
-<meta charset="EUC-KR">
-<title>asdf</title>
+<style>
+.box{
+overflow:scroll;
+overflow-x:hidden;
+}
+.box::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+</style>
+<title>Insert title here</title>
 </head>
 <body>
-	<table class="table table-hover table-striped"  style="text-align-last: center;">
-				<div class="row2">
-				<thead>
-
-				</thead>
-				
-			<p id="demo"></p><br>
-				
-				
+	<div class="box festival" style="width:230px; height: 522px;"> 
+	
+	</div>
 </body>
 </html>

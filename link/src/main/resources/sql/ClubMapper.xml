@@ -348,8 +348,10 @@
 	 </select>
 	 
 	 <!-- 로그인한 회원이 속해있는 모임의 채팅방 번호를 찾는 Query -->
-	<select id="getRoomIdList" parameterType="user" resultMap="clubUserSelectMap">
-		SELECT ROOMID FROM CLUB_USER WHERE USER_ID = #{ userId } AND JOIN_REG_DATE IS NOT NULL
+	<select id="getRoomIdList" parameterType="user" resultMap="clubSelectMap">
+		SELECT CU.ROOMID, C.CLUB_TITLE
+		FROM CLUB_USER CU, CLUB C
+		WHERE CU.CLUB_NO = C.CLUB_NO (+) AND CU.USER_ID = #{ userId } AND CU.APPROVAL_CONDITION = 1 AND CU.JOIN_REG_DATE IS NOT NULL
 	</select>
 	
 	<select  id="getClubMemberList"  parameterType="search"	resultMap="clubUserSelectMap">

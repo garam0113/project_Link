@@ -92,20 +92,22 @@ body {
 </script>
 
 </head>
-
-<body>
-
 	<!-- ToolBar Start /////////////////////////////////////-->
+<body style=" background-color: #EBEDF0;">
 	<jsp:include page="/sideToolbar.jsp" />
+
+
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-
+<div class="page-header text-left">
+				<h3 class=" text-info">회원목록</h3>
+			</div>
 		<div class="row">
 
-			<div class=" text-left">
-				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
+			<div class=" text-left" >
+				<p class="text-primary" style="margin-left: 20px;">전체 ${resultPage.totalCount } 건수, 현재
 					${resultPage.currentPage} 페이지</p>
 			</div>
 
@@ -149,7 +151,8 @@ body {
 
 
 		<!--  table Start /////////////////////////////////////-->
-		<table class="table table-hover table-striped">
+		<div>
+		<table class="table table-hover table-striped" style="background-color: white; border-width: thick; border: 3px solid #ddd;  border-radius: 10px;">
 
 			<thead>
 				<tr>
@@ -182,6 +185,7 @@ body {
 			</tbody>
 
 		</table>
+		</div>
 		<!--  table End /////////////////////////////////////-->
 
 	</div>

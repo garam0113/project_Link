@@ -24,33 +24,35 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
 <!-- ?? -->
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
 	
-	function fncDeleteClub() {
-		Swal.fire({
-			  title: '정말 모임을 삭제하시겠습니까?',
-			  text: "삭제한 모임은 복구가 불가능합니다.",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'delete'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-			    Swal.fire(
-			      'Deleted!',
-			      'Your file has been deleted.',
-			      'success'
-			    )
-			    $("form").attr("method", "POST").attr("action", "/club/deleteClub")
-				.submit();	    
-			  }
-			})
-	}
 	
+	
+	$(function () {
+		
+		$(document).on("click","#deleteClub", function() {
+		
+			Swal.fire({
+				  title: '정말 모임을 삭제하시겠습니까?',
+				  text: "삭제한 모임은 복구가 불가능합니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소' ,
+				}).then((result) => {
+				  if (result.value) {
+				    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteClub").submit();	    
+				  }
+				})
+		})
+	});
 	$(function() {
 		
 		$("#club-add-approval").bind("click", function() {
@@ -59,6 +61,14 @@
 		});
 		
 		$("input[value='신청']").bind("click", function() {
+			
+			if($.trim($("input[name='joinGreeting']").val()) == '' ){
+				Swal.fire({
+					icon: 'error' ,
+					title: '제목은 필수입니다'
+				})
+				return;
+			}
 			
 			$("form").attr("accept-charset" , "EUC-KR").submit();
 		});
@@ -80,11 +90,11 @@
 		});
 	});
 	
-	$(function() {
+/* 	$(function() {
 		$("#deleteClub").on("click", function() {
 			fncDeleteClub();
 		});
-	});
+	}); */
 	
 	$(function() {
 		$("#cancel").bind("click", function() {
@@ -116,6 +126,34 @@
 		});
 	}); 
 	
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+	
+	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+		});
+	});
+		
+	
+	
+	
  	$(function() {
 		
 		//alert("123");
@@ -127,7 +165,7 @@
 		socket = io.connect(url, options);
 
 		socket.on("connect", function() {
-			alert("소켓연결 완료");
+			//alert("소켓연결 완료");
 		});
 		
 		$(".live").on("click", function() {
@@ -135,8 +173,8 @@
 			var clubTitle = $("#clubTitle").val();
 			var profile = $("#profile").val();
 			var nickName = $("#nickName").val();
-		//	console.log("profile : "+profile);
-		//	console.log("nickName : "+nickName);
+			console.log("profile : "+profile);
+			console.log("nickName : "+nickName);
 			
 			$.ajax("/liveRest/json/getLiveList", {
 				type : "POST",
@@ -285,8 +323,8 @@
 		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 		   border-radius: 10px;
 		   margin: 1rem;
-		   padding: 0px;
-		   width: 65px !important;
+		   padding: 5px;
+		   width: 75px !important;
 		   color: #5F0080 !important;
 		   font-size: 16px !important;
 		   text-align: center;
@@ -298,8 +336,8 @@
 		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 		   border-radius: 10px;
 		   margin: 1rem;
-		   padding: 0px;
-		   width: 65px !important;
+		   padding: 5px;
+		   width: 75px !important;
 		   color: white !important;
 		   font-size: 16px !important;
 		}
@@ -324,29 +362,14 @@
 		}
 		
 		.club-wrap img {
-			width: 100%;
+			width: 50%;
 			vertical-align: middle;
 			filter: brightness(1.1);
+			margin-left: 450px;
+			/* margin-top: -23px;
+			height: 0%; */
 		}
 	
-		.club-text {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 100%;
-			transform: translate(-50%, -50%);
-			font-size: 20px;
-			text-align: center;
-		}
-		
-		.h2-color {
-			color: yellow;
-		}
-		
-		.p-color {
-			color: yellow;
-		}
-		
 		.row-content.buffer, .row-content.buffer-left {
 			padding-left: 0% !important;
 		}
@@ -365,7 +388,7 @@
 		
 		
 		.modal { 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
+			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none; margin-top: 350px;
 		}
 			
 		.modal_content{
@@ -382,8 +405,6 @@
 			position: static !important;
 		
 		}
-		
-		
 		
 		
 	</style>
@@ -412,90 +433,87 @@
 						<div class="club-image">
 							<a href="/club/getClub?clubNo=${clubNo}"><img
 								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="1500" height="300" name="file" id="clubImage"></a>
+								width="800" height="300" name="file" id="clubImage"></a>
 						</div>
-
-						<div class="club-text">
-							<h2 class="h2-color">
-								<a href="/club/getClub?clubNo=${clubNo}"></a>CLUB
-							</h2>
-							<p class="p-color">Make good memories with the members...</p>
 						</div>
 					</div>
 				</div>
+				<!-- intro -->
 			</div>
-			<!-- intro -->
-		</div>
 		<!-- intro-wrap -->
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
 				<div class="row-content buffer-left buffer-right buffer-bottom">
-					<ul class="inline cats filter-options" style="font-size: 40px; margin-left: 310px;">
-						<li data-group="advertising">
-							<a href="/club/getClub?clubNo=${clubNo }" style="color: #BD76FF;">모임</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">모임게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">모임채팅</a>
-						</li>
-					</ul>
+					<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>					
 		
-				<button type="button" class="live">모임 화상채팅</button>
-
 
 				<div class="mainForm" style="display: inline-flex;">
 					<!-- 클럽상세 -->
 					<div>
-						<form class="form-horizontal" enctype="multipart/form-data"
-							style="width: 443px;">
+						<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
 
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
-									<div class="col-xs-4 col-md-6">
-										<strong>모 임 제 목</strong> <button type="button" class="plain button red cancel" id="club-add-approval">가신2</button>
+									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
+										<strong>모 임 제 목</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${club.clubTitle}</div>
+									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubTitle}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
-									<div class="col-xs-4 col-md-6 ">
+									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
 										<strong>모 임 설 명</strong>
 									</div>
-									<div class="col-xs-8 col-md-8">${club.clubDetail}</div>
+									<div class="col-xs-8 col-md-8" style="margin-left: 15px;">${club.clubDetail}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
-									<div class="col-xs-4 col-md-6 ">
-										<strong>모 임 카 테 고 리</strong>
+									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+										<strong>카 테 고 리</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${club.clubCategory}</div>
+									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
-									<div class="col-xs-4 col-md-6 ">
-										<strong>모 임 활 동 영 역</strong>
+									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+										<strong>활 동 영 역</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${club.clubArea}</div>
+									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
 								</div>
 
 								<hr />
 
-								<div class="row">
-									<div class="col-s-4 col-md-6 ">
+								<div class="row"> 
+									<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
 										<strong>모임원 수</strong>
 									</div>
-									<div class="col-xs-8 col-md-4">${clubMemberCount}/${club.clubMaxMember}</div>
+									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
 								</div>
 
 							</div>
@@ -513,13 +531,25 @@
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 877px;">일정생성</button>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 860px;">일정생성</button>
 				</div>
+				
+				<div class="form-group" id="btn_group">
+					<!-- <button type="button" class="joinLi"></button> -->
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
+		      		
+		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
+					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+				</div>
+		    </div>
+				
 				
 			
 			<!-- 모달영역 -->
 			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog" role="document" style="margin-top: 150px;">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -542,30 +572,15 @@
 				</div>
 			
 			</div>
+			
+
 		
 		
-			<div class="form-group" id="btn_group">
-
-
-					<!-- <button type="button" class="joinLi"></button> -->
 					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
-					<input type="hidden" id="nickName" value="${user.nickName }">
-					<input type="hidden" id="profile" value="${user.profileImage }">
+					<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
+					<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
 					<input type="hidden" id="no" value="${clubNo}">
-				</div>
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
-		      		
-		      		<!-- <button type="button" class="plain button red cancel" id="addApproval">가입신청</button> -->
-					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>			
-					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
-					
-					
-						<input type="hidden" id="addName" value="${clubNo}${club.clubTitle}">
-						<input type="hidden" id="total" value="${clubMemberCount}">
-						<input type="hidden" id="nickName" value="${user.nickName }">
-						<input type="hidden" id="profile" value="${user.profileImage }">
-		    </div>
+					<input type="hidden" id="total" value="${clubMemberCount}">
 			</div>	
 	</main>
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>

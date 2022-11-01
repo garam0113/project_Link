@@ -12,22 +12,146 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
-<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
-	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-	
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link href="/resources/css/feed/getFeedListForMyHome.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="dialog.css">
+<script src="dialog.js"></script>
 <script type="text/javascript">
+ $(function(){
+	
+	$('.dl').on("click",function(){
+		
+	var user_Id = $(this).parent().parent().attr("id");
+	  
+	
+	
+	$.ajax("/userRest/json/getUser", {
+
+		type : "POST",
+		data : JSON.stringify({
+			userId : user_Id
+		}),
+		dataType : "json",
+		contentType : "application/json",
+		headers : {
+			"Accept" : "application/json"
+		},
+		success : function(Data, status) {
+			
+			var userId = Data.userId;
+			var nickName = Data.nickName;
+			var profileImage = Data.profileImage;
+			var profileWriting = Data.profileWriting;
+			var value = "<div name='dialog'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px;, height:100px;'><div><h4>"+nickName+"</h4></div></div>";
+			
+			 $("#"+nickName+"").html(value);
+		
+			
+				$("#"+nickName+"").dialog({
+					
+					autoOpen: false,
+					show: {
+						effect: "Pulsate",
+				        duration: 1000
+					},
+					hide: {
+				        effect: "Scale",
+				        duration: 1000
+					},
+					position: {
+						
+						my:"center",
+						at:"center",
+						of:"#"+userId+""
+					}
+					
+				});
+	
+	
+				 $("#"+nickName+"").dialog("open");
+	
+		}
+	})
+
+}) 
+$(".main").on("click",function(){
+
+	 $("div[name='dialog']").parent().dialog("close");
+
+}) 
+
+$(document).on("click",".dll",function(){
+	
+	var user_Id = $(this).parent().parent().attr("id");
+	  
+	
+	
+	$.ajax("/userRest/json/getUser", {
+
+		type : "POST",
+		data : JSON.stringify({
+			userId : user_Id
+		}),
+		dataType : "json",
+		contentType : "application/json",
+		headers : {
+			"Accept" : "application/json"
+		},
+		success : function(Data, status) {
+			
+			var userId = Data.userId;
+			var nickName = Data.nickName;
+			var profileImage = Data.profileImage;
+			var profileWriting = Data.profileWriting;
+			var value = "<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px;, height:100px;'><div><h4>"+nickName+"</h4></div></div>"
+			
+			 $("#"+nickName+"1").html(value);
+		
+			
+				$("#"+nickName+"1").dialog({
+					
+					autoOpen: false,
+					show: {
+						effect: "Pulsate",
+				        duration: 1000
+					},
+					hide: {
+				        effect: "Scale",
+				        duration: 1000
+					},
+					position: {
+						
+						my:"center",
+						at:"center",
+						of:"div[name='"+nickName+"']"
+					}
+					
+				});
+	
+	
+				 $("#"+nickName+"1").dialog("open");
+	
+		}
+	})
+
+}) 
+$(".main").on("click",function(){
+
+	 $("div[name='dialog1']").parent().dialog("close");
+
+}) 
+
+
+	
+	
+});
+ 
 	$(function() {
 
 		$("#follow").on("click", function() {
@@ -1128,9 +1252,9 @@ margin-top:100px;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div style="display: inline-block; margin-left :-50px;"><img src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			<div style="display: inline-block; margin-left :-50px;"><img class="dl" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
-					
+					<div id="${list.receiveId.nickName }"></div>
 				</div>
 			</c:forEach>
 		
@@ -1469,9 +1593,9 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:35px;' id="+item.userId+">"+
-			"<div style='display: inline-block; margin-left :-50px;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
-			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
+				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1'></div>"+
 		"</div>";
 			
 			

@@ -55,8 +55,8 @@
 		query: {
 			userId : '${ user.userId }',
 			profileImage : '${ sessionScope.user.profileImage }',
-			nickName : '${ sessionScope.user.nickName }'//,
-			//roomId : '${ roomId }'
+			nickName : '${ sessionScope.user.nickName }',
+			roomId : '${ roomId }'
 		}
 	});
 	

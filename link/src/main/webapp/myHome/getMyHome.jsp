@@ -13,17 +13,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="/resources/javascript/plugins.js"></script>
-<script src="/resources/javascript/beetle.js"></script>
-<link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
+<link href="/resources/css/feed/getFeedListForMyHome.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">ss
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="dialog.css">
+<script src="dialog.js"></script>
+
 <script type="text/javascript">
+
 	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 	function getClubPostGo(clubPostNo){
 		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
@@ -36,15 +37,14 @@
 </script>
 <script type="text/javascript">
 
-$(function(){
+ $(function(){
 	
-	//$("img.").hover(function(){
-	$("img").hover(function(){
-	//alert( $(this).parent().parent().attr("id") );
+	$('.dl').on("click",function(){
+		
 	var user_Id = $(this).parent().parent().attr("id");
 	  
 	
-	///*
+	
 	$.ajax("/userRest/json/getUser", {
 
 		type : "POST",
@@ -58,37 +58,114 @@ $(function(){
 		},
 		success : function(Data, status) {
 			
-			
+			var userId = Data.userId;
 			var nickName = Data.nickName;
 			var profileImage = Data.profileImage;
 			var profileWriting = Data.profileWriting;
+			var value = "<div name='dialog'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px;, height:100px;'><div><h4>"+nickName+"</h4></div></div>";
 			
-			$("#ajaxImage").text(profileImage)
-			$("#ajaxNickName").text(nickName)
-			$("#ajaxWriting").text(profileWriting)
-
+			 $("#"+nickName+"").html(value);
+		
 			
-				$("#" + nickName).dialog({
-					modal : true,
-					open : true
+				$("#"+nickName+"").dialog({
+					
+					autoOpen: false,
+					show: {
+						effect: "Pulsate",
+				        duration: 1000
+					},
+					hide: {
+				        effect: "Scale",
+				        duration: 1000
+					},
+					position: {
+						
+						my:"center",
+						at:"center",
+						of:"#"+userId+""
+					}
+					
 				});
-				$("#" + nickName).dialog("open");
-				
-				
-		    
+	
+	
+				 $("#"+nickName+"").dialog("open");
+	
+		}
+	})
+
+}) 
+$(".main").on("click",function(){
+
+	 $("div[name='dialog']").parent().dialog("close");
+
+}) 
+
+$(document).on("click",".dll",function(){
+	
+	var user_Id = $(this).parent().parent().attr("id");
+	  
+	
+	
+	$.ajax("/userRest/json/getUser", {
+
+		type : "POST",
+		data : JSON.stringify({
+			userId : user_Id
+		}),
+		dataType : "json",
+		contentType : "application/json",
+		headers : {
+			"Accept" : "application/json"
+		},
+		success : function(Data, status) {
 			
-		}//end of successs
-	});
+			var userId = Data.userId;
+			var nickName = Data.nickName;
+			var profileImage = Data.profileImage;
+			var profileWriting = Data.profileWriting;
+			var value = "<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px;, height:100px;'><div><h4>"+nickName+"</h4></div></div>"
+			
+			 $("#"+nickName+"1").html(value);
+		
+			
+				$("#"+nickName+"1").dialog({
+					
+					autoOpen: false,
+					show: {
+						effect: "Pulsate",
+				        duration: 1000
+					},
+					hide: {
+				        effect: "Scale",
+				        duration: 1000
+					},
+					position: {
+						
+						my:"center",
+						at:"center",
+						of:"div[name='"+nickName+"']"
+					}
+					
+				});
+	
+	
+				 $("#"+nickName+"1").dialog("open");
+	
+		}
+	})
+
+}) 
+$(".main").on("click",function(){
+
+	 $("div[name='dialog1']").parent().dialog("close");
+
+}) 
 
 
-}, function() {
-
-	$("#" + nickName).dialog("close");
-});
 	
 	
 });
-
+ 
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className) 
@@ -260,7 +337,365 @@ $(function(){
 	<%-- CALL REPORT --%>
 	
 })
+$(function() {
 
+		$("#follow").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "1"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log(data.follow);
+				if(data.follow != null ){
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+								$("#follow").text("팔로잉");
+								}else if(update.follow.fbState == 2){
+								$("#follow").text("팔로우");
+								}
+						}
+					})
+					}else if(data.follow ==null){
+						console.log("서버로 받은 데이터(error) : " + data.follow);
+
+						$.ajax("/myHomeRest/json/addFollow", {
+							type : "POST",
+							data : JSON.stringify({
+								receiveId : userId
+							}),
+							dataType : "json",
+							contentType : "application/json",
+							headers : {
+								"Accetp" : "application/json"
+							},
+							success : function(Data, status) {
+								console.log("서버로부터 받은 Data(error) : " + Data);
+								$("#follow").text("팔로잉");
+							}
+						})
+					} 
+				}
+				
+			})
+		})
+
+		 $("#following").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "1"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+							$("#following").text("팔로잉");
+							}else if(update.follow.fbState == 2){
+							$("#following").text("팔로우");
+							}
+						}
+					})
+				}
+			})
+		}) 
+
+		 $("#updateFollow").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "1"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.follow.userId);
+					console.log("서버로 받은 데이터 : " + data.follow.fbState);
+					var fbState = "";
+					if(data.follow.fbState == 1){
+						fbState = "2";
+					}else if(data.follow.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/myHomeRest/json/updateFollow", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "1",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+							if(update.follow.fbState == 1){
+							$("#updateFollow").text("팔로잉");
+							}else if(update.follow.fbState == 2){
+							$("#updateFollow").text("팔로우");
+							}
+						}
+					})
+				}
+			})
+		})
+
+
+		$("#block").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log(data.block);
+					if(data.block != null ){
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
+					var fbState = "";
+					if(data.block.fbState == 1){
+						fbState = "2";
+					}else if(data.block.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
+								$("#block").text("차단해제");
+								}else if(update.block.fbState == 2){
+								$("#block").text("차단");
+								}
+						}
+					})
+					}else if(data.block ==null){
+						console.log("서버로 받은 데이터(error) : " + data.block);
+
+						$.ajax("/userRest/json/addBlock", {
+							type : "POST",
+							data : JSON.stringify({
+								receiveId : userId
+							}),
+							dataType : "json",
+							contentType : "application/json",
+							headers : {
+								"Accetp" : "application/json"
+							},
+							success : function(Data, status) {
+								console.log("서버로부터 받은 Data(error) : " + Data);
+								$("#block").text("차단해제");
+							}
+						})
+					}
+				}
+				
+			})
+		})
+
+		$("#stopBlock").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log(data);
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
+					var fbState = "";
+					if(data.block.fbState == 1){
+						fbState = "2";
+					}else if(data.block.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
+							$("#stopBlock").text("차단해제");
+							}else if(update.block.fbState == 2){
+							$("#stopBlock").text("차단");
+							}
+						}
+					})
+				}
+			})
+		})
+
+		$("#updateBlock").on("click", function() {
+			var userId = $("#userId").val();
+			console.log("전달받은 회원 Id : " + userId);
+
+			$.ajax("/myHomeRest/json/getFollow", {
+				type : "POST",
+				data : JSON.stringify({
+					receiveId : userId,
+					fbType : "2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(data, status) {
+					console.log("서버로 받은 데이터 : " + data.block.userId);
+					console.log("서버로 받은 데이터 : " + data.block.fbState);
+					var fbState = "";
+					if(data.block.fbState == 1){
+						fbState = "2";
+					}else if(data.block.fbState == 2){
+						fbState = "1";
+					}
+					
+					console.log("state 값 : "+fbState);
+					$.ajax("/userRest/json/updateBlock", {
+						type : "POST",
+						data : JSON.stringify({
+							receiveId : userId,
+							fbType : "2",
+							fbState : fbState
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(update, status) {
+							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+							if(update.block.fbState == 1){
+							$("#updateBlock").text("차단해제");
+							}else if(update.block.fbState == 2){
+							$("#updateBlock").text("차단");
+							}
+						}
+					})
+				}
+			})
+		})
+
+	});
+	
 
 
 
@@ -741,27 +1176,16 @@ margin-left:65px;
 
 <body class="blog masonry-style">
 
-	<jsp:include page="/toolbar.jsp" />
+	
 
 	<main role="main" class="main">
 		
-			<div id="intro-wrap" data-height="12" style="background-color : black;">
-				<div id="intro" class="preload">
-					<div class="intro-item"
-						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2 class="neon">MyBlog</h2>
-						</div>
-						<!-- caption -->
-					</div>
-					<!-- intro -->
-				</div>
-				<!-- intro -->
-			</div>
-			<!-- intro-wrap -->
-
+			
 			<div id="main" class="row">
-			<div class="my">
+			<div>
+			<jsp:include page="/toolbar.jsp" />
+			</div>
+			<div class="my" style="margin-top : 100px;">
 			<div>
 				<div id="calendar">
 
@@ -839,11 +1263,11 @@ margin-left:65px;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div id="${list.receiveId.nickName}">1234</div>
-			<div style="display: inline-block; margin-left :-50px;"><img userId="${list.receiveId.userId }" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			<div style="display: inline-block; margin-left :-50px;"><img class="dl" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
-					
+			<div id="${list.receiveId.nickName }"></div>
 				</div>
+				
 			</c:forEach>
 			
 				
@@ -858,8 +1282,8 @@ margin-left:65px;
 </div>
 </div>
   </div>
+  
 			
-		
 <div class="tabs2">
     <input id="all" type="radio" name="tab_item" checked>
     <label class="tab_item1" for="all"><h4>내가 쓴 피드</h4></label>
@@ -1184,9 +1608,9 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"'>"+
-			"<div style='display: inline-block; margin-left :-50px;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
-			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
+				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1'></div>"+
 		"</div>";
 			
 			
@@ -1207,11 +1631,10 @@ $(function() {
 	 
 });	
 
+
+
 </script>
 
-<div id="">
-
-</div>
 
 </body>
 
