@@ -156,19 +156,12 @@
                   
                </ul>
                
-               <%--
-               	<div class="alarmHead" >
-						
-					<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-
-				</div>
-                --%>
             </nav>
             
          </div>
          <!-- row-content -->
       </div>
-      
+      <%--
 		<c:if test="${!empty sessionScope.user }">
 			<div class="alarmHead" >
 							
@@ -184,5 +177,6 @@
 			
 			</div>
 		</c:if>
+	--%>
       <!-- row -->
    </header>
