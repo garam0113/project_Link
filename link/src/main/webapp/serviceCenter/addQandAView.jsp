@@ -72,6 +72,7 @@
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
+	
 }
 textarea {
 	resize: none;
