@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.link.common.Search;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
@@ -38,6 +39,8 @@ public interface ClubPostService {
 	
 	
 	
+	
+	
 	// 신고
 	
 	// 결제
@@ -52,6 +55,19 @@ public interface ClubPostService {
 	//public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
 	
 	//public void updateClub(Pay pay) throws Exception;
+	
+	
+	
+	
+
+	// 1:1 채팅
+	public void addChat(Chat chat) throws Exception;
+	
+	// 1:1 채팅
+	public List<Chat> getChatList(Chat chat) throws Exception;
+	
+	// 1:1 채팅
+	public List<Chat> getChat(Chat chat) throws Exception;
 	
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.link.service.clubPost.ClubPostDAO;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
@@ -318,6 +319,24 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public List<ClubUser> getRoomIdList(User user) throws Exception {
 		System.out.println(getClass() + ".getRoomIdList(User user) 왔다");
 		return sqlSession.selectList("ClubMapper.getRoomIdList", user);
+	}
+
+	@Override
+	public void addChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ". addChat(Chat chat) 왔다");
+		sqlSession.insert("ClubPostMapper.addChat", chat);
+	}
+
+	@Override
+	public List<Chat> getChatList(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChatList(Chat chat) 왔다");
+		return sqlSession.selectList("ClubPostMapper.getChatList", chat);
+	}
+
+	@Override
+	public List<Chat> getChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChat(Chat chat) 왔다");
+		return sqlSession.selectList("ClubPostMapper.getChat", chat);
 	}
 	
 	

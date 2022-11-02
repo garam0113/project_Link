@@ -172,7 +172,15 @@
 		<c:if test="${!empty sessionScope.user }">
 			<div class="alarmHead" >
 							
-				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
+				<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/>
+				<span class="badge">
+					<c:if test="${empty alarmCount }">
+					0
+					</c:if>
+					<c:if test="${!empty alarmCount }">
+					${alarmCount}
+					</c:if>
+				</span>
 			
 			</div>
 		</c:if>

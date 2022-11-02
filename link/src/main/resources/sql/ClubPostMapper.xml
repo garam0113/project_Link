@@ -62,6 +62,27 @@
 	
 	
 	
+	<resultMap	id="chatSelectMap" type="com.link.service.domain.Chat">
+		<result property="chatNo" 					column="CHAT_NO" 					jdbcType="NUMERIC"/>
+		<result property="roomId" 					column="roomId" 					jdbcType="VARCHAR"/>
+		<result property="userId" 					column="USER_ID" 					jdbcType="VARCHAR"/>
+		<result property="userId2" 					column="USER_ID2" 					jdbcType="VARCHAR"/>
+		
+		<association property="user"				javaType="user">
+			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
+		</association>
+		
+		<association property="user2"				javaType="user">
+			<result property="userId" 				column="user_id"		 			jdbcType="VARCHAR" />
+			<result property="profileImage"			column="profile_image"				jdbcType="VARCHAR" />
+			<result property="nickName"				column="nickName"					jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	
+	
+	
 	
 	
 	<!-- /////////////////////////////////////////////////////////////// CLUBPOST /////////////////////////////////////////////////////////////// -->
@@ -264,6 +285,37 @@
 		FROM PAY P, USERS U
 		WHERE P.USER_ID = U.USER_ID AND PAY_NO = #{ payNo }
 	</select>
+	
+	
+	
+	
+	
+	<!-- /////////////////////////////////////////////////////////////// Chat /////////////////////////////////////////////////////////////// -->
+	
+	
+	<insert id="addChat" parameterType="com.link.service.domain.Chat">
+		INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, #{ user.userId }, #{ roomId }, #{ user2.userId })
+	</insert>
+
+
+
+	<select id="getChatList" parameterType="com.link.service.domain.Chat" resultMap="chatSelectMap">
+		SELECT *
+		FROM ( SELECT * FROM CHAT WHERE USER_ID = #{ user.userId } OR USER_ID2 = #{ user.userId } )
+		WHERE USER_ID = #{ user2.userId } OR USER_ID2 = #{ user2.userId }
+	</select>
+
+
+
+	<select id="getChat" parameterType="com.link.service.domain.Chat" resultMap="chatSelectMap">
+		SELECT * FROM CHAT WHERE USER_ID = #{ user.userId } OR USER_ID2 = #{ user.userId }
+	</select>
+
+
+
+
+
+
 	
 	
 	 

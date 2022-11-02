@@ -1,5 +1,6 @@
 package com.link.web.clubPost;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
@@ -422,6 +424,37 @@ public class ClubPostController {
 		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
 	}
+	
+	/*
+	@RequestMapping(value = "addChat", method = RequestMethod.POST)
+	public String addChat(HttpSession session, User user2, Chat chat, Model model) throws Exception {
+		System.out.println("/addChat : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
+
+		chat.setUser((User)session.getAttribute("user"));
+		chat.setUser2(user2);
+		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+user2.getUserId());
+		
+		System.out.println("DB로 보내는 데이터 : " + chat);
+		
+		
+		
+		//////////////////////////////////////BUSINESS LOGIC /////////////////////////////////////////
+
+		
+		
+		// 로그인한 회원과 상대방의 채팅방이 없으면 만들고 있으면 안 만든다
+		List<Chat> list = clubPostServiceImpl.getChatList(chat);
+		System.out.println("로그인한 회원과 상대방과의 방 : " + list);
+		if( list.size() == 0 ) {
+			// DB에 로그인한 회원과 상대방과의 채팅방이 없으면 채팅방 만듬, 1:1 채팅에서 메세지를 보내면 채팅방 만들어짐
+			clubPostServiceImpl.addChat(chat);
+		}
+		
+		// 내가 들어있는 채팅방 가져오기
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+		return "";
+	}
+	*/
 	
 	
 

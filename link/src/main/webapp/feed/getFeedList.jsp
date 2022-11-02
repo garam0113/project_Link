@@ -61,6 +61,8 @@
 	function uploadSummernoteImageFile(file, el) {
 		data = new FormData();
 		data.append("file", file);
+		
+		console.log(data.file);
 		$.ajax({
 			data : data,
 			type : "POST",
@@ -684,7 +686,7 @@
 					  showConfirmButton : false,
 				})
 			} else {
-				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+				$(this.form).attr("method", "POST").attr("accept-charset", "UTF-8").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
 				$.ajax (
 						{
@@ -924,29 +926,32 @@
 						
 						$.each(data.clubList, function(index, item){
 
-							if(index > 4) {
-								return false;
-							} else if(index == 0 ){
-								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
-								addImg += 	'<div class="item active">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
-													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
-												'</a>' +
-												'<div class="carousel-caption">' +
-												'</div>' +
-										    '</div>'
-							} else {
-								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
-								addImg += 	'<div class="item">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
-													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
-												'</a>' +
-												'<div class="carousel-caption">' +
-												'</div>' +
-										    '</div>'
+							if(item.clubImage != null) {
+								
+								if(index > 4) {
+									
+									return false;
+									
+								} else if(index == 0 ){
+									addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
+									addImg += 	'<div class="item active">' +
+													'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+														'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+													'</a>' +
+													'<div class="carousel-caption">' +
+													'</div>' +
+											    '</div>'
+								} else {
+									addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
+									addImg += 	'<div class="item">' +
+													'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+														'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+													'</a>' +
+													'<div class="carousel-caption">' +
+													'</div>' +
+											    '</div>'
+								}
 							}
-							
-							
 							
 						}) // each close
 						
