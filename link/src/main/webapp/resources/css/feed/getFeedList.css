@@ -1,4 +1,7 @@
-
+	.feedVideo {
+		margin-top: 10px;
+	}
+		
 	/* 랜덤 클럽 가져오기 */
 
 	.clubRandomCover {
@@ -310,11 +313,17 @@
 
 	/* 피드 작성자 이미지 */
 
+	.feedProfileImage {
+		width: 50px;
+		height: 50px;
+		border-radius: 25% !important;
+	}
+
+
+
 	.feedForm > img {
 		vertical-align: sub; 
 		display: inline-block; 
-		width:50px; 
-		height:50px; 
 		margin-top:10px; 
 		margin-left:10px;
 		border-radius: 25% !important;
