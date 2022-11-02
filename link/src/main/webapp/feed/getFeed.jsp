@@ -446,6 +446,7 @@
 										} else {
 											$(addHtml).appendTo($(".comment:last"));
 											$("#currentPage").val( parseInt($("#currentPage").val()) + 1 );
+											
 										}
 										
 									} // success close
@@ -642,11 +643,6 @@
 			       		//"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
 						$("form").attr("method", "GET").attr("action", "/feed/deleteFeed").submit();
 						
-						if(sock) {
-							var Msg = "가 피드를 삭제했습니다.";
-							
-							sock.send(Msg);
-						}
 					}
 				})
 				
@@ -680,7 +676,7 @@
 			$(document).on("click", ".btn_addRecomment", function(event){
 				event.stopPropagation();
 				
-				console.log($(this).parents().siblings(".commentInfo").find("input[name='userId']").val())
+				console.log($(this).parents().siblings(".commentInfo").find("input[name='userId']").val()) 
 				console.log($(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']").val());
 				console.log($(this).prev().val())
 				
@@ -689,6 +685,7 @@
 				var depthValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='depth']").val()) + 1;
 				var sequenceValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='sequence']").val()) + 1;
 				var content = $(this).prev().val();
+				var commentCount = $(this).parents(".comment-section").siblings(".lastBar").find(".commentCount")
 				
 				var changePoint = $(this).parents(".comment");
 				var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
@@ -696,7 +693,7 @@
 				var htmlSequence = $(this).parents(".comment-section").siblings("#feedInfo").find("input[name='sequence']");
 				var cPage = $("#currentPage").val();
 				
-				var feedWriter = $(this).parents().siblings(".commentInfo").find("input[name='user2']").val();
+				var feedWriter = $(this).parents().siblings("#feedInfo").find("input[name='user2']").val();
 				
 				if(content == "" || content == " ") {
 					swal.fire("내용을 입력하세요");
@@ -786,14 +783,16 @@
 									
 								}) // $.each close 
 								
-								console.log(changeHtml);
+								// console.log(changeHtml);
 								$(changePoint).html(changeHtml);
 								$(content).text( parseInt( $(content).text() ) + 1 );
 								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
+								$(commentCount).text(parseInt( $(commentCount).text() ) + 1);
+								
 								if(sock) {
 									var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 가 댓글을 작성했습니다.";
-
+									console.log(Msg);
 									sock.send(Msg);
 								}
 								
@@ -1566,6 +1565,100 @@
 	
 	<style>
 	
+
+	
+	.main{
+		height:100vh;
+		width:100%;  
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		text-align:center;
+	}
+	
+	h3{
+		text-align:center;
+		text-transform: uppercase;
+		color: #F1FAEE; 
+		font-size: 4rem;
+		margin-top: 15px !important;
+		margin-bottom: 15px !important;
+	}
+
+	.roller{
+		height: 3.125rem;
+    	line-height: 3.9rem;
+		position: relative;
+		overflow: hidden; 
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #1D3557;
+	}
+
+	#spare-time{
+		font-size: 1rem;
+		letter-spacing: 1rem;
+		margin-top: 0;
+		color: #A8DADC;
+	}
+
+	.roller #rolltext {
+		position: absolute;
+		top: 0;
+		animation: slide 5s infinite;  
+	}
+
+	@keyframes slide {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -4rem;    
+		}
+		50%{
+			top: -8rem;
+		}
+		72.5%{
+			top: -12.25rem;
+		}
+	}
+
+@media screen and (max-width: 600px){
+	h3{
+		text-align:center;
+		text-transform: uppercase;
+		color: #F1FAEE; 
+		font-size: 1.125rem !important;
+	}
+  
+	.roller{
+		height: 2.6rem; 
+		line-height: 2.125rem;  
+	}
+  
+	.roller #rolltext {  
+		animation: slide-mob 5s infinite;  
+	}
+
+	@keyframes slide-mob {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -2.125rem;    
+		}
+		50%{
+			top: -4.25rem;
+		}
+		72.5%{
+			top: -6.375rem;
+		}
+	}
+
+
+	
 		
 		
 	</style>
@@ -1597,6 +1690,15 @@
 					
 					<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 						
+					<h3>오늘은:
+						<div class="roller">
+						<span id="rolltext">내가<br/>
+											너와<br/>
+											만나다<br/>
+											LINK<br/>
+					</div>
+					</h3>
+					
 				</div>
 				
 				<div class="column six">
@@ -1710,7 +1812,7 @@
 						<div class="hashtagContent">
 							
 							<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
-							tag : 
+							
 							<c:forEach var="textValue" items="${text}" varStatus="varStatus">
 								<span class="searchByHashtag">
 									#${textValue}
@@ -1888,6 +1990,30 @@
 				</div>
 				
 				<div class="column three"></div>
+				
+				
+				<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
+
+							<div class="tabs1">
+								<input id="all-follow" type="radio" name="tab_item-follow" checked>
+								<label class="tab_item-follow" for="all-follow">팔로우</label>
+								
+								<input id="programming-follow" type="radio" name="tab_item-follow">
+								<label class="tab_item-following" for="programming-follow">팔로워</label>
+
+								<div class="tab_content-follow" id="all-follow_content">
+									<div class="col-md-4" id="fll">
+										<br />
+									</div>
+								</div>
+								<div class="tab_content-follow" id="programming-follow_content">
+									<div class="col-md-4" id="fl">
+										<br />
+									</div>
+								</div>
+							</div>
+				
+				
 				
 				<%-- 현재 페이지 --%>
 				<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">

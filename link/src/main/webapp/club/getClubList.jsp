@@ -476,11 +476,6 @@
          <!-- row-content -->
       </div>
       
-		<div class="alarmHead" >
-						
-			<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-		
-		</div>
       <!-- row -->
    </header>
  
@@ -590,7 +585,7 @@
 	   <!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
 	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;">
 	    	<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
-	    	<p style="margin-top: 20px; margin-left: 11px;">모임개설
+	    	<p style="margin-top: 20px; margin-left: 11px;"><strong>모임개설</strong>
 	    </div>	
 
 

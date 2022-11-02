@@ -327,13 +327,9 @@
 	</delete>
 	
 	<!-- 가입신청현황 삭제 -->
-	<update id="deleteApprovalCondition" parameterType="clubUser">
-		UPDATE club_user
-		<set>
-			approval_condition = #{approvalCondition}
-		</set>
-		WHERE club_user_no = #{clubUserNo}
-	</update>
+	<delete id="deleteApprovalCondition">
+		DELETE FROM club_user WHERE club_no = #{clubNo} and user_id = #{user.userId}
+	</delete>
 	
 	
 	<!-- 모임게시물 등록할 때 해당 모임의 모임원들에게 게시물 등록되었다고 알림. 해당 모임의 모임원들 찾는 Query -->

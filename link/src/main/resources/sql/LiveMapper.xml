@@ -15,6 +15,7 @@
 		<result property="profileImage" column="profile_image"
 			jdbcType="NUMERIC" /> 
 		<result property="type" column="type" jdbcType="CHAR" />
+		<result property="club_no" column="clubNo" jdbcType="NUMERIC" />
 	</resultMap>  
 	<!-- <sql id="select-list"> SELECT roomid , limit , member FROM live <where> 
 		<if test="(searchCondition == 0 and searchKeyword != '')"> user_id LIKE(#{searchKeyword}||'%') 
@@ -26,30 +27,30 @@
 	<insert id="addLive" parameterType="live">
 		INSERT 
 		INTO live (
-		live_no ,roomid , limit , member, profile_image, type
+		live_no ,roomid , limit , member, profile_image, type, club_no
 		)
 		VALUES 
 		(
 		seq_club_post_no.NEXTVAL, #{roomName:VARCHAR},
-		#{limit:NUMERIC}, #{member:NUMERIC}, #{profileImage:VARCHAR}, #{type:CHAR}
+		#{limit:NUMERIC}, #{member:NUMERIC}, #{profileImage:VARCHAR}, #{type:CHAR}, #{clubNo:NUMERIC}
 		)
 	</insert>
   
 	<select id="getLive" parameterType="live"
 		resultMap="liveSelectMap">
 		SELECT
-		roomid , limit , member, profile_image, type
+		roomid , limit , member, profile_image, type, club_no
 		FROM live
-		WHERE roomid = #{roomName} AND type = #{type}
+		WHERE roomid = #{roomName} AND type = #{type} AND club_no = #{clubNo}
 	</select>
 
 	<select id="getLiveList" parameterType="live"
 		resultMap="liveSelectMap">
 		SELECT
-		roomid , limit , member, profile_image, type
+		roomid , limit , member, profile_image, type, club_no 
 		FROM live
-		WHERE type = #{type}
-	</select>
+		WHERE type = #{type} AND club_no = #{clubNo}
+	</select>  
 
 	<delete id="deleteLive" parameterType="live">
 		DELETE live

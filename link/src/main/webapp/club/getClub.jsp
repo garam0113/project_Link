@@ -128,6 +128,30 @@
 		});
 	});
 	
+	$(function () {
+		
+		$(document).on("click","#deleteApprovalCondition", function() {
+		
+			Swal.fire({
+				  title: '정말 모임을 탈퇴하시겠습니까?',
+				  text: "탈퇴 시 다시 가입 신청을 해야합니다",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소' ,
+				}).then((result) => {
+				  if (result.value) {
+				    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteApprovalCondition").submit();	    
+				  }
+				})
+		})
+	});
+	
+	
+	
 	$(function() {
 
 		$("#updateClub").on("click", function() {
@@ -554,6 +578,9 @@
 		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
 					
+				<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
+					<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
+				</c:if>					
 				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
 					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
@@ -566,7 +593,7 @@
 			
 			<!-- 모달영역 -->
 			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document" style="margin-top: 150px;">
+				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
