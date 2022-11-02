@@ -31,6 +31,7 @@ import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
+import com.link.service.domain.ClubUser;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Meeting;
@@ -361,4 +362,69 @@ public class MyHomeRestController {
 			 return map;
 			 
 		 }
+		@RequestMapping(value="/json/getApprovalConditionList")
+		public Map<String, Object> getMyClubList(@RequestBody Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser, String userId) throws Exception {
+			
+			System.out.println("/club/getApprovalConditionList : GET/POST");
+			
+			user = (User) session.getAttribute("user");
+//			club = (Club) session.getAttribute("club");
+			
+			session.getAttribute("clubNo");
+//			clubUser.setClubNo(club.getClubNo());
+			
+			System.out.println("유저 세션에 뭐가 있나요 : "+user);
+			System.out.println("클럽넘버는 왔나요 : "+session.getAttribute("clubNo"));
+			System.out.println("유저 아이디는 뭐지? : "+userId);
+			
+			if(search.getOrder()==0) {
+				search.setSearchKeyword(user.getUserId());
+//				search.setSearchKeyword(userId);
+			}else {
+				search.setSearchKeyword(userId);
+			}
+			
+			if(search.getCurrentPage()==0) {
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+//			search.setPageUnit(pageUnit);
+			
+			Map<String, Object> map = clubService.getApprovalConditionList(search);
+			
+			System.out.println("서치에 뭐 들어있나요 ? ? : "+search);
+			
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalApprovalConditionCount")).intValue(), pageUnit, pageSize);
+			
+			System.out.println("resultPage : "+resultPage);
+			
+			model.addAttribute("approvalConditionList",map.get("approvalConditionList"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			return map;
+		}
+		@RequestMapping(value = "/json/getBlockList")
+		public Map<String, Object> getBlockList(@ModelAttribute User user,HttpSession session,Search search,String userId, Model model) throws Exception {
+		
+			String sessionId = ((User)session.getAttribute("user")).getUserId();
+			user.setUserId(sessionId);
+			
+			
+			Map<String, Object> map = new HashMap<String, Object>();		
+			map.put("user", (User)session.getAttribute("user"));
+			map.put("search", search);
+			
+			search.setSearchKeyword(sessionId);
+			map.put("blockList",myHomeService.getBlockList(search).get("list"));
+			
+			model.addAttribute("blockList", map.get("blockList"));
+			model.addAttribute("search", search);
+			
+			System.out.println("............ "+myHomeService.getBlockList(search).get("list"));
+			
+			return map;
+		}
+			
+		
 }

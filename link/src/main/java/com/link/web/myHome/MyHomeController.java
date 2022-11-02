@@ -180,15 +180,10 @@ public class MyHomeController {
 		System.out.println("세션아이디"+sessoinId);
 		System.out.println("유저아이디"+userId);
 	
-	    if(cutUserId.get("block") != null ) {
-	    
-	    	return "forward:/feed/getFeedList";
-	 
-	    }else {
 		
 		return "forward:/myHome/getYourHome.jsp";
 	}
-	}
+	
 	
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)
 	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession session) throws Exception{
