@@ -228,8 +228,8 @@ public class ClubController {
 		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
-		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
+//		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
+//		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
 		
 		return "forward:/club/getClubList.jsp";
@@ -391,10 +391,13 @@ public class ClubController {
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
 		
-		
+		//participant 들어가나?
+		participant.setUser(user);
+		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
+		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		
