@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -28,28 +28,24 @@
 		var image = $("input[name='noticeImage']").val();
 
 		if (title == null || title.length < 1) {
-			alert("제목은 반드시 입력하여야 합니다.");
-			return;
-		}
+		 	Swal.fire({
+                icon: 'error',
+                title: '제목은 필수입니다.',
+            });
+				return;
+			}
 		if (content == null || content.length < 1) {
-			alert("내용은 반드시 입력하여야 합니다.");
-			return;
-		}
+		 	Swal.fire({
+                icon: 'error',
+                title: '내용은 필수입니다.',
+            });
+				return;
+			}
 
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
 	
-	function readURL(input) {
-		  if (input.files && input.files[0]) {
-		    var reader = new FileReader();
-		    reader.onload = function(e) {
-		      document.getElementById('preview').src = e.target.result;
-		    };
-		    reader.readAsDataURL(input.files[0]);
-		  } else {
-		    document.getElementById('preview').src = "";
-	}
-}	//function readURL 끝 사진 미리보기  
+	//function readURL 끝 사진 미리보기  
 	$(function() {
 
 		$("button:contains('등록')").bind("click", function() {
@@ -152,7 +148,7 @@ background-color: #EBEDF0 !important;
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label"><strong>첨부파일</strong></label>
 			<div class="col-sm-4">
-				<input multiple="multiple" type="file" name="image" id="file" onchange="readURL(this);"
+				<input multiple="multiple" type="file" name="image" id="file" 
 					class="ct_input_g" style="width: 200px; height: 50px" />
 				<img id="preview"/>
 

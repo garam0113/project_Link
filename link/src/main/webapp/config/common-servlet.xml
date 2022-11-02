@@ -64,6 +64,8 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>
+			<mvc:mapping path="/club/**"/>
+			<mvc:mapping path="/myHome/**"/>
 			<bean class="com.link.common.web.LogonCheckInterceptor"></bean>
 		</mvc:interceptor>	
 	</mvc:interceptors>

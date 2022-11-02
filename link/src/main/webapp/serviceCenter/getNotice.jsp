@@ -61,6 +61,7 @@
 }
 textarea {
 	resize: none;
+	
 }
 body{
 background-color: #EBEDF0 !important;
@@ -122,7 +123,8 @@ background-color: #EBEDF0 !important;
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">³»¿ë</th>
-						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white;    margin-bottom: 30px;">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						${notice.noticeContent}
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
