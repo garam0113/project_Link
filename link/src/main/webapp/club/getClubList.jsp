@@ -31,9 +31,6 @@
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 
- 	 <%-- SOCKET IO --%>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
-	<%-- SOCKET IO --%>
  	 
  	 <!-- alert! -->
  	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
@@ -330,6 +327,20 @@
 	}); // end of scroll */
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+	
+	<script>
 	var sock = null;
 	
 	$(document).ready(function () {
@@ -381,18 +392,13 @@
 	    
 	    
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	</script>	
 </head>
+
+	 <%-- SOCKET IO --%>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+	<%-- SOCKET IO --%>
+
 
 
 <%-- <jsp:include page="/toolbar.jsp" /> --%>
@@ -475,7 +481,7 @@
 	  	  <div id="main" class="row" style="width: 824px;">
 		   
 		    <div class="col-md-8 text-right" style="float: left;">
-			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;">
+			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
 			    
 				  <div class="form-group" id="selectTitle">
 				    <select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
@@ -563,7 +569,7 @@
 		
 	   <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'">
 	    	<img src="/resources/image/uploadFiles/plusIcon.png" style="width: 308px;">
-	    	<p>모임개설
+	    	<p style="margin-top: 20px; margin-left: 11px;">모임개설
 	    </div>	
 
 

@@ -224,11 +224,6 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addMeeting(Meeting meeting) throws Exception {
 		
 		System.out.println("addMeeting DAO왔는가 ? ");
-		
-//		meeting.setClubNo(2);
-//		meeting.setAddMeetingUserId("user01");
-//		meeting.setMeetingWeather("테스트날씨다");
-//		meeting.setMeetingMember(1);
 		System.out.println("meeting 값이 뭔가 ? : "+meeting);
 		sqlSession.insert("ClubMapper.addMeeting",meeting); 
 	}
@@ -276,6 +271,7 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addMeetingMember(Participant participant) throws Exception {
 		
 		System.out.println("미팅참가 DAO Impl 왔나?");
+		
 		sqlSession.insert("ClubMapper.addMeetingMember",participant);
 	}
 	
