@@ -1019,6 +1019,20 @@
 				$(".chat-img-sidebar.people-users").removeAttr("style");
 			});
 			
+
+			
+			
+			//소켓서버에 접속시킨다.
+			let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				cors: { origin: "*" },
+				path: '/socket.io',
+				query: {
+					userId : '${ user.userId }',
+					profileImage : '${ sessionScope.user.profileImage }',
+					nickName : '${ sessionScope.user.nickName }',
+					roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
+				}
+			}); //*/
 			
 			
 			var room_Id = "";
@@ -1028,22 +1042,24 @@
 			
 			$(".chat-content-onechat").bind("click", function(){
 				//alert("하나의 채팅 클릭시");
+
+				socket.disconnect();
+				$('#chatLog').empty();
 				
 				$("#allChat-toobar-title").attr("style", "display: none");
 				$("#allChat-toobar-back").removeAttr("style");
 				
 				$("#chat-list-content").attr("style", "display: none");
 				$("#chat-room-content").removeAttr("style");
-			
 
 				
 				roomId = $(this).attr("roomId");
-				room_Id = roomId;
+				//room_Id = roomId;
+				//alert(roomId);
 
 				
-				
 				//소켓서버에 접속시킨다.
-				/* var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
 					cors: { origin: "*" },
 					path: '/socket.io',
 					query: {
@@ -1051,8 +1067,9 @@
 						profileImage : '${ sessionScope.user.profileImage }',
 						nickName : '${ sessionScope.user.nickName }',
 						roomId : roomId,
-					}
-				}); */
+					},
+					forceNew: true
+				});
 				
 				
 				
@@ -1087,11 +1104,6 @@
 				    					    
 				    
 				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-				   
-				    //alert( "/////////////////" + data.userId );
-				    //alert( '${ sessionScope.user.userId }' );
-				    
 					$('#chatLog').append(display);
 				    
 				});
@@ -1102,7 +1114,7 @@
 			
 			
 			
-			$("#allChat-toobar-back").bind("click", function(){
+			$(".chat-toolbar-back").bind("click", function(){
 				//alert("back 클릭시");
 				
 				$("#allChat-toobar-back").attr("style", "display: none");
@@ -1112,7 +1124,7 @@
 				$("#chat-list-content").removeAttr("style");				
 				
 				//소켓서버를 끊는다.
-				socket.close();
+				socket.disconnect();
 				
 			});
 			
@@ -1120,34 +1132,16 @@
 			
 			$(document).ready(function(){
 			    $('#chat_send_button').bind("click", function(){
-			    	
-			    	//alert("roomId : " + room_Id);
-			    	//$("form").attr("method", "post").attr("action", "/clubPost/getClubPostList");
-			    	//return false;
 			        var message = $('#sendForm input[name=message]');
 			        //소켓 서버의 'client message' 라는 이벤트명으로 메세지를 송신한다.
 			        socket.emit('client message', { message : message.val()});
 			        //input 박스 초기화
 			        message.val('');
 			        return false;
-			    });
+			    });//end of 전송버튼
 			});
 			
 			
-			
-			
-			
-			//소켓서버에 접속시킨다.
-			var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
-				cors: { origin: "*" },
-				path: '/socket.io',
-				query: {
-					userId : '${ user.userId }',
-					profileImage : '${ sessionScope.user.profileImage }',
-					nickName : '${ sessionScope.user.nickName }',
-					roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
-				}
-			});
 			
 			
 			
@@ -1196,11 +1190,6 @@
 			    					    
 			    
 			    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-			    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-			   
-			    //alert( "/////////////////" + data.userId );
-			    //alert( '${ sessionScope.user.userId }' );
-			    
 				   $('#chatLog').append(display);
 			    
 			});
@@ -1269,12 +1258,12 @@
 								<!-- 로고 -->
 								<span id="allChat-toobar-title">LINK</span>
 								<!-- 뒤로가기 -->
-								<span id="allChat-toobar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
+								<span id="allChat-toobar-back" class="chat-toolbar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
 							</div>
 							<div></div>
 							<div>
 								<!-- 닫기 -->
-								<span id="allChat-toolbar-close">X</span>
+								<span id="allChat-toolbar-close" class="chat-toolbar-back">X</span>
 							</div>
 						</div>
 						<!-- 채팅 상단 툴바 end -->
