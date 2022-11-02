@@ -200,11 +200,13 @@ public class ClubServiceImpl implements ClubService {
 		
 		System.out.println("나의 모임리스트 ServiceImpl 왔나??");
 		List<ClubUser> list = clubDAO.getApprovalConditionList(search);
+		
 		int totalApprovalConditionCount = clubDAO.getTotalApprovalConditionCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("approvalConditionList",list);
 		map.put("totalApprovalConditionCount", new Integer(totalApprovalConditionCount));
+		
 		return map;
 	}
 	
