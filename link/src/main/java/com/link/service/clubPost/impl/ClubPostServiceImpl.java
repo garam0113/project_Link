@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostDAO;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
@@ -119,6 +120,24 @@ public class ClubPostServiceImpl implements ClubPostService {
 	public List<ClubUser> getRoomIdList(User user) throws Exception {
 		System.out.println(getClass() + ".getRoomIdList(User user) 도착");
 		return clubPostDAOImpl.getRoomIdList(user);
+	}
+
+	@Override
+	public void addChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ".addChat(Chat chat) 도착");
+		clubPostDAOImpl.addChat(chat);
+	}
+
+	@Override
+	public List<Chat> getChatList(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChatList(Chat chat) 도착");
+		return clubPostDAOImpl.getChatList(chat);
+	}
+
+	@Override
+	public List<Chat> getChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChat(Chat chat) 도착");
+		return clubPostDAOImpl.getChat(chat);
 	}
 	
 	

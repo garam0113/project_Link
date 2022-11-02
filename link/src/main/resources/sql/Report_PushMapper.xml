@@ -144,7 +144,8 @@
 	 <update id ="handleReportCondition" parameterType="report">
 	 UPDATE REPORT_PUSH
 	 <set>
-	 REPORT_CONDITION = 1
+	 REPORT_CONDITION = 1,
+	 REPORT_REASON = #{reportReason:VARCHAR}
 	 </set>
 	 WHERE NO = #{no}
 	 </update>

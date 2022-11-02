@@ -157,12 +157,12 @@
  	$(function() {
 		
 		//alert("123");
-		var options = {
+/* 		var options = {
 			"forcNew" : true
-		};
+		}; */
 		var url = "https://192.168.0.183:4000";
 
-		socket = io.connect(url, options);
+		socket = io.connect(url);
 
 		socket.on("connect", function() {
 			//alert("소켓연결 완료");
@@ -173,6 +173,7 @@
 			var clubTitle = $("#clubTitle").val();
 			var profile = $("#profile").val();
 			var nickName = $("#nickName").val();
+			var num;
 			console.log("profile : "+profile);
 			console.log("nickName : "+nickName);
 			
@@ -235,7 +236,8 @@
 										viewName : roomName,
 										total : total,
 										profile : profile,
-										nickName : nickName
+										nickName : nickName,
+										member : 1
 										});
 									self.location = "https://192.168.0.183:4040";
 								}
@@ -265,10 +267,12 @@
 							success : function (data) {
 								console.log(data);
 								socket.emit("info", {
+									total : data.limit,
 									roomName : roomName,
 									viewName : viewName,
 									profile : profile,
-									nickName : nickName
+									nickName : nickName,
+									member : data.member
 								});
 								self.location = "https://192.168.0.183:4040";
 							}
@@ -475,25 +479,25 @@
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
 									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
-										<strong>모 임 제 목</strong>
+										<strong>모임제목</strong>
 									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubTitle}</div>
+									<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>모 임 설 명</strong>
+										<strong>모임설명</strong>
 									</div>
-									<div class="col-xs-8 col-md-8" style="margin-left: 15px;">${club.clubDetail}</div>
+									<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>카 테 고 리</strong>
+										<strong>카테고리</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
 								</div>
@@ -502,7 +506,7 @@
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>활 동 영 역</strong>
+										<strong>활동영역</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
 								</div>
@@ -531,7 +535,7 @@
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 860px;">일정생성</button>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
 				</div>
 				
 				<div class="form-group" id="btn_group">

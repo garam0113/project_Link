@@ -142,7 +142,7 @@ public class ServiceCenterRestController {
 		addr = addr + serviceKey + parameter;
 		URL url = new URL(addr);
 		
-		System.out.println(addr);
+		//System.out.println(addr);
 		
 		InputStream in = url.openStream();
 		
@@ -152,11 +152,7 @@ public class ServiceCenterRestController {
 		bos1.close();
 		
 		String mbos = bos1.toString("UTF-8");
-		
-		System.out.println("나다"+mbos);
-	
-		
-		
+
 		return mbos;
 	}
 	
@@ -187,7 +183,7 @@ public class ServiceCenterRestController {
 		addr = addr + serviceKey + parameter;
 		URL url = new URL(addr);
 		
-		System.out.println(addr);
+		//System.out.println(addr);
 		
 		InputStream in = url.openStream();
 		
@@ -197,10 +193,7 @@ public class ServiceCenterRestController {
 		bos1.close();
 		
 		String mbos = bos1.toString("UTF-8");
-		
-		System.out.println("나다222"+mbos);
-			
-		
+
 		return mbos;
 	}
 	
