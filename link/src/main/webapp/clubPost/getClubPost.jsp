@@ -1035,8 +1035,6 @@
 			}); //*/
 			
 			
-			var room_Id = "";
-			//var socket = io.connect({});
 			
 			
 			
@@ -1054,12 +1052,11 @@
 
 				
 				roomId = $(this).attr("roomId");
-				//room_Id = roomId;
-				//alert(roomId);
+				namespace = $(this).attr("namespace");
 
 				
 				//소켓서버에 접속시킨다.
-				socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				socket = io.connect("http://192.168.0.74:3000/"+namespace, { // clubchat 네임스페이스
 					cors: { origin: "*" },
 					path: '/socket.io',
 					query: {
@@ -1281,16 +1278,22 @@
 									<div id="club-chat-list">
 										<c:if test="${ fn:length(roomList) > 0 }">
 										<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }">
-												<div><img class="chat-img-main" src="/resources/image/uploadFiles/one_user.jpg"></div>
+											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }" namespace="clubchat">
+												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ roomList[i].clubImage }"></div>
 												<div>${ roomList[i].clubTitle } / ${ roomList[i].roomId }</div>
 											</div>
 										</c:forEach>
 										</c:if>
 									</div>
 									<div id="user-chat-list" style="display: none;">
-										<div class="chat-content chat-content-onechat">닉네임1</div>
-										<div class="chat-content chat-content-onechat">닉네임2</div>
+										<c:if test="${ fn:length(getChat) > 0 }">
+										<c:forEach var="i" begin="0" end="${ fn:length(getChat) - 1 }" step="1">
+											<div class="chat-content chat-content-onechat" roomId="${ getChat[i].roomId }" namespace="userchat">
+												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
+												<div>${ getChat[i].user2.nickName }</div>
+											</div>
+										</c:forEach>
+										</c:if>
 									</div>
 								</div>
 								<!-- 모임 채팅과 1:1 채팅 리스트 end -->
