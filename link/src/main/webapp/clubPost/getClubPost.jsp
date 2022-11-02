@@ -1053,7 +1053,7 @@
 				
 				roomId = $(this).attr("roomId");
 				namespace = $(this).attr("namespace");
-				alert(roomId);
+				//alert(roomId);
 
 				
 				//소켓서버에 접속시킨다.
@@ -1073,7 +1073,7 @@
 				
 				//server message 라는 이벤트명으로 대기
 				socket.on('server message', function(data){
-				    console.log(data);
+				    //console.log(data);
 				    
 				    var display = "";
 					    
