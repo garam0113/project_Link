@@ -82,7 +82,7 @@ public class UserController {
 
 		session.setAttribute("user", getUser);
 
-		return "redirect:/main.jsp";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
@@ -153,7 +153,7 @@ public class UserController {
 
 		} else {
 
-			return "redirect:/main.jsp";
+			return "redirect:/";
 		}
 	}
 
@@ -190,7 +190,7 @@ public class UserController {
 
 			return "forward:/user/updateUserView.jsp";
 		} else {
-			return "redirect:/main.jsp";
+			return "redirect:/";
 		}
 
 	}
@@ -267,7 +267,7 @@ public class UserController {
 
 			return "forward:/user/updateProfileView.jsp";
 		} else {
-			return "redirect:/main.jsp";
+			return "redirect:/";
 		}
 	}
 
@@ -326,7 +326,7 @@ public class UserController {
 			session.setAttribute("user", getUser);
 		}
 		
-		return "forward:/main.jsp";
+		return "forward:/";
 	}
 
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
@@ -374,7 +374,7 @@ public class UserController {
 			session.setAttribute("follow", map.get("list"));
 		}
 
-		return "redirect:/main.jsp";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)
@@ -392,7 +392,7 @@ public class UserController {
 			System.out.println("세션에 값 저장 : " + session.getAttribute("user").toString());
 
 //			return null;
-			return "redirect:/main.jsp";
+			return "redirect:/";
 		} else if (getUser != null && getUser.getNickName() == null) {
 
 			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
@@ -414,7 +414,7 @@ public class UserController {
 
 		session.invalidate(); // session정보 제거
 
-		return "redirect:/main.jsp";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
@@ -432,7 +432,7 @@ public class UserController {
 
 		session.invalidate();
 
-		return "redirect:/main.jsp";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "getUserList")

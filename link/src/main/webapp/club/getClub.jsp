@@ -267,6 +267,7 @@
 							success : function (data) {
 								console.log(data);
 								socket.emit("info", {
+									total : data.limit,
 									roomName : roomName,
 									viewName : viewName,
 									profile : profile,
