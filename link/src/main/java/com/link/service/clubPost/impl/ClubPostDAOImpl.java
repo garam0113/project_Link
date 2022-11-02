@@ -339,12 +339,13 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".getChat(Chat chat) 왔다");
  		List<Chat> list = sqlSession.selectList("ClubPostMapper.getChat", chat);
  		
- 		System.out.println("리스트의 사이즈 : " + list.size());
- 		
  		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getUserId2());
-			User user = sqlSession.selectOne("UserMapper.getUser", list.get(i).getUser());
-			User user2 = sqlSession.selectOne("UserMapper.getUser", list.get(i).getUser2());
+ 			
+ 			System.out.println("////////////////////////////////");
+ 			System.out.println(list.get(i));
+ 			
+			User user = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId()));
+			User user2 = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId2()));
 			
 			list.get(i).setUser(user);
 			list.get(i).setUser2(user2);

@@ -121,9 +121,14 @@ public class ClubController {
 		
 		search.setSearchKeyword(user.getUserId());
 		
+		Search search2 = new Search();
+		
+		search2.setSearchKeyword(clubNo);
+		
 		//Business Logic
 		Map<String, Object> map = clubService.getClub(Integer.parseInt(clubNo));
 		Map<String, Object> map1 = clubService.getApprovalConditionList(search);
+		Map<String, Object> map2 = clubService.getClubMemberList(search2);
 		
 		//Model 과 View 연결
 		System.out.println("MODEL VIEW 연결 전");
@@ -131,12 +136,14 @@ public class ClubController {
 		model.addAttribute("club", map.get("club"));
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
 		session.setAttribute("clubNo", clubNo);
 		
 		
 		System.out.println("유저 세션 뭐지? : " +user);
 		System.out.println("클럽 맵에 뭐 들어갔지? : "+map.get("club"));
 		System.out.println(" Map1 값은? : "+map1.get("totalApprovalConditionCount"));
+		System.out.println("Map2 값은? : "+map2.get("clubMemberList"));
 		System.out.println("클럽 넘버 세션은? : "+clubNo);
 		
 		return "forward:/club/getClub.jsp";
@@ -211,7 +218,7 @@ public class ClubController {
 		
 		return "forward:/club/getClubList";
 	}
-	
+		
 	@RequestMapping(value="getClubList")
 	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user) throws Exception {
 		
@@ -409,12 +416,12 @@ public class ClubController {
 		meeting.setMeetingWeather("테스트 날씨");
 		
 		//participant 들어가나?
-		participant.setUser(user);
-		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
+//		participant.setUser(user);
+//		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
-		clubService.addMeetingMember(participant);
+//		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		
@@ -604,6 +611,22 @@ public class ClubController {
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
 		
 		return "forward:/club/getMeeting.jsp";
+	}
+	
+	@RequestMapping(value="deleteApprovalCondition", method=RequestMethod.POST)
+	public String deleteApprovalCondition(@ModelAttribute ClubUser clubUser, HttpSession session, Club club, User user, String clubNo) throws Exception {
+		
+		System.out.println("deleteApprovalCondition 시작~~~~~ ");
+		
+		user = (User) session.getAttribute("user");
+		clubNo = (String) session.getAttribute("clubNo");
+		
+		clubUser.setUser(user);
+		clubUser.setClubNo(Integer.parseInt(clubNo));
+		
+		clubService.deleteApprovalCondition(clubUser);
+		
+		return "forward:/club/getClubList";
 	}
 	
 //	

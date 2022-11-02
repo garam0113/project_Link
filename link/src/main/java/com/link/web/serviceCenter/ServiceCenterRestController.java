@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,7 +126,7 @@ public class ServiceCenterRestController {
 		String pattern = "yyyyMMdd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
-		System.out.println(date);
+	//	System.out.println(date);
 		
 		parameter = parameter + "&" +"numOfRows=7";
 		parameter = parameter + "&" +"pageNo=1";
@@ -164,7 +165,7 @@ public class ServiceCenterRestController {
 		String addr = "http://apis.data.go.kr/B551011/KorService/detailCommon?ServiceKey=";
 		String serviceKey="zBGM3gx0Dc2jBEW14Zfw26CVqo2w018oxuxycZo6dMCuzeN25ma4CNoVlRDiS2k%2BXoOyBXC88QgaP1T4DZ9DuQ%3D%3D";
 		String parameter ="";
-		System.out.println(contentid);
+	//	System.out.println(contentid);
 		parameter = parameter + "&" +"contentTypeId=15";
 		parameter = parameter + "&" +"contentId="+contentid;
 		parameter = parameter + "&" +"MobileOS=ETC";
@@ -232,7 +233,7 @@ public class ServiceCenterRestController {
 		
 		System.out.println("/ServiceCenter/updateReport : POST");
 
-			System.out.println(report+" 처음 들어온 값");
+			System.out.println("처음 들어온 신고이유 "+report.getReportReason());
 			serviceCenterService.updateReport(report);
 			System.out.println(report);
 			report = serviceCenterService.getReport(report.getNo());
@@ -242,6 +243,7 @@ public class ServiceCenterRestController {
 			return "redirect:/serviceCenter/getReportList";
 		
 	}
+	
 	/////////////////////////////////////////////// 알림 ///////////////////////////////////////////////
 	
 	@RequestMapping(value = "/json/getPushList", method = RequestMethod.POST)

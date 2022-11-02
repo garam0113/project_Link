@@ -21,8 +21,11 @@
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <!-- ?? -->
@@ -128,15 +131,29 @@
 		});
 	});
 	
-	//팝업 띄우기
-	var openWin;
-	function popup() {
-		var url = "/club/applyClub.jsp";
-		var name = "applyClub";
-		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
+	$(function () {
 		
-		openWin = window.open(url, name, option);
-	} 
+		$(document).on("click","#deleteApprovalCondition", function() {
+		
+			Swal.fire({
+				  title: '정말 모임을 탈퇴하시겠습니까?',
+				  text: "탈퇴 시 다시 가입 신청을 해야합니다",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소' ,
+				}).then((result) => {
+				  if (result.value) {
+				    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteApprovalCondition").submit();	    
+				  }
+				})
+		})
+	});
+	
+	
 	
 	$(function() {
 
@@ -163,8 +180,7 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+		
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
 			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
@@ -196,11 +212,13 @@
 			var num;
 			console.log("profile : "+profile);
 			console.log("nickName : "+nickName);
+			console.log(clubNo);
 			
 			$.ajax("/liveRest/json/getLiveList", {
 				type : "POST",
 				data : JSON.stringify({
-					type : '2'
+					type : '2',
+					clubNo : clubNo
 				}),
 				dataType : "json",
 				contentType : "application/json",
@@ -241,7 +259,8 @@
 								data : JSON.stringify({
 									roomName : clubNo+"_"+clubTitle+":"+roomName,
 									type : '2',
-									limit : total
+									limit : total,
+									clubNo : clubNo
 								}),
 								dataType : "json",
 								contentType : "application/json",
@@ -277,7 +296,8 @@
 							method : "POST",
 							data : JSON.stringify({
 								roomName : roomName,
-								type : '2'
+								type : '2',
+								clubNo : clubNo
 							}),
 							dataType : "json",
 							contentType : "application/json",
@@ -286,6 +306,7 @@
 							},
 							success : function (data) {
 								console.log(data);
+								if(data.limit >= data.member){
 								socket.emit("info", {
 									total : data.limit,
 									roomName : roomName,
@@ -295,6 +316,11 @@
 									member : data.member
 								});
 								self.location = "https://192.168.0.183:4040";
+								}
+								},
+								error : function(error) {
+										swal.fire("인원초과입니다.");
+										return;
 							}
 						})
 					})
@@ -329,109 +355,121 @@
 	
 	</script>
 
-	<style>
-		body {
-			padding-top: 70px;
-		}
-		
-		#main {
-			background-color: #f0f2f5 !important;
-		}
-		
-		main {
-			background-color: #f0f2f5 !important;
-		}
-		
-		.plain.button.red.cancel{
-		   background-color: white;
-		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-		   border-radius: 10px;
-		   margin: 1rem;
-		   padding: 5px;
-		   width: 75px !important;
-		   color: #5F0080 !important;
-		   font-size: 16px !important;
-		   text-align: center;
-		   border: solid 2px;
-		}
-		
-		.plain.button.red.cancel:hover{
-		   background-color: #5F0080;
-		   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-		   border-radius: 10px;
-		   margin: 1rem;
-		   padding: 5px;
-		   width: 75px !important;
-		   color: white !important;
-		   font-size: 16px !important;
-		}
-		
-		a {
-			color: #bd76ff;
-			text-decoration: underline;
-		}
-		
-		.darkover {
-			position: sticky;
-			top: auto;
-			bottom: 0;
-			left: 0;
-			background: rgba(0, 0, 0, 0.35);
-		}
-		
-		.club-wrap {
-			width: 100%;
-			margin: 10px auto;
-			position: relative;
-		}
-		
-		.club-wrap img {
-			width: 50%;
-			vertical-align: middle;
-			filter: brightness(1.1);
-			margin-left: 450px;
-			/* margin-top: -23px;
-			height: 0%; */
-		}
-	
-		.row-content.buffer, .row-content.buffer-left {
-			padding-left: 0% !important;
-		}
-		
-		.row-content.buffer, .row-content.buffer-right {
-			padding-right: 0% !important;
-		}
-		
-		row-content.buffer, .row-content.buffer-bottom {
-			padding-bottom: 10% !important;
-		}
-		
-		element.style {
-			margin-bottom: 100px !important;
-		}
-		
-		
-		.modal { 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none; margin-top: 350px;
-		}
-			
-		.modal_content{
-			width:400px; height:200px;
-			background:#fff; border-radius:10px;
-			position:relative; top:50%; left:50%;
-			margin-top:-100px; margin-left:-200px;
-			text-align:center;
-			box-sizing:border-box; padding:74px 0;
-			line-height:23px; cursor:pointer;
-		}
-		
-		.modal-backdrop {
-			position: static !important;
-		
-		}
-		
-		
-	</style>
+<<<<<<< HEAD
+<style>
+body {
+	padding-top: 70px;
+}
+
+#main {
+	background-color: #f0f2f5 !important;
+}
+
+main {
+	background-color: #f0f2f5 !important;
+}
+
+.plain.button.red.cancel {
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px,
+		rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 5px;
+	width: 75px !important;
+	color: #5F0080 !important;
+	font-size: 16px !important;
+	text-align: center;
+	border: solid 2px;
+}
+
+.plain.button.red.cancel:hover {
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px,
+		rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 5px;
+	width: 75px !important;
+	color: white !important;
+	font-size: 16px !important;
+}
+
+a {
+	color: #bd76ff;
+	text-decoration: underline;
+}
+
+.darkover {
+	position: sticky;
+	top: auto;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.club-wrap {
+	width: 100%;
+	margin: 10px auto;
+	position: relative;
+}
+
+.club-wrap img {
+	width: 50%;
+	vertical-align: middle;
+	filter: brightness(1.1);
+	margin-left: 450px;
+	/* margin-top: -23px;
+}
+
+.row-content.buffer, .row-content.buffer-left {
+	padding-left: 0% !important;
+}
+
+.row-content.buffer, .row-content.buffer-right {
+	padding-right: 0% !important;
+}
+
+row-content.buffer, .row-content.buffer-bottom {
+	padding-bottom: 10% !important;
+}
+
+element.style {
+	margin-bottom: 100px !important;
+}
+
+.modal {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.2);
+	top: 0;
+	left: 0;
+	display: none;
+	margin-top: 350px;
+}
+
+.modal_content {
+	width: 400px;
+	height: 200px;
+	background: #fff;
+	border-radius: 10px;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -200px;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 74px 0;
+	line-height: 23px;
+	cursor: pointer;
+}
+
+.modal-backdrop {
+	position: static !important;
+}
+</style>
 
 
 
@@ -456,45 +494,48 @@
 
 						<div class="club-image">
 							<a href="/club/getClub?clubNo=${clubNo}"><img
-								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="800" height="300" name="file" id="clubImage"></a>
-						</div>
+								src="/resources/image/uploadFiles/${club.clubImage}" width="800"
+								height="300" name="file" id="clubImage"></a>
 						</div>
 					</div>
 				</div>
-				<!-- intro -->
 			</div>
+			<!-- intro -->
+		</div>
 		<!-- intro-wrap -->
-		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-					<div class="homeBtn_group">
-						<button type="button" class="homeBtn" style="margin-top: 17px;">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
-						</button>
-						
-						<button type="button" class="clubPostBtn">
-							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="clubMemberBtn">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="live">
-							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
-						</button>
-					</div>					
-		
+
+		<div id="main" class="row">
+			<!-- 중간 개별영역 -->
+			<div class="row-content buffer-left buffer-right buffer-bottom">
+				<div class="homeBtn_group">
+					<button type="button" class="homeBtn" style="margin-top: 17px;">
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					</button>
+
+					<button type="button" class="clubPostBtn">
+						<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+					</button>
+
+					<button type="button" class="clubMemberBtn">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					</button>
+
+					<button type="button" class="clubChatBtn">
+						<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+					</button>
+
+					<button type="button" class="live">
+						<span class="glyphicon glyphicon-facetime-video"
+							aria-hidden="true"></span>
+					</button>
+				</div>
+
 
 				<div class="mainForm" style="display: inline-flex;">
 					<!-- 클럽상세 -->
 					<div>
-						<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
+						<form class="form-horizontal" enctype="multipart/form-data"
+							style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
 
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
@@ -533,7 +574,7 @@
 
 								<hr />
 
-								<div class="row"> 
+								<div class="row">
 									<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
 										<strong>모임원 수</strong>
 									</div>
@@ -555,62 +596,73 @@
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
-				</div>
-				
-				<div class="form-group" id="btn_group">
-					<!-- <button type="button" class="joinLi"></button> -->
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
-		      		
-		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+				<button type="button" class="plain button red cancel"
+					id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
+			</div>
+
+			<div class="form-group" id="btn_group">
+				<!-- <button type="button" class="joinLi"></button> -->
+				<div class="col-sm-offset-4  col-sm-4 text-center"
+					style="margin-top: -140px;">
+
+					<button type="button" class="plain button red cancel"
+						id="club-add-approval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
-					
-				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
-					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
-				</c:if>
-				
+
+					<c:if
+						test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+						<button type="button" class="plain button red cancel"
+							id="updateClub">수&nbsp;정</button>
+						<button type="button" class="plain button red cancel"
+							id="deleteClub">삭&nbsp;제</button>
+					</c:if>
+
 				</div>
-		    </div>
-				
-				
-			
+			</div>
+
+
+
 			<!-- 모달영역 -->
-			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="club-add-approval-modal" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="margin-top: 150px;">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<button class="close" type="button" data-dismiss="modal"
+								aria-label="Close">
+								<button type="button" class="close" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
 							</button>
 							<h3 class="modal-title" id="exampleModalLabel">가입신청</h3>
 						</div>
-					<div class="club-add-approval-view">
-						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
-							<input type="hidden" name="clubNo" value="${ clubNo }">
-							<input type="hidden" name="roomId" value="${ club.roomId }">
-							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요">
-							</div>
-							<input type="button" class="plain button red cancel" value="신청">
-							<input type="button" class="plain button red cancel" value="취소">
-						</form>
-					</div>
+						<div class="club-add-approval-view">
+							<form name="addApprovalCondition" method="post"
+								action="/club/addApprovalCondition" enctype=multipart/form-data>
+								<input type="hidden" name="clubNo" value="${ clubNo }">
+								<input type="hidden" name="roomId" value="${ club.roomId }">
+								<div class="clubJoinGreeting">
+									<input type="text" name="joinGreeting"
+										placeholder="가입인사를 작성해주세요">
+								</div>
+								<input type="button" class="plain button red cancel" value="신청">
+								<input type="button" class="plain button red cancel" value="취소">
+							</form>
+						</div>
 					</div>
 				</div>
-			
 			</div>
-			
-			<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
-			<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
-		
-		
-					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
-					<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
-					<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
-					<input type="hidden" id="no" value="${clubNo}">
-					<input type="hidden" id="total" value="${clubMemberCount}">
-			</div>	
+
+
+
+
+			<input type="hidden" id="clubTitle" value="${club.clubTitle}">
+			<input type="hidden" id="nickName"
+				value="${sessionScope.user.nickName }"> <input type="hidden"
+				id="profile" value="${sessionScope.user.profileImage }"> <input
+				type="hidden" id="no" value="${clubNo}"> <input
+				type="hidden" id="total" value="${clubMemberCount}">
+		</div>
 	</main>
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
 </body>

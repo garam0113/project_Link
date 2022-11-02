@@ -72,7 +72,7 @@ public class UserController {
 
 			file.transferTo(
 					new File(uploadTempDir, user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
-			user.setProfileImage(user.getUserId() + sysName + dateNow + file.getOriginalFilename());
+			user.setProfileImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 
 		}
 
@@ -113,11 +113,11 @@ public class UserController {
 			if (getUser == null) {
 
 				userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
-				
+
 				login = userService.getUser(user);
-				
-				session.setAttribute("user", login); 
-				
+
+				session.setAttribute("user", login);
+
 				break;
 			}
 		}
@@ -325,7 +325,7 @@ public class UserController {
 		if (sessionId.equals(getUser.getUserId())) {
 			session.setAttribute("user", getUser);
 		}
-		
+
 		return "forward:/";
 	}
 

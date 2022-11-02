@@ -330,7 +330,7 @@ SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_hea
 
 
 SELECT * FROM feed;
-
+SELECT * FROM users;
 
 SELECT
 recv_user_id AS NAME

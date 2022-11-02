@@ -27,6 +27,9 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+.page-header{
+	border-bottom:0px !important;
+}
 td{
 vertical-align: middle;
 }

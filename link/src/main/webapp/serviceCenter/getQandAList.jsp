@@ -41,7 +41,9 @@ body {
 	border: 1px solid #bcbcbc;
 	align = center;
 }
-
+.page-header{
+	border-bottom:0px !important;
+}
 
 .content {
 

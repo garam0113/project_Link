@@ -8,6 +8,7 @@ public class Live {
 	private int limit;
 	private int member;
 	private String type;
+	private int clubNo;
 
 	public String getRoomName() {
 		return roomName;
@@ -60,11 +61,19 @@ public class Live {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public int getClubNo() {
+		return clubNo;
+	}
+
+	public void setClubNoint (int clubNo) {  
+		this.clubNo = clubNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Live [roomName=" + roomName + ", viewRoomName=" + viewRoomName + ", profileImage=" + profileImage
-				+ ", limit=" + limit + ", member=" + member + ", type=" + type + "]";
+				+ ", limit=" + limit + ", member=" + member + ", type=" + type + ", clubNo=" + clubNo + "]";
 	}
 
 }
