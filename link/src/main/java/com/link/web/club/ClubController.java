@@ -2,6 +2,7 @@ package com.link.web.club;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,25 +113,30 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user, Search search) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
 		user = (User) session.getAttribute("user");
+		
+		search.setSearchKeyword(user.getUserId());
+		
 		//Business Logic
 		Map<String, Object> map = clubService.getClub(Integer.parseInt(clubNo));
+		Map<String, Object> map1 = clubService.getApprovalConditionList(search);
 		
 		//Model 과 View 연결
 		System.out.println("MODEL VIEW 연결 전");
 		
 		model.addAttribute("club", map.get("club"));
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
+		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
 		session.setAttribute("clubNo", clubNo);
 		
 		
 		System.out.println("유저 세션 뭐지? : " +user);
 		System.out.println("클럽 맵에 뭐 들어갔지? : "+map.get("club"));
-
+		System.out.println(" Map1 값은? : "+map1.get("totalApprovalConditionCount"));
 		System.out.println("클럽 넘버 세션은? : "+clubNo);
 		
 		return "forward:/club/getClub.jsp";
@@ -217,19 +223,26 @@ public class ClubController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-
+		
+		Search search2 = new Search();
+		
+		search2.setSearchKeyword(user.getUserId());
+		
 		Map<String, Object> map = clubService.getClubList(search);
+		Map<String, Object> map1 = clubService.getApprovalConditionList(search2);
+		
+		System.out.println("Map1 값은? : "+map1.get("totalApprovalConditionCount"));
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalClubCount")).intValue(), pageUnit, pageSize);
-		
 		
 		System.out.println("resultPage : "+resultPage);
 		
 		model.addAttribute("clubList",map.get("clubList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
-		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
+		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
+//		model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
+//		model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
 		
 		return "forward:/club/getClubList.jsp";
@@ -252,7 +265,6 @@ public class ClubController {
 		
 		if(search.getOrder()==0) {
 			search.setSearchKeyword(user.getUserId());
-//			search.setSearchKeyword(userId);
 		}else {
 			search.setSearchKeyword(userId);
 		}
@@ -266,13 +278,23 @@ public class ClubController {
 		Map<String, Object> map = clubService.getApprovalConditionList(search);
 		
 		System.out.println("서치에 뭐 들어있나요 ? ? : "+search);
+		System.out.println("카운트 개수 뭐지? : "+map.get("totalApprovalConditionCount"));
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalApprovalConditionCount")).intValue(), pageUnit, pageSize);
+//		ArrayList<Integer> arr = new ArrayList<>();
+//		arr.addAll((ArrayList) map.get("totalApprovalConditionCount"));
+//		int arrlen = arr.size();
+//		
+//		
+//		System.out.println("리스트 개수 가능? : "+arrlen);
 		
-		System.out.println("resultPage : "+resultPage);
+		
+		//Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalApprovalConditionCount")).intValue(), pageUnit, pageSize);
+		//Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalApprovalConditionCount")).intValue(), pageUnit, pageSize);
+		
+		//System.out.println("resultPage : "+resultPage);
 		
 		model.addAttribute("approvalConditionList",map.get("approvalConditionList"));
-		model.addAttribute("resultPage", resultPage);
+		//model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
 		return "forward:/club/getApprovalConditionList.jsp";
@@ -317,12 +339,7 @@ public class ClubController {
 		user = (User) session.getAttribute("user"); 
 		
 		search.setSearchKeyword(clubNo);
-		
-//		if(search.getCurrentPage()==0) {
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		search.setPageUnit(pageUnit);
+
 		
 		Map<String, Object> map = clubService.getClubMemberList(search);
 		Map<String, Object> map1 = clubService.getClub(Integer.parseInt(clubNo));
@@ -391,10 +408,13 @@ public class ClubController {
 		meeting.setMeetingMember(1);
 		meeting.setMeetingWeather("테스트 날씨");
 		
-		
+		//participant 들어가나?
+		participant.setUser(user);
+		participant.setMeetingNo((int) session.getAttribute("meetingNo"));
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
+		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		

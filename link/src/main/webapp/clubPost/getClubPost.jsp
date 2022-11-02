@@ -15,6 +15,7 @@
 		
 		<!-- 사용자 정의 css -->
 		<link rel="stylesheet" href="/resources/css/clubPost/clubPost.css" type="text/css" media="screen" title="no title">
+		<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
 
 		<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
 		
@@ -41,10 +42,6 @@
 		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
-		
-		<!-- 모임채팅 -->
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-		<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 		
 		
 		
@@ -988,46 +985,79 @@
 		<%-- 채팅 --%>
 		<script type="text/javascript">
 		$(function(){
+			<%-- 채팅 아이콘 클릭시 채팅 열기 --%>
 			$("#chat-icon").bind("click", function(){
 				$("#chat-icon").attr("style", "display:none");
 				$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
 			});
 			
+			<%-- 채팅 X표 클릭시 채팅 닫기 --%>
 			$("#allChat-toolbar-close").bind("click", function (){
 				$("#allChat").attr("style", "display: none;");
 				$("#chat-icon").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
 			});
 			
-			$(".chatdiv.chat-content").bind("click", function(){
-				$(this).next().attr("condition") == 1 ? $(this).next().attr("style", "display: none"): $(this).next().removeAttr("style");
-				$(this).next().attr("condition") == 1 ? $(this).next().attr("condition", "0"): $(this).next().attr("condition", "1");
+			<%-- 일대다 이미지 클릭시 모임 채팅 리스트 보이기 --%>
+			$(".chat-img-sidebar.people-users").bind("click", function(){
+				//alert("일대다");
+				// 모임채팅 보이고 1:1채팅 숨긴다
+				$("#user-chat-list").attr("style", "display: none");
+				$("#club-chat-list").removeAttr("style");
+				// 모임채팅 이미지 테두리 이벤트, 1:1채팅 이미지 테두리 이벤트 없애기
+				$(this).attr("style", "box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;");
+				$(".chat-img-sidebar.people-user").removeAttr("style");
+			});
+
+			<%-- 일대일 이미지 클릭시 1:1 채팅 리스트 보이기 --%>
+			$(".chat-img-sidebar.people-user").bind("click", function(){
+				//alert("일대일");
+				// 1:1채팅 보이고 모임채팅 숨긴다
+				$("#user-chat-list").removeAttr("style");
+				$("#club-chat-list").attr("style", "display: none");
+				// 1:1채팅 이미지 테두리 이벤트, 모임채팅 이미지 테두리 이벤트 없애기
+				$(this).attr("style", "box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;");
+				$(".chat-img-sidebar.people-users").removeAttr("style");
 			});
 			
+
 			
 			
-			var room_Id = "";
-			var socket = "";
+			//소켓서버에 접속시킨다.
+			let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				cors: { origin: "*" },
+				path: '/socket.io',
+				query: {
+					userId : '${ user.userId }',
+					profileImage : '${ sessionScope.user.profileImage }',
+					nickName : '${ sessionScope.user.nickName }',
+					roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
+				}
+			}); //*/
+			
+			
 			
 			
 			
 			$(".chat-content-onechat").bind("click", function(){
 				//alert("하나의 채팅 클릭시");
+
+				socket.disconnect();
+				$('#chatLog').empty();
 				
 				$("#allChat-toobar-title").attr("style", "display: none");
 				$("#allChat-toobar-back").removeAttr("style");
 				
-				$("#allChat-content").attr("style", "display: none");
-				$("#allChat-content-child").removeAttr("style");
-
+				$("#chat-list-content").attr("style", "display: none");
+				$("#chat-room-content").removeAttr("style");
 
 				
 				roomId = $(this).attr("roomId");
-				room_Id = roomId;
+				namespace = $(this).attr("namespace");
+				//alert(roomId);
 
 				
-				
 				//소켓서버에 접속시킨다.
-				socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				socket = io.connect("http://192.168.0.74:3000/"+namespace, { // clubchat 네임스페이스
 					cors: { origin: "*" },
 					path: '/socket.io',
 					query: {
@@ -1035,21 +1065,15 @@
 						profileImage : '${ sessionScope.user.profileImage }',
 						nickName : '${ sessionScope.user.nickName }',
 						roomId : roomId,
-					}
-				});
-				
-				
-				
-				//사용자 참가
-				socket.on('join', data => {
-				    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');
+					},
+					forceNew: true
 				});
 				
 				
 				
 				//server message 라는 이벤트명으로 대기
 				socket.on('server message', function(data){
-				    console.log(data);
+				    //console.log(data);
 				    
 				    var display = "";
 					    
@@ -1078,12 +1102,7 @@
 				    					    
 				    
 				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-				   
-				    //alert( "/////////////////" + data.userId );
-				    //alert( '${ sessionScope.user.userId }' );
-				    
-					   $('#chatLog').append(display);
+					$('#chatLog').append(display);
 				    
 				});
 
@@ -1093,64 +1112,17 @@
 			
 			
 			
-			$("#allChat-toobar-back").bind("click", function(){
+			$(".chat-toolbar-back").bind("click", function(){
 				//alert("back 클릭시");
 				
 				$("#allChat-toobar-back").attr("style", "display: none");
 				$("#allChat-toobar-title").removeAttr("style");
 				
-				$("#allChat-content-child").attr("style", "display: none");
-				$("#allChat-content").removeAttr("style");
+				$("#chat-room-content").attr("style", "display: none");
+				$("#chat-list-content").removeAttr("style");				
 				
-				alert( socket );
-				alert( room_Id );
-				
-				
-				
-				//사용자 종료
-				socket.on('leave', data => {
-				    $('#chatLog').append('<li style="font-size: 25px;">' + data.username + '님이 나가셨습니다</li>');
-				});
-				
-				
-				
-				//server message 라는 이벤트명으로 대기
-				socket.on('server message', function(data){
-				    console.log(data);
-				    
-				    var display = "";
-					    
-					    if( '${ sessionScope.user.nickName }' != data.username ){
-					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-										+"<div>"
-											+"<div>"+data.username+"</div>"
-											+"<div>"
-												+"<div>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-									+"</div>";
-					    		
-					    }else{
-					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
-										+"<div>"
-											+"<div style='float: right;'>"+data.username+"</div>"
-											+"<div>"
-												+"<div style='float: right;'>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-									+"</div>";
-					    }
-				    					    
-				    
-				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-				    $('#chatLog').append(display);
-				    
-				});
-				
-				
+				//소켓서버를 끊는다.
+				socket.disconnect();
 				
 			});
 			
@@ -1164,40 +1136,93 @@
 			        //input 박스 초기화
 			        message.val('');
 			        return false;
-			    });
+			    });//end of 전송버튼
 			});
 			
 			
 			
-		});
+			
+			
+			//사용자 참가
+			socket.on('join', data => {
+			    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');
+			});
+			
+			
+			
+			//사용자 종료
+			socket.on('leave', data => {
+			    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 나가셨습니다</div>');
+			});
+			
+			
+			
+			//server message 라는 이벤트명으로 대기
+			socket.on('server message', function(data){
+			    //console.log(data);
+			    
+			    var display = "";
+				    
+				    if( '${ sessionScope.user.nickName }' != data.username ){
+				    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
+									+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+									+"<div>"
+										+"<div>"+data.username+"</div>"
+										+"<div>"
+											+"<div>"+data.message+"</div>"
+										+"</div>"
+									+"</div>"
+								+"</div>";
+				    		
+				    }else{
+				    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
+									+"<div>"
+										+"<div style='float: right;'>"+data.username+"</div>"
+										+"<div>"
+											+"<div style='float: right;'>"+data.message+"</div>"
+										+"</div>"
+									+"</div>"
+									+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+								+"</div>";
+				    }
+			    					    
+			    
+			    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
+				   $('#chatLog').append(display);
+			    
+			});
+			
+			
+			
+		});//end of 채팅 script
 		
+		
+		//클럽버튼 펑션입니다.
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+		
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
+		});
+	});		
 		
 		</script>
-		
-		
-		
-		<style type="text/css">
-		.modal{ 
-			position: fixed ; width:100%; height:100%; background: rgba(0,0,0,0.2); top: 40px; left:0; display:none;
-		}
-		
-		.modal_content{
-			width:400px; height:200px;
-			background:#fff; border-radius:10px;
-			position:relative; top:50%; left:50%;
-			margin-top:-100px; margin-left:-200px;
-			text-align:center;
-			box-sizing:border-box; padding:74px 0;
-			line-height:23px; cursor:pointer;
-		}
-		
-		.club-post-update-view{
-			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 30px;
-			padding: 3rem;
-			/* background-color: #f2f3ff; */
-		}
-		</style>
 		
 	</head>
 
@@ -1206,6 +1231,10 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+		
+	<!-- 모임채팅 -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 	
 	<br><br>
 
@@ -1240,87 +1269,137 @@
 		
 		
 				
-					<!-- 채팅 이미지 -->
+					<!-- 채팅 이미지 start -->
 					<div>
 						<img id="chat-icon" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
 					</div>
+					<!-- 채팅 이미지 end -->
 		
 					<!-- 채팅 start -->
 					<div id="allChat" style="display: none;">
+						<!-- 채팅 상단 툴바 start -->
 						<div id="allChat-toolbar">
 							<div>
+								<!-- 로고 -->
 								<span id="allChat-toobar-title">LINK</span>
-								<span id="allChat-toobar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
+								<!-- 뒤로가기 -->
+								<span id="allChat-toobar-back" class="chat-toolbar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
 							</div>
 							<div></div>
 							<div>
-								<span id="allChat-toolbar-close">X</span>
+								<!-- 닫기 -->
+								<span id="allChat-toolbar-close" class="chat-toolbar-back">X</span>
 							</div>
 						</div>
-						<div id="allChat-content">
-							<div class="chatdiv chat-content">모임채팅</div>
-							<div class="chatdiv chidren" style="display: none;" condition="0">
-								<c:if test="${ fn:length(roomList) > 0 }">
-									<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-										<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }">${ roomList[i].clubTitle } / ${ roomList[i].roomId }</div>
-									</c:forEach>
-								</c:if>
-							</div>
-							<div class="chatdiv chat-content">1:1채팅</div>
-							<div class="chatdiv chidren" style="display: none;" condition="0">
-								<div class="chat-content chat-content-onechat" userId="">닉네임</div>
-								<div class="chat-content chat-content-onechat" userId="">닉네임</div>
-							</div>
-						</div>
-						<div id="allChat-content-child" style="display: none;">
-							<div id="club-post-chatRoom" class="chatdiv chat-content">
-								<div id="chatLog" style="padding: 10px;">
-									<!-- <div style="display: grid; grid-template-columns: 1fr 6fr;">
-										<div><img src="/resources/image/uploadFiles/robin.jpg" height="50px" width="50px" style="border-radius: 100px;"></div>
-										<div>
-											<div>닉네임</div>
-											<div style="position: relative; height: auto; background-color: red;">
-												<img src="/resources/image/uploadFiles/no_heart.jpg" style="vertical-align: middle;">
-												<div style="text-align: center; position: absolute; top: 3%; left: 5%; right: 13%;">루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-											</div>
-										</div>
-										<div>
-											<div>로빈</div>
-											<div>
-												<div>루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-											</div>
-										</div>
-									</div> -->
+						<!-- 채팅 상단 툴바 end -->
+						<!-- 채팅 body start -->
+						<div id="chat-body">
+							<!-- 채팅 list start -->
+							<div id="chat-list-content">
+								<!-- 채팅 사이드바 -->
+								<div id="chat-body-sidebar">
+									<img class="chat-img-sidebar people-users" style="box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;" src="/resources/image/uploadFiles/people.jpg">
+									<img class="chat-img-sidebar people-user" src="/resources/image/uploadFiles/one_user.jpg">
 								</div>
+								<!-- 모임 채팅과 1:1 채팅 리스트 start -->
+								<div id="chat-list-one-content">
+									<div id="club-chat-list">
+										<c:if test="${ fn:length(roomList) > 0 }">
+										<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
+											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }" namespace="clubchat">
+												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ roomList[i].clubImage }"></div>
+												<div>${ roomList[i].clubTitle } / ${ roomList[i].roomId }</div>
+											</div>
+										</c:forEach>
+										</c:if>
+									</div>
+									<div id="user-chat-list" style="display: none;">
+										<c:if test="${ fn:length(getChat) > 0 }">
+										<c:forEach var="i" begin="0" end="${ fn:length(getChat) - 1 }" step="1">
+											<div class="chat-content chat-content-onechat" roomId="${ getChat[i].roomId }" namespace="userchat">
+												
+												<c:choose>
+													<c:when test="${ getChat[i].user.nickName != sessionScope.user.nickName }">
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user.profileImage }"></div>
+														<div>${ getChat[i].user.nickName }</div>
+													</c:when>
+													<c:otherwise>
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
+														<div>${ getChat[i].user2.nickName }</div>
+													</c:otherwise>
+												</c:choose>
+											</div>
+										</c:forEach>
+										</c:if>
+									</div>
+								</div>
+								<!-- 모임 채팅과 1:1 채팅 리스트 end -->
 							</div>
-							<form action="" id="sendForm">
-							<div id="input-chatLog">
-								<div style="width: 270px; height: 40px;"><input type="text" name="message" autocomplete="off" style="width: 100%;"></div>
-								<div style="width: 50px; height: 40px;"><button id="chat_send_button" style="border-radius: 10px;">전송</button></div>
+							<!-- 채팅 list end -->
+							
+							<!-- 채팅방 start -->
+							<div id="chat-room-content" style="display: none;">
+								<div id="chat-room">
+									<div id="chatLog">
+										<!-- <div style="display: grid; grid-template-columns: 1fr 6fr;">
+											<div><img src="/resources/image/uploadFiles/robin.jpg" height="50px" width="50px" style="border-radius: 100px;"></div>
+											<div>
+												<div>닉네임</div>
+												<div style="position: relative; height: auto; background-color: red;">
+													<img src="/resources/image/uploadFiles/no_heart.jpg" style="vertical-align: middle;">
+													<div style="text-align: center; position: absolute; top: 3%; left: 5%; right: 13%;">루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
+												</div>
+											</div>
+											<div>
+												<div>로빈</div>
+												<div>
+													<div>루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
+												</div>
+											</div>
+										</div> -->
+									</div>
+								</div>
+								<!-- 채팅 메세지 전송 start -->
+								<form action="" id="sendForm">
+								<div id="input-chatLog">
+									<div><input type="text" name="message" autocomplete="off"></div>
+									<div><button id="chat_send_button">전송</button></div>
+								</div>
+								</form>
+								<!-- 채팅 메세지 전송 end -->
 							</div>
-							</form>
+							<!-- 채팅방 end -->
+							
 						</div>
+						<!-- 채팅 body end -->						
 					</div>
 					<!-- 채팅 end -->
 				
 				
 				
 				
-				
-					<ul class="inline cats filter-options">
-						<li data-group="advertising">
-							<a href="/club/getClubList">모임 일정</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="#">모임 채팅</a>
-						</li>
-					</ul>
+				<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>			
+					
 
 					<div class="post-area clear-after">
 						<article role="main">

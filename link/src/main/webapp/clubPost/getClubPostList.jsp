@@ -37,6 +37,70 @@
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
+		<!-- include summernote css/js -->
+		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+		<script src="/resources/summernote/summernote-lite.js"></script>
+		
+		<script type="text/javascript">
+			function textEdit(){
+			    jsonArray = [];
+				$('#summernote').summernote({
+	                disableResizeEditor: true,
+	                minHeight : 400,
+	                maxHeight : 700,
+	                focus : true,
+	                lang : 'ko-KR',
+	                toolbar : [
+	  	              ["style", ["style"]],
+		              ["font", ["bold", "underline", "clear"]],
+		              ["fontname", ["fontname"]],
+		              ["para", ["ul", "ol", "paragraph"]],
+		              ["table", ["table"]],
+		              ["insert", ["link", "picture", "video"]],
+		              ["view", ["fullscreen", "codeview"]],
+		              ['highlight', ['highlight']]
+		            ],
+	                //콜백 함수
+	                callbacks : {
+	                	onImageUpload : function(files, editor, welEditable) {
+	               	 		// 파일 업로드(다중업로드를 위해 반복문 사용)
+	               	 		for (var i = files.length - 1; i >= 0; i--) {
+	                			uploadSummernoteImageFile(files[i], this);
+	                		}
+	                	}
+	                }//end of callbacks
+	            });//end of summernote
+
+				function uploadSummernoteImageFile(file, el) {
+					var data = new FormData();
+					data.append("file",file);
+						$.ajax({
+							url: '/clubPostRest/json/uploadSummernoteImageFile',
+							type: "POST",
+							enctype: 'multipart/form-data',
+							data: data,
+							cache: false,
+							contentType : false,
+							processData : false,
+							success : function(data) {
+								//alert(data.responseCode);
+								//alert(data.url);
+								//alert("업로드 하였습니다");
+								$(el).summernote('editor.insertImage', data.url);
+								//alert(data.url);
+								//jsonArray.push(json["url"]);
+								//jsonFn(jsonArray);
+							}
+						});
+				}//end of uploadSummernoteImageFile
+				
+				function jsonFn(jsonArray){
+					//console.log(jsonArray);
+				}
+
+			};//end of textEdit
+		</script>
+		
 		<script type="text/javascript">
 			$(function() {
 				// summernote
@@ -217,6 +281,36 @@
 				
 			});// end of function()
 			
+			
+			//클럽버튼 펑션입니다.
+			
+			
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+		
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
+		});
+	});
+			
+			
+			
 			//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
 			function getClubPostGo(clubNo, clubPostNo){
 				location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
@@ -227,92 +321,6 @@
 				location.href = "/myHome/getYourHome?userId="+userId;
 			}
 		</script>
-		
-		<!-- include summernote css/js -->
-		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
-		<script src="/resources/summernote/summernote-lite.js"></script>
-		<script>
-			function textEdit(){
-			    jsonArray = [];
-				$('#summernote').summernote({
-	                disableResizeEditor: true,
-	                minHeight : 400,
-	                maxHeight : 700,
-	                focus : true,
-	                lang : 'ko-KR',
-	                toolbar : [
-	  	              ["style", ["style"]],
-		              ["font", ["bold", "underline", "clear"]],
-		              ["fontname", ["fontname"]],
-		              ["para", ["ul", "ol", "paragraph"]],
-		              ["table", ["table"]],
-		              ["insert", ["link", "picture", "video"]],
-		              ["view", ["fullscreen", "codeview"]],
-		              ['highlight', ['highlight']]
-		            ],
-	                //콜백 함수
-	                callbacks : {
-	                	onImageUpload : function(files, editor, welEditable) {
-	               	 		// 파일 업로드(다중업로드를 위해 반복문 사용)
-	               	 		for (var i = files.length - 1; i >= 0; i--) {
-	                			uploadSummernoteImageFile(files[i], this);
-	                		}
-	                	}
-	                }//end of callbacks
-	            });//end of summernote
-
-				function uploadSummernoteImageFile(file, el) {
-					var data = new FormData();
-					data.append("file",file);
-						$.ajax({
-							url: '/clubPostRest/json/uploadSummernoteImageFile',
-							type: "POST",
-							enctype: 'multipart/form-data',
-							data: data,
-							cache: false,
-							contentType : false,
-							processData : false,
-							success : function(data) {
-								//alert(data.responseCode);
-								//alert(data.url);
-								//alert("업로드 하였습니다");
-								$(el).summernote('editor.insertImage', data.url);
-								//alert(data.url);
-								//jsonArray.push(json["url"]);
-								//jsonFn(jsonArray);
-							}
-						});
-				}//end of uploadSummernoteImageFile
-				
-				function jsonFn(jsonArray){
-					//console.log(jsonArray);
-				}
-
-			};//end of textEdit
-		</script>
-		
-		<style type="text/css">
-		.modal{ 
-			position: fixed; width:100%; height:100%; background: rgba(0,0,0,0.2); top: 40px; left:0; display:none;
-		}
-		
-		.modal_content{
-			width:400px; height:200px;
-			background:#fff; border-radius:10px;
-			position:relative; top:50%; left:50%;
-			margin-top:-100px; margin-left:-200px;
-			text-align:center;
-			box-sizing:border-box; padding:74px 0;
-			line-height:23px; cursor:pointer;
-		}
-		
-		.club-post-add-view{
-			box-shadow: rgba(95, 0, 128, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-			border-radius: 30px;
-			padding: 3rem;
-			/* background-color: #f2f3ff; */
-		}
-		</style>
 		
 	</head>
 <body class="portfolio">
@@ -331,20 +339,27 @@
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
-						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList">모임 채팅</a>
-						</li>
-					</ul>
+					<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>
 					
 					
 					

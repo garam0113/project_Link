@@ -56,8 +56,33 @@
 	$(function() {
 		
 		$("#club-add-approval").bind("click", function() {
+			
+			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
+			var joinClubLimit = $("input[name='joinClubLimit']").val();
+			
+			//alert(totalApprovalConditionCount);
+			//alert(joinClubLimit);
+			
+			if(totalApprovalConditionCount < joinClubLimit) {
 			//모달창 열기
 			$('#club-add-approval-modal').modal("show");
+			} else {
+				
+				Swal.fire({
+					title: '모임 최대 한도 수를 초과하였습니다.' ,
+					text: "결제를 통해 모임 한도를 늘릴 수 있습니다." ,
+					icon: 'warning',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					if(result.value){
+					
+						self.location="/clubPost/addPayView?payNavigation=1"
+					}
+				})
+			}
 		});
 		
 		$("input[value='신청']").bind("click", function() {
@@ -72,6 +97,7 @@
 			
 			$("form").attr("accept-charset" , "EUC-KR").submit();
 		});
+		
 		
 		$("input[value='취소']").bind("click", function() {
 			
@@ -102,16 +128,6 @@
 		});
 	});
 	
-	//팝업 띄우기
-	var openWin;
-	function popup() {
-		var url = "/club/applyClub.jsp";
-		var name = "applyClub";
-		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
-		
-		openWin = window.open(url, name, option);
-	} 
-	
 	$(function() {
 
 		$("#updateClub").on("click", function() {
@@ -119,12 +135,6 @@
 
 		});
 	});
-	
-	$(function() {
-		$("#addApproval").on("click", function() {
-			popup();
-		});
-	}); 
 	
 	$(function() {
 		$(".homeBtn").on("click", function() {
@@ -143,11 +153,10 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+		
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
 	});
 		
@@ -157,12 +166,12 @@
  	$(function() {
 		
 		//alert("123");
-		var options = {
+/* 		var options = {
 			"forcNew" : true
-		};
+		}; */
 		var url = "https://192.168.0.183:4000";
 
-		socket = io.connect(url, options);
+		socket = io.connect(url);
 
 		socket.on("connect", function() {
 			//alert("소켓연결 완료");
@@ -173,6 +182,7 @@
 			var clubTitle = $("#clubTitle").val();
 			var profile = $("#profile").val();
 			var nickName = $("#nickName").val();
+			var num;
 			console.log("profile : "+profile);
 			console.log("nickName : "+nickName);
 			
@@ -235,7 +245,8 @@
 										viewName : roomName,
 										total : total,
 										profile : profile,
-										nickName : nickName
+										nickName : nickName,
+										member : 1
 										});
 									self.location = "https://192.168.0.183:4040";
 								}
@@ -265,10 +276,12 @@
 							success : function (data) {
 								console.log(data);
 								socket.emit("info", {
+									total : data.limit,
 									roomName : roomName,
 									viewName : viewName,
 									profile : profile,
-									nickName : nickName
+									nickName : nickName,
+									member : data.member
 								});
 								self.location = "https://192.168.0.183:4040";
 							}
@@ -362,10 +375,10 @@
 		}
 		
 		.club-wrap img {
-			width: 50%;
+			width: 100%;
 			vertical-align: middle;
 			filter: brightness(1.1);
-			margin-left: 450px;
+			/* margin-left: 450px; */
 			/* margin-top: -23px;
 			height: 0%; */
 		}
@@ -475,25 +488,25 @@
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
 									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
-										<strong>모 임 제 목</strong>
+										<strong>모임제목</strong>
 									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubTitle}</div>
+									<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>모 임 설 명</strong>
+										<strong>모임설명</strong>
 									</div>
-									<div class="col-xs-8 col-md-8" style="margin-left: 15px;">${club.clubDetail}</div>
+									<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
 								</div>
 
 								<hr />
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>카 테 고 리</strong>
+										<strong>카테고리</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
 								</div>
@@ -502,7 +515,7 @@
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>활 동 영 역</strong>
+										<strong>활동영역</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
 								</div>
@@ -531,7 +544,7 @@
 					</div>
 					<!-- 달력 영역 -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 134px; margin-left: 860px;">일정생성</button>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
 				</div>
 				
 				<div class="form-group" id="btn_group">
@@ -577,7 +590,8 @@
 			
 			</div>
 			
-
+			<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+			<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
 		
 		
 					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
