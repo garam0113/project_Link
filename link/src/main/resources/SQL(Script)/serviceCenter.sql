@@ -100,8 +100,8 @@ WHERE n.notice_no = 41;
 
 
 SELECT *
-FROM FEED
-WHERE FEED_NO ='52';
+FROM USERS
+WHERE USER_ID ='user01';
 
 
 

@@ -29,6 +29,7 @@
 <script type="text/javascript">
 	$(function() {
 
+
 		$("button:contains('뒤로')").bind("click", function() {
 			if(${user.role=='1'}){
 			self.location = "/serviceCenter/getReportList";
@@ -38,7 +39,65 @@
 		})
 
 		$("button:contains('처리')").bind("click", function() {
-			self.location = "/serviceCenter/updateReport?no="+$('#no').val();
+			
+			Swal.fire({
+		          title: '신고 처리',
+		          html: '<h3>욕설 <input type="checkbox" id="욕설" name="reportReason2" value="1" /></h3><p/>' +
+		         		 '<h3>광고 <input type="checkbox" id="광고"  name="reportReason2" value="2"/></h3><p/>' +
+		         		 '<h3>기타 <input type="checkbox" id="기타" name="reportReason2" value="4" /></h3><p/>' +
+		                '<h3>성적인 발언 <input type="checkbox" id="성적" name="reportReason2" value="8" /></h3>',
+		          showCancelButton: true,
+		          cancelButtonColor: '#d33',
+		          confirmButtonText: '처리하기',
+		      
+		        }).then((result) => {
+		        	if(result.isConfirmed){
+		        		var sum = 0;
+		        		var length = $("input:checkbox[name=reportReason2]:checked").length;
+		        		var checkbox = $("input:checkbox[name=reportReason2]:checked").val();
+		        		
+		        		for(var i =0 ; i<length; i++){
+		        			
+		        			var sum2 = parseInt($($("input:checkbox[name=reportReason2]:checked")[i]).val());
+		        			
+		        			sum += parseInt(sum2);			
+		        			
+		        		} //for문 끝
+		        	
+		        		$.ajax({
+		        			url  : "/serviceCenterRest/json/updateReport",
+		        			contentType: 'application/json',
+		        			method : "POST",
+		        			dataType: "json",
+		        			data : JSON.stringify ({
+		        				"title":$("#title").val(),
+		        				"content":$("#content").val(),
+		        				"user1":$("#user1").val(),
+		        				"user2":$("#user2").val(),
+		        				"reportSource":$("#reportSource").val(),
+		        				"reportReason": sum,
+		        				"type": $("#type").val(),
+								"no" : $("#no").val(),
+		        					
+		        			 success: function(){
+		        				
+		        			 }<!-- success 끝 -->
+		        			}), <!-- data -->
+		        				
+		        			}) <!-- ajax (updateReport) -->
+		        			
+		        			
+		        		
+		        	
+
+		        		Swal.fire('신고처리 되었습니다.','ㅜㅜ','success');<!--if문 -->
+		        	}else if(result.isDismissed){
+		        	
+		        	}
+		        })<!-- result 골랐을 때 -->
+			
+			
+		<%--	self.location = "/serviceCenter/updateReport?no="+$('#no').val();   --%>
 	
 
 					})
@@ -98,7 +157,7 @@ textarea {
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
   <h2>신고 상세보기</h2>
 </div>
-	
+
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
 			<table>
@@ -113,9 +172,10 @@ textarea {
 						<input type="hidden" name="no" id="no" value="${report.no}">
 						</td>
 					</tr>
-					<tr class = "content" id ="content" >
+					<tr >
 						<th style="text-align-last: center;">제목</th>
-						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; ">				
+						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; 
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">				
 						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 
@@ -126,7 +186,8 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						${report.content}
 						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>
@@ -166,6 +227,8 @@ textarea {
 		     			</td>
 		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>신고받는 닉네임 &nbsp;&nbsp;</strong>
 		     			 <input type="text" class="" value="${report.user2.nickName}" style="width:auto; height:35px; display:inline;" disabled />
+		     			 <input type="hidden" id="user2" name="user2.userId" value="${report.user2.userId}"/>
+		     			  <input type="hidden" id="user1" name="user2.userId" value="${report.user1.userId}"/>
 		     			</td>
 					</tr>
 					<tr >
@@ -185,7 +248,7 @@ textarea {
 		   				  </c:if>
 		   				 <c:if test="${report.reportReason == '8'|| report.reportReason == '9' || report.reportReason == '10' || report.reportReason == '11' || report.reportReason == '12'
 		    				 || report.reportReason == '11' || report.reportReason == '14' || report.reportReason == '15' }">
-		    			  성적<input type="checkbox" class="input" id="reportReason" name="reportReason" value="8" checked>
+		    			  성적인 발언<input type="checkbox" class="input" id="reportReason" name="reportReason" value="8" checked>
 		   				</c:if>
 						</td>
 						
