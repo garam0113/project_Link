@@ -366,7 +366,7 @@
 										and cU.club_no = #{searchKeyword}
 									</if>
 								</where>
-								ORDER BY cU.member_role DESC
+								ORDER BY cU.member_role DESC, cU.approval_condition DESC, cU.join_reg_date
 								) deep_table
 							) inner_table
 		

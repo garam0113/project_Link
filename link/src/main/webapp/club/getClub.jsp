@@ -386,10 +386,10 @@
 		}
 		
 		.club-wrap img {
-			width: 50%;
+			width: 100%;
 			vertical-align: middle;
 			filter: brightness(1.1);
-			margin-left: 450px;
+			/* margin-left: 450px; */
 			/* margin-top: -23px;
 			height: 0%; */
 		}
