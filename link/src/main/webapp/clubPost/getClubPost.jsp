@@ -1053,6 +1053,7 @@
 				
 				roomId = $(this).attr("roomId");
 				namespace = $(this).attr("namespace");
+				alert(roomId);
 
 				
 				//소켓서버에 접속시킨다.
@@ -1289,8 +1290,17 @@
 										<c:if test="${ fn:length(getChat) > 0 }">
 										<c:forEach var="i" begin="0" end="${ fn:length(getChat) - 1 }" step="1">
 											<div class="chat-content chat-content-onechat" roomId="${ getChat[i].roomId }" namespace="userchat">
-												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
-												<div>${ getChat[i].user2.nickName }</div>
+												
+												<c:choose>
+													<c:when test="${ getChat[i].user.nickName != sessionScope.user.nickName }">
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user.profileImage }"></div>
+														<div>${ getChat[i].user.nickName }</div>
+													</c:when>
+													<c:otherwise>
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
+														<div>${ getChat[i].user2.nickName }</div>
+													</c:otherwise>
+												</c:choose>
 											</div>
 										</c:forEach>
 										</c:if>
