@@ -1,6 +1,7 @@
 package com.link.service.clubPost.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -336,7 +337,23 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public List<Chat> getChat(Chat chat) throws Exception {
 		System.out.println(getClass() + ".getChat(Chat chat) 왔다");
-		return sqlSession.selectList("ClubPostMapper.getChat", chat);
+ 		List<Chat> list = sqlSession.selectList("ClubPostMapper.getChat", chat);
+ 		
+ 		for (int i = 0; i < list.size(); i++) {
+ 			
+ 			System.out.println("////////////////////////////////");
+ 			System.out.println(list.get(i));
+ 			
+			User user = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId()));
+			User user2 = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId2()));
+			
+			list.get(i).setUser(user);
+			list.get(i).setUser2(user2);
+			
+			list.set(i, list.get(i));
+		}
+ 		
+		return list;
 	}
 	
 	

@@ -1,6 +1,5 @@
 package com.link.web.clubPost;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -252,8 +251,6 @@ public class ClubPostController {
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		
-		
-		
 		// 알림
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
 		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
@@ -264,7 +261,7 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Chat chat, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
 		
 		
@@ -296,7 +293,11 @@ public class ClubPostController {
 		
 		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
 
+
 		
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
 		
 		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
