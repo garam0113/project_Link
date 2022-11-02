@@ -51,7 +51,7 @@ $(function() {
 			contentType : "application/json",
 			success : function(data,status) { 
 	       console.log(status);
-	       console.log(data);
+	       console.log(data.blockList);
 	          var value="";
 	       $.each(data.blockList, function(index, item) { 
 	    	      value += 	"<div id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<span class='yourHome3'>"+item.receiveId.nickName+"</span>"+
@@ -241,11 +241,11 @@ $(document).on("click","#myClub", function() {
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
 				var value =
 					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div><button type='button' class='btn btn-danger btn-sm'>채팅</button></div>";
+					"팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
 				var value =
 					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div><button type='button' class='btn btn-danger btn-sm'>채팅</button></div>";
+					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
 			}else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
 				var value =
 					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+

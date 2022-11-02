@@ -29,7 +29,7 @@ $(function(){
 	var user_Id = $(this).parent().parent().attr("id");
 	var nickName = $("."+user_Id+"").val();
 	var profileImage = $(this).attr("id");
-	
+	var sessionId = $("#myId").val();
 	
 	$.ajax("/myHomeRest/json/getFollow", {
 
@@ -135,9 +135,9 @@ $(function(){
 					
 				});
 	
-	
+	         if(sessionId != user_Id){
 				 $("#"+nickName+"").dialog("open");
-	
+	         }
 		},
 		error : function(){
 			var value =
@@ -184,7 +184,7 @@ $(document).on("click",".dll",function(){
 	var user_Id = $(this).parent().parent().attr("id");
 	var nickName = $("."+user_Id+"").val();
 	var profileImage = $(this).attr("id");
-	
+	var sessionId = $("#myId").val();
 	$.ajax("/myHomeRest/json/getFollow", {
 
 		type : "POST",
@@ -290,7 +290,9 @@ $(document).on("click",".dll",function(){
 				});
 	
 	
-				 $("#"+nickName+"1").dialog("open");
+				if(sessionId != user_Id){
+					 $("#"+nickName+"").dialog("open");
+		         }
 	
 		},
 		error : function(){
@@ -1094,6 +1096,15 @@ $(function() {
 			self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 		}
 	});
+	$(document).on("click" ,".yourHome2", function() {
+		var userId = $("#sendId").val(); 
+		if($(this).parent().parent().attr("id")==userId){
+			self.location = "/myHome/getMyHome?userId="+$(this).parent().parent().attr("id");
+			
+		}else{
+			self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+		}
+	});
 	
  });
  
@@ -1790,6 +1801,7 @@ margin-top:100px;
 									value="${sessionScope.user.userId}"> <input
 									type="hidden" name="recvId" id="recvId"
 									value="${getUser.userId}">
+									<input type="hidden" id="myId" value=${followUser.userId }>
 							</div> 
 								<!-- END SIDEBAR BUTTONS -->
 								<!-- SIDEBAR MENU -->
@@ -2161,10 +2173,7 @@ $(function() {
 			
 			$("#fl").append(value);      
 			
-			 $(".yourHome2").on("click" , function() {
-					
-					self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
-				});
+			
 			
 		})
 		

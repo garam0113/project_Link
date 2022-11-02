@@ -337,31 +337,29 @@ public class MyHomeRestController {
 			
 		}
 
-		@RequestMapping(value = "/json/getBlockList", method = RequestMethod.POST)
-		 public Map<String, Object> getBlockList(@RequestBody Search search, User user, HttpSession session) throws Exception{
-			 System.out.println("/myHomeRest/json/getBlockList : POST");
-			 
-			 if(search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				search.setPageSize(pageSize);
-				search.setPageUnit(pageUnit);
-				
-				
-				String userId = ((User) session.getAttribute("user")).getUserId();
-				search.setSearchKeyword(userId);
-			 Map<String, Object> map = new HashMap<String, Object>();
-			 map.put("search",search);
-			 map.put("user", user);	
-			 map.put("blockList",myHomeService.getFollowList(search).get("list"));
-			 
-			 
-			 
-			 
-			 return map;
-			 
-		 }
+		/*
+		 * @RequestMapping(value = "/json/getBlockList", method = RequestMethod.POST)
+		 * public Map<String, Object> getBlockList(@RequestBody Search search, User
+		 * user, HttpSession session) throws Exception{
+		 * System.out.println("/myHomeRest/json/getBlockList : POST");
+		 * 
+		 * if(search.getCurrentPage() == 0) { search.setCurrentPage(1); }
+		 * 
+		 * search.setPageSize(pageSize); search.setPageUnit(pageUnit);
+		 * 
+		 * 
+		 * String userId = ((User) session.getAttribute("user")).getUserId();
+		 * search.setSearchKeyword(userId); Map<String, Object> map = new
+		 * HashMap<String, Object>(); map.put("search",search); map.put("user", user);
+		 * map.put("blockList",myHomeService.getFollowList(search).get("list"));
+		 * 
+		 * 
+		 * 
+		 * 
+		 * return map;
+		 * 
+		 * }
+		 */
 		@RequestMapping(value="/json/getApprovalConditionList")
 		public Map<String, Object> getMyClubList(@RequestBody Search search, Model model, User user, HttpSession session, Club club, ClubUser clubUser, String userId) throws Exception {
 			

@@ -143,6 +143,10 @@ public class MyHomeController {
 		Map<String, Object> followUserId = myHomeService.getFollow(followUser);
 		Map<String, Object> cutUserId =  myHomeService.getFollow(cutUser);
 		
+		System.out.println("/////////////////////컷유저!!!!!!//////"+cutUserId.get("block"));
+		
+		User users1 = new User();
+		users1 = (User)cutUserId.get("block");
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -180,11 +184,19 @@ public class MyHomeController {
 		System.out.println("세션아이디"+sessoinId);
 		System.out.println("유저아이디"+userId);
 	
+		if(users1 != null) {
+			if(users1.getFbState().trim().equals("2")) {
+			return "forward:/myHome/getYourHome.jsp";
+			}
+		}
 		
+	if(cutUserId.get("block")==null) {
 		return "forward:/myHome/getYourHome.jsp";
+	}else{
+		return "forward:/";
 	}
 	
-	
+	}
 	@RequestMapping(value = "getProfile", method = RequestMethod.GET)
 	public String getProfile(@RequestParam("userId")String userId,Model model, HttpSession session) throws Exception{
 		
