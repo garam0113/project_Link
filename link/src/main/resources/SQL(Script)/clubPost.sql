@@ -754,7 +754,7 @@ VALUES (5, 'user555', 22, '모임원 추가', '실시간 계좌이체', 5000, SY
 
 
 INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, #{ user.userId }, #{ roomID }, #{ user2.userId })
-INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, 'user111', '111', 'user222');
+INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, 'user111', 'user111user222', 'user222');
 INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, 'user222', 'user222user333', 'user333');
 INSERT INTO CHAT (CHAT_NO, USER_ID, ROOMID, USER_ID2) VALUES(seq_chat_no.NEXTVAL, 'user444', '222', 'user222');
 
