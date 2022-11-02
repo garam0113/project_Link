@@ -56,8 +56,33 @@
 	$(function() {
 		
 		$("#club-add-approval").bind("click", function() {
+			
+			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
+			var joinClubLimit = $("input[name='joinClubLimit']").val();
+			
+			//alert(totalApprovalConditionCount);
+			//alert(joinClubLimit);
+			
+			if(totalApprovalConditionCount < joinClubLimit) {
 			//모달창 열기
 			$('#club-add-approval-modal').modal("show");
+			} else {
+				
+				Swal.fire({
+					title: '모임 최대 한도 수를 초과하였습니다.' ,
+					text: "결제를 통해 모임 한도를 늘릴 수 있습니다." ,
+					icon: 'warning',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					if(result.value){
+					
+						self.location="/clubPost/addPayView?payNavigation=1"
+					}
+				})
+			}
 		});
 		
 		$("input[value='신청']").bind("click", function() {
@@ -72,6 +97,7 @@
 			
 			$("form").attr("accept-charset" , "EUC-KR").submit();
 		});
+		
 		
 		$("input[value='취소']").bind("click", function() {
 			
@@ -121,12 +147,6 @@
 	});
 	
 	$(function() {
-		$("#addApproval").on("click", function() {
-			popup();
-		});
-	}); 
-	
-	$(function() {
 		$(".homeBtn").on("click", function() {
 			self.location="/club/getClub?clubNo=${clubNo}";
 		});
@@ -147,7 +167,7 @@
 	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
 	});
 		
@@ -580,7 +600,8 @@
 			
 			</div>
 			
-
+			<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+			<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
 		
 		
 					<input type="hidden" id="clubTitle" value="${club.clubTitle}">

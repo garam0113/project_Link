@@ -108,7 +108,7 @@
 	}
 	
 	
-	$(function() {
+/* 	$(function() {
 		
 	
 		$(document).on("click", "#banMember", function() {
@@ -132,18 +132,18 @@
 		//refreshMemList();
 	})
 	
-});	
+});	 */
 
-	$(function() {
+/* 	$(function() {
 		$("#banMember").on("click", function() {
 			deleteClubMember();
 		});
 	});
-	 
+	  */
 	
 	
 	
-/* 	
+
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
@@ -152,7 +152,7 @@
 			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		 });
-  */
+
 
 			//추방 그냥 컨트롤러	
 			
@@ -183,7 +183,38 @@
 			$(function() {
 				$("#updateApprovalCondition").on("click", function() {
 					//alert("모임원을 승인합니다 : ");
-					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+					
+					var totalClubMemberCount = $("input[name='totalClubMemberCount']").val();
+					var clubMaxMember = $("input[name='clubMaxMember']").val();
+					
+					alert(totalClubMemberCount);
+					alert(clubMaxMember);
+					
+					if(totalClubMemberCount < clubMaxMember) {
+						
+						$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+						
+						} else{
+							
+							Swal.fire({
+								title: '모임원 한도 초과입니다.' ,
+								text: "결제를 통해 모임원 한도를 늘릴 수 있습니다." ,
+								icon: 'warning',
+								schowCancelButton: false ,
+								confirmButtonColor: '#3085d6',
+								cancelButtonColor: '#d33',
+								confirmButtonText: '확인',
+							}).then((result) => {
+								if(result.value){
+								
+									self.location="/clubPost/addPayView?clubNo=${clubNo}"
+								}
+							})
+							
+						}
+					});
+					
+					
 			});
 				
 			$(document).on("click", "#updateApprovalCondition", function(){
@@ -333,10 +364,11 @@
 	<div class="container">
 	
 		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">모임원 리스트</h2>
+			<h2 class="sub_tit_txt">모임원 리스트${totalClubMemberCount}/${club.clubMaxMember}</h2>
 		</div>
 	
-	
+		<input type="hidden" id="totalClubMemberCount" name="totalClubMemberCount" value="${totalClubMemberCount}">
+		<input type="hidden" id="clubMaxMember" name="clubMaxMember" value="${club.clubMaxMember}">
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  		  <div class="row">

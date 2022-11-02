@@ -261,16 +261,13 @@
 	</select>
 	
 	<select  id="getTotalApprovalConditionCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT club_no 
-						FROM club_user
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			cU.user_id = #{searchKeyword}
-								</if>								
-							</where>
-						</if> ) countTable						
+	  	SELECT count(*)
+	  	FROM ( SELECT user_id
+				FROM club_user		
+			<where>
+				user_id = #{searchKeyword}
+			</where>			
+			) countTable		
 	 </select>
 	
 	<!-- 로그인한 회원이 가장 최근 만든 모임번호 가져온다 -->
@@ -380,8 +377,8 @@
 	  	FROM(	SELECT club_no 
 						FROM club_user
 							<where>
-
-						 			club_no = #{searchKeyword}								
+						 			club_no = #{searchKeyword}
+						 			and approval_condition = '1'								
 							</where> ) countTable						
 	 </select>
 	
