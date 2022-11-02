@@ -116,7 +116,7 @@ public class LiveRestController {
 			
 			System.out.println("조건에 만족하지 못할 경우");
 			
-			return limit;
+			return null;
 			
 		}
 	}

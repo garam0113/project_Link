@@ -174,6 +174,43 @@ $(function(){
 	
 	
 	
+	/*server message 라는 이벤트명으로 대기*/
+	socket.on('server message', function(data){
+	    //console.log(data);
+	    
+	    var display = "";
+		    
+		    if( $("#session_nickName").val() != data.username ){
+		    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
+							+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+							+"<div>"
+								+"<div>"+data.username+"</div>"
+								+"<div>"
+									+"<div>"+data.message+"</div>"
+								+"</div>"
+							+"</div>"
+						+"</div>";
+		    		
+		    }else{
+		    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
+							+"<div>"
+								+"<div style='float: right;'>"+data.username+"</div>"
+								+"<div>"
+									+"<div style='float: right;'>"+data.message+"</div>"
+								+"</div>"
+							+"</div>"
+							+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+						+"</div>";
+		    }
+	    					    
+	    
+	    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
+		   $('#chatLog').append(display);
+	    
+	});
+	
+	
+	
 	
 	
 	

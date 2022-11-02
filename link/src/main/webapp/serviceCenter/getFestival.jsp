@@ -34,7 +34,6 @@ $(function(){
 						 	   "<h5 class=card-title>"+ item.title+"</h5>"+
 						 	   "<input type='hidden' name='contentid' value="+item.contentid+">"
 								
-							<%--		console.log($(this).parent().find('input[name="contentid"]').val());  --%>
 										$.ajax({
 										url  : "/serviceCenterRest/json/getFestival",
 										type : "get",

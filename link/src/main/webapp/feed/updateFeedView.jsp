@@ -12,6 +12,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 	
+	<link href="/resources/css/feed/updateFeedView.css" rel="stylesheet">
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,6 +26,10 @@
 	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	<%-- SUMMER NOTE --%>
+	
+	<%-- ICON --%>
+	<script src="https://kit.fontawesome.com/ebd5a092f1.js"></script>
+	<%-- ICON --%>
 	
 	<script type="text/javascript">
 	
@@ -167,22 +173,24 @@
 
 	<jsp:include page="/toolbar.jsp" />			
 
-	<div id="intro-wrap" data-height="12.222">
-		<div id="intro" class="preload darken">					
-			<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-				<div class="caption">
-					<h2>Feed</h2>
-				</div><!-- caption -->					
-			</div>								
-		</div><!-- intro -->
-	</div><!-- intro-wrap -->
-	
 	<div id="main">
 		<section class="row section">
 			<div class="row-content buffer even clear-after">
 			
+				<div id="post-nav">
+					<ul class="clear-after reset plain">
+						<li id="prev-items" class="post-nav">
+							<a href="#" onClick="javascript:history.go(-1); return false">
+								<i class="fa fa-chevron-left"></i>
+								<span class="label">Prev</span>
+							</a>
+						</li> 
+					</ul>
+				</div>
+			
 				<div class="column three">
-					<a href="/feed/getFestivalLocation.jsp">길찾기</a>
+					<button class="btn btn-primary searchPlace" type="button"
+									onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 				</div>
 				
 				<div class="column six">
