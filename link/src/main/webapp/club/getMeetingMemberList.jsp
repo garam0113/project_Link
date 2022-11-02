@@ -167,17 +167,16 @@
 
 <body>
 	
-	<div class="container">	
+	<div class="container" style="background-color: #f0f2f5 !important;">	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
 		<div class="form_txtInput" style="margin-top: 150px;">
-			<h2 class="sub_tit_txt">모임원 리스트</h2>
+			<h2 class="sub_tit_txt">일정 참여자</h2>
 		</div>
-		
-			<!-- <div id="main" class="row" style="padding-bottom: 20%;">중간 개별영역 -->
-			
+			<!-- 중간 개별영역 -->
+			<div id="main" class="row" style="padding-bottom: 20%;">
 			
 				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
 			
@@ -225,6 +224,7 @@
 	  </form>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
+ 	</div>
  	</div>
  	</div>
 	<!-- </div> -->
