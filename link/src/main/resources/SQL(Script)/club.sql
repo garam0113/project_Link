@@ -398,12 +398,40 @@ WHERE row_seq BETWEEN ? AND ?
 
 
 
+SELECT
+inner_table.* 
+FROM ( 
+	SELECT rownum AS row_seq, deep_table.* 
+	FROM ( 
+		SELECT 
+		c.club_no , 
+		c.club_title , 
+		c.club_detail , 
+		c.club_category , 
+		c.current_member , 
+		c.club_max_member , 
+		c.club_area , 
+		c.club_image , 
+		cU.approval_condition 
+			FROM club c, club_User cU 
+			WHERE c.club_no = cU.club_no and cU.user_id = ?
+			) deep_table ) inner_table 
 
 
 
 
+SELECT count(*)
+FROM (	SELECT user_id
+	FROM club_user
+	WHERE user_id = 'user15' ) countTable
+	
+	
+	
+SELECT COUNT(*)
+FROM( SELECT club_no 
+	FROM club_user
+	WHERE club_no = '2' and approval_condition = '1' ) countTable				
 
-
-
+SELECT * FROM club;
 
 

@@ -21,6 +21,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--페이지 네비게이션 css --%>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+.page-header{
+	border-bottom:0px !important;
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -161,7 +164,7 @@ function fncGetList(currentPage) {
 					<form class="form-inline" name="detailForm">
 						
 						<div class="form-group">
-							<select class="form-control" name="searchCondition" style="vertical-align: top;">
+							<select class="form-control" name="searchCondition" >
 								<option value="0"
 									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"

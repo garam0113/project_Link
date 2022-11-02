@@ -191,7 +191,6 @@ public class ServiceCenterController {
 		System.out.println("/ServiceCenter/addQandA : GET& POST");
 		User userId = (User) session.getAttribute("user");
 		qandA.setUserId(userId);
-		System.out.println(qandA.getQandAOpenCondition() + "테스트용");
 		int fileCount = 0;
 		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
 

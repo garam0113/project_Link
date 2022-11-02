@@ -131,7 +131,15 @@
                <ul class="reset" role="navigation">
                   <li class="menu-item"><a href="/">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
-                  <li class="menu-item"><a href="/club/getClubList">Club</a></li>
+                  
+                  <c:if test="${! empty sessionScope.user }">
+                  	<li class="menu-item"><a href="/club/getClubList">Club</a></li>
+                  </c:if>
+                  
+                  <c:if test="${ empty sessionScope.user }">
+                  	<li class="menu-item"><a href="/user/login">Club</a></li>
+                  </c:if>
+                  
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
                   <li class="menu-item"><a

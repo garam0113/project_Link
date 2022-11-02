@@ -113,6 +113,39 @@
 	        return false;
 	    });
 	});
+	
+	
+	
+	//클럽버튼 펑션입니다.
+	
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+		
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
+		});
+	});
+	
+	
+	
+	
+	
 	</script>
 	<!-- 모임채팅 -->
 	
@@ -134,21 +167,29 @@
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 				
-				
-					<ul class="inline cats filter-options" style="font-size: 40px;">
-						<li data-group="advertising">
-							<a href="/club/getMeetingList">모임 일정</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="#">모임 채팅</a>
-						</li>
-					</ul>
+				<%-- 클럽버튼 --%>
+					<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>	
+				<%-- 클럽버튼 --%>
 					
 					
 					<%-- #f5ddff --%>

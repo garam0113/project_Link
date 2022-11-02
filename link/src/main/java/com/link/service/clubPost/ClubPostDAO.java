@@ -3,6 +3,7 @@ package com.link.service.clubPost;
 import java.util.List;
 import java.util.Map;
 
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
@@ -34,6 +35,7 @@ public interface ClubPostDAO {
 	
 	
 	
+	
 	// 신고
 	
 	// 좋아요 확인
@@ -54,6 +56,16 @@ public interface ClubPostDAO {
 	
 	
 	
+	
+	
+	// 1:1 채팅
+	public void addChat(Chat chat) throws Exception;
+	
+	// 1:1 채팅
+	public List<Chat> getChatList(Chat chat) throws Exception;
+	
+	// 1:1 채팅
+	public List<Chat> getChat(Chat chat) throws Exception;
 	
 	
 	

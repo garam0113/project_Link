@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonObject;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
@@ -239,14 +240,38 @@ public class ClubPostRestController {
 
 	
 
-///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// Chat /////////////////////////////////////////////////////////////////////////////////////
 
 	
-	@RequestMapping(value = "json/addRoomId", method = RequestMethod.POST)
-	public void addRoomId(HttpSession session, String roomId) throws Exception {
-		System.out.println("/addRoomId : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
-		//(User)session.getAttribute("user");
+	///*
+	@RequestMapping(value = "json/addChat", method = RequestMethod.POST)
+	public List<Chat> addChat(HttpSession session, User user2, Chat chat) throws Exception {
+		System.out.println("/addChat : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
+
+		chat.setUser((User)session.getAttribute("user"));
+		chat.setUser2(user2);
+		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+user2.getUserId());
+		
+		System.out.println("DB로 보내는 데이터 : " + chat);
+		
+		
+		
+		//////////////////////////////////////BUSINESS LOGIC /////////////////////////////////////////
+
+		
+		
+		// 로그인한 회원과 상대방의 채팅방이 없으면 만들고 있으면 안 만든다
+		List<Chat> list = clubPostServiceImpl.getChatList(chat);
+		System.out.println("로그인한 회원과 상대방과의 방 : " + list);
+		if( list.size() == 0 ) {
+			// DB에 로그인한 회원과 상대방과의 채팅방이 없으면 채팅방 만듬, 1:1 채팅에서 메세지를 보내면 채팅방 만들어짐
+			clubPostServiceImpl.addChat(chat);
+		}
+		
+		// 내가 들어있는 채팅방 가져오기
+		return clubPostServiceImpl.getChat(chat);
 	}
+	//*/
 	
 	
 ///////////////////////////////////////////////////////////////////////////////////// MyHome /////////////////////////////////////////////////////////////////////////////////////

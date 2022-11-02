@@ -1,6 +1,7 @@
 package com.link.service.clubPost.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.link.service.clubPost.ClubPostDAO;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
@@ -318,6 +320,40 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	public List<ClubUser> getRoomIdList(User user) throws Exception {
 		System.out.println(getClass() + ".getRoomIdList(User user) 왔다");
 		return sqlSession.selectList("ClubMapper.getRoomIdList", user);
+	}
+
+	@Override
+	public void addChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ". addChat(Chat chat) 왔다");
+		sqlSession.insert("ClubPostMapper.addChat", chat);
+	}
+
+	@Override
+	public List<Chat> getChatList(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChatList(Chat chat) 왔다");
+		return sqlSession.selectList("ClubPostMapper.getChatList", chat);
+	}
+
+	@Override
+	public List<Chat> getChat(Chat chat) throws Exception {
+		System.out.println(getClass() + ".getChat(Chat chat) 왔다");
+ 		List<Chat> list = sqlSession.selectList("ClubPostMapper.getChat", chat);
+ 		
+ 		for (int i = 0; i < list.size(); i++) {
+ 			
+ 			System.out.println("////////////////////////////////");
+ 			System.out.println(list.get(i));
+ 			
+			User user = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId()));
+			User user2 = sqlSession.selectOne("UserMapper.getUser", new User(list.get(i).getUserId2()));
+			
+			list.get(i).setUser(user);
+			list.get(i).setUser2(user2);
+			
+			list.set(i, list.get(i));
+		}
+ 		
+		return list;
 	}
 	
 	

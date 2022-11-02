@@ -33,7 +33,7 @@
  	 
  	 
  	 <!-- alert! -->
- 	 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
+ 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
  	 
  	 
  	 <!-- 따로 가능?? -->
@@ -256,7 +256,32 @@
 	$(function() {
 		
 		$("#addClubBtn").on("click", function() {
-			self.location="/club/addClubView.jsp"
+			
+			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
+			var joinClubLimit = $("input[name='joinClubLimit']").val();
+			
+			//alert(totalApprovalConditionCount);
+			//alert(joinClubLimit);
+			
+			if(totalApprovalConditionCount < joinClubLimit) {
+				self.location="/club/addClubView.jsp"
+			} else {
+				
+				Swal.fire({
+					title: '모임 최대 한도 수를 초과하였습니다.' ,
+					text: "결제를 통해 모임 한도를 늘릴 수 있습니다." ,
+					icon: 'warning',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					if(result.value){
+						
+						self.location="/clubPost/addPayView"
+					}
+				})
+			}	
 		});
 	});
 	
@@ -325,14 +350,6 @@
 			}); // end of ajax
 		} // end of if
 	}); // end of scroll */
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -412,14 +429,14 @@
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/main.jsp">LINK</a>
+                  <a href="/">LINK</a>
                </h1>
             </div>
             <!-- brand -->
             <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
             <nav>
                <ul class="reset" role="navigation">
-                  <li class="menu-item" style="margin-left: 320px;"><a href="/main.jsp">Home</a></li>
+                  <li class="menu-item" style="margin-left: 320px;"><a href="/">Home</a></li>
                   <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
                   <li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   <li class="menu-item"><a
@@ -559,6 +576,9 @@
 	    	</form>
 	    	</div>
 	    	
+	    	<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+	    	<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
+	    	
 	  		<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임개설
 	  		
 	  		</button> -->
@@ -567,9 +587,10 @@
 	</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-	   <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'">
-	    	<img src="/resources/image/uploadFiles/plusIcon.png" style="width: 308px;">
-	    	<p style="margin-top: 20px; margin-left: 11px;">모임개설
+	   <!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
+	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;">
+	    	<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
+	    	<p style="margin-top: 20px; margin-left: 11px;"><strong>모임개설</strong>
 	    </div>	
 
 
