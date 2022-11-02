@@ -44,9 +44,9 @@ $(function(){
 		cors: { origin: "*" },
 		path: '/socket.io',
 		query: {
-			userId : '${ user.userId }',
-			profileImage : '${ sessionScope.user.profileImage }',
-			nickName : '${ sessionScope.user.nickName }',
+			userId : $("#session_userId").val(),
+			profileImage : $("#session_profileImage").val(),
+			nickName : $("#session_nickName").val(),
 			roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
 		}
 	}); //*/
@@ -78,9 +78,9 @@ $(function(){
 			cors: { origin: "*" },
 			path: '/socket.io',
 			query: {
-				userId : '${ user.userId }',
-				profileImage : '${ sessionScope.user.profileImage }',
-				nickName : '${ sessionScope.user.nickName }',
+				userId : $("#session_userId").val(),
+				profileImage : $("#session_profileImage").val(),
+				nickName : $("#session_nickName").val(),
 				roomId : roomId,
 			},
 			forceNew: true
@@ -94,7 +94,7 @@ $(function(){
 		    
 		    var display = "";
 			    
-			    if( '${ sessionScope.user.nickName }' != data.username ){
+			    if( $("#session_nickName").val() != data.username ){
 			    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
 								+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
 								+"<div>"
