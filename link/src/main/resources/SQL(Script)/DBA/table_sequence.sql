@@ -321,7 +321,6 @@ CREATE TABLE NOTICE (
 	notice_image2					VARCHAR(100),
 	notice_regdate					DATE												NOT NULL,
 	NOTICE_COUNT					NUMBER(10)											NOT NULL,
-	CLUB_NO							NUMBER(20)														REFERENCES club(club_no),
 	user_id							VARCHAR2(20)										NOT NULL	REFERENCES users(user_id),
 	PRIMARY KEY(notice_no)
 );
@@ -388,6 +387,7 @@ CREATE TABLE LIVE(
 	LIMIT							NUMBER(20),
 	PROFILE_IMAGE					VARCHAR2(100),
 	TYPE							CHAR(1),
+	CLUB_NO							NUMBER(20),
 	PRIMARY KEY(LIVE_NO)
 );
 

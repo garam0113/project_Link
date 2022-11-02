@@ -203,17 +203,17 @@ public class ClubRestController {
 		
 		return null;
 	}
-	
-	@RequestMapping(value="/json/deleteApprovalCondition", method=RequestMethod.POST)
-	public ClubUser deleteApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
-		
-		System.out.println("deleteApprovalCondition 시작 ! ");
-		
-		clubService.deleteApprovalCondition(clubUser);
-		model.addAttribute("clubUser", clubUser);
-		
-		return null;
-	}
+//	
+//	@RequestMapping(value="/json/deleteApprovalCondition", method=RequestMethod.POST)
+//	public ClubUser deleteApprovalCondition(@RequestBody ClubUser clubUser, Model model) throws Exception {
+//		
+//		System.out.println("deleteApprovalCondition 시작 ! ");
+//		
+//		clubService.deleteApprovalCondition(clubUser);
+//		model.addAttribute("clubUser", clubUser);
+//		
+//		return null;
+//	}
 	
 	//캘린더
 	@RequestMapping(value="/json/getMeetList",method = RequestMethod.POST)

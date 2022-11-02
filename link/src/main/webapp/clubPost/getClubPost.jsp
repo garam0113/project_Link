@@ -1019,31 +1019,45 @@
 				$(".chat-img-sidebar.people-users").removeAttr("style");
 			});
 			
+
 			
 			
-			var room_Id = "";
-			//var socket = io.connect({});
+			//소켓서버에 접속시킨다.
+			let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				cors: { origin: "*" },
+				path: '/socket.io',
+				query: {
+					userId : '${ user.userId }',
+					profileImage : '${ sessionScope.user.profileImage }',
+					nickName : '${ sessionScope.user.nickName }',
+					roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
+				}
+			}); //*/
+			
+			
 			
 			
 			
 			$(".chat-content-onechat").bind("click", function(){
 				//alert("하나의 채팅 클릭시");
+
+				socket.disconnect();
+				$('#chatLog').empty();
 				
 				$("#allChat-toobar-title").attr("style", "display: none");
 				$("#allChat-toobar-back").removeAttr("style");
 				
 				$("#chat-list-content").attr("style", "display: none");
 				$("#chat-room-content").removeAttr("style");
-			
 
 				
 				roomId = $(this).attr("roomId");
-				room_Id = roomId;
+				namespace = $(this).attr("namespace");
+				//alert(roomId);
 
 				
-				
 				//소켓서버에 접속시킨다.
-				/* var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+				socket = io.connect("http://192.168.0.74:3000/"+namespace, { // clubchat 네임스페이스
 					cors: { origin: "*" },
 					path: '/socket.io',
 					query: {
@@ -1051,14 +1065,15 @@
 						profileImage : '${ sessionScope.user.profileImage }',
 						nickName : '${ sessionScope.user.nickName }',
 						roomId : roomId,
-					}
-				}); */
+					},
+					forceNew: true
+				});
 				
 				
 				
 				//server message 라는 이벤트명으로 대기
 				socket.on('server message', function(data){
-				    console.log(data);
+				    //console.log(data);
 				    
 				    var display = "";
 					    
@@ -1087,11 +1102,6 @@
 				    					    
 				    
 				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-				    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-				   
-				    //alert( "/////////////////" + data.userId );
-				    //alert( '${ sessionScope.user.userId }' );
-				    
 					$('#chatLog').append(display);
 				    
 				});
@@ -1102,7 +1112,7 @@
 			
 			
 			
-			$("#allChat-toobar-back").bind("click", function(){
+			$(".chat-toolbar-back").bind("click", function(){
 				//alert("back 클릭시");
 				
 				$("#allChat-toobar-back").attr("style", "display: none");
@@ -1112,7 +1122,7 @@
 				$("#chat-list-content").removeAttr("style");				
 				
 				//소켓서버를 끊는다.
-				socket.close();
+				socket.disconnect();
 				
 			});
 			
@@ -1120,34 +1130,16 @@
 			
 			$(document).ready(function(){
 			    $('#chat_send_button').bind("click", function(){
-			    	
-			    	//alert("roomId : " + room_Id);
-			    	//$("form").attr("method", "post").attr("action", "/clubPost/getClubPostList");
-			    	//return false;
 			        var message = $('#sendForm input[name=message]');
 			        //소켓 서버의 'client message' 라는 이벤트명으로 메세지를 송신한다.
 			        socket.emit('client message', { message : message.val()});
 			        //input 박스 초기화
 			        message.val('');
 			        return false;
-			    });
+			    });//end of 전송버튼
 			});
 			
 			
-			
-			
-			
-			//소켓서버에 접속시킨다.
-			var socket = io.connect("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
-				cors: { origin: "*" },
-				path: '/socket.io',
-				query: {
-					userId : '${ user.userId }',
-					profileImage : '${ sessionScope.user.profileImage }',
-					nickName : '${ sessionScope.user.nickName }',
-					roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
-				}
-			});
 			
 			
 			
@@ -1196,11 +1188,6 @@
 			    					    
 			    
 			    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-			    //$('#chatLog').append('<li style="font-size: 25px;">' + data.username + '  :  ' + data.message + '</li>');
-			   
-			    //alert( "/////////////////" + data.userId );
-			    //alert( '${ sessionScope.user.userId }' );
-			    
 				   $('#chatLog').append(display);
 			    
 			});
@@ -1208,6 +1195,33 @@
 			
 			
 		});//end of 채팅 script
+		
+		
+		//클럽버튼 펑션입니다.
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+		
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
+		});
+	});		
+		
 		</script>
 		
 	</head>
@@ -1269,12 +1283,12 @@
 								<!-- 로고 -->
 								<span id="allChat-toobar-title">LINK</span>
 								<!-- 뒤로가기 -->
-								<span id="allChat-toobar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
+								<span id="allChat-toobar-back" class="chat-toolbar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
 							</div>
 							<div></div>
 							<div>
 								<!-- 닫기 -->
-								<span id="allChat-toolbar-close">X</span>
+								<span id="allChat-toolbar-close" class="chat-toolbar-back">X</span>
 							</div>
 						</div>
 						<!-- 채팅 상단 툴바 end -->
@@ -1292,16 +1306,31 @@
 									<div id="club-chat-list">
 										<c:if test="${ fn:length(roomList) > 0 }">
 										<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }">
-												<div><img class="chat-img-main" src="/resources/image/uploadFiles/one_user.jpg"></div>
+											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }" namespace="clubchat">
+												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ roomList[i].clubImage }"></div>
 												<div>${ roomList[i].clubTitle } / ${ roomList[i].roomId }</div>
 											</div>
 										</c:forEach>
 										</c:if>
 									</div>
 									<div id="user-chat-list" style="display: none;">
-										<div class="chat-content chat-content-onechat">닉네임1</div>
-										<div class="chat-content chat-content-onechat">닉네임2</div>
+										<c:if test="${ fn:length(getChat) > 0 }">
+										<c:forEach var="i" begin="0" end="${ fn:length(getChat) - 1 }" step="1">
+											<div class="chat-content chat-content-onechat" roomId="${ getChat[i].roomId }" namespace="userchat">
+												
+												<c:choose>
+													<c:when test="${ getChat[i].user.nickName != sessionScope.user.nickName }">
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user.profileImage }"></div>
+														<div>${ getChat[i].user.nickName }</div>
+													</c:when>
+													<c:otherwise>
+														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
+														<div>${ getChat[i].user2.nickName }</div>
+													</c:otherwise>
+												</c:choose>
+											</div>
+										</c:forEach>
+										</c:if>
 									</div>
 								</div>
 								<!-- 모임 채팅과 1:1 채팅 리스트 end -->
@@ -1349,21 +1378,28 @@
 				
 				
 				
-				
-					<ul class="inline cats filter-options">
-						<li data-group="advertising">
-							<a href="/club/getClubList">모임 일정</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="#">모임 채팅</a>
-						</li>
-					</ul>
+				<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>			
+					
 
 					<div class="post-area clear-after">
 						<article role="main">
