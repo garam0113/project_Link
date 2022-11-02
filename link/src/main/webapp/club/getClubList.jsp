@@ -476,11 +476,6 @@
          <!-- row-content -->
       </div>
       
-		<div class="alarmHead" >
-						
-			<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-		
-		</div>
       <!-- row -->
    </header>
  
