@@ -1195,6 +1195,33 @@
 			
 			
 		});//end of 채팅 script
+		
+		
+		//클럽버튼 펑션입니다.
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
+		
+	$(function() {
+		$(".clubChatBtn").on("click", function() {
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
+		});
+	});		
+		
 		</script>
 		
 	</head>
@@ -1351,21 +1378,28 @@
 				
 				
 				
-				
-					<ul class="inline cats filter-options">
-						<li data-group="advertising">
-							<a href="/club/getClubList">모임 일정</a>
-						</li>
-						<li data-group="fun">
-							<a href="/clubPost/getClubPostList">모임 게시물</a>
-						</li>
-						<li data-group="icons">
-							<a href="/club/getClubMemberList">모임원</a>
-						</li>
-						<li data-group="infographics">
-							<a href="#">모임 채팅</a>
-						</li>
-					</ul>
+				<div class="homeBtn_group">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+					</div>			
+					
 
 					<div class="post-area clear-after">
 						<article role="main">

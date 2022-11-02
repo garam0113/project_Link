@@ -128,16 +128,6 @@
 		});
 	});
 	
-	//팝업 띄우기
-	var openWin;
-	function popup() {
-		var url = "/club/applyClub.jsp";
-		var name = "applyClub";
-		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
-		
-		openWin = window.open(url, name, option);
-	} 
-	
 	$(function() {
 
 		$("#updateClub").on("click", function() {
@@ -163,8 +153,7 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+		
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
 			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
@@ -386,10 +375,10 @@
 		}
 		
 		.club-wrap img {
-			width: 50%;
+			width: 100%;
 			vertical-align: middle;
 			filter: brightness(1.1);
-			margin-left: 450px;
+			/* margin-left: 450px; */
 			/* margin-top: -23px;
 			height: 0%; */
 		}
