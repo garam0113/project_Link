@@ -108,7 +108,7 @@
 	}
 	
 	
-	$(function() {
+/* 	$(function() {
 		
 	
 		$(document).on("click", "#banMember", function() {
@@ -132,18 +132,18 @@
 		//refreshMemList();
 	})
 	
-});	
+});	 */
 
-	$(function() {
+/* 	$(function() {
 		$("#banMember").on("click", function() {
 			deleteClubMember();
 		});
 	});
-	 
+	  */
 	
 	
 	
-/* 	
+
 	
 	//추방 그냥 컨트롤러
 	 $(function() {
@@ -152,7 +152,7 @@
 			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		 });
-  */
+
 
 			//추방 그냥 컨트롤러	
 			
@@ -181,12 +181,42 @@
 	 
 			
 			$(function() {
-				$("#updateApprovalCondition").on("click", function() {
+				
+				$(".updateApprovalCondition").on("click", function() {
 					//alert("모임원을 승인합니다 : ");
-					$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();
+					
+					var totalClubMemberCount = $("input[name='totalClubMemberCount']").val();
+					var clubMaxMember = $("input[name='clubMaxMember']").val();
+					
+				//	alert(totalClubMemberCount);
+				//	alert(clubMaxMember);
+					
+					if(totalClubMemberCount >= clubMaxMember) {
+							
+						Swal.fire({
+							title: '모임원 한도 초과입니다.' ,
+							text: "결제를 통해 모임원 한도를 늘릴 수 있습니다." ,
+							icon: 'warning',
+							schowCancelButton: false ,
+							confirmButtonColor: '#3085d6',
+							cancelButtonColor: '#d33',
+							confirmButtonText: '확인',
+						}).then((result) => {
+							if(result.value){
+							
+								self.location="/clubPost/addPayView?clubNo=${clubNo}"
+							}
+						})
+						
+						} else{
+							
+							$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();							
+						}
+					});
+					
 			});
 				
-			$(document).on("click", "#updateApprovalCondition", function(){
+			$(document).on("click", ".updateApprovalCondition", function(){
 				//alert('승인');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr('approvalCondition');
@@ -208,7 +238,7 @@
 								alert(status);
 							} // end of success
 						}); // end of ajax
-						refreshMemList();
+						//refreshMemList();
 				}); // end of 승인
 			});
 
@@ -270,7 +300,7 @@
 	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
 	});
 	
@@ -333,10 +363,11 @@
 	<div class="container">
 	
 		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">모임원 리스트</h2>
+			<h2 class="sub_tit_txt">${club.clubTitle}의 모임원 </h2>
 		</div>
 	
-	
+		<input type="hidden" id="totalClubMemberCount" name="totalClubMemberCount" value="${totalClubMemberCount}">
+		<input type="hidden" id="clubMaxMember" name="clubMaxMember" value="${club.clubMaxMember}">
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  		  <div class="row">
@@ -404,7 +435,7 @@
 			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
 			  	
 			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
-			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition">승인</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalCondition">승인</button></td>
 					<td>${i.club.clubMaxMember}</td>
 				</c:if>
 			</tr>

@@ -49,17 +49,8 @@ public class ClubDAOImpl implements ClubDAO {
 	@Override
 	public void addClub(Club club) throws Exception {
 		System.out.println("addClub DAO까지 왔나??");
-
-//		User user = new User();
-
-		//회원 세션으로 바꿔야함
-//		user = (User) HttpSession.getAttribute("user");
-//		
-//		club.setCurrentMember(1);
-//		club.setClubMaxMember(10);
-//		club.setClubCategory("test카테고리");
-		
 		System.out.println("club에 값 뭐있지 ? : "+club);
+		
 		sqlSession.insert("ClubMapper.addClub",club);
 	}
 	

@@ -109,8 +109,30 @@ border-color: BD76FF;
 </style>
 
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
+function fncGetReport(){
+	if(${user.role==null}){
+		 	Swal.fire({
+                icon: 'error',
+                title: '로그인 후 가능합니다.',
+            });
+				return;
+			
+	}
+	$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
+}
+function fncGetQandA(){
+	if(${user.role==null}){
+	 	Swal.fire({
+            icon: 'error',
+            title: '로그인 후 가능합니다.',
+        });
+			return;
+		
+	}
+	$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
+}
 $(function() {
 	$("button:contains('공지사항 보기')").bind("click", function() {
 		location.href = "/serviceCenter/getNoticeList";
@@ -119,25 +141,6 @@ $(function() {
 	$("button:contains('Q&A보기')").bind("click", function() {
 		location.href = "/serviceCenter/getQandAList";
 		
-	});
-		
-	$("button:contains('내 신고 보기')").bind("click", function() {
-		if(${user.role== null}){
-		 	alert('로그인 후 이용 가능합니다.')
-          	return; 
-		}else if(${!empty sessionScope.user.userId}){
-			$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
-			
-		}
-	});
-	
-	$("button:contains('내 질문 보기')").bind("click", function() {
-		if(${user.role == null}){
-			alert('로그인 하셔야 이용 가능합니다.');
-			return;
-		}else if(${!empty sessionScope.user.userId}){
-			$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
-		}
 	});
 
 	$("button:contains('신고 목록')").bind("click", function() {
@@ -162,7 +165,7 @@ $(function() {
 <body style="overflow-x: hidden">
 	<%--검은색 화면 --%>
 	<%-- --%>
-	<div style="text-align: center;">
+	<div style="text-align: center; margin-top: 100px; transform: translateX(-23px);">
 	<h1 >고  객  센  터</h1>
 	<h4>
 		고객센터를 통해 궁금증을 해결하세요
@@ -173,7 +176,7 @@ $(function() {
    <div class="container" style="transform: translate(300px, -200px);">
    
    
-      <div class="row2" style="display:flex;">
+      <div class="row2" style="display:flex; margin-top: -40px;">
         <div class="col-4" style ="">
           
           <div class="card" style="transform: translate(-320px, 280px);">
@@ -212,8 +215,8 @@ $(function() {
               <p class="card-text" align="center">내 신고 및 Q&A 내역을 </br>확인할 수 있습니다. </p>
               <c:if test="${ user.role == '0' || user.role== null }">
               	<form>
-				<button class="button3" style="transform: translate(15px, 0px);">내 신고 보기</button>
-				<button class="button4" style="transform: translate(40px, 0px);">내 질문 보기</button>
+              	<input type="button" class="button3" value="내 신고보기" onClick="fncGetReport()" style="transform:translate(15px,0px);">
+				<input type="button" class="button4" value="내 질문보기" onClick="fncGetQandA()" style=" transform: translate(27px, 0px);" >
 				</form>
 				</c:if>
 				<c:if test="${ user.role == '1'  }">

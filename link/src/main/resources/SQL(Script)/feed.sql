@@ -329,8 +329,8 @@ SELECT * FROM FEED_COMMENT WHERE FEED_NO = 142
 SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_heart_count, feed_recomment_count, feed_comment_reg_date, feed_comment_update_date, report_condition, delete_condition, parent, depth, sequence FROM feed_comment WHERE feed_no = 142 AND sequence = 8
 
 
-SELECT * FROM Users;
-
+SELECT * FROM feed;
+SELECT * FROM users;
 
 SELECT
 recv_user_id AS NAME

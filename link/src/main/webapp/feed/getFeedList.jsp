@@ -40,7 +40,6 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <%-- BOOTSTRAP ICON --%>
 
-
 <script type="text/javascript">
 	
 	function formatDate(date) {
@@ -61,6 +60,8 @@
 	function uploadSummernoteImageFile(file, el) {
 		data = new FormData();
 		data.append("file", file);
+		
+		console.log(data.file);
 		$.ajax({
 			data : data,
 			type : "POST",
@@ -199,7 +200,7 @@
 		
 		$(document).on("click", ".feedProfileImage", function(event) {
 			
-			if('${sessionScope.user.userId}' == null) {
+			if('${sessionScope.user}' == null) {
 				return false;
 			}
 			
@@ -234,7 +235,7 @@
 		
 		$(document).on("click", ".feedName", function(event) {
 			
-			if('${sessionScope.user.userId}' == null) {
+			if('${sessionScope.user}' == null) {
 				return false;
 			}
 			
@@ -273,7 +274,7 @@
 		
 		$(document).on("click", ".sessionProfileImage", function(event) {
 			
-			if('${sessionScope.user.userId}' == null) {
+			if('${sessionScope.user}' == null) {
 				return false;
 			}
 			
@@ -308,7 +309,7 @@
 		
 		$(document).on("click", ".addFormName", function(event) {
 			
-			if('${sessionScope.user.userId}' == null) {
+			if('${sessionScope.user}' == null) {
 				return false;
 			}
 			
@@ -397,6 +398,18 @@
 		})
 		
 		<%-- 알람 모달창 --%>
+		
+		
+		
+		<%-- 댓글 모달창 --%>
+		
+		$(document).on("click", ".comment", function(event) {
+			
+			alert("hi");
+		});
+		
+		<%-- 댓글 모달창 --%>
+		
 		
 				
 		<%-- SEARCH BY HASHTAG --%>
@@ -684,7 +697,7 @@
 					  showConfirmButton : false,
 				})
 			} else {
-				$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+				$(this.form).attr("method", "POST").attr("accept-charset", "euc-kr").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
 				$.ajax (
 						{
@@ -924,29 +937,32 @@
 						
 						$.each(data.clubList, function(index, item){
 
-							if(index > 4) {
-								return false;
-							} else if(index == 0 ){
-								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
-								addImg += 	'<div class="item active">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
-													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
-												'</a>' +
-												'<div class="carousel-caption">' +
-												'</div>' +
-										    '</div>'
-							} else {
-								addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
-								addImg += 	'<div class="item">' +
-												'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
-													'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
-												'</a>' +
-												'<div class="carousel-caption">' +
-												'</div>' +
-										    '</div>'
+							if(item.clubImage != null) {
+								
+								if(index > 4) {
+									
+									return false;
+									
+								} else if(index == 0 ){
+									addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" ></li>';
+									addImg += 	'<div class="item active">' +
+													'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+														'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+													'</a>' +
+													'<div class="carousel-caption">' +
+													'</div>' +
+											    '</div>'
+								} else {
+									addHtml += '<li data-target="#carousel-club" data-slide-to="' + index + '" class="active"></li>';
+									addImg += 	'<div class="item">' +
+													'<a href="/club/getClub?clubNo=' + item.clubNo + '" >' +
+														'<img src="/resources/image/uploadFiles/' + item.clubImage + '" alt="">' +
+													'</a>' +
+													'<div class="carousel-caption">' +
+													'</div>' +
+											    '</div>'
+								}
 							}
-							
-							
 							
 						}) // each close
 						
@@ -969,6 +985,97 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
+
+	.main{
+		height:100vh;
+		width:100%;  
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		text-align:center;
+	}
+	
+	h3{
+		text-align:center;
+		text-transform: uppercase;
+		color: #F1FAEE; 
+		font-size: 4rem;
+		margin-top: 15px !important;
+		margin-bottom: 15px !important;
+	}
+
+	.roller{
+		height: 3.125rem;
+    	line-height: 3.9rem;
+		position: relative;
+		overflow: hidden; 
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #1D3557;
+	}
+
+	#spare-time{
+		font-size: 1rem;
+		letter-spacing: 1rem;
+		margin-top: 0;
+		color: #A8DADC;
+	}
+
+	.roller #rolltext {
+		position: absolute;
+		top: 0;
+		animation: slide 5s infinite;  
+	}
+
+	@keyframes slide {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -4rem;    
+		}
+		50%{
+			top: -8rem;
+		}
+		72.5%{
+			top: -12.25rem;
+		}
+	}
+
+@media screen and (max-width: 600px){
+	h3{
+		text-align:center;
+		text-transform: uppercase;
+		color: #F1FAEE; 
+		font-size: 1.125rem !important;
+	}
+  
+	.roller{
+		height: 2.6rem; 
+		line-height: 2.125rem;  
+	}
+  
+	.roller #rolltext {  
+		animation: slide-mob 5s infinite;  
+	}
+
+	@keyframes slide-mob {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -2.125rem;    
+		}
+		50%{
+			top: -4.25rem;
+		}
+		72.5%{
+			top: -6.375rem;
+		}
+	}
+}
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -990,20 +1097,35 @@
 
 					<div class="row-content buffer even clear-after">
 						<div class="column three">
-							<button class="btn btn-primary searchPlace" type="button"
-								onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
-
-							<%-- 검색 --%>
-							<form id="searchForm" method="POST" action="/feed/getFeedList"
-								accept-charset="euc-kr">
-
-								<input type="text" id="searchKeyword" placeholder="검색"
-									name="searchKeyword" value="${search.searchKeyword}">
-
-							</form>
+							<div>
+								<button class="btn btn-primary searchPlace" type="button"
+									onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+	
+								<%-- 검색 --%>
+								<form id="searchForm" method="POST" action="/feed/getFeedList"
+									accept-charset="euc-kr">
+	
+									<input type="text" id="searchKeyword" placeholder="검색"
+										name="searchKeyword" value="${search.searchKeyword}">
+	
+								</form>
+								<%-- 검색 --%>
+							</div>
+							
+							
+							
+							<h3>오늘은:
+								<div class="roller">
+								<span id="rolltext">내가<br/>
+													너와<br/>
+													만나다<br/>
+													LINK<br/>
+							</div>
+							</h3>
+							
+							
 							
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
-							<%-- 검색 --%>
 
 						</div>
 
@@ -1173,7 +1295,7 @@
 												<div class="hashtagContent">
 
 													<c:set var="text" value="${fn:split(feed.hashtag, '#')}" />
-													tag :
+													
 													<c:forEach var="textValue" items="${text}"
 														varStatus="varStatus">
 														<span class="searchByHashtag"> #${textValue} </span>
@@ -1220,8 +1342,7 @@
 
 													<div class="col-xs-2 comment">
 														<img src="/resources/image/uploadFiles/comment2.jpg"
-															class="commentImg" aria-hidden="true" data-toggle="modal"
-															data-target="#myModal" />
+															class="commentImg" aria-hidden="true"/>
 													</div>
 
 													<div class="col-xs-1 commentCount">
@@ -1324,7 +1445,7 @@
 		</div>
 
 		<!-- COMMENT Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -1338,9 +1459,11 @@
 					<div class="modal-body">여기는 내용</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-						<button type="button" class="btn btn-primary">Save
-							changes</button>
+							Close
+						</button>
+						<button type="button" class="btn btn-primary">
+							Save changes
+						</button>
 					</div>
 				</div>
 			</div>

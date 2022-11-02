@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
@@ -250,8 +251,6 @@ public class ClubPostController {
 		
 		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
 		
-		
-		
 		// 알림
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
 		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
@@ -262,7 +261,7 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "getClubPost", method = RequestMethod.GET)
-	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
+	public String getClubPost(@ModelAttribute ClubPost clubPost, Comment comment, Chat chat, Search search, Heart heart, Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		System.out.println("/getClubPost : GET : 모임게시물 상세보기, 모임게시물 댓글 리스트 가져온 후 모임게시물 상세보기 화면 또는 수정 화면으로 이동");
 		
 		
@@ -294,7 +293,11 @@ public class ClubPostController {
 		
 		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
 
+
 		
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
 		
 		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
@@ -422,6 +425,37 @@ public class ClubPostController {
 		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
 	}
+	
+	/*
+	@RequestMapping(value = "addChat", method = RequestMethod.POST)
+	public String addChat(HttpSession session, User user2, Chat chat, Model model) throws Exception {
+		System.out.println("/addChat : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
+
+		chat.setUser((User)session.getAttribute("user"));
+		chat.setUser2(user2);
+		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+user2.getUserId());
+		
+		System.out.println("DB로 보내는 데이터 : " + chat);
+		
+		
+		
+		//////////////////////////////////////BUSINESS LOGIC /////////////////////////////////////////
+
+		
+		
+		// 로그인한 회원과 상대방의 채팅방이 없으면 만들고 있으면 안 만든다
+		List<Chat> list = clubPostServiceImpl.getChatList(chat);
+		System.out.println("로그인한 회원과 상대방과의 방 : " + list);
+		if( list.size() == 0 ) {
+			// DB에 로그인한 회원과 상대방과의 채팅방이 없으면 채팅방 만듬, 1:1 채팅에서 메세지를 보내면 채팅방 만들어짐
+			clubPostServiceImpl.addChat(chat);
+		}
+		
+		// 내가 들어있는 채팅방 가져오기
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+		return "";
+	}
+	*/
 	
 	
 

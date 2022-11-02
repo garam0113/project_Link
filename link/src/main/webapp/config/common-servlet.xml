@@ -2,6 +2,7 @@
 
 <beans	xmlns="http://www.springframework.org/schema/beans"
 		xmlns:websocket="http://www.springframework.org/schema/websocket"
+		xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 
 		xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,7 +17,9 @@
 							http://www.springframework.org/schema/mvc/spring-mvc.xsd
 							
 							http://www.springframework.org/schema/websocket 
-							http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+							http://www.springframework.org/schema/websocket/spring-websocket.xsd
+							
+							http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd">
 
 	<!-- 	:: Client 의 Request URI와 Controller 을 연결시켜 주는 HandlerMapping  
 			:: 아래와 같이 서술적 기술 Test 후 주석처리해서 Test 할것 :: Default / Zero Configuration -->
@@ -64,6 +67,8 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>
+			<mvc:mapping path="/club/**"/>
+			<mvc:mapping path="/myHome/**"/>
 			<bean class="com.link.common.web.LogonCheckInterceptor"></bean>
 		</mvc:interceptor>	
 	</mvc:interceptors>
@@ -123,6 +128,12 @@
 	</bean>
 	 
 	<!-- 이메일 인증 관련 빈 등록 -->
+	
+	
+	
+	<!-- mongo -->
+    
+    <!-- mongo -->
 	
 	
 </beans>

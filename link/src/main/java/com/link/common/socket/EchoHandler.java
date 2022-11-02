@@ -134,7 +134,11 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
+						
 					}
 					
 				} else if(type.equals("feedComment")) {
@@ -172,7 +176,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
 					}
 					
 				} else if(type.equals("follow")) {
@@ -215,7 +222,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/club/getClub?clubNo="+ url + "'>이동</a>"));
+
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
 					}
 					
 				} else if(type.equals("clubPost")) {
@@ -253,7 +263,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
 					}
 					
 				} else if(type.equals("clubPostComment")) {
@@ -291,13 +304,19 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/clubPost/getClubPost?clubPostNo="+ url + "'>이동</a>"));
+
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
 					}
 					
 				} else if(type.equals("service")) {
 					
 					WebSocketSession targetSession = users.get(target);
-					targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/serviceCenter/getReport?no="+ url + "'>이동</a>"));
+
+					if(targetSession!=null) {
+						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+					}
 
 				} else if(type.equals("live")) {
 					
@@ -334,7 +353,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 					} else {
 						WebSocketSession targetSession = users.get(target);
-						targetSession.sendMessage(new TextMessage(senderNickName + content));
+
+						if(targetSession!=null) {
+							targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+						}
 					}
 					
 				} 

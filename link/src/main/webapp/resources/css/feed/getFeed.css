@@ -1,4 +1,212 @@
 	
+	
+	
+
+	/* 사이드바에 있는 팔로우 목록 */
+
+	/* 선택 된 탭 콘텐츠를 표시 */
+
+	h4.yourHome {
+		margin: 0px;
+	}
+
+	h4.yourHome2 {
+		margin: 0px;
+	}
+
+	#all:checked ~ #all_content,
+	#programming:checked ~ #programming_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	#all-follow:checked ~ #all-follow_content,
+	#programming-follow:checked ~ #programming-follow_content,
+	#design:checked ~ #design_content {
+	  display: block;
+	}
+	
+	.tab{
+		display: block;
+	}
+	
+	/* 탭 전체 스타일 position: fixed; */
+	.tabs1 {
+		position: fixed;
+		width:200px;
+		margin-bottom: 100px;
+		background-color: #ffffff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		display:inline-block;
+		height:500px;
+		border-radius: 15px;
+	}
+		
+	
+	/* 탭 스타일 */
+	.tab_item1 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 14px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	.tab_item-following {
+		width: 100px !important;
+		height: 50px;
+		background-color: #F5F6F7;
+		border-bottom: 3px solid #EBEDF0;
+		line-height: 50px;
+		font-size: 14px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 0px 15px 0px 0px ;
+	}
+	.tab_item-follow {
+		width: 100px !important;
+		height: 50px;
+		background-color: #F5F6F7;
+		border-bottom: 3px solid #EBEDF0;
+		line-height: 50px;
+		font-size: 14px;
+		text-align: center;
+		color: #333333;
+		display: block;
+		float: left;
+		width:200px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+		border-radius: 15px 0px 0px 0px ;
+	}
+	
+	.tab_item2 {
+		width: calc(100%/3);
+		height: 50px;
+		border-bottom: 3px solid #333333;
+		background-color: #f8f8f8;
+		line-height: 50px;
+		font-size: 14px;
+		text-align: center;
+		color: #333333;
+		display: inline-block;
+		width:400px;
+		text-align: center;
+		font-weight: bold;
+		transition: all 0.2s ease;
+	}
+	
+	.tab_item1:hover {
+		opacity: 0.75;
+	}
+	.tab_item2:hover {
+		opacity: 0.75;
+	}
+	
+	/* 라디오 버튼 UI삭제*/
+	input[name="tab_item"] {
+		display: none;
+	}
+	input[name="tab_item-follow"] {
+		display: none;
+	}
+	
+	/* 탭 컨텐츠 스타일 */
+	.tab_content {
+		position: fixed;
+		display: none;
+		height: 400px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+	    width: inherit;
+	}
+	.tab_content-follow {
+		position: fixed;
+		display: none;
+		height: 400px;
+		clear: both;
+		overflow: hidden;
+		overflow-y: auto;
+		scrollbar-width: none;
+		width: inherit;
+	}
+	
+	/* 스크롤바 안보이기 */
+	
+	.tab_content::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	.tab_content-follow::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	#fll {
+	    display: contents;
+	}
+	
+	#fl {
+	    display: contents;
+	}
+
+	.follow-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	.following-section {
+		margin: 0px;
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+
+	.follow-section img {
+		border-radius: 15px;
+	}
+
+	.following-section img {
+		border-radius: 15px;
+	}
+
+	label.tab_item-follow:hover {
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	label.tab_item-follow:checked {color: red;}
+	
+	label.tab_item-following:hover {
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	label.tab_item-following:checked {color: red;}
+
+
+
+	/* 사이드바에 있는 팔로우 목록 */	
+
+
 	/* 바탕색 */
 
 	html {
@@ -301,6 +509,8 @@
 	.hashtagContent {
 		margin-left: 60px;
 		margin-right: 25px;
+		background-color: #bd76ff;
+	    border-radius: inherit;
 	}
 
 	/* 해시 태그 */
@@ -343,6 +553,7 @@
 	.feedProfileImage {
 		border-radius: 25% !important;
 		cursor: pointer;
+		width: 50px;
 	}
 
 	.feedDate {

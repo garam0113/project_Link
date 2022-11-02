@@ -59,8 +59,33 @@
 	$(function() {
 		
 		$("#club-add-approval").bind("click", function() {
+			
+			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
+			var joinClubLimit = $("input[name='joinClubLimit']").val();
+			
+			//alert(totalApprovalConditionCount);
+			//alert(joinClubLimit);
+			
+			if(totalApprovalConditionCount < joinClubLimit) {
 			//모달창 열기
 			$('#club-add-approval-modal').modal("show");
+			} else {
+				
+				Swal.fire({
+					title: '모임 최대 한도 수를 초과하였습니다.' ,
+					text: "결제를 통해 모임 한도를 늘릴 수 있습니다." ,
+					icon: 'warning',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					if(result.value){
+					
+						self.location="/clubPost/addPayView?payNavigation=1"
+					}
+				})
+			}
 		});
 		
 		$("input[value='신청']").bind("click", function() {
@@ -75,6 +100,7 @@
 			
 			$("form").attr("accept-charset" , "EUC-KR").submit();
 		});
+		
 		
 		$("input[value='취소']").bind("click", function() {
 			
@@ -105,15 +131,29 @@
 		});
 	});
 	
-	//팝업 띄우기
-	var openWin;
-	function popup() {
-		var url = "/club/applyClub.jsp";
-		var name = "applyClub";
-		var option = "width = 500, height = 350, top = 50, left = 50, location = no, scrollbars = no"
+	$(function () {
 		
-		openWin = window.open(url, name, option);
-	} 
+		$(document).on("click","#deleteApprovalCondition", function() {
+		
+			Swal.fire({
+				  title: '정말 모임을 탈퇴하시겠습니까?',
+				  text: "탈퇴 시 다시 가입 신청을 해야합니다",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소' ,
+				}).then((result) => {
+				  if (result.value) {
+				    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteApprovalCondition").submit();	    
+				  }
+				})
+		})
+	});
+	
+	
 	
 	$(function() {
 
@@ -122,12 +162,6 @@
 
 		});
 	});
-	
-	$(function() {
-		$("#addApproval").on("click", function() {
-			popup();
-		});
-	}); 
 	
 	$(function() {
 		$(".homeBtn").on("click", function() {
@@ -146,11 +180,10 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
+		
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
 	});
 		
@@ -322,6 +355,7 @@
 	
 	</script>
 
+<<<<<<< HEAD
 <style>
 body {
 	padding-top: 70px;
@@ -386,7 +420,6 @@ a {
 	filter: brightness(1.1);
 	margin-left: 450px;
 	/* margin-top: -23px;
-			height: 0%; */
 }
 
 .row-content.buffer, .row-content.buffer-left {
@@ -618,7 +651,6 @@ element.style {
 						</div>
 					</div>
 				</div>
-
 			</div>
 
 
