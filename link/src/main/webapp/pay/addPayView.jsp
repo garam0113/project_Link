@@ -170,8 +170,8 @@
 				updateClubCount = 0;
 			}
 			
-			alert( ${ returnUser == '' } );
-			alert( payProduct );
+			//alert( ${ returnUser == '' } );
+			//alert( payProduct );
 			
 			$("input[name='payProduct']").val( payProduct );
 			$("input[name='totalPrice']").val( totalPrice );
@@ -190,7 +190,7 @@
 					amount : totalPrice,
 					customer_uid : 'your-customer-unique-id', // 필수 입력.
 					buyer_email : email,
-					buyer_name : ${ user.name },
+					buyer_name : '${ user.name }',
 					buyer_tel : ${ user.phoneNo }
 				    //buyer_addr : '서울특별시 강남구 삼성동',
 				    //buyer_postcode : '123-456'

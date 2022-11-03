@@ -316,13 +316,15 @@
 		})
 		
 		socket.on("reRoomName", function(data) {
+			var clubNo = $("#no").val();
 			console.log("socket서버에서 받은 Data : "+data);
 			if(data != null){
 			$.ajax("/liveRest/json/exitLive", {
 				method : "POST",
 				data : JSON.stringify({
 					roomName : data,
-					type : '2'
+					type : '2',
+					clubNo : clubNo
 				}),
 				dataType : "json",
 				contentType : "application/json",
