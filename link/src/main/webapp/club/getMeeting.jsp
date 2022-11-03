@@ -174,7 +174,7 @@
 	
 	<jsp:include page="/toolbar.jsp" />	
 		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background: #EBEDF0 !important;"><!-- 중간 개별영역 -->
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 100px;">
 				
@@ -249,7 +249,7 @@
 				
 				<div>
 			  		<div class="col-xs-4 col-md-6 "><strong>일정설명</strong></div>
-					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">${meeting.meetingContent}</div>
+					<div class="col" style="margin-left: 20px;">${meeting.meetingContent}</div>
 				</div>
 				
 				<p>
