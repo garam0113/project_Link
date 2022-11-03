@@ -74,7 +74,8 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 					if(		uri.indexOf("addUserView")		!= -1		|| 	uri.indexOf("addUser")		!= -1 		|| 
 							uri.indexOf("loginView")		!= -1 		||	uri.indexOf("login") 		!= -1 		|| 
 							uri.indexOf("checkDuplication") != -1 		||	uri.indexOf("getMeeting")	!= -1		||
-							uri.indexOf("getClubList")	!= -1       
+							uri.indexOf("getClubList")	!= -1           ||  uri.indexOf("getUserId")    != -1		||
+							uri.indexOf("getPassword")  != -1
 						  )		
 					{						
 //						System.out.println("[ 로그 시도 상태 .... ]");
