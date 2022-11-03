@@ -164,7 +164,7 @@ body>div.container {
 </head>
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'
 	rel='stylesheet'>
-<div class="login">
+<div class="login" style=" zoom: 1.2; margin-top: -100px;">
 	<div class="login__content">
 		<div class="login__img">
 			<img
