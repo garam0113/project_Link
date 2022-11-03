@@ -213,7 +213,8 @@
 			$.ajax("/liveRest/json/getLiveList", {
 				type : "POST",
 				data : JSON.stringify({
-					type : '2'
+					type : '2',
+					clubNo : clubNo
 				}),
 				dataType : "json",
 				contentType : "application/json",
@@ -273,7 +274,7 @@
 										nickName : nickName,
 										member : 1
 										});
-									//self.location = "https://192.168.0.183:4040";
+									self.location = "https://192.168.0.183:4040";
 								}
 							}) 
 						}
