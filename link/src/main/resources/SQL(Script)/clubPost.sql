@@ -779,8 +779,7 @@ WHERE U.USER_ID (+) = V1.USER_ID2 AND U.USER_ID = 'user222'
 
 
 
-
-
+select count(*) from ( select * from heart where trim(source) = 2 and source_no = 32 and user_id = 'user12')
 
 
 

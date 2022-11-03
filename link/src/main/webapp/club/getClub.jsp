@@ -285,6 +285,7 @@
 					
 					$("button.joinLive").on("click", function() {
 						//alert("asdf");
+						var clubNo = $("#no").val();
 						var roomName = $(this).parent().attr("id");
 						var viewName = $(this).children().val();
 						console.log(roomName);
@@ -292,7 +293,8 @@
 							method : "POST",
 							data : JSON.stringify({
 								roomName : roomName,
-								type : '2'
+								type : '2',
+								clubNo : clubNo
 							}),
 							dataType : "json",
 							contentType : "application/json",
