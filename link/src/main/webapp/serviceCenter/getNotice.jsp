@@ -55,6 +55,11 @@
 	});
 </script>
 <style> 
+table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 30px;
+    background: #c9c9ff;
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -99,13 +104,13 @@ background-color: #EBEDF0 !important;
 </head>
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
-<div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px;">
+<div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px; margin-top: 80px;">
   <h2>공지사항 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 37px;">
+		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
@@ -117,8 +122,8 @@ background-color: #EBEDF0 !important;
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						</th>
 						
-						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;"><strong>${notice.noticeRegDate }</strong></td>
-						<td align="left" style="transform: translateX(-300px);" style="display: flex; height: 40px;"><strong>${notice.userId.nickName}</strong></td>
+						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="transform: translate(0px, -9px);display: flex; height: 40px;"><strong>${notice.noticeRegDate }</strong>
+						<strong style="margin-left: 468px;">${notice.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
@@ -137,7 +142,7 @@ background-color: #EBEDF0 !important;
 						<td><c:if test="${notice.noticeImage1 != null }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; border: 10px solid white; border-radius: 15px;
-						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
+						cursor:pointer;    margin-left: 40px;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>
 						<c:if test="${notice.noticeImage2 != null }">
@@ -161,12 +166,12 @@ background-color: #EBEDF0 !important;
 						
 									<div> 
 									<c:if test="${user.role=='1'}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
 									   수정</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
 									   삭제</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(370px, 0px); ">
 									뒤로</button>
 									</div>
 				
