@@ -244,15 +244,15 @@ public class ClubPostRestController {
 
 	
 	///*
-	@RequestMapping(value = "json/addChat", method = RequestMethod.POST)
-	public List<Chat> addChat(HttpSession session, User user2, Chat chat) throws Exception {
+	@RequestMapping(value = "/json/addChat", method = RequestMethod.POST)
+	public List<Chat> addChat(HttpSession session, @RequestBody Chat chat) throws Exception {
 		System.out.println("/addChat : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
 
 		chat.setUser((User)session.getAttribute("user"));
-		chat.setUser2(user2);
-		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+user2.getUserId());
+		chat.setUser2(new User(chat.getUserId2()));
+		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+chat.getUserId2());
 		
-		System.out.println("DB로 보내는 데이터 : " + chat);
+		System.out.println("채팅방 번호 : " + chat.getRoomId() + ", 상대방 아이디 : " + chat.getUserId2());
 		
 		
 		
@@ -263,13 +263,29 @@ public class ClubPostRestController {
 		// 로그인한 회원과 상대방의 채팅방이 없으면 만들고 있으면 안 만든다
 		List<Chat> list = clubPostServiceImpl.getChatList(chat);
 		System.out.println("로그인한 회원과 상대방과의 방 : " + list);
+		
+		String currentRoomId = "";
 		if( list.size() == 0 ) {
 			// DB에 로그인한 회원과 상대방과의 채팅방이 없으면 채팅방 만듬, 1:1 채팅에서 메세지를 보내면 채팅방 만들어짐
 			clubPostServiceImpl.addChat(chat);
+			currentRoomId = chat.getRoomId();
 		}
 		
 		// 내가 들어있는 채팅방 가져오기
-		return clubPostServiceImpl.getChat(chat);
+		List<Chat> chatList = clubPostServiceImpl.getChat(chat);
+		for (int i = 0; i < chatList.size(); i++) {
+			if( chatList.get(i).getRoomId().indexOf(chat.getUserId2()) != -1) {
+				currentRoomId = chatList.get(i).getRoomId();
+				System.out.println("1111111111currentRoomId : " + currentRoomId);
+			}
+		}
+		
+		for (int i = 0; i < chatList.size(); i++) {
+			System.out.println("currentRoomId : " + currentRoomId);
+			chatList.get(i).setCurrentRoomId(currentRoomId);
+		}
+		
+		return chatList;
 	}
 	//*/
 	

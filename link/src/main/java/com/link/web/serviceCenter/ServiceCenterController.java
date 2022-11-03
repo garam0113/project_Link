@@ -261,14 +261,35 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "updateQandA", method = RequestMethod.POST)
-	public String updateQandA(@ModelAttribute QandA qandA, Model model, User user, HttpSession session)
-			throws Exception {
+	public String updateQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file,
+			Model model, User user, HttpSession session) throws Exception {
 
 		System.out.println("/ServiceCenter/updateQandA : POST");
 
 		User userId = (User) session.getAttribute("user");
 		qandA.setUserId(userId);
 		System.out.println(qandA);
+		int fileCount = 0;
+		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
+		for (MultipartFile files : file) {
+			fileCount++;
+			System.out.println(files.getOriginalFilename());
+
+			if (fileCount != file.length) {
+				qandA.setQandAImage2(files.getOriginalFilename());
+			}
+
+			qandA.setQandAImage1(files.getOriginalFilename());
+
+			File saveFile = new File(root + files.getOriginalFilename());
+
+			boolean isExists = saveFile.exists();
+
+			if (!isExists) {
+				files.transferTo(saveFile);
+			}
+		}
 		serviceCenterService.updateQandA(qandA);
 
 		qandA = serviceCenterService.getQandA(qandA.getQandANo());

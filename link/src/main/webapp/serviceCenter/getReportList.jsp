@@ -165,8 +165,6 @@ function fncGetList(currentPage) {
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" >
-								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>

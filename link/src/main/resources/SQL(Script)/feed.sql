@@ -333,7 +333,7 @@ SELECT * FROM feed;
 SELECT * FROM users;
 
 SELECT
-recv_user_id AS NAME
+*
 FROM FOLLOW_BLOCK
 WHERE send_user_id = 'user05'
 AND STATE = '1'

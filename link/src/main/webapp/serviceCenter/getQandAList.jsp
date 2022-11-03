@@ -122,12 +122,14 @@ function fncGetList(currentPage) {
 		$("td:contains('비밀글입니다.')").bind("click", function() {
 			if (${empty user}){
 			 alert("관계자만 볼 수 있습니다."); 			
-				}
-			
+				}	
 
-		})	
-			
-
+		})
+		
+		$("button:contains('검색')").bind("click", function() {	
+		  fncGetList($(search.order));
+		})
+		
 		$("button:contains('등록')").bind("click", function() {
 			if(${empty sessionScope.user.userId}){
 			alert("로그인 후 이용 가능합니다.");
@@ -145,31 +147,6 @@ function fncGetList(currentPage) {
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
-		
-		
-<%-- 		$("button:contains('검색')").bind("click", function() {
-			
-			$.ajax({
-				
-				url : "/serviceCenterRest/json/getQandAList",
-				method : "POST",
-				data : JSON.stringify ({
-					currentPage : ($(".currentPage").val())
-				}),
-				dataType :"json",
-				contentType: "application/json",
-				success : function(JSONData, status){
-					
-					
-					alert("성공");
-				}
-				
-			})
-			
-			
-			
-		}) --%>
-		
 
 	});
 </script>
@@ -204,8 +181,6 @@ function fncGetList(currentPage) {
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
-								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
@@ -370,9 +345,10 @@ function fncGetList(currentPage) {
 							<td width="30"></td>
 
 							<div class="col-md-3 col-sm-3 col-xs-6">
+							<c:if test="${ user.role == 0 }">
 								    <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
 									   등록</button> 
-									
+									</c:if>
 											<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
 									뒤로</button>
 							</div>

@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <head>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 function YesScroll () {
 		const pagination = document.querySelector('#paginaiton'); // ∆‰¿Ã¡ˆ≥◊¿Ãº« ¡§∫∏»πµÊ
@@ -37,9 +36,9 @@ function YesScroll () {
 			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
 				<li>
 			</c:if>
-			<a href="javascript:fncGetClubList('${ resultPage.currentPage-1}')"
-				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-			</a>
+			<li>
+			<a href="javascript:fncGetClubList('${ resultPage.currentPage-1}')" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+			
 			</li>
 
 			<!--  ¡ﬂæ”  -->
@@ -66,6 +65,7 @@ function YesScroll () {
 			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
 				<li>
 			</c:if>
+			<li>
 			<a href="javascript:fncGetClubList('${resultPage.endUnitPage+1}')"
 				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a>

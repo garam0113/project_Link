@@ -100,8 +100,7 @@ WHERE n.notice_no = 41;
 
 
 SELECT *
-FROM USERS
-WHERE USER_ID ='user01';
+FROM USERS;
 
 
 
