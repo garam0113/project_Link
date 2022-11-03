@@ -183,9 +183,19 @@
 			"type": $("#type").val(),
 			"no" :no,
 				
-		 success: function(){
-			 window.close();
-		 }
+			success: function(){
+				Swal.fire({
+						
+					icon: 'success',
+					title: 'Your work has been saved',
+					showConfirmButton: false,
+					timer: 1500
+					  
+				}) // swal close
+				
+				$("#reportModal").modal('hide');
+			}
+		
 		}),
 			
 		})<!-- ajax ( ReportAdd) 끝 --> 
@@ -196,7 +206,322 @@
 	
 	$(function(){
 		
-	<%-- 피드 폼에서 아이디에 호버시 --%>
+		<%-- 사이드 바 팔로우에서 이미지 클릭시 반장님 코드 --%>
+		
+		$(document).on("click", ".dl", function(){
+			
+			   var user_Id = $(this).parent().parent().attr("id");
+			   var nickName = $("."+user_Id+"").val();
+			   var profileImage = $(this).attr("id");
+			   
+			   console.log(user_Id);
+			   console.log(nickName);
+			   console.log(profileImage);
+			   //alert(followUser.receiveId.userId);
+			   $.ajax("/myHomeRest/json/getFollow", {
+	
+			      type : "POST",
+			      data : JSON.stringify({
+			         receiveId : user_Id
+			      }),
+			      dataType : "json",
+			      contentType : "application/json",
+			      headers : {
+			         "Accept" : "application/json"
+			      },
+			      success : function(Data, status) {
+			      if(Data.follow != null){
+			         var freceiveId = Data.follow.receiveId.userId;
+			         var fnickName = Data.follow.receiveId.nickName;
+			         var fprofileImage = Data.follow.receiveId.profileImage;
+			         var ffbType = Data.follow.fbType;
+			         var ffbState = Data.follow.fbState;
+			      }else{
+			         var freceiveId = "";
+			         var fnickName = "";
+			         var fprofileImage = "";
+			         var ffbType = "";
+			         var ffbState = "";
+			      }
+			      if(Data.block != null){
+			         var breceiveId = Data.block.receiveId.userId;
+			            var bnickName = Data.block.receiveId.nickName;
+			         var bprofileImage = Data.block.receiveId.profileImage;
+			         var bfbType = Data.block.fbType;
+			         var bfbState = Data.block.fbState;
+			      }else{
+			         var breceiveId = "";
+			            var bnickName = "";
+			         var bprofileImage = "";
+			         var bfbType = "";
+			         var bfbState = "";
+			      }
+		         
+		         if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '1'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(ffbType == ""  && bfbType == "" ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }
+		         
+		          $("#"+nickName+"").html(value);
+		      
+		         
+		            $("#"+nickName+"").dialog({
+		               
+		               autoOpen: false,
+		               show: {
+		                  effect: "Pulsate",
+		                    duration: 1000
+		               },
+		               hide: {
+		                    effect: "Scale",
+		                    duration: 1000
+		               },
+		               position: {
+		                  
+		                  my:"center",
+		                  at:"center",
+		                  of:"#"+user_Id+""
+		               }
+		               
+		            });
+		   
+		   
+		             $("#"+nickName+"").dialog("open");
+		   
+		      },
+		      error : function(){
+		         var value =
+		            "<div name='dialog'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		            "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		            
+		          $("#"+nickName+"").html(value);
+		            
+		            
+		            $("#"+nickName+"").dialog({
+		               
+		               autoOpen: false,
+		               show: {
+		                  effect: "Pulsate",
+		                    duration: 1000
+		               },
+		               hide: {
+		                    effect: "Scale",
+		                    duration: 1000
+		               },
+		               position: {
+		                  
+		                  my:"center",
+		                  at:"center",
+		                  of:"#"+user_Id+""
+		               }
+		               
+		            });
+		   
+		   
+		             $("#"+nickName+"").dialog("open");
+		      }
+		   })
+
+		}) 
+		$(".main").on("click",function(){
+
+		    $("div[name='dialog']").parent().dialog("close");
+
+		}) 
+
+		$(document).on("click",".dll",function(){
+		   
+		   var user_Id = $(this).parent().parent().attr("id");
+		   var nickName = $("."+user_Id+"").val();
+		   var profileImage = $(this).attr("id");
+		   
+		   $.ajax("/myHomeRest/json/getFollow", {
+
+		      type : "POST",
+		      data : JSON.stringify({
+		         receiveId : user_Id
+		      }),
+		      dataType : "json",
+		      contentType : "application/json",
+		      headers : {
+		         "Accept" : "application/json"
+		      },
+		      success : function(Data, status) {
+		      if(Data.follow != null){
+		         var freceiveId = Data.follow.receiveId.userId;
+		         var fnickName = Data.follow.receiveId.nickName;
+		         var fprofileImage = Data.follow.receiveId.profileImage;
+		         var ffbType = Data.follow.fbType;
+		         var ffbState = Data.follow.fbState;
+		      }else{
+		         var freceiveId = "";
+		         var fnickName = "";
+		         var fprofileImage = "";
+		         var ffbType = "";
+		         var ffbState = "";
+		      }
+		      if(Data.block != null){
+		         var breceiveId = Data.block.receiveId.userId;
+		            var bnickName = Data.block.receiveId.nickName;
+		         var bprofileImage = Data.block.receiveId.profileImage;
+		         var bfbType = Data.block.fbType;
+		         var bfbState = Data.block.fbState;
+		      }else{
+		         var breceiveId = "";
+		            var bnickName = "";
+		         var bprofileImage = "";
+		         var bfbType = "";
+		         var bfbState = "";
+		      }
+		         
+		         
+		         
+		      
+		         
+		         if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '1'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
+		               "팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '2'){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }else if(ffbType == ""  && bfbType == "" ){
+		            var value =
+		               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
+		               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		         }
+		         
+		          $("#"+nickName+"1").html(value);
+		      
+		         
+		            $("#"+nickName+"1").dialog({
+		               
+		               autoOpen: false,
+		               show: {
+		                  effect: "Pulsate",
+		                    duration: 1000
+		               },
+		               hide: {
+		                    effect: "Scale",
+		                    duration: 1000
+		               },
+		               position: {
+		                  
+		                  my:"center",
+		                  at:"center",
+		                  of:"div[name='"+nickName+"']"
+		               }
+		               
+		            });
+		   
+		   
+		             $("#"+nickName+"1").dialog("open");
+		   
+		      },
+		      error : function(){
+		         var value =
+		            "<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='Follow' class='btn btn-danger btn-sm'>"+
+		            "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
+		            
+		          $("#"+nickName+"1").html(value);
+		            
+		            
+		            $("#"+nickName+"1").dialog({
+		               
+		               autoOpen: false,
+		               show: {
+		                  effect: "Pulsate",
+		                    duration: 1000
+		               },
+		               hide: {
+		                    effect: "Scale",
+		                    duration: 1000
+		               },
+		               position: {
+		                  
+		                  my:"center",
+		                  at:"center",
+		                  of:"div[name='"+nickName+"']"
+		               }
+		               
+		            });
+		   
+		   
+		             $("#"+nickName+"1").dialog("open");
+		      }
+		   })
+
+		})
+		
+		$(".main").on("click",function(){
+
+		    $("div[name='dialog1']").parent().dialog("close");
+
+		}) 
+		
+		<%-- 사이드 바 팔로우에서 이미지 클릭시 반장님 코드 --%>
+		
+		
+	
+		<%-- 피드 폼에서 아이디에 호버시 --%>
 		
 		$(document).on("click", ".feedProfileImage", function(event) {
 			
@@ -344,7 +669,7 @@
 		
 		<%-- 작성자 아이디에 호버시 --%>
 		
-		<%-- 알람 모달창 --%>
+		<%-- 알람 모달창 MODAL --%>
 		
 		$(document).on("click", ".alarmImg", function(event) {
 			var sessionUser = '${sessionScope.user.userId}';
@@ -397,18 +722,68 @@
 			
 		})
 		
-		<%-- 알람 모달창 --%>
+		<%-- 알람 모달창 MODAL --%>
 		
 		
 		
-		<%-- 댓글 모달창 --%>
+		<%-- 댓글 모달창 MODAL --%>
 		
 		$(document).on("click", ".comment", function(event) {
+			event.stopPropagation();
 			
-			alert("hi");
+			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+			
+			$("#commentModalFeedNo").val(feedNo);
+			$("#commentModal").modal();
 		});
 		
-		<%-- 댓글 모달창 --%>
+		$(document).on("click", ".addCommentByModal", function(event) {
+			event.stopPropagation();
+			
+			if('${sessionScope.user}' == null) return false;
+			
+			var sessionUser = '${sessionScope.user.userId}';
+			var content = $("#contentModal").val();
+			var feedNumber = $("#commentModalFeedNo").val();
+			
+			$.ajax (
+						{
+							url : "/feedRest/json/addFeedComment",
+							method : "POST",
+							data : JSON.stringify ({
+								userId : sessionUser,
+								commentContent : content,
+								feedNo : feedNumber
+							}),
+							contentType: 'application/json',
+							dataType : "json",
+							header : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							}, // header end
+							
+							success : function(data, status) {
+								
+								Swal.fire({
+									
+									  icon: 'success',
+									  title: 'Your work has been saved',
+									  showConfirmButton: false,
+									  timer: 1500
+									  
+								}) // swal close
+								
+								$("#commentModal").modal('hide');
+							
+							} // success close
+							
+						} // ajax inner close
+			
+			) // ajax close
+		})
+		
+		
+		<%-- 댓글 모달창 MODAL --%>
 		
 		
 				
@@ -716,7 +1091,7 @@
 								
 								if(sock) {
 									var Msg = "feed,follower," + parseInt(data + 1) + ",피드를 작성했습니다.";
-									alert(Msg);
+									// alert(Msg);
 									sock.send(Msg);
 								}
 							}
@@ -735,7 +1110,7 @@
 			
 			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
 			
-			alert($(this).parents(".feedHeader").siblings(".feedContent").find(".feedLetter").html().trim())
+			// alert($(this).parents(".feedHeader").siblings(".feedContent").find(".feedLetter").html().trim())
 			
 			$(".updateCover").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedCover").html().trim())
 			$(".updateFormName").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedName").html().trim())
@@ -881,7 +1256,7 @@
 		})
 		<%-- CAROUSEL 침범 방지 --%>
 		
-		<%-- CALL REPORT --%>
+		<%-- CALL REPORT 모달 --%>
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 			
@@ -901,13 +1276,13 @@
 		})	// .report evenet close
 		
 		
-		$(document).on("click", "button:contains('등록')", function(event) {
+		$(document).on("click", ".addReportByModal", function(event) {
 			event.stopPropagation();
 			
 			fncAddReport();
 		})
 		
-		<%-- CALL REPORT --%>
+		<%-- CALL REPORT 모달 --%>
 		
 	})
 	
@@ -1057,7 +1432,7 @@
 	.roller #rolltext {
 		position: absolute;
 		top: 0;
-		animation: slide 5s infinite;  
+		animation: slide 10s infinite;  
 	}
 
 	@keyframes slide {
@@ -1089,7 +1464,7 @@
 	}
   
 	.roller #rolltext {  
-		animation: slide-mob 5s infinite;  
+		animation: slide-mob 10s infinite;  
 	}
 
 	@keyframes slide-mob {
@@ -1130,7 +1505,7 @@
 						<div class="column three">
 							<div>
 								<button class="btn btn-primary searchPlace" type="button"
-									onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+									onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 	
 								<%-- 검색 --%>
 								<form id="searchForm" method="POST" action="/feed/getFeedList"
@@ -1480,22 +1855,30 @@
 			aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalCommentLabel">title</h4>
-					</div>
-					<div class="modal-body">여기는 내용</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close
-						</button>
-						<button type="button" class="btn btn-primary">
-							Save changes
-						</button>
-					</div>
+					
+					<form class="form-horizontal" id="commentForm">
+					
+						<div class="commentContentCover">
+							<div class="commentContentTitle">
+								간편 댓글 달기
+							</div>
+							
+							<div class="commentModalContent">
+								<textarea class="content" id="contentModal" name="content" placeholder="댓글을 입력하세요." maxlength="500"></textarea>
+							</div>
+						</div>
+						
+					</form>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+							<button type="button" class="btn btn-default addCommentByModal">등록</button>
+						</div>
+						
+						<input type="hidden" id="commentModalFeedNo" value="">
+						
 				</div>
 			</div>
 		</div>
@@ -1587,7 +1970,11 @@
 							Close
 						</button>
 						
+
 						<button type="button" class="custom-btn btn-13">등록</button>
+
+						<button type="button" class="btn btn-default add addReportByModal">등록</button>
+
 					</div>
 				</div>
 			</div>

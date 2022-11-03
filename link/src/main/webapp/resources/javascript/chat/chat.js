@@ -1,10 +1,24 @@
 
 
+	
+	//소켓서버에 접속시킨다.
+	let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+		cors: { origin: "*" },
+		path: '/socket.io',
+		query: {
+			userId : $("#session_userId").val(),
+			profileImage : $("#session_profileImage").val(),
+			nickName : $("#session_nickName").val(),
+			roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
+		}
+	}); //*/
 
 $(function(){
 	/*채팅 아이콘 클릭시 채팅 열기*/
 	$("#chat-icon").bind("click", function(){
+		// 채팅 아이콘 숨긴다
 		$("#chat-icon").attr("style", "display:none");
+		// 채팅창 보인다
 		$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
 	});
 	
@@ -36,26 +50,10 @@ $(function(){
 		$(".chat-img-sidebar.people-users").removeAttr("style");
 	});
 	
-
-	
-	
-	//소켓서버에 접속시킨다.
-	let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
-		cors: { origin: "*" },
-		path: '/socket.io',
-		query: {
-			userId : $("#session_userId").val(),
-			profileImage : $("#session_profileImage").val(),
-			nickName : $("#session_nickName").val(),
-			roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
-		}
-	}); //*/
 	
 	
 	
-	
-	
-	$(".chat-content-onechat").bind("click", function(){
+	$(document).on("click", ".chat-content-onechat", function(){
 		//alert("하나의 채팅 클릭시");
 
 		socket.disconnect();
@@ -158,24 +156,37 @@ $(function(){
 	
 	
 	
+
+	setChat()
+
+
+	
+	
+	
+	
+	
+});//end of 채팅 script
+
+function setChat(){
+
+	
 	
 	
 	//사용자 참가
-	socket.on('join', data => {
+	socket.off('join').on('join', data => {
 	    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');
 	});
 	
 	
 	
 	//사용자 종료
-	socket.on('leave', data => {
+	socket.off('leave').on('leave', data => {
 	    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 나가셨습니다</div>');
 	});
 	
 	
-	
 	/*server message 라는 이벤트명으로 대기*/
-	socket.on('server message', function(data){
+	socket.off('server message').on('server message', function(data){
 	    //console.log(data);
 	    
 	    var display = "";
@@ -208,13 +219,4 @@ $(function(){
 		   $('#chatLog').append(display);
 	    
 	});
-	
-	
-	
-	
-	
-	
-	
-});//end of 채팅 script
-
-
+}

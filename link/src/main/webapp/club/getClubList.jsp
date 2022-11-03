@@ -48,7 +48,7 @@
  	 
  	 <style>
 		body {
-		    background-color: #f0f2f5;
+		    background-color: #EBEDF0;
 		    color: #333;
 		    font-size: 1.125em;
 		    font-size: 15px;
@@ -60,7 +60,7 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    background-color: #f0f2f5;
+		    background-color: #EBEDF0;
 		}
 		
 		header {
@@ -233,7 +233,7 @@
 	function fncGetClubList(currentPage) {
 		
 		
-		$("#currentPage").val(currentPage)
+		$("#currentPage1").val(currentPage)
 		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
 	}
 	
@@ -290,7 +290,7 @@
 		if(window.event.keyCode == 13) {
 			fncGetClubList(1);
 		}
-	}
+	} 
 	
 	function changeFn() {
 		var category = document.getElementById("clubCategory");
@@ -357,59 +357,6 @@
 	
 	</script>
 	
-	<script>
-	var sock = null;
-	
-	$(document).ready(function () {
-		connectWs();
-	});
-
-	function connectWs() {
-
-		sock = new SockJS("<c:url value="/echo"/>");
-		
-		sock.onopen = function () {
-			console.log('open');
-
-		};
-
-		sock.onmessage = onMessage;
-
-		sock.onclose = function () {
-			console.log('close');
-		};
-
-	};
-
-	function getContextPath() {
-		var hostIndex = location.href.indexOf(location.host) + location.host.length;
-
-		return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
-	};
-	
-	function onMessage(evt){
-		var data = evt.data;
-	    
-	    const Toast = Swal.mixin({
-	    	  toast: true,
-	    	  position: 'bottom-end',
-	    	  showConfirmButton: false,
-	    	  timer: 3000,
-	    	  timerProgressBar: true,
-	    	  didOpen: (toast) => {
-	    	    toast.addEventListener('mouseenter', Swal.stopTimer)
-	    	    toast.addEventListener('mouseleave', Swal.resumeTimer)
-	    	  }
-	    	})
-
-	    	Toast.fire({
-	    	  icon: 'info',
-	    	  title: data
-	    	})
-	    
-	    
-	};
-	</script>	
 </head>
 
 	 <%-- SOCKET IO --%>
@@ -462,14 +409,6 @@
                   </c:if>
                   
                </ul>
-               
-               <%--
-               	<div class="alarmHead" >
-						
-					<img class="alarmImg" alt="" src="/resources/image/uploadFiles/alarm.png" aria-hidden="true" data-toggle="modal" data-target="#alarmModal"/><span class="badge">${alarmCount}</span>
-
-				</div>
-                --%>
             </nav>
             
          </div>
@@ -491,9 +430,13 @@
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	  	  <div id="main" class="row" style="width: 824px;">
-		   
+
 		    <div class="col-md-8 text-right" style="float: left;">
 			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
+			    
+			    <c:if 
+						test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
+			    
 			    
 				  <div class="form-group" id="selectTitle">
 				    <select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
@@ -508,8 +451,8 @@
 				  
 				  <div class="form-group" id="selects" style="text-align: left;">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="모임 검색" onkeyup="enterkey()"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 5px;">
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="모임 검색" autocomplete="off" onkeyup="enterkey()"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
 				    			 
 					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
 	    					<option value="">지역</option>
@@ -530,7 +473,7 @@
 							<option value="서초구">서초구</option>
 							<option value="성동구">성동구</option>
 							<option value="성북구">성북구</option>
-							<option value="송파구">송팡구</option>
+							<option value="송파구">송파구</option>
 							<option value="양천구">양천구</option>
 							<option value="영등포구">영등포구</option>
 							<option value="용산구">용산구</option>
@@ -559,14 +502,14 @@
 						<button type="button" class="btn btn-search" >검색</button>
 	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화</button>
 				  </div>
+				  </c:if>
 				  
-				  <!-- <div class="form-group">
-				  <button type="button" class="btn btn-primary">가입현황리스트</button>
-				  <button type="button" class="btn btn-default">모임등록</button>
-				  </div> -->
+				  <c:if
+						test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
+				</c:if>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <input type="hidden" id="currentPage1" name="currentPage" value="1"/>
 	    	    			
 	    	</form>
 	    	</div>
@@ -583,7 +526,7 @@
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
 	   <!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
-	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;">
+	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px; transform: translate(-33px, 0px);">
 	    	<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
 	    	<p style="margin-top: 20px; margin-left: 11px;"><strong>모임개설</strong>
 	    </div>	
@@ -610,11 +553,9 @@
  	
  	<!--  화면구성 div End /////////////////////////////////////-->
 	
-	<div id="pageNav" >
- 	<jsp:include page="../common/pageNavigator_new2.jsp" />
- 	</div>
+	 		<jsp:include page="../common/pageNavigator_new2.jsp" />
  	
-	</main>
+ 	</main>
 	
 </body>
 

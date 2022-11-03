@@ -23,6 +23,10 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
 		
+		<!-- alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		
+		
 		<%-- SOCKET IO --%>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 		<%-- SOCKET IO --%>
@@ -88,6 +92,33 @@
 		
 		</script>
 
+
+		<script>
+			
+			$(function () {
+				
+				$(document).on("click",".clubNav", function() {
+					
+					Swal.fire({
+						title: '로그인 후 이용해주세요' ,
+						text: "로그인 창으로 이동합니다" ,
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '확인', 
+					}).then((result) => {
+						if(result.value) {
+							self.location="/user/login.jsp"	
+						}
+					})
+				})
+			});
+			
+			
+			
+			
+		</script>
+
 </head>
 
 <style>
@@ -137,7 +168,7 @@
                   </c:if>
                   
                   <c:if test="${ empty sessionScope.user }">
-                  	<li class="menu-item"><a href="/user/login">Club</a></li>
+                  	<li class="menu-item"><a href="#" class="clubNav" onclick="clubNav();">Club</a></li>
                   </c:if>
                   
                   <li class="menu-item"><a

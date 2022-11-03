@@ -19,8 +19,10 @@ $(function() {
     	   console.log(item);
 			var value = 
 				"<div class='following-section' id='"+item.userId+"'>"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' />"+"</div><div>"+
+			"<div style='display: inline-block;'>"+"<img class='dl' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' />"+"</div><div>"+
 			"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
+			"<div id='" + item.nickName + "'></div>" +
+			"<input type='hidden' class='" + item.userId + "' value='" + item.nickName + "'>" +
 		"</div>";
 			
 			
@@ -57,8 +59,10 @@ window.onload=function() {
     	   console.log(item);
 			var value = 
 				"<div class='follow-section' id='"+item.receiveId.userId+"'>"+
-			"<div style='display: inline-block;'>"+"<img src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' />"+"</div><div'>"+
+			"<div style='display: inline-block;'>"+"<img class='dl' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' />"+"</div><div>"+
 			"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
+			"<div id='" + item.nickName + "'></div>" +
+			"<input type='hidden' class='" + item.receiveId.userId + "' value='" + item.nickName + "'>" +
 		"</div>";
 			
 			
