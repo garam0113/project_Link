@@ -48,7 +48,7 @@ ALTER TABLE REPORT_PUSH DROP COLUMN REPORT_REASON;
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)
-VALUES	('admin1', '1234', '박경수', '1111110000000', '남자', '01011113333', 'admin@hotmail.com', '1', '관리자', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+VALUES	('admin1', 'q123123', '관리자', '111111-0000000', '남자', '010-1111-3333', 'admin@hotmail.com', '1', '관리자', 'admin.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
 
 INSERT INTO USERS (user_id, password, name, rrn, gender, phone_no, email, role, nickname, profile_image, profile_writing, 
 	area1, area2, area3, category1, category2, category3, add_user_date)

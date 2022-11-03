@@ -347,11 +347,11 @@ function fncGetList(currentPage) {
 							<td width="30"></td>
 
 							<div class="col-md-3 col-sm-3 col-xs-6">
-							<c:if test="${ user.role == 0 }">
+							<c:if test="${ user.role == 0 || user.role == 1 }">
 								    <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
 									   등록</button> 
 									</c:if>
-											<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
+											<button class="custom-btn btn-13" style= "transform: translate(970px, -90px); margin-left::20px; ">
 									뒤로</button>
 							</div>
 
