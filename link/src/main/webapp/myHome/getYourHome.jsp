@@ -23,6 +23,59 @@
 
 <script type="text/javascript">
 $(function(){
+	$(document).on("click", ".comment", function(event) {
+		event.stopPropagation();
+		
+		var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+		
+		$("#commentModalFeedNo").val(feedNo);
+		$("#commentModal").modal();
+	});
+	
+	$(document).on("click", ".addCommentByModal", function(event) {
+		event.stopPropagation();
+		
+		if('${sessionScope.user}' == null) return false;
+		
+		var sessionUser = '${sessionScope.user.userId}';
+		var content = $("#contentModal").val();
+		var feedNumber = $("#commentModalFeedNo").val();
+		
+		$.ajax (
+					{
+						url : "/feedRest/json/addFeedComment",
+						method : "POST",
+						data : JSON.stringify ({
+							userId : sessionUser,
+							commentContent : content,
+							feedNo : feedNumber
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							Swal.fire({
+								
+								  icon: 'success',
+								  title: 'Your work has been saved',
+								  showConfirmButton: false,
+								  timer: 1500
+								  
+							}) // swal close
+							
+							$("#commentModal").modal('hide');
+						
+						} // success close
+						
+					} // ajax inner close
+		
+		) // ajax close
+	})
 	
 	$('.dl').on("click",function(){
 		
@@ -1191,6 +1244,96 @@ $(function(){
 				
 		) // ajax close
 	})
+	<%-- ADD_FEED_HEART --%>
+		$(document).on("click", ".feedLike", function(event){
+			event.stopPropagation();
+			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
+			
+			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
+			
+			$.ajax(
+					{
+						url : "/feedRest/json/addFeedHeart",
+						method : "POST",
+						data : JSON.stringify ({
+							source : 0,
+							sourceNo : feedNo,
+							userId : sessionUser
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+							
+							if(sock) {
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 눌렀습니다."
+								sock.send(Msg);
+							}
+							
+						} // success close
+						
+					} // ajax inner close
+					
+			) // ajax close
+		})
+		<%-- ADD_FEED_HEART --%>
+		
+		<%-- DELETE_FEED_HEART --%>
+		$(document).on("click", ".feedDislike", function(event){
+			event.stopPropagation();
+			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
+			
+			var html = $(this);
+			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
+			
+			$.ajax(
+					{
+						url : "/feedRest/json/deleteFeedHeart",
+						method : "POST",
+						data : JSON.stringify ({
+							source : 0,
+							sourceNo : $(this).parents(".feedForm").children("input[name='feedNo']").val(),
+							userId : sessionUser
+						}),
+						contentType: 'application/json',
+						dataType : "json",
+						header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						}, // header end
+						
+						success : function(data, status) {
+							
+							console.log("피드 시러요 성공 : " + data);
+							
+							$(html).parents(".row").children(".likeCount").text(data);
+							$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
+							
+							if(sock) {
+								var Msg = "feed,follower," + feedNo + ", 좋아요를 취소했습니다."
+
+								sock.send(Msg);
+							}
+							
+						} // success close
+						
+					} // ajax inner close
+					
+			) // ajax close
+		})
+		<%-- DELETE_FEED_HEART --%>
 	<!-- ADD_FEED_HEART -->
 	$(document).on("click", ".carousel-control", function(event) {
 		event.stopPropagation();
@@ -1265,6 +1408,10 @@ $(function(){
 </script>
 
 <style>
+
+.modal-backdrop.in {
+z-index: -1;
+}
 .my{
 margin-right: 450px;
 }
@@ -1469,12 +1616,11 @@ position:relative;
 
 .single-comment {
 	padding-left: 0;
-	border-radius:20px;
-	margin-left : 70px;
-    width : 600px;
-    border: 2px solid #CCD0D5;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+	margin-left : 80px;
+    width : 560px;
+    border: none;
+    
+
     }
 .ui-widget.ui-widget-content{
 		
@@ -1673,6 +1819,8 @@ input[name="tab_item-follow"] {
 }
 .feedForm {
   margin-left:-70px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 15px !important;
 }
 
 .feedForm > img {
@@ -1744,7 +1892,7 @@ margin-left:65px;
 }
 
 .btn:hover{
-	   background-color: #5F0080;
+	   background-color: #5F0080 !important;
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   color: white !important;
 	   border-color : #5F0080;
@@ -1789,6 +1937,9 @@ margin-left:10px;
 		
 width:auto !important; 
 border-radius: 20px;   
+}
+.row{
+border-radius: 15px !important;
 }
 </style>
 </head>
@@ -2090,6 +2241,38 @@ border-radius: 20px;
 
 						</c:if>
 					</c:forEach>
+					<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					<form class="form-horizontal" id="commentForm">
+					
+						<div class="commentContentCover">
+							<div class="commentContentTitle">
+								댓글
+							</div>
+							
+							<div class="commentModalContent">
+								<textarea class="content" id="contentModal" name="content" placeholder="댓글을 입력하세요." maxlength="500"></textarea>
+							</div>
+						</div>
+						
+					</form>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+							<button type="button" class="btn btn-default addCommentByModal">등록</button>
+						</div>
+						
+						<input type="hidden" id="commentModalFeedNo" value="">
+						
+				</div>
+			</div>
+		</div>
+					
 
 				</div>
 				<%-- 현재 페이지 --%>

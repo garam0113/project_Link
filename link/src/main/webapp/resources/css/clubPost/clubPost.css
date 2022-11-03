@@ -31,6 +31,7 @@
 	border-radius: 10px;
 	margin: 10px;
 	padding: 1rem;
+	background: white;
 }
 
 /* 게시물등록, 댓글등록, 등록완료, 수정완료, 취소의 버튼 */
@@ -205,6 +206,7 @@
 	display: none;
 	display: grid;
 	grid-template-columns: 2fr 10fr;
+	background: white;
 }
 
 .recomment-header.depth{
