@@ -53,7 +53,7 @@ public class LiveRestController {
 		System.out.println("set한 LiveMember 값 : "+getLiveMember.getMember());
 		liveService.updateLive(getLiveMember);
 		System.out.println("update 진행완료 ");
-		Live getLive = liveService.getLive(getLiveMember);
+		Live getLive = liveService.getLive(live);
 		System.out.println("update 후 값 : "+getLive);
 		
 		if(getLive.getMember() == 0) { 

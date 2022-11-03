@@ -1148,9 +1148,15 @@ $(function() {
 		})
 
 	});
+
 	$(function(){
 		/* 모임 게시물 좋아요 또는 좋아요취소 */
 		$(document).on("click",".clubPost-header-heart", function() {
+
+	 $(function(){
+		모임 게시물 좋아요 또는 좋아요취소
+		$(".clubPost-header-heart").bind("click", function(){
+
 			//alert("모임게시물 좋아요");
 			
 			var clubNo = $("div[class='post']").attr("clubNo");
@@ -1198,8 +1204,13 @@ $(function() {
 					});
 		}); // end of 하트
 		
+
 	})
  
+
+	}) 
+
+
 
 
 </script>
