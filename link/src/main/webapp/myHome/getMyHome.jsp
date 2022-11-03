@@ -575,17 +575,63 @@ $(function(){
 	})
 	<!-- GET_FEED -->
 	
-	<!-- ADD_FEED_HEART -->
+	<%-- ADD_FEED_HEART --%>
 	$(document).on("click", ".feedLike", function(event){
 		event.stopPropagation();
-		alert($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
+		console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
 		
 		var html = $(this);
 		var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+		var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+		var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
 		
 		$.ajax(
 				{
 					url : "/feedRest/json/addFeedHeart",
+					method : "POST",
+					data : JSON.stringify ({
+						source : 0,
+						sourceNo : feedNo,
+						userId : sessionUser
+					}),
+					contentType: 'application/json',
+					dataType : "json",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, // header end
+					
+					success : function(data, status) {
+						
+						$(html).parents(".row").children(".likeCount").text(data);
+						$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+						
+						if(sock) {
+							var Msg = "feed,follower," + feedNo + ", 좋아요를 눌렀습니다."
+							sock.send(Msg);
+						}
+						
+					} // success close
+					
+				} // ajax inner close
+				
+		) // ajax close
+	})
+	<%-- ADD_FEED_HEART --%>
+	
+	<%-- DELETE_FEED_HEART --%>
+	$(document).on("click", ".feedDislike", function(event){
+		event.stopPropagation();
+		console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 시러요");
+		
+		var html = $(this);
+		var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
+		var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
+		var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
+		
+		$.ajax(
+				{
+					url : "/feedRest/json/deleteFeedHeart",
 					method : "POST",
 					data : JSON.stringify ({
 						source : 0,
@@ -601,10 +647,16 @@ $(function(){
 					
 					success : function(data, status) {
 						
-						alert("피드 좋아요 성공 : " + data);
-
+						console.log("피드 시러요 성공 : " + data);
+						
 						$(html).parents(".row").children(".likeCount").text(data);
-						$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
+						$(html).parent().html('<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" />');
+						
+						if(sock) {
+							var Msg = "feed,follower," + feedNo + ", 좋아요를 취소했습니다."
+
+							sock.send(Msg);
+						}
 						
 					} // success close
 					
@@ -612,7 +664,7 @@ $(function(){
 				
 		) // ajax close
 	})
-	<!-- ADD_FEED_HEART -->
+	<%-- DELETE_FEED_HEART --%>
 	
 	<!-- DELETE_FEED_HEART -->
 	$(".dislike:contains('시러요')").bind("click", function(){
@@ -1040,13 +1092,56 @@ $(function() {
 		})
 
 	});
-	
+	$(function(){
+		<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
+		$(".clubPost-header-heart").bind("click", function(){
+			//alert("모임게시물 좋아요");
+			$.ajax( "/clubPostRest/json/updateClubPost",
+					{
+						method : "POST",
+						data : JSON.stringify({
+									clubNo : ${ clubPost.getClubPost.clubNo },
+									clubPostNo : ${ clubPost.getClubPost.clubPostNo }
+								}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							$(".clubPost-header-heart").children().remove();
+							$(".clubPost-header-heartCount").text("");
+
+							var heartDisplay = "";
+							
+							// 로그인한 회원이 좋아요하면 게시물번호를 안했으면 0을 리턴한다
+							if(JSONData.heartCondition == 0){
+								heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
+							}else{
+								heartDisplay = "<img src='/resources/image/uploadFiles/heart.jpg' height='70' width='70'>";
+							}
+							
+							$(".clubPost-header-heart").append( heartDisplay );
+							$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
+							
+							if(sock) {
+								var Msg = "하트 좋아요";
+								sock.send(Msg);
+							}
+						}
+					});
+		}); // end of 하트
+		
+	})
 
 
 
 </script>
 
 <style>
+.row{
+border-radius: 15px !important;
+}
 .cc{
     display: flex;
     align-items: center;
@@ -1254,18 +1349,12 @@ position:relative;
 
 .single-comment {
 	padding-left: 0;
-	border-radius:15px;
-	margin-left : 70px;
-    width : 600px;
-    border: 2px solid #CCD0D5;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-		
-		
+	margin-left : 80px;
+    width : 560px;
+    border: none;
     
-    
-	
-}
+
+    }
 
 .f {
 	margin-left: 300px;
@@ -1459,7 +1548,8 @@ input[name="tab_item-follow"] {
 }
 .feedForm {
   margin-left:-70px;
-   border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 15px !important;
 }
 
 .feedForm > img {
@@ -1948,7 +2038,7 @@ $(function() {
 				"</div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+                "<img class='clubPost-header-heart'style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
              "</div>"+
 				"<div style='flex:1;  padding-top: 15px;' >"+
 					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
@@ -1984,7 +2074,7 @@ $(function() {
 				"</div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+                "<img style='float: right;' class='clubPost-header-heart' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
              "</div>"+
 				"<div style='flex:1; padding-top: 15px;'>"+
 					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
