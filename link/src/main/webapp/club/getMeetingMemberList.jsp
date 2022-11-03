@@ -132,10 +132,10 @@
 		});
 	});
 	
-/* 	//홈버튼
+	//홈버튼
 	$(function() {
 		$(".homeBtn").on("click", function() {
-			self.location="/club/getClub?clubNo=${clubNo}"
+			self.location="/club/getClub?clubNo="+${clubNo};
 		});
 	});
 	
@@ -151,12 +151,11 @@
 		});
 	});
 	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
-			//self.location="/clubPost/chatRoomList?rommId=+${club.roomId}";
+			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
-	}); */
+	});
 	
 	
 	
@@ -165,13 +164,35 @@
 	
 </head>
 
-<body>
+<body style="background: #EBEDF0;">
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
+		<div class="homeBtn_group" style="margin-top: 200px;">
+						<button type="button" class="homeBtn" style="margin-top: 17px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						</button>
+						
+						<button type="button" class="clubPostBtn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubMemberBtn">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="clubChatBtn">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</button>
+						
+						<button type="button" class="live">
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+						</button>
+				</div>
+				
 		<div class="form_txtInput" style="margin-top: 150px;">
 			<h2 class="sub_tit_txt">일정 참여자</h2>
 		</div>
