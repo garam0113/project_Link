@@ -29,14 +29,23 @@
 		<!-- import.payment.js -->
 		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 		
+		
+	
+		<!-- 템플릿에 있던 코드 -->
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+		<script src="/resources/javascript/plugins.js"></script>
+		<script src="/resources/javascript/beetle.js"></script>
+		
+		
+		
 		<script type="text/javascript">
 		$(function(){
 			$("input[value='결제하기']").bind("click", function(){
 				requestPayment();
 			});
 			$("input[value='취소하기']").bind("click", function(){
-				//history.go(-1);
-				location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo };
+				history.go(-1);
+				//location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo };
 			});
 			
 			var clubOption = ('${ returnClub.clubMaxMember }' == 0) ? true : false;
@@ -181,7 +190,7 @@
 					amount : totalPrice,
 					customer_uid : 'your-customer-unique-id', // 필수 입력.
 					buyer_email : email,
-					buyer_name : '상디',
+					buyer_name : ${ user.name },
 					buyer_tel : ${ user.phoneNo }
 				    //buyer_addr : '서울특별시 강남구 삼성동',
 				    //buyer_postcode : '123-456'
@@ -235,6 +244,7 @@
 		.pay-main{
 			border-radius: 100px;
 			font-size: 20px;
+			margin-top: 50px;
 		}
 		.pay-header{
 			background-color: #f2e3ff;
@@ -290,15 +300,15 @@
 		<!-- ToolBar End /////////////////////////////////////-->
 
 		<main role="main">
-			<div id="intro-wrap">
-			</div><!-- intro-wrap -->
+			<!-- <div id="intro-wrap">
+			</div> --><!-- intro-wrap -->
 
 			<div id="main" class="row">
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 				
 				
-					<ul class="inline cats filter-options" style="font-size: 40px; font-size: 3rem;">
+					<%-- <ul class="inline cats filter-options" style="font-size: 40px; font-size: 3rem;">
 						<li data-group="advertising">
 							<a href="/club/getMeetingList">모임 일정</a>
 						</li>
@@ -314,7 +324,7 @@
 						<li data-group="infographics">
 							<a href="/clubPost/addPayView?clubNo=${ pay.clubNo }">결제</a>
 						</li>
-					</ul>
+					</ul> --%>
 					
 					
 					
@@ -392,14 +402,14 @@
 						
 	
 						<br><br><br>
-						<input type="text" name="payProduct" value="">
-						<input type="text" name="totalPrice" value="">
-						<input type="text" name="merchant_uid" value="">
-						<input type="text" name="updateClubMemberCount" value="0">
-						<input type="text" name="updateClubCount" value="0">
-						<input type="text" name="clubNo" value="${ pay.clubNo }">
-						<input type="text" id="maxPay" value="${ pay.maxPay }">
-						<input type="text" name="payNavigation" value="${ pay.payNavigation }">
+						<input type="hidden" name="payProduct" value="">
+						<input type="hidden" name="totalPrice" value="">
+						<input type="hidden" name="merchant_uid" value="">
+						<input type="hidden" name="updateClubMemberCount" value="0">
+						<input type="hidden" name="updateClubCount" value="0">
+						<input type="hidden" name="clubNo" value="${ pay.clubNo }">
+						<input type="hidden" id="maxPay" value="${ pay.maxPay }">
+						<input type="hidden" name="payNavigation" value="${ pay.payNavigation }">
 					
 					
 					
@@ -416,51 +426,6 @@
 		</main><!-- main -->
 		
 		
-
-		<footer role="contentinfo">
-			<div class="row">
-				<div class="row-content buffer clear-after">
-					<section id="top-footer">
-						<div class="widget column three">
-							<h4>Menu</h4>
-							<ul class="plain">
-								<li><a href="home-01.html">Home</a></li>
-								<li><a href="works-3-columns.html">Portfolio</a></li>
-								<li><a href="blog-4-columns-masonry.html">Blog</a></li>
-								<li><a href="resume.html">Resume</a></li>
-								<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
-							</ul>
-						</div>
-						<div class="widget column three">
-							<h4>Archives</h4>
-							<ul class="plain">
-								<li><a href="#">March 2014</a></li>
-								<li><a href="#">April 2014</a></li>
-								<li><a href="#">May 2014</a></li>
-								<li><a href="#">June 2014</a></li>
-								<li><a href="#">July 2014</a></li>
-							</ul>
-						</div>								
-						<div class="widget column three">
-							<h4>Widget</h4>
-							<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-						</div>				
-						<div class="widget meta-social column three">
-							<h4>Follow Us</h4>
-							<ul class="inline">
-								<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
-								<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
-								<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
-							</ul>
-						</div>														
-					</section><!-- top-footer -->
-					<section id="bottom-footer">
-						<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
-						<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-					</section><!-- bottom-footer -->			
-				</div><!-- row-content -->	
-			</div><!-- row -->	
-		</footer>
 
 	</body>
 

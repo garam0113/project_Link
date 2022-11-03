@@ -67,11 +67,11 @@
 	}
 	
 	#main {
-		background-color: #f0f2f5 !important;
+		background-color: #EBEDF0 !important;
 	}
 	
 	main {
-		background-color: #f0f2f5 !important;
+		background-color: #EBEDF0 !important;
 	}
 	
 	.darkover {
@@ -313,7 +313,7 @@
 </head>
 
 	
-	<body class="blog masonry-style">
+	<body class="blog masonry-style" style="background: #EBEDF0;">
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	

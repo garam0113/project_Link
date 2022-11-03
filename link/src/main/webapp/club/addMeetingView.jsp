@@ -248,14 +248,14 @@
 
 </head>
 
-<body>
+<body style="background: #EBEDF0;">
 
 	<jsp:include page="/toolbar.jsp"/>
 
 
-	<form>
-		<div class="wrap wd668">
-			<div class="container">
+	<form style="background: #EBEDF0;">
+		<div class="wrap wd668" style="background-color: #f0f2f5;">
+			<div class="container" style="background-color: white; border: outset;">
 				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모임일정등록</h2>
 					<p class="exTxt">새로운 일정을 등록해보세요...</p>
