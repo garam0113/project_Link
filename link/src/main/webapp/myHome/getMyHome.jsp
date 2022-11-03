@@ -54,13 +54,15 @@ $(function() {
 	       console.log(data.blockList);
 	          var value="";
 	       $.each(data.blockList, function(index, item) { 
-	    	      value += 	"<div id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<span class='yourHome3'>"+item.receiveId.nickName+"</span>"+
-					        "<button type='button' class='"+item.receiveId.userId+" btn-danger btn-sm' id='stopBlock2'>차단해제</button></div>"
+	    	      value += 	"<div class='cc' id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<h3 class='yourHome3' style='margin:0;'>"+item.receiveId.nickName+"</h3>"+
+					        "&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<button type='button' class='"+item.receiveId.userId+" btn-danger btn-sm' id='stopBlock2'>차단해제</button></div>"
 						                                                       
 
 	    	   
 	    	   
 			})
+			
+			if(value == "") value += "차단한 유저가 없습니다";
 			Swal.fire({
 				
 		  html : "<div id='swal1'></div>"
@@ -505,7 +507,8 @@ function showPopUp(){
 }
 
 function showPopUp2(){
-    window.open("/myHome/getBlockList","테스트","width=400, height=600, top=50, left=50");
+	var userId = $("#userId").val();
+    window.open("/user/updateProfile2?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
 }
  
 
@@ -1040,6 +1043,10 @@ $(function() {
 </script>
 
 <style>
+.cc{
+    display: flex;
+    align-items: center;
+}
 .my{
 margin-right: 450px;
 }
@@ -1074,12 +1081,12 @@ position:relative;
 
 #calendar {
 	margin-left: 955px;
-	margin-top: 50px;
+	margin-top: 15px;
 	display: flex;
 	justify-content: center;
 	float: left;
 	width : 675px;
-	height : 680px;
+	height : 720px;
 	
 }
 
@@ -1092,6 +1099,7 @@ position:relative;
 	width: 340px;
 	background-color:#F5F6F7;
 	border-radius: 15px;
+	border: 1px solid #DADDE1;;
 }
 
 /* Profile container */
@@ -1299,7 +1307,7 @@ margin-left:150px;
   margin-top: 120px;
   margin-bottom: 100px;
    background-color: #F5F6F7;
-   border: 2px solid #DADDE1;
+   border: 2px solid #CCD0D5;
   width: 670px;
   display:inline-block;
   margin-left:170px;
@@ -1504,6 +1512,7 @@ margin-left:65px;
 	transform: scale(1.1);
 		transition: transform .5s; 
 	}
+	
 
 </style>
 </head>
@@ -1567,7 +1576,7 @@ margin-left:65px;
 										<div class="userbtn" id="myClub" style="color : black;">
 												 내 모임</div>
 										
-										<div class="userbtn" style="color : black;"><a href="/user/updateProfile?userId=${user.userId }"> 
+										<div class="userbtn" style="color : black;" onclick="showPopUp2();">
 										
 												 프로필 수정</a></div>
 												

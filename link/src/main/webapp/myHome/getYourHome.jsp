@@ -291,7 +291,7 @@ $(document).on("click",".dll",function(){
 	
 	
 				if(sessionId != user_Id){
-					 $("#"+nickName+"").dialog("open");
+					 $("#"+nickName+"1").dialog("open");
 		         }
 	
 		},
@@ -1181,6 +1181,29 @@ $(function(){
 		) // ajax close
 	})
 	<!-- ADD_FEED_HEART -->
+	$(document).on("click", ".carousel-control", function(event) {
+		event.stopPropagation();
+	})
+	<%-- CAROUSEL 침범 방지 --%>
+	
+	<%-- CALL REPORT --%>
+	$(document).on("click", ".report", function(event) {
+		event.stopPropagation();
+	    
+		$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+		
+	}) // .report evenet close
+	<%-- CALL REPORT --%>
+	$(".btn_getFeed").bind("click", function(){
+		alert("클릭한 글 번호 : " + $(this).parent().find("input[name='feedNo']").val());
+		location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
+	})
+	$(document).on("click", ".feedForm", function(event) {
+		event.stopPropagation();
+		var feedNumber = $(this).children("input[name='feedNo']").val();
+		location.href="/feed/getFeed?feedNo=" + feedNumber;
+	})
+	
 	
 	<!-- DELETE_FEED_HEART -->
 	$(".dislike:contains('시러요')").bind("click", function(){
@@ -1265,7 +1288,7 @@ position:relative;
 
 #calendar {
 	margin-left: 955px;
-	margin-top: 50px;
+	margin-top: 15px;
 	display: flex;
 	justify-content: center;
 	float: left;
@@ -1332,16 +1355,16 @@ position:relative;
 	float: left;
 	text-align: center;
 	margin-top: 10px;
-	margin-left: 80px;
+	margin-left: 60px;
 }
 
 .profile-userbuttons .btn {
 	text-transform: uppercase;
-	font-size: 11px;
+	font-size: 15px;
 	font-weight: 600;
 	padding: 6px 15px;
 	margin-right: 5px;
-	background-color:blueviolet;
+	color:blueviolet;
 	border-color: blueviolet !important;
 }
 
@@ -1492,12 +1515,12 @@ margin-left:150px;
   margin-top: 120px;
   margin-bottom: 100px;
    background-color: #F5F6F7;
-   border: 2px solid #DADDE1;
   width: 670px;
   display:inline-block;
   margin-left:170px;
   height:800px;
    border-radius: 15px;
+   border: 2px solid #CCD0D5;
   
   
   
@@ -1702,37 +1725,35 @@ margin-left:65px;
 }
 .btn{
 margin-top:100px;
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border: solid 2px;
+	   color:blueviolet;
 
 }
 
+.btn:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color: white !important;
+	}
 
 </style>
 </head>
 
 <body class="blog masonry-style">
 
-	<jsp:include page="/toolbar.jsp" />
+	
 
 	<main role="main" class="main">
 		
-			<div id="intro-wrap" data-height="12" style="background-color : black;">
-				<div id="intro" class="preload">
-					<div class="intro-item"
-						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2 class="neon">MyBlog</h2>
-							
-						</div>
-						<!-- caption -->
-					</div>
-					<!-- intro -->
-				</div>
-				<!-- intro -->
-			</div>
-			<!-- intro-wrap -->
+			
 
 			<div id="main" class="row">
-			<div class="my">
+			<div>
+			<jsp:include page="/toolbar.jsp" />
+			</div>
+			<div class="my" style="margin-top : 100px;">
 			<div>
 				<div id="calendar">
 
@@ -1766,32 +1787,32 @@ margin-top:100px;
 							
 								  <c:if test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '1'}">
 									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
-										<button type="button" class="btn btn-danger btn-sm"
+										<button type="button" class="btn btn-sm" 
 											id="following1">팔로잉</button>
 									</c:if>
 									<c:if test="${fn:trim(followUser.receiveId.fbState) == '2'}">
-										<button type="button" class="btn btn-danger btn-sm"
+										<button type="button" class="btn btn-sm" 
 											id="updateFollow1">팔로우</button>
 									</c:if>
 								</c:if> 
 								<c:if test="${ empty followUser }">
-									<button type="button" class="btn btn-danger btn-sm" id="follow1">팔로우</button>
+									<button type="button" class="btn btn-sm" id="follow1">팔로우</button>
 								</c:if>
-
+                                   &nbsp; &nbsp;&nbsp;
 
 								<c:if
 									test="${block.receiveId.userId == getUser.userId and fn:trim(block.receiveId.fbType) == '2'}">
 									<c:if test="${fn:trim(block.receiveId.fbState) == '1'}">
-										<button type="button" class="btn btn-danger btn-sm"
+										<button type="button" class="btn btn-sm"
 											id="stopBlock1">차단해제</button>
 									</c:if>
 									<c:if test="${fn:trim(block.receiveId.fbState) == '2'}">
-										<button type="button" class="btn btn-danger btn-sm"
+										<button type="button" class="btn btn-sm"
 											id="updateBlock1">차단</button>
 									</c:if>
 								</c:if>
 								<c:if test="${ empty block }">
-									<button type="button" class="btn btn-danger btn-sm" id="block1">차단</button>
+									<button type="button" class="btn btn-sm" id="block1">차단</button>
 								</c:if>
 								<br> <br>
 
