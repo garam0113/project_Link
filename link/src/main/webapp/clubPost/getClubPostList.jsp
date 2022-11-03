@@ -384,7 +384,7 @@
 
 		<main role="main">
 
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background: #EBEDF0;"><!-- 중간 개별영역 -->
 			
 				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
@@ -454,7 +454,7 @@
 							    
 							    
 							    <!-- 썸네일로 list display start -->
-								<div class="row">
+								<div class="row" style="background: white;">
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
