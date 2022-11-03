@@ -247,7 +247,7 @@ body {
 							placeholder="변경이메일">
 					</div>
 					<div class="col-sm-4">
-						<button type="button" id="sendPhoneNumber" class="btn " style="margin-top: 11px; margin-left: 30px; background-color: white; border-color: #5F0080;">인증번호전송</button>
+						<button type="button" id="sendEmail" class="btn " style="margin-top: 11px; margin-left: 30px; background-color: white; border-color: #5F0080;">인증번호전송</button>
 						<input type="hidden" id=checkNo>
 					</div>
 				</div>
