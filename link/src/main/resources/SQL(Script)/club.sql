@@ -65,7 +65,7 @@ UPDATE club
 //모임 삭제
 deleteClub()
 DELETE FROM club
-WHERE club_no=21;
+WHERE club_no=5;
 
 
 //모임리스트
