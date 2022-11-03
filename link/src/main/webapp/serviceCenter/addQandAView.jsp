@@ -69,6 +69,30 @@
 	
 	</script>
 <style>
+.table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;
+    translate: -225px;
+}
+input[type=file]::file-selector-button {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: solid 2px;
+  box-shadow:none !important;
+  outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
+  }
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -133,6 +157,7 @@ margin-left: 400px !important;
 		<h2>Q&A 등록</h2>
 	</div>
 	<div class="container">
+	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px; height:750px;">
 		<div></div>
 		<div class="page-header text-center"></div>
 
@@ -140,7 +165,7 @@ margin-left: 400px !important;
 		<form class="form-horizontal" enctype="multipart/form-data">
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
-			<div class="form-group">
+			<div class="form-group" style="margin-left: 161px;">
 				<strong>제목</strong> <label for="title"></label>
 				<div class="col-sm-4">
 					<textarea class="qandATitle" id="qandATitle" name="qandATitle" value=""
@@ -149,26 +174,27 @@ margin-left: 400px !important;
 
 				</div>
 			</div>
-			<strong>내용</strong>
+			<strong style="margin-left: 161px;">내용</strong>
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
 					<textarea class="content" id="qandAContent" name="qandAContent" value=""
 						placeholder="내용을 입력해주세요." maxlength="500"
-						style="width: 500px; height: 500px;"></textarea>
+						style="width: 500px; height: 500px; margin-left: 161px;"></textarea>
 				</div>
 			</div>
 
-			<div  style= "display:flex; height: 30px;">
-				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
+			<div  style= "display:flex; height: 30px; margin-left: 161px;">
+				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px " />
 				<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" style ="margin-left: 60px; width:auto; height:auto;" checked>나만 보기
 			 	<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1" style ="margin-left: 20px; width:auto; height:auto;">전체 보기
 				</div></form> 
 			
-			<span id="helpBlock" class="help-block"> <strong
-				class="text-danger">사진은 2장까지 가능합니다.</strong>
-			</span>
-
+			<div id="helpBlock" class="help-block"> 
+				<strong class="text-danger" style="margin-left: 161px; display: flex; margin-top: 30px;">사진은 2장까지 가능합니다.</strong>
+			</div>
+			
+			</div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
