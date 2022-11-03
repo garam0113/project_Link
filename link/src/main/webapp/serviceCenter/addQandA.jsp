@@ -41,7 +41,8 @@ $(function(){
 <style>
 .row {
 	margin-left : 0px !important;
-	   display: initial !important;
+	 display: initial !important;
+	resize: none;
 }
 textarea {
 	resize: none;
@@ -57,58 +58,33 @@ background-color: #EBEDF0 !important;
 .content {
 	margin-top: -30px;
 }
-.custom-btn {
-  margin: 5px;
-  width: 80px;
-  height: 30px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+.btn-13 {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
-  background: transparent;
+  background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  border: none !important;
+  border: solid 2px;
   box-shadow:none !important;
   outline: none;
-}
-.btn-13 {
-  background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
-  border: none;
-  z-index: 1;
-}
-.btn-13:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  border-radius: 5px;
-   background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
-}
-.btn-13:hover { <%-- 글씨색 --%>
-  color: #fff;
-}
-.btn-13:hover:after {
-  top: 0;
-  height: 100%;
-}
-.btn-13:active {
-  top: 2px;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
 }
 
+.btn-13:hover { 
+   background-color: #5F0080;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
+}
 </style>
 </head>
 
@@ -133,24 +109,26 @@ background-color: #EBEDF0 !important;
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
-					<tr class = "content" id ="content">
-						<th style="text-align-last: center;">제목</th>
-						<td>		
-						<textarea class="text" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}"  
-						style="width: 900px; height:40px;" readonly >${qandA.qandATitle}</textarea>
-						</td> 
+					<tr class = "title" id ="title">
+					<th style="text-align-last: center;">제목</th>
+					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">		
+						${qandA.qandATitle}
+							<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}">
+					</td>	
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandARegDate" id="qandARegDate">${qandA.qandARegDate }</td>
-						<td align="left" style="transform: translateX(-370px);">${qandA.userId.nickName}</td>
+						<td align="left" name ="qandARegDate" id="qandARegDate" style="display: flex; height: 40px;">${qandA.qandARegDate }</td>
+						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;"><strong>${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td>
-						<textarea class="text" id="qandAContent" name="qandAContent" value="${qandAe.qandAContent}"  
-						style="width: 900px; size:400px;" readonly >${qandA.qandAContent}</textarea>
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
+								${qandA.qandAContent}
+						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
 						</td>
 					</tr>
 					<tr >

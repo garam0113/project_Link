@@ -53,11 +53,9 @@
 		
 		$("button:contains('수정')").bind("click", function(){
 			fncUpdateQandA();
-			alert("3");
 		});
 		
 		$("#back").bind("click", function(){
-			alert("4");
 			window.history.back(-1);
 		});
 
@@ -138,46 +136,53 @@ textarea {
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
-					<tr class = "content" id ="content">
+					<tr class = "title" id ="title">
 						<th style="text-align-last: center;">제목</th>
-						<td>		
-						<textarea class="text" id="qandATitle" name="qandATitle" value=""  
-						style="width: 900px; min-height:40px; max-height:80px;" >${qandA.qandATitle}</textarea>
-						</td> 
+						<td>
+						<textarea class="qandATitle" id="qandATitle" name="qandATitle" value="" style="width:900px; min-height: 40px; max-height:80px;"
+						maxlength="66" placeholder="제목을 입력해주세요">${qandA.qandATitle}</textarea>
 					</tr>
 					<tr>
 						<th></th>
 						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong></td>
-						<td align="left" style="transform: translateX(-370px);">${qandA.userId.nickName}</td>
+						<td align="left" style="transform: translateX(-370px);"><strong>${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
 						<td>
-						<textarea class="text" id="qandAContent" name="qandAContent" value=""  
-						style="width: 900px; size:400px;" >${qandA.qandAContent}</textarea>
-						</td>
+						<textarea class="qandAContent" id="qandAContent" name="qandAContent" value="" style="width:900px; min-height : 150px; max-height: 800px;"
+						maxlength="500" placeholder="내용을 입력해주세요">${qandA.qandAContent}</textarea></td>
+						
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">첨부파일</th>
 <%--파일 --%>				<!-- <td><input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
 						</td> -->
 						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
-							<td>첨부파일 없음</td>
+							<td>
+							<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
+							
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
-						${qandA.qandAImage1}
-						
+					
+						<input type="hidden" name="qandAImage1" id="qandAImage1" value="${qandA.qandAImage1}">
+						<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; border: 10px solid white; border-radius: 15px;
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						</c:if>
 						<c:if test="${qandA.qandAImage2 != null }">
-						<br/> ${qandA.qandAImage2}
+						<input type="hidden" name="qandAImage2" id="qandAImage2" value="${qandA.qandAImage2}">
+						<img src="/resources/image/uploadFiles/${qandA.qandAImage2}" 
+						style="vertical-align: sub; display: inline-block; width:250px; margin-left: 30px; height:250px; border: 10px solid white; border-radius: 15px;
+						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage2}">
 						</c:if>
 						</td>
 						
 						<c:if test ="${user.role == '1'}"> <%--관리자--%>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate">${qandA.qandAAnswerRegDate }</td>
+						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate"></td>
 						<td/>
 					</tr>
 					<tr >
