@@ -28,6 +28,7 @@ background-color: #EBEDF0 !important;
 }
 .row {
 display: initial !important;
+margin-left: 0px !important;
 }
 
 .card{

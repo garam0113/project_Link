@@ -263,6 +263,9 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("미팅참가 DAO Impl 왔나?");
 		
+//		int meetingNo = sqlSession.selectOne("ClubMapper.getMeetingNo", participant.getMeeting());
+//		participant.setMeetingNo(meetingNo);
+		
 		sqlSession.insert("ClubMapper.addMeetingMember",participant);
 	}
 	

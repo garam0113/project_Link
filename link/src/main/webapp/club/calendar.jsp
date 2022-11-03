@@ -96,6 +96,10 @@ border-radius: 0px 0px 0px 0px  !important;
     left: 0 !important;
 }
 
+a {
+	color: #333;
+}
+
 
 
 

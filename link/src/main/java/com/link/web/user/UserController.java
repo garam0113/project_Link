@@ -246,7 +246,7 @@ public class UserController {
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 
-	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
+	@RequestMapping(value = "updateProfile2", method = RequestMethod.GET)
 	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session)
 			throws Exception {
 

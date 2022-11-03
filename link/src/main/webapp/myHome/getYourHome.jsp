@@ -29,7 +29,7 @@ $(function(){
 	var user_Id = $(this).parent().parent().attr("id");
 	var nickName = $("."+user_Id+"").val();
 	var profileImage = $(this).attr("id");
-	
+	var sessionId = $("#myId").val();
 	
 	$.ajax("/myHomeRest/json/getFollow", {
 
@@ -76,40 +76,40 @@ $(function(){
 			
 			if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '1'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='block' class='btn  btn-sm'>차단</button></div><button type='button' class='btn  btn-sm'>채팅</button></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(ffbType == ""  && bfbType == "" ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}
 			
 			 $("#"+nickName+"").html(value);
@@ -135,14 +135,14 @@ $(function(){
 					
 				});
 	
-	
+	         if(sessionId != user_Id){
 				 $("#"+nickName+"").dialog("open");
-	
+	         }
 		},
 		error : function(){
 			var value =
-				"<div name='dialog'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-				"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+				"<div name='dialog'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+				"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 				
 			 $("#"+nickName+"").html(value);
 				alert("dd");
@@ -184,9 +184,7 @@ $(document).on("click",".dll",function(){
 	var user_Id = $(this).parent().parent().attr("id");
 	var nickName = $("."+user_Id+"").val();
 	var profileImage = $(this).attr("id");
-	alert(user_Id);
-	alert(nickName);
-	alert(profileImage);
+	var sessionId = $("#myId").val();
 	$.ajax("/myHomeRest/json/getFollow", {
 
 		type : "POST",
@@ -232,40 +230,40 @@ $(document).on("click",".dll",function(){
 			
 			if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '1'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-					"팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn  btn-sm'>"+
+					"팔로잉</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='stopBlock' class='btn  btn-sm'>차단해제</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '2'){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div class='goHome'><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='updateBlock' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}else if(ffbType == ""  && bfbType == "" ){
 				var value =
-					"<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-					"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+					"<div name='dialog' id='"+user_Id+"'><img class='di' src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4 class='goHome'>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn  btn-sm'>"+
+					"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 			}
 			
 			 $("#"+nickName+"1").html(value);
@@ -292,13 +290,15 @@ $(document).on("click",".dll",function(){
 				});
 	
 	
-				 $("#"+nickName+"1").dialog("open");
+				if(sessionId != user_Id){
+					 $("#"+nickName+"1").dialog("open");
+		         }
 	
 		},
 		error : function(){
 			var value =
-				"<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='Follow' class='btn btn-danger btn-sm'>"+
-				"팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button></div></div>";
+				"<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='Follow' class='btn  btn-sm'>"+
+				"팔로우</button><button type='button' id='block' class='btn  btn-sm'>차단</button><button type='button' class='btn  btn-sm'>채팅</button></div></div>";
 				
 			 $("#"+nickName+"1").html(value);
 				
@@ -387,6 +387,10 @@ $(function() {
 						console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 						if(update.follow.fbState == 1){
 							$("#follow").text("팔로잉");
+							if(sock) {
+								   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+								   sock.send(Msg);
+							}
 							}else if(update.follow.fbState == 2){
 							$("#follow").text("팔로우");
 							}
@@ -408,6 +412,10 @@ $(function() {
 						success : function(Data, status) {
 							console.log("서버로부터 받은 Data(error) : " + Data);
 							$("#follow").text("팔로잉");
+							if(sock) {
+								   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+								   sock.send(Msg);
+							}
 						}
 					})
 				} 
@@ -459,6 +467,10 @@ $(function() {
 						console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 						if(update.follow.fbState == 1){
 						$("#following").text("팔로잉");
+						if(sock) {
+							   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+							   sock.send(Msg);
+						}
 						}else if(update.follow.fbState == 2){
 						$("#following").text("팔로우");
 						}
@@ -510,6 +522,10 @@ $(function() {
 						console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 						if(update.follow.fbState == 1){
 						$("#updateFollow").text("팔로잉");
+						if(sock) {
+							   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+							   sock.send(Msg);
+						}
 						}else if(update.follow.fbState == 2){
 						$("#updateFollow").text("팔로우");
 						}
@@ -1080,6 +1096,26 @@ $(function() {
 			self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
 		}
 	});
+	$(document).on("click" ,".yourHome2", function() {
+		var userId = $("#sendId").val(); 
+		if($(this).parent().parent().attr("id")==userId){
+			self.location = "/myHome/getMyHome?userId="+$(this).parent().parent().attr("id");
+			
+		}else{
+			self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
+		}
+	});
+	
+	$(document).on("click" ,".goHome", function() {
+		var userId = $("#sendId").val(); 
+		if($(this).parent().attr("id")==userId){
+			self.location = "/myHome/getMyHome?userId="+$(this).parent().attr("id");
+			
+		}else{
+			self.location = "/myHome/getYourHome?userId="+$(this).parent().attr("id");
+		}
+	});
+	
 	
  });
  
@@ -1156,6 +1192,29 @@ $(function(){
 		) // ajax close
 	})
 	<!-- ADD_FEED_HEART -->
+	$(document).on("click", ".carousel-control", function(event) {
+		event.stopPropagation();
+	})
+	<%-- CAROUSEL 침범 방지 --%>
+	
+	<%-- CALL REPORT --%>
+	$(document).on("click", ".report", function(event) {
+		event.stopPropagation();
+	    
+		$(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+		
+	}) // .report evenet close
+	<%-- CALL REPORT --%>
+	$(".btn_getFeed").bind("click", function(){
+		alert("클릭한 글 번호 : " + $(this).parent().find("input[name='feedNo']").val());
+		location.href="/feed/getFeed?feedNo=" + $(this).parents(".feedForm").find("input[name='feedNo']").val();
+	})
+	$(document).on("click", ".feedForm", function(event) {
+		event.stopPropagation();
+		var feedNumber = $(this).children("input[name='feedNo']").val();
+		location.href="/feed/getFeed?feedNo=" + feedNumber;
+	})
+	
 	
 	<!-- DELETE_FEED_HEART -->
 	$(".dislike:contains('시러요')").bind("click", function(){
@@ -1240,7 +1299,7 @@ position:relative;
 
 #calendar {
 	margin-left: 955px;
-	margin-top: 50px;
+	margin-top: 15px;
 	display: flex;
 	justify-content: center;
 	float: left;
@@ -1307,16 +1366,16 @@ position:relative;
 	float: left;
 	text-align: center;
 	margin-top: 10px;
-	margin-left: 80px;
+	margin-left: 60px;
 }
 
 .profile-userbuttons .btn {
 	text-transform: uppercase;
-	font-size: 11px;
+	font-size: 15px;
 	font-weight: 600;
 	padding: 6px 15px;
 	margin-right: 5px;
-	background-color:blueviolet;
+	color:blueviolet;
 	border-color: blueviolet !important;
 }
 
@@ -1416,11 +1475,10 @@ position:relative;
     border: 2px solid #CCD0D5;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    }
+.ui-widget.ui-widget-content{
 		
-		
-    
-    
-	
+width:auto !important;    
 }
 
 .f {
@@ -1467,12 +1525,12 @@ margin-left:150px;
   margin-top: 120px;
   margin-bottom: 100px;
    background-color: #F5F6F7;
-   border: 2px solid #DADDE1;
   width: 670px;
   display:inline-block;
   margin-left:170px;
   height:800px;
    border-radius: 15px;
+   border: 2px solid #CCD0D5;
   
   
   
@@ -1676,38 +1734,78 @@ margin-left:65px;
 
 }
 .btn{
-margin-top:100px;
+
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border: solid 2px;
+	   color:#5F0080;
+	   border-color : #5F0080;
 
 }
 
+.btn:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color: white !important;
+	   border-color : #5F0080;
+	   border: solid 2px;
+	}
+.ui-dialog-titlebar{
+border: hidden;
+background-color: white;
+display:none;
+}
+.ui-dialog-titlebar-close{
+border: hidden;
+background-color: white;
+display:none;
+}
+#following{
+color: white !important; 
+background-color: #5F0080 !important;
+}
+#updateFollow{
+ background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border: solid 2px;
+	   color:#5F0080;
+	   border-color : #5F0080;
+}
+#follow{
+background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   border: solid 2px;
+	   color:#5F0080;
+	   border-color : #5F0080;
+}
+.di{
+border-radius:15px;
 
+}
+.goHome{
+margin-left:10px;
+}
+.ui-widget.ui-widget-content{
+		
+width:auto !important; 
+border-radius: 20px;   
+}
 </style>
 </head>
 
 <body class="blog masonry-style">
 
-	<jsp:include page="/toolbar.jsp" />
+	
 
 	<main role="main" class="main">
 		
-			<div id="intro-wrap" data-height="12" style="background-color : black;">
-				<div id="intro" class="preload">
-					<div class="intro-item"
-						style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2 class="neon">MyBlog</h2>
-							
-						</div>
-						<!-- caption -->
-					</div>
-					<!-- intro -->
-				</div>
-				<!-- intro -->
-			</div>
-			<!-- intro-wrap -->
+			
 
 			<div id="main" class="row">
-			<div class="my">
+			<div>
+			<jsp:include page="/toolbar.jsp" />
+			</div>
+			<div class="my" style="margin-top : 100px;">
 			<div>
 				<div id="calendar">
 
@@ -1741,32 +1839,34 @@ margin-top:100px;
 							
 								  <c:if test="${followUser.receiveId.userId == getUser.userId and fn:trim(followUser.receiveId.fbType) == '1'}">
 									<c:if test="${fn:trim(followUser.receiveId.fbState) == '1'}">
-										<button type="button" class="btn btn-danger btn-sm"
-											id="following1">팔로잉</button>
+										<button type="button" class="btn btn-sm" 
+											id="following1" style="margin-top:50px; color: white !important;
+	   background-color: #5F0080 !important;" >팔로잉</button>
 									</c:if>
 									<c:if test="${fn:trim(followUser.receiveId.fbState) == '2'}">
-										<button type="button" class="btn btn-danger btn-sm"
-											id="updateFollow1">팔로우</button>
+										<button type="button" class="btn btn-sm" 
+											id="updateFollow1" style="margin-top:50px;">팔로우</button>
 									</c:if>
 								</c:if> 
 								<c:if test="${ empty followUser }">
-									<button type="button" class="btn btn-danger btn-sm" id="follow1">팔로우</button>
+									<button type="button" class="btn btn-sm" id="follow1" style="margin-top:50px;">팔로우</button>
 								</c:if>
-
+                                   &nbsp; &nbsp;&nbsp;
 
 								<c:if
 									test="${block.receiveId.userId == getUser.userId and fn:trim(block.receiveId.fbType) == '2'}">
 									<c:if test="${fn:trim(block.receiveId.fbState) == '1'}">
-										<button type="button" class="btn btn-danger btn-sm"
-											id="stopBlock1">차단해제</button>
+										<button type="button" class="btn btn-sm"
+											id="stopBlock1" style="margin-top:50px; color: white !important;
+	   background-color: #5F0080 !important;">차단해제</button>
 									</c:if>
 									<c:if test="${fn:trim(block.receiveId.fbState) == '2'}">
-										<button type="button" class="btn btn-danger btn-sm"
-											id="updateBlock1">차단</button>
+										<button type="button" class="btn btn-sm"
+											id="updateBlock1" style="margin-top:50px;">차단</button>
 									</c:if>
 								</c:if>
 								<c:if test="${ empty block }">
-									<button type="button" class="btn btn-danger btn-sm" id="block1">차단</button>
+									<button type="button" class="btn btn-sm" id="block1" style="margin-top:50px;">차단</button>
 								</c:if>
 								<br> <br>
 
@@ -1776,6 +1876,7 @@ margin-top:100px;
 									value="${sessionScope.user.userId}"> <input
 									type="hidden" name="recvId" id="recvId"
 									value="${getUser.userId}">
+									<input type="hidden" id="myId" value=${followUser.userId }>
 							</div> 
 								<!-- END SIDEBAR BUTTONS -->
 								<!-- SIDEBAR MENU -->
@@ -2147,10 +2248,7 @@ $(function() {
 			
 			$("#fl").append(value);      
 			
-			 $(".yourHome2").on("click" , function() {
-					
-					self.location = "/myHome/getYourHome?userId="+$(this).parent().parent().attr("id");
-				});
+			
 			
 		})
 		
