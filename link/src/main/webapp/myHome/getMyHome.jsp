@@ -1092,8 +1092,8 @@ $(function() {
 		})
 
 	});
-	$(function(){
-		<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
+	<%-- $(function(){
+		모임 게시물 좋아요 또는 좋아요취소
 		$(".clubPost-header-heart").bind("click", function(){
 			//alert("모임게시물 좋아요");
 			$.ajax( "/clubPostRest/json/updateClubPost",
@@ -1132,7 +1132,7 @@ $(function() {
 					});
 		}); // end of 하트
 		
-	})
+	}) --%>
 
 
 
