@@ -360,7 +360,7 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-6  col-sm-6 text-center">
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 28%;">
 		      		<button type="button" class="plain button red cancel" id="addClub">등 &nbsp;록</button>
 					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
