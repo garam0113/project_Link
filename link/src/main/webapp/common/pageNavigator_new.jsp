@@ -25,7 +25,7 @@ function YesScroll () {
 
 <div>
 
-	<nav style= "transform: translate(-900px, 0px);">
+	<nav>
 		<!-- 크기조절 :  pagination-lg pagination-sm-->
 		<ul class="pagination" >
 

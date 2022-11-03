@@ -12,25 +12,25 @@
 <head>
 <meta charset="EUC-KR">
 
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- 참조 : http://getbootsdivap.com/css/   참조 -->
+<meta name="viewport" content="widdiv=device-widdiv, initial-scale=1.0" />
 
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<!--  ///////////////////////// Bootsdivap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	href="https://maxcdn.bootsdivapcdn.com/bootsdivap/3.3.7/css/bootsdivap.min.css">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	href="https://maxcdn.bootsdivapcdn.com/bootsdivap/3.3.7/css/bootsdivap-diveme.min.css">
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootsdivapcdn.com/bootsdivap/3.3.7/js/bootsdivap.min.js"></script>
 
 <script type="text/javascript" charset="utf-8"
 	src="/resources/javascript/user/SMSCheck.js"></script>
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	href="//code.jquery.com/ui/1.12.1/divemes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -50,6 +50,43 @@ label {
 
 .overflow {
 	height: 200px;
+}
+
+.container {
+	border: solid 2px rgb(179, 207, 249);
+	border-radius: 10px;
+	background: #ecf4ff;
+	width: 1150px;
+}
+
+.group {
+	display: flex;
+}
+
+.title {
+	width: 140px;
+	text-align: center;
+}
+
+.value {
+	width: 400px;
+	margin-left: 40px;
+}
+
+button:hover {
+	border-style: hidden;
+	background-color: #5F0080;
+	color: white;
+	border-radius: 10px;
+	font-weight: bold;
+	border: solid 2px white;
+}
+
+button{
+	background-color: white;
+	border: solid 2px #5F0080;
+    border-radius: 10px; 
+    color: ;
 }
 </style>
 
@@ -82,14 +119,14 @@ label {
     		console.log("패널티 값 : "+penalty);
     		//console.log("정지 날짜 : "+stopEnd.datepicker({ dateFormat: 'yy-mm-dd' }));
     		
-    		if(${user.role == '0'} && (pw == null || pw.length < 1)){
+    		if(${user.role == '0'} && (pw == null || pw.lengdiv < 1)){
     			swal.fire("비밀번호를 입력하셔야 합니다.");
     			return;
     		}
     		
     		if(${user.role == '0'}){
     		
-    			if(6 > pw.length || pw.length > 12){
+    			if(6 > pw.lengdiv || pw.lengdiv > 12){
     				swal.fire("비밀번호는 영어, 숫자조합 6~12자 입니다.");
     				return;
     			}
@@ -104,7 +141,7 @@ label {
     				return;
     			}
     				
-    			if(email == null || email.length < 1){
+    			if(email == null || email.lengdiv < 1){
     				swal.fire("이메일을 입력하셔야 합니다.");
     				return;
     			}
@@ -118,7 +155,7 @@ label {
 /*
     		$.ajax("/userRest/json/updatePenalty", {
     			type : "POST",
-    			data : JSON.stringify({
+    			data : JSON.sdivingify({
     				penaltyType : penalty,
     				stopEndDate : stopEnd
     			}),
@@ -133,170 +170,179 @@ label {
 				}
     		});
     */	    
-    		$("form").attr("method", "POST").attr("action", "/user/updateUser").submit();
+    		$("form").adiviv("medivod", "POST").adiviv("action", "/user/updateUser").submit();
 		}
     
     function popup(){
         var url = "/user/updatePhoneNoView.jsp";
         var name = "updatePhoneNoView";
-        var option = "width = 800, height = 300, top = 100, left = 200, location = no"
+        var option = "widdiv = 800, height = 300, top = 100, left = 200, location = no"
         window.open(url, name, option);
     }
     
-    $.datepicker.setDefaults({
+    $.datepicker.sedivefaults({
 		dateFormat : 'yy-mm-dd',
 		prevText : '이전 달',
 		nextText : '다음 달',
-		monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+		mondivNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
 				'10월', '11월', '12월' ],
-		monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월',
+		mondivNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월',
 				'9월', '10월', '11월', '12월' ],
 		dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
 		dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
 		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-		showMonthAfterYear : true,
+		showMondivAfterYear : divue,
 		yearSuffix : '년'
 	});
 
 	$(function() {
-		$("#stopEndDateString").datepicker();
+		$("#stopEndDateSdiving").datepicker();
 	});
     </script>
 
 </head>
-<body style=" background-color: #EBEDF0;">
+<body style="background-color: #EBEDF0;">
 	<jsp:include page="/sideToolbar.jsp" />
 	<form>
 		<div class="wrap wd668">
 			<div class="container" style="margin-left: 400px;">
-				<div class="form_txtInput">
-					<c:if test="${user.role == '0'}">
-						<h3 class=" text-info">내정보보기>내정보수정</h3>
+				<div class="form_txtInput" style="margin-left: 200px;">
+					<c:if test="${fn:trim(user.role) == '0'}">
+						<h3 class=" text-info" style="color: #31708f;">내정보보기>내정보수정</h3>
 					</c:if>
-					<c:if test="${user.role == '1'}">
-						<h3 class=" text-info">회원정보수정</h3>
+					<c:if test="${fn:trim(user.role) == '1'}">
+						<h3 class=" text-info" style="color: #31708f;">회원정보수정</h3>
 					</c:if>
 					<div class="join_form">
-						<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="auto" />
-							</colgroup>
-							<tbody>
-								<tr>
-									<th><span>아이디</span></th>
-									<td><input disabled="disabled" class="form-control"
-										id="userId" name="userId" value="${getUser.userId }">
-										<input type="hidden" class="form-control" id="userId"
-										name="userId" value="${getUser.userId }"></td>
-								</tr>
-								<tr>
-									<th><span>이름</span></th>
-									<td><input disabled="disabled" type="text"
-										class="form-control" id="name" name="name"
-										value="${getUser.name}"> <input type="hidden"
-										class="form-control" id="name" name="name"
-										value="${getUser.name }"></td>
-								</tr>
-								<tr>
-								<tr>
-									<th><span>성별</span></th>
-									<td><input disabled="disabled" type="text"
-										class="form-control" id="gender" name="gender"
-										value="${getUser.gender}"> <input type="hidden"
-										class="form-control" id="gender" name="gender"
-										value="${getUser.gender }"></td>
-								</tr>
-								<tr>
-									<th><span>주민번호</span></th>
-									<td><input disabled="disabled" type="text"
-										class="form-control" id="rrn" name="rrn"
-										value="${getUser.rrn}"> <input type="hidden"
-										class="form-control" id="rrn" name="rrn"
-										value="${getUser.rrn }"></td>
-								</tr>
-								<c:if test="${user.role == '0'}">
-									<tr>
-										<th><span>비밀번호</span></th>
-										<td><input type="password" class="form-control"
-											id="password" name="password" placeholder="변경비밀번호"> <span
-											id="helpBlock" class="help-block"> <strong
-												class="text-danger">영어, 숫자 조합 6~12자</strong>
-										</span></td>
-									</tr>
+						<div>
+							<div style="margin-top: 40px;">
+								<div class="group">
+									<strong class="title">아이디</strong>
+									<div class="value">
+										<input disabled="disabled" class="form-condivol" id="userId"
+											name="userId" value="${getUser.userId }"> <input
+											type="hidden" class="form-condivol" id="userId" name="userId"
+											value="${getUser.userId }">
+									</div>
+								</div>
+								<div class="group">
+									<strong class="title">이름</strong>
+									<div class="value">
+										<input disabled="disabled" type="text" class="form-condivol"
+											id="name" name="name" value="${getUser.name}"> <input
+											type="hidden" class="form-condivol" id="name" name="name"
+											value="${getUser.name }">
+									</div>
+								</div>
+								<div class="group">
+									<strong class="title">성별</strong>
+									<div class="value">
+										<input disabled="disabled" type="text" class="form-condivol"
+											id="gender" name="gender" value="${getUser.gender}">
+										<input type="hidden" class="form-condivol" id="gender"
+											name="gender" value="${getUser.gender }">
+									</div>
+								</div>
+								<div class="group">
+									<strong class="title">주민번호</strong>
+									<div class="value">
+										<input disabled="disabled" type="text" class="form-condivol"
+											id="rrn" name="rrn" value="${getUser.rrn}"> <input
+											type="hidden" class="form-condivol" id="rrn" name="rrn"
+											value="${getUser.rrn }">
+									</div>
+								</div>
+								<c:if test="${fn:trim(user.role) == '0'}">
+									<div class="group">
+										<strong class="title">비밀번호</strong>
+										<div class="value">
+											<input type="password" class="form-condivol" id="password"
+												name="password" placeholder="변경비밀번호"> <strong
+												id="helpBlock" class="help-block" style="color: red;">
+												영어, 숫자 조합 6~12자 </strong>
+										</div>
+									</div>
 								</c:if>
-								<c:if test="${user.role == '0'}">
-									<tr>
-										<th><span>비밀번호 확인</span></th>
-										<td><input type="password" class="form-control"
-											id="password2" name="password2" placeholder="변경비밀번호 확인">
-											<span id="helpBlock" class="help-block"> <strong
-												class="text-danger">영어, 숫자 조합 6~12자</strong>
-										</span></td>
-									</tr>
+								<c:if test="${fn:trim(user.role) == '0'}">
+									<div class="group">
+										<strong class="title">비밀번호확인</strong>
+										<div class="value">
+											<input type="password" class="form-condivol" id="password2"
+												name="password2" placeholder="변경비밀번호 확인"> <strong
+												id="helpBlock" class="help-block" style="color: red;">
+												영어, 숫자 조합 6~12자 </strong>
+										</div>
+									</div>
 								</c:if>
-								<tr class="email">
-									<th><span>이메일</span></th>
-									<td><c:if test="${user.role == '0'}">
-											<input type="text" class="form-control" id="email"
+								<div class="group">
+									<strong class="title">이메일</strong>
+									<div class="value">
+										<c:if test="${fn:trim(user.role) == '0'}">
+											<input type="text" class="form-condivol" id="email"
 												name="email" value="${getUser.email}" placeholder="변경이메일">
-										</c:if> <c:if test="${user.role == '1'}">
-											<input disabled="disabled" type="text" class="form-control"
+										</c:if>
+										<c:if test="${fn:trim(user.role) == '1'}">
+											<input disabled="disabled" type="text" class="form-condivol"
 												id="email" name="email" value="${getUser.email}"
 												placeholder="변경이메일">
-										</c:if></td>
-								</tr>
-								<tr>
-									<th><span>휴대폰 번호</span></th>
-									<td>
+										</c:if>
+									</div>
+								</div>
+								<div class="group">
+									<strong class="title">휴대폰번호</strong>
+									<div class="value">
 										<div style="display: flex;">
-											<input disabled="disabled" type="text" class="form-control"
+											<input disabled="disabled" type="text" class="form-condivol"
 												id="phoneNo" name="phoneNo" value="${ getUser.phoneNo }">
-											<c:if test="${user.role == '0'}">
+											<c:if test="${fn:trim(user.role) == '0'}">
 												<button type="button" class="btn"
-													style="background-color: #5F0080; color: white; height: 20px; margin-left: 20px;"
+													style="height: 32px; margin-left: 10px; margin-top: 2px; width: 50px; font-weight: 900;"
 													id="phoneChange">변&nbsp;경</button>
 											</c:if>
 										</div>
-									</td>
-								</tr>
-								<c:if test="${user.role == '1'}">
-									<tr>
-										<th><span>정지상태</span></th>
-										<td><select name="penaltyType" id="penaltyType" style=" border-color: #00000038;">
+									</div>
+								</div>
+								<c:if test="${fn:trim(user.role) == '1'}">
+									<div class="group">
+										<strong class="title">정지상태</strong>
+										<div class="value">
+											<select name="penaltyType" id="penaltyType"
+												style="border-color: #00000038;">
 												<option selected="selected">선택해주세요</option>
 												<option>ㅡ</option>
 												<option>정지</option>
 												<option>영구정지</option>
-										</select></td>
-									</tr>
+											</select>
+										</div>
+									</div>
 								</c:if>
-								<c:if test="${user.role == '1'}">
-									<tr>
-										<th><span>정지기간</span></th>
-										<td><input class="form-control" id="stopEndDateString"
-											readonly="readonly" name="stopEndDateString" value="" /></td>
-									</tr>
+								<c:if test="${fn:trim(user.role) == '1'}">
+									<div class="group">
+										<strong class="title">정지기간</strong>
+										<div class="value">
+											<input class="form-condivol" id="stopEndDateSdiving"
+												readonly="readonly" name="stopEndDateSdiving" value="" />
+										</div>
+									</div>
 								</c:if>
-								<tr>
-									<th><span></span></th>
-									<td align="center">
-										<button type="button" class="btn" id="update"
-											style="background-color: #5F0080; color: white;"update">수
-											&nbsp;정</button>
-										<button type="button" class="btn" id="cancel"
-											style="background-color: #5F0080; color: white;"cancel">취
-											&nbsp;소</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+							</div>
+						</div>
+						<div style="margin-left: 300px;">
+							<button type="button" class="btn" id="update"
+								style="padding: 6px 12px; font-weight: bold;">수
+								&nbsp;정</button>
+							<button type="button" class="btn" id="cancel"
+								style="padding: 6px 12px; font-weight: bold;">취
+								&nbsp;소</button>
+						</div>
+						<br /> <br />
 					</div>
 				</div>
 				<!-- form_txtInput E -->
 			</div>
 			<!-- content E-->
 		</div>
+		<br /> <br />
 		<!-- container E -->
 	</form>
 </body>

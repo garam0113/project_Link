@@ -32,6 +32,12 @@
 body {
 	padding-top: 50px;
 }
+
+.container {
+	border: solid 2px rgb(179, 207, 249);
+	border-radius: 10px;
+	background: #ecf4ff;
+}
 </style>
 
 <script type="text/javascript">
@@ -87,7 +93,7 @@ function fncGetList(currentPage) {
 
 			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
-			<div class="col-md-6 left" style=" margin-left: -14px;">
+			<div class="col-md-6 left" style="margin-left: -14px;">
 				<form class="form-inline" name="detailForm">
 
 					<div class="form-group">
@@ -118,7 +124,7 @@ function fncGetList(currentPage) {
 
 		<!--  table Start /////////////////////////////////////-->
 		<table class="table table-hover table-striped"
-			style="background-color: white; border-width: thick; border: 3px solid #ddd; border-radius: 10px;">
+			style="background-color: #ecf4ff;">
 			<thead>
 				<tr>
 					<th align="center">No</th>
@@ -158,15 +164,14 @@ function fncGetList(currentPage) {
 		</table>
 		<!--  table End /////////////////////////////////////-->
 		<!-- PageNavigation Start... -->
-
-		<jsp:include page="../common/pageNavigator_n.jsp" />
-
 		<!-- PageNavigation End... -->
-
+<br/><br/>
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
-
-
+	<div style="display: flex; justify-content: center;">
+		<jsp:include page="../common/pageNavigator_new.jsp" />
+	</div>
+<br/><br/>
 
 </body>
 

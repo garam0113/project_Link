@@ -127,14 +127,20 @@ function fncGetList(currentPage) {
 		$("td:nth-child(3)").on(
 				"click",
 				function() {
-					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find("td:eq(0)").text()
+					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find($("input[name='no']")).val();
 							});
 
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
+		
+		$("button:contains('검색')").bind("click", function() {
+			fncGetList(1);
+		})
 
 	});
+	
+	
 </script>
 
 </head>
@@ -165,8 +171,6 @@ function fncGetList(currentPage) {
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" >
-								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
 								<option value="1"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
@@ -213,7 +217,9 @@ function fncGetList(currentPage) {
 					<c:forEach var="getReportList" items="${getReportList}">
 						<c:set var="i" value="${i + 1}" />
 						<tr class="ct_list_pop">
-							<td align="center" id="bb">${getReportList.no}</td>
+							<td align="center" id="bb">${i}
+							<input type="hidden" id="no" name="no" value="${getReportList.no}">
+							</td>
 							<td></td>
 							<td align="center" class="content" style="cursor:pointer;">${getReportList.title}	
 							<c:if test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">

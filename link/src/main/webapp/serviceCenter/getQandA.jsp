@@ -41,6 +41,10 @@
 		$("button:contains('수정')").bind("click", function() {
 			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
+		
+		$("button:contains('답변')").bind("click", function() {
+			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
+		})
 
 		$("button:contains('삭제')").bind("click", function() {
 			 Swal.fire({
@@ -152,13 +156,13 @@ textarea {
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
 						<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; border: 10px solid white; border-radius: 15px;
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>
 						<c:if test="${qandA.qandAImage2 != null }">
 						<img src="/resources/image/uploadFiles/${qandA.qandAImage2}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px;  border: 10px solid white; border-radius: 15px;
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${qandA.qandAImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>
@@ -175,9 +179,10 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">답변</th>
-						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; ">
-						${qandA.qandAContent}
-						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; 
+						background: white; border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%); ">
+						${qandA.qandAAnswerContent}
+						<input type="hidden" id="qandAAnswerContent" name="qandAAnswerContent" value="${qandA.qandAAnswerContent}">
 						</td>
 					</tr>
 						</c:if>
@@ -194,7 +199,13 @@ textarea {
 									<div> 
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
  									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
-									   수정</button> 
+									  <c:if test="${ user.role == 0 }">
+									   수정
+									   </c:if>
+									   <c:if test="${ user.role == 1 }">
+									   답변
+									   </c:if>
+									   </button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
 									   삭제</button> 
 									</c:if>
