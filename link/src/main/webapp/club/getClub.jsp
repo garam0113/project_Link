@@ -499,11 +499,6 @@
 					</div>	
 					
 					<%-- ${clubMemberList.clubUserNo} --%> 
-					<p>
-					${club }
-					<p>
-					${club.user.userId}
-					<%-- ${clubMemberList.user.userId } --%>				
 		
 
 				<div class="mainForm" style="display: inline-flex;">
