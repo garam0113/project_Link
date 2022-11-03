@@ -586,19 +586,29 @@
 	
 	$(function(){
 		
-		<%-- 사이드 바 팔로우에서 이미지 클릭시 반장님 코드 --%>
+		<%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
 		
-		$(document).on("click", ".dl", function(){
+		$(document).on("click", ".dl", function(event){
+				event.stopPropagation();
 			
-			   var user_Id = $(this).parent().parent().attr("id");
-			   var nickName = $("."+user_Id+"").val();
-			   var profileImage = $(this).attr("id");
-			   
-			   console.log(user_Id);
-			   console.log(nickName);
-			   console.log(profileImage);
-			   //alert(followUser.receiveId.userId);
-			   $.ajax("/myHomeRest/json/getFollow", {
+				var user_Id = $(this).parent().parent().attr("id");
+				var nickName = $("."+user_Id+"").val();
+				var profileImage = $(this).attr("alt");
+				
+				console.log(user_Id);
+				console.log(nickName);
+				console.log(profileImage);
+				
+				if(user_Id == null) {
+					user_Id = $(this).parents(".feedHeader").siblings("input[name='user2']").val();
+					nickName = $(this).parent().next().text().trim();
+					
+					console.log("다른곳 :: " + user_Id);
+					console.log("다른곳 :: " + nickName);
+				}
+				
+				//alert(followUser.receiveId.userId);
+				$.ajax("/myHomeRest/json/getFollow", {
 	
 			      type : "POST",
 			      data : JSON.stringify({
@@ -677,7 +687,7 @@
 		         
 		         
 		         	$("#"+nickName+"").html(value);
-		      
+		         	
 					$("#"+nickName+"").dialog({
 		               
 		               autoOpen: false,
@@ -693,7 +703,7 @@
 		                  
 		                  my:"center",
 		                  at:"center",
-		                  of:"#"+user_Id+""
+		                  of:"div[name='"+nickName+"']"
 		               }
 		               
 		            });
@@ -725,7 +735,7 @@
 		                  
 		                  my:"center",
 		                  at:"center",
-		                  of:"#"+user_Id+""
+		                  of:"div[name='"+nickName+"']"
 		               }
 		               
 		            });
@@ -903,7 +913,7 @@
 		
 		
 	
-		<%-- 피드 폼에서 아이디에 호버시 --%>
+		<%-- 피드 폼에서 아이디에 호버시 
 		
 		$(document).on("click", ".feedProfileImage", function(event) {
 			
@@ -938,7 +948,7 @@
 					
 					)
 			
-		})
+		}) --%>
 		
 		$(document).on("click", ".feedName", function(event) {
 			
@@ -1232,7 +1242,8 @@
 										'<div class="feedLeft">' + 
 										'<div class="feedInner">' + 
 										'<div class="feedCover">' +
-										'<img class="feedProfileImage" src="/resources/image/uploadFiles/' + item.user.profileImage + '" />' + 
+										'<img class="feedProfileImage dl" src="/resources/image/uploadFiles/' + item.user.profileImage + '" alt="' + item.user.profileImage + '">' + 
+										'<div class="' + item.user.nickName + '"></div>' +
 										'</div>' +
 										'<div class="feedName">' +
 										item.user.nickName +
@@ -1742,7 +1753,6 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
-	<%-- 신고처리 --%>
 	
 	.btn-13 {
  	 font-family: 'Lato', sans-serif;
@@ -1969,10 +1979,10 @@
 												<div class="feedLeft">
 													<div class="feedInner">
 														<div class="feedCover">
-															<img class="feedProfileImage"
-																src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+															<img class="feedProfileImage dl" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
+															<div class="${feed.user.nickName}"></div>
 														</div>
-														<div class="feedName">${feed.user.nickName}</div>
+														<div class="feedName dlFeednickName">${feed.user.nickName}</div>
 													</div>
 
 													<div class="feedDate">
@@ -2093,16 +2103,15 @@
 											</c:if>
 
 											<%-- 피드 댓글 신고 --%>
-											<input type="hidden" name="reportSource" value="3"> <input
-												type="hidden" name="sourceNumber" value="${feed.feedNo}">
+											<input type="hidden" name="reportSource" value="3">
+											<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
 											<input type="hidden" name="user2" value="${feed.user.userId}">
 											<%-- 피드 댓글 신고 --%>
 
-											<input type="hidden" name="source" value="0"> <input
-												type="hidden" name="feedNo" value="${feed.feedNo}">
-											<input type="hidden" id="userId" name="userId"
-												value="${sessionScope.user.userId}"> <input
-												type="hidden" name="openCondition" value="3">
+											<input type="hidden" name="source" value="0">
+											<input type="hidden" name="feedNo" value="${feed.feedNo}">
+											<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
+											<input type="hidden" name="openCondition" value="3">
 
 											<!-- 피드 좋아요 댓글수 신고 -->
 											<section class="row section lastBar">
