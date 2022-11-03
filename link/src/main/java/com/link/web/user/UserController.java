@@ -78,7 +78,9 @@ public class UserController {
 			user.setProfileImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 
 		}else {
-			user.setProfileImage(image.getProfileImage());
+			if(image != null) {
+				user.setProfileImage(image.getProfileImage());
+			}
 		}
 
 		userService.addUser(user); // 회원가입 정보 DB저장
