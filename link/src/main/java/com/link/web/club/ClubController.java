@@ -137,6 +137,7 @@ public class ClubController {
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
 		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
+		model.addAttribute("search2", search2);
 		session.setAttribute("clubNo", clubNo);
 		
 		

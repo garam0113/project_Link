@@ -24,7 +24,7 @@
 
 <style>
 body{
-background-color: #EBEDF0 !important;
+background-color: whitesmoke !important;
 }
 .row {
 display: initial !important;

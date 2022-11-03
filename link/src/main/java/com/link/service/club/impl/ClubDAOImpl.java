@@ -75,11 +75,19 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		Club club = sqlSession.selectOne("ClubMapper.getClub", clubNo);
 		
+		//추가중
+		//Search search2 = new Search();
+		
+		//List<ClubUser> clubMemberList = sqlSession.selectList("ClubMapper.getClubMemberList", search2);
+		
 		int totalClubMemberCount = sqlSession.selectOne("ClubMapper.getTotalClubMemberCount", new Search(clubNo+""));
-	
+			
 		Map<String, Object> map = new HashMap<String, Object>();
+		//Map<String, Object> map1 = new HashMap<String, Object>();
+		
 		map.put("club", club);
 		map.put("totalClubMemberCount", totalClubMemberCount);
+		//map.put("clubMemberList", clubMemberList);
 		
 		return map;
 	}

@@ -27,6 +27,12 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+.pagenation>.active>a{
+	color: #5F0080 !important;
+    cursor: default;
+    background-color: white !important;
+    border-color: #5F0080 !important;
+}
 .page-header{
 	border-bottom:0px !important;
 }
@@ -295,7 +301,7 @@ background-color: #EBEDF0 !important;
 									  <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
 									   등록</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
+									<button class="custom-btn btn-13" style= "transform: translate(980px, -90px); margin-left::20px; ">
 									뒤로</button>
 									</div>
 								

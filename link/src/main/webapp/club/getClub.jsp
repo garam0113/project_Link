@@ -178,12 +178,6 @@
 		});
 	});
 		
-	$(function() {
-		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
-		});
-	});
-		
 	
 	
 	
@@ -499,14 +493,12 @@
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						</button>
 						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-						</button>
-						
 						<button type="button" class="live">
 							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
 						</button>
-					</div>					
+					</div>	
+					
+					<%-- ${clubMemberList.clubUserNo} --%> 
 		
 
 				<div class="mainForm" style="display: inline-flex;">

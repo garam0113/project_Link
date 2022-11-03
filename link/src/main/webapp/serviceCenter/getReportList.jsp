@@ -273,7 +273,7 @@ function fncGetList(currentPage) {
 
 							<div class="col-md-3 col-sm-3 col-xs-6">
 
-								<button class="custom-btn btn-13" style= "transform: translate(957px, -90px); margin-left::20px; ">
+								<button class="custom-btn btn-13" style= "transform: translate(1038px, -90px); margin-left::20px; ">
 									µÚ·Î</button>
 							</div>
 

@@ -1016,12 +1016,6 @@
 		});
 	});
 		
-	$(function() {
-		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
-		});
-	});		
-		
 	
 	$(function(){
 		//소켓서버에 접속시킨다.
@@ -1212,10 +1206,6 @@
 						
 						<button type="button" class="clubMemberBtn">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 						</button>
 						
 						<button type="button" class="live">
