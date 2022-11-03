@@ -454,11 +454,11 @@
 							    
 							    
 							    <!-- 썸네일로 list display start -->
-								<div class="row" style="background: white;">
+								<div class="row">
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
-										<div class="col-md-12" style="padding-left: 105px;">
+										<div class="col-md-12" style="padding-left: 105px; background: white;">
 											<a style="background-color: red;" href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
 													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="600">

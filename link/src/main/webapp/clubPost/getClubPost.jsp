@@ -1053,13 +1053,12 @@
 		<!-- 채팅 javascript -->
 		<script src="/resources/javascript/chat/chat.js"></script>
 	
-	<br><br>
 
-		<main role="main">
-
+		<main role="main" style="background: #EBEDF0;">
 
 
-			<div id="main" class="row">
+
+			<div id="main" class="row" style="background: #EBEDF0;">
 				<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
 				<!-- <div class="row-content buffer-left buffer-right buffer-bottom"> -->
 	
@@ -1223,7 +1222,7 @@
 					</div>			
 					
 
-					<div class="post-area clear-after">
+					<div class="post-area clear-after" style="background: white;">
 						<article role="main">
 							
 							<h5><time datetime="2013-11-09" class="club-post-time">
