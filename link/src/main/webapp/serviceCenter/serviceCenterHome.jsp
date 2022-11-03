@@ -132,7 +132,7 @@ function fncGetQandA(){
 			return;
 		
 	}
-	$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();
+	$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
 }
 $(function() {
 	$("button:contains('공지사항 보기')").bind("click", function() {

@@ -105,9 +105,8 @@ background-color: #EBEDF0 !important;
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-
+	
 	function fncGetList(currentPage) {
-		
 		$("#currentPage").val(currentPage)
 		$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
 				.submit();
@@ -125,6 +124,12 @@ background-color: #EBEDF0 !important;
 
 		$("button:contains('등록')").bind("click", function() {
 			self.location = "/serviceCenter/addNoticeView.jsp";
+		})
+		
+		$("button:contains('검색')").bind("click", function() {
+			$("#currentPage").val(currentPage)
+			$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
+					.submit()
 		})
 		
 		$("button:contains('뒤로')").bind("click", function() {
@@ -167,14 +172,12 @@ background-color: #EBEDF0 !important;
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
-								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
-								<option value="1"
+								<option value="1" id="searchCondition"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
 
 							<label class="sr-only" for="searchKeyword">검색어</label> <input
-								type="text" class="form-control" id="searchKeyword" width="200px"
+								type="text" class="form-control" id="searchKeyword" width="200px" 
 								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px;"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
@@ -182,7 +185,7 @@ background-color: #EBEDF0 !important;
 						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-						<input type="hidden" id="currentPage" name="currentPage" value="1" />
+						<input type="hidden" id="currentPage" name="currentPage" value="0" />
 					</form>
 				</div>
 				

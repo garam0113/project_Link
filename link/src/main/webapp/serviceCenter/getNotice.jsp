@@ -136,13 +136,13 @@ background-color: #EBEDF0 !important;
 						</c:if>
 						<td><c:if test="${notice.noticeImage1 != null }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; border: 10px solid white; border-radius: 15px;
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>
 						<c:if test="${notice.noticeImage2 != null }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage2}" 
-						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
+						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; border: 10px solid white;border-radius: 15px;
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>

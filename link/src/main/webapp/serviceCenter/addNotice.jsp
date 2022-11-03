@@ -117,9 +117,10 @@ textarea {
 						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 						</td>
 					</tr>
-							<tr class = "content" id ="content">
+							<tr class = "title" id ="title">
 						<th style="text-align-last: center;">제목</th>
-						<td style="display: flex; height: 40px; width: 900px;">						
+					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
 						${notice.noticeTitle}	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						</td> 
@@ -132,7 +133,8 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">내용</th>
-						<td style="display: flex; min-height : 300px; max-height: 800px; width: 100%">
+						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
+						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						${notice.noticeContent}
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
