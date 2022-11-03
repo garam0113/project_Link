@@ -102,14 +102,14 @@ public class FeedRestController {
 		
 		feedService.addFeedComment(map);
 		
-		push.setReportSource(4);
-		push.setType(2);
-		push.setContent(user.getNickName() + "님이 댓글을 작성했습니다.");
-		
-		push.setFeedComment(feedService.getCommentLast());
-		push.setUser1(user);
-		
-		serviceCenterService.addPush(push);
+//		push.setReportSource(4);
+//		push.setType(2);
+//		push.setContent(user.getNickName() + "님이 댓글을 작성했습니다.");
+//		
+//		push.setFeedComment(feedService.getCommentLast());
+//		push.setUser1(user);
+//		
+//		serviceCenterService.addPush(push);
 		
 		return (List <Comment>)(feedService.getFeedCommentList(map).get("commentList"));
 		

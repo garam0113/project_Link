@@ -1607,7 +1607,7 @@
 	.roller #rolltext {
 		position: absolute;
 		top: 0;
-		animation: slide 5s infinite;  
+		animation: slide 10s infinite;  
 	}
 
 	@keyframes slide {
@@ -1639,7 +1639,7 @@
 	}
   
 	.roller #rolltext {  
-		animation: slide-mob 5s infinite;  
+		animation: slide-mob 10s infinite;  
 	}
 
 	@keyframes slide-mob {
@@ -1688,7 +1688,7 @@
 				
 				<div class="column three">
 					
-					<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+					<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 						
 					<h3>오늘은:
 						<div class="roller">
