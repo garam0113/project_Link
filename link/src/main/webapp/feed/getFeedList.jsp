@@ -1742,7 +1742,38 @@
 <!------------------------------ CSS ------------------------------>
 
 <style type="text/css">
+	<%-- 신고처리 --%>
+	
+	.btn-13 {
+ 	 font-family: 'Lato', sans-serif;
+ 	 font-weight: 500;
+ 	 background-color: white;
+ 	 cursor: pointer;
+ 	 transition: all 0.3s ease;
+ 	 position: relative;
+ 	 border: solid 2px;
+ 	 box-shadow:none !important;
+ 	 outline: none;
+ 	 box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+ 	 border-radius: 10px;
+  	 padding: 10px;
+   	 color: #5F0080 !important;
+	 font-size: 16px !important;
+	 text-align: center;
+	}
 
+	.btn-13:hover { 
+  	 background-color: #5F0080;
+   	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   	border-radius: 10px;
+   	color: white !important;
+   	font-size: 16px !important;
+   	text-align: center;
+   	border: solid 2px;
+	}
+	
+	<%--신고처리 --%>
+	
 	.main{
 		height:100vh;
 		width:100%;  
@@ -2317,11 +2348,15 @@
 					</form>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
+						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
 							Close
 						</button>
 						
+
+						<button type="button" class="custom-btn btn-13">등록</button>
+
 						<button type="button" class="btn btn-default add addReportByModal">등록</button>
+
 					</div>
 				</div>
 			</div>

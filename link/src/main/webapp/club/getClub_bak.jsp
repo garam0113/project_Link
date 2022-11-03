@@ -379,11 +379,6 @@
 		   font-size: 16px !important;
 		}
 		
-		a {
-			color: #bd76ff;
-			text-decoration: underline;
-		}
-		
 		.darkover {
 			position: sticky;
 			top: auto;
@@ -443,6 +438,10 @@
 		
 		}
 		
+		a {
+			/* color: #333 !important; */
+		}
+		
 		
 	</style>
 
@@ -451,7 +450,7 @@
 </head>
 
 
-<body class="blog masonry-style">
+<body class="blog masonry-style" style="background: #EBEDF0;">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
@@ -594,7 +593,7 @@
 			<!-- 모달영역 -->
 			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
-					<div class="modal-content">
+					<div class="modal-content" style="height: 300px; width: 440px;">
 						<div class="modal-header">
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -606,10 +605,12 @@
 							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<input type="hidden" name="roomId" value="${ club.roomId }">
 							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요">
+								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요" style="margin-top: 10px; margin-left: 10px; height: 130px; width: 365px;">
 							</div>
+							<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
 							<input type="button" class="plain button red cancel" value="신청">
 							<input type="button" class="plain button red cancel" value="취소">
+							</div>
 						</form>
 					</div>
 					</div>

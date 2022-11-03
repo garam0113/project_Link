@@ -36,6 +36,12 @@
 body {
 	padding-top: 50px;
 }
+
+.container {
+	border: solid 2px rgb(179, 207, 249);
+	border-radius: 10px;
+	background: #ecf4ff;
+}
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -152,7 +158,7 @@ body {
 
 		<!--  table Start /////////////////////////////////////-->
 		<div>
-		<table class="table table-hover table-striped" style="background-color: white; border-width: thick; border: 3px solid #ddd;  border-radius: 10px;">
+		<table class="table table-hover table-striped" style="background-color: #ecf4ff; ">
 
 			<thead>
 				<tr>
@@ -187,15 +193,15 @@ body {
 		</table>
 		</div>
 		<!--  table End /////////////////////////////////////-->
-
+<br/><br/>
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
 
-
+<div style="display: flex; justify-content: center;">
 	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp" />
 	<!-- PageNavigation End... -->
-
+</div>
 </body>
 
 </html>

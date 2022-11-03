@@ -106,43 +106,6 @@
 	function getMyHomeGo(userId){
 		location.href = "/myHome/getYourHome?userId="+userId;
 	}
-	
-	
-/* 	$(function() {
-		
-	
-		$(document).on("click", "#banMember", function() {
-			
-			Swal.fire({
-			  title: '모임원을 추방하시겠습니까?',
-			  text: "삭제한 모임은 복구가 불가능합니다.",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: '추방',
-			  cancelButtonText: '취소',
-			}).then((result) => {
-			  if (result.value) {
-			
-				$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
-				
-			 }
-		})
-		//refreshMemList();
-	})
-	
-});	 */
-
-/* 	$(function() {
-		$("#banMember").on("click", function() {
-			deleteClubMember();
-		});
-	});
-	  */
-	
-	
-	
 
 	
 	//추방 그냥 컨트롤러
@@ -182,7 +145,7 @@
 			
 			$(function() {
 				
-				$(".updateApprovalCondition").on("click", function() {
+				$(".updateApprovalConditionBtn").on("click", function() {
 					//alert("모임원을 승인합니다 : ");
 					
 					var totalClubMemberCount = $("input[name='totalClubMemberCount']").val();
@@ -216,7 +179,7 @@
 					
 			});
 				
-			$(document).on("click", ".updateApprovalCondition", function(){
+			$(document).on("click", ".updateApprovalConditionBtn", function(){
 				//alert('승인');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr('approvalCondition');
@@ -238,7 +201,7 @@
 								alert(status);
 							} // end of success
 						}); // end of ajax
-						//refreshMemList();
+						refreshMemList();
 				}); // end of 승인
 			});
 
@@ -248,12 +211,6 @@
 
 		$("#cancel").bind("click", function() {
 			history.go(-1);
-		});
-	});
-	
-	$(function() {
-		$("plain1.button.red-cancel").on("click", function() {
-			self.location="/club/updateClubView.jsp"
 		});
 	});
 	
@@ -297,7 +254,6 @@
 		});
 	});
 	
-	//모임채팅 모임게시물에서 넘어가야해서 안들어가짐
 	$(function() {
 		$(".clubChatBtn").on("click", function() {
 			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
@@ -435,7 +391,7 @@
 			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
 			  	
 			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
-			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalCondition">승인</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">승인</button></td>
 					<td>${i.club.clubMaxMember}</td>
 				</c:if>
 			</tr>

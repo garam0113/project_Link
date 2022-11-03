@@ -69,6 +69,30 @@
 	
 	</script>
 <style>
+.table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;
+    translate: -225px;
+}
+input[type=file]::file-selector-button {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: solid 2px;
+  box-shadow:none !important;
+  outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
+  }
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -79,6 +103,7 @@ textarea {
 }
 body{
 background-color: #EBEDF0 !important;
+margin-left: 400px !important;
 }
 .qandATitle {
 	width: 500px;
@@ -88,53 +113,32 @@ background-color: #EBEDF0 !important;
 .content {
 	margin-top: -30px;
 }
-.custom-btn {
-  margin: 5px;
-  width: 80px;
-  height: 30px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+.btn-13 {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
-  background: transparent;
+  background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  border: none !important;
+  border: solid 2px;
   box-shadow:none !important;
   outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
 }
-.btn-13 {
-  background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF  50%, #5F0080 74%);
-  border: none;
-  z-index: 1;
-}
-.btn-13:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  border-radius: 5px;
+
+.btn-13:hover { 
    background-color: #5F0080;
-  background-image: linear-gradient(315deg, #BD76FF 50%, #5F0080 74%);
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
-}
-.btn-13:hover { <%-- 글씨색 --%>
-  color: #fff;
-}
-.btn-13:hover:after {
-  top: 0;
-  height: 100%;
+   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+   border-radius: 10px;
+   color: white !important;
+   font-size: 16px !important;
+   text-align: center;
+   border: solid 2px;
 }
 .btn-13:active {
   top: 2px;
@@ -153,6 +157,7 @@ background-color: #EBEDF0 !important;
 		<h2>Q&A 등록</h2>
 	</div>
 	<div class="container">
+	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px; height:750px;">
 		<div></div>
 		<div class="page-header text-center"></div>
 
@@ -160,7 +165,7 @@ background-color: #EBEDF0 !important;
 		<form class="form-horizontal" enctype="multipart/form-data">
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
-			<div class="form-group">
+			<div class="form-group" style="margin-left: 161px;">
 				<strong>제목</strong> <label for="title"></label>
 				<div class="col-sm-4">
 					<textarea class="qandATitle" id="qandATitle" name="qandATitle" value=""
@@ -169,26 +174,27 @@ background-color: #EBEDF0 !important;
 
 				</div>
 			</div>
-			<strong>내용</strong>
+			<strong style="margin-left: 161px;">내용</strong>
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
 					<textarea class="content" id="qandAContent" name="qandAContent" value=""
 						placeholder="내용을 입력해주세요." maxlength="500"
-						style="width: 500px; height: 500px;"></textarea>
+						style="width: 500px; height: 500px; margin-left: 161px;"></textarea>
 				</div>
 			</div>
 
-			<div  style= "display:flex; height: 30px;">
-				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
+			<div  style= "display:flex; height: 30px; margin-left: 161px;">
+				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px " />
 				<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" style ="margin-left: 60px; width:auto; height:auto;" checked>나만 보기
 			 	<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1" style ="margin-left: 20px; width:auto; height:auto;">전체 보기
 				</div></form> 
 			
-			<span id="helpBlock" class="help-block"> <strong
-				class="text-danger">사진은 2장까지 가능합니다.</strong>
-			</span>
-
+			<div id="helpBlock" class="help-block"> 
+				<strong class="text-danger" style="margin-left: 161px; display: flex; margin-top: 30px;">사진은 2장까지 가능합니다.</strong>
+			</div>
+			
+			</div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">

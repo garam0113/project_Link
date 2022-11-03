@@ -225,7 +225,6 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		String subject = "임시비밀번호 입니다.";
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Link에서 보낸 임시비밀번호["+user.getPassword()+"] 입니다.");
 		System.out.println("보낼 내용 : "+stringBuilder);
 		
 		MimeMessage message = javaMailSender.createMimeMessage();
@@ -234,7 +233,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setSubject(subject);
-			helper.setText(stringBuilder.toString());
+			helper.setText("<h1>Link에서 보낸 임시비밀번호["+user.getPassword()+"] 입니다.</h1>","text/html");
 			helper.setFrom("bymini1992@gmail.com");
 			helper.setTo(user.getEmail());
 			

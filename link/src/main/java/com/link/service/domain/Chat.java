@@ -8,6 +8,7 @@ public class Chat {
 	private String roomId;
 	private String userId2;
 	private User user2;
+	private String currentRoomId;
 	
 	public Chat() {
 	}
@@ -60,6 +61,14 @@ public class Chat {
 		this.user2 = user2;
 	}
 
+	public String getCurrentRoomId() {
+		return currentRoomId;
+	}
+
+	public void setCurrentRoomId(String currentRoomId) {
+		this.currentRoomId = currentRoomId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -75,6 +84,8 @@ public class Chat {
 		builder.append(userId2);
 		builder.append(", user2=");
 		builder.append(user2);
+		builder.append(", currentRoomId=");
+		builder.append(currentRoomId);
 		builder.append("]");
 		return builder.toString();
 	}
