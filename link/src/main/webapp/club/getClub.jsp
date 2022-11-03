@@ -379,11 +379,6 @@
 		   font-size: 16px !important;
 		}
 		
-		a {
-			color: #bd76ff;
-			text-decoration: underline;
-		}
-		
 		.darkover {
 			position: sticky;
 			top: auto;
