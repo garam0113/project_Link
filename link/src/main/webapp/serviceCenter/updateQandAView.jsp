@@ -43,7 +43,7 @@
             });
 				return;
 			}
-		alert("2");
+		
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateQandA").submit();
 	}
 			
@@ -65,6 +65,29 @@
 	
 </script>
 <style>
+input[type=file]::file-selector-button {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: solid 2px;
+  box-shadow:none !important;
+  outline: none;
+  box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #5F0080 !important;
+  font-size: 16px !important;
+  text-align: center;
+  }
+}
+table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -126,8 +149,7 @@ textarea {
 			<form class="form-horizontal" enctype="multipart/form-data">
 		 <input type="hidden" id="userId" name="qandA.userId" value ="${SessionScope.user.userId}">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
-
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				</tbody>
 					 <tr class = "body" id ="body" >
 					 
@@ -144,8 +166,8 @@ textarea {
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong></td>
-						<td align="left" style="transform: translateX(-370px);"><strong>${qandA.userId.nickName}</strong></td>
+						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong>
+						<strong style="margin-left: 335px;">${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
@@ -161,7 +183,7 @@ textarea {
 						</td> -->
 						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
 							<td>
-							<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
+							<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 60px" />
 							
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
@@ -200,14 +222,14 @@ textarea {
 						<td style ="display:flex;"> 
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" 
 						 style ="width:auto; height:auto;" checked>나만 보기</td> <td/>
-						<td style ="display:flex; transform: translateX(-708px);">
+						<td style ="display:flex; transform: translateX(-273px);">
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
 							 style ="width:auto; height:auto;">전체 보기</td></c:if>
 						<c:if test="${qandA.qandAOpenCondition==1}">
 						<td style ="display:flex;"> 
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" 
 						 style ="width:auto; height:auto;" >나만 보기</td> <td/>
-						<td style ="display:flex; transform: translateX(-708px);">
+						<td style ="display:flex; transform: translateX(-273px);">
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
 							 style ="width:auto; height:auto;" checked>전체 보기</td></c:if>
 					</tr>

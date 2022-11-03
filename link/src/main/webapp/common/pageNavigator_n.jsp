@@ -5,14 +5,16 @@
 
 <head>
 <script type="text/javascript">
+	
 </script>
 </head>
-
+<style>
+</style>
 <div>
 
-	<nav style= "transform: translate(-480px, 0px);">
+	<nav style="transform: translate(-480px, 0px);">
 		<!-- 크기조절 :  pagination-lg pagination-sm-->
-		<ul class="pagination" >
+		<ul class="pagination">
 
 			<!--  <<== 좌측 nav -->
 			<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
@@ -22,6 +24,7 @@
 				<li>
 			</c:if>
 			<a href="javascript:fncGetList('${ resultPage.currentPage-1}')"
+				style="color: #5F0080; background-color: white; border-color: #5F0080;"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 			</a>
 			</li>
@@ -32,13 +35,14 @@
 
 				<c:if test="${ resultPage.currentPage == i }">
 					<!--  현재 page 가르킬경우 : active -->
-					<li class="active"><a
-						href="javascript:fncGetList('${ i }');">${ i }<span
+					<li class="active"><a href="javascript:fncGetList('${ i }');"
+						style="color: #5F0080; background-color: white; border-color: #5F0080;">${ i }<span
 							class="sr-only">(current)</span></a></li>
 				</c:if>
 
 				<c:if test="${ resultPage.currentPage != i}">
-					<li><a href="javascript:fncGetList('${ i }');">${ i }</a>
+					<li><a href="javascript:fncGetList('${ i }');"
+						style="color: #5F0080; background-color: white; border-color: #5F0080;">${ i }</a>
 					</li>
 				</c:if>
 			</c:forEach>
@@ -51,6 +55,7 @@
 				<li>
 			</c:if>
 			<a href="javascript:fncGetList('${resultPage.endUnitPage+1}')"
+				style="color: #5F0080; background-color: white; border-color: #5F0080;"
 				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a>
 			</li>

@@ -65,6 +65,11 @@
 	});
 </script>
 <style>
+table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -116,7 +121,8 @@ textarea {
 	
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; 
+			 transform: translate(130px, 0px); background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
@@ -137,8 +143,8 @@ textarea {
 					</tr>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong></td>
-						<td align="left" style="transform: translateX(-370px);"><strong>${qandA.userId.nickName}</strong></td>
+						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong>
+						<strong style="margin-left:300px;">${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >
@@ -173,8 +179,8 @@ textarea {
 						<c:if test ="${qandA.qandAAnswerRegDate != null}"> <%--包府磊--%>
 					<tr>
 						<th></th>
-						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate"><strong>${qandA.qandAAnswerRegDate }</strong></td>
-						<td align="left" style="transform: translateX(-370px);"><strong>包府磊</strong></td>
+						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate"><strong>${qandA.qandAAnswerRegDate }</strong>
+						<strong style="margin-left:300px;">包府磊</strong></td>
 						<td/>
 					</tr>
 					<tr >
@@ -206,10 +212,10 @@ textarea {
 									   翠函
 									   </c:if>
 									   </button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(540px,0px); ">
 									   昏力</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
 									第肺</button>
 									
 									</div>
