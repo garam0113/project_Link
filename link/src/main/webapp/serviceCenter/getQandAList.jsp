@@ -127,7 +127,7 @@ function fncGetList(currentPage) {
 		})
 		
 		$("button:contains('검색')").bind("click", function() {	
-		  fncGetList($(search.order));
+		  fncGetList(1);
 		})
 		
 		$("button:contains('등록')").bind("click", function() {
@@ -224,7 +224,9 @@ function fncGetList(currentPage) {
 				<c:forEach var="getQandAList" items="${getQandAList}">
 					<c:set var="i" value="${i + 1}" />
 					<tr class="ct_list_pop">
-						<td align="left" id="bb" style="vertical-align: middle;">${getQandAList.qandANo}</td>
+						<td align="left" id="bb" style="vertical-align: middle;">${i}
+						<input type="hidden" id="qandANo" name="qandANo" value="${getQandAList.qandANo }">
+						</td>
 						<td></td>
 						<%-- 관리자 --%>
 						<c:if test="${ user.role == '1' }">

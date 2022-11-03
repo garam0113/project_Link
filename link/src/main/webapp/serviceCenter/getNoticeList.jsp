@@ -117,20 +117,23 @@ background-color: #EBEDF0 !important;
 		$("td:nth-child(3)").on(
 				"click",
 				function() {
+					
+					
 					self.location = "/serviceCenter/getNotice?noticeNo="
-							+ $(this).parent().find("td:eq(0)").text()
+							+ $(this).parent().find($("input[name='noticeNo']")).val();
 
 				});
-
+		
+		$("button:contains('검색')").bind("click", function() {
+			fncGetList(1);
+		})
+		
+		
 		$("button:contains('등록')").bind("click", function() {
 			self.location = "/serviceCenter/addNoticeView.jsp";
 		})
 		
-		$("button:contains('검색')").bind("click", function() {
-			$("#currentPage").val(currentPage)
-			$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
-					.submit()
-		})
+
 		
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
@@ -185,7 +188,7 @@ background-color: #EBEDF0 !important;
 						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">검색</button>
 
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-						<input type="hidden" id="currentPage" name="currentPage" value="0" />
+						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					</form>
 				</div>
 				
@@ -220,7 +223,9 @@ background-color: #EBEDF0 !important;
 						<c:set var="i" value="${i + 1}" />
 						<tr class="ct_list_pop">
 							<td align="left" id="bb" style="vertical-align: middle;">
-							${getNoticeList.noticeNo}</td>
+							${i}
+							<input type="hidden" id="noticeNo" name="noticeNo" value="${getNoticeList.noticeNo}">
+							</td>
 							<td></td>
 							
 							<td align="left" class="content2" style="vertical-align: middle; cursor:pointer;">
