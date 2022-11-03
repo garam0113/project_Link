@@ -1046,6 +1046,8 @@
 		
 		<!-- 채팅 javascript -->
 		<script src="/resources/javascript/chat/chat.js"></script>
+		
+		<%-- <jsp:include page="/chat/chat.jsp" /> --%>
 	
 
 		<main role="main" style="background: #EBEDF0;">

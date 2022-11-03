@@ -105,17 +105,14 @@ textarea {
 	
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
 				</div>
 				</tbody>
 					 <tr class = "body" id ="body" >
-						<th style="text-align-last: center;"></th>
-						<td align="left">
-						<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
-						</td>
+					<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 					</tr>
 							<tr class = "title" id ="title">
 						<th style="text-align-last: center;">力格</th>
@@ -123,6 +120,7 @@ textarea {
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
 						${notice.noticeTitle}	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
+						
 						</td> 
 					</tr>
 					<tr>
@@ -140,11 +138,11 @@ textarea {
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">梅何颇老</th>
+			<%--			<th style="text-align-last: center;">梅何颇老</th>
 						<c:if test="${notice.noticeImage1 == null && notice.noticeImage2 ==null }">
 							<td>梅何颇老 绝澜</td>
 						</c:if>
-						<td><c:if test="${notice.noticeImage1 != null }">
+						<td><c:if test="${notice.noticeImage1 != null || notice.noticeImage1 ==' ' }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
@@ -155,11 +153,11 @@ textarea {
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
-						</c:if>
+						</c:if> 
 						</td>
 						
 						
-					</tr>
+					</tr>--%>
 					<tr >
 						<th style="text-align-last: center;"></th>
 					</tr>

@@ -57,7 +57,7 @@
 <style> 
 table{
     box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
-    border-radius: 30px;
+    border-radius: 20px;
     background: #c9c9ff;
 }
 .row {

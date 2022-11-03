@@ -104,6 +104,11 @@
 	});
 </script>
 <style>
+table{
+    box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;
+}
 .row {
 	margin-left : 0px !important;
 	   display: initial !important;
@@ -160,7 +165,7 @@ textarea {
 
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table>
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
