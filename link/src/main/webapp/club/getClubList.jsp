@@ -48,7 +48,7 @@
  	 
  	 <style>
 		body {
-		    background-color: #f0f2f5;
+		    background-color: #EBEDF0;
 		    color: #333;
 		    font-size: 1.125em;
 		    font-size: 15px;
@@ -60,7 +60,7 @@
 		    position: relative;
 		    z-index: 10;
 		    overflow: hidden;
-		    background-color: #f0f2f5;
+		    background-color: #EBEDF0;
 		}
 		
 		header {
@@ -240,7 +240,7 @@
 	//============================== 검색 이벤트 처리 ====================
 	$(function(){
 		$("button.btn.btn-search").on("click", function() {
-			fncGetClubList(1);
+			fncGetClubList(currentPage);
 		});	
 	});
 	
@@ -286,11 +286,11 @@
 	});
 	
 	
-	function enterkey() {
+	/* function enterkey() {
 		if(window.event.keyCode == 13) {
 			fncGetClubList(1);
 		}
-	}
+	} */
 	
 	function changeFn() {
 		var category = document.getElementById("clubCategory");
@@ -583,7 +583,7 @@
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
 	   <!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
-	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;">
+	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px; transform: translate(-33px, 0px);">
 	    	<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
 	    	<p style="margin-top: 20px; margin-left: 11px;"><strong>모임개설</strong>
 	    </div>	

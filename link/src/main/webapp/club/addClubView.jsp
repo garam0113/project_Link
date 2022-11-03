@@ -263,14 +263,14 @@
 </script>
 </head>
 
-<body>
+<body style="background: #EBEDF0;">
 
 	<jsp:include page="/toolbar.jsp"/>
 	
 	
 	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
-			<div class="container">
+			<div class="container" style="background: white;">
 				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 등 록</h2>
 					<p class="exTxt">새로운 모임을 등록해보세요...</p>
@@ -336,7 +336,7 @@
 						<option value="서초구">서초구</option>
 						<option value="성동구">성동구</option>
 						<option value="성북구">성북구</option>
-						<option value="송파구">송팡구</option>
+						<option value="송파구">송파구</option>
 						<option value="양천구">양천구</option>
 						<option value="영등포구">영등포구</option>
 						<option value="용산구">용산구</option>
