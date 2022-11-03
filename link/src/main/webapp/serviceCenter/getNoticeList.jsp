@@ -105,9 +105,8 @@ background-color: #EBEDF0 !important;
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-
+	
 	function fncGetList(currentPage) {
-		
 		$("#currentPage").val(currentPage)
 		$("form").attr("method", "GET").attr("accept-charset","EUC-KR").attr("action", "/serviceCenter/getNoticeList")
 				.submit();
@@ -118,14 +117,23 @@ background-color: #EBEDF0 !important;
 		$("td:nth-child(3)").on(
 				"click",
 				function() {
+					
+					
 					self.location = "/serviceCenter/getNotice?noticeNo="
-							+ $(this).parent().find("td:eq(0)").text()
+							+ $(this).parent().find($("input[name='noticeNo']")).val();
 
 				});
-
+		
+		$("button:contains('검색')").bind("click", function() {
+			fncGetList(1);
+		})
+		
+		
 		$("button:contains('등록')").bind("click", function() {
 			self.location = "/serviceCenter/addNoticeView.jsp";
 		})
+		
+
 		
 		$("button:contains('뒤로')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
@@ -167,14 +175,12 @@ background-color: #EBEDF0 !important;
 						
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
-								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>번호</option>
-								<option value="1"
+								<option value="1" id="searchCondition"
 									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
 							</select>
 
 							<label class="sr-only" for="searchKeyword">검색어</label> <input
-								type="text" class="form-control" id="searchKeyword" width="200px"
+								type="text" class="form-control" id="searchKeyword" width="200px" 
 								name="searchKeyword" placeholder="검색어" style="transform: translate(10px, 8px); width:300px;"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
@@ -217,7 +223,9 @@ background-color: #EBEDF0 !important;
 						<c:set var="i" value="${i + 1}" />
 						<tr class="ct_list_pop">
 							<td align="left" id="bb" style="vertical-align: middle;">
-							${getNoticeList.noticeNo}</td>
+							${i}
+							<input type="hidden" id="noticeNo" name="noticeNo" value="${getNoticeList.noticeNo}">
+							</td>
 							<td></td>
 							
 							<td align="left" class="content2" style="vertical-align: middle; cursor:pointer;">

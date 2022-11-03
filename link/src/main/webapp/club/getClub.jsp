@@ -316,13 +316,15 @@
 		})
 		
 		socket.on("reRoomName", function(data) {
+			var clubNo = $("#no").val();
 			console.log("socket서버에서 받은 Data : "+data);
 			if(data != null){
 			$.ajax("/liveRest/json/exitLive", {
 				method : "POST",
 				data : JSON.stringify({
 					roomName : data,
-					type : '2'
+					type : '2',
+					clubNo : clubNo
 				}),
 				dataType : "json",
 				contentType : "application/json",
@@ -598,14 +600,14 @@
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</button>
-							<h3 class="modal-title" id="exampleModalLabel">가입신청</h3>
+							<h3 class="modal-title" id="exampleModalLabel" style="text-align: center; ">가입신청</h3>
 						</div>
 					<div class="club-add-approval-view">
 						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
 							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<input type="hidden" name="roomId" value="${ club.roomId }">
 							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요" style="margin-top: 10px; margin-left: 10px; height: 130px; width: 365px;">
+								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요" autocomplete="off" style="margin-top: 10px; margin-left: 45px; height: 130px; width: 365px;">
 							</div>
 							<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
 							<input type="button" class="plain button red cancel" value="신청">

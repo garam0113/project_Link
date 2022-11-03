@@ -47,11 +47,6 @@
 		
 		
 		
-		<!-- 채팅 javascript -->
-		<script src="/resources/javascript/chat/chat.js"></script>
-		
-		
-		
 		<!-- 프로필 이미지 클릭시 dialog 나온다 -->
 		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -1027,6 +1022,20 @@
 		});
 	});		
 		
+	
+	$(function(){
+		//소켓서버에 접속시킨다.
+		/* let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
+			cors: { origin: "*" },
+			path: '/socket.io',
+			query: {
+				userId : $("#session_userId").val(),
+				profileImage : $("#session_profileImage").val(),
+				nickName : $("#session_nickName").val(),
+				roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
+			}
+		}); */
+	});
 		</script>
 		
 	</head>
@@ -1034,20 +1043,24 @@
 	<body class="single single-post">
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/toolbar.jsp" /> --%>
+	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 		
 	<!-- 모임채팅 -->
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+		
+		<!-- 채팅 javascript -->
+		<script src="/resources/javascript/chat/chat.js"></script>
+		
+		<%-- <jsp:include page="/chat/chat.jsp" /> --%>
 	
-	<br><br>
 
-		<main role="main">
-
+		<main role="main" style="background: #EBEDF0;">
 
 
-			<div id="main" class="row">
+
+			<div id="main" class="row" style="background: #EBEDF0;">
 				<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
 				<!-- <div class="row-content buffer-left buffer-right buffer-bottom"> -->
 	
@@ -1069,8 +1082,12 @@
 						<input type="hidden" name="clubNo" value="${ clubPost.getClubPost.clubNo }">
 						<%-- 모임게시물 댓글 신고 --%>
 					</form>
-		
-		
+					
+					<%-- chat.js에서 사용위해서 --%>
+						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+					<%-- chat.js에서 사용위해서 --%>
 		
 		
 				
@@ -1207,7 +1224,7 @@
 					</div>			
 					
 
-					<div class="post-area clear-after">
+					<div class="post-area clear-after" style="background: white;">
 						<article role="main">
 							
 							<h5><time datetime="2013-11-09" class="club-post-time">
@@ -1274,7 +1291,8 @@
 							
 								<br><br>
 								
-								<div class="clubPost-body-title">${ clubPost.getClubPost.clubPostTitle }</div>
+								<%-- id는 프로필 이미지 클릭했을 때 나오는 다이얼로그 나오는 위치이다 --%>
+								<div class="clubPost-body-title" id="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.clubPostTitle }</div>
 								
 								<br><br>
 								
@@ -1644,16 +1662,19 @@
 		<script type="text/javascript">
 		<%-- 이미지 클릭시 다이얼로그 온 --%>
 		$(function(){
+			
+			var user_Id = "";
+			
 			   
 			   $('.dl').on("click",function(){
 			      
-			   var user_Id = $(this).parent().attr("userId");
+			   user_Id = $(this).parent().attr("userId");
 			   var nickName = $(this).attr("nickName");
 			   var profileImage = $(this).attr("profileImage");
 			   
-			   alert(user_Id);
-			   alert(nickName);
-			   alert(profileImage);
+			   //alert(user_Id);
+			   //alert(nickName);
+			   //alert(profileImage);
 			   
 			   //alert(followUser.receiveId.userId);
 			   $.ajax("/myHomeRest/json/getFollow", {
@@ -1785,8 +1806,8 @@
 			               },
 			               position: {
 			                  
-			                  my:"center",
-			                  at:"center",
+			                  my:"right",
+			                  at:"right",
 			                  of:"#"+user_Id+""
 			               }
 			               
@@ -1804,165 +1825,12 @@
 
 			}) 
 
-			$(document).on("click",".dll",function(){
-			   
-			   var user_Id = $(this).parent().parent().attr("id");
-			   var nickName = $("."+user_Id+"").val();
-			   var profileImage = $(this).attr("id");
-			   
-			   $.ajax("/myHomeRest/json/getFollow", {
-
-			      type : "POST",
-			      data : JSON.stringify({
-			         receiveId : user_Id
-			      }),
-			      dataType : "json",
-			      contentType : "application/json",
-			      headers : {
-			         "Accept" : "application/json"
-			      },
-			      success : function(Data, status) {
-			      if(Data.follow != null){
-			         var freceiveId = Data.follow.receiveId.userId;
-			         var fnickName = Data.follow.receiveId.nickName;
-			         var fprofileImage = Data.follow.receiveId.profileImage;
-			         var ffbType = Data.follow.fbType;
-			         var ffbState = Data.follow.fbState;
-			      }else{
-			         var freceiveId = "";
-			         var fnickName = "";
-			         var fprofileImage = "";
-			         var ffbType = "";
-			         var ffbState = "";
-			      }
-			      if(Data.block != null){
-			         var breceiveId = Data.block.receiveId.userId;
-			            var bnickName = Data.block.receiveId.nickName;
-			         var bprofileImage = Data.block.receiveId.profileImage;
-			         var bfbType = Data.block.fbType;
-			         var bfbState = Data.block.fbState;
-			      }else{
-			         var breceiveId = "";
-			            var bnickName = "";
-			         var bprofileImage = "";
-			         var bfbType = "";
-			         var bfbState = "";
-			      }
-			         
-			         
-			         
-			      
-			         
-			         if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-			               "팔로잉</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '1'){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '2'){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-			               "팔로잉</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType.trim() == '2' && bfbState.trim() == '2'){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType == ""){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='following' class='btn btn-danger btn-sm'>"+
-			               "팔로잉</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '2' && bfbType == "" ){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+fprofileImage+"' style='width:100px; height:100px;'><div><h4>"+fnickName+"</h4></div><div><button type='button' id='updateFollow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '1'){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='stopBlock' class='btn btn-danger btn-sm'>차단해제</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(breceiveId == user_Id && ffbType == ""  && bfbType.trim() == '2' && bfbState.trim() == '2'){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+bprofileImage+"' style='width:100px; height:100px;'><div><h4>"+bnickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='updateBlock' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }else if(ffbType == ""  && bfbType == "" ){
-			            var value =
-			               "<div name='dialog' id='"+user_Id+"'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='follow' class='btn btn-danger btn-sm'>"+
-			               "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			         }
-			         
-			          $("#"+nickName+"1").html(value);
-			      
-			         
-			            $("#"+nickName+"1").dialog({
-			               
-			               autoOpen: false,
-			               show: {
-			                  effect: "Pulsate",
-			                    duration: 1000
-			               },
-			               hide: {
-			                    effect: "Scale",
-			                    duration: 1000
-			               },
-			               position: {
-			                  
-			                  my:"center",
-			                  at:"center",
-			                  of:"div[name='"+nickName+"']"
-			               }
-			               
-			            });
-			   
-			   
-			             $("#"+nickName+"1").dialog("open");
-			   
-			      },
-			      error : function(){
-			         var value =
-			            "<div name='dialog1'><img src='/resources/image/uploadFiles/"+profileImage+"' style='width:100px; height:100px;'><div><h4>"+nickName+"</h4></div><div><button type='button' id='Follow' class='btn btn-danger btn-sm'>"+
-			            "팔로우</button><button type='button' id='block' class='btn btn-danger btn-sm'>차단</button><button type='button' class='btn btn-danger btn-sm'>채팅</button></div></div>";
-			            
-			          $("#"+nickName+"1").html(value);
-			            
-			            
-			            $("#"+nickName+"1").dialog({
-			               
-			               autoOpen: false,
-			               show: {
-			                  effect: "Pulsate",
-			                    duration: 1000
-			               },
-			               hide: {
-			                    effect: "Scale",
-			                    duration: 1000
-			               },
-			               position: {
-			                  
-			                  my:"center",
-			                  at:"center",
-			                  of:"div[name='"+nickName+"']"
-			               }
-			               
-			            });
-			   
-			   
-			             $("#"+nickName+"1").dialog("open");
-			      }
-			   })
-
-			}) 
-			$(".main").on("click",function(){
-
-			    $("div[name='dialog1']").parent().dialog("close");
-
-			}) 
+			
 
 
 
 			   
 			   
-			});
 		<%-- 이미지 클릭시 다이얼로그 온 --%>
 		
 		
@@ -1970,7 +1838,6 @@
 		
 		
 		<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
-		$(function() {
 
 		      $(document).on("click","#follow", function() {
 		         var userId = $(this).parent().parent().attr("id");
@@ -2343,9 +2210,160 @@
 		            }
 		         })
 		      })
+		    
+		    <%-- 1:1 채팅 --%>
+			$(document).on("click","button:contains('채팅')", function() {
+				//alert("a");
+				$("#chat-icon").attr("style", "display:none");
+				// 채팅창 보인다
+				$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+				 	  
+				// 1:1채팅 보이고 모임채팅 숨긴다
+				$("#user-chat-list").removeAttr("style");
+				$("#club-chat-list").attr("style", "display: none");
+				// 1:1채팅 이미지 테두리 이벤트, 모임채팅 이미지 테두리 이벤트 없애기
+				$(this).attr("style", "box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;");
+				$(".chat-img-sidebar.people-users").removeAttr("style");
+				
+				//alert( "1:1 채팅하고하는 상대방 아이디 : " + user_Id );
+				var make_roomId = "";
+				
 
-		   });
+				socket.disconnect();
+				$('#chatLog').empty();
+				
+				$("#allChat-toobar-title").attr("style", "display: none");
+				$("#allChat-toobar-back").removeAttr("style");
+				
+				$("#chat-list-content").attr("style", "display: none");
+				$("#chat-room-content").removeAttr("style");
+				
+				// ajax로 roomId 만들어서 DB에 넣고
+				$.ajax( "/clubPostRest/json/addChat",
+						{
+							method : "POST",
+							data : JSON.stringify({
+								userId2 : user_Id
+							}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							dataType : "json",
+							success : function(JSONData, status){
+								//alert(status);
+								
+								var user_chat_list = "";
+								$("#user-chat-list").empty();
+								
+								for (var i = 0; i < JSONData.length; i++) {
+									//alert(JSONData[i].roomId);
+									//alert(JSONData[i].user2.nickName);
+									//alert(JSONData[i].user2.profileImage);
+									//alert(JSONData[i].currentRoomId);
+									
+									make_roomId = JSONData[i].currentRoomId;
+
+									// 넣은 roomId까지 가져와서 1:1채팅 리스트 돌리고
+									user_chat_list = "<div class='chat-content chat-content-onechat' roomId='"+JSONData[i].roomId+"' namespace='userchat'>"
+															+"<div>"
+																+"<img class='chat-img-main' src='/resources/image/uploadFiles/"+JSONData[i].user2.profileImage+"'>"
+															+"</div>"
+															+"<div>"+JSONData[i].user2.nickName+"</div>"
+														+"</div>";
+									
+									$("#user-chat-list").append( user_chat_list );
+								}
+								
+								//alert( make_roomId );
+								console.log(socket)
+								
+								//소켓서버에 접속시킨다.
+								socket = io("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
+									cors: { origin: "*" },
+									path: '/socket.io',
+									query: {
+										userId : $("#session_userId").val(),
+										profileImage : $("#session_profileImage").val(),
+										nickName : $("#session_nickName").val(),
+										roomId : make_roomId
+									},
+									forceNew: true,
+									autoConnect:false
+								});
+								console.log(socket)
+								
+								setChat()
+								
+								socket.connect()
+								
+								
+							}//end of success	
+						});// end of ajax
+			
+						
+				// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
+				//alert( make_roomId );
+				
+				//소켓서버에 접속시킨다.
+				/* socket = io.connect("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
+					cors: { origin: "*" },
+					path: '/socket.io',
+					query: {
+						userId : $("#session_userId").val(),
+						profileImage : $("#session_profileImage").val(),
+						nickName : $("#session_nickName").val(),
+						roomId : make_roomId,
+					},
+					forceNew: true
+				}); */
+				// 소켓 접속
+				
+				//server message 라는 이벤트명으로 대기
+				/* socket.on('server message', function(data){
+				    //console.log(data);
+				    
+				    var display = "";
+					    
+					    if( $("#session_nickName").val() != data.username ){
+					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+										+"<div>"
+											+"<div>"+data.username+"</div>"
+											+"<div>"
+												+"<div>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+									+"</div>";
+					    		
+					    }else{
+					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
+										+"<div>"
+											+"<div style='float: right;'>"+data.username+"</div>"
+											+"<div>"
+												+"<div style='float: right;'>"+data.message+"</div>"
+											+"</div>"
+										+"</div>"
+										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
+									+"</div>";
+					    }
+				    					    
+				    
+				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
+					$('#chatLog').append(display);
+				    
+				}); */
+				// 이벤트명으로 대기하다가 서버에서 데이터가 오면 출력한다
+			 	  
+			});//end of 프로필사진의 채팅 클릭시 1:1 채팅
+
+			
+			
+			
+			
+		   });//end of $(function
 		<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
+		
 		</script>
 		
 		

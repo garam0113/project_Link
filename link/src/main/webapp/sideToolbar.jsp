@@ -61,7 +61,7 @@
 <form>
 <br/><br/>
 <input type="hidden" class="currentPage" id="currentPage" name="currentPage" value="1" />
-	<c:if test="${ user.role == '0' }">
+	<c:if test="${ fn:trim(user.role) == '0' }">
 		<div id="main" class="row"style="background-color: #EBEDF0;">
 			<div class="row-content buffer clear-after" style="margin-bottom: -100px;">
 				<ul class="inline cats filter-options">
@@ -76,7 +76,7 @@
 		<!-- row -->
 	</c:if>
 
-	<c:if test="${ user.role == '1' }">
+	<c:if test="${ fn:trim(user.role) == '1' }">
 		<div id="main" class="row" style="background-color: #EBEDF0;">
 			<div class="row-content buffer clear-after" style="margin-bottom: -100px;">
 				<ul class="inline cats filter-options">

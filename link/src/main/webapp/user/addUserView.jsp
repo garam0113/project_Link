@@ -251,10 +251,12 @@ body>div.container {
 
 </head>
 
-<body>
-	<form style="background-color: #EBEDF0;">
+<body style="background-color: #EBEDF0;">
+	<form>
 		<div class="wrap wd668">
-			<div class="container">
+			<br />
+			<br />
+			<div class="container" style="background-color: aliceblue; border-radius: 20px; zoom: 1.2; width: 120%;">
 				<div class="form_txtInput">
 					<h2 class="sub_tit_txt">회원가입</h2>
 					<p class="exTxt">회원가입시 핸드폰 인증을 반드시 진행하셔야 합니다.</p>
@@ -412,7 +414,7 @@ body>div.container {
 												<option value="구로구">구로구</option>
 												<option value="금천구">금천구</option>
 												<option value="노원구">노원구</option>
-												<option value="도봉구">도봉구</option> 
+												<option value="도봉구">도봉구</option>
 												<option value="동대문구">동대문구</option>
 												<option value="동작구">동작구</option>
 												<option value="마포구">마포구</option>
@@ -519,6 +521,8 @@ body>div.container {
 				</div>
 				<!-- form_txtInput E -->
 			</div>
+			<br />
+			<br />
 			<!-- content E-->
 		</div>
 		<!-- container E -->

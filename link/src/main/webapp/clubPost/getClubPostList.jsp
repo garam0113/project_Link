@@ -384,7 +384,7 @@
 
 		<main role="main">
 
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background: #EBEDF0;"><!-- 중간 개별영역 -->
 			
 				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
@@ -458,7 +458,7 @@
 									<c:set var="i" value="${ clubPostList }"></c:set>
 									<c:if test="${ clubPostListCount > 0}">
 									<c:forEach var="i" begin="0" end="${ fn:length(clubPostList) - 1 }" step="1">
-										<div class="col-md-12" style="padding-left: 105px;">
+										<div class="col-md-12" style="padding-left: 105px; background: white;">
 											<a style="background-color: red;" href="javascript:getClubPostGo('${ clubPostList[i].clubNo }','${ clubPostList[i].clubPostNo }')">
 												<c:if test="${ empty clubPostList[i].clubPostVideo1 }">
 													<img src="/resources/image/uploadFiles/${ clubPostList[i].image1 }" height="400" width="600">
