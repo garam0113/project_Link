@@ -276,6 +276,50 @@
 						$(this).css("color", "black");
 					});
 				});
+				
+				
+				
+				
+				<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
+				<%--$(".clubPost-header-heart").bind("click", function(){
+					//alert("모임게시물 좋아요");
+					$.ajax( "/clubPostRest/json/updateClubPost",
+							{
+								method : "POST",
+								data : JSON.stringify({
+											clubNo : ${ clubNo },
+											clubPostNo : ${ clubPost.getClubPost.clubPostNo }
+										}),
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								dataType : "json",
+								success : function(JSONData, status){
+									$(".clubPost-header-heart").children().remove();
+									$(".clubPost-header-heartCount").text("");
+
+									var heartDisplay = "";
+									
+									// 로그인한 회원이 좋아요하면 게시물번호를 안했으면 0을 리턴한다
+									if(JSONData.heartCondition == 0){
+										heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
+									}else{
+										heartDisplay = "<img src='/resources/image/uploadFiles/heart.jpg' height='70' width='70'>";
+									}
+									
+									$(".clubPost-header-heart").append( heartDisplay );
+									$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
+									
+									if(sock) {
+										var Msg = "하트 좋아요";
+										sock.send(Msg);
+									}
+								}
+							});
+				});--%> // end of 하트
+				
+				
 								
 				
 				
@@ -320,6 +364,13 @@
 			function getMyHomeGo(userId){
 				location.href = "/myHome/getYourHome?userId="+userId;
 			}
+			
+			
+			
+			
+				
+			
+			
 		</script>
 		
 	</head>
@@ -379,9 +430,9 @@
 											<b class="club-post-list-order">오래된순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">좋아요 많은순</b>&nbsp;/&nbsp;
 											<b class="club-post-list-order">내가 작성한 게시물</b><br>
-											<b class="club-post-list-order">모임등록시 - 모임 추가</b><br>
+											<!-- <b class="club-post-list-order">모임등록시 - 모임 추가</b><br>
 											<b class="club-post-list-order">모임대표가 가입승인시 - 모임원 추가</b><br>
-											<b class="club-post-list-order">모임신청시 - 모임추가</b><br>
+											<b class="club-post-list-order">모임신청시 - 모임추가</b><br> -->
 											<!-- <a href="/clubPost/getClubNoticeList">공지사항</a> -->
 											<button type="button" class="plain button red" id="club-post-add">등록하기</button>
 								    	</p>
