@@ -72,7 +72,7 @@ public class UserController {
 
 			file.transferTo(
 					new File(uploadTempDir, user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
-			user.setProfileImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
+			user.setProfileImage(user.getUserId() + sysName + dateNow + file.getOriginalFilename());
 
 		}
 
@@ -82,7 +82,7 @@ public class UserController {
 
 		session.setAttribute("user", getUser);
 
-		return "redirect:/";
+		return "redirect:/main.jsp";
 	}
 
 	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
@@ -113,11 +113,11 @@ public class UserController {
 			if (getUser == null) {
 
 				userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
-
+				
 				login = userService.getUser(user);
-
-				session.setAttribute("user", login);
-
+				
+				session.setAttribute("user", login); 
+				
 				break;
 			}
 		}
@@ -153,7 +153,7 @@ public class UserController {
 
 		} else {
 
-			return "redirect:/";
+			return "redirect:/main.jsp";
 		}
 	}
 
@@ -190,7 +190,7 @@ public class UserController {
 
 			return "forward:/user/updateUserView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/main.jsp";
 		}
 
 	}
@@ -246,7 +246,7 @@ public class UserController {
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 
-	@RequestMapping(value = "updateProfile2", method = RequestMethod.GET)
+	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
 	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session)
 			throws Exception {
 
@@ -267,7 +267,7 @@ public class UserController {
 
 			return "forward:/user/updateProfileView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/main.jsp";
 		}
 	}
 
@@ -325,8 +325,8 @@ public class UserController {
 		if (sessionId.equals(getUser.getUserId())) {
 			session.setAttribute("user", getUser);
 		}
-
-		return "forward:/";
+		
+		return "forward:/main.jsp";
 	}
 
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
@@ -374,7 +374,7 @@ public class UserController {
 			session.setAttribute("follow", map.get("list"));
 		}
 
-		return "redirect:/";
+		return "redirect:/main.jsp";
 	}
 
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)
@@ -392,7 +392,7 @@ public class UserController {
 			System.out.println("세션에 값 저장 : " + session.getAttribute("user").toString());
 
 //			return null;
-			return "redirect:/";
+			return "redirect:/main.jsp";
 		} else if (getUser != null && getUser.getNickName() == null) {
 
 			session.setAttribute("user", getUser); // 입력받은 snsUserId와 가입유형 번호가 DB에 있는 데이터 내용과 같을 시 session에 정보 저장
@@ -414,7 +414,7 @@ public class UserController {
 
 		session.invalidate(); // session정보 제거
 
-		return "redirect:/";
+		return "redirect:/main.jsp";
 	}
 
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
@@ -432,7 +432,7 @@ public class UserController {
 
 		session.invalidate();
 
-		return "redirect:/";
+		return "redirect:/main.jsp";
 	}
 
 	@RequestMapping(value = "getUserList")
