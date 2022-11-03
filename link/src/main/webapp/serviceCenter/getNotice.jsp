@@ -108,7 +108,7 @@ background-color: #EBEDF0 !important;
   <h2>공지사항 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 37px;">
+		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
@@ -166,12 +166,12 @@ background-color: #EBEDF0 !important;
 						
 									<div> 
 									<c:if test="${user.role=='1'}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
 									   수정</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
 									   삭제</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(370px, 0px); ">
 									뒤로</button>
 									</div>
 				
