@@ -254,7 +254,8 @@
 								data : JSON.stringify({
 									roomName : clubNo+"_"+clubTitle+":"+roomName,
 									type : '2',
-									limit : total
+									limit : total,
+									clubNo : clubNo
 								}),
 								dataType : "json",
 								contentType : "application/json",
@@ -272,7 +273,7 @@
 										nickName : nickName,
 										member : 1
 										});
-									self.location = "https://192.168.0.183:4040";
+									//self.location = "https://192.168.0.183:4040";
 								}
 							}) 
 						}
