@@ -354,8 +354,6 @@
 
 	
 	</script>
-
-<<<<<<< HEAD
 <style>
 body {
 	padding-top: 70px;

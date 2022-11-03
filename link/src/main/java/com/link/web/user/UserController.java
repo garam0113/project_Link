@@ -50,7 +50,7 @@ public class UserController {
 
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
-
+ 
 		System.out.println("/user/addUser : GET");
 
 		return "redirect:/user/addUserView.jsp";
@@ -68,12 +68,17 @@ public class UserController {
 
 		System.out.println(dateNow);
 
+		User image = new User();
+		image = userService.getUser(user);
+		
 		if (file != null && file.getSize() > 0) {
 
 			file.transferTo(
 					new File(uploadTempDir, user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
 			user.setProfileImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 
+		}else {
+			user.setProfileImage(image.getProfileImage());
 		}
 
 		userService.addUser(user); // 회원가입 정보 DB저장
@@ -272,17 +277,24 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-	public String updateProfile(@ModelAttribute("uesr") User user, Model model, HttpSession session,
+	public String updateProfile(@ModelAttribute("user") User user, Model model, HttpSession session,
 			@RequestParam("profileImageFile") MultipartFile file) throws Exception {
 
 		System.out.println("/user/updateProfile : POST");
 
 		Date dateNow = new Date(System.currentTimeMillis());
 
+		System.out.println("받아온 file : "+file);
+		
+		User image = new User();
+		image = userService.getUser(user);
+		
 		if (file != null && file.getSize() > 0) {
 			file.transferTo(
 					new File(uploadTempDir, user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename()));
 			user.setProfileImage(user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename());
+		} else {
+			user.setProfileImage(image.getProfileImage());
 		}
 
 		userService.updateUser(user); // SNS회원 프로필 작성
@@ -309,10 +321,15 @@ public class UserController {
 
 		Date dateNow = new Date(System.currentTimeMillis());
 
+		User image = new User();
+		image = userService.getUser(user);
+		
 		if (file != null && file.getSize() > 0) {
 			file.transferTo(
 					new File(uploadTempDir, user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename()));
 			user.setProfileImage(user.getUserId() + "_User_" + dateNow + "_" + file.getOriginalFilename());
+		}else {
+			user.setProfileImage(image.getProfileImage());
 		}
 
 		userService.updateUser(user); // SNS회원 프로필 작성
