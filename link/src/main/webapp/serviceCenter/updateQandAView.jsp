@@ -50,6 +50,9 @@
 	
 	
 	$(function(){
+		$("button:contains('답변')").bind("click", function(){
+			fncUpdateQandA();
+		});
 		
 		$("button:contains('수정')").bind("click", function(){
 			fncUpdateQandA();
@@ -241,9 +244,12 @@ textarea {
 		
 						
 									<div> 
+									<c:if test ="${user.role == '0'}"> <%--회원--%>
 			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
-									   수정</button> 
-
+									   수정</button></c:if>
+									  <c:if test ="${user.role == '1'}"> <%--관리자--%> 
+										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
+									   답변</button></c:if>
 									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
 									뒤로</button>
 									

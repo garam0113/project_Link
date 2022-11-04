@@ -2364,7 +2364,7 @@
 
 						<button type="button" class="custom-btn btn-13">등록</button>
 
-						<button type="button" class="btn btn-default add addReportByModal">등록</button>
+						
 
 					</div>
 				</div>
