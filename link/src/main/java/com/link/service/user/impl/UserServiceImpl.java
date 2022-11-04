@@ -204,12 +204,18 @@ public class UserServiceImpl implements UserService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setSubject(subject);
-			helper.setText(stringBuilder.toString(), true);
-			helper.setFrom("bymini1992@gmail.com");
+//			helper.setText("<img src=\'http://192.168.0.183:8080/resources/image/uploadFiles/Log.png\'>","text/html");
+//			helper.setText(stringBuilder.toString(), true); 
+			helper.setFrom("bymini1992@gmail.com"); 
 			helper.setTo(email);
 			
 			System.out.println("helper 값 : "+helper);
 			
+//			message.setContent("<head><meta charset=\"UTF-8R\"></head><div style='background: #dff0ff; width: 700px; border-radius: 20px; padding: 20px;'>"
+//					+"<a href=http://192.168.0.183:8080/user/login.jsp#getId>"
+//					+"<img style='margin-left: 47px; margin-top: 30px;' src=\'https://192.168.0.183:8443/resources/image/uploadFiles/Log.png\'></a>"
+//					+"<div style='font-size: xx-large;  font-weight: bold;     margin-left: 50px; margin-top: 20px;'>Link에서 보낸 인증코드["+cerNo+"]입니다.</div></div>","text/html;charset=UTF-8"); 
+			  
 			javaMailSender.send(message);
 			
 			System.out.println("message 보내기 성공");
@@ -233,11 +239,17 @@ public class UserServiceImpl implements UserService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setSubject(subject);
-			helper.setText("<h1>Link에서 보낸 임시비밀번호["+user.getPassword()+"] 입니다.</h1>","text/html");
+//			helper.setText("<img src=\'http://192.168.0.183/resurces/image/uploadFiles/로고큰사이즈.png\'>","text/html");
+//			helper.setText("<h1>Link에서 보낸 임시비밀번호["+user.getPassword()+"] 입니다.</h1>","text/html");
 			helper.setFrom("bymini1992@gmail.com");
 			helper.setTo(user.getEmail());
 			
 			System.out.println("helper 값 : "+helper);
+			
+			message.setContent("<head><meta charset=\"UTF-8R\"></head><div style='background: #dff0ff; width: 700px; border-radius: 20px; padding: 20px;'>"
+					+"<a href=http://192.168.0.183:8080/user/login.jsp#getId>"
+					+"<img style='margin-left: 47px; margin-top: 30px;' src=\'https://192.168.0.183:8443/resources/image/uploadFiles/Log.png\'></a>"
+	 				+"<div style='font-size: x-large;  font-weight: bold;    margin-left: 50px; margin-top: 20px;'>Link에서 보낸 임시비밀번호는 ["+user.getPassword()+"]입니다.</div></div>","text/html;charset=UTF-8");
 			
 			javaMailSender.send(message);
 			
