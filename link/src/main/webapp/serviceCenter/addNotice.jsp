@@ -103,7 +103,7 @@ textarea {
   <h2>공지사항 확인하기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 37px;">
+		<div class="container" style="margin-top: 66px;">
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
@@ -117,7 +117,7 @@ textarea {
 							<tr class = "title" id ="title">
 						<th style="text-align-last: center;">제목</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
-						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
+						background: white;  border: 1px solid white;  border-radius: 15px; margin-top: 25px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
 						${notice.noticeTitle}	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						

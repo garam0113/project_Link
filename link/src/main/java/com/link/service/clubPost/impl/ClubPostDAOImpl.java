@@ -245,6 +245,16 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		
 		// 게시물의 전체 댓글개수 - 1 한다
 		sqlSession.update("ClubPostMapper.updateClubPost", map);
+		
+		System.out.println("지우려는 댓글의 대댓글 수 : " + comment.getCommentCount());
+		
+		// 지우려는 댓글의 대댓글 개수만큼 게시물 댓글수를 마이너스한다
+		if(comment.getCommentCount() > 0) {
+			// 지우려는 댓글에 대댓글이 있을 때
+			for (int i = 0; i < comment.getCommentCount(); i++) {
+				//sqlSession.update("ClubPostMapper.updateClubPost", map);
+			}
+		}
 
 		// 댓글개수 - 1 한다
 		if(comment.getDepth() != 0) {

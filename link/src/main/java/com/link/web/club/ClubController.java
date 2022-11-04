@@ -416,12 +416,12 @@ public class ClubController {
 		meeting.setMeetingWeather("테스트 날씨");
 		
 		//participant 들어가나?
-	//	participant.setUser(user);
+		participant.setUser(user);
 	//	participant.setMeetingNo(meeting.getMeetingNo());
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
-	//	clubService.addMeetingMember(participant);
+		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		
