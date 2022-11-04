@@ -181,7 +181,7 @@ textarea {
 						<th style="text-align-last: center;">제목</th>
 						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; 
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">				
-						${report.title}
+						<pre>${report.title}</pre>
 						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 
 					</tr>
@@ -193,7 +193,7 @@ textarea {
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${report.content}
+						<pre>${report.content}</pre>
 						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>
 					</tr>

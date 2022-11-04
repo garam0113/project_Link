@@ -118,7 +118,7 @@ textarea {
 						<th style="text-align-last: center;">力格</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px; margin-top: 25px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
-						<pre>${notice.noticeTitle}</pre>	
+					<pre>${notice.noticeTitle}</pre>	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						
 						</td> 
@@ -133,12 +133,12 @@ textarea {
 						<th style="text-align-last: center;">郴侩</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${notice.noticeContent}
+						<pre>${notice.noticeContent}</pre>
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
 					</tr>
 					<tr >
-			<%--			<th style="text-align-last: center;">梅何颇老</th>
+						<th style="text-align-last: center;">梅何颇老</th>
 						<c:if test="${notice.noticeImage1 == null && notice.noticeImage2 ==null }">
 							<td>梅何颇老 绝澜</td>
 						</c:if>
@@ -157,7 +157,7 @@ textarea {
 						</td>
 						
 						
-					</tr>--%>
+					</tr>
 					<tr >
 						<th style="text-align-last: center;"></th>
 					</tr>

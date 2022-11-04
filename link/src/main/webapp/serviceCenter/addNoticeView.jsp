@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>ê³µì§€ì‚¬í•­ ë“±ë¡</title>
+<title>°øÁö»çÇ× µî·Ï</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -17,12 +17,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
 	rel="stylesheet">
 
-<script type="text/javascript"><%-- javaScript, JQuery ì‹œì‘ --%>
+<script type="text/javascript"><%-- javaScript, JQuery ½ÃÀÛ --%>
 
 
 
 	
-	//=====ê¸°ì¡´Code ì£¼ì„ ì²˜ë¦¬ í›„  jQuery ë³€ê²½ ======//
+	//=====±âÁ¸Code ÁÖ¼® Ã³¸® ÈÄ  jQuery º¯°æ ======//
 	function fncAddNotice() {
 
 		var title = $("textarea[name='noticeTitle']").val();
@@ -31,37 +31,37 @@
 		if (title == null || title.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
+                title: 'Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù.',
             });
 				return;
 			}
 		if (content == null || content.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: 'ë‚´ìš©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
+                title: '³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.',
             });
 				return;
 			}
 
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
-	} //funtion AddNotice ë
+	} //funtion AddNotice ³¡
 	
-	//function readURL ë ì‚¬ì§„ ë¯¸ë¦¬ë³´ê¸°  
+	//function readURL ³¡ »çÁø ¹Ì¸®º¸±â  
 	$(function() {
 
-		$("button:contains('ë“±ë¡')").bind("click", function() {
+		$("button:contains('µî·Ï')").bind("click", function() {
 	
 			fncAddNotice();
 		});
 
-		$("button:contains('ì´ì „')").bind("click", function() {
+		$("button:contains('ÀÌÀü')").bind("click", function() {
 
 		location.href = "/serviceCenter/getNoticeList";
 		})
 
 	});
 </script>
-<style><%--CSS ì¶”ê°€ --%>
+<style><%--CSS Ãß°¡ --%>
 .table{
     box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
     border-radius: 20px;
@@ -142,7 +142,7 @@ background-color: #EBEDF0 !important;
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
 		style="transform: translate(-316px, 38px);">
-		<h2>ê³µì§€ì‚¬í•­ ë“±ë¡</h2>
+		<h2>°øÁö»çÇ× µî·Ï</h2>
 	</div>
 	<div class="container">
 	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px;">
@@ -154,26 +154,26 @@ background-color: #EBEDF0 !important;
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 			<div class="form-group" style="margin-left: 161px;">
-				<strong>ì œëª©</strong> <label for="title"></label>
+				<strong>Á¦¸ñ</strong> <label for="title"></label>
 				<div class="col-sm-4">
-					<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle" value=""
-						maxlength="66" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
+				<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle" value=""
+						maxlength="66" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
 
 
 				</div>
 			</div>
-			<strong style="margin-left: 161px;">ë‚´ìš©</strong>
+			<strong style="margin-left: 161px;">³»¿ë</strong>
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4" style="margin-left: 161px;">
 					<textarea class="content" id="noticeContent" name="noticeContent" value=""
-						placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”." maxlength="1000"
+						placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä." maxlength="1000"
 						style="width: 500px; height: 500px;"></textarea>
 				</div>
 			</div>
 
 			<label for="noticeImage"
-				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>ì²¨ë¶€íŒŒì¼</strong></label>
+				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>Ã·ºÎÆÄÀÏ</strong></label>
 			<div class="col-sm-4" style="margin-left: 161px;">
 				<input multiple="multiple" type="file" name="image" id="file" 
 					class="ct_input_g" style="width: 200px; height: 65px" />
@@ -181,23 +181,23 @@ background-color: #EBEDF0 !important;
 
 			</div></form>
 			<span id="helpBlock" class="help-block"> <strong style="margin-left: 161px;"
-				class="text-danger">ì‚¬ì§„ì€ 2ì¥ê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤.</strong>
+				class="text-danger">»çÁøÀº 2Àå±îÁö °¡´ÉÇÕ´Ï´Ù.</strong>
 			</span>
 
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(75px, 0px);">ë“±ë¡</button>
+						style="transform: translate(75px, 0px);">µî·Ï</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(75px, 0px);">ì´ì „</button>
+						style="transform: translate(75px, 0px);">ÀÌÀü</button>
 				</div>
 			</div>
 		
 
 
 	</div>
-	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
+	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
 
 </body>
 
