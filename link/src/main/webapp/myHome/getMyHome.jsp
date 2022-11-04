@@ -79,7 +79,7 @@
 								}) // swal close
 								
 								$("#commentModal").modal('hide');
-								self.location = "/feed/getFeed?feedNo="+feedNo;
+								self.location = "/feed/getFeed?feedNo="+feedNumber;
 							
 							} // success close
 							
@@ -87,7 +87,7 @@
 			
 			) // ajax close
 		})
-
+	});
 
 </script>
 <script type="text/javascript">
@@ -568,6 +568,7 @@ function showPopUp(){
 function showPopUp2(){
 	var userId = $("#userId").val();
     window.open("/user/updateProfile2?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
+    
 }
  
 
@@ -1153,10 +1154,6 @@ $(function() {
 		/* 모임 게시물 좋아요 또는 좋아요취소 */
 		$(document).on("click",".clubPost-header-heart", function() {
 
-	 $(function(){
-		모임 게시물 좋아요 또는 좋아요취소
-		$(".clubPost-header-heart").bind("click", function(){
-
 			//alert("모임게시물 좋아요");
 			
 			var clubNo = $("div[class='post']").attr("clubNo");
@@ -1208,14 +1205,18 @@ $(function() {
 	})
  
 
-	}) 
-
 
 
 
 </script>
 
 <style>
+.comment2 {
+		width:25px !important;
+	}
+.modal-backdrop.in {
+z-index: -1;
+}
 .row{
 border-radius: 15px !important;
 }
@@ -1810,7 +1811,7 @@ margin-left:10px;
 										
 										<div class="userbtn" style="color : black;" onclick="showPopUp2();">
 										
-												 프로필 수정</a></div>
+												 프로필 수정</div>
 												
 										<div class="userbtn" id="myCut" style="color : black;">
 												차단 리스트</div>
@@ -2034,7 +2035,37 @@ margin-left:10px;
 
 						</c:if>
 					</c:forEach>
-
+	<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					<form class="form-horizontal" id="commentForm">
+					
+						<div class="commentContentCover">
+							<div class="commentContentTitle">
+								댓글
+							</div>
+							
+							<div class="commentModalContent">
+								<textarea class="content" id="contentModal" name="content" placeholder="댓글을 입력하세요." maxlength="500"></textarea>
+							</div>
+						</div>
+						
+					</form>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+							<button type="button" class="btn btn-default addCommentByModal">등록</button>
+						</div>
+						
+						<input type="hidden" id="commentModalFeedNo" value="">
+						
+				</div>
+			</div>
+		</div>
 				</div>
 					
 					<%-- 현재 페이지 --%>
@@ -2112,7 +2143,7 @@ $(function() {
 					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
 					"</a>"+
-				"</div>"+
+				"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
                 "<img class='clubPost-header-heart'style='float: right;' clubPostNo='"+item.clubPostNo+"' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
@@ -2148,7 +2179,7 @@ $(function() {
 					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
 					"</a>"+
-				"</div>"+
+				"</div>"+"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
                 "<img style='float: right;' class='clubPost-header-heart' clubPostNo='"+item.clubPostNo+"' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+

@@ -1460,6 +1460,9 @@ $(function(){
 </script>
 
 <style>
+.comment2 {
+		width:25px !important;
+	}
 
 .modal-backdrop.in {
 z-index: -1;
@@ -2399,19 +2402,13 @@ $(function() {
 				/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 					"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
-				"</a>"+
-			"</div>"+"<div style='padding-top: 33px; margin-left:50px;'>"+
-            
-            "<img style='float: right;' src='/resources/image/uploadFiles/comment2.jpg' height='30' width='30'>"+
-         "</div>"+"<div style='flex:1;  padding-top: 15px;' >"+
-				"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostCommentCount+ "</p>"+
-			"</div>"+
+				"</a>"+"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 			"<div style='padding-top: 33px; margin-left:50px;'>"+
             <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-            "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+            "<img class='clubPost-header-heart' style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
          "</div>"+
 			"<div style='flex:1;  padding-top: 15px;' >"+
-				"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+				"<p align='center' class='clubPostHeartCountAjax' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
 			"</div>"+
 		
 			
@@ -2438,19 +2435,13 @@ $(function() {
 					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
 					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
-					"</a>"+
-				"</div>"+"<div style='padding-top: 33px; margin-left:50px;'>"+
-	            
-	            "<img style='float: right;' src='/resources/image/uploadFiles/comment2.jpg' height='30' width='30'>"+
-	         "</div>"+"<div style='flex:1;  padding-top: 15px;' >"+
-					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostCommentCount+ "</p>"+
-				"</div>"+
+					"</a>"+"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+                "<img class='clubPost-header-heart' style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
              "</div>"+
 				"<div style='flex:1; padding-top: 15px;'>"+
-					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+					"<p align='center' class='clubPostHeartCountAjax' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
 				"</div>"+
 			
 				
