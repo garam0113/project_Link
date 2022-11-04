@@ -90,7 +90,7 @@
 		        		
 		        	
 
-		        		Swal.fire('신고처리 되었습니다.','ㅜㅜ','success');<!--if문 -->
+		        		Swal.fire('신고처리 되었습니다.','','success');<!--if문 -->
 		        	}else if(result.isDismissed){
 		        	
 		        	}
@@ -181,7 +181,7 @@ textarea {
 						<th style="text-align-last: center;">제목</th>
 						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; 
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">				
-						<pre>${report.title}</pre>
+						${report.title}
 						<input type="hidden" id="title" name="title" value="${report.title}">
 						</td> 
 					</tr>

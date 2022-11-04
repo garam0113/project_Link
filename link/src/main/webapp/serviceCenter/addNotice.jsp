@@ -139,16 +139,16 @@ textarea {
 					</tr>
 					<tr >
 						<th style="text-align-last: center;">梅何颇老</th>
-						<c:if test="${notice.noticeImage1 == null && notice.noticeImage2 ==null }">
+						<c:if test="${notice.noticeImage1 == '' && notice.noticeImage2 ==null }">
 							<td>梅何颇老 绝澜</td>
 						</c:if>
-						<td><c:if test="${notice.noticeImage1 != null || notice.noticeImage1 ==' ' }">
+						<td><c:if test="${notice.noticeImage1 != null && notice.noticeImage1 !='' }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; 
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage1}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
 						
 						</c:if>
-						<c:if test="${notice.noticeImage2 != null }">
+						<c:if test="${notice.noticeImage2 != null && notice.noticeImage1 !=''}">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage2}" 
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; margin-left: 70px; 
 						cursor:pointer;" onclick="window.open('/resources/image/uploadFiles/${notice.noticeImage2}','asdfo8or','scrollbars=yes,width=417,height=385,top=10,left=20');">
