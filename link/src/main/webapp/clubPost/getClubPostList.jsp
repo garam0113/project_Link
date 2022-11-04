@@ -347,12 +347,6 @@
 		});
 	});
 		
-	$(function() {
-		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
-		});
-	});
-			
 			
 			
 			//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동

@@ -137,6 +137,7 @@ public class ClubController {
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
 		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
+		model.addAttribute("search2", search2);
 		session.setAttribute("clubNo", clubNo);
 		
 		
@@ -415,12 +416,12 @@ public class ClubController {
 		meeting.setMeetingWeather("테스트 날씨");
 		
 		//participant 들어가나?
-	//	participant.setUser(user);
+		participant.setUser(user);
 	//	participant.setMeetingNo(meeting.getMeetingNo());
 		/////////////////////////////////// Business Logic /////////////////////////////////////////////////////
 
 		clubService.addMeeting(meeting);
-	//	clubService.addMeetingMember(participant);
+		clubService.addMeetingMember(participant);
 		map = clubService.getClub(Integer.parseInt(clubNo));
 		
 		

@@ -75,11 +75,20 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		Club club = sqlSession.selectOne("ClubMapper.getClub", clubNo);
 		
+		//추가중
+		Search search = new Search();
+		
+		//List<ClubUser> clubMemberList = sqlSession.selectList("ClubMapper.getClubMemberList", search2);
+		List<ClubUser> clubMemberList = sqlSession.selectList("ClubMapper.getClubMemberList", search);
+		
 		int totalClubMemberCount = sqlSession.selectOne("ClubMapper.getTotalClubMemberCount", new Search(clubNo+""));
-	
+			
 		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		
 		map.put("club", club);
 		map.put("totalClubMemberCount", totalClubMemberCount);
+		//map1.put("clubMemberList", clubMemberList);
 		
 		return map;
 	}
@@ -263,8 +272,8 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		System.out.println("미팅참가 DAO Impl 왔나?");
 		
-//		int meetingNo = sqlSession.selectOne("ClubMapper.getMeetingNo", participant.getMeeting());
-//		participant.setMeetingNo(meetingNo);
+		int meetingNo = sqlSession.selectOne("ClubMapper.getMeetingNo", participant.getUser());
+		participant.setMeetingNo(meetingNo);
 		
 		sqlSession.insert("ClubMapper.addMeetingMember",participant);
 	}

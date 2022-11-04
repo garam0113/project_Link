@@ -102,6 +102,7 @@
 			    -webkit-transition: border .2s ease-in-out;
 			    -o-transition: border .2s ease-in-out;
 			    transition: border .2s ease-in-out;
+			    height: 400px;
 			}
 		
 		.thumbnail img { 

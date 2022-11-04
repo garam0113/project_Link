@@ -163,7 +163,7 @@ background-color: #EBEDF0 !important;
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4" style="margin-left: 161px;">
 					<textarea class="content" id="noticeContent" name="noticeContent" value=""
-						placeholder="내용을 입력해주세요." maxlength="500"
+						placeholder="내용을 입력해주세요." maxlength="1000"
 						style="width: 500px; height: 500px;"></textarea>
 				</div>
 			</div>

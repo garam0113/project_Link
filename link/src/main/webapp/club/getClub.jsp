@@ -65,7 +65,7 @@
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
 			//모달창 열기
-			$('#club-add-approval-modal').modal("show");
+			$('#approvalModal').modal("show");
 			} else {
 				
 				Swal.fire({
@@ -102,11 +102,11 @@
 		$("input[value='취소']").bind("click", function() {
 			
 			//모달창 닫기
-			$('#club-add-approval-modal').modal("hide");
+			$('#approvalModal').modal("hide");
 		});
 		
 		$("button[class='close']").bind("click", function() {
-			$('#club-add-approval-modal').modal("hide");
+			$('#approvalModal').modal("hide");
 		});
 	});
 	
@@ -175,12 +175,6 @@
 	$(function() {
 		$(".clubMemberBtn").on("click", function() {
 			self.location="/club/getClubMemberList"
-		});
-	});
-		
-	$(function() {
-		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
 		});
 	});
 		
@@ -499,14 +493,19 @@
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						</button>
 						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-						</button>
-						
 						<button type="button" class="live">
 							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
 						</button>
-					</div>					
+					</div>	
+					
+				<%-- 	${clubMemberList} 
+					
+					<p>
+					${club }
+					
+					<p>
+					${club.user.userId } --%>
+					
 		
 
 				<div class="mainForm" style="display: inline-flex;">
@@ -597,7 +596,7 @@
 				
 			
 			<!-- 모달영역 -->
-			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
 					<div class="modal-content" style="height: 300px; width: 440px;">
 						<div class="modal-header">
