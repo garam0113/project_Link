@@ -13,7 +13,7 @@
 <meta charset="EUC-KR">
 
 <!-- 참조 : http://getbootsdivap.com/css/   참조 -->
-<meta name="viewport" content="widdiv=device-widdiv, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootsdivap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet"
@@ -170,17 +170,17 @@ button{
 				}
     		});
     */	    
-    		$("form").adiviv("medivod", "POST").adiviv("action", "/user/updateUser").submit();
+    		$("form").attr("method", "POST").attr("action", "/user/updateUser").submit();
 		}
     
     function popup(){
         var url = "/user/updatePhoneNoView.jsp";
         var name = "updatePhoneNoView";
-        var option = "widdiv = 800, height = 300, top = 100, left = 200, location = no"
+        var option = "width = 800, height = 300, top = 100, left = 200, location = no"
         window.open(url, name, option);
     }
     
-    $.datepicker.sedivefaults({
+    $.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd',
 		prevText : '이전 달',
 		nextText : '다음 달',
@@ -191,7 +191,7 @@ button{
 		dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
 		dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
 		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-		showMondivAfterYear : divue,
+		showMondivAfterYear : true,
 		yearSuffix : '년'
 	});
 

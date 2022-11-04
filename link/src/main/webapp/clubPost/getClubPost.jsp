@@ -1016,12 +1016,6 @@
 		});
 	});
 		
-	$(function() {
-		$(".clubChatBtn").on("click", function() {
-			self.location="/clubPost/chatRoomList?rommId=${club.roomId}&clubTitle=${club.clubTitle}&clubImage=${club.clubImage}";
-		});
-	});		
-		
 	
 	$(function(){
 		//소켓서버에 접속시킨다.

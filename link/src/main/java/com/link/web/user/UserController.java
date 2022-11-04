@@ -74,11 +74,13 @@ public class UserController {
 		if (file != null && file.getSize() > 0) {
 
 			file.transferTo(
-					new File(uploadTempDir, user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
+					new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename()));
 			user.setProfileImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 
 		}else {
-			user.setProfileImage(image.getProfileImage());
+			if(image != null) {
+				user.setProfileImage(image.getProfileImage());
+			}
 		}
 
 		userService.addUser(user); // 회원가입 정보 DB저장
