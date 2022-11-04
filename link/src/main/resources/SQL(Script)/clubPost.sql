@@ -785,3 +785,35 @@ select count(*) from ( select * from heart where trim(source) = 2 and source_no 
 
 
 
+
+
+
+
+select * from report_push where type = 2 and club_post_comment_no is not null;
+
+delete from report_push where club_post_comment_no = 1
+
+select club_post_comment_no, club_post_no, user_id, comment_count, parent, depth, comment_heart_count, comment_content from club_post_comment where delete_condition = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
