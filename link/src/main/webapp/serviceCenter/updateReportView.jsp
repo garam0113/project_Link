@@ -52,7 +52,7 @@
 			fncUpdateReport();
 		});
 		
-		$("button:contains('뒤로')").bind("click", function(){
+		$("button:contains('이전')").bind("click", function(){
 			window.history.back(-1);
 		});
 
@@ -213,7 +213,7 @@ textarea {
 
 									
 								<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
-									뒤로</button>
+									이전</button>
 									</div>
 				
 			</div>

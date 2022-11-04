@@ -55,7 +55,7 @@
 			fncAddQandA();
 		});
 
-		$("button:contains('뒤로')").bind("click", function(){
+		$("button:contains('이전')").bind("click", function(){
 			if(${empty sessionScope.user.userId}){
 				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit();
 			}
@@ -202,7 +202,7 @@ margin-left: 400px !important;
 					<button class="custom-btn btn-13"
 						style="transform: translate(220px, 0px);">등록</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">뒤로</button>
+						style="transform: translate(220px, 0px);">이전</button>
 				</div>
 			</div>
 			 

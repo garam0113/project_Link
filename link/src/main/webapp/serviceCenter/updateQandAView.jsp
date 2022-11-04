@@ -251,7 +251,7 @@ textarea {
 										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
 									   답변</button></c:if>
 									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
-									뒤로</button>
+									이전</button>
 									
 									</div>
 				

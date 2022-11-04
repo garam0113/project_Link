@@ -30,7 +30,7 @@
 	$(function() {
 
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			if(${user.role=='1'}){
 			self.location = "/serviceCenter/getReportList";
 			}else if (${user.role=='0'}){
@@ -274,7 +274,7 @@ textarea {
 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
-									뒤로</button>
+									이전</button>
 									</div>
 				
 			</div><form></form>

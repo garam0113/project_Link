@@ -46,7 +46,7 @@
 			fncAddNotice();
 		});
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 		
 		location.href = "/serviceCenter/getNoticeList";
 		})
@@ -185,7 +185,7 @@ textarea {
 					<button class="custom-btn btn-13"
 						style="transform: translate(20px, 0px);">수정</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(60px, 0px);">뒤로</button>
+						style="transform: translate(60px, 0px);">이전</button>
 				</div>
 			</div>
 		

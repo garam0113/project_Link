@@ -143,7 +143,7 @@
 		})
 
 		
-		$("button:contains('뒤로')").bind("click", function(){
+		$("button:contains('이전')").bind("click", function(){
 			
 			self.close();
 			<%-- self.close() 하고 window.close() 둘 다 크롬에서 되는지 확인해보기.
@@ -306,7 +306,7 @@ textarea {
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="left:30px;">
 					<button type="button" class="add add5">수정</button>
-					<button type="button" class="add add6">뒤로</button>
+					<button type="button" class="add add6">이전</button>
 				</div>
 			</div>
 

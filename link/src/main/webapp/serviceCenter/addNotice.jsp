@@ -118,7 +118,7 @@ textarea {
 						<th style="text-align-last: center;">Á¦¸ñ</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px; margin-top: 25px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
-						${notice.noticeTitle}	
+						<pre>${notice.noticeTitle}</pre>	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						
 						</td> 

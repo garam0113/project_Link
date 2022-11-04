@@ -130,7 +130,7 @@ function fncGetList(currentPage) {
 					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find($("input[name='no']")).val();
 							});
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 		
@@ -274,7 +274,7 @@ function fncGetList(currentPage) {
 							<div class="col-md-3 col-sm-3 col-xs-6">
 
 								<button class="custom-btn btn-13" style= "transform: translate(1038px, -90px); margin-left::20px; ">
-									뒤로</button>
+									이전</button>
 							</div>
 
 

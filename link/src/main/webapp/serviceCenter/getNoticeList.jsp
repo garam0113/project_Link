@@ -141,7 +141,7 @@ background-color: #EBEDF0 !important;
 		
 
 		
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 		
@@ -302,7 +302,7 @@ background-color: #EBEDF0 !important;
 									   등록</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(980px, -90px); margin-left::20px; ">
-									뒤로</button>
+									이전</button>
 									</div>
 								
 

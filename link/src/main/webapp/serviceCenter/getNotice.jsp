@@ -24,7 +24,7 @@
 <script type="text/javascript"> <%-- 자바스크립트 시작 --%>
 	$(function() {
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/getNoticeList";
 		})
 
@@ -130,7 +130,7 @@ background-color: #EBEDF0 !important;
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${notice.noticeContent}
+						<pre>${notice.noticeContent}</pre>
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
 					</tr>
@@ -172,7 +172,7 @@ background-color: #EBEDF0 !important;
 									   삭제</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(370px, 0px); ">
-									뒤로</button>
+									이전</button>
 									</div>
 				
 			</div>
