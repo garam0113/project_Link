@@ -135,7 +135,7 @@
 	//È¨¹öÆ°
 	$(function() {
 		$(".homeBtn").on("click", function() {
-			self.location="/club/getClub?clubNo="+${clubNo};
+			self.location="/club/getClub?clubNo=${clubNo}"
 		});
 	});
 	

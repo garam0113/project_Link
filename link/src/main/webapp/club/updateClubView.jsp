@@ -158,9 +158,9 @@
 	<jsp:include page="/toolbar.jsp"/>
 	
 	
-	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
-		<div class="wrap wd668">
-			<div class="container">
+	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data" style="background: #EBEDF0;">
+		<div class="wrap wd668" style="background: #EBEDF0;">
+			<div class="container" style="background: white;">
 				<div class="form_txtInput" style="margin-top: 150px;">
 					<h2 class="sub_tit_txt">모 임 수 정</h2>
 					<p class="exTxt">모임을 수정해보세요...</p>
@@ -248,7 +248,7 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-6  col-sm-6 text-center">
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 150px;">
 		      		<button type="button" class="plain button red cancel" id="updateClub" >수 &nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
