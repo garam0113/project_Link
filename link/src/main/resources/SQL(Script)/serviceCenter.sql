@@ -30,6 +30,20 @@
 	WHERE NOTICE_NO = '3';
 
 
+	
+INSERT 
+INTO users (user_id, password, name, rrn, gender, phone_no, email, nickname, profile_writing, 
+	area1, area2, area3, category1, category2, category3, add_user_date)
+VALUES	('ssiroo4147', 'q123123', '조승우', '930505-1053553', '남자', '010-1993-5237', 'srnt3223@google.com', '날씬한오징어', 'pakbokum.jpg', NULL, NULL, NULL, NULL, NULL, NULL, SYSDATE);
+
+update users
+set profile_image ='admin.JPG'
+where user_id='admin01';
+
+select *
+from users
+where user_id ='admin01';
+
 //===============================================================여기까지 노티스	
 //===============================================================밑부턴 Q&A
 
