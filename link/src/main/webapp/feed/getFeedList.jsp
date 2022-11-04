@@ -1765,7 +1765,6 @@
  	 outline: none;
  	 box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
  	 border-radius: 10px;
-  	 padding: 10px;
    	 color: #5F0080 !important;
 	 font-size: 16px !important;
 	 text-align: center;
@@ -2358,14 +2357,12 @@
 					</form>
 
 					<div class="modal-footer">
-						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
-							Close
-						</button>
-						
 
 						<button type="button" class="custom-btn btn-13">등록</button>
-
 						
+						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
+							취소
+						</button>
 
 					</div>
 				</div>

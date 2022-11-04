@@ -13,11 +13,6 @@
     General Rules
 ----------------------------------------------------------------*/
 
-::selection {
-    background-color: #3a85ed !important;
-    color: #fff;
-}
-
 ::-moz-selection {
     background: #FD685B;
     color: #fff;
@@ -280,7 +275,7 @@ h6 {
 
 
 /*----------------------------------------------------------------
-    Header menu
+    Header menu 
 ----------------------------------------------------------------*/
 
 header {
@@ -339,7 +334,7 @@ header.fixed-header {
     top: 0;
     left: 0;
     z-index: 9998;
-    background-color: rgba(255, 255, 255, 0.97);
+    background-color: black;
     -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
@@ -412,12 +407,12 @@ header.transparent.light nav > ul > li > a {
 
 header.fixed-header.transparent.light #brand a,
 header.fixed-header.transparent.light nav > ul > li > a {
-    color: #333;
+    color: white;
     text-shadow: none;
 }
 
 header.fixed-header.transparent.light nav > ul > li:hover > a {
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid white;
 }
 
 nav > ul,
@@ -430,7 +425,7 @@ nav > ul > li {
     padding: 0 0.778em;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 0.778em;
+    font-size: 0.878em;
     font-family: 'Montserrat', sans-serif;
     cursor: pointer;
 }

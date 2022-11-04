@@ -142,14 +142,14 @@ header {
 				<div id="brand">
 					<h1 class="reset">
 						<!--<img src="img/logo.png" alt="logo">-->
-						<a href="/">LINK</a>
+						<a href="/main.jsp"><img src="/resources/image/uploadFiles/link_logo3.png" width="120px" height="48px"></a>
 					</h1>
 				</div>
 				<!-- brand -->
-				<a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+				
 				<nav>
 					<ul class="reset" role="navigation">
-						<li class="menu-item"><a href="/">Home</a></li>
+						<li class="menu-item"><a href="/main.jsp">Home</a></li>
 						<li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
 
 						<c:if test="${! empty sessionScope.user }">
