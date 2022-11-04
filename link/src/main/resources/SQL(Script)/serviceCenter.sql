@@ -41,8 +41,7 @@ set profile_image ='admin.JPG'
 where user_id='admin01';
 
 select *
-from users
-where user_id ='admin01';
+from users;
 
 //===============================================================여기까지 노티스	
 //===============================================================밑부턴 Q&A

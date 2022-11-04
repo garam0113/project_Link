@@ -30,7 +30,7 @@
 	$(function() {
 
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			if(${user.role=='1'}){
 			self.location = "/serviceCenter/getReportList";
 			}else if (${user.role=='0'}){
@@ -90,7 +90,7 @@
 		        		
 		        	
 
-		        		Swal.fire('신고처리 되었습니다.','ㅜㅜ','success');<!--if문 -->
+		        		Swal.fire('신고처리 되었습니다.','','success');<!--if문 -->
 		        	}else if(result.isDismissed){
 		        	
 		        	}
@@ -193,7 +193,7 @@ textarea {
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${report.content}
+						<pre>${report.content}</pre>
 						<input type="hidden" id="content" name="content" value="${report.content}">
 						</td>
 					</tr>
@@ -274,7 +274,7 @@ textarea {
 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
-									뒤로</button>
+									이전</button>
 									</div>
 				
 			</div><form></form>

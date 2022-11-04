@@ -144,7 +144,7 @@ function fncGetList(currentPage) {
 		
 		
 	
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 
@@ -352,7 +352,7 @@ function fncGetList(currentPage) {
 									   등록</button> 
 									</c:if>
 											<button class="custom-btn btn-13" style= "transform: translate(970px, -90px); margin-left::20px; ">
-									뒤로</button>
+									이전</button>
 							</div>
 
 

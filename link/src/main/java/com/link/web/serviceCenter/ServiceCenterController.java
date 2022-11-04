@@ -296,7 +296,7 @@ public class ServiceCenterController {
 
 		model.addAttribute("qandA", qandA);
 
-		return "forward:/serviceCenter/getQandA.jsp";
+		return "redirect:/serviceCenter/getQandA?qandANo="+qandA.getQandANo();
 	}
 
 	@RequestMapping(value = "deleteQandA")
