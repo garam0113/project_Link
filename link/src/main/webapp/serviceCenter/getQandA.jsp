@@ -33,11 +33,13 @@
 					if(${ sessionScope.user.role == '1'}){ //관리자
 						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
 					}else if(${sessionScope.user.role == '0' }){ //유저
+						
 						history.go(-1); 	//겟 ==전체보기
 					}
 				}  
 		});
 
+		
 		$("button:contains('수정')").bind("click", function() {
 			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
@@ -137,7 +139,7 @@ textarea {
 					<tr class = "title" id ="title">
 						<th style="text-align-last: center;">제목</th>
 						<td style="display: flex; min-height: 40px; max-height:80px; width: 700px; background-color:white; text-align : center; 
-						background: white;  border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%);"><pre>${qandA.qandATitle}</pre>
+						background: white;  border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%);">${qandA.qandATitle}
 						<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle }">		
 						</td> 
 					</tr>

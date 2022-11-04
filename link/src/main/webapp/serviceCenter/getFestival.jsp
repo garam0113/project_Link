@@ -1,6 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<script type="text/javascript">
+
+<style>
+.box{
+overflow:scroll;
+overflow-x:hidden;
+}
+.box::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+.card{
+width:210px; 
+background:white;
+border: 1px solid white;
+border-radius: 15px;
+box-shadow: 0 0 10px rgb(0 0 0 / 20%);'
+
+}
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="box festival" style="width:230px; height: 470px; border-radius:15px;"> 
+	
+	</div>
+	
+	
+	
+	<script type="text/javascript">
  // 데이터를 aJax로 받기
  
 $(function(){
@@ -66,27 +93,4 @@ $(function(){
 		 
 		 
 </script>
-<style>
-.box{
-overflow:scroll;
-overflow-x:hidden;
-}
-.box::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-}
-.card{
-width:210px; 
-background:white;
-border: 1px solid white;
-border-radius: 15px;
-box-shadow: 0 0 10px rgb(0 0 0 / 20%);'
-
-}
-</style>
-<title>Insert title here</title>
-</head>
-<body>
-	<div class="box festival" style="width:230px; height: 470px; border-radius:15px;"> 
-	
-	</div>
 </body>

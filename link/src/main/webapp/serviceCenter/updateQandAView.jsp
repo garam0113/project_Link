@@ -152,7 +152,9 @@ textarea {
 			<form class="form-horizontal" enctype="multipart/form-data">
 		 <input type="hidden" id="userId" name="qandA.userId" value ="${SessionScope.user.userId}">
 			<!--  table Start /////////////////////////////////////-->
-			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
+			<table style="width:880px; transform: translate(130px, 0px); box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;background-color:aliceblue;">
 				</tbody>
 					 <tr class = "body" id ="body" >
 					 
