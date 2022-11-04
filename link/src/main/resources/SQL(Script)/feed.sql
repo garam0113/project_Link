@@ -330,7 +330,7 @@ SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_hea
 
 
 SELECT * FROM feed;
-SELECT * FROM users;
+SELECT * FROM report_push;
 
 SELECT
 *
@@ -512,5 +512,5 @@ AND TYPE = '2'
 
 
 
-
+SELECT * FROM FEED_COMMENT
 

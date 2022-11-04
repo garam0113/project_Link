@@ -21,23 +21,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
-import com.link.common.socket.EchoHandler;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
-import com.link.service.user.UserService;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 public class FeedController {
-
-	@Autowired
-	@Qualifier("userServiceImpl")
-	private UserService userService;
 	
 	@Autowired
 	@Qualifier("feedServiceImpl")

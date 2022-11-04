@@ -22,26 +22,11 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 
-<%-- SUMMER NOTE --%>
-<script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-<%-- SUMMER NOTE --%>
-
-<%-- ALERT --%>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<%-- ALERT --%>
-
-<%-- BOOTSTRAP ICON --%>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<%-- BOOTSTRAP ICON --%>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	
@@ -1123,6 +1108,8 @@
 		$(document).on("click", ".comment", function(event) {
 			event.stopPropagation();
 			
+			if('${sessionScope.user}' == null) return false;
+			
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
 			$("#commentModalFeedNo").val(feedNo);
@@ -1653,18 +1640,30 @@
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 			
-			// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
-			// $(".modal-content").load("/loginModal");
-			var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
-			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+			var sessionUser = '${sessionScope.user}';
 			
-			// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			if(sessionUser == "" || sessionUser == null) {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+			} else {
 			
-			$("#user2").val(reportedUser);
-			$("#feedNo").val(feedNo);
-			
-			$('#reportModal').modal();
-
+				// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				// $(".modal-content").load("/loginModal");
+				var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
+				var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+				
+				// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+				
+				$("#user2").val(reportedUser);
+				$("#feedNo").val(feedNo);
+				
+				$('#reportModal').modal();
+			}
 			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		})	// .report evenet close
 		
@@ -1922,9 +1921,11 @@
 							</h3>
 							
 							
+							<%--
 							
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
-
+							
+							--%>
 						</div>
 
 						<div class="column six">

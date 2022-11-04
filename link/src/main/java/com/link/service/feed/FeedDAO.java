@@ -112,9 +112,7 @@ public interface FeedDAO {
 	
 	// 피드 댓글 좋아요
 	public void addFeedCommentHeart(Heart heart) throws Exception;
-	
-	public int getFeedCommentHeart(Heart heart) throws Exception;
-	
+		
 	// 피드 댓글 싫어요
 	public void deleteFeedCommentHeart(Heart heart) throws Exception;
 	
@@ -136,14 +134,6 @@ public interface FeedDAO {
 	
 	
 	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
-	
-	
-	// 피드 or 피드 댓글 알림
-	public void addPush(Push push) throws Exception;
-	
-//	보류
-//	public void addFeedCommentPush(Push push) throws Exception;
-
 	
 	
 	
