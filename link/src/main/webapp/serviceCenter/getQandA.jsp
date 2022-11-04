@@ -24,7 +24,7 @@
 <script type="text/javascript">
 	$(function() {
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			
 				if(${empty sessionScope.user.userId}){
 					location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
@@ -33,11 +33,13 @@
 					if(${ sessionScope.user.role == '1'}){ //관리자
 						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
 					}else if(${sessionScope.user.role == '0' }){ //유저
+						
 						history.go(-1); 	//겟 ==전체보기
 					}
 				}  
 		});
 
+		
 		$("button:contains('수정')").bind("click", function() {
 			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
@@ -151,7 +153,7 @@ textarea {
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; 
 						background: white; border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${qandA.qandAContent}
+						<pre>${qandA.qandAContent}</pre>
 						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
 						</td>
 					</tr>
@@ -187,7 +189,7 @@ textarea {
 						<th style="text-align-last: center;">답변</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; 
 						background: white; border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%); ">
-						${qandA.qandAAnswerContent}
+						<pre>${qandA.qandAAnswerContent}</pre>
 						<input type="hidden" id="qandAAnswerContent" name="qandAAnswerContent" value="${qandA.qandAAnswerContent}">
 						</td>
 					</tr>
@@ -216,7 +218,7 @@ textarea {
 									   삭제</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
-									뒤로</button>
+									이전</button>
 									
 									</div>
 				
