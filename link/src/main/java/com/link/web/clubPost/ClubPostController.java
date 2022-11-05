@@ -22,7 +22,6 @@ import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
@@ -74,7 +73,7 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "getClubPostList")
-	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session) throws Exception {
+	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session, Chat chat) throws Exception {
 		System.out.println("/getClubPostList : GET,POST : 모임 상세보기에서 모임게시물 탭 클릭시 session에 있는 모임번호로 해당 모임의 모임게시물리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
 
 		
@@ -114,6 +113,13 @@ public class ClubPostController {
 		// 알림
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
 		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
+		
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+				
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
 		
 		
 		
@@ -249,7 +255,10 @@ public class ClubPostController {
 		chat.setUser((User)session.getAttribute("user"));
 		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
 		
+		// 모임채팅 roomId 가져온다
 		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
+		
+		// 게시물 상세보기 + 댓글리스트
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList, 좋아요 여부 : getClubPost.heartCondition, 모임 직책 : getClubPost.clubRole
 		
