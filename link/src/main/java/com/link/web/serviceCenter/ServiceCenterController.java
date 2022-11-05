@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Feed;
@@ -51,6 +52,11 @@ public class ServiceCenterController {
 	@Autowired
 	@Qualifier("clubPostServiceImpl")
 	ClubPostService clubPostServiceImpl;
+	
+	// 채팅에 필요한 코딩
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
+	private ClubPostService clubPostService;
 
 	public ServiceCenterController() {
 		// TODO Auto-generated constructor stub
@@ -363,7 +369,7 @@ public class ServiceCenterController {
 	//정민이형 요구사항
 	@RequestMapping(value = "getUserQandAList/{userId}", method = RequestMethod.POST)
 	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model,
-			@PathVariable String userId, HttpSession httpSession) throws Exception {
+			@PathVariable String userId, HttpSession httpSession, Chat chat) throws Exception {
 		System.out.println("/serviceCenter/getQandAList :POST");
 
 		if (search.getOrder() == 0) {
@@ -384,6 +390,18 @@ public class ServiceCenterController {
 		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/user/getQandAList.jsp";
 	}
@@ -551,7 +569,7 @@ public class ServiceCenterController {
 	
 	//정민이형 요구사항
 	@RequestMapping(value = "getUserReportList/{userId}", method = RequestMethod.POST)
-	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model,
+	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model, HttpSession httpSession, Chat chat,
 			@PathVariable String userId) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");
@@ -569,12 +587,24 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/user/getReportList.jsp";
 	}
 	//정민이형 요구사항
 	@RequestMapping(value = "getUserReportList", method = RequestMethod.GET)
-	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model) throws Exception {
+	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model, Chat chat) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 
@@ -594,6 +624,8 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
 
 		return "forward:/user/getReportList.jsp";
 	}
