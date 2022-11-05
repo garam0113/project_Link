@@ -130,6 +130,32 @@
 header {
 	display: flex;
 }
+
+/* SCROLL */
+body.page {
+	overflow-y: scroll !important;
+}
+
+body.page::-webkit-scrollbar {
+	display: none !important;
+}
+
+body.swal2-shown {
+	padding-right: 0px !important;
+}
+
+/* SCROLL */
+header {
+	overflow-y: scroll !important;
+}
+
+header::-webkit-scrollbar {
+	display: none !important;
+}
+
+/* SCROLL */
+
+/* SCROLL */
 </style>
 
 </head>
@@ -146,7 +172,7 @@ header {
 					</h1>
 				</div>
 				<!-- brand -->
-				
+
 				<nav>
 					<ul class="reset" role="navigation">
 						<li class="menu-item"><a href="/main.jsp">Home</a></li>

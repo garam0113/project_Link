@@ -141,7 +141,8 @@
 		overflow: hidden;
 		overflow-y: auto;
 		scrollbar-width: none;
-	    width: inherit;
+		width: inherit;
+		font-size: 0.9rem;
 	}
 	.tab_content-follow {
 		position: fixed;
@@ -152,6 +153,7 @@
 		overflow-y: auto;
 		scrollbar-width: none;
 		width: inherit;
+		font-size: 0.9rem;
 	}
 	
 	/* 스크롤바 안보이기 */
@@ -175,25 +177,31 @@
 	.follow-section {
 		margin: 0px;
 	    display: flex;
-	    justify-content: space-around;
+	    justify-content: space-between !important;
 	    align-items: center;
-	    margin-bottom: 20px;
+		margin-bottom: 20px;
+		margin-left: 10px;
+    	margin-right: 10px;
 	}
 	
 	.following-section {
 		margin: 0px;
 	    display: flex;
-	    justify-content: space-around;
+	    justify-content: space-between !important;
 	    align-items: center;
-	    margin-bottom: 20px;
+		margin-bottom: 20px;
+		margin-left: 10px;
+    	margin-right: 10px;
 	}
 
 	.follow-section img {
 		border-radius: 15px;
+		margin-right: 10px;
 	}
 
 	.following-section img {
 		border-radius: 15px;
+		margin-right: 10px;
 	}
 
 	label.tab_item-follow:hover {
@@ -215,17 +223,19 @@
 	/* 사이드바에 있는 팔로우 목록 */	
 
 
-	/* 바탕색 */
+	/* BACKGROUND */
 
 	html {
-		background-color: #EBEDF0 !important;
+		background-color: white !important;
 	}
 
 	#main {
-		background-color: #EBEDF0 !important;
+		background-color: white !important;
 	}
 
-	/* 바탕색 */	
+	/* BACKGROUND */
+	
+	
 
 	/* 스크롤바 안보이지만 동작 */
 
@@ -238,6 +248,8 @@
 	}
 
 	/* 스크롤바 안보이지만 동작 */
+
+
 
 	/* PREV */
 

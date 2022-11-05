@@ -607,7 +607,7 @@
 			
 			$(document).on("click", ".btn_updateFeed", function(event) {
 				console.log("수정하기");
-				$("#updateFeedForm").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+				$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 			})
 
 			
@@ -2118,6 +2118,7 @@ top
 			</div>
 		</div>
 	</div>
-
+	<!-- 수정 Modal -->
+	
 </body>
 </html>
