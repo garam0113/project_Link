@@ -116,13 +116,25 @@
 						confirmButtonText: '확인', 
 					}).then((result) => {
 						if(result.value) {
-							self.location="/user/login.jsp"	
+							return;	
 						}
 					})
 				})
 			});
 			
-</script>
+			$(function() {
+				$('#login').on('click', function(event) {
+					event.stopPropagation();
+					$('#modalLogin').modal();
+				})
+				/*  $('#ml').on("click", function(event) {
+					event.stopPropagation();
+					$('.modal.fade.login').modal('hide');
+				})  */
+			}); 
+			
+			
+		</script>
 
 </head>
 
@@ -157,11 +169,80 @@ header::-webkit-scrollbar {
 
 /* SCROLL */
 </style>
+<<<<<<< HEAD
+		
+	</head> 
+=======
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
+
+ <jsp:include page="/user/login.jsp" />
+=======
 </head>
 
+>>>>>>> refs/remotes/origin/master
 <body class="page">
 
+<<<<<<< HEAD
+   <header role="banner" class="transparent light">
+      <div class="row">
+         <div
+            class="nav-inner row-content buffer-left buffer-right even clear-after">
+            <div id="brand">
+               <h1 class="reset">
+                  <!--<img src="img/logo.png" alt="logo">-->
+                  <a href="/">LINK</a>
+               </h1>
+            </div>
+            <!-- brand -->
+            <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+            <nav>
+               <ul class="reset" role="navigation">
+                  <li class="menu-item"><a href="/">Home</a></li>
+                  <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
+                  
+                  <c:if test="${! empty sessionScope.user }">
+                  	<li class="menu-item"><a href="/club/getClubList">Club</a></li>
+                  </c:if>
+                  
+                  <c:if test="${ empty sessionScope.user }">
+                  	<li class="menu-item"><a href="#" class="clubNav" onclick="clubNav();">Club</a></li>
+                  </c:if>
+                  
+                  <li class="menu-item"><a
+                     href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
+                  <li class="menu-item"><a
+                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+                  <c:if test="${ empty sessionScope.user }">
+                     <li class="menu-item"><a href="#" id='login'>로그인</a></li>
+                  </c:if>
+                  <c:if test="${!empty sessionScope.user }">
+                     <li class="menu-item"><a
+                        href="/user/logout?userId=${sessionScope.user.userId}">로그아웃</a></li>
+                     <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
+                        <li class="menu-item"><a
+                           href="/user/getUser?userId=${sessionScope.user.userId}">내정보보기</a></li>
+                           
+                     </c:if>
+                     <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
+                        <li class="menu-item"><a href="/user/getUserList">관리자페이지</a></li>
+                     </c:if>
+                     
+                     
+                  </c:if>
+                  
+               </ul>
+               
+            </nav>
+            
+         </div>
+         <!-- row-content -->
+         
+        
+      </div>
+      <%--
+=======
 	<header role="banner" class="transparent light">
 		<div class="row">
 			<div class="nav-inner row-content buffer-left buffer-right even clear-after">
@@ -213,6 +294,7 @@ header::-webkit-scrollbar {
 		</div>
 		<%--
 		
+>>>>>>> refs/remotes/origin/master
 		<c:if test="${!empty sessionScope.user }">
 			<div class="alarmHead" >
 							

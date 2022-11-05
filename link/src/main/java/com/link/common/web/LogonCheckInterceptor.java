@@ -52,9 +52,10 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 					String uri = request.getRequestURI();
 					if(		uri.indexOf("addUserView")		!= -1 		|| 	uri.indexOf("addUser")	!= -1		|| 
 							uri.indexOf("loginView")		!= -1 		||	uri.indexOf("login")	!= -1 		|| 
-							uri.indexOf("checkDuplication") != -1       ||  uri.indexOf("getUserList") != -1) {
+							uri.indexOf("checkDuplication") != -1       ||  uri.indexOf("getUserList") != -1 
+						) {	
 						
-						request.getRequestDispatcher("/feed/getFeedList.jsp").forward(request, response);
+						request.getRequestDispatcher("/").forward(request, response);
 //						System.out.println("[ 로그인 상태 - 로그인 후 불필요한 요구 ]");
 //						System.out.println("[ LogonCheckInterceptor end ]\n");
 						return false;
@@ -75,7 +76,8 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 							uri.indexOf("loginView")		!= -1 		||	uri.indexOf("login") 		!= -1 		|| 
 							uri.indexOf("checkDuplication") != -1 		||	uri.indexOf("getMeeting")	!= -1		||
 							uri.indexOf("getClubList")	!= -1           ||  uri.indexOf("getUserId")    != -1		||
-							uri.indexOf("getPassword")  != -1
+							uri.indexOf("getPassword")  != -1 || uri.indexOf("snsLogin") !=-1 ||
+							uri.indexOf("addSnsUser") != -1
 						  )		
 					{						
 //						System.out.println("[ 로그 시도 상태 .... ]");
@@ -83,8 +85,8 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 						return true;
 					}
 					
-					request.getRequestDispatcher("/user/login.jsp").forward(request, response);
-//					System.out.println("[ 로그인 이전 ]");
+					request.getRequestDispatcher("/").forward(request, response);
+//					System.out.println("[ 로그인 이전 ]"); 
 //					System.out.println("[ LogonCheckInterceptor end ]\n");
 					return false;
 //					return true;

@@ -13,10 +13,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
 <link rel="stylesheet" href="/resources/css/login.css">
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -33,8 +33,6 @@
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-
 
 <script type="text/javascript"
 	src="/resources/javascript/user/kakaoLogin.js" charset="utf-8"></script>
@@ -101,7 +99,6 @@ body>div.container {
 					child = window.open("/user/getPassword", "_blank",
 							"width = 800, height = 500");
 				});
-
 	});
 
 	function login() {
@@ -161,124 +158,146 @@ body>div.container {
 
 	}
 </script>
-</head>
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'
 	rel='stylesheet'>
-<div class="login" style=" zoom: 1.2; margin-top: -100px;">
-	<div class="login__content">
-		<div class="login__img">
-			<img
-				src="https://image.freepik.com/free-vector/code-typing-concept-illustration_114360-3581.jpg"
-				alt="user login">
-		</div>
-		<div class="login__forms">
-			<!--         login form -->
-			<form class="login__register" id="login-in">
-				<h1 class="login__title">Sign In</h1>
-				<div class="login__box">
-					<i class='bx bx-user login__icon'></i> <input type="text" onkeyup="enterkey()" 
-						placeholder="Username" class="login__input" name="userId"
-						style="font-size: initial;" id="userId">
-				</div>
-				<div class="login__box">
-					<i class='bx bx-lock login__icon'></i> <input type="password"
-						placeholder="Password" class="login__input" name="password" onkeyup="enterkey()" 
-						style="font-size: initial;" id="password">
-				</div>
-				<a href="#getId" class="login__forgot" style="font-size: small;">Forgot
-					Id? </a> <a href="#getPassword" class="login__forgot"
-					style="font-size: small;">Forgot Password? </a> <a href="#login"
-					class="login__button">Sign In</a>
-				<div class="form-group">
-					<div class="col-sm-offset-4 col-sm-6 text-center">
-						<button class="button" type="button" onclick="kakaoLogin();">
-							<img src="/resources/image/ko/kakao_login_medium_narrow.png"
-								alt="카카오계정 로그인" />
-						</button>
-						<input type="hidden" class="kakao" name="snsUserId" id="snsUserId">
-						<input type="hidden" class="snsType" name="addType" id="addType"
-							value=>
-					</div>
-				</div>
+</head>
+<body>
+	<div class='modal fade' id='modalLogin'
+		style='display: none; margin-left: -30px; overflow: hidden; width: auto; margin-top: -100px;'>
+		<div class='modal-dialog'>
+			<div class='modal-content' id='ml'
+				style='background: transparent; box-shadow: none; border: none;'>
+				<div class='modal-header'>
+					<div class="login" style="">
+						<div class="login__content">
+							<div class="login__forms">
+								<!--         login form -->
+								<form class="login__register" id="login-in"
+									style='margin-left: 60px'>
+									<h1 class="login__title">Sign In</h1>
+									<div class="login__box" style="height: 60px;">
+										<i class='bx bx-user login__icon'></i> <input type="text"
+											onkeyup="enterkey()" placeholder="아이디" class="login__input"
+											name="userId" style="font-size: initial; border: none;"
+											id="userId">
+									</div>
+									<div class="login__box" style="height: 60px;">
+										<i class='bx bx-lock login__icon'></i> <input type="password"
+											placeholder="비밀번호" class="login__input" name="password"
+											onkeyup="enterkey()"
+											style="font-size: initial; border: none;" id="password">
+									</div>
+									<div style="display: flex;">
+										<a href="#getId" class="login__forgot"
+											style="font-size: small; margin-right: -181px;">Forgot Id? </a> <a
+											href="#getPassword" class="login__forgot"
+											style="font-size: small;">Forgot Password? </a>
+									</div>
+									<a href="#login" class="login__button" id="qwe">Sign In</a>
+									<div class="form-group">
+										<div class="col-sm-offset-4 col-sm-6 text-center" style="margin-left: 220px; margin-top: -20px;">
+											<button class="button" type="button" onclick="kakaoLogin();" style=" background: transparent;">
+												<img src="/resources/css/images/kakao_talk.png" style="width: 40px; height: 40px; border-radius: 70px;"
+								 					alt="카카오계정 로그인" />
+											</button><button id='naverButton' type="button" style=" background: transparent; border: none;"><img src="/resources/css/images/naver.png" style="width: 40px; height: 40px; border-radius: 70px;"></button>
+											<input type="hidden" class="kakao" name="snsUserId"
+												id="snsUserId"> <input type="hidden" class="snsType"
+												name="addType" id="addType" value=>
+										</div>
+									</div>
 
-				<div class="form-group">
-					<div class="col-sm-offset-4 col-sm-6 text-center">
-						<div id="naver_id_login">
-							<a id="naverIdLogin_loginButton" href="#"> <img
-								src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1"
-								height="50"></a>
+									<div class="form-group">
+										<div class="col-sm-offset-4 col-sm-6 text-center"> 
+											<div id="naver_id_login" style="display: none;">
+												<!-- <a id="naverIdLogin_loginButton" href="#"> <img
+	 												src="/resources/css/images/naver.png"
+													height="50" id="naver"></a> -->
+											</div>
+											<input class="naver" type="hidden" id="snsUserId"
+												name="snsUserId"> <input class="naverType"
+												type="hidden" id="addType" name="addType">
+										</div>
+									</div>
+									<div>
+										<span class="login__account login__account--account"
+											style="font-size: small;">Don't Have an Account?</span> <span
+											class="login__signin login__signin--signup"
+											style="font-size: small;" id="sign-up">Sign Up</span>
+									</div>
+								</form>
+							</div>
 						</div>
-						<input class="naver" type="hidden" id="snsUserId" name="snsUserId">
-						<input class="naverType" type="hidden" id="addType" name="addType">
 					</div>
 				</div>
-				<br /> <br /> <br /> <br /> <br /> <br />
-				<div>
-					<span class="login__account login__account--account"
-						style="font-size: small;">Don't Have an Account?</span> <span
-						class="login__signin login__signin--signup"
-						style="font-size: small;" id="sign-up">Sign Up</span>
-				</div>
-			</form>
+			</div>
 		</div>
 	</div>
-</div>
+	<script type="text/javascript">
+	$(function(){
+		$("#naverButton").on("click", function() {
+			//alert("클릭");
+		//$("#naver_id_login").click();  
+		//$('#naver_id_login_anchor').click()
+		location.href=$('#naver_id_login > a').attr('href')
+		//window.open($('#naver_id_login > a').attr('href'))
+		 	
+	})  
+	})
+		var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c",
+				"http://192.168.0.183:8080/user/login.jsp");
+		var state = naver_id_login.getUniqState();
+		naver_id_login.setButton("green", 3, 50);
+		naver_id_login.setDomain("http://192.168.0.183:8080/");
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+		console.log(naver_id_login);
 
-<script type="text/javascript">
-	var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c",
-			"http://192.168.0.183:8080/user/login.jsp");
-	var state = naver_id_login.getUniqState();
-	naver_id_login.setButton("green", 3, 50);
-	naver_id_login.setDomain("http://192.168.0.183:8080/");
-	naver_id_login.setState(state);
-	naver_id_login.init_naver_id_login();
-	console.log(naver_id_login);
+		naver_id_login.get_naver_userprofile("naverSignInCallback()");
 
-	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+		function naverSignInCallback() {
 
-	function naverSignInCallback() {
+			console.log(naver_id_login.getProfileData('email'))
+			var snsId = naver_id_login.getProfileData('email');
+			console.log(snsId);
 
-		console.log(naver_id_login.getProfileData('email'))
-		var snsId = naver_id_login.getProfileData('email');
-		console.log(snsId);
+			$(".naver").val(snsId);
+			$(".naverType").val(2);
+			console.log($(".naverType").val());
+			console.log($(".naver").val());
 
-		$(".naver").val(snsId);
-		$(".naverType").val(2);
-		console.log($(".naverType").val());
-		console.log($(".naver").val());
+			$.ajax("/userRest/json/getUser", {
+				type : "POST",
+				data : JSON.stringify({
+					snsUserId : "," + snsId,
+					addType : ",2"
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				headers : {
+					"Accept" : "application/json"
+				},
+				success : function(Data, status) {
+					console.log("서버로 받는 데이타 : " + Data.userId)
+					console.log("서버로 받는 데이타 : " + Data.penaltyType)
+					console.log("서버로 받는 데이타 : " + Data.stopEndDate)
 
-		$.ajax("/userRest/json/getUser", {
-			type : "POST",
-			data : JSON.stringify({
-				snsUserId : "," + snsId,
-				addType : ",2"
-			}),
-			dataType : "json",
-			contentType : "application/json",
-			headers : {
-				"Accept" : "application/json"
-			},
-			success : function(Data, status) {
-				console.log("서버로 받는 데이타 : " + Data.userId)
-				console.log("서버로 받는 데이타 : " + Data.penaltyType)
-				console.log("서버로 받는 데이타 : " + Data.stopEndDate)
-
-				if (Data.penaltyType == 2) {
-					swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
-					return;
-				} else if (Data.penaltyType == 1
-						&& Date.now() < Data.stopEndDate) {
-					swal.fire("회원은 정지대상자로 [" + Data.stopStartDateString + " ~ "
-							+ Data.stopEndDateString + "까지 로그인이 제한됩니다.");
-					return;
+					if (Data.penaltyType == 2) {
+						swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
+						return;
+					} else if (Data.penaltyType == 1
+							&& Date.now() < Data.stopEndDate) {
+						swal.fire("회원은 정지대상자로 [" + Data.stopStartDateString
+								+ " ~ " + Data.stopEndDateString
+								+ "까지 로그인이 제한됩니다.");
+						return;
+					}
+					$("form").attr("method", "POST").attr("action",
+							"/user/snsLogin").submit();
 				}
-				$("form").attr("method", "POST").attr("action",
-						"/user/snsLogin").submit();
-			}
-		})
+			})
 
-	}
-</script>
+		}
+	</script>
 
 </body>
 </html>
