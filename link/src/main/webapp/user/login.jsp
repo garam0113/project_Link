@@ -65,6 +65,9 @@ body>div.container {
 .text-dark {
 	color: #343a40 !important;
 }
+.swal2-container.swal2-center{
+z-index: 10000; 
+}
 </style>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
@@ -87,18 +90,21 @@ body>div.container {
 		$("a[href='#getId']").on(
 				"click",
 				function() {
-					var child;
+					/* var child;
 					child = window.open("/user/getUserId", "_blank",
-							"width = 800, height = 500");
+							"width = 800, height = 500"); */
+					$('#modalId').modal('show');
 				});
 
 		$("a[href='#getPassword']").on(
 				"click",
 				function() {
-					var child;
+					$('#modalPass').modal('show');
+/* 					var child;
 					child = window.open("/user/getPassword", "_blank",
-							"width = 800, height = 500");
+							"width = 800, height = 500"); */
 				});
+		
 	});
 
 	function login() {
@@ -110,11 +116,13 @@ body>div.container {
 		console.log("date : " + Date.now());
 
 		if (id == null || id.length < 1) {
+			event.stopPropagation();
 			swal.fire("아이디를 입력해주세요.");
 			return;
 		}
 
 		if (pw == null || pw.length < 1) {
+			event.stopPropagation();
 			swal.fire("비밀번호를 입력해주세요.");
 			return;
 		}
@@ -135,16 +143,20 @@ body>div.container {
 				console.log(Data.stopEndDate);
 
 				if (Data.userId == "" || Data.outUserState == 1) {
+					event.stopPropagation();
 					swal.fire("존재하지 않는 아이디입니다.");
 					return;
 				} else if (Data.userId != "" && pw != Data.password) {
+					event.stopPropagation();
 					swal.fire("비밀번호가 틀립니다.");
 					return;
 				} else if (Data.penaltyType == 2) {
+					event.stopPropagation();
 					swal.fire("회원은 영구정지 대상자로 로그인이 제한됩니다.");
 					return;
 				} else if (Data.penaltyType == 1
 						&& Date.now() < Data.stopEndDate) {
+					event.stopPropagation();
 					swal.fire("회원은 정지대상자로 [" + Data.stopStartDateString + " ~ "
 							+ Data.stopEndDateString + "까지 로그인이 제한됩니다.");
 					return;
@@ -163,8 +175,8 @@ body>div.container {
 </head>
 <body>
 	<div class='modal fade' id='modalLogin'
-		style='display: none; margin-left: -30px; overflow: hidden; width: auto; margin-top: -100px;'>
-		<div class='modal-dialog'>
+		style='display: none; margin-left: -30px; overflow: hidden; width: auto; margin-top: -100px; '>
+		<div class='modal-dialog' style="margin-top: -160px; zoom: 1.2;">
 			<div class='modal-content' id='ml'
 				style='background: transparent; box-shadow: none; border: none;'>
 				<div class='modal-header'>
@@ -197,15 +209,15 @@ body>div.container {
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6 text-center" style="margin-left: 220px; margin-top: -20px;">
 											<button class="button" type="button" onclick="kakaoLogin();" style=" background: transparent;">
-												<img src="/resources/css/images/kakao_talk.png" style="width: 40px; height: 40px; border-radius: 70px;"
+												<img src="/resources/image/kakao_talk.png" style="width: 47px; height: 47px; border-radius: 70px; margin-bottom: -3px;"
 								 					alt="카카오계정 로그인" />
-											</button><button id='naverButton' type="button" style=" background: transparent; border: none;"><img src="/resources/css/images/naver.png" style="width: 40px; height: 40px; border-radius: 70px;"></button>
+											</button><button id='naverButton' type="button" style=" background: transparent; border: none;"><img src="/resources/image/naver.png" style="width: 40px; height: 40px; border-radius: 70px;"></button>
 											<input type="hidden" class="kakao" name="snsUserId"
 												id="snsUserId"> <input type="hidden" class="snsType"
 												name="addType" id="addType" value=>
 										</div>
 									</div>
-
+ 
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6 text-center"> 
 											<div id="naver_id_login" style="display: none;">
@@ -231,6 +243,8 @@ body>div.container {
 				</div>
 			</div>
 		</div>
+		<jsp:include page="/user/getIdView.jsp" />
+	<jsp:include page="/user/getPasswordView.jsp" />
 	</div>
 	<script type="text/javascript">
 	$(function(){

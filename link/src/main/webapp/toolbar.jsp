@@ -169,22 +169,12 @@ header::-webkit-scrollbar {
 
 /* SCROLL */
 </style>
-<<<<<<< HEAD
-		
-	</head> 
-=======
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
 
- <jsp:include page="/user/login.jsp" />
-=======
 </head>
 
->>>>>>> refs/remotes/origin/master
 <body class="page">
 
-<<<<<<< HEAD
    <header role="banner" class="transparent light">
       <div class="row">
          <div
@@ -241,6 +231,8 @@ header::-webkit-scrollbar {
          
         
       </div>
+      
+      <jsp:include page="/user/login.jsp" />
       <%--
 =======
 	<header role="banner" class="transparent light">
