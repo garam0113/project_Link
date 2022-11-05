@@ -512,7 +512,7 @@ function showPopUp(){
 
 function showPopUp2(){
 	var userId = $("#userId").val();
-    window.open("/user/updateProfile2?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
+    window.open("/user/updateProfile?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
 }
  
 

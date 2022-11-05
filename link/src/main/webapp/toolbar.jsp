@@ -114,7 +114,16 @@
 				})
 			});
 			
-			
+			$(function() {
+				$('#login').on('click', function(event) {
+					event.stopPropagation();
+					$('#modalLogin').modal();
+				})
+				/*  $('#ml').on("click", function(event) {
+					event.stopPropagation();
+					$('.modal.fade.login').modal('hide');
+				})  */
+			}); 
 			
 			
 		</script>
@@ -140,10 +149,10 @@
 	}
 </style>
 		
-	</head>
+	</head> 
 
 
-
+ <jsp:include page="/user/login.jsp" />
 <body class="page">
 
    <header role="banner" class="transparent light">
@@ -176,7 +185,7 @@
                   <li class="menu-item"><a
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="/user/login">로그인</a></li>
+                     <li class="menu-item"><a href="#" id='login'>로그인</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a
@@ -199,6 +208,8 @@
             
          </div>
          <!-- row-content -->
+         
+        
       </div>
       <%--
 		<c:if test="${!empty sessionScope.user }">
