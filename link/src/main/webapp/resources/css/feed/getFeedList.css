@@ -73,11 +73,12 @@
 
 	/* SCROLL */
 
-	html {
-		-ms-overflow-style:none !important; 
+
+	body {
+		overflow-y : scroll !important;
 	}
 
-	html::-webkit-scrollbar {
+	body::-webkit-scrollbar {
 		display:none !important;
 	}
 

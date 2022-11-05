@@ -1108,18 +1108,40 @@
 		$(document).on("click", ".comment", function(event) {
 			event.stopPropagation();
 			
-			if('${sessionScope.user}' == null) return false;
-			
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
+				
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
 			$("#commentModalFeedNo").val(feedNo);
 			$("#commentModal").modal();
+			
 		});
 		
 		$(document).on("click", ".addCommentByModal", function(event) {
 			event.stopPropagation();
 			
-			if('${sessionScope.user}' == null) return false;
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
 			
 			var sessionUser = '${sessionScope.user.userId}';
 			var content = $("#contentModal").val();
