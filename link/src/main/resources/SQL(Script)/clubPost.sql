@@ -789,11 +789,8 @@ select count(*) from ( select * from heart where trim(source) = 2 and source_no 
 
 
 
-select * from report_push where type = 2 and club_post_comment_no is not null;
-
-delete from report_push where club_post_comment_no = 1
-
-select club_post_comment_no, club_post_no, user_id, comment_count, parent, depth, comment_heart_count, comment_content from club_post_comment where delete_condition = 0
+INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
+VALUES (seq_pay_no.NEXTVAL, 'garam113', 2, '1', '2', 10000, SYSDATE, 0, 20, 'AIELF-WOHAS-2DJHE2')
 
 
 
@@ -801,7 +798,7 @@ select club_post_comment_no, club_post_no, user_id, comment_count, parent, depth
 
 
 
-
+UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1', DELETE_USER_ID = 'food1' WHERE PARENT = 38
 
 
 

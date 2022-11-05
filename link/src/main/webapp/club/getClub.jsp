@@ -168,6 +168,10 @@
 	
 	$(function() {
 		$(".clubPostBtn").on("click", function() {
+			
+			
+			
+			
 			self.location="/clubPost/getClubPostList"
 		});
 	});
@@ -379,13 +383,13 @@
 		   font-size: 16px !important;
 		}
 		
-		.darkover {
+		/* .darkover {
 			position: sticky;
 			top: auto;
 			bottom: 0;
 			left: 0;
 			background: rgba(0, 0, 0, 0.35);
-		}
+		} */
 		
 		.club-wrap {
 			width: 100%;
@@ -452,13 +456,26 @@
 
 <body class="blog masonry-style" style="background: #EBEDF0;">
 
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<main role="main">
 
-		<div id="intro-wrap" data-height="17.35">
+		<%-- <div id="intro-wrap" data-height="17.35">
 			<!-- 상단 검은색 공통 영역 -->
 			<div id="intro" class="preload darken">
 				<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
@@ -476,10 +493,34 @@
 				</div>
 				<!-- intro -->
 			</div>
-		<!-- intro-wrap -->
+		<!-- intro-wrap --> --%>
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+			
+			
+				<%-- chat.js에서 사용위해서 --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+				
+				
+				
 				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+				
+				<!-- 모임 대표이미지 -->				
+					<div class="club-image" style="margin-left: 190px; margin-top: 20px; margin-bottom: 35px;">
+							<a href="/club/getClub?clubNo=${clubNo}"><img
+								src="/resources/image/uploadFiles/${club.clubImage}"
+								width="800" height="300" name="file" id="clubImage"></a>
+					</div>
+				
+				 <!-- 모임버튼 영역 -->			
 					<div class="homeBtn_group">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
@@ -496,17 +537,32 @@
 						<button type="button" class="live">
 							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
 						</button>
-					</div>	
+					</div>
 					
-				<%-- 	${clubMemberList} 
 					
-					<p>
-					${club }
+				<div class="form-group" id="btn_group">
+					<!-- <button type="button" class="joinLi"></button> -->
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -65px; margin-left: 900px;">
+		      		
+		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
 					
-					<p>
-					${club.user.userId } --%>
-					
-		
+				<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+								<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
+							</c:if>
+						</c:if>				 	
+				 	</c:forEach>	
+									
+				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
+					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
+					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+				</c:if>
+				
+				</div>
+			    </div>
+						
 
 				<div class="mainForm" style="display: inline-flex;">
 					<!-- 클럽상세 -->
@@ -571,13 +627,33 @@
 
 					</div>
 					<!-- 달력 영역 -->
-				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
+					
+					
+						<%-- ${clubMemberList[0].approvalCondition} --%>
+				 	
+				 	<%-- <c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+				 		<c:if test="${ clubMemberList[k].approvalCondition == 1 }">
+				 			${ clubMemberList[k].user.userId == sessionScope.user.userId }
+				 			'버튼'
+				 		</c:if>				 	
+				 	</c:forEach> --%>
+					
+					
+					
 				</div>
 				
-				<div class="form-group" id="btn_group">
+					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+								<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
+							</c:if>
+						</c:if>				 	
+				 	</c:forEach>
+				</div>
+				<!-- 버튼 원래 자리 -->
+			<%-- 	<div class="form-group" id="btn_group">
 					<!-- <button type="button" class="joinLi"></button> -->
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
+				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -20px;">
 		      		
 		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
 					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
@@ -591,10 +667,7 @@
 				</c:if>
 				
 				</div>
-		    </div>
-				
-				
-			
+		    </div> --%>
 			<!-- 모달영역 -->
 			<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">

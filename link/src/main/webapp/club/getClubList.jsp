@@ -405,6 +405,19 @@ html::-webkit-scrollbar {
 
 <body class="page">
 
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+
 	<jsp:include page="/toolbar.jsp" />
 
 
@@ -417,6 +430,19 @@ html::-webkit-scrollbar {
 
 				<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 				<div id="main" class="row" style="width: 824px;">
+			
+			
+			
+					<%-- chat.js에서 사용위해서 --%>
+						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+					<%-- chat.js에서 사용위해서 --%>
+					<%-- 채팅 --%>
+					<jsp:include page="/chat/chat.jsp" />
+					<%-- 채팅 --%>
+				
+				
 
 					<div class="col-md-8 text-right" style="float: left;">
 						<form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">

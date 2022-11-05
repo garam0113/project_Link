@@ -147,7 +147,8 @@
 							return;
 					}
 					
-					$("form").attr("accept-charset", "EUC-KR").submit();
+					//$("form").attr("accept-charset", "EUC-KR").submit();
+					$("form").submit();
 					
 					if(sock) {
 						var Msg = "게시물 작성";
@@ -199,7 +200,7 @@
 					$("input[name='currentPage']").val("1");
 					//$("form").submit();
 				});
-				$("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
+				/* $("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
 					location.href = "/clubPost/addPayView";
 				});
 				$("b:contains('모임대표가 가입승인시 - 모임원 추가')").bind("click", function() {
@@ -207,7 +208,7 @@
 				});
 				$("b:contains('모임신청시 - 모임추가')").bind("click", function() {
 					location.href = "/clubPost/addPayView?payNavigation=1";
-				});
+				}); */
 				
 				//무한 페이징
 				var currentPage = 1;
@@ -327,25 +328,23 @@
 			
 			
 			//클럽버튼 펑션입니다.
+			$(function() {
+				$(".homeBtn").on("click", function() {
+					self.location="/club/getClub?clubNo=${clubNo}";
+				});
+			});
 			
+			$(function() {
+				$(".clubPostBtn").on("click", function() {
+					self.location="/clubPost/getClubPostList"
+				});
+			});
 			
-	$(function() {
-		$(".homeBtn").on("click", function() {
-			self.location="/club/getClub?clubNo=${clubNo}";
-		});
-	});
-	
-	$(function() {
-		$(".clubPostBtn").on("click", function() {
-			self.location="/clubPost/getClubPostList"
-		});
-	});
-	
-	$(function() {
-		$(".clubMemberBtn").on("click", function() {
-			self.location="/club/getClubMemberList"
-		});
-	});
+			$(function() {
+				$(".clubMemberBtn").on("click", function() {
+					self.location="/club/getClubMemberList"
+				});
+			});
 		
 			
 			
@@ -361,10 +360,6 @@
 			
 			
 			
-			
-				
-			
-			
 		</script>
 		
 	</head>
@@ -374,11 +369,37 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	
+	<!-- 모임채팅 -->
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<!-- 채팅 javascript -->
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<!-- 채팅 css -->
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 		<main role="main">
+		
 
 			<div id="main" class="row" style="background: #EBEDF0;"><!-- 중간 개별영역 -->
+			
+				<%-- chat.js에서 사용위해서 --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+			
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
 			
 				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
