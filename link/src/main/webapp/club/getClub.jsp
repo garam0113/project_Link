@@ -456,6 +456,19 @@
 
 <body class="blog masonry-style" style="background: #EBEDF0;">
 
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
@@ -483,6 +496,20 @@
 		<!-- intro-wrap --> --%>
 		
 			<div id="main" class="row"><!-- 중간 개별영역 -->
+			
+			
+			
+				<%-- chat.js에서 사용위해서 --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+				
+				
+				
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 				
