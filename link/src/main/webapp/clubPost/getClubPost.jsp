@@ -723,14 +723,12 @@
 									dataType : "json",
 									success : function(JSONData, status){
 										//alert(status);
-										//alert(JSONData.clubPostCommentCount);
-										//alert(JSONData.commentCount);
-										//alert(JSONData.parent);
-
-										// 삭제된것도 가져와서 댓글개수 변경 안해도 된다
+										console.log("게시물 댓글 수 : " + JSONData.clubPostCommentCount);
+										console.log("댓글의 댓글 수 : " + JSONData.commentCount);
+										console.log("부모 댓글 번호 : " + JSONData.parent);
 										
 										// 게시물 댓글개수 수정
-										//$(".comment_count").text( JSONData.clubPostCommentCount );
+										$(".comment_count").text( JSONData.clubPostCommentCount );
 										
 										// 게시물 댓글의 댓글개수 수정
 										//$("div .single-comment"+JSONData.parent).find("b").text( JSONData.commentCount );
@@ -1331,14 +1329,18 @@
 					<div class="comment-section">
 						<h3 id="comments">
 							<c:choose>
-								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>개${ clubPost.getClubPostCommentList }</c:when>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>개</c:when>
 							</c:choose>
 						</h3>
 						<ul class="comment-list plain">
 							<%-- 해당 게시물에 댓글이 있을때만 for문을 돈다 --%>
 							<li class="comment">
+								${ clubPost.getClubPost.clubPostCommentCount }#########
+								${ clubPost.getClubPost.clubPostNo }#########
 								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 									<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
+										${ clubPost.getClubPostCommentList[i].commentContent }
+										${ clubPost.getClubPostCommentList[i].parent }/////<br>
 										<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
 											<div class="comment-parent">
 												<div id="comment-body" class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="1" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">

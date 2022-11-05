@@ -184,6 +184,7 @@
 			<when test="clubPost.heartCondition == -1">CLUB_POST_HEART_COUNT = CLUB_POST_HEART_COUNT - 1</when>
 			<when test="clubPost.clubPostCommentNo > 0">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT + 1</when>
 			<when test="clubPost.clubPostCommentNo == -1">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT - 1</when>
+			<when test="clubPost.clubPostCommentNo == -1 and comment.depth = 1">CLUB_POST_COMMENT_COUNT= CLUB_POST_COMMENT_COUNT - ${ comment.commentCount }</when>
 			<when test="report.reportCondition == 1 and report.reportReason > 0">REPORT_CONDITION = 1</when>
 			<otherwise>
 				CLUB_POST_TITLE = #{ clubPost.clubPostTitle:VARCHAR }, CLUB_POST_CONTENT = #{ clubPost.clubPostContent:VARCHAR }, CLUB_POST_VIDEO1 = #{ clubPost.clubPostVideo1:VARCHAR }, CLUB_POST_VIDEO2 = #{ clubPost.clubPostVideo2:VARCHAR },

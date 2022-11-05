@@ -120,7 +120,10 @@
 	
 	<!-- 댓글 삭제 -->
 	<update id="deleteClubPostComment" parameterType="comment">
-		UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1', DELETE_USER_ID = #{ user.userId } WHERE CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }
+		UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1', DELETE_USER_ID = #{ user.userId } WHERE <choose>
+																										<when test="deleteCondition == 20">PARENT = #{ clubPostCommentNo }</when>
+																										<otherwise>CLUB_POST_COMMENT_NO = #{ clubPostCommentNo }</otherwise>
+																									</choose>
 	</update>
 	
 	
