@@ -227,6 +227,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".deleteClubPostComment(Comment comment) 왔다");
+		System.out.println(comment.getDepth());
 		
 		String Id = comment.getUser().getUserId();
 		System.out.println("삭제하는 회원 아이디 : " + Id);
@@ -249,12 +250,16 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		// 지우려는 댓글의 대댓글 개수만큼 게시물 댓글수를 마이너스한다
 		if(comment.getCommentCount() > 0) {
 			// 지우려는 댓글에 대댓글이 있을 때
+			((Comment)map.get("comment")).setDepth(1);
 			for (int i = 0; i < comment.getCommentCount(); i++) {
-				//sqlSession.update("ClubPostMapper.updateClubPost", map);
+				System.out.println("댓글 깊이 : " + ((Comment)map.get("comment")).getDepth() + ", 댓글 개수 : " + comment.getCommentCount() + ", 게시물 번호 : " + comment.getClubPostNo());
+				sqlSession.update("ClubPostMapper.updateClubPost", map);
 			}
+			((Comment)map.get("comment")).setDepth(0);
 		}
 
-		// 댓글개수 - 1 한다
+		// 댓글의 댓글개수 - 1 한다
+		System.out.println("대댓글 있는지 확인 후 댓글의 개수 -1 하려고 한다. 댓글 깊이 : " +comment.getDepth());
 		if(comment.getDepth() != 0) {
 			System.out.println("댓글 삭제시 : 삭제여부 : " + ((Comment)map.get("comment")).getDeleteCondition()
 					+ ", 하트여부 : " + ((Comment)map.get("comment")).getHeartCondition() + ", 댓글의 부모번호 : " + ((Comment)map.get("comment")).getParent());
@@ -262,7 +267,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		}
 
 		// 댓글 삭제
+		System.out.println("댓글 삭제 전 : " + comment.getClubPostCommentNo() + ", " + comment.getDeleteCondition());
 		sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+		System.out.println("댓글 삭제 후 : " + comment.getClubPostCommentNo() + ", " + comment.getDeleteCondition());
+		
+		// 대댓글이 있다면 대댓글을 모두 지운다
+		if(comment.getCommentCount() > 0) {
+			for (int i = 0; i < comment.getCommentCount(); i++) {
+				comment.setDeleteCondition(20+"");
+				sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+			}
+		}
 		
 		// 게시물 댓글개수 가져온다
 		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo(), comment.getUser()));
