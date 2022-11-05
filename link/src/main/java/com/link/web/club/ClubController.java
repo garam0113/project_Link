@@ -505,13 +505,17 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getMeeting", method=RequestMethod.GET)
-	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model, HttpSession session) throws Exception {
+	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model, HttpSession session, Search search, String clubNo) throws Exception {
 	
 		System.out.println("/club/getMeeting : GET");
 		
+		clubNo = (String) session.getAttribute("clubNo");
+		
+		search.setSearchKeyword(clubNo);
 		
 		//Business Logic
 		Map<String, Object> map = clubService.getMeeting(Integer.parseInt(meetingNo));
+		Map<String, Object> map2 = clubService.getClubMemberList(search);
 		// 미팅정보 : meeting, 미팅의 총 참여자 수 : totalMeetingMemberCount
 		
 		//Model 과 View 연결
@@ -519,10 +523,12 @@ public class ClubController {
 		
 		model.addAttribute("meeting", map.get("meeting"));
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
 		session.setAttribute("meetingNo", meetingNo);
 		
 		System.out.println("미팅 맵에 뭐 있나? : " + map.get("meeting"));
 		System.out.println("겟에서 세션에 들어갔나? :"+meetingNo);
+		System.out.println("Map2 값은? : "+map2.get("clubMemberList"));
 		return "forward:/club/getMeeting.jsp";
 	}
 	
