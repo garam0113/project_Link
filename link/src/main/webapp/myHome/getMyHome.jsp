@@ -1778,12 +1778,12 @@ margin-left:10px;
 			
 			
 				<%-- chat.js에서 사용위해서 --%>
-					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 				<%-- chat.js에서 사용위해서 --%>
 				<%-- 채팅 --%>
-					<jsp:include page="/chat/chat.jsp" />
+				<jsp:include page="/chat/chat.jsp" />
 				<%-- 채팅 --%>
 				
 				

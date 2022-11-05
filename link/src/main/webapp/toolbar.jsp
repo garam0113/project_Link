@@ -260,7 +260,7 @@ header::-webkit-scrollbar {
 						</c:if>
 
 						<li class="menu-item"><a href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
-						<li class="menu-item"><a href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+						<li class="menu-item"><a href="/serviceCenter/serviceCenterHome">ServiceCenter</a></li>
 						<c:if test="${ empty sessionScope.user }">
 							<li class="menu-item"><a href="/user/login">로그인</a></li>
 						</c:if>

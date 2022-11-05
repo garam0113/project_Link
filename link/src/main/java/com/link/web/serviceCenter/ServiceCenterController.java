@@ -68,6 +68,26 @@ public class ServiceCenterController {
 
 	@Value("#{commonProperties['pageUnit'] ?: 10}")
 	int pageUnit;
+	
+	@RequestMapping(value = "serviceCenterHome", method = RequestMethod.GET)
+	public String serviceCenterHome(HttpSession session, Chat chat, Model model) throws Exception {
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
+		return "forward:/serviceCenter/serviceCenterHome.jsp";
+	}
 
 	@RequestMapping(value = "addNotice", method = RequestMethod.POST)
 	public String addNotice(@ModelAttribute Notice notice, @RequestParam("image") MultipartFile[] file, Model model)
@@ -103,7 +123,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getNotice")
-	public String getNotice(@ModelAttribute Notice notice, Model model, HttpServletResponse response) throws Exception {
+	public String getNotice(@ModelAttribute Notice notice, Model model, HttpSession session, Chat chat, HttpServletResponse response) throws Exception {
 
 		System.out.println("/ServiceCenter/getNotice : GET & POST");
 
@@ -111,6 +131,20 @@ public class ServiceCenterController {
 		notice = serviceCenterService.getNotice(notice.getNoticeNo());
 
 		model.addAttribute("notice", notice);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		String URI = "forward:/serviceCenter/getNotice.jsp"; // 지워야됨
 
@@ -168,7 +202,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getNoticeList")
-	public String getNoticeList(@ModelAttribute("search") Search search, Notice notice, Model model) throws Exception {
+	public String getNoticeList(@ModelAttribute("search") Search search, Notice notice, HttpSession session, Chat chat, Model model) throws Exception {
 		System.out.println("/ServiceCenter/listNotice : GET & POST");
 
 		if (search.getCurrentPage() == 0) {
@@ -183,14 +217,48 @@ public class ServiceCenterController {
 		model.addAttribute("getNoticeList", map.get("getNoticeList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/serviceCenter/getNoticeList.jsp";
 	}
 
-//======================================================================================여기까지가 Notice	
+//======================================================================================여기까지가 Notice
+	
+	@RequestMapping(value = "addQandAView", method = RequestMethod.GET)
+	public String addQandAView(HttpSession session, Chat chat, Model model) throws Exception {
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
+		return "forward:/serviceCenter/addQandAView.jsp";
+	}
 
 	@RequestMapping(value = "addQandA", method = RequestMethod.POST)
-	public String addQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file, Model model,
+	public String addQandA(@ModelAttribute QandA qandA, @RequestParam("image") MultipartFile[] file, Model model, Chat chat,
 			HttpSession session) throws Exception {
 		System.out.println(qandA);
 
@@ -222,12 +290,26 @@ public class ServiceCenterController {
 		serviceCenterService.addQandA(qandA);
 
 		model.addAttribute("qandA", qandA);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+
 
 		return "forward:/serviceCenter/addQandA.jsp";
 	}
 
 	@RequestMapping(value = "getQandA", method = RequestMethod.GET)
-	public String getQandA(@ModelAttribute QandA qandA,
+	public String getQandA(@ModelAttribute QandA qandA, HttpSession session, Chat chat,
 			@RequestParam(value = "menu", defaultValue = "search") String menu, Model model,
 			HttpServletResponse response) throws Exception {
 
@@ -237,6 +319,20 @@ public class ServiceCenterController {
 
 		model.addAttribute("qandA", qandA);
 		model.addAttribute("menu", menu);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		String URI = null;
 
@@ -252,7 +348,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "updateQandA", method = RequestMethod.GET)
-	public String updateQandA(@ModelAttribute QandA qandA, Model model, HttpSession session) throws Exception {
+	public String updateQandA(@ModelAttribute QandA qandA, Model model, HttpSession session, Chat chat) throws Exception {
 
 		System.out.println("/ServiceCenter/updateQandA : GET");
 
@@ -262,6 +358,20 @@ public class ServiceCenterController {
 		qandA = serviceCenterService.getQandA(qandA.getQandANo());
 
 		model.addAttribute("qandA", qandA);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+
 
 		return "forward:/serviceCenter/updateQandAView.jsp";
 	}
@@ -317,7 +427,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getQandAList", method = RequestMethod.GET)
-	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model,
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model, Chat chat, HttpSession session,
 			@RequestParam(value = "menu", defaultValue = "search") String menu) throws Exception {
 
 		System.out.println("/serviceCenter/getQandAList : GET ");
@@ -336,12 +446,26 @@ public class ServiceCenterController {
 		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
 
 	@RequestMapping(value = "getQandAList/{userId}", method = RequestMethod.POST)
-	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model,
+	public String getQandAList(@ModelAttribute("search") Search search, QandA qandA, String UserId, Model model, Chat chat,
 			@PathVariable String userId, HttpSession httpSession) throws Exception {
 		System.out.println("/serviceCenter/getQandAList :POST");
 
@@ -363,6 +487,20 @@ public class ServiceCenterController {
 		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(httpSession.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/serviceCenter/getQandAList.jsp";
 	}
@@ -394,11 +532,13 @@ public class ServiceCenterController {
 		
 		
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(httpSession.getAttribute("user") != null) {
 		// 1:1 채팅 채팅방번호 가져온다
 		chat.setUser((User)httpSession.getAttribute("user"));
 		model.addAttribute("getChat", clubPostService.getChat(chat));
 		// 모임채팅 roomId 가져온다
 		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		}
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
 		
 		
@@ -520,7 +660,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getReportList/{userId}", method = RequestMethod.POST)
-	public String getReportList(@ModelAttribute("search") Search search, Report report, Model model,
+	public String getReportList(@ModelAttribute("search") Search search, Report report, Model model, Chat chat, HttpSession session,
 			@PathVariable String userId) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");
@@ -538,6 +678,20 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/serviceCenter/getReportList.jsp";
 	}

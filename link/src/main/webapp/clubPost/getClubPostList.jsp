@@ -33,7 +33,6 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 		<!-- 템플릿에 있던 코드 -->
-		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
@@ -200,15 +199,6 @@
 					$("input[name='currentPage']").val("1");
 					//$("form").submit();
 				});
-				/* $("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
-					location.href = "/clubPost/addPayView";
-				});
-				$("b:contains('모임대표가 가입승인시 - 모임원 추가')").bind("click", function() {
-					location.href = "/clubPost/addPayView?clubNo="+${ clubNo };
-				});
-				$("b:contains('모임신청시 - 모임추가')").bind("click", function() {
-					location.href = "/clubPost/addPayView?payNavigation=1";
-				}); */
 				
 				//무한 페이징
 				var currentPage = 1;
@@ -377,14 +367,6 @@
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 
 		<main role="main">
 		
@@ -392,9 +374,9 @@
 			<div id="main" class="row" style="background: #EBEDF0;"><!-- 중간 개별영역 -->
 			
 				<%-- chat.js에서 사용위해서 --%>
-					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 				<%-- chat.js에서 사용위해서 --%>
 			
 				<%-- 채팅 --%>
