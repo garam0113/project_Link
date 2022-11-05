@@ -41,7 +41,6 @@
 		
 	
 		<!-- 템플릿에 있던 코드 -->
-		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
@@ -443,11 +442,19 @@
 			
 			<%-- 해당 게시물에 댓글 등록 --%>
 			$(document).on("click", ".plain.button.red.add", function(){
-				//alert('댓글 등록완료');
+				//alert('댓글 등록완료');				
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var commentContent = $(this).prev().val();
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
+				
+				if( commentContent.trim().length == 0 ){
+					Swal.fire({
+						  icon: 'error',
+						  title: '댓글 내용은 필수입니다'
+						})
+						return;
+				}
 				
 				if( depth <= 0 ){
 					//alert("게시물의 댓글 등록!");
@@ -640,6 +647,14 @@
 				//alert( "댓글내용 : " + commentContent );
 				//alert( "해당댓글의번호 : " + clubPostCommentNo );
 				//alert( divClassName );
+				
+				if( commentContent.trim().length == 0 ){
+					Swal.fire({
+						  icon: 'error',
+						  title: '댓글 내용은 필수입니다'
+						})
+						return;
+				}
 				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
 						{
@@ -891,7 +906,7 @@
 								$(".clubPost-body-content").empty();
 								
 								tmp = JSONData.clubPostContent.substring(3, JSONData.clubPostContent.length - 4 );
-								//alert("앞 뒤 p태그 자른 string : " + content);
+								//alert("앞 뒤 p태그 자른 string : " + content); b
 								var content = tmp.split("</p><p>");
 								for (var i = 0; i < content.length; i++) {
 									$(".clubPost-body-content").append( content[i] );
@@ -1316,7 +1331,7 @@
 					<div class="comment-section">
 						<h3 id="comments">
 							<c:choose>
-								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>개</c:when>
+								<c:when test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">댓글 <b class="comment_count">${ clubPost.getClubPost.clubPostCommentCount }</b>개${ clubPost.getClubPostCommentList }</c:when>
 							</c:choose>
 						</h3>
 						<ul class="comment-list plain">
@@ -2268,6 +2283,7 @@
 								//alert( make_roomId );
 								console.log(socket)
 								
+								// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
 								//소켓서버에 접속시킨다.
 								socket = io("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
 									cors: { origin: "*" },
@@ -2291,59 +2307,7 @@
 							}//end of success	
 						});// end of ajax
 			
-						
-				// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
-				//alert( make_roomId );
 				
-				//소켓서버에 접속시킨다.
-				/* socket = io.connect("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
-					cors: { origin: "*" },
-					path: '/socket.io',
-					query: {
-						userId : $("#session_userId").val(),
-						profileImage : $("#session_profileImage").val(),
-						nickName : $("#session_nickName").val(),
-						roomId : make_roomId,
-					},
-					forceNew: true
-				}); */
-				// 소켓 접속
-				
-				//server message 라는 이벤트명으로 대기
-				/* socket.on('server message', function(data){
-				    //console.log(data);
-				    
-				    var display = "";
-					    
-					    if( $("#session_nickName").val() != data.username ){
-					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-										+"<div>"
-											+"<div>"+data.username+"</div>"
-											+"<div>"
-												+"<div>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-									+"</div>";
-					    		
-					    }else{
-					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
-										+"<div>"
-											+"<div style='float: right;'>"+data.username+"</div>"
-											+"<div>"
-												+"<div style='float: right;'>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-									+"</div>";
-					    }
-				    					    
-				    
-				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-					$('#chatLog').append(display);
-				    
-				}); */
-				// 이벤트명으로 대기하다가 서버에서 데이터가 오면 출력한다
 			 	  
 			});//end of 프로필사진의 채팅 클릭시 1:1 채팅
 
@@ -2352,7 +2316,7 @@
 			
 			
 		   });//end of $(function
-		<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
+			<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
 		
 		</script>
 		

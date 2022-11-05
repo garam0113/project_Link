@@ -1,7 +1,6 @@
 package com.link.service.clubPost.impl;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
@@ -394,56 +392,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".getPay(Pay pay) 왔다");
 		return sqlSession.selectOne("ClubPostMapper.getPay", pay);
 	}// end of getPay(Pay pay)
-	
-	
-	
-	
-	
-///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////	
-	
-	
-	
-	
-	
-	@Override
-	public Map<String, Object> addClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".addClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.insert("NoticeMapper.addClubNotice", map);
-		int no = sqlSession.selectOne("NoticeMapper.getClubNoticetNo", map);
-		Notice notice = ((Notice)map.get("notice"));
-		notice.setNoticeNo(no);
-		map.put("notice", notice);
-		map.put("getClubNotice", sqlSession.selectOne("NoticeMapper.getClubNotice", notice));
-		return getClubNoticeList(map);
-	}// end of addClubNotice(Map<String, Object> map)
-
-	@Override
-	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");
-		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
-		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
-		return map;
-	}// end of getClubNoticeList(Map<String, Object> map)
-
-	@Override
-	public Notice getClubNotice(Notice notice) throws Exception {
-		System.out.println(getClass() + ".getClubNotice(Notice notice) 왔다");
-		return sqlSession.selectOne("NoticeMapper.getClubNotice", notice);
-	}// end of getClubNotice(Notice notice)
-
-	@Override
-	public Map<String, Object> updateClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".updateClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.update("NoticeMapper.updateClubNotice", map);
-		return getClubNoticeList(map);
-	}// end of updateClubNotice(Map<String, Object> map)
-
-	@Override
-	public Map<String, Object> deleteClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".deleteClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.delete("NoticeMapper.deleteClubNotice", map);
-		return getClubNoticeList(map);
-	}// end of deleteClubNotice(Search search, Notice notice)
 	
 	
 	

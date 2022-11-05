@@ -121,56 +121,6 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
 
-	/*
-	@RequestMapping(value = "addClubPostView", method = RequestMethod.GET)
-	public String addClubPostView(@RequestParam int clubNo, Model model) throws Exception {
-		System.out.println("/addClubPostView : GET : 모임번호 갖고 모임게시물 등록 화면으로 이동");
-		
-		
-		
-		System.out.println("모임 번호 : " + clubNo);
-		
-		
-		
-		model.addAttribute("clubNo", clubNo);
-		return "forward:/clubPost/addClubPostView.jsp";
-	}
-	*/
-	
-	/*
-	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
-	public String addClubPost(@RequestParam("imageName") List<MultipartFile> imageMultiFile, @RequestParam("videoName") List<MultipartFile> videoMultiFile, @ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
-		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
-		// session으로 로그인한 회원 정보를 가져온다
-		clubPost.setUser(new User(((User)session.getAttribute("user")).getUserId()));
-		
-		System.err.println(imageMultiFile.size());
-		System.err.println(videoMultiFile.size());
-		
-		for (int i = 0; i < imageMultiFile.size(); i++) {
-			imageMultiFile.get(i).transferTo(new File(clubPostUploadTemDir, imageMultiFile.get(i).getOriginalFilename()));
-		}
-		for (int i = 0; i < videoMultiFile.size(); i++) {
-			videoMultiFile.get(i).transferTo(new File(clubPostUploadTemDir, videoMultiFile.get(i).getOriginalFilename()));
-		}
-		
-		int j = 0;
-		int k = 0;
-		clubPost = new ClubPost(clubPost.getClubNo(), clubPost.getUser(), clubPost.getClubPostTitle(), clubPost.getClubPostContent(),
-				videoMultiFile.get(k++).getOriginalFilename(), videoMultiFile.get(k++).getOriginalFilename(),
-				videoMultiFile.get(k).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
-				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
-				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
-				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
-				imageMultiFile.get(j++).getOriginalFilename(), imageMultiFile.get(j++).getOriginalFilename(),
-				imageMultiFile.get(j).getOriginalFilename());
-		System.out.println("파일 확인용 : " + clubPost);
-		
-		model.addAttribute("clubPost", clubPostServiceImpl.addClubPost(clubPost));
-		return "forward:/clubPost/getClubPost.jsp";
-	}
-	*/
-
 	@RequestMapping(value = "addClubPost", method = RequestMethod.POST)
 	public String addClubPost(@ModelAttribute ClubPost clubPost, Model model, HttpSession session) throws Exception {
 		System.out.println("/addClubPost : POST : 모임게시물 등록, 모임원에게 알림, 모임게시물상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
@@ -308,32 +258,6 @@ public class ClubPostController {
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
-	/*
-	@RequestMapping(value = "updateClubPostView", method = RequestMethod.POST)
-	public String updateClubPostView(@ModelAttribute ClubPost clubPost, Model model, HttpSession session, Map<String, Object> map) throws Exception {
-		System.out.println("/updateClubPostView : POST : 모임게시물 상세보기 가져온 후 모임게시물 수정 화면으로 이동");
-
-		
-		
-		System.out.println("" + clubPost);
-		
-		
-		
-		////////////////////////////////////// DATA /////////////////////////////////////////
-		
-		// 로그인한 회원의 
-		clubPost.setUser((User)session.getAttribute("user"));
-		
-		// 모임 상세보기에서 search, clubPost, comment를 보내기 때문에 getCLubPost의 매개변수가 map이다
-		map.put("clubPost", clubPost);
-
-		
-		
-		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
-		return "forward:/clubPost/updateClubPostView.jsp";
-	}
-	*/
-
 	@RequestMapping(value = "updateClubPost")
 	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
@@ -410,10 +334,6 @@ public class ClubPostController {
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
 		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
-		// 모임 40번
-		//model.addAttribute("roomId", "0162812f-1c51-41f5-938a-335ed02ed20b");
-		// 모임 41번
-		//model.addAttribute("roomId", "09b98129-4fa6-4947-8a5f-104606924784");
 		return "forward:/chat/chatRoom.jsp";
 	}
 	
@@ -425,37 +345,6 @@ public class ClubPostController {
 		model.addAttribute("roomId", roomId );
 		return "forward:/chat/chatRoom.jsp";
 	}
-	
-	/*
-	@RequestMapping(value = "addChat", method = RequestMethod.POST)
-	public String addChat(HttpSession session, User user2, Chat chat, Model model) throws Exception {
-		System.out.println("/addChat : POST : 1:1 채팅에서 전송버튼을 클릭하면 채팅방 생성한다");
-
-		chat.setUser((User)session.getAttribute("user"));
-		chat.setUser2(user2);
-		chat.setRoomId(((User)session.getAttribute("user")).getUserId()+user2.getUserId());
-		
-		System.out.println("DB로 보내는 데이터 : " + chat);
-		
-		
-		
-		//////////////////////////////////////BUSINESS LOGIC /////////////////////////////////////////
-
-		
-		
-		// 로그인한 회원과 상대방의 채팅방이 없으면 만들고 있으면 안 만든다
-		List<Chat> list = clubPostServiceImpl.getChatList(chat);
-		System.out.println("로그인한 회원과 상대방과의 방 : " + list);
-		if( list.size() == 0 ) {
-			// DB에 로그인한 회원과 상대방과의 채팅방이 없으면 채팅방 만듬, 1:1 채팅에서 메세지를 보내면 채팅방 만들어짐
-			clubPostServiceImpl.addChat(chat);
-		}
-		
-		// 내가 들어있는 채팅방 가져오기
-		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
-		return "";
-	}
-	*/
 	
 	
 
@@ -559,57 +448,6 @@ public class ClubPostController {
 		System.out.println("/getPay : POST : 마이홈피에서 내가 결제 상세보기");
 		model.addAttribute("pay", clubPostServiceImpl.getPay(pay));
 		return "forward:/pay/getPay.jsp";
-	}
-	
-	
-	
-
-	
-///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	@RequestMapping(value = "addClubNotice", method = RequestMethod.POST)
-	public String addClubNotice(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
-		System.out.println("/updateClubNotice : POST : 모임공지사항 등록, 등록한 모임공지사항 상세보기, 모임공지사항 리스트");
-		return "forward:/clubPost/updateClubNoticeView.jsp";
-	}
-	
-	@RequestMapping(value = "getClubNoticeList", method = RequestMethod.GET)
-	public String getClubNoticeList(@ModelAttribute Search search, Notice notice, HttpSession session, Model model) throws Exception {
-		System.out.println("/updateClubNotice : POST : 모임공지사항 리스트");
-		
-		model.addAttribute("map", clubPostServiceImpl.getClubNoticeList(ClubPostCommon.getSearch(search), notice, ((User)session.getAttribute("user")).getUserId()));
-		// 모임 공지사항 리슽 : getClubNoticeList, 모임 공지사항 리스트 개수 : getClubNoticeListCount
-		return "forward:/clubPost/getClubNoticeList.jsp";
-		//return "forward:/clubPost/test.jsp";
-	}
-	
-	@RequestMapping(value = "updateClubNoticeView", method = RequestMethod.POST)
-	public String updateClubNoticeView(@ModelAttribute Notice notice, Model model) throws Exception {
-		System.out.println("/updateClubNoticeView : POST : 해당 모임공지사항 상세보기, 모임공지사항 수정화면으로 이동");
-		model.addAttribute("getClubNotice", clubPostServiceImpl.getClubNotice(notice));
-		return "forward:/clubPost/updateClubNoticeView.jsp";
-	}
-	
-	@RequestMapping(value = "updateClubNotice", method = RequestMethod.POST)
-	public String updateClubNotice(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
-		System.out.println("/updateClubNotice : POST : 모임공지사항 수정, 수정한 모임공지사항 상세보기, 모임공지사항 리스트, 수정한 모임공지사항 리스트 화면으로 이동");
-		model.addAttribute("map", clubPostServiceImpl.updateClubNotice(search, notice));
-		return "forward:/clubPost/getClubNoticeList.jsp";
-	}
-
-	@RequestMapping(value = "deleteClubNotice", method = RequestMethod.POST)
-	public String deleteClubNotice(@ModelAttribute Search search, Notice notice, Model model) throws Exception {
-		System.out.println("/deleteClubNotice : POST : 모임공지사항 삭제, 모임공지사항 리스트");
-		// 모임공지사항 리스트 : getClubNoticeList, 모임공지사항 리스트 개수 : getClubNoticeListCount
-		
-		// 누가 삭제하는지 아이디를 가져오지 않는다
-		
-		model.addAttribute("map", clubPostServiceImpl.deleteClubNotice(search, notice));
-		return "forward:/clubPost/getClubNoticeList.jsp";
 	}
 
 }

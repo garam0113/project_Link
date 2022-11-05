@@ -199,7 +199,7 @@
 					$("input[name='currentPage']").val("1");
 					//$("form").submit();
 				});
-				$("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
+				/* $("b:contains('모임등록시 - 모임 추가')").bind("click", function() {
 					location.href = "/clubPost/addPayView";
 				});
 				$("b:contains('모임대표가 가입승인시 - 모임원 추가')").bind("click", function() {
@@ -207,7 +207,7 @@
 				});
 				$("b:contains('모임신청시 - 모임추가')").bind("click", function() {
 					location.href = "/clubPost/addPayView?payNavigation=1";
-				});
+				}); */
 				
 				//무한 페이징
 				var currentPage = 1;

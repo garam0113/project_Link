@@ -8,7 +8,6 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.User;
 
@@ -29,14 +28,10 @@ public interface ClubPostDAO {
 	// 모임게시물 삭제 후 모임게시물 리스트
 	public Map<String, Object> deleteClubPost(Map<String, Object> map) throws Exception;
 	
-	// 내가 가입한 모임의 채팅방 번호 가져오기
-	public List<ClubUser> getRoomIdList(User user) throws Exception;
 	
 	
 	
 	
-	
-	// 신고
 	
 	// 좋아요 확인
 	public int getHeart(Heart heart) throws Exception;
@@ -50,14 +45,12 @@ public interface ClubPostDAO {
 	// 결제 상세보기
 	public Pay getPay(Pay pay) throws Exception;
 	
-	//public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
-	
-	//public void updateClub(Pay pay) throws Exception;
 	
 	
 	
-	
-	
+
+	// 내가 가입한 모임의 채팅방 번호 가져오기
+	public List<ClubUser> getRoomIdList(User user) throws Exception;
 	// 1:1 채팅
 	public void addChat(Chat chat) throws Exception;
 	
@@ -85,31 +78,7 @@ public interface ClubPostDAO {
 	
 	// 모잉게시물 댓글 삭제
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception;
-	
-	// 모임게시물 댓글 좋아요
-	//public int updateClubPostCommentHeart(Comment comment, Heart heart) throws Exception;
-	
-	
-	
-	
-	
-	
-	
-	
-	// 모임공지사항 등록
-	public Map<String, Object> addClubNotice(Map<String, Object> map) throws Exception;
-	
-	// 모임공지사항 리스트
-	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception;
-	
-	// 모임공지사항 상세보기
-	public Notice getClubNotice(Notice notice) throws Exception;
-	
-	// 모임공지사항 수정
-	public Map<String, Object> updateClubNotice(Map<String, Object> map) throws Exception;
-	
-	// 모임공지사항 삭제
-	public Map<String, Object> deleteClubNotice(Map<String, Object> map) throws Exception;
+
 	
 	
 	
