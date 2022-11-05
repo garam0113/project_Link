@@ -1,7 +1,6 @@
 package com.link.service.clubPost.impl;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import com.link.service.domain.ClubPost;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Notice;
 import com.link.service.domain.Pay;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
@@ -229,6 +227,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 	@Override
 	public Map<String, Object> deleteClubPostComment(Comment comment) throws Exception {
 		System.out.println(getClass() + ".deleteClubPostComment(Comment comment) 왔다");
+		System.out.println(comment.getDepth());
 		
 		String Id = comment.getUser().getUserId();
 		System.out.println("삭제하는 회원 아이디 : " + Id);
@@ -251,12 +250,16 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		// 지우려는 댓글의 대댓글 개수만큼 게시물 댓글수를 마이너스한다
 		if(comment.getCommentCount() > 0) {
 			// 지우려는 댓글에 대댓글이 있을 때
+			((Comment)map.get("comment")).setDepth(1);
 			for (int i = 0; i < comment.getCommentCount(); i++) {
-				//sqlSession.update("ClubPostMapper.updateClubPost", map);
+				System.out.println("댓글 깊이 : " + ((Comment)map.get("comment")).getDepth() + ", 댓글 개수 : " + comment.getCommentCount() + ", 게시물 번호 : " + comment.getClubPostNo());
+				sqlSession.update("ClubPostMapper.updateClubPost", map);
 			}
+			((Comment)map.get("comment")).setDepth(0);
 		}
 
-		// 댓글개수 - 1 한다
+		// 댓글의 댓글개수 - 1 한다
+		System.out.println("대댓글 있는지 확인 후 댓글의 개수 -1 하려고 한다. 댓글 깊이 : " +comment.getDepth());
 		if(comment.getDepth() != 0) {
 			System.out.println("댓글 삭제시 : 삭제여부 : " + ((Comment)map.get("comment")).getDeleteCondition()
 					+ ", 하트여부 : " + ((Comment)map.get("comment")).getHeartCondition() + ", 댓글의 부모번호 : " + ((Comment)map.get("comment")).getParent());
@@ -264,7 +267,17 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		}
 
 		// 댓글 삭제
+		System.out.println("댓글 삭제 전 : " + comment.getClubPostCommentNo() + ", " + comment.getDeleteCondition());
 		sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+		System.out.println("댓글 삭제 후 : " + comment.getClubPostCommentNo() + ", " + comment.getDeleteCondition());
+		
+		// 대댓글이 있다면 대댓글을 모두 지운다
+		if(comment.getCommentCount() > 0) {
+			for (int i = 0; i < comment.getCommentCount(); i++) {
+				comment.setDeleteCondition(20+"");
+				sqlSession.update("ClubPostCommentMapper.deleteClubPostComment", comment);
+			}
+		}
 		
 		// 게시물 댓글개수 가져온다
 		ClubPost clubPost = sqlSession.selectOne("ClubPostMapper.getClubPost", new ClubPost(comment.getClubPostNo(), comment.getClubPostCommentNo(), comment.getUser()));
@@ -394,56 +407,6 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		System.out.println(getClass() + ".getPay(Pay pay) 왔다");
 		return sqlSession.selectOne("ClubPostMapper.getPay", pay);
 	}// end of getPay(Pay pay)
-	
-	
-	
-	
-	
-///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////	
-	
-	
-	
-	
-	
-	@Override
-	public Map<String, Object> addClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".addClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.insert("NoticeMapper.addClubNotice", map);
-		int no = sqlSession.selectOne("NoticeMapper.getClubNoticetNo", map);
-		Notice notice = ((Notice)map.get("notice"));
-		notice.setNoticeNo(no);
-		map.put("notice", notice);
-		map.put("getClubNotice", sqlSession.selectOne("NoticeMapper.getClubNotice", notice));
-		return getClubNoticeList(map);
-	}// end of addClubNotice(Map<String, Object> map)
-
-	@Override
-	public Map<String, Object> getClubNoticeList(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".getClubNoticeList(Map<String, Object> map) 왔다");
-		map.put("getClubNoticeList", sqlSession.selectList("NoticeMapper.getClubNoticeList", map) );
-		map.put("getClubNoticeListCount", sqlSession.selectOne("NoticeMapper.getClubNoticeListCount", map) );
-		return map;
-	}// end of getClubNoticeList(Map<String, Object> map)
-
-	@Override
-	public Notice getClubNotice(Notice notice) throws Exception {
-		System.out.println(getClass() + ".getClubNotice(Notice notice) 왔다");
-		return sqlSession.selectOne("NoticeMapper.getClubNotice", notice);
-	}// end of getClubNotice(Notice notice)
-
-	@Override
-	public Map<String, Object> updateClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".updateClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.update("NoticeMapper.updateClubNotice", map);
-		return getClubNoticeList(map);
-	}// end of updateClubNotice(Map<String, Object> map)
-
-	@Override
-	public Map<String, Object> deleteClubNotice(Map<String, Object> map) throws Exception {
-		System.out.println(getClass() + ".deleteClubNotice(Map<String, Object> map) 왔다");
-		sqlSession.delete("NoticeMapper.deleteClubNotice", map);
-		return getClubNoticeList(map);
-	}// end of deleteClubNotice(Search search, Notice notice)
 	
 	
 	

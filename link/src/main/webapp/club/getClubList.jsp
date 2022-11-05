@@ -1,10 +1,10 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- °¡´É? -->
+<!-- ê°€ëŠ¥? -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -12,223 +12,258 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-	
+
 <head>
-	<title>¸ğÀÓ¸®½ºÆ®</title>
-	<meta charset="EUC-KR">
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
- 	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 	 
- 	 
- 	 
- 	 <!-- alert! -->
- 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
- 	 
- 	 
- 	 <!-- µû·Î °¡´É?? -->
- 	 	<meta name="description" content="The Page Description">
-		<style type="text/css">@-ms-viewport{width: device-width;}</style>
-		<title>Beetle - Home page</title>
-		<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
-		<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
-		<link rel="stylesheet" href="/resources/css/style.css" media="screen">
- 	 
- 	 
- 	 
- 	 <style>
-		body {
-		    background-color: #EBEDF0;
-		    color: #333;
-		    font-size: 1.125em;
-		    font-size: 15px;
-		    font-family: 'Open Sans', sans-serif;
-		    line-height: 0;
-		}
-		
-		#main {
-		    position: relative;
-		    z-index: 10;
-		    overflow: hidden;
-		    background-color: #EBEDF0;
-		}
-		
-		header {
-	    position: fixed;
-	    top: 0;
-	    left: 0;
-	    z-index: 9;
-	    padding: 0.7rem;
-	    width: 100%;
-	    /* background-color: rgba(255, 255, 255, 0.97);
+<title>ëª¨ì„ë¦¬ìŠ¤íŠ¸</title>
+<meta charset="EUC-KR">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI toolTip ì‚¬ìš© JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+<!-- alert! -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!-- ë”°ë¡œ ê°€ëŠ¥?? -->
+<meta name="description" content="The Page Description">
+<style type="text/css">
+@
+-ms-viewport {
+	width: device-width;
+}
+</style>
+<title>Beetle - Home page</title>
+<link rel="stylesheet" href="/resources/css/layers.min.css" media="screen">
+<link rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
+<link rel="stylesheet" href="/resources/css/style.css" media="screen">
+
+
+
+<style>
+body {
+	background-color: #EBEDF0;
+	color: #333;
+	font-size: 1.125em;
+	font-size: 15px;
+	font-family: 'Open Sans', sans-serif;
+	line-height: 0;
+}
+
+#main {
+	position: relative;
+	z-index: 10;
+	overflow: hidden;
+	background-color: #EBEDF0;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	padding: 0.7rem;
+	width: 100%;
+	/* background-color: rgba(255, 255, 255, 0.97);
 	    -webkit-box-shadow: 0 1px 0 rgb(0 0 0 / 10%);
 	    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 	    box-shadow: 0 1px 0 rgb(0 0 0 / 10%); */
-		}
-		
-		.darkover {
-    	position: static;
-	    top: 0;
-	    right: 0;
-	    bottom: 0;
-	    left: 0;
- 	   background: rgba(0,0,0,0.35);
-		}
-		
-		header.transparent {
-    		/* background-color: #23242b; */
-		    -webkit-box-shadow: none;
-		    -moz-box-shadow: none;
- 	   		box-shadow: none;
-		}
-		.thumbnail {
-			    display: block;
-			    padding: 0px;
-			    margin-bottom: 40px;
-			    line-height: 1;
-			    background-color: #ffffff;
-			    /* border: 1px solid #5F0080; */
-			    border-radius: 10px;
-			    -webkit-transition: border .2s ease-in-out;
-			    -o-transition: border .2s ease-in-out;
-			    transition: border .2s ease-in-out;
-			    height: 400px;
-			}
-		
-		.thumbnail img { 
-			min-height:200px;
-			height:100px;
-		    width: 254px;
-		    border-radius: 20px;
-		 }     
-		 
-		 div {
-		 	clear: none;
-		 }
-		 
-		 .club-cT {
-		 		font-size: 
-		 }
-		 
-		 element.style {
-	    float: left;
-	    border: 1px solid !important;
-		}
-		
-		.btn{
-	   background-color: white;
-	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	   border-radius: 10px;
-	   margin: 1rem;
-	   padding: 0px;
-	   width: 83px !important;
-	   color: #5F0080 !important;
-	   font-size: 16px !important;
-	   text-align: center;
-	   border: solid 2px;
-	}
+}
+
+.darkover {
+	position: static;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+header.transparent {
+	/* background-color: #23242b; */
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.thumbnail {
+	display: block;
+	padding: 0px;
+	margin-bottom: 40px;
+	line-height: 1;
+	background-color: #ffffff;
+	/* border: 1px solid #5F0080; */
+	border-radius: 10px;
+	-webkit-transition: border .2s ease-in-out;
+	-o-transition: border .2s ease-in-out;
+	transition: border .2s ease-in-out;
+	height: 400px;
+	font-size: 0.9rem !important;
+}
+
+.thumbnail img {
+	min-height: 200px;
+	height: 100px;
+	width: 254px;
+	border-radius: 20px;
+}
+
+div {
+	clear: none !important;
+}
+
+div.row {
+	margin-left: 0 !important;
+}
+
+.club-cT {
+	font-size:
+}
+
+element.style {
+	float: left;
+	border: 1px solid !important;
+}
+
+.btn {
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px,
+		rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 0px;
+	width: 83px !important;
+	color: #5F0080 !important;
+	font-size: 16px !important;
+	text-align: center;
+	border: solid 2px;
+}
+
+.btn:hover {
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px,
+		rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 10px;
+	margin: 1rem;
+	padding: 0px;
+	width: 83px !important;
+	color: white !important;
+	font-size: 16px !important;
+}
+
+#pageNav {
+	float: none;
+}
+
+#toolbar {
+	float: right !important;
+}
+
+nav {
+	float: none;
+}
+
+element.style {
+	float: right;
+	margin-bottom: 20px !important;
+	margin-top: 10px !important;
+}
+
+.keyword_search_area {
+	padding: 18px 0 10px 20px;
+	border: solid 1px #d8d8d8;
+	background-color: #e1bfff00 !important;
+	font-size: 12px;
+}
+
+section {
+	background-color: #cf0cc90d !important;
+	border: solid 1px #d8d8d8 !important;
+	margin: 10px;
+}
+
+/*ì¸ë„¤ì¼ ì• ë‹ˆë©”ì´ì…˜*/
+@keyframes post-ani { 
 	
-	.btn:hover{
-	   background-color: #5F0080;
-	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	   border-radius: 10px;
-	   margin: 1rem;
-	   padding: 0px;
-	   width: 83px !important;
-	   color: white !important;
-	   font-size: 16px !important;
+	25% {
+		transform: rotate(2deg) scale(1.01);
 	}
-		
-		 #pageNav {
-		 	float: none;
-		 }
-		 
-		 #toolbar {
-		 	float: right !important;
-		 }
-		 
-		 nav {
-		 	float: none;
-		 }
-		 
-		 
-	 element.style {
-    	float: right;
-    	margin-bottom: 20px !important;
-	    margin-top: 10px !important;
+
+	50%
+	{
+		transform:rotate(0deg)
+		scale(1);
 	}
-	
-	.keyword_search_area {
-    padding: 18px 0 10px 20px;
-    border: solid 1px #d8d8d8;
-    background-color: #e1bfff00 !important;
-    font-size: 12px;
+	75%
+	{
+		transform:rotate(-2deg)
+		scale(1.01);
 	}
-	
-	section {
-		background-color: #cf0cc90d !important;
-		border: solid 1px #d8d8d8 !important;
-		margin: 10px;
-	}
-	
-	
-	/*½æ³×ÀÏ ¾Ö´Ï¸ŞÀÌ¼Ç*/
-	@keyframes post-ani {
-	
-    25% {
-        transform: rotate(2deg) scale(1.01);
-	    }
- 
-    50% {
-        transform: rotate(0deg) scale(1);
-    	}
- 
-    75% {
-        transform: rotate(-2deg) scale(1.01);
-    	}
-	}
-	.thumbnail:hover {
+}
+.thumbnail:hover {
 	opacity: 0.9;
 	animation: post-ani 0.8s linear 1;
-	}
-	
-	/* ¾Ë¸²ºÎºĞ */
-	header {
-		display: flex;
-	}
+	cursor:pointer;
+}
 
-	.alarmHead {
-		float: right;
-		display: flex;
-		align-items: center;
-		margin: 5px;
-	}
+/* ì•Œë¦¼ë¶€ë¶„ */
+header {
+	display: flex;
+}
 
-	.alarmImg {
-		display: inline-flex; 
-		width:25px; 
-		height:25px;
-	}
+.alarmHead {
+	float: right;
+	display: flex;
+	align-items: center;
+	margin: 5px;
+}
+
+.alarmImg {
+	display: inline-flex;
+	width: 25px;
+	height: 25px;
 	
-		 
-		 
-	
-	</style>
-	
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
-	<script type="text/javascript">
+}
+
+.text-center {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/* SCROLL */
+
+html {
+	-ms-overflow-style:none !important; 
+}
+
+html::-webkit-scrollbar {
+	display:none !important;
+}
+
+/* SCROLL */
+
+
+
+</style>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+<script type="text/javascript">
 	
 	
 	function fncGetClubList(currentPage) {
@@ -238,14 +273,14 @@
 		$("form").attr("method", "POST").attr("action", "/club/getClubList").submit();
 	}
 	
-	//============================== °Ë»ö ÀÌº¥Æ® Ã³¸® ====================
+	//============================== ê²€ìƒ‰ ì´ë²¤íŠ¸ ì²˜ë¦¬ ====================
 	$(function(){
 		$("button.btn.btn-search").on("click", function() {
 			fncGetClubList(1);
 		});	
 	});
 	
-	//========== °¡ÀÔÇöÈ² Ã³¸® ================
+	//========== ê°€ì…í˜„í™© ì²˜ë¦¬ ================
 	$(function() {
 
 		$("button.btn.btn-myList").on("click", function() {
@@ -269,13 +304,13 @@
 			} else {
 				
 				Swal.fire({
-					title: '¸ğÀÓ ÃÖ´ë ÇÑµµ ¼ö¸¦ ÃÊ°úÇÏ¿´½À´Ï´Ù.' ,
-					text: "°áÁ¦¸¦ ÅëÇØ ¸ğÀÓ ÇÑµµ¸¦ ´Ã¸± ¼ö ÀÖ½À´Ï´Ù." ,
+					title: 'ëª¨ì„ ìµœëŒ€ í•œë„ ìˆ˜ë¥¼ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.' ,
+					text: "ê²°ì œë¥¼ í†µí•´ ëª¨ì„ í•œë„ë¥¼ ëŠ˜ë¦´ ìˆ˜ ìˆìŠµë‹ˆë‹¤." ,
 					icon: 'warning',
 					showCancelButton: false,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
-					confirmButtonText: 'È®ÀÎ',
+					confirmButtonText: 'í™•ì¸',
 				}).then((result) => {
 					if(result.value){
 						
@@ -311,7 +346,7 @@
 	
 	
 	
-	//¹«ÇÑ ÆäÀÌÂ¡
+	//ë¬´í•œ í˜ì´ì§•
 	/* var currentPage = 1;
 	$(window).scroll(function() {
 		var maxHeight = $(document).height();
@@ -357,207 +392,188 @@
 	
 	
 	</script>
-	
+
 </head>
 
-	 <%-- SOCKET IO --%>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
-	<%-- SOCKET IO --%>
+<%-- SOCKET IO --%>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+<%-- SOCKET IO --%>
 
 
 
 <%-- <jsp:include page="/toolbar.jsp" /> --%>
 
-  <body class="page">
-
-   <header role="banner" class="transparent light">
-      <div class="row">
-         <div
-            class="nav-inner row-content buffer-left buffer-right even clear-after" style="margin-left: 350px; font-size: 17.5px;">
-            <div id="brand">
-               <h1 class="reset">
-                  <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/">LINK</a>
-               </h1>
-            </div>
-            <!-- brand -->
-            <a id="menu-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-            <nav>
-               <ul class="reset" role="navigation">
-                  <li class="menu-item" style="margin-left: 320px;"><a href="/">Home</a></li>
-                  <li class="menu-item"><a href="/feed/getFeedList">Feed</a></li>
-                  <li class="menu-item"><a href="/club/getClubList">Club</a></li>
-                  <li class="menu-item"><a
-                     href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
-                  <li class="menu-item"><a
-                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
-                  <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="/user/login">·Î±×ÀÎ</a></li>
-                  </c:if>
-                  <c:if test="${!empty sessionScope.user }">
-                     <li class="menu-item"><a
-                        href="/user/logout?userId=${sessionScope.user.userId}">·Î±×¾Æ¿ô</a></li>
-                     <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
-                        <li class="menu-item"><a
-                           href="/user/getUser?userId=${sessionScope.user.userId}">³»Á¤º¸º¸±â</a></li>
-                           
-                     </c:if>
-                     <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
-                        <li class="menu-item"><a href="/user/getUserList">°ü¸®ÀÚÆäÀÌÁö</a></li>
-                     </c:if>
-                     
-                     
-                  </c:if>
-                  
-               </ul>
-            </nav>
-            
-         </div>
-         <!-- row-content -->
-      </div>
-      
-      <!-- row -->
-   </header>
- 
+<body class="page">
 
 
-<body class="blog masonry-style">
+
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- ì±„íŒ… js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- ì±„íŒ… css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
+	
+
+	<jsp:include page="/toolbar.jsp" />
+
 
 	<main role="main">
-	
-		<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-		<div class="container" style="margin-top:150px;">
-	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
-	  	  <div id="main" class="row" style="width: 824px;">
 
-		    <div class="col-md-8 text-right" style="float: left;">
-			    <form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px;background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
-			    
-			    <c:if 
-						test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
-			    
-			    
-				  <div class="form-group" id="selectTitle">
-				    <select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>¸ğÀÓÀÌ¸§</option>
-					</select>
-					
-					<p><label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">Áö ¿ª</label></p>
-					
-					<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">Ä«Å×°í¸®</label>
-					
-				  </div>
-				  
-				  <div class="form-group" id="selects" style="text-align: left;">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="¸ğÀÓ °Ë»ö" autocomplete="off" onkeyup="enterkey()"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
-				    			 
-					<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
-	    					<option value="">Áö¿ª</option>
-	    					<option value="°­³²±¸">°­³²±¸</option>
-							<option value="°­µ¿±¸">°­µ¿±¸</option>
-							<option value="°­ºÏ±¸">°­ºÏ±¸</option>
-							<option value="°­¼­±¸">°­¼­±¸</option>
-							<option value="°ü¾Ç±¸">°ü¾Ç±¸</option>
-							<option value="±¤Áø±¸">±¤Áø±¸</option>
-							<option value="±¸·Î±¸">±¸·Î±¸</option>
-							<option value="±İÃµ±¸">±İÃµ±¸</option>
-							<option value="³ë¿ø±¸">³ë¿ø±¸</option>
-							<option value="µµºÀ±¸">µµºÀ±¸</option>
-							<option value="µ¿´ë¹®±¸">µ¿´ë¹®±¸</option>
-							<option value="µ¿ÀÛ±¸">µ¿ÀÛ±¸</option>
-							<option value="¸¶Æ÷±¸">¸¶Æ÷±¸</option>
-							<option value="¼­´ë¹®±¸">¼­´ë¹®±¸</option>
-							<option value="¼­ÃÊ±¸">¼­ÃÊ±¸</option>
-							<option value="¼ºµ¿±¸">¼ºµ¿±¸</option>
-							<option value="¼ººÏ±¸">¼ººÏ±¸</option>
-							<option value="¼ÛÆÄ±¸">¼ÛÆÄ±¸</option>
-							<option value="¾çÃµ±¸">¾çÃµ±¸</option>
-							<option value="¿µµîÆ÷±¸">¿µµîÆ÷±¸</option>
-							<option value="¿ë»ê±¸">¿ë»ê±¸</option>
-							<option value="ÀºÆò±¸">ÀºÆò±¸</option>
-							<option value="Á¾·Î±¸">Á¾·Î±¸</option>
-							<option value="Áß±¸">Áß±¸</option>
-							<option value="Áß¶û±¸">Áß¶û±¸</option>
-	    				</select>	
-	    				
-	    				<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
-	    					<option value="">Ä«Å×°í¸®</option>
-	    					<option value="¿îµ¿">¿îµ¿</option>
-	  						<option value="ºÀ»çÈ°µ¿">ºÀ»çÈ°µ¿</option>
-	  						<option value="À½½Ä">À½½Ä</option>
-							<option value="¿©Çà">¿©Çà</option>
-							<option value="¹İ·Áµ¿¹°">¹İ·Áµ¿¹°</option>
-							<option value="°ÔÀÓ">°ÔÀÓ</option>
-							<option value="À½¾Ç/´í½º">À½¾Ç/´í½º</option>
-							<option value="µ¶¼­">µ¶¼­</option>
-							<option value="±âÅ¸">±âÅ¸</option>
-	    				</select>			    			 
-					<p>
-					
-					<p>
-					
-						<button type="button" class="btn btn-search" >°Ë»ö</button>
-	    				<button type="button" onclick="resetBtn()" class="btn btn-reset"><span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>ÃÊ±âÈ­</button>
-				  </div>
-				  </c:if>
-				  
-				  <c:if
-						test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
-				</c:if>
-				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
-				  <input type="hidden" id="currentPage1" name="currentPage" value="1"/>
-	    	    			
-	    	</form>
-	    	</div>
-	    	
-	    	<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
-	    	<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
-	    	
-	  		<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">¸ğÀÓ°³¼³
+		<div id="main">
+
+			<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+			<div class="container" style="margin-top: 150px;">
+
+				<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
+				<div id="main" class="row" style="width: 824px;">
+			
+			
+			
+					<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+					<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+					<%-- ì±„íŒ… --%>
+					<jsp:include page="/chat/chat.jsp" />
+					<%-- ì±„íŒ… --%>
+				
+				
+
+					<div class="col-md-8 text-right" style="float: left;">
+						<form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
+
+							<c:if test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
+
+
+								<div class="form-group" id="selectTitle">
+									<select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
+										<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ëª¨ì„ì´ë¦„</option>
+									</select>
+
+									<p>
+										<label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">ì§€ ì—­</label>
+									</p>
+
+									<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">ì¹´í…Œê³ ë¦¬</label>
+
+								</div>
+
+								<div class="form-group" id="selects" style="text-align: left;">
+									<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+									<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="ëª¨ì„ ê²€ìƒ‰" autocomplete="off" onkeyup="enterkey()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
+
+									<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
+										<option value="">ì§€ì—­</option>
+										<option value="ê°•ë‚¨êµ¬">ê°•ë‚¨êµ¬</option>
+										<option value="ê°•ë™êµ¬">ê°•ë™êµ¬</option>
+										<option value="ê°•ë¶êµ¬">ê°•ë¶êµ¬</option>
+										<option value="ê°•ì„œêµ¬">ê°•ì„œêµ¬</option>
+										<option value="ê´€ì•…êµ¬">ê´€ì•…êµ¬</option>
+										<option value="ê´‘ì§„êµ¬">ê´‘ì§„êµ¬</option>
+										<option value="êµ¬ë¡œêµ¬">êµ¬ë¡œêµ¬</option>
+										<option value="ê¸ˆì²œêµ¬">ê¸ˆì²œêµ¬</option>
+										<option value="ë…¸ì›êµ¬">ë…¸ì›êµ¬</option>
+										<option value="ë„ë´‰êµ¬">ë„ë´‰êµ¬</option>
+										<option value="ë™ëŒ€ë¬¸êµ¬">ë™ëŒ€ë¬¸êµ¬</option>
+										<option value="ë™ì‘êµ¬">ë™ì‘êµ¬</option>
+										<option value="ë§ˆí¬êµ¬">ë§ˆí¬êµ¬</option>
+										<option value="ì„œëŒ€ë¬¸êµ¬">ì„œëŒ€ë¬¸êµ¬</option>
+										<option value="ì„œì´ˆêµ¬">ì„œì´ˆêµ¬</option>
+										<option value="ì„±ë™êµ¬">ì„±ë™êµ¬</option>
+										<option value="ì„±ë¶êµ¬">ì„±ë¶êµ¬</option>
+										<option value="ì†¡íŒŒêµ¬">ì†¡íŒŒêµ¬</option>
+										<option value="ì–‘ì²œêµ¬">ì–‘ì²œêµ¬</option>
+										<option value="ì˜ë“±í¬êµ¬">ì˜ë“±í¬êµ¬</option>
+										<option value="ìš©ì‚°êµ¬">ìš©ì‚°êµ¬</option>
+										<option value="ì€í‰êµ¬">ì€í‰êµ¬</option>
+										<option value="ì¢…ë¡œêµ¬">ì¢…ë¡œêµ¬</option>
+										<option value="ì¤‘êµ¬">ì¤‘êµ¬</option>
+										<option value="ì¤‘ë‘êµ¬">ì¤‘ë‘êµ¬</option>
+									</select>
+
+									<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
+										<option value="">ì¹´í…Œê³ ë¦¬</option>
+										<option value="ìš´ë™">ìš´ë™</option>
+										<option value="ë´‰ì‚¬í™œë™">ë´‰ì‚¬í™œë™</option>
+										<option value="ìŒì‹">ìŒì‹</option>
+										<option value="ì—¬í–‰">ì—¬í–‰</option>
+										<option value="ë°˜ë ¤ë™ë¬¼">ë°˜ë ¤ë™ë¬¼</option>
+										<option value="ê²Œì„">ê²Œì„</option>
+										<option value="ìŒì•…/ëŒ„ìŠ¤">ìŒì•…/ëŒ„ìŠ¤</option>
+										<option value="ë…ì„œ">ë…ì„œ</option>
+										<option value="ê¸°íƒ€">ê¸°íƒ€</option>
+									</select>
+									<p>
+									<p>
+
+										<button type="button" class="btn btn-search">ê²€ìƒ‰</button>
+										<button type="button" onclick="resetBtn()" class="btn btn-reset">
+											<span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>ì´ˆê¸°í™”
+										</button>
+								</div>
+							</c:if>
+
+							<c:if test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
+							</c:if>
+
+							<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
+							<input type="hidden" id="currentPage1" name="currentPage" value="1" />
+
+						</form>
+					</div>
+
+					<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+					<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
+
+					<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">ëª¨ì„ê°œì„¤
 	  		
 	  		</button> -->
-	    <!-- </div> -->
-	    	
-	</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
-		
-	   <!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
-	   <div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px; transform: translate(-33px, 0px);">
-	    	<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
-	    	<p style="margin-top: 20px; margin-left: 11px;"><strong>¸ğÀÓ°³¼³</strong>
-	    </div>	
+					<!-- </div> -->
 
-
-	<div id="main" class="row">
-		  <c:forEach var="i" items="${clubList}">
-		  	<div class="col-xs-4 col-md-3">	
-				<div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
-			  			<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
-			  			<p class="club-cT" style="margin-left:10px;"><strong>${i.clubTitle}</strong></p>
-				  		<p style="margin-left:10px;">${i.clubArea}</p>
-				  		<p style="margin-left:10px;">ÃÖ´ëÀÎ¿ø : ${i.clubMaxMember}</p>
-				  		<p style="margin-left:10px;">${i.clubCategory }</p>
-				  		<p style="margin-left:10px;">¸ğÀÓ»ı¼ºÀÏ : ${i.clubRegDate}</p>
 				</div>
-				</div>						
-	    	 </c:forEach>
-		</div>	
-				
-      
-	</div>
-	  
- 	
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
-	
-	 		<jsp:include page="../common/pageNavigator_new2.jsp" />
- 	
- 	</main>
-	
+				<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
+
+				<!-- <div class="thumbnail" style="box-shadow: rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px;" onclick="location.href='/club/addClubView.jsp'"> -->
+				<div class="thumbnail" id="addClubBtn" style="box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; border-radius: 20px; margin-left: 909px; height: 245px; margin-top: -248px; transform: translate(-33px, 0px);">
+					<img src="/resources/image/uploadFiles/addButton1.png" style="width: 308px;">
+					<p style="margin-top: 20px; margin-left: 11px;">
+						<strong>ëª¨ì„ê°œì„¤</strong>
+				</div>
+
+
+				<div id="main" class="row">
+					<c:forEach var="i" items="${clubList}">
+						<div class="col-xs-4 col-md-3">
+							<div class="thumbnail" style="box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; border-radius: 20px;" onclick="location.href='/club/getClub?clubNo=${i.clubNo}'">
+								<img src="/resources/image/uploadFiles/${i.clubImage}" class="img-rounded">
+								<p class="club-cT" style="margin-left: 10px;">
+									<strong>${i.clubTitle}</strong>
+								</p>
+								<p style="margin-left: 10px;">${i.clubArea}</p>
+								<p style="margin-left: 10px;">ìµœëŒ€ì¸ì› : ${i.clubMaxMember}</p>
+								<p style="margin-left: 10px;">${i.clubCategory }</p>
+								<p style="margin-left: 10px;">ëª¨ì„ìƒì„±ì¼ : ${i.clubRegDate}</p>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+
+
+			</div>
+
+
+			<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
+
+			<jsp:include page="../common/pageNavigator_new2.jsp" />
+
+		</div>
+	</main>
+
 </body>
 
 </html>

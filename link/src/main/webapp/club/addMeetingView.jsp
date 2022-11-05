@@ -178,7 +178,7 @@
 	
 	
 	//잠시 주석!
-	/* var openWin;
+	var openWin;
 	function popup() {
 		var url = "/club/searchPlace.jsp";
 		var name = "searchPlace";
@@ -191,7 +191,7 @@
 			popup();
 		});
 		
-	}); */
+	});
 	
 	
 	//자식창에서 부모창으로 값 전달하기

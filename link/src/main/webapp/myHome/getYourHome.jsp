@@ -69,6 +69,7 @@ $(function(){
 							}) // swal close
 							
 							$("#commentModal").modal('hide');
+							self.location = "/feed/getFeed?feedNo="+feedNo;
 						
 						} // success close
 						
@@ -1397,7 +1398,58 @@ $(function(){
 	<!-- DELETE_FEED_HEART -->
 	
 })
-	
+$(function(){
+		/* 모임 게시물 좋아요 또는 좋아요취소 */
+		$(document).on("click",".clubPost-header-heart", function() {
+			//alert("모임게시물 좋아요");
+			
+			var clubNo = $("div[class='post']").attr("clubNo");
+			var clubPostNo = $("div[class='post']").attr("clubPostNo");
+			
+			//alert( clubNo );
+			//alert( clubPostNo );
+			
+			$.ajax( "/clubPostRest/json/updateClubPost",
+					{
+						method : "POST",
+						data : JSON.stringify({
+									clubNo : clubNo,
+									clubPostNo : clubPostNo
+								}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							// 기존의 이미지 경로를 지운다
+							console.log( JSONData );
+							//alert( JSONData.clubPostHeartCount );
+							
+							
+							// 다른 경로를 붙인다
+							// heartCondition
+							if( $("div[class='post']").attr("heartCondition") == 0 ){
+								// 빨간색
+								$("div[class='post']").attr("heartCondition", "1");
+								$("div[class='post']").find(".clubPost-header-heart").attr("src", "/resources/image/uploadFiles/heart.jpg");
+							}else{
+								// 하얀색
+								$("div[class='post']").attr("heartCondition", "0");
+								$("div[class='post']").find(".clubPost-header-heart").attr("src", "/resources/image/uploadFiles/no_heart.jpg");
+							}
+							$("div[class='post']").find("p[class='clubPostHeartCountAjax']").text( JSONData.clubPostHeartCount );
+							
+							if(sock) {
+								var Msg = "하트 좋아요";
+								sock.send(Msg);
+							}
+						}//end of success
+					});
+		}); // end of 하트
+		
+	})
+ 	
 
 	
 	
@@ -1408,6 +1460,9 @@ $(function(){
 </script>
 
 <style>
+.comment2 {
+		width:25px !important;
+	}
 
 .modal-backdrop.in {
 z-index: -1;
@@ -1946,13 +2001,40 @@ border-radius: 15px !important;
 
 <body class="blog masonry-style">
 
-	
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+
+
 
 	<main role="main" class="main">
 		
 			
 
 			<div id="main" class="row">
+
+
+
+				<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+				<%-- chat.js에서 사용위해서 --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+				<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+				
+				
+				
 			<div>
 			<jsp:include page="/toolbar.jsp" />
 			</div>
@@ -2347,14 +2429,13 @@ $(function() {
 				/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
 				"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 					"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
-				"</a>"+
-			"</div>"+
+				"</a>"+"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 			"<div style='padding-top: 33px; margin-left:50px;'>"+
             <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-            "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+            "<img class='clubPost-header-heart' style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
          "</div>"+
 			"<div style='flex:1;  padding-top: 15px;' >"+
-				"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+				"<p align='center' class='clubPostHeartCountAjax' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
 			"</div>"+
 		
 			
@@ -2381,14 +2462,13 @@ $(function() {
 					/* "<a href='/myHome/getYourHome?userId="+item.user.userId+">"+ */
 					"<a href='javascript:getMyHomeGo(\"item.user.userId\")'>"+
 						"<p align='center' style='font-size: 20px;'>"+ item.user.nickName+ "</p>"+
-					"</a>"+
-				"</div>"+
+					"</a>"+"</div>"+"<div style='margin-left:-50px;'><img style='padding-top:35px;' class='comment2' src='/resources/image/uploadFiles/comment2.jpg'></div><div style='margin-left:15px;'><p style='padding-top:17px;'>"+item.clubPostCommentCount+"</p></div>"+
 				"<div style='padding-top: 33px; margin-left:50px;'>"+
                 <!-- heartCondition에 모임 게시물 번호가 있으면 해당 유저가 좋아요했다 / 0이면 좋아요 안했다 -->
-                "<img style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
+                "<img class='clubPost-header-heart' style='float: right;' src='/resources/image/uploadFiles/"+heartImage+"' height='30' width='30'>"+
              "</div>"+
 				"<div style='flex:1; padding-top: 15px;'>"+
-					"<p align='center' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
+					"<p align='center' class='clubPostHeartCountAjax' style='font-size: 20px; margin-right: 35px;'>"+ item.clubPostHeartCount+ "</p>"+
 				"</div>"+
 			
 				

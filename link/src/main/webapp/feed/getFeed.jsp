@@ -1,44 +1,34 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="description" content="The Page Description">
-	
-	<title>Feed</title>
-	
-	<link href="/resources/css/feed/getFeed.css" rel="stylesheet">
-	
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="/resources/javascript/plugins.js"></script>
-	<script src="/resources/javascript/beetle.js"></script>
-	
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-	<%-- SUMMER NOTE --%>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	<%-- SUMMER NOTE --%>
-	
-	<%-- ALERT --%>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<%-- ALERT --%>
-	
-	<%-- ICON --%>
-	<script src="https://kit.fontawesome.com/ebd5a092f1.js"></script>
-	<%-- ICON --%>
-	
-	<script type="text/javascript">
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
+
+<title>Feed</title>
+
+<link href="/resources/css/feed/getFeed.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+
+<%-- ICON --%>
+<script src="https://kit.fontawesome.com/ebd5a092f1.js"></script>
+<%-- ICON --%>
+
+<script type="text/javascript">
 	
 	function uploadSummernoteImageFile(file, el) {
 		data = new FormData();
@@ -617,7 +607,7 @@
 			
 			$(document).on("click", ".btn_updateFeed", function(event) {
 				console.log("수정하기");
-				$("#updateFeedForm").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+				$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 			})
 
 			
@@ -1562,106 +1552,115 @@
 		}) // jquery end
 	
 	</script>
-	
-	<style>
-	
 
-	
-	.main{
-		height:100vh;
-		width:100%;  
-		display:flex;
-		align-items:center;
-		justify-content:center;
-		text-align:center;
-	}
-	
-	h3{
-		text-align:center;
+<style>
+.main {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+	text-transform: uppercase;
+	color: #F1FAEE;
+	font-size: 4rem;
+	margin-top: 15px !important;
+	margin-bottom: 15px !important;
+}
+
+.roller {
+	height: 3.125rem;
+	line-height: 3.9rem;
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #1D3557;
+}
+
+#spare-time {
+	font-size: 1rem;
+	letter-spacing: 1rem;
+	margin-top: 0;
+	color: #A8DADC;
+}
+
+.roller #rolltext {
+	position: absolute;
+	top: 0;
+	animation: slide 10s infinite;
+}
+
+@
+keyframes slide { 0%{
+	top: 0;
+}
+
+25
+%
+{
+top
+:
+-4rem;
+}
+50
+%
+{
+top
+:
+-8rem;
+}
+72
+.5 %{
+	top: -12.25rem;
+}
+
+}
+@media screen and (max-width: 600px) {
+	h3 {
+		text-align: center;
 		text-transform: uppercase;
-		color: #F1FAEE; 
-		font-size: 4rem;
-		margin-top: 15px !important;
-		margin-bottom: 15px !important;
-	}
-
-	.roller{
-		height: 3.125rem;
-    	line-height: 3.9rem;
-		position: relative;
-		overflow: hidden; 
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: #1D3557;
-	}
-
-	#spare-time{
-		font-size: 1rem;
-		letter-spacing: 1rem;
-		margin-top: 0;
-		color: #A8DADC;
-	}
-
-	.roller #rolltext {
-		position: absolute;
-		top: 0;
-		animation: slide 10s infinite;  
-	}
-
-	@keyframes slide {
-		0%{
-			top:0;
-		}
-		25%{
-			top: -4rem;    
-		}
-		50%{
-			top: -8rem;
-		}
-		72.5%{
-			top: -12.25rem;
-		}
-	}
-
-@media screen and (max-width: 600px){
-	h3{
-		text-align:center;
-		text-transform: uppercase;
-		color: #F1FAEE; 
+		color: #F1FAEE;
 		font-size: 1.125rem !important;
 	}
-  
-	.roller{
-		height: 2.6rem; 
-		line-height: 2.125rem;  
+	.roller {
+		height: 2.6rem;
+		line-height: 2.125rem;
 	}
-  
-	.roller #rolltext {  
-		animation: slide-mob 10s infinite;  
+	.roller #rolltext {
+		animation: slide-mob 10s infinite;
 	}
-
-	@keyframes slide-mob {
-		0%{
-			top:0;
-		}
-		25%{
-			top: -2.125rem;    
-		}
-		50%{
-			top: -4.25rem;
-		}
-		72.5%{
-			top: -6.375rem;
-		}
+	@
+	keyframes slide-mob { 0%{
+		top: 0;
 	}
+	25
+	%
+{
+	top
+	:
+	-2.125rem;
+}
 
-
-	
-		
-		
-	</style>
+50
+%
+{
+top
+:
+-4.25rem;
+}
+72
+.5 %{
+	top: -6.375rem;
+}
+}
+</style>
 
 </head>
 
@@ -1672,488 +1671,454 @@
 	<div id="main">
 
 		<section class="row section">
-		<div class="container">
-			<div class="row-content buffer even clear-after">
-			
-				<div id="post-nav">
-					<ul class="clear-after reset plain">
-						<li id="prev-items" class="post-nav">
-							<a href="#" onClick="javascript:history.go(-1); return false">
-								<i class="fa fa-chevron-left"></i>
-								<span class="label">Prev</span>
-							</a>
-						</li> 
-					</ul>
-				</div>
-				
-				<div class="column three">
-					
-					<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
-						
-					<h3>오늘은:
-						<div class="roller">
-						<span id="rolltext">내가<br/>
-											너와<br/>
-											만나다<br/>
-											LINK<br/>
+			<div class="container">
+				<div class="row-content buffer even clear-after">
+
+					<div id="post-nav">
+						<ul class="clear-after reset plain">
+							<li id="prev-items" class="post-nav"><a href="#" onClick="javascript:history.go(-1); return false"> <i class="fa fa-chevron-left"></i> <span class="label">Prev</span>
+							</a></li>
+						</ul>
 					</div>
-					</h3>
-					
+
+					<div class="column three">
+
+						<button class="btn btn-primary searchPlace" type="button" onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+
+						<h3>
+							오늘은:
+							<div class="roller">
+								<span id="rolltext">내가<br /> 너와<br /> 만나다<br /> LINK<br />
+							</div>
+						</h3>
+
+					</div>
+
+					<div class="column six">
+
+						<!-- 피드 내용 -->
+						<div class="post-area clear-after">
+
+							<div class="feedHeader">
+								<div class="feedLeft">
+									<div class="feedInner">
+										<div class="feedCover">
+											<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+										</div>
+										<div class="feedName">${feed.user.nickName}</div>
+									</div>
+
+									<div class="feedDate">
+										<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+										<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+									</div>
+								</div>
+
+								<c:if test="${sessionScope.user.userId eq feed.user.userId}">
+
+									<div class="udIcon">
+										<%-- 수정 버튼 --%>
+										<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
+										<%-- 수정 버튼 --%>
+
+										<%-- 삭제 버튼 --%>
+										<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true"></span>
+										<%-- 삭제 버튼 --%>
+									</div>
+
+								</c:if>
+							</div>
+
+							<div class="feedContent">
+
+								<c:if test="${!empty feed.video}">
+									<iframe width="560" height="315" src="http://${feed.video}"></iframe>
+								</c:if>
+
+								<%-- 이미지 --%>
+
+								<c:if test="${!empty feed.image1}">
+									<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
+										<ol class="carousel-indicators">
+											<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
+
+											<c:if test="${!empty feed.image2}">
+												<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
+											</c:if>
+											<c:if test="${!empty feed.image3}">
+												<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
+											</c:if>
+											<c:if test="${!empty feed.image4}">
+												<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
+											</c:if>
+										</ol>
+
+										<!-- Wrapper for slides -->
+										<div class="carousel-inner" role="listbox">
+											<div class="item active">
+												<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
+											</div>
+
+											<c:if test="${!empty feed.image2}">
+												<div class="item">
+													<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+												</div>
+												<c:if test="${!empty feed.image3}">
+													<div class="item">
+														<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
+													</div>
+													<c:if test="${!empty feed.image4}">
+														<div class="item">
+															<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
+														</div>
+													</c:if>
+												</c:if>
+											</c:if>
+										</div>
+
+										<!-- Controls -->
+										<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+										</a> <a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span>
+										</a>
+									</div>
+								</c:if>
+
+
+								<%-- 이미지 --%>
+
+								<p>${feed.content}</p>
+
+							</div>
+
+						</div>
+						<!-- 피드 내용 -->
+
+						<!-- 피드 해시태그 -->
+						<c:if test="${!empty feed.hashtag}">
+							<div class="hashtagContent">
+
+								<c:set var="text" value="${fn:split(feed.hashtag, '#')}" />
+
+								<c:forEach var="textValue" items="${text}" varStatus="varStatus">
+									<span class="searchByHashtag"> #${textValue} </span>
+								</c:forEach>
+
+							</div>
+						</c:if>
+						<!-- 피드 해시태그 -->
+
+						<!-- 피드 좋아요 댓글수 신고 -->
+						<section class="row section lastBar">
+							<div class="row">
+
+								<%-- 여백 --%>
+								<div class="col-xs-2"></div>
+								<%-- 여백 --%>
+
+								<c:if test="${feed.checkHeart eq 0}">
+									<div class="col-xs-2">
+										<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top: 0px;" />
+									</div>
+								</c:if>
+								<c:if test="${feed.checkHeart ne 0}">
+									<div class="col-xs-2">
+										<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top: 0px;" />
+									</div>
+								</c:if>
+
+								<div class="col-xs-1 likeCount">${feed.heartCount}</div>
+
+								<div class="col-xs-2 comment">
+									<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true" />
+								</div>
+
+								<div class="col-xs-1 commentCount">${feed.commentCount}</div>
+
+								<!-- 신고 아이콘 -->
+								<div class="col-xs-2 report">
+									<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true" />
+								</div>
+								<!-- 신고 아이콘 -->
+
+								<%-- 여백 --%>
+								<div class="col-xs-2"></div>
+								<%-- 여백 --%>
+
+							</div>
+						</section>
+						<!-- 피드 좋아요 댓글수 신고 -->
+
+						<form id="feedInfo" style="margin-top: 50px;">
+							<!-- 댓글 관련 hidden -->
+
+							<%-- 피드 신고 --%>
+							<input type="hidden" name="reportSource" value="3">
+							<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
+							<input type="hidden" name="user2" value="${feed.user.userId}">
+							<%-- 피드 신고 --%>
+
+							<input type="hidden" name="source" value="0">
+							<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
+							<input type="hidden" name="feedNo" value="${feed.feedNo}">
+
+							<input type="hidden" name="parent" value="0">
+							<input type="hidden" name="depth" value="0">
+							<input type="hidden" name="sequence" value="${feed.commentCount}">
+							<textarea name="mainCommentContent" placeholder="댓글작성"></textarea>
+							<button class="btn btn-primary btn_addComment" type="button">SUBMIT</button>
+							<!-- 댓글 관련 hidden -->
+						</form>
+
+						<div class="comment-section">
+							<ul class="comment-list plain">
+								<li class="comment"><c:set var="i" value="0"></c:set> <c:forEach var="comment" items="${commentList}">
+										<c:set var="i" value="${i + 1}"></c:set>
+
+										<div class="single-comment" style="margin-left:<c:out value='${25 * comment.depth}'/>px;">
+
+											<div class="comment-author">
+
+												<img src="/resources/image/uploadFiles/${comment.user.profileImage}" class="avatar" alt=""> <cite>${comment.user.nickName}</cite> <span class="says">says</span>
+
+											</div>
+											<!-- comment-author -->
+
+
+
+											<div class="comment-meta">
+												<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time>
+												/
+												<c:if test="${comment.depth lt 2}">
+													<a class="btn_createRecomment">Reply</a>
+												</c:if>
+												<c:if test="${sessionScope.user.userId eq comment.user.userId}">
+													<!-- 수정 버튼 -->
+											&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
+													<!-- 수정 버튼 -->
+
+													<!--  삭제 버튼 -->
+											&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
+													<!--  삭제 버튼 -->
+												</c:if>
+												<!--  신고 버튼 -->
+												&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>
+												<!--  신고 버튼 -->
+												<c:if test="${comment.heartCondition ne 0}">
+													<div class="heartPosition">
+														<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />
+
+														<div class="heartCountPosition">${comment.commentHeartCount}</div>
+													</div>
+												</c:if>
+												<c:if test="${comment.heartCondition eq 0}">
+													<div class="heartPosition">
+														<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />
+
+														<div class="heartCountPosition">${comment.commentHeartCount}</div>
+													</div>
+												</c:if>
+											</div>
+											<!-- comment-meta -->
+
+											<c:if test="${fn:trim(comment.reportCondition) ne 0}">
+												<p class="commentContent">관리자에 의해 삭제된 댓글입니다.</p>
+											</c:if>
+
+											<c:if test="${fn:trim(comment.reportCondition) eq 0}">
+												<p class="commentContent">${comment.commentContent}</p>
+											</c:if>
+
+											<!-- 대댓글 관련 hidden -->
+
+											<form class="commentInfo">
+
+												<%-- 피드 댓글 신고 --%>
+												<input type="hidden" name="reportSource" value="4">
+												<input type="hidden" name="sourceNumber" value="${comment.feedCommentNo}">
+												<input type="hidden" name="user2" value="${comment.user.userId}">
+												<%-- 피드 댓글 신고 --%>
+
+												<input type="hidden" name="source" value="1">
+												<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+												<input type="hidden" name="feedNo" value="${feed.feedNo}">
+												<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
+
+												<input type="hidden" name="parent" value="${comment.parent}">
+												<input type="hidden" name="depth" value="${comment.depth}">
+												<input type="hidden" name="sequence" value="${comment.sequence}">
+
+											</form>
+
+											<!-- 대댓글 관련 hidden -->
+
+											<div class='btn_recommentCheck' style="display: none;">
+												<textarea name='commentContent' placeholder='작성'></textarea>
+												<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>
+											</div>
+
+										</div>
+										<!-- single-comment -->
+
+									</c:forEach></li>
+							</ul>
+						</div>
+						<!-- comment-section -->
+
+
+					</div>
+
+					<div class="column three"></div>
+
+
+					<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
+
+					<div class="tabs1">
+						<input id="all-follow" type="radio" name="tab_item-follow" checked>
+						<label class="tab_item-follow" for="all-follow">팔로우</label>
+
+						<input id="programming-follow" type="radio" name="tab_item-follow">
+						<label class="tab_item-following" for="programming-follow">팔로워</label>
+
+						<div class="tab_content-follow" id="all-follow_content">
+							<div class="col-md-4" id="fll">
+								<br />
+							</div>
+						</div>
+						<div class="tab_content-follow" id="programming-follow_content">
+							<div class="col-md-4" id="fl">
+								<br />
+							</div>
+						</div>
+					</div>
+
+
+
+					<%-- 현재 페이지 --%>
+					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
+					<input type="hidden" id="pageFlag" value=true>
+					<%-- 현재 페이지 --%>
+
 				</div>
-				
-				<div class="column six">
+			</div>
+		</section>
+	</div>
+
+	<!-- 신고 Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<!-- form Start /////////////////////////////////////-->
+				<form class="form-horizontal" enctype="multipart/form-data" id="reportForm">
+
+					<div class="reportTitleCover">
+						<div class="reportTitleTitle">제목</div>
+						<div class="reportTitle">
+
+							<textarea class="title" id="title" name="title" maxlength="66" placeholder="신고 제목을 입력해주세요"></textarea>
+
+						</div>
+
+						<!--  화면구성 div end /////////////////////////////////////-->
+
+					</div>
+
+					<div class="reportContentCover">
+						<div class="reportContentTitle">내용</div>
+
+						<div class="reportContent">
+							<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
+						</div>
+					</div>
+
+					<div class="reportSourceDiv">
+						신고받는 ID
+						<input type="text" class="reportSourceDivId" id="user2" name="user2" value="" readonly />
+						신고 출처
+						<input type="text" class="reportSourceDivSource" value="피드" disabled />
+					</div>
+
+					<input type="hidden" name="type" id="type" value="1">
+					<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
+					<input type="hidden" id="reportSource" name="reportSource" value="">
+					<input type="hidden" name="no" id="No" value="" />
+
+					<div class="reportModalReason">
+
+						<input type="checkbox" id="욕설" name="reportReason" value="1">
+						욕설
+						<input type="checkbox" id="광고" name="reportReason" value="2">
+						광고
+						<input type="checkbox" id="기타" name="reportReason" value="4">
+						기타
+						<input type="checkbox" id="성적" name="reportReason" value="8">
+						성적인 발언
+
+					</div>
+
+				</form>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+					<button type="button" class="btn btn-default add add5">등록</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 수정 Modal -->
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<form id="updateFeedForm">
 
 					<!-- 피드 내용 -->
 					<div class="post-area clear-after">
-					
-						<div class="feedHeader">
-							<div class="feedLeft">
-								<div class="feedInner">
-									<div class="feedCover">
-										<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}"/>
-									</div>
-									<div class="feedName">
-										${feed.user.nickName}
-									</div>
-								</div>
-									
-								<div class="feedDate">
-									<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-									<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
-								</div>
-							</div>
-									
-							<c:if test="${sessionScope.user.userId eq feed.user.userId}">
-							
-							<div class="udIcon">
-								<%-- 수정 버튼 --%>
-								<span class="glyphicon glyphicon-paperclip btn_update" id="updateFeed" aria-hidden="true"></span>
-								<%-- 수정 버튼 --%>
-							
-								<%-- 삭제 버튼 --%>
-								<span class="glyphicon glyphicon-trash btn_delete" id="deleteFeed" aria-hidden="true" ></span>
-								<%-- 삭제 버튼 --%>
-							</div>
-							
-							</c:if>
-						</div>
-							
-						<div class="feedContent">
-						
-						<c:if test="${!empty feed.video}">
-							<iframe width="560" height="315" src="http://${feed.video}"></iframe>
-						</c:if>
-						
-						<%-- 이미지 --%>
-						
-							<c:if test="${!empty feed.image1}">
-							<div id="carousel-example-generic${i}" class="carousel slide" data-ride="carousel">
-								<ol class="carousel-indicators">
-									<li data-target="#carousel-example-generic${i}" data-slide-to="0" class="active"></li>
-									
-									<c:if test="${!empty feed.image2}">
-										<li data-target="#carousel-example-generic${i}" data-slide-to="1"></li>
-									</c:if>
-									<c:if test="${!empty feed.image3}">
-										<li data-target="#carousel-example-generic${i}" data-slide-to="2"></li>
-									</c:if>
-									<c:if test="${!empty feed.image4}">
-										<li data-target="#carousel-example-generic${i}" data-slide-to="3"></li>
-									</c:if>
-								</ol>
-							
-								<!-- Wrapper for slides -->
-								<div class="carousel-inner" role="listbox">
-									<div class="item active">
-										<img src="/resources/image/uploadFiles/${feed.image1}" alt="${feed.image1}">
-									</div>
-									
-									<c:if test="${!empty feed.image2}">
-										<div class="item">
-											<img src="/resources/image/uploadFiles/${feed.image2}" alt="${feed.image2}">
+
+						<article role="main">
+							<div class="updateModalHeader">
+								<div class="updateModalLeft">
+									<div class="updateModalInner">
+										<div class="updateCover">
+											<img class="updateFeedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
 										</div>
-											<c:if test="${!empty feed.image3}">
-												<div class="item">
-													<img src="/resources/image/uploadFiles/${feed.image3}" alt="${feed.image3}">
-												</div>
-												<c:if test="${!empty feed.image4}">
-													<div class="item">
-														<img src="/resources/image/uploadFiles/${feed.image4}" alt="${feed.image4}">
-													</div>
-												</c:if>
-											</c:if>														
-									</c:if>
-								</div>
 
-								<!-- Controls -->
-								<a class="left carousel-control carousel_prev" href="#carousel-example-generic${i}" role="button" data-slide="prev">
-									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-									<span class="sr-only">Previous</span>
-								</a>
-								<a class="right carousel-control carousel_next" href="#carousel-example-generic${i}" role="button" data-slide="next">
-									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-									<span class="sr-only">Next</span>
-								</a>
+										<div class="updateFormName">${feed.user.nickName}</div>
+									</div>
+
+									<div class="updateFeedDate">
+										<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
+										<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+									</div>
+								</div>
 							</div>
-							</c:if>
-							
-							
-							<%-- 이미지 --%>
-												
-							<p>${feed.content}</p>
-							
-						</div>
-							
+
+							<textarea id="summernote" name="fullContent">${feed.fullContent}</textarea>
+
+						</article>
+
 					</div>
-					<!-- 피드 내용 -->
-					
-					<!-- 피드 해시태그 -->
-					<c:if test="${!empty feed.hashtag}">
-						<div class="hashtagContent">
-							
-							<c:set var="text" value="${fn:split(feed.hashtag, '#')}"/>
-							
-							<c:forEach var="textValue" items="${text}" varStatus="varStatus">
-								<span class="searchByHashtag">
-									#${textValue}
-								</span>
-							</c:forEach>
-							
-						</div>
-					</c:if>
-					<!-- 피드 해시태그 -->
-					
-					<!-- 피드 좋아요 댓글수 신고 -->
-					<section class="row section lastBar">
-						<div class="row">
-						
-							<%-- 여백 --%>
-							<div class="col-xs-2"></div>
-							<%-- 여백 --%>
-							
-							<c:if test="${feed.checkHeart eq 0}">
-								<div class="col-xs-2">
-									<img class="feedLike" src="/resources/image/uploadFiles/no_heart.jpg" width="30" height="30" style="margin-top : 0px;" />
-								</div>
-							</c:if>
-							<c:if test="${feed.checkHeart ne 0}">
-								<div class="col-xs-2">
-									<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" width="30" height="30" style="margin-top : 0px;" />
-								</div>
-							</c:if>
-							
-							<div class="col-xs-1 likeCount">
-								${feed.heartCount}
-							</div>
-							
-							<div class="col-xs-2 comment">
-								<img src="/resources/image/uploadFiles/comment2.jpg" aria-hidden="true"/>
-							</div>
-							
-							<div class="col-xs-1 commentCount">
-								 ${feed.commentCount}
-							</div>
-								
-							<!-- 신고 아이콘 -->
-							<div class="col-xs-2 report">
-								<img src="/resources/image/uploadFiles/report.jpg" aria-hidden="true"/>
-							</div>
-							<!-- 신고 아이콘 -->
-							
-							<%-- 여백 --%>
-							<div class="col-xs-2"></div>
-							<%-- 여백 --%>
-							
-						</div>
-					</section>
-					<!-- 피드 좋아요 댓글수 신고 -->
-					
-					<form id="feedInfo" style="margin-top:50px;">
-						<!-- 댓글 관련 hidden -->
-						
-						<%-- 피드 신고 --%>
-						<input type="hidden" name="reportSource" value="3">
-						<input type="hidden" name="sourceNumber" value="${feed.feedNo}">
-						<input type="hidden" name="user2" value="${feed.user.userId}">
-						<%-- 피드 신고 --%>
-						
-						<input type="hidden" name="source" value="0">
-						<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
-						<input type="hidden" name="feedNo" value="${feed.feedNo}">
-						
-						<input type="hidden" name="parent" value="0">
-						<input type="hidden" name="depth" value="0">
-						<input type="hidden" name="sequence" value="${feed.commentCount}">
-						<textarea name="mainCommentContent" placeholder="댓글작성"></textarea>
-						<button class="btn btn-primary btn_addComment" type="button">SUBMIT</button>
-						<!-- 댓글 관련 hidden -->
-					</form>
-					
-					<div class="comment-section">
-						<ul class="comment-list plain">
-							<li class="comment">
-							
-								<c:set var="i" value="0"></c:set>
-								<c:forEach var="comment" items="${commentList}">
-								<c:set var="i" value="${i + 1}"></c:set>
-										
-								<div class="single-comment" style="margin-left:<c:out value='${25 * comment.depth}'/>px;">
-								
-									<div class="comment-author">
-										
-											<img src="/resources/image/uploadFiles/${comment.user.profileImage}" class="avatar" alt="">
-											<cite>${comment.user.nickName}</cite>
-											<span class="says">says</span>
-										
-									</div><!-- comment-author -->
-									
-									
-									
-									<div class="comment-meta">
-										<time datetime="${comment.commentRegDate}">${comment.commentRegDate}</time> / <c:if test="${comment.depth lt 2}"><a class="btn_createRecomment">Reply</a></c:if>
-										<c:if test="${sessionScope.user.userId eq comment.user.userId}">
-											<!-- 수정 버튼 -->
-											&nbsp;&nbsp;<span class="glyphicon glyphicon-paperclip updateCommentView" aria-hidden="true"></span>
-											<!-- 수정 버튼 -->
-											
-											<!--  삭제 버튼 -->
-											&nbsp;&nbsp;<span class="glyphicon glyphicon-trash deleteComment" aria-hidden="true"></span>
-											<!--  삭제 버튼 -->
-										</c:if>
-											<!--  신고 버튼 -->
-											&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign commentReport" aria-hidden="true"></span>
-											<!--  신고 버튼 -->
-										<c:if test="${comment.heartCondition ne 0}">
-											<div class="heartPosition">
-												<img class="deleteCommentHeart" src="/resources/image/uploadFiles/heart.jpg" />
-												
-												<div class="heartCountPosition">
-													${comment.commentHeartCount}
-												</div>
-											</div>
-										</c:if>
-										<c:if test="${comment.heartCondition eq 0}">
-											<div class="heartPosition">
-												<img class="addCommentHeart" src="/resources/image/uploadFiles/no_heart.jpg" />
-												
-												<div class="heartCountPosition">
-													${comment.commentHeartCount}
-												</div>
-											</div>
-										</c:if>
-									</div><!-- comment-meta -->
-									
-									<c:if test="${fn:trim(comment.reportCondition) ne 0}">
-										<p class="commentContent">관리자에 의해 삭제된 댓글입니다.</p>
-									</c:if>
-									
-									<c:if test="${fn:trim(comment.reportCondition) eq 0}">
-										<p class="commentContent">${comment.commentContent}</p>
-									</c:if>
-									
-									<!-- 대댓글 관련 hidden -->
-			
-									<form class="commentInfo">
-									
-										<%-- 피드 댓글 신고 --%>
-										<input type="hidden" name="reportSource" value="4">
-										<input type="hidden" name="sourceNumber" value="${comment.feedCommentNo}">
-										<input type="hidden" name="user2" value="${comment.user.userId}">
-										<%-- 피드 댓글 신고 --%>
-									
-										<input type="hidden" name="source" value="1">
-										<input type="hidden" name="userId" value="${sessionScope.user.userId}">
-										<input type="hidden" name="feedNo" value="${feed.feedNo}">
-										<input type="hidden" name="feedCommentNo" value="${comment.feedCommentNo}">
-										
-										<input type="hidden" name="parent" value="${comment.parent}">
-										<input type="hidden" name="depth" value="${comment.depth}">
-										<input type="hidden" name="sequence" value="${comment.sequence}">
-										
-									</form>
-							
-									<!-- 대댓글 관련 hidden -->
-								
-									<div class='btn_recommentCheck' style="display: none;">
-										<textarea name='commentContent' placeholder='작성'></textarea>
-										<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>
-									</div>
-								
-								</div><!-- single-comment -->
-								
-								</c:forEach>
-							</li>
-						</ul>
-					</div><!-- comment-section -->
-					
-					
+
+					<!-- 댓글 관련 hidden -->
+					<input type="hidden" name="source" value="0">
+					<input type="hidden" name="openCondition" value="3">
+					<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+					<input type="hidden" name="feedNo" value="${feed.feedNo}">
+
+					<!-- 댓글 관련 hidden -->
+				</form>
+
+				<div class="modal-footer">
+					<button class="btn btn-primary btn_updateFeed" type="button">수정</button>
+					<button type="button" class="btn btn-default btn_updateFeedCancel" data-dismiss="modal">이전</button>
 				</div>
-				
-				<div class="column three"></div>
-				
-				
-				<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
-
-							<div class="tabs1">
-								<input id="all-follow" type="radio" name="tab_item-follow" checked>
-								<label class="tab_item-follow" for="all-follow">팔로우</label>
-								
-								<input id="programming-follow" type="radio" name="tab_item-follow">
-								<label class="tab_item-following" for="programming-follow">팔로워</label>
-
-								<div class="tab_content-follow" id="all-follow_content">
-									<div class="col-md-4" id="fll">
-										<br />
-									</div>
-								</div>
-								<div class="tab_content-follow" id="programming-follow_content">
-									<div class="col-md-4" id="fl">
-										<br />
-									</div>
-								</div>
-							</div>
-				
-				
-				
-				<%-- 현재 페이지 --%>
-				<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}">
-				<input type="hidden" id="pageFlag" value=true>
-				<%-- 현재 페이지 --%>
-				
 			</div>
 		</div>
-		</section>
 	</div>
-	
-		<!-- 신고 Modal -->
-		<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-
-					<!-- form Start /////////////////////////////////////-->
-					<form class="form-horizontal" enctype="multipart/form-data" id="reportForm">
-						
-						<div class="reportTitleCover">
-							<div class="reportTitleTitle">
-								제목
-							</div>
-							<div class="reportTitle">
-							
-								<textarea class="title" id="title" name="title" maxlength="66" placeholder="신고 제목을 입력해주세요"></textarea>
-
-							</div>
-
-							<!--  화면구성 div end /////////////////////////////////////-->
-
-						</div>
-						
-						<div class="reportContentCover">
-							<div class="reportContentTitle">
-								내용
-							</div>
-							
-							<div class="reportContent">
-								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
-							</div>
-						</div>
-						
-						<div class="reportSourceDiv">
-							신고받는 ID
-							<input type="text" class="reportSourceDivId" id="user2" name="user2" value="" readonly />
-							신고 출처
-							<input type="text" class="reportSourceDivSource" value="피드" disabled />
-						</div>
-						
-						<input type="hidden" name="type" id="type" value="1">
-						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
-						<input type="hidden" id="reportSource" name="reportSource" value="">
-						<input type="hidden" name="no" id="No" value="" />
-						
-						<div class="reportModalReason">
-
-							<input type="checkbox" id="욕설" name="reportReason" value="1" >
-								욕설
-							<input type="checkbox" id="광고" name="reportReason" value="2" >
-								광고
-							<input type="checkbox" id="기타" name="reportReason" value="4" >
-								기타
-							<input type="checkbox" id="성적" name="reportReason" value="8" >
-							성적인 발언
-
-						</div>
-						
-					</form>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close
-						</button>
-						
-						<button type="button" class="btn btn-default add add5">등록</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		<!-- 수정 Modal -->
-		<div class="modal fade" id="updateModal" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-				
-					<form id="updateFeedForm">
-						
-						<!-- 피드 내용 -->
-						<div class="post-area clear-after">
-						
-							<article role="main">
-								<div class="updateModalHeader">
-									<div class="updateModalLeft">
-										<div class="updateModalInner">
-											<div class="updateCover">
-												<img class="updateFeedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
-											</div>
-												
-											<div class="updateFormName">
-												${feed.user.nickName}
-											</div>
-										</div>
-										
-										<div class="updateFeedDate">
-											<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-											<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
-										</div>
-									</div>
-								</div>
-								
-								<textarea id="summernote" name="fullContent">${feed.fullContent}</textarea>
-								
-							</article>
-	
-						</div>
-						
-						<!-- 댓글 관련 hidden -->
-						<input type="hidden" name="source" value="0">
-						<input type="hidden" name="openCondition" value="3">
-						<input type="hidden" name="userId" value="${sessionScope.user.userId}">
-						<input type="hidden" name="feedNo" value="${feed.feedNo}">
-						
-						<!-- 댓글 관련 hidden -->
-					</form>
-					
-					<div class="modal-footer">
-						<button class="btn btn-primary btn_updateFeed" type="button">
-							UPDATE
-						</button>
-						<button type="button" class="btn btn-default btn_updateFeedCancel" data-dismiss="modal">
-							Close
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+	<!-- 수정 Modal -->
 	
 </body>
 </html>

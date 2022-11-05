@@ -22,26 +22,11 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 
-<%-- SUMMER NOTE --%>
-<script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-<%-- SUMMER NOTE --%>
-
-<%-- ALERT --%>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<%-- ALERT --%>
-
-<%-- BOOTSTRAP ICON --%>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<%-- BOOTSTRAP ICON --%>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	
@@ -602,9 +587,6 @@
 				if(user_Id == null) {
 					user_Id = $(this).parents(".feedHeader").siblings("input[name='user2']").val();
 					nickName = $(this).parent().next().text().trim();
-					
-					console.log("다른곳 :: " + user_Id);
-					console.log("다른곳 :: " + nickName);
 				}
 				
 				//alert(followUser.receiveId.userId);
@@ -700,10 +682,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -732,10 +713,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -745,18 +725,30 @@
 		      }
 		   })
 
+		   
+		   $(document).on("click", ".main", function(){
+
+			    $("div[name='dialog']").parent().dialog("close");
+
+			}) 
+			
 		}) 
-		$(".main").on("click",function(){
-
-		    $("div[name='dialog']").parent().dialog("close");
-
-		}) 
-
-		$(document).on("click",".dll",function(){
+		
+		$(document).on("click",".dll",function(event){
+			
 		   
 		   var user_Id = $(this).parent().parent().attr("id");
 		   var nickName = $("."+user_Id+"").val();
 		   var profileImage = $(this).attr("id");
+		   
+		  	console.log(user_Id);
+			console.log(nickName);
+			console.log(profileImage);
+			
+			if(user_Id == null) {
+				user_Id = $(this).parents(".feedHeader").siblings("input[name='user2']").val();
+				nickName = $(this).parent().next().text().trim();
+			}
 		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 
@@ -796,9 +788,6 @@
 		         var bfbType = "";
 		         var bfbState = "";
 		      }
-		         
-		         
-		         
 		      
 		         
 		         if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
@@ -854,10 +843,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -887,9 +875,9 @@
 		               },
 		               position: {
 		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		                  my:"left",
+		                  at:"right",
+		                  of:event
 		               }
 		               
 		            });
@@ -898,15 +886,14 @@
 		             $("#"+nickName+"1").dialog("open");
 		      }
 		   })
+		   
+		   $(document).on("click", ".main", function(){
+
+			    $("div[name='dialog']").parent().dialog("close");
+
+			}) 
 
 		})
-		
-		$(".main").on("click",function(){
-
-		    $("div[name='dialog1']").parent().dialog("close");
-
-		})
-		
 		
 		
 		<%-- 사이드 바 팔로우에서 이미지 클릭시 반장님 코드 --%>
@@ -1123,16 +1110,40 @@
 		$(document).on("click", ".comment", function(event) {
 			event.stopPropagation();
 			
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
+				
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
 			$("#commentModalFeedNo").val(feedNo);
 			$("#commentModal").modal();
+			
 		});
 		
 		$(document).on("click", ".addCommentByModal", function(event) {
 			event.stopPropagation();
 			
-			if('${sessionScope.user}' == null) return false;
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
 			
 			var sessionUser = '${sessionScope.user.userId}';
 			var content = $("#contentModal").val();
@@ -1194,8 +1205,9 @@
 		
 		<%-- 무한 스크롤 --%>
 		
-		$(window).scroll(function() {
+		$(window).scroll(function(event) {
 			console.log(($("#pageFlag").val()));
+			
 			if($("#pageFlag").val() == "true") {
 			
 				if((Math.ceil($(window).scrollTop() + $(window).height())) >= ( $(document).height() )) {
@@ -1261,6 +1273,7 @@
 										if(sessionUser == item.user.userId) {
 											addHtml += '<div class="udIcon">' +
 														'<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>' +
+														'<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>' +
 														'</div>'
 										}
 										
@@ -1389,6 +1402,7 @@
 									
 									if(addHtml == "") {
 										$("#pageFlag").val(false);
+										
 									}
 									
 								} // success close
@@ -1399,7 +1413,9 @@
 					
 				} // scroll if close
 			
-			} // pageFlag close;
+			} else { // 여기에 스크롤 이벤트 종료
+				event.preventDefault();
+			}// pageFlag close;
 		
 		}); // window scroll event close
 		
@@ -1420,6 +1436,34 @@
 			maxHeight: null,             	// 최대 높이
 			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
 			placeholder: '오늘 하루는 어떤가요?',			
+			
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// 파일 업로드(다중업로드를 위해 반복문 사용)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
+		
+		});
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernoteUpdate').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Insert', ['picture', 'video']],
+            ],
+            
+            disableResizeEditor: true,
+			height: 200,                 	// 에디터 높이
+			minHeight: null,             	// 최소 높이
+			maxHeight: null,             	// 최대 높이
+			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
 			
 			callbacks : { 
             	onImageUpload : function(files, editor, welEditable) {
@@ -1465,7 +1509,7 @@
 					  showConfirmButton : false,
 				})
 			} else {
-				$(this.form).attr("method", "POST").attr("accept-charset", "euc-kr").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+				$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
 				$.ajax (
 						{
@@ -1498,25 +1542,19 @@
 		<%-- UPDATE_FEED --%>
 		$(document).on("click", ".btn_update", function(event){
 			event.stopPropagation();
-			// console.log("피드 수정 버튼");
-			// console.log($(this).parents(".feedForm").html())
-			
-			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
-			
-			// alert($(this).parents(".feedHeader").siblings(".feedContent").find(".feedLetter").html().trim())
 			
 			$(".updateCover").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedCover").html().trim())
 			$(".updateFormName").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedName").html().trim())
 			$(".updateFeedDate").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedDate").html().trim())
-			$("#updateFeedForm textarea").html($(this).parents(".feedHeader").siblings(".feedContent").html())
-			
+			$("#updateFeedForm").find("input[name='feedNo']").val($(this).parents(".feedHeader").siblings("input[name='feedNo']").val());
+			$("#summernoteUpdate").next().find(".note-editable").html($(this).parents(".feedHeader").siblings("input[name='forUpdateFullContent']").val())
 			
 			$('#updateModal').modal();
 		});
 		
 		$(document).on("click", ".btn_updateFeed", function(event) {
 			console.log("수정하기");
-			$("#updateFeedForm").attr("method", "GET").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+			$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 		})
 		<%-- UPDATE_FEED --%>
 		
@@ -1653,18 +1691,30 @@
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 			
-			// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
-			// $(".modal-content").load("/loginModal");
-			var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
-			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+			var sessionUser = '${sessionScope.user}';
 			
-			// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			if(sessionUser == "" || sessionUser == null) {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+			} else {
 			
-			$("#user2").val(reportedUser);
-			$("#feedNo").val(feedNo);
-			
-			$('#reportModal').modal();
-
+				// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				// $(".modal-content").load("/loginModal");
+				var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
+				var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+				
+				// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+				
+				$("#user2").val(reportedUser);
+				$("#feedNo").val(feedNo);
+				
+				$('#reportModal').modal();
+			}
 			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		})	// .report evenet close
 		
@@ -1766,7 +1816,6 @@
  	 outline: none;
  	 box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
  	 border-radius: 10px;
-  	 padding: 10px;
    	 color: #5F0080 !important;
 	 font-size: 16px !important;
 	 text-align: center;
@@ -1874,6 +1923,7 @@
 		}
 	}
 }
+
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -1900,8 +1950,7 @@
 									onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 	
 								<%-- 검색 --%>
-								<form id="searchForm" method="POST" action="/feed/getFeedList"
-									accept-charset="euc-kr">
+								<form id="searchForm" method="POST" action="/feed/getFeedList">
 	
 									<input type="text" id="searchKeyword" placeholder="검색"
 										name="searchKeyword" value="${search.searchKeyword}">
@@ -1922,9 +1971,16 @@
 							</h3>
 							
 							
+							<%--
 							
+<<<<<<< HEAD
 						<jsp:include page="/serviceCenter/getFestival.jsp" />
 
+=======
+							<jsp:include page="/serviceCenter/getFestival.jsp" />
+							
+							--%>
+>>>>>>> refs/remotes/origin/master
 						</div>
 
 						<div class="column six">
@@ -1980,7 +2036,7 @@
 													<div class="feedInner">
 														<div class="feedCover">
 															<img class="feedProfileImage dl" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
-															<div class="${feed.user.nickName}"></div>
+															
 														</div>
 														<div class="feedName dlFeednickName">${feed.user.nickName}</div>
 													</div>
@@ -1995,7 +2051,7 @@
 
 													<div class="udIcon">
 														<%-- 수정 버튼 --%>
-														<%-- <span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> --%>
+														<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
 														<%-- 수정 버튼 --%>
 
 														<%-- 삭제 버튼 --%>
@@ -2112,6 +2168,8 @@
 											<input type="hidden" name="feedNo" value="${feed.feedNo}">
 											<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
 											<input type="hidden" name="openCondition" value="3">
+											
+											<input type="hidden" name="forUpdateFullContent" value='${feed.fullContent}'>
 
 											<!-- 피드 좋아요 댓글수 신고 -->
 											<section class="row section lastBar">
@@ -2357,19 +2415,68 @@
 					</form>
 
 					<div class="modal-footer">
-						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
-							Close
-						</button>
-						
 
 						<button type="button" class="custom-btn btn-13">등록</button>
-
 						
+						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
+							취소
+						</button>
 
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<!-- 수정 Modal -->
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<form id="updateFeedForm">
+
+					<!-- 피드 내용 -->
+					<div class="post-area clear-after">
+
+						<article role="main">
+							<div class="updateModalHeader">
+								<div class="updateModalLeft">
+									<div class="updateModalInner">
+										<div class="updateCover">
+											<img class="updateFeedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+										</div>
+
+										<div class="updateFormName">${feed.user.nickName}</div>
+									</div>
+
+									<div class="updateFeedDate">
+									</div>
+								</div>
+							</div>
+
+							<textarea id="summernoteUpdate" name="fullContent"></textarea>
+
+						</article>
+
+					</div>
+
+					<!-- 댓글 관련 hidden -->
+					<input type="hidden" name="source" value="0">
+					<input type="hidden" name="openCondition" value="3">
+					<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+					<input type="hidden" name="feedNo" value="">
+
+					<!-- 댓글 관련 hidden -->
+				</form>
+
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default btn_updateFeedCancel" data-dismiss="modal">이전</button>
+					<button class="btn btn-primary btn_updateFeed" type="button">수정</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 수정 Modal -->
 
 	</main>
 

@@ -264,7 +264,15 @@
 		<form>
 			<div class="btn_group" id="btn_group" style="margin-top: 60px;">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 20%;">
-					<button type="button" class="plain button red cancel" id="addMeetingMember">참가신청</button>
+				
+				<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+								<button type="button" class="plain button red cancel" id="addMeetingMember">참가신청</button>
+							</c:if>
+						</c:if>				 	
+				 	</c:forEach>	
+					
 					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
 					
 					<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(meeting.user.userId) }">

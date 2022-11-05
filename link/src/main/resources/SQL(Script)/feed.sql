@@ -330,7 +330,7 @@ SELECT feed_comment_no, feed_no, user_id, feed_comment_content, feed_comment_hea
 
 
 SELECT * FROM feed;
-SELECT * FROM users;
+SELECT * FROM report_push;
 
 SELECT
 *
@@ -385,7 +385,7 @@ FROM (
 															
 															
 															
-															
+			SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image FROM users u, follow_block f WHERE u.user_id = f.recv_user_id and f.send_user_id = 'meptael' and f.recv_user_id = 'garam113'												
 		
 
 
@@ -460,7 +460,7 @@ WHERE TRIM(user_id) NOT IN (
 															
 															
 															
-															
+SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image FROM users u, follow_block f WHERE u.user_id = f.recv_user_id and f.send_user_id = 'meptael' and f.recv_user_id = 'garam113'											
 															
 															
 									SELECT    
@@ -501,6 +501,49 @@ WHERE send_user_id = 'Link4813'
 
 
 
+
+SELECT
+*
+FROM follow_block f
+
+
+
+
+SELECT
+uf.user_id,
+deepInner.*
+FROM users uf, (
+					SELECT
+					us.user_id,
+					us.nickname,
+					us.profile_image,
+					NVL(innerTable.type, 1) AS TYPE,
+					NVL(innerTable.state, 2) AS STATE
+					FROM (
+									SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image 
+									FROM users u, follow_block f 
+									WHERE u.user_id = f.recv_user_id 
+									and f.send_user_id = 'meptael' and f.recv_user_id = 'garam113'	) innerTable, users us
+					WHERE us.user_id = 'garam113'
+					and us.user_id = innerTable.recv_user_id (+)
+																	) deepInner
+where uf.user_id = 'meptael'
+
+
+SELECT uf.user_id AS SEND_USER_ID, deepInner.* FROM users uf, ( SELECT us.user_id AS RECV_USER_ID, us.nickname, us.profile_image, NVL(innerTable.type, 1) AS TYPE, NVL(innerTable.state, 2) AS STATE FROM ( SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image FROM users u, follow_block f WHERE u.user_id = f.recv_user_id and f.send_user_id = 'meptael'  and f.recv_user_id ='shinLee' ) innerTable, users us WHERE us.user_id = 'shinLee' and us.user_id = innerTable.recv_user_id (+) ) deepInner where uf.user_id = 'meptael' 
+
+
+
+
+
+
+
+
+
+
+
+
+
 SELECT
 *
 FROM FOLLOW_BLOCK
@@ -512,5 +555,5 @@ AND TYPE = '2'
 
 
 
-
+SELECT * FROM FEED_COMMENT
 

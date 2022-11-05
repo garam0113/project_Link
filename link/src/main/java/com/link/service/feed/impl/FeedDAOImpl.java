@@ -193,12 +193,6 @@ public class FeedDAOImpl implements FeedDAO {
 		sqlSession.insert("HeartMapper.insertHeart", heart);
 	}
 	
-	@Override
-	public int getFeedCommentHeart(Heart heart) throws Exception {
-		// TODO Auto-generated method stub
-		return 13;
-	}
-	
 	// 사용
 	@Override
 	public void deleteFeedCommentHeart(Heart heart) throws Exception {
@@ -236,14 +230,6 @@ public class FeedDAOImpl implements FeedDAO {
 	
 	///////////////////////////////////////////////////// Push /////////////////////////////////////////////////////
 	
-	
-	
-	@Override
-	public void addPush(Push push) throws Exception {
-		// TODO Auto-generated method stub
-//		sqlSession.insert("Report_PushMapper.addReport", push);
-	}
-
 	
 
 }

@@ -12,13 +12,12 @@ public class Notice {
 	private Date noticeRegDate;				//공지사항 등록날짜
 	private int noticeCount;				//공지사항 조회수
 	private User userId;					//공지사항 작성자
-	private int clubNo;						//모임번호
 	
 	public Notice() {
 	}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeImage1, String noticeImage2,
-			Date noticeRegDate, int noticeCount, User userId, int clubNo) {
+			Date noticeRegDate, int noticeCount, User userId) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -28,7 +27,7 @@ public class Notice {
 		this.noticeRegDate = noticeRegDate;
 		this.noticeCount = noticeCount;
 		this.userId = userId;
-		this.clubNo = clubNo;
+
 	}
 
 	public int getNoticeNo() {
@@ -97,13 +96,6 @@ public class Notice {
 		this.userId = userId;
 	}
 
-	public int getClubNo() {
-		return clubNo;
-	}
-
-	public void setClubNo(int clubNo) {
-		this.clubNo = clubNo;
-	}
 
 	@Override
 	public String toString() {
@@ -124,8 +116,6 @@ public class Notice {
 		builder.append(noticeCount);
 		builder.append(", userId=");
 		builder.append(userId);
-		builder.append(", clubNo=");
-		builder.append(clubNo);
 		builder.append("]");
 		return builder.toString();
 	}

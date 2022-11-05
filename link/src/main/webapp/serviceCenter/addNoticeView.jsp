@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
 <!DOCTYPE html>
@@ -17,8 +17,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
 	rel="stylesheet">
 
-
 <script type="text/javascript"><%-- javaScript, JQuery 시작 --%>
+
+
+
+	
 	//=====기존Code 주석 처리 후  jQuery 변경 ======//
 	function fncAddNotice() {
 
@@ -51,7 +54,7 @@
 			fncAddNotice();
 		});
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 
 		location.href = "/serviceCenter/getNoticeList";
 		})
@@ -87,6 +90,7 @@ input[type=file]::file-selector-button {
 	margin-left : 0px !important;
 	   display: initial !important;
 }
+
 textarea {
 	resize: none;
 }
@@ -152,7 +156,7 @@ background-color: #EBEDF0 !important;
 			<div class="form-group" style="margin-left: 161px;">
 				<strong>제목</strong> <label for="title"></label>
 				<div class="col-sm-4">
-					<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle" value=""
+				<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle" value=""
 						maxlength="66" placeholder="제목을 입력해주세요"></textarea>
 
 
@@ -171,8 +175,7 @@ background-color: #EBEDF0 !important;
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>첨부파일</strong></label>
 			<div class="col-sm-4" style="margin-left: 161px;">
-				<input multiple="multiple" type="file" name="image" id="file" 
-					class="ct_input_g" style="width: 200px; height: 65px" />
+				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
 				
 
 			</div></form>
@@ -186,7 +189,7 @@ background-color: #EBEDF0 !important;
 					<button class="custom-btn btn-13"
 						style="transform: translate(75px, 0px);">등록</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(75px, 0px);">뒤로</button>
+						style="transform: translate(75px, 0px);">이전</button>
 				</div>
 			</div>
 		
