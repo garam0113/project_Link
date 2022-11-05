@@ -28,6 +28,10 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- include summernote css/js -->
+<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/summernote/summernote-lite.js"></script>
+
 <script type="text/javascript">
 	
 	function formatDate(date) {
@@ -1482,6 +1486,7 @@
 		
 		<%-- GET_FEED --%>
 		$(document).on("click", ".feedForm", function(event) {
+			alert("a");
 			event.stopPropagation();
 			var feedNumber = $(this).children("input[name='feedNo']").val();
 			
@@ -1933,12 +1938,34 @@
 </head>
 
 <body>
+		
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
 
 	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
 
 		<div id="main">
+		
+			<c:if test="${ sessionScope.user != null }">
+	
+				<%-- chat.js에서 사용위해서 --%>
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+			
+			</c:if>
 
 			<section class="row section">
 				<div class="container">
@@ -1979,8 +2006,9 @@
 =======
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
 							
-							--%>
+							
 >>>>>>> refs/remotes/origin/master
+							--%>
 						</div>
 
 						<div class="column six">

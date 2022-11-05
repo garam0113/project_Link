@@ -1027,21 +1027,7 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-		
-	
-	$(function(){
-		//소켓서버에 접속시킨다.
-		/* let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
-			cors: { origin: "*" },
-			path: '/socket.io',
-			query: {
-				userId : $("#session_userId").val(),
-				profileImage : $("#session_profileImage").val(),
-				nickName : $("#session_nickName").val(),
-				roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
-			}
-		}); */
-	});
+
 		</script>
 		
 	</head>
@@ -1058,7 +1044,8 @@
 		<script src="/resources/javascript/chat/chat.js"></script>
 		<!-- 채팅 css -->
 		<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	
+
+
 
 		<main role="main" style="background: #EBEDF0;">
 
@@ -1088,9 +1075,9 @@
 					</form>
 					
 					<%-- chat.js에서 사용위해서 --%>
-						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 					<%-- chat.js에서 사용위해서 --%>
 		
 		
