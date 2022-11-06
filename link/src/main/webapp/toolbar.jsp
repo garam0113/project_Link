@@ -27,11 +27,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <%-- BOOTSTRAP ICON --%>
 
-<%-- SUMMER NOTE --%>
-<script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-<%-- SUMMER NOTE --%>
 
 <!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -44,7 +39,13 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <%-- SOCKET IO --%>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 
 <script>
 		var sock = null;
@@ -237,7 +238,7 @@ header::-webkit-scrollbar {
       
       <jsp:include page="/user/login.jsp" />
       <%--
-=======
+
 	<header role="banner" class="transparent light">
 		<div class="row">
 			<div class="nav-inner row-content buffer-left buffer-right even clear-after">
@@ -289,7 +290,7 @@ header::-webkit-scrollbar {
 		</div>
 		<%--
 		
->>>>>>> refs/remotes/origin/master
+
 		<c:if test="${!empty sessionScope.user }">
 			<div class="alarmHead" >
 							

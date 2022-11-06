@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,13 +17,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   
   <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css"> 
-  	<!--  	jQuery UI toolTip »ç¿ë JS -->
+  	<!--  	jQuery UI toolTip ì‚¬ìš© JS -->
   <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
@@ -35,7 +35,7 @@
 	<script src="/resources/javascript/beetle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-	 <!-- Å¸ÀÓÇÇÄ¿ -->
+	 <!-- íƒ€ìž„í”¼ì»¤ -->
   	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>	
 		
@@ -98,7 +98,7 @@
 		if (title == null || title.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ì œëª©ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -106,7 +106,7 @@
 		if( date == null || date.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ë‚ ì§œëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -114,7 +114,7 @@
 		if( time == null || time.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤½Ã°£Àº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ì‹œê°„ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -122,7 +122,7 @@
 		if( content == null || content.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ë‚´ìš©ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -130,7 +130,7 @@
 		if( member == null || member.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'Á¤¿øÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì •ì›ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -138,7 +138,7 @@
 		if( place == null || place.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓÀå¼Ò´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ìž¥ì†ŒëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -169,15 +169,15 @@
 	
 	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd' ,
-		prevText: 'ÀÌÀü ´Þ' ,
-		nextText: '´ÙÀ½ ´Þ',
-        monthNames: ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù'],
-        monthNamesShort: ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù'],
-        dayNames: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±Ý', 'Åä'],
-        dayNamesShort: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±Ý', 'Åä'],
-        dayNamesMin: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±Ý', 'Åä'],
+		prevText: 'ì´ì „ ë‹¬' ,
+		nextText: 'ë‹¤ìŒ ë‹¬',
+        monthNames: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        monthNamesShort: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        dayNames: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesShort: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesMin: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
         showMonthAfterYear: true,
-        yearSuffix: '³â'
+        yearSuffix: 'ë…„'
 	})
 	
 	$(function(){
@@ -211,7 +211,7 @@
 		
 	}) */
 	
-	//ÀÚ½ÄÃ¢¿¡¼­ ºÎ¸ðÃ¢À¸·Î °ª Àü´ÞÇÏ±â
+	//ìžì‹ì°½ì—ì„œ ë¶€ëª¨ì°½ìœ¼ë¡œ ê°’ ì „ë‹¬í•˜ê¸°
 	function openChild()
 	{
 		window.name = "addMeetingView";
@@ -233,8 +233,8 @@
 		<div class="wrap wd668">
 			<div class="container">
 				<div class="form_txtInput" style="margin-top:150px;">
-					<h2 class="sub_tit_txt">¸ð ÀÓ ÀÏ Á¤ ¼ö Á¤</h2>
-					<p class="exTxt">ÀÏÁ¤À» ¼öÁ¤ÇØº¸¼¼¿ä...</p>
+					<h2 class="sub_tit_txt">ëª¨ ìž„ ì¼ ì • ìˆ˜ ì •</h2>
+					<p class="exTxt">ì¼ì •ì„ ìˆ˜ì •í•´ë³´ì„¸ìš”...</p>
 					<div class="join_form">
 					
 					<table>
@@ -245,39 +245,39 @@
 						
 						<tbody>
 							<tr>
-								<th><span>ÀÏ Á¤ Á¦ ¸ñ</span></th>
+								<th><span>ì¼ ì • ì œ ëª©</span></th>
 								<td>
 									<textarea class="meetingTitle" id="meetingTitle" name="meetingTitle" maxlength="80" style="width: 280px; height: 50px;">${meeting.meetingTitle }</textarea>
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ð ÀÓ ³¯ Â¥</span></th>
-								<td><input type="text" id="datepicker" name="meetingDate" placeholder="¸ðÀÓ³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù." style="height: 40px" autocomplete='off' value="${meeting.meetingDate}"></td>
+								<th><span>ëª¨ ìž„ ë‚  ì§œ</span></th>
+								<td><input type="text" id="datepicker" name="meetingDate" placeholder="ëª¨ìž„ë‚ ì§œëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤." style="height: 40px" autocomplete='off' value="${meeting.meetingDate}"></td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ð ÀÓ ½Ã °£</span></th>
-								<td><input type="text" class="timepicker" id="timepicker" name="meetingTime" placeholder="¸ðÀÓ½Ã°£Àº ÇÊ¼öÀÔ´Ï´Ù." style="height: 40px" autocomplete='off' value="${meeting.meetingTime}"></td>
+								<th><span>ëª¨ ìž„ ì‹œ ê°„</span></th>
+								<td><input type="text" class="timepicker" id="timepicker" name="meetingTime" placeholder="ëª¨ìž„ì‹œê°„ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤." style="height: 40px" autocomplete='off' value="${meeting.meetingTime}"></td>
 							</tr>
 							
 							<tr>
-								<th><span>ÀÏ Á¤ ³» ¿ë</span></th>
+								<th><span>ì¼ ì • ë‚´ ìš©</span></th>
 								<td>
 									<textarea class="meetingContent" id="meetingContent" name="meetingContent" maxlength="500" style="width: 280px; height: 200px;">${meeting.meetingContent}</textarea> 
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>Á¤ ¿ø</span>
+								<th><span>ì • ì›</span>
 								<td>
 									<textarea class="meetingMaximumMember" id="meetingMaximumMember" name="meetingMaximumMember" maxlength="50" style="width:80px; height: 40px;">${meeting.meetingMaximumMember}</textarea>
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ð ÀÓ Àå ¼Ò</span></th>
-								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="¸ðÀÓÀå¼Ò´Â ÇÊ¼öÀÔ´Ï´Ù." autocomplete='off' value="${meeting.meetingPlace}" onclick="openChild()"></td>
+								<th><span>ëª¨ ìž„ ìž¥ ì†Œ</span></th>
+								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="ëª¨ìž„ìž¥ì†ŒëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤." autocomplete='off' value="${meeting.meetingPlace}" onclick="openChild()"></td>
 							</tr>	
 							
 								
@@ -293,8 +293,8 @@
 				
 			<div class="form-group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 25%;">
-		      		<button type="button" class="plain button red cancel" id="updateMeeting">¼ö &nbsp;Á¤</button>
-					<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+		      		<button type="button" class="plain button red cancel" id="updateMeeting">ìˆ˜ &nbsp;ì •</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 			    </div>
 			</div>
 			
@@ -307,7 +307,7 @@
 		
 		
 			<%-- <div class="form-group">
-				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">¸ð ÀÓ ÀÏ Á¤ Á¦ ¸ñ</label>
+				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ìž„ ì¼ ì • ì œ ëª©</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" value="${meeting.meetingTitle}">
 				</div>						
@@ -316,35 +316,35 @@
 			
 		
 			<div class="form-group">
-				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">¸ð ÀÓ ³¯ Â¥</label>
+				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ìž„ ë‚  ì§œ</label>
 				<div class="col-sm-4">
 					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" value="${meeting.meetingDate}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">¸ð ÀÓ ½Ã °£</label>
+				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ìž„ ì‹œ ê°„</label>
 				<div class="col-sm-4">
 					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" value="${meeting.meetingTime}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">¸ð ÀÓ Àå ¼Ò</label>
+				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ìž„ ìž¥ ì†Œ</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" value="${meeting.meetingPlace}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
-				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">ÀÏ Á¤ ³» ¿ë</label>
+				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">ì¼ ì • ë‚´ ìš©</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="meetingContent" name="meetingContent" value="${meeting.meetingContent}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> Á¤ ¿ø</label>
+				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> ì • ì›</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" value="${meeting.meetingMaximumMember}">
 				</div>		

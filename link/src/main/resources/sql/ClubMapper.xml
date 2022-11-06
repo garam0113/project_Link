@@ -145,8 +145,9 @@
 	</delete>
 	
 	 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	SELECT V3.*
+		FROM ( SELECT V2.*
+				FROM ( SELECT ROW_NUMBER() OVER( ORDER BY club_no DESC ) AS row_seq, V1.*
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
 											FROM club
 											  <if test="searchCondition != null and searchCondition != '' ">
@@ -191,9 +192,10 @@
 													</choose>														
 												</where>
 											 </if> 
-											ORDER BY club_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+											ORDER BY club_no ) V1
+						 		) V2
+						 ) V3
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
 	 <!-- <if test=" searchKeyword !='' ">  -->
@@ -206,7 +208,8 @@
 													<if test="searchCondition == 0 and searchKeyword !='' and category != '' and area != '' ">
 										 			 	and club_area LIKE ('%${area}%')
 													</if>  -->
-	 
+
+	
 	 
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalClubCount"  parameterType="search"	 resultType="int">
@@ -272,7 +275,7 @@
 	
 	<!-- 로그인한 회원이 가장 최근 만든 모임번호 가져온다 -->
 	<select id="getClubNo" parameterType="user" resultType="int">
-		SELECT *
+		SELECT CLUB_NO
 		FROM ( SELECT club_no FROM CLUB WHERE USER_ID = #{ userId } order by club_reg_date DESC )
 		WHERE ROWNUM = 1	
 	</select>

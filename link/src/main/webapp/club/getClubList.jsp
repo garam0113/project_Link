@@ -15,7 +15,7 @@
 
 <head>
 <title>모임리스트</title>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -421,52 +421,50 @@ html::-webkit-scrollbar {
 	<jsp:include page="/toolbar.jsp" />
 
 
-	<main role="main">
+	<!-- <main role="main"> -->
 
 		<div id="main">
+				
+			<%-- chat.js에서 사용위해서 --%>
+			<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+			<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+			<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+			<%-- chat.js에서 사용위해서 --%>
+			<%-- 채팅 --%>
+			<jsp:include page="/chat/chat.jsp" />
+			<%-- 채팅 --%>
 
 			<!--  화면구성 div Start /////////////////////////////////////-->
-			<div class="container" style="margin-top: 150px;">
+			<div class="container" style="background-color: black;">
+		
+				<div style="width: 1140px; height: 550px; overflow: hidden;">
+					<img src="/resources/image/uploadFiles/clubMainImage5.jpg" width="100%">
+				</div>
 
-				<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-				<div id="main" class="row" style="width: 824px;">
-			
-			
-			
-					<%-- chat.js에서 사용위해서 --%>
-						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-					<%-- chat.js에서 사용위해서 --%>
-					<%-- 채팅 --%>
-					<jsp:include page="/chat/chat.jsp" />
-					<%-- 채팅 --%>
+				<div style="background-color: gray;">
 				
-				
-
-					<div class="col-md-8 text-right" style="float: left;">
-						<form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
-
+					<div style="background-color: purple; display: flex;">
+						<form class="form-inline" name="detailForm" id="searchArea">
+	
 							<c:if test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
-
-
-								<div class="form-group" id="selectTitle">
+							
+								<div>
 									<select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
 										<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
 									</select>
-
+								</div>
+								
+								<div>
+									<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="모임 검색" autocomplete="off" onkeyup="enterkey()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
+								</div>
+								
+								<div>
 									<p>
 										<label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">지 역</label>
 									</p>
-
-									<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
-
 								</div>
-
-								<div class="form-group" id="selects" style="text-align: left;">
-									<label class="sr-only" for="searchKeyword">검색어</label>
-									<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="모임 검색" autocomplete="off" onkeyup="enterkey()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
-
+								
+								<div>
 									<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
 										<option value="">지역</option>
 										<option value="강남구">강남구</option>
@@ -495,7 +493,13 @@ html::-webkit-scrollbar {
 										<option value="중구">중구</option>
 										<option value="중랑구">중랑구</option>
 									</select>
-
+								</div>
+								
+								<div>
+									<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
+								</div>
+								
+								<div>
 									<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
 										<option value="">카테고리</option>
 										<option value="운동">운동</option>
@@ -508,17 +512,25 @@ html::-webkit-scrollbar {
 										<option value="독서">독서</option>
 										<option value="기타">기타</option>
 									</select>
-									<p>
-									<p>
-
-										<button type="button" class="btn btn-search">검색</button>
-										<button type="button" onclick="resetBtn()" class="btn btn-reset">
-											<span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화
-										</button>
 								</div>
-							</c:if>
+								
+								<div>
+									<button type="button" class="btn btn-search">검색</button>
+								</div>
+								
+								<div>
+									<button type="button" onclick="resetBtn()" class="btn btn-reset">
+										<span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화
+									</button>
+								</div>
 
-							<c:if test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
+								<div class="form-group" id="selectTitle">
+
+								</div>
+
+								<div class="form-group" id="selects" style="text-align: left;">
+										
+								</div>
 							</c:if>
 
 							<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -526,15 +538,103 @@ html::-webkit-scrollbar {
 
 						</form>
 					</div>
-
-					<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
-					<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
-
-					<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임개설
-	  		
-	  		</button> -->
-					<!-- </div> -->
-
+					<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+					<div id="main" class="row" style="width: 800px; background-color: aqua;">
+					
+					
+	
+						<div class="col-md-8 text-right" style="float: left; background-color: orange;">
+							<form class="form-inline" name="detailForm" id="searchArea" style="margin-top: 30px; margin-bottom: 30px; display: flex; height: 220px; border-radius: 10px; box-shadow: rgb(0 0 0/ 30%) 0px 7px 9px, rgb(0 0 0/ 22%) 0px 4px 5px; background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
+	
+								<c:if test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
+	
+	
+									<div class="form-group" id="selectTitle">
+										<select class="form-control" name="searchCondition" style="margin-top: 15px; margin-left: 10px; background-color: #f0f2f5;">
+											<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>모임이름</option>
+										</select>
+	
+										<p>
+											<label for="clubArea" style="margin-top: 22px; text-align: center !important; margin-right: 34px;">지 역</label>
+										</p>
+	
+										<label for="clubCategory" style="margin-top: 22px; text-align: center !important; margin-right: 24px;">카테고리</label>
+	
+									</div>
+	
+									<div class="form-group" id="selects" style="text-align: left;">
+										<label class="sr-only" for="searchKeyword">검색어</label>
+										<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="모임 검색" autocomplete="off" onkeyup="enterkey()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="border-width: thin; margin-top: 15px; margin-right: 70px; margin-left: 10px;">
+	
+										<select class="form-control" name="clubArea" id="clubArea" onchange="changeFn2()" style="margin-right: 388px; margin-left: 10px;">
+											<option value="">지역</option>
+											<option value="강남구">강남구</option>
+											<option value="강동구">강동구</option>
+											<option value="강북구">강북구</option>
+											<option value="강서구">강서구</option>
+											<option value="관악구">관악구</option>
+											<option value="광진구">광진구</option>
+											<option value="구로구">구로구</option>
+											<option value="금천구">금천구</option>
+											<option value="노원구">노원구</option>
+											<option value="도봉구">도봉구</option>
+											<option value="동대문구">동대문구</option>
+											<option value="동작구">동작구</option>
+											<option value="마포구">마포구</option>
+											<option value="서대문구">서대문구</option>
+											<option value="서초구">서초구</option>
+											<option value="성동구">성동구</option>
+											<option value="성북구">성북구</option>
+											<option value="송파구">송파구</option>
+											<option value="양천구">양천구</option>
+											<option value="영등포구">영등포구</option>
+											<option value="용산구">용산구</option>
+											<option value="은평구">은평구</option>
+											<option value="종로구">종로구</option>
+											<option value="중구">중구</option>
+											<option value="중랑구">중랑구</option>
+										</select>
+	
+										<select class="form-control" name="clubCategory" id="clubCategory" onchange="changeFn()" style="margin-top: 16px; margin-left: 10px;">
+											<option value="">카테고리</option>
+											<option value="운동">운동</option>
+											<option value="봉사활동">봉사활동</option>
+											<option value="음식">음식</option>
+											<option value="여행">여행</option>
+											<option value="반려동물">반려동물</option>
+											<option value="게임">게임</option>
+											<option value="음악/댄스">음악/댄스</option>
+											<option value="독서">독서</option>
+											<option value="기타">기타</option>
+										</select>
+										<p>
+										<p>
+	
+											<button type="button" class="btn btn-search">검색</button>
+											<button type="button" onclick="resetBtn()" class="btn btn-reset">
+												<span class="glyphicon glyphicon-repeat" aria-hidden="true" style="margin-top: 30px; margin-left: 50px !important; display: contents;"></span>초기화
+											</button>
+									</div>
+								</c:if>
+	
+								<c:if test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
+								</c:if>
+	
+								<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+								<input type="hidden" id="currentPage1" name="currentPage" value="1" />
+	
+							</form>
+						</div>
+	
+						<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+						<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
+	
+						<!-- <button type="button" class="btn btn-addClubBtn" id="addClubBtn" style="margin-top: 130px !important; margin-left: 50px !important;">모임개설
+		  		
+		  		</button> -->
+						<!-- </div> -->
+	
+					</div>
 				</div>
 				<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
@@ -572,7 +672,7 @@ html::-webkit-scrollbar {
 			<jsp:include page="../common/pageNavigator_new2.jsp" />
 
 		</div>
-	</main>
+	<!-- </main> -->
 
 </body>
 

@@ -47,11 +47,14 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	//Method
 	@Override
-	public void addClub(Club club) throws Exception {
+	public int addClub(Club club) throws Exception {
 		System.out.println("addClub DAO까지 왔나??");
 		System.out.println("club에 값 뭐있지 ? : "+club);
 		
 		sqlSession.insert("ClubMapper.addClub",club);
+		
+		// 등록된 모임번호를 가져온다
+		return sqlSession.selectOne("ClubMapper.getClubNo", club.getUser());
 	}
 	
 //	//JUNIT TEST

@@ -802,6 +802,37 @@ UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1', DELETE_USER_ID = 'food1' WH
 
 
 
+SELECT *
+FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+				FROM club
+				ORDER BY club_no ) inner_table
+		WHERE ROWNUM <= 12 )
+WHERE row_seq BETWEEN 1 AND 12
+
+
+SELECT V3.*
+FROM ( SELECT V2.*
+		FROM ( SELECT ROW_NUMBER() OVER( ORDER BY club_no DESC ) AS row_seq, V1.*
+			  	FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+						FROM club
+						ORDER BY club_no ) V1
+			 ) V2
+		) V3
+WHERE row_seq BETWEEN 1 AND 4
+
+SELECT *
+FROM ( SELECT * FROM CLUB WHERE USER_ID = 'food1' ORDER BY CLUB_NO DESC )
+WHERE ROWNUM = 1
+
+
+
+
+
+
+
+
+
 
 
 

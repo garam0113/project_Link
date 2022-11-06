@@ -1177,9 +1177,11 @@
 								<br><br>
 								
 								<%-- id는 프로필 이미지 클릭했을 때 나오는 다이얼로그 나오는 위치이다 --%>
-								<div class="clubPost-body-title" id="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.clubPostTitle }</div>
+								<div class="clubPost-body-title">${ clubPost.getClubPost.clubPostTitle }</div>
 								
 								<br><br>
+								
+								<div style="display: none;" id="${ clubPost.getClubPost.user.userId }"></div>
 								
 								<div class="clubPost-body-content">
 									<p>${ clubPost.getClubPost.clubPostContent }</p>
@@ -1217,12 +1219,8 @@
 						<ul class="comment-list plain">
 							<%-- 해당 게시물에 댓글이 있을때만 for문을 돈다 --%>
 							<li class="comment">
-								${ clubPost.getClubPost.clubPostCommentCount }#########
-								${ clubPost.getClubPost.clubPostNo }#########
 								<c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 									<c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
-										${ clubPost.getClubPostCommentList[i].commentContent }
-										${ clubPost.getClubPostCommentList[i].parent }/////<br>
 										<c:if test="${ clubPost.getClubPost.clubPostNo == clubPost.getClubPostCommentList[i].parent }">
 											<div class="comment-parent">
 												<div id="comment-body" class="single-comment${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" depth="1" commentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }" revUserId="${ clubPost.getClubPostCommentList[i].user.userId }">
@@ -1555,8 +1553,7 @@
 			
 			var user_Id = "";
 			
-			   
-			   $('.dl').on("click",function(){
+			   $(document).on("click", ".dl", function(event){
 			      
 			   user_Id = $(this).parent().attr("userId");
 			   var nickName = $(this).attr("nickName");
@@ -1664,9 +1661,9 @@
 			               },
 			               position: {
 			                  
-			                  my:"center",
-			                  at:"center",
-			                  of:"#"+user_Id+""
+			                  my:"left",
+			                  at:"right",
+			                  of: event
 			               }
 			               
 			            });
@@ -1696,9 +1693,9 @@
 			               },
 			               position: {
 			                  
-			                  my:"right",
-			                  at:"right",
-			                  of:"#"+user_Id+""
+			                  my: "left",
+			                  at: "right",
+			                  of: event
 			               }
 			               
 			            });

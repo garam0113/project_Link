@@ -13,7 +13,7 @@ import com.link.service.domain.Pay;
 
 public interface ClubService {
 
-	public void addClub(Club club) throws Exception;
+	public int addClub(Club club) throws Exception;
 	
 //	//JUNIT TEST
 //	public int addClub(Club club) throws Exception;

@@ -137,11 +137,11 @@
 	
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트 가져온다 -->
 	<select id="getClubPostList" parameterType="map" resultMap="clubPostSelectMap">
-		SELECT V3.*
-		FROM ( 
+		<!-- SELECT V3.*
+		FROM (  -->
 				<include refid="select-list"></include>
-			 ) V3
-		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize }
+			 <!-- ) V3
+		WHERE R BETWEEN ((#{ search.currentPage }-1)*#{ search.pageSize }+1) AND #{ search.currentPage }*#{ search.pageSize } -->
 	</select>
 	
 	
@@ -149,10 +149,10 @@
 	<!-- 모임게시물 탭 클릭시 => 최근 가입한 모임의 모임게시물리스트의 개수 가져온다 -->
 	<select id="getClubPostListCount" parameterType="map" resultType="int">
 		SELECT COUNT(*)
-		FROM ( SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
-				FROM (
+		FROM ( <!--  SELECT ROW_NUMBER() OVER(ORDER BY CLUB_POST_NO DESC) AS R, V2.*
+				FROM ( -->
 						<include refid="select-list"></include>
-					 ) V2
+					<!-- ) V2 -->
 			 ) V3
 	</select>
 	

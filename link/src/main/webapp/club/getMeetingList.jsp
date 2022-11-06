@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ page import = "java.net.URLEncoder" %>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
@@ -9,7 +9,7 @@
 	String userId = (String)session.getAttribute("user");
 
 	if(userId == null) {
-		String message = "¸ÕÀú ·Î±×ÀÎ ÇÏ½Å ÈÄ »ç¿ë °¡´ÉÇÕ´Ï´Ù.";
+		String message = "ë¨¼ì € ë¡œê·¸ì¸ í•˜ì‹  í›„ ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.";
 		message = URLEncoder.encode(message, "utf-8");
 
 		response.sendRedirect("/user/login.jsp?message = "+message);
@@ -24,7 +24,7 @@
 <html lang="ko">
 	
 <head>
-	<title>¸ğÀÓÀÏÁ¤¸®½ºÆ®</title>
+	<title>ëª¨ì„ì¼ì •ë¦¬ìŠ¤íŠ¸</title>
 	<meta charset="EUC-KR">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,7 +37,7 @@
 	
 	
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
+	  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <style>
@@ -119,7 +119,7 @@
 		
 	<main role="main">
 		
-			<div id="intro-wrap" data-height="20"><!-- »ó´Ü °ËÀº»ö °øÅë ¿µ¿ª -->
+			<div id="intro-wrap" data-height="20"><!-- ìƒë‹¨ ê²€ì€ìƒ‰ ê³µí†µ ì˜ì—­ -->
 				<div id="intro" class="preload darken">					
 					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
 						<div class="caption">
@@ -131,26 +131,26 @@
 			</div><!-- intro-wrap -->
 			
 		
-			<div id="main" class="row"><!-- Áß°£ °³º°¿µ¿ª -->
+			<div id="main" class="row"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 
 					<ul class="inline cats filter-options" style="font-size: 40px; margin-bottom: 0em; margin-left: 20px;">
 						<li data-group="advertising">
-							<a href="/club/getMeetingList" style="color: #BD76FF;">¸ğÀÓÀÏÁ¤</a>
+							<a href="/club/getMeetingList" style="color: #BD76FF;">ëª¨ì„ì¼ì •</a>
 						</li>
 						<li data-group="fun">
-							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">¸ğÀÓ°Ô½Ã¹°</a>
+							<a href="/clubPost/getClubPostList" style="color: #BD76FF;">ëª¨ì„ê²Œì‹œë¬¼</a>
 						</li>
 						<li data-group="icons">
-							<a href="/club/getClubMemberList" style="color: #BD76FF;">¸ğÀÓ¿ø</a>
+							<a href="/club/getClubMemberList" style="color: #BD76FF;">ëª¨ì„ì›</a>
 						</li>
 						<li data-group="infographics">
-							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">¸ğÀÓÃ¤ÆÃ</a>
+							<a href="/clubPost/chatRoomList" style="color: #BD76FF;">ëª¨ì„ì±„íŒ…</a>
 						</li>
 						<%-- <li data-group="infographics">
-							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">°áÁ¦</a>
+							<a href="/clubPost/addPayView?clubNo=${ clubPostList[0].clubNo }">ê²°ì œ</a>
 						</li> --%>
 					</ul>
 	
@@ -160,20 +160,20 @@
 	
 	
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#f0f2f5; color:#BD76FF; margin-right: 115px; border-color: #BD76FF;">ÀÏÁ¤µî·Ï</button>
+		<button type="button" class="btn btn-addMeeting" style="float:right; background-color:#f0f2f5; color:#BD76FF; margin-right: 115px; border-color: #BD76FF;">ì¼ì •ë“±ë¡</button>
 
 
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	    <div class="row" id="calendar" style="">
 	    
 	    	<jsp:include page="/club/calendar.jsp"/>	    		    
 	
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 		
 		
       <!--  table Start /////////////////////////////////////-->
@@ -182,10 +182,10 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >¸ğÀÓÀÏÁ¤Á¦¸ñ</th>
-            <th align="left">¸ğÀÓÀÏÁ¤³¯Â¥</th>
-            <th align="left">¸ğÀÓÀÏÁ¤½Ã°£</th>
-            <th align="left">¸ğÀÓÀå¼Ò</th>
+            <th align="left" >ëª¨ì„ì¼ì •ì œëª©</th>
+            <th align="left">ëª¨ì„ì¼ì •ë‚ ì§œ</th>
+            <th align="left">ëª¨ì„ì¼ì •ì‹œê°„</th>
+            <th align="left">ëª¨ì„ì¥ì†Œ</th>
           </tr>
         </thead>
        
@@ -210,7 +210,7 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 
 	</main>
 	

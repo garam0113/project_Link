@@ -248,15 +248,18 @@ public class ClubPostController {
 		
 		
 		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
-
-
 		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
 		// 1:1 채팅 채팅방번호 가져온다
 		chat.setUser((User)session.getAttribute("user"));
 		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
-		
 		// 모임채팅 roomId 가져온다
 		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		// 게시물 상세보기 + 댓글리스트
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
@@ -364,7 +367,7 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "addPayView", method = RequestMethod.GET)
-	public String addPayView(@ModelAttribute Pay pay, Model model, HttpSession sesstion) throws Exception {
+	public String addPayView(@ModelAttribute Pay pay, Model model, HttpSession session, Chat chat) throws Exception {
 		System.out.println("/addPayView : GET : 모임번호를 가지고 결제화면으로 이동");
 
 		int maxPay = 0;
@@ -377,7 +380,7 @@ public class ClubPostController {
 			
 		// 둘 다 없으면 모임리스트로 간다
 				
-		System.out.println("모임번호 : " + pay.getClubNo() + ", 네비게시션 : " + pay.getPayNavigation() + ", 아이디 : " + ((User)sesstion.getAttribute("user")).getUserId());
+		System.out.println("모임번호 : " + pay.getClubNo() + ", 네비게시션 : " + pay.getPayNavigation() + ", 아이디 : " + ((User)session.getAttribute("user")).getUserId());
 		if( pay.getClubNo() != 0 && pay.getPayNavigation() == 0 ) {
 			// 모임대표가 가입승인 클릭시
 			// 해당 모임의 최대 인원수까지의 최대 결제금액을 가져간다
@@ -395,7 +398,7 @@ public class ClubPostController {
 		}else {
 			// 모임등록시 모임가입신청시
 			// 해당 회원의 최대 가입수까지의 최대 결제금액을 가져간다
-			User returnUser = userServiceImpl.getUser((User)sesstion.getAttribute("user"));
+			User returnUser = userServiceImpl.getUser((User)session.getAttribute("user"));
 			System.out.println("전달받은 회원 정보 : " + returnUser);
 			model.addAttribute("returnUser", returnUser);
 			
@@ -408,16 +411,41 @@ public class ClubPostController {
 		}
 		pay.setMaxPay(maxPay);
 		model.addAttribute("pay", pay);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
 		return "forward:/pay/addPayView.jsp";
 	}
 	
 	@RequestMapping(value = "addPay", method = RequestMethod.POST)
-	public String addPay(@ModelAttribute Pay pay, Search search, Model model, HttpSession session) throws Exception {
+	public String addPay(@ModelAttribute Pay pay, Search search, Model model, HttpSession session, Chat chat) throws Exception {
 		System.out.println("/addPay : POST : 모임원 최대 수 수정 후 모임원 리스트 화면으로 이동 모임대표만 올 수 있다, 모임번호가 있으면 모임 상세보기, 모임번호가 없으면 모임리스트 화면으로 이동");
 		System.out.println(pay);
 		pay.setUser(new User(((User)session.getAttribute("user")).getUserId()));
 		//결제추가
 		clubPostServiceImpl.addPay(pay);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		if(pay.getUpdateClubMemberCount() != 0) {
 			// 모임원 업데이트 수가 있다면 모임대표가 가입승인 클릭 후 이벤트이다 결제 후 모임원리스트 화면으로 이동

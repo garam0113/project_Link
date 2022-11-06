@@ -69,7 +69,8 @@ public class ClubController {
 
 	@RequestMapping(value="addClub", method=RequestMethod.POST)
 	//public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("clubImage") List<MultipartFile> file) throws Exception {
-	public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("file") MultipartFile file) throws Exception {
+	public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, Chat chat,
+			Search search, Model model, @RequestParam("file") MultipartFile file) throws Exception {
 		
 		System.out.println("club/addClub : POST");
 		
@@ -100,12 +101,31 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			//file.transferTo( new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
-		clubService.addClub(club);
+		int clubNo = clubService.addClub(club);
+		System.out.println("가장 최근 모임번호 : " + clubNo);
 		clubService.addApprovalCondition(clubUser);
+		
+		search.setSearchKeyword(clubNo+"");
+		Map<String, Object> map2 = clubService.getClubMemberList(search);
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
 		return "forward:/club/getClub.jsp";
 	}
 	
