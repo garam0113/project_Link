@@ -28,9 +28,11 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- include summernote css/js -->
-<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+<%-- SUMMER NOTE --%>
 <script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+<%-- SUMMER NOTE --%>
 
 <script type="text/javascript">
 	
