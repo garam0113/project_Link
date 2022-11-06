@@ -443,7 +443,7 @@ html::-webkit-scrollbar {
 
 				<div style="background-color: gray;">
 				
-					<div style="background-color: purple;">
+					<div style="background-color: purple; display: flex;">
 						<form class="form-inline" name="detailForm" id="searchArea">
 	
 							<c:if test="${ (search.searchKeyword != '1') and (search.searchKeyword != '2')}">
