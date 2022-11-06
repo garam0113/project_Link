@@ -44,7 +44,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <%-- SOCKET IO --%>
 
-<script type="text/javascript"></script>
+
 
 <script>
 		var sock = null;
@@ -195,6 +195,8 @@ header::-webkit-scrollbar {
                   <c:if test="${! empty sessionScope.user }">
                   	<li class="menu-item"><a href="/club/getClubList">Club</a></li>
                   </c:if>
+
+                  <li class="menu-item"><a href="#" id='live'>LIVE</a></li>
                   
                   <c:if test="${ empty sessionScope.user }">
                   	<li class="menu-item"><a href="#" class="clubNav" onclick="clubNav();">Club</a></li>
@@ -225,7 +227,8 @@ header::-webkit-scrollbar {
                </ul>
                
             </nav>
-            
+            <input type="hidden" id='liveJoinId' value="${sessionScope.user.nickName}">
+            <input type="hidden" id='liveJoinProfile' value="${sessionScope.user.profileImage}">
          </div>
          <!-- row-content -->
          
@@ -306,3 +309,164 @@ header::-webkit-scrollbar {
 		--%>
 		<!-- row -->
 	</header>
+	<script type="text/javascript">
+	$(function() {
+				
+				//alert("123");
+		/* 		var options = {
+					"forcNew" : true
+				}; */
+				var url = "https://192.168.0.183:4000";
+
+				socket = io.connect(url);
+
+				socket.on("connect", function() {
+					//alert("소켓연결 완료");
+				});
+				
+				$("#live").on("click", function() {
+					
+					alert("클릭")
+					
+					if(${ empty sessionScope.user}){
+						swal.fire('로그인이 필요합니다.');
+						return;
+					}
+					
+					var profile = $("#liveJoinProfile").val();
+					var nickName = $("#liveJoinId").val();
+					var num;
+					console.log("profile : "+profile);
+					console.log("nickName : "+nickName);
+					
+					$.ajax("/liveRest/json/getLiveList", {
+						type : "POST",
+						data : JSON.stringify({
+							type : '1',
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(Data) {
+							console.log(Data);
+							var roomName = "";
+							$.each (Data, function(index, data) {
+								roomName += "<div style='margin-top: 10px;' id='"+data.roomName+"'><span style='font-size: larger; font-weight: bold; color: black;'>"
+								+(index+1)+". "+data.viewRoomName+"</span><span style='font-size: larger; font-weight: bold;" 
+								+"color: black;'>("+data.member+"/"+data.limit+")</span><button type='button'" 
+								+"class='joinLive' style=' margin-left: 20px;'><input type='hidden'"
+								+"value='"+data.viewRoomName+"'/>입장</button></div>";
+							})
+							swal.fire({
+								title : "화상채팅방",
+								showCancelButton : true,
+								cancelButtonText : '취소',
+								confirmButtonText : '채팅방개설',
+								html: "<div id='roomNameList1' style='text-align-last: left; margin-left: 70px;'></div>",
+							}).then((result) => { 
+								var viewName;
+								if(result.isConfirmed){
+								swal.fire({
+									title : "채팅방개설",
+									html : "<input type='text' id='roomName' class='swal2-input' placeholder='방제목'>" +
+									"<input type='text' id='total' class='swal2-input' placeholder='인원수'>",
+									showCancelButton : true,
+									cancelButtonText : '취소',
+									confirmButtonText : '개설',
+									preConfirm : () => {
+										var total = Swal.getPopup().querySelector('#total').value
+										var roomName = Swal.getPopup().querySelector('#roomName').value
+									$.ajax("/liveRest/json/addLive", {
+								 		type : "POST",
+										data : JSON.stringify({
+											roomName : nickName+":"+roomName,
+											type : '1',
+											limit : total,
+										}),
+										dataType : "json",
+										contentType : "application/json",
+										headers : {
+											"Accept" : "application/json"
+										}, 
+										success : function(json) {
+											console.log(json);
+											var name = nickName+":"+roomName;
+											socket.emit("info", {
+												roomName : name,
+												viewName : roomName,
+												total : total,
+												profile : profile,
+												nickName : nickName,
+												member : 1
+												});
+											self.location = "https://192.168.0.183:4040";
+										}
+									}) 
+								}
+							})
+								}
+							})
+							$("#roomNameList1").append(roomName);
+							
+							$("button.joinLive").on("click", function() {
+								//alert("asdf");
+								var clubNo = $("#no").val();
+								var roomName = $(this).parent().attr("id");
+								var viewName = $(this).children().val();
+								console.log(roomName);
+								$.ajax("/liveRest/json/getLive",{
+									method : "POST",
+									data : JSON.stringify({
+										roomName : roomName,
+										type : '1',
+									}),
+									dataType : "json",
+									contentType : "application/json",
+									headers : {
+										"Accept" : "application/json"
+									},
+									success : function (data) {
+										console.log(data);
+										socket.emit("info", {
+											total : data.limit,
+											roomName : roomName,
+											viewName : viewName,
+											profile : profile,
+											nickName : nickName,
+											member : data.member
+										});
+										self.location = "https://192.168.0.183:4040";
+									}
+								})
+							})
+						} 
+					}) 
+				})
+				
+				socket.on("reRoomName", function(data) {
+					var clubNo = $("#no").val();
+					console.log("socket서버에서 받은 Data : "+data);
+					if(data != null){
+					$.ajax("/liveRest/json/exitLive", {
+						method : "POST",
+						data : JSON.stringify({
+							roomName : data,
+							type : '1',
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						headers : {
+							"Accept" : "application/json"
+						},
+						success : function(Data) {
+							console.log(Data);
+						}
+					})
+					}
+				})
+			})
+			</script>
+			<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
+	</body>
