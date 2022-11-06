@@ -15,7 +15,7 @@
 
 <head>
 <title>모임리스트</title>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

@@ -39,12 +39,11 @@ public class ClubServiceImpl implements ClubService {
 	}
 	
 	@Override
-	public void addClub(Club club) throws Exception {
+	public int addClub(Club club) throws Exception {
 		
 		System.out.println("addClub 서비스 왔나? ");
 
-		clubDAO.addClub(club);
-		
+		return clubDAO.addClub(club);
 	}
 	
 //	// JUnit TEST

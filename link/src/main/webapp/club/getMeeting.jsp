@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -10,7 +10,7 @@
 
 <!-- <link rel="stylesheet" href="/css/admin.css" type="text/css"> -->
 
-<title>¸ğÀÓÀÏÁ¤»ó¼¼Á¶È¸</title>
+<title>ëª¨ì„ì¼ì •ìƒì„¸ì¡°íšŒ</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -20,9 +20,9 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!-- alert -->
@@ -79,19 +79,19 @@
 	
 		
 	$(function() {
-		<%-- ÀÏÁ¤»èÁ¦ --%>		
+		<%-- ì¼ì •ì‚­ì œ --%>		
 		
 		$(document).on("click", "#deleteMeeting", function() {
 			
 			Swal.fire({
-				title: 'Á¤¸» ÀÏÁ¤À» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?' ,
-				text: "»èÁ¦ÇÑ ÀÏÁ¤Àº º¹±¸µÇÁö ¾Ê½À´Ï´Ù.",
+				title: 'ì •ë§ ì¼ì •ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?' ,
+				text: "ì‚­ì œí•œ ì¼ì •ì€ ë³µêµ¬ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.",
 				icon: 'warning' ,
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
 				cancelButtonColor: '#d33',
-				confirmButtonText: '»èÁ¦',
-				cancelButtonText: 'Ãë¼Ò' ,
+				confirmButtonText: 'ì‚­ì œ',
+				cancelButtonText: 'ì·¨ì†Œ' ,
 			}).then((result) => {
 				if (result.value) {
 					
@@ -101,17 +101,17 @@
 			})// end of swal
 		})
 		
-	//ÀÏÁ¤ Âü°¡
+	//ì¼ì • ì°¸ê°€
 
 		$(document).on("click", "#addMeetingMember", function() {
 		
 			Swal.fire({
-				title: 'ÀÏÁ¤¿¡ Âü¿©ÇÕ´Ï´Ù' ,
-				text: 'Áñ°Å¿î ¸¸³²ÇÏ¼¼¿ä' ,
+				title: 'ì¼ì •ì— ì°¸ì—¬í•©ë‹ˆë‹¤' ,
+				text: 'ì¦ê±°ìš´ ë§Œë‚¨í•˜ì„¸ìš”' ,
 				icon: 'warning' ,
 				showConfirmButton: true,
-				confirmButtonText: 'Âü°¡',
-				cancelButtonText: 'Ãë¼Ò' ,
+				confirmButtonText: 'ì°¸ê°€',
+				cancelButtonText: 'ì·¨ì†Œ' ,
 			}).then((result) => {
 				if(result.value) {
 				
@@ -168,7 +168,7 @@
 	
 	<jsp:include page="/toolbar.jsp" />	
 		
-			<div id="main" class="row" style="background: #EBEDF0 !important;"><!-- Áß°£ °³º°¿µ¿ª -->
+			<div id="main" class="row" style="background: #EBEDF0 !important;"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 100px;">
 				
@@ -194,27 +194,27 @@
 		
 	<div class="container">
 		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">ÀÏÁ¤»ó¼¼º¸±â</h2>
+			<h2 class="sub_tit_txt">ì¼ì •ìƒì„¸ë³´ê¸°</h2>
 		
 		</div>
 		
 	
-		<!-- ÇÕÄ¡ÀÚ~~ -->
+		<!-- í•©ì¹˜ì~~ -->
 		<div class="mainForm">
-		<!-- »ó¼¼ div -->
+		<!-- ìƒì„¸ div -->
 			
 			<!-- <form class="form-horizontal" style="width: 443px;"> -->
 			<div class="detailForm" style="background-color: #ffffff; width: 775px; height: 515px; margin-left: 10px; margin-top: 10px; border-radius: 10px;">
 			
 				<div>
-					<div class="col-xs-4 col-md-6" style="margin-top: 15px;"><strong>ÀÏÁ¤Á¦¸ñ</strong></div>
+					<div class="col-xs-4 col-md-6" style="margin-top: 15px;"><strong>ì¼ì •ì œëª©</strong></div>
 					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">${meeting.meetingTitle}</div> 		
 				</div>
 					
 				<p>
 				
 				<div>
-			  		<div class="col-xs-4 col-md-6 "><strong>ÀÏÁ¤³¯Â¥ </strong></div>
+			  		<div class="col-xs-4 col-md-6 "><strong>ì¼ì •ë‚ ì§œ </strong></div>
 					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">${meeting.meetingDate}</div>
 				</div>
 				
@@ -222,7 +222,7 @@
 				
 				
 				<div>
-			  		<div class="col-xs-4 col-md-6 "><strong>ÀÏÁ¤½Ã°£</strong></div>
+			  		<div class="col-xs-4 col-md-6 "><strong>ì¼ì •ì‹œê°„</strong></div>
 					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">${meeting.meetingTime}</div>
 				</div>
 				
@@ -230,7 +230,7 @@
 				
 				
 				<div>
-			  		<div class="col-xs-4 col-md-6 "><strong>ÀÏÁ¤Àå¼Ò</strong></div>
+			  		<div class="col-xs-4 col-md-6 "><strong>ì¼ì •ì¥ì†Œ</strong></div>
 					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">${meeting.meetingPlace}</div>
 				</div>
 				
@@ -238,7 +238,7 @@
 				
 				
 				<div>
-			  		<div class="col-xs-4 col-md-6 "><strong>ÀÏÁ¤¼³¸í</strong></div>
+			  		<div class="col-xs-4 col-md-6 "><strong>ì¼ì •ì„¤ëª…</strong></div>
 					<div class="col" style="margin-left: 20px;">${meeting.meetingContent}</div>
 				</div>
 				
@@ -246,20 +246,20 @@
 				
 				
 				<div>
-			  		<div class="col-xs-4 col-md-6 "><strong>Á¤ ¿ø</strong><a href="/club/getMeetingMemberList">(Âü¿©ÀÎ¿ø)</a></div>
+			  		<div class="col-xs-4 col-md-6 "><strong>ì • ì›</strong><a href="/club/getMeetingMemberList">(ì°¸ì—¬ì¸ì›)</a></div>
 					<div class="col-xs-8 col-md-6" style="margin-left: 5px;">(${meetingCount}/${meeting.meetingMaximumMember})</div>
 				</div>
 				
 				<p>
 				
-				</div> <!-- detailForm Á¾·á -->			
+				</div> <!-- detailForm ì¢…ë£Œ -->			
 			<!-- </form>	 -->
 			
 		<%-- 	<div class="mapArea">
 				<jsp:include page="/club/searchPlace.jsp"/>			
 			</div> --%>
 		
-		<!-- ÇÕÄ¡ÀÚ~ -->		
+		<!-- í•©ì¹˜ì~ -->		
 		</div>	
 		<form>
 			<div class="btn_group" id="btn_group" style="margin-top: 60px;">
@@ -268,16 +268,16 @@
 				<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
-								<button type="button" class="plain button red cancel" id="addMeetingMember">Âü°¡½ÅÃ»</button>
+								<button type="button" class="plain button red cancel" id="addMeetingMember">ì°¸ê°€ì‹ ì²­</button>
 							</c:if>
 						</c:if>				 	
 				 	</c:forEach>	
 					
-					<button type="button" class="plain button red cancel" id="cancel"> ÀÌ&nbsp;Àü</button>
+					<button type="button" class="plain button red cancel" id="cancel"> ì´&nbsp;ì „</button>
 					
 					<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(meeting.user.userId) }">
-						<button type="button" class="plain button red cancel" id="updateMeeting">¼ö&nbsp;Á¤</button>
-			      		<button type="button" class="plain button red cancel" id="deleteMeeting">»è&nbsp;Á¦</button>
+						<button type="button" class="plain button red cancel" id="updateMeeting">ìˆ˜&nbsp;ì •</button>
+			      		<button type="button" class="plain button red cancel" id="deleteMeeting">ì‚­&nbsp;ì œ</button>
 			      	</c:if>
 		      		
 		 	   </div>

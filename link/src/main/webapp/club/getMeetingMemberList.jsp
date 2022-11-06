@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,8 +10,8 @@
 <html lang="ko">
 	
 <head>
-	<title>¸ðÀÓÀÏÁ¤ Âü¿©ÀÚ ¸®½ºÆ®</title>
-	<meta charset="EUC-KR">
+	<title>ëª¨ìž„ì¼ì • ì°¸ì—¬ìž ë¦¬ìŠ¤íŠ¸</title>
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -23,7 +23,7 @@
 	
 	
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
+	  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <!-- alert -->
@@ -110,14 +110,14 @@
 		$(document).on("click","#deleteParticipant", function() {
 
 			Swal.fire({
-				title: 'ÀÏÁ¤ Âü¿©¸¦ Ãë¼ÒÇÏ½Ã°Ú½À´Ï±î?' ,
-				text: "Ãë¼Ò ÈÄ¿¡µµ ´Ù½Ã ½ÅÃ»ÀÌ °¡´ÉÇÕ´Ï´Ù.",
+				title: 'ì¼ì • ì°¸ì—¬ë¥¼ ì·¨ì†Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?' ,
+				text: "ì·¨ì†Œ í›„ì—ë„ ë‹¤ì‹œ ì‹ ì²­ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.",
 				icon: 'warning' ,
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
 				cancelButtonColor: '#d33',
-				confirmButtonText: '»èÁ¦',
-				cancelButtonText: 'Ãë¼Ò' ,
+				confirmButtonText: 'ì‚­ì œ',
+				cancelButtonText: 'ì·¨ì†Œ' ,
 			}).then((result) => {
 				if (result.value) {	
 			
@@ -132,7 +132,7 @@
 		});
 	});
 	
-	//È¨¹öÆ°
+	//í™ˆë²„íŠ¼
 	$(function() {
 		$(".homeBtn").on("click", function() {
 			self.location="/club/getClub?clubNo=${clubNo}"
@@ -194,9 +194,9 @@
 				</div>
 				
 		<div class="form_txtInput" style="margin-top: 150px;">
-			<h2 class="sub_tit_txt">ÀÏÁ¤ Âü¿©ÀÚ</h2>
+			<h2 class="sub_tit_txt">ì¼ì • ì°¸ì—¬ìž</h2>
 		</div>
-			<!-- Áß°£ °³º°¿µ¿ª -->
+			<!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
 			<div id="main" class="row" style="padding-bottom: 20%;">
 			
 				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
@@ -209,9 +209,9 @@
 			      
 			        <thead>
 			          <tr>
-			          	<th align="left">È¸¿ø ÇÁ·ÎÇÊ»çÁø</th>
-			            <th align="left" >È¸¿ø ¾ÆÀÌµð</th>
-			            <th align="left">È¸¿ø ´Ð³×ÀÓ</th>
+			          	<th align="left">íšŒì› í”„ë¡œí•„ì‚¬ì§„</th>
+			            <th align="left" >íšŒì› ì•„ì´ë””</th>
+			            <th align="left">íšŒì› ë‹‰ë„¤ìž„</th>
 			          </tr>
 			        </thead>
 		       
@@ -237,14 +237,14 @@
 	  
 		<div class="form-group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 30%;">
-					<button type="button" class="plain button red cancel" id="deleteParticipant">½ÅÃ»Ãë¼Ò</button>
-					<button type="button" class="plain button red cancel" id="cancel">´Ý&nbsp;±â</button>					
+					<button type="button" class="plain button red cancel" id="deleteParticipant">ì‹ ì²­ì·¨ì†Œ</button>
+					<button type="button" class="plain button red cancel" id="cancel">ë‹«&nbsp;ê¸°</button>					
 		    </div>
 			</div>		
 	  
 	  </form>
  	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
  	</div>
  	</div>
  	</div>

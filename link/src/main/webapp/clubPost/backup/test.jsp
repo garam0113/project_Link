@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +8,9 @@
 
 </head>
 <body>
-  <button id="testBtn" class="btn">¸ð´Þ Å×½ºÆ®</button>
+  <button id="testBtn" class="btn">ëª¨ë‹¬ í…ŒìŠ¤íŠ¸</button>
   
-  <!-- È¸¿ø°¡ÀÔ È®ÀÎ Modal-->
+  <!-- íšŒì›ê°€ìž… í™•ì¸ Modal-->
 	<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -18,12 +18,12 @@
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					</button>
-					<h3 class="modal-title" id="exampleModalLabel">¸ð´ÞÅ×½ºÆ®</h5>
+					<h3 class="modal-title" id="exampleModalLabel">ëª¨ë‹¬í…ŒìŠ¤íŠ¸</h5>
 				</div>
-				<div class="modal-body">³»¿ë ÀÔ·Â !!</div>
+				<div class="modal-body">ë‚´ìš© ìž…ë ¥ !!</div>
 				<div class="modal-footer">
-					<a class="btn" id="modalY" href="#">¿¹</a>
-					<button class="btn" type="button" data-dismiss="modal">¾Æ´Ï¿ä</button>
+					<a class="btn" id="modalY" href="#">ì˜ˆ</a>
+					<button class="btn" type="button" data-dismiss="modal">ì•„ë‹ˆìš”</button>
 				</div>
 			</div>
 		</div>

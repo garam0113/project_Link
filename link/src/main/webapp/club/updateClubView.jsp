@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,13 +17,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
   
   <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css">
   
-  	<!--  	jQuery UI toolTip »ç¿ë JS -->
+  	<!--  	jQuery UI toolTip ì‚¬ìš© JS -->
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
@@ -84,7 +84,7 @@
 		if (title == null || title.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓÀÌ¸§Àº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ì´ë¦„ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -92,7 +92,7 @@
 		if( content == null || content.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓ¼³¸íÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ì„¤ëª…ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -100,7 +100,7 @@
 		if( image == null || image.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓ´ëÇ¥ÀÌ¹ÌÁö´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ëŒ€í‘œì´ë¯¸ì§€ëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -112,7 +112,7 @@
 	$(function() {
 
 		$("#updateClub").on("click", function() {
-			//alert($("td.ct_btn01:contains('µî·Ï')").html());
+			//alert($("td.ct_btn01:contains('ë“±ë¡')").html());
 			fncUpdateClub();
 		});
 	});
@@ -162,8 +162,8 @@
 		<div class="wrap wd668" style="background: #EBEDF0;">
 			<div class="container" style="background: white;">
 				<div class="form_txtInput" style="margin-top: 150px;">
-					<h2 class="sub_tit_txt">¸ð ÀÓ ¼ö Á¤</h2>
-					<p class="exTxt">¸ðÀÓÀ» ¼öÁ¤ÇØº¸¼¼¿ä...</p>
+					<h2 class="sub_tit_txt">ëª¨ ìž„ ìˆ˜ ì •</h2>
+					<p class="exTxt">ëª¨ìž„ì„ ìˆ˜ì •í•´ë³´ì„¸ìš”...</p>
 					<div class="join_form">
 			
 		
@@ -172,7 +172,7 @@
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<strong>¸ð ÀÓ ÀÌ ¸§</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" style="width: 500px; height: 50px;">${club.clubTitle }</textarea>
+					<strong>ëª¨ ìž„ ì´ ë¦„</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" style="width: 500px; height: 50px;">${club.clubTitle }</textarea>
 				</div>					
 			</div>
 			
@@ -181,24 +181,24 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<strong>¸ð ÀÓ ¼³ ¸í</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" maxlength="500" style="width: 500px; height: 300px;">${club.clubDetail }</textarea>
+					<strong>ëª¨ ìž„ ì„¤ ëª…</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" maxlength="500" style="width: 500px; height: 300px;">${club.clubDetail }</textarea>
 				</div>		
 			</div>
 			
 			<div class="form-group">
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<strong>¸ðÀÓÄ«Å×°í¸®</strong>
+					<strong>ëª¨ìž„ì¹´í…Œê³ ë¦¬</strong>
 					<select class="form-control" id="clubCategory" name="clubCategory" style="width:350px;">
-						<option value="¿îµ¿">¿îµ¿</option>
-  						<option value="ºÀ»çÈ°µ¿">ºÀ»çÈ°µ¿</option>
-  						<option value="À½½Ä">À½½Ä</option>
-						<option value="¿©Çà">¿©Çà</option>
-						<option value="¹Ý·Áµ¿¹°">¹Ý·Áµ¿¹°</option>
-						<option value="°ÔÀÓ">°ÔÀÓ</option>
-						<option value="À½¾Ç/´í½º">À½¾Ç/´í½º</option>
-						<option value="µ¶¼­">µ¶¼­</option>
-						<option value="±âÅ¸">±âÅ¸</option>
+						<option value="ìš´ë™">ìš´ë™</option>
+  						<option value="ë´‰ì‚¬í™œë™">ë´‰ì‚¬í™œë™</option>
+  						<option value="ìŒì‹">ìŒì‹</option>
+						<option value="ì—¬í–‰">ì—¬í–‰</option>
+						<option value="ë°˜ë ¤ë™ë¬¼">ë°˜ë ¤ë™ë¬¼</option>
+						<option value="ê²Œìž„">ê²Œìž„</option>
+						<option value="ìŒì•…/ëŒ„ìŠ¤">ìŒì•…/ëŒ„ìŠ¤</option>
+						<option value="ë…ì„œ">ë…ì„œ</option>
+						<option value="ê¸°íƒ€">ê¸°íƒ€</option>
 					</select>
 				</div>			    
 			</div>			
@@ -206,33 +206,33 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-					<strong>Áö ¿ª</strong>
+					<strong>ì§€ ì—­</strong>
 					<select class="form-control" id="clubArea" name="clubArea" style="width:350px;">
-						<option value="°­³²±¸">°­³²±¸</option>
-						<option value="°­µ¿±¸">°­µ¿±¸</option>
-						<option value="°­ºÏ±¸">°­ºÏ±¸</option>
-						<option value="°­¼­±¸">°­¼­±¸</option>
-						<option value="°ü¾Ç±¸">°ü¾Ç±¸</option>
-						<option value="±¤Áø±¸">±¤Áø±¸</option>
-						<option value="±¸·Î±¸">±¸·Î±¸</option>
-						<option value="±ÝÃµ±¸">±ÝÃµ±¸</option>
-						<option value="³ë¿ø±¸">³ë¿ø±¸</option>
-						<option value="µµºÀ±¸">µµºÀ±¸</option>
-						<option value="µ¿´ë¹®±¸">µ¿´ë¹®±¸</option>
-						<option value="µ¿ÀÛ±¸">µ¿ÀÛ±¸</option>
-						<option value="¸¶Æ÷±¸">¸¶Æ÷±¸</option>
-						<option value="¼­´ë¹®±¸">¼­´ë¹®±¸</option>
-						<option value="¼­ÃÊ±¸">¼­ÃÊ±¸</option>
-						<option value="¼ºµ¿±¸">¼ºµ¿±¸</option>
-						<option value="¼ººÏ±¸">¼ººÏ±¸</option>
-						<option value="¼ÛÆÄ±¸">¼ÛÆÎ±¸</option>
-						<option value="¾çÃµ±¸">¾çÃµ±¸</option>
-						<option value="¿µµîÆ÷±¸">¿µµîÆ÷±¸</option>
-						<option value="¿ë»ê±¸">¿ë»ê±¸</option>
-						<option value="ÀºÆò±¸">ÀºÆò±¸</option>
-						<option value="Á¾·Î±¸">Á¾·Î±¸</option>
-						<option value="Áß±¸">Áß±¸</option>
-						<option value="Áß¶û±¸">Áß¶û±¸</option>
+						<option value="ê°•ë‚¨êµ¬">ê°•ë‚¨êµ¬</option>
+						<option value="ê°•ë™êµ¬">ê°•ë™êµ¬</option>
+						<option value="ê°•ë¶êµ¬">ê°•ë¶êµ¬</option>
+						<option value="ê°•ì„œêµ¬">ê°•ì„œêµ¬</option>
+						<option value="ê´€ì•…êµ¬">ê´€ì•…êµ¬</option>
+						<option value="ê´‘ì§„êµ¬">ê´‘ì§„êµ¬</option>
+						<option value="êµ¬ë¡œêµ¬">êµ¬ë¡œêµ¬</option>
+						<option value="ê¸ˆì²œêµ¬">ê¸ˆì²œêµ¬</option>
+						<option value="ë…¸ì›êµ¬">ë…¸ì›êµ¬</option>
+						<option value="ë„ë´‰êµ¬">ë„ë´‰êµ¬</option>
+						<option value="ë™ëŒ€ë¬¸êµ¬">ë™ëŒ€ë¬¸êµ¬</option>
+						<option value="ë™ìž‘êµ¬">ë™ìž‘êµ¬</option>
+						<option value="ë§ˆí¬êµ¬">ë§ˆí¬êµ¬</option>
+						<option value="ì„œëŒ€ë¬¸êµ¬">ì„œëŒ€ë¬¸êµ¬</option>
+						<option value="ì„œì´ˆêµ¬">ì„œì´ˆêµ¬</option>
+						<option value="ì„±ë™êµ¬">ì„±ë™êµ¬</option>
+						<option value="ì„±ë¶êµ¬">ì„±ë¶êµ¬</option>
+						<option value="ì†¡íŒŒêµ¬">ì†¡íŒ¡êµ¬</option>
+						<option value="ì–‘ì²œêµ¬">ì–‘ì²œêµ¬</option>
+						<option value="ì˜ë“±í¬êµ¬">ì˜ë“±í¬êµ¬</option>
+						<option value="ìš©ì‚°êµ¬">ìš©ì‚°êµ¬</option>
+						<option value="ì€í‰êµ¬">ì€í‰êµ¬</option>
+						<option value="ì¢…ë¡œêµ¬">ì¢…ë¡œêµ¬</option>
+						<option value="ì¤‘êµ¬">ì¤‘êµ¬</option>
+						<option value="ì¤‘ëž‘êµ¬">ì¤‘ëž‘êµ¬</option>
 					</select>
 				</div>		
 			</div>			
@@ -240,7 +240,7 @@
 			<div class="form-group">
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
-				<strong>¸ðÀÓÀÌ¹ÌÁö</strong><input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
+				<strong>ëª¨ìž„ì´ë¯¸ì§€</strong><input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
 					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width: 300px; max-width: 260%;"></button>
 				</div>		
 			</div>
@@ -249,8 +249,8 @@
 			
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 150px;">
-		      		<button type="button" class="plain button red cancel" id="updateClub" >¼ö &nbsp;Á¤</button>
-					<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+		      		<button type="button" class="plain button red cancel" id="updateClub" >ìˆ˜ &nbsp;ì •</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 		    </div>
 			</div>
 			</div>
