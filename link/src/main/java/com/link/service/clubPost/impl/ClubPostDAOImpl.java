@@ -74,7 +74,7 @@ public class ClubPostDAOImpl implements ClubPostDAO {
 		map.put("clubPostList", sqlSession.selectList("ClubPostMapper.getClubPostList", map));
 
 		// 모임 게시물 리스트의 개수 가져온다
-		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", map));		
+		map.put("clubPostListCount", sqlSession.selectOne("ClubPostMapper.getClubPostListCount", map));
 		return map;
 	}// end of getClubPostList(Map<String, Object> map)
 
