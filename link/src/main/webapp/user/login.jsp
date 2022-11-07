@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="/resources/css/login.css">
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -288,7 +288,7 @@ z-index: 10000;
 
 			$.ajax("/userRest/json/getUser", {
 				type : "POST",
-				data : JSON.stringify({
+				data : JSON.stringify({ 
 					snsUserId : "," + snsId,
 					addType : ",2"
 				}),
@@ -312,7 +312,7 @@ z-index: 10000;
 								+ "까지 로그인이 제한됩니다.");
 						return;
 					}
-					$("form").attr("method", "POST").attr("action",
+					$($("form")[0]).attr("method", "POST").attr("action",
 							"/user/snsLogin").submit();
 				}
 			})
