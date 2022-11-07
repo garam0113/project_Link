@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,11 +9,11 @@
 <html lang="ko">
 
 <head>
-<title>Q&A ¸ñ·Ï</title>
-<meta charset="EUC-KR">
+<title>Q&A ëª©ë¡</title>
+<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--ÆäÀÌÁö ³×ºñ°ÔÀÌ¼Ç css --%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--í˜ì´ì§€ ë„¤ë¹„ê²Œì´ì…˜ css --%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -106,12 +106,12 @@ function fncGetList(currentPage) {
 
 	if(${search.order=='2'}){
 	$("#currentPage").val(currentPage)
-	$("form").attr("method", "GET").attr("action", "/serviceCenter/getQandAList")   //ÀüÃ¼º¸±â
+	$("form").attr("method", "GET").attr("action", "/serviceCenter/getQandAList")   //ì „ì²´ë³´ê¸°
 			.submit();
 	}
 	else if(${search.order=='3'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "POST").attr("action", "/serviceCenter/getQandAList/${sessionScope.user.userId}")   //³ª¸¸º¸±â
+		$("form").attr("method", "POST").attr("action", "/serviceCenter/getQandAList/${sessionScope.user.userId}")   //ë‚˜ë§Œë³´ê¸°
 				.submit();
 	}	
 }
@@ -119,20 +119,20 @@ function fncGetList(currentPage) {
 	$(function() {
 
 
-		$("td:contains('ºñ¹Ğ±ÛÀÔ´Ï´Ù.')").bind("click", function() {
+		$("td:contains('ë¹„ë°€ê¸€ì…ë‹ˆë‹¤.')").bind("click", function() {
 			if (${empty user}){
-			 alert("°ü°èÀÚ¸¸ º¼ ¼ö ÀÖ½À´Ï´Ù."); 			
+			 alert("ê´€ê³„ìë§Œ ë³¼ ìˆ˜ ìˆìŠµë‹ˆë‹¤."); 			
 				}	
 
 		})
 		
-		$("button:contains('°Ë»ö')").bind("click", function() {	
+		$("button:contains('ê²€ìƒ‰')").bind("click", function() {	
 		  fncGetList(1);
 		})
 		
-		$("button:contains('µî·Ï')").bind("click", function() {
+		$("button:contains('ë“±ë¡')").bind("click", function() {
 			if(${empty sessionScope.user.userId}){
-			alert("·Î±×ÀÎ ÈÄ ÀÌ¿ë °¡´ÉÇÕ´Ï´Ù.");
+			alert("ë¡œê·¸ì¸ í›„ ì´ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.");
 			self.location="/user/login.jsp";
 			}
 			
@@ -144,7 +144,7 @@ function fncGetList(currentPage) {
 		
 		
 	
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 
@@ -160,35 +160,35 @@ function fncGetList(currentPage) {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 
 
 
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
-  <h1 >Q&A ¸®½ºÆ®</h1>
+  <h1 >Q&A ë¦¬ìŠ¤íŠ¸</h1>
 </div>
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 			
 		<div class="row1">
@@ -196,12 +196,12 @@ function fncGetList(currentPage) {
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ÀüÃ¼ ${resultPage.totalCount } °Ç¼ö, ÇöÀç
-					${resultPage.currentPage} ÆäÀÌÁö</p>
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
 			</div>
 
 
-			<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+			<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 			<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
 					<form class="form-inline" name="detailForm">
@@ -209,25 +209,25 @@ function fncGetList(currentPage) {
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
 								<option value="1"
-									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>Á¦¸ñ</option>
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì œëª©</option>
 							</select>
 
-							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">°Ë»ö¾î</label> <input
+							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">ê²€ìƒ‰ì–´</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="°Ë»ö¾î" style="transform: translate(10px, 8px); width:300px; "
+								name="searchKeyword" placeholder="ê²€ìƒ‰ì–´" style="transform: translate(10px, 8px); width:300px; "
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">°Ë»ö</button>
+							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">ê²€ìƒ‰</button>
 
-						<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+						<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					</form>
 				</div>
 
 
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 
 		<!--  table Start /////////////////////////////////////-->
@@ -237,13 +237,13 @@ function fncGetList(currentPage) {
 					<tr class = "head" id ="head" >
 						<th align="center">No</th>
 						<td />
-						<th align="center" class="content">Á¦¸ñ</th>
+						<th align="center" class="content">ì œëª©</th>
 						<td />
-						<th align="center">ÁøÇà»óÈ²</th>
+						<th align="center">ì§„í–‰ìƒí™©</th>
 						<td />
-						<th align="center">ÀÛ¼ºÀÚ</th>
+						<th align="center">ì‘ì„±ì</th>
 						<td />
-						<th align="center" width="140">ÀÛ¼º ³¯Â¥</th>
+						<th align="center" width="140">ì‘ì„± ë‚ ì§œ</th>
 					</tr>
 				</thead>
 
@@ -255,85 +255,85 @@ function fncGetList(currentPage) {
 						<input type="hidden" id="qandANo" name="qandANo" value="${getQandAList.qandANo }">
 						</td>
 						<td></td>
-						<%-- °ü¸®ÀÚ --%>
+						<%-- ê´€ë¦¬ì --%>
 						<c:if test="${ user.role == '1' }">
 							<td align="left"><a
 								href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 								
 									${getQandAList.qandATitle} </a>
 									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	
 									
 									</td>
 						</c:if>
-						<%--°ü¸®ÀÚ ³¡ --%>
-						<%-- ºñÈ¸¿ø--%>
+						<%--ê´€ë¦¬ì ë --%>
+						<%-- ë¹„íšŒì›--%>
 						<c:if test="${ user.role== null }">
 							<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<td align="left"><a
 									href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} </a>
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-										&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+										&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 										</c:if>	
 										</td>
 							</c:if>
 
 							<c:if test="${getQandAList.qandAOpenCondition=='0'}">
 								<td >
-								<img src="/resources/image/uploadFiles/ÀÚ¹°¼è.jpg" style="width:15px; height:15px; display: inline;">
-								ºñ¹Ğ±ÛÀÔ´Ï´Ù.
+								<img src="/resources/image/uploadFiles/ìë¬¼ì‡ .jpg" style="width:15px; height:15px; display: inline;">
+								ë¹„ë°€ê¸€ì…ë‹ˆë‹¤.
 								<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	
 								
 								</td>
 							</c:if>
 						</c:if>
-						<%--ºñÈ¸¿ø ³¡ --%>
-						<%--È¸¿ø--%>
+						<%--ë¹„íšŒì› ë --%>
+						<%--íšŒì›--%>
 						<c:if test="${ user.role =='0' }">
-							<%--¼¼¼Ç ¾ÆÀÌµğ ºñ±³ OK --%>
+							<%--ì„¸ì…˜ ì•„ì´ë”” ë¹„êµ OK --%>
 							<td align="left">
 							<c:if test="${sessionScope.user.userId == getQandAList.userId.userId}">
 									
 									<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} <c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	</a>	
 							</c:if>
-							<%--¼¼¼Ç ¾ÆÀÌµğºñ±³ OK ³¡ --%>
-							<%--¼¼¼Ç ¾ÆÀÌµğºñ±³  NO --%>
+							<%--ì„¸ì…˜ ì•„ì´ë””ë¹„êµ OK ë --%>
+							<%--ì„¸ì…˜ ì•„ì´ë””ë¹„êµ  NO --%>
 							<c:if test="${sessionScope.user.userId != getQandAList.userId.userId}">
 									<c:if test="${getQandAList.qandAOpenCondition=='1'}">
 								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} 
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 									</c:if>	</a>
 							</c:if>
 							
 									<c:if test="${getQandAList.qandAOpenCondition=='0'}">
-									<img src="/resources/image/uploadFiles/ÀÚ¹°¼è.jpg" style="width:15px; height:15px; display: inline;">
-								ºñ¹Ğ±ÛÀÔ´Ï´Ù.
+									<img src="/resources/image/uploadFiles/ìë¬¼ì‡ .jpg" style="width:15px; height:15px; display: inline;">
+								ë¹„ë°€ê¸€ì…ë‹ˆë‹¤.
 									</c:if>
 									<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 									</c:if>								
 								
 							</c:if></c:if>
 							
 							</td>
-							<%--¼¼¼Ç ¾ÆÀÌµğºñ±³ NO ³¡ --%>
+							<%--ì„¸ì…˜ ì•„ì´ë””ë¹„êµ NO ë --%>
 						
-						<%--È÷¿ø  --%>
+						<%--íˆì›  --%>
 						<td></td>
 						<c:if test="${getQandAList.qandACondition=='1'}">
-							<td align="left" style="vertical-align: middle;">Ã³¸®¿Ï·á</td>
+							<td align="left" style="vertical-align: middle;">ì²˜ë¦¬ì™„ë£Œ</td>
 						</c:if>
 						<c:if test="${getQandAList.qandACondition=='0'}">
-							<td align="left" style="vertical-align: middle;">´ë±âÁß</td>
+							<td align="left" style="vertical-align: middle;">ëŒ€ê¸°ì¤‘</td>
 						</c:if>
 						<td></td>
 						<td align="left" style="vertical-align: middle;">${getQandAList.userId.nickName}</td>
@@ -376,10 +376,10 @@ function fncGetList(currentPage) {
 							<div class="col-md-3 col-sm-3 col-xs-6">
 							<c:if test="${ user.role == 0 || user.role == 1 }">
 								    <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
-									   µî·Ï</button> 
+									   ë“±ë¡</button> 
 									</c:if>
 											<button class="custom-btn btn-13" style= "transform: translate(970px, -90px); margin-left::20px; ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 							</div>
 
 
@@ -392,7 +392,7 @@ function fncGetList(currentPage) {
 	</div>
 	</div>
 	</div>
-	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 
 
 

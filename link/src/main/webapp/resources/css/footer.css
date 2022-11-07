@@ -1,0 +1,15 @@
+.club_post_footer_Tag{
+	color: gray; font-size: 13px;
+}
+#club_post_footer_img{
+	width: 100%;
+}
+#club_post_footer{
+	height: 350px; overflow: hidden; background-color: whitesmoke;
+}
+#club_post_footer_content{
+	position: relative; background-color: red;
+}
+#club_post_footer_int{
+	position: absolute; top: 10px; left: 500px; width: 1000px; height: 300px; display: grid; grid-template-columns: 1fr 2fr 1fr;
+}

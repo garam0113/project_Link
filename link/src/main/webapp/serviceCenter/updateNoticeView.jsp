@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>°øÁö»çÇ× ¼öÁ¤</title>
+<title>ê³µì§€ì‚¬í•­ ìˆ˜ì •</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -18,8 +18,8 @@
 	rel="stylesheet">
 
 
-<script type="text/javascript"><%-- javaScript, JQuery ½ÃÀÛ --%>
-	//=====±âÁ¸Code ÁÖ¼® Ã³¸® ÈÄ  jQuery º¯°æ ======//
+<script type="text/javascript"><%-- javaScript, JQuery ì‹œì‘ --%>
+	//=====ê¸°ì¡´Code ì£¼ì„ ì²˜ë¦¬ í›„  jQuery ë³€ê²½ ======//
 	function fncAddNotice() {
 
 		var title = $("textarea[name='noticeTitle']").val();
@@ -28,26 +28,26 @@
 		var image = $("input[name='noticeImage']").val();
 
 		if (title == null || title.length < 1) {
-			alert("Á¦¸ñÀº ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+			alert("ì œëª©ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 			return;
 		}
 		if (content == null || content.length < 1) {
-			alert("³»¿ëÀº ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+			alert("ë‚´ìš©ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 			return;
 		}
 
 		$($("form")[0]).attr("method", "POST").attr("action",
 				"/serviceCenter/updateNotice").submit();
-	} //funtion Notice ³¡
+	} //funtion Notice ë
 
 	$(function() {
 
-		$("button:contains('¼öÁ¤')").bind("click", function() {
+		$("button:contains('ìˆ˜ì •')").bind("click", function() {
 
 			fncAddNotice();
 		});
 
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 
 			location.href = "/serviceCenter/getNoticeList";
 		})
@@ -146,7 +146,7 @@ textarea {
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
 		style="transform: translate(-340px, 38px);">
-		<h2>°øÁö»çÇ× ¼öÁ¤</h2>
+		<h2>ê³µì§€ì‚¬í•­ ìˆ˜ì •</h2>
 	</div>
 	<div class="container">
 		<div class="table"
@@ -161,27 +161,27 @@ textarea {
 					name="userId" id="userId" value="${user.userId}">
 
 				<div class="form-group" style="margin-left: 161px;">
-					<strong>Á¦¸ñ</strong> <label for="title"></label>
+					<strong>ì œëª©</strong> <label for="title"></label>
 					<div class="col-sm-4">
 						<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle"
-							value="" maxlength="80" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">${notice.noticeTitle}</textarea>
+							value="" maxlength="80" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">${notice.noticeTitle}</textarea>
 
 
 					</div>
 				</div>
-				<strong style="margin-left: 161px;">³»¿ë</strong>
+				<strong style="margin-left: 161px;">ë‚´ìš©</strong>
 				<div class="form-group">
 					<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 					<div class="col-sm-4" style="margin-left: 161px;">
 										<textarea class="content" id="noticeContent" name="noticeContent" value=""
-						placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä." maxlength="1000"
+						placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”." maxlength="1000"
 						style="width: 500px; height: 500px;">${notice.noticeContent}</textarea>
 					</div>
 				</div>
 
 				<label for="noticeImage"
 					class="col-sm-offset-1 col-sm-3 control-label"
-					style="margin-left: 161px;"><strong>Ã·ºÎÆÄÀÏ</strong></label>
+					style="margin-left: 161px;"><strong>ì²¨ë¶€íŒŒì¼</strong></label>
 				<div class="col-sm-4" style="margin-left: 161px;">
 					<input multiple="multiple" type="file" name="image" id="file"
 						class="ct_input_g" style="width: 200px; height: 65px" />
@@ -190,17 +190,17 @@ textarea {
 				</div>
 			</form>
 			<span id="helpBlock" class="help-block"> <strong
-				class="text-danger" style="margin-left: 161px;">»çÁøÀº 2Àå±îÁö
-					°¡´ÉÇÕ´Ï´Ù.</strong>
+				class="text-danger" style="margin-left: 161px;">ì‚¬ì§„ì€ 2ì¥ê¹Œì§€
+					ê°€ëŠ¥í•©ë‹ˆë‹¤.</strong>
 			</span>
 
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-4  col-sm-4 text-center">
 				<button class="custom-btn btn-13"
-					style="transform: translate(20px, 0px);">¼öÁ¤</button>
+					style="transform: translate(20px, 0px);">ìˆ˜ì •</button>
 				<button class="custom-btn btn-13"
-					style="transform: translate(60px, 0px);">ÀÌÀü</button>
+					style="transform: translate(60px, 0px);">ì´ì „</button>
 			</div>
 		</div>
 
@@ -208,7 +208,7 @@ textarea {
 
 
 	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 
 </body>
 

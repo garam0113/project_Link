@@ -1,12 +1,12 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>Ω≈∞Ì µÓ∑œ</title>
+<title>Ïã†Í≥† Îì±Î°ù</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
@@ -24,15 +24,15 @@
 		if(title == null || title.length <1){
           	Swal.fire({
                 icon: 'error',
-                title: 'Ω≈∞Ì ¡¶∏Ò¿∫ « ºˆ¿‘¥œ¥Ÿ.',
+                title: 'Ïã†Í≥† Ï†úÎ™©ÏùÄ ÌïÑÏàòÏûÖÎãàÎã§.',
             });
 				return;
 			}
 		if(content == null || content.length <1){
 			Swal.fire({
                 icon: 'error',
-                title: 'Ω≈∞Ì ≥ªøÎ¿∫ « ºˆ¿‘¥œ¥Ÿ.',
-                text: '∞°¥…«— ªÛºº»˜ ¿˚æÓ¡÷ººø‰.',
+                title: 'Ïã†Í≥† ÎÇ¥Ïö©ÏùÄ ÌïÑÏàòÏûÖÎãàÎã§.',
+                text: 'Í∞ÄÎä•Ìïú ÏÉÅÏÑ∏Ìûà Ï†ÅÏñ¥Ï£ºÏÑ∏Ïöî.',
             });
 				return;
 			}
@@ -40,22 +40,22 @@
 		if(checkbox==0){
 			Swal.fire({
                 icon: 'error',
-                title: 'Ω≈∞Ì ªÁ¿Ø¥¬ « ºˆ¿‘¥œ¥Ÿ.',
-                text: '1∞≥ ¿ÃªÛ ≈¨∏Ø«ÿ¡÷ººø‰.',
+                title: 'Ïã†Í≥† ÏÇ¨Ïú†Îäî ÌïÑÏàòÏûÖÎãàÎã§.',
+                text: '1Í∞ú Ïù¥ÏÉÅ ÌÅ¥Î¶≠Ìï¥Ï£ºÏÑ∏Ïöî.',
             });
 			return;
 		}
 		
 						
 	  Swal.fire({
-          title: '¡§∏ª∑Œ Ω≈∞Ì«œΩ√∞⁄Ω¿¥œ±Ó?',
-          text: "¥ŸΩ√ µ«µπ∏± ºˆ æ¯Ω¿¥œ¥Ÿ. Ω≈¡ﬂ«œººø‰.",
+          title: 'Ï†ïÎßêÎ°ú Ïã†Í≥†ÌïòÏãúÍ≤†ÏäµÎãàÍπå?',
+          text: "Îã§Ïãú ÎêòÎèåÎ¶¥ Ïàò ÏóÜÏäµÎãàÎã§. Ïã†Ï§ëÌïòÏÑ∏Ïöî.",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Ω≈∞Ì',
-          cancelButtonText: '√Îº“'
+          confirmButtonText: 'Ïã†Í≥†',
+          cancelButtonText: 'Ï∑®ÏÜå'
       }).then((result) => {
           if (result.isConfirmed) {
              AddReport()
@@ -128,26 +128,26 @@
 		 }
 		}),
 			
-		})<!-- ajax ( ReportAdd) ≥° --> 
+		})<!-- ajax ( ReportAdd) ÎÅù --> 
 		
 
-	} //funtion ≥°
+	} //funtion ÎÅù
 	
 
 	$(function(){
 		
   		
-		$("button:contains('µÓ∑œ')").bind("click", function(){
+		$("button:contains('Îì±Î°ù')").bind("click", function(){
 			fncAddReport()
 			
 		})
 
 		
-		$("button:contains('µ⁄∑Œ')").bind("click", function(){
+		$("button:contains('Îí§Î°ú')").bind("click", function(){
 			
 			self.close();
-			<%-- self.close() «œ∞Ì window.close() µ— ¥Ÿ ≈©∑“ø°º≠ µ«¥¬¡ˆ »Æ¿Œ«ÿ∫∏±‚.
-			∫Œ∏√¢ æ¯æÓº≠ ≥™ »•¿⁄∑Œ¥¬ ∏¯ ≤˚ --%>
+			<%-- self.close() ÌïòÍ≥† window.close() Îëò Îã§ ÌÅ¨Î°¨ÏóêÏÑú ÎêòÎäîÏßÄ ÌôïÏù∏Ìï¥Î≥¥Í∏∞.
+			Î∂ÄÎ™®Ï∞Ω ÏóÜÏñ¥ÏÑú ÎÇò ÌòºÏûêÎ°úÎäî Î™ª ÎÅî --%>
 		})
 		
 		var reportSource = opener.$("input[name='reportSource']").val();
@@ -219,7 +219,7 @@ background-color: #EBEDF0 !important;
 	<div class="container">
 		<div></div>
 		<div class="page-header text-center">
-			<h2><strong>Ω≈∞Ì µÓ∑œ</strong></h2>
+			<h2><strong>Ïã†Í≥† Îì±Î°ù</strong></h2>
 		</div>
 
 		<!-- form Start /////////////////////////////////////-->
@@ -228,58 +228,58 @@ background-color: #EBEDF0 !important;
 			
 			<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
 			<div class="form-group">
-				<label for="title" class="col-sm-offset-1 col-sm-3 control-label">¡¶∏Ò</label>
+				<label for="title" class="col-sm-offset-1 col-sm-3 control-label">Ï†úÎ™©</label>
 				<div class="col-sm-4">
 					<textarea class="title" id="title" name="title" value=""
-						maxlength="66" placeholder="Ω≈∞Ì ¡¶∏Ò¿ª ¿‘∑¬«ÿ¡÷ººø‰"
+						maxlength="66" placeholder="Ïã†Í≥† Ï†úÎ™©ÏùÑ ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî"
 						style="position: fixed;"></textarea>
 
 				</div>
 
  	
-	<!--  »≠∏È±∏º∫ div end /////////////////////////////////////-->
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div end /////////////////////////////////////-->
 
 			</div>
 			</br>
 			<div class="form-group">
-				<label for="content" class="col-sm-offset-1 col-sm-3 control-label">≥ªøÎ</label>
+				<label for="content" class="col-sm-offset-1 col-sm-3 control-label">ÎÇ¥Ïö©</label>
 				<div class="context">
-					<textarea class="content" id="content" name="content" value="" placeholder="Ω≈∞Ì ≥ªøÎ¿ª ¿‘∑¬«ÿ¡÷ººø‰." maxlength="500"
+					<textarea class="content" id="content" name="content" value="" placeholder="Ïã†Í≥† ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî." maxlength="500"
 						style="width: 400px; height: 250px; margin-left: 15px;"></textarea>
 				</div>
 			</div>
 			</br>
 			<div class="form-group">
 
-					<label for="text" class="col-sm-offset-1 col-sm-3 control-label">Ω≈∞Ìπﬁ¥¬
+					<label for="text" class="col-sm-offset-1 col-sm-3 control-label">Ïã†Í≥†Î∞õÎäî
 						ID </label> 
 						<input type="text" class="" id="user2"
 						name="user2" value="${user02}" readonly style="width: 150px;" readonly />
 				
 					<label for="text"
-						class="col-sm-offset-1 col-sm-offset-1  control-label">Ω≈∞Ì
-						√‚√≥ </label>
+						class="col-sm-offset-1 col-sm-offset-1  control-label">Ïã†Í≥†
+						Ï∂úÏ≤ò </label>
 					
 					<c:if test="${reportSource== '1'}"> 
-						<input type="text" class="" value="∏¿”∞‘Ω√π∞" style="width: 150px;" disabled />
+						<input type="text" class="" value="Î™®ÏûÑÍ≤åÏãúÎ¨º" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="1">
 		     		 <input type="hidden" name="no" id="clubPostNo" value="${report.clubPost.clubPostNo}"/>
 		     		 <input type="hidden" name="clubNo" id="clubNo2" value="${report.clubPost.clubNo}"/>
 					</c:if> 
 					<c:if test="${reportSource=='2'}"> 
-					<input type="text" class="" value="∏¿”∞‘Ω√π∞¥Ò±€" style="width: 150px;" disabled />
+					<input type="text" class="" value="Î™®ÏûÑÍ≤åÏãúÎ¨ºÎåìÍ∏Ä" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="2">  			
 		     		 <input type="hidden" name="no" id="clubPostCommentNo" value="${report.clubPostComment.clubPostCommentNo}"/>
 		     		 <input type="hidden" name="clubPostNo" id="clubPostNo2" value="${report.clubPostComment.clubPostNo}"/>
 		     	     <input type="hidden" name="clubNo" id="clubNo3" value="${report.clubPostComment.clubNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='3'}">
-						<input type="text" class="" value="««µÂ" style="width: 150px;" disabled />
+						<input type="text" class="" value="ÌîºÎìú" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="3">
 		     		 <input type="hidden" name="no" id="feedNo" value="${report.feed.feedNo}"/>
 					</c:if>
 					<c:if test="${reportSource=='4'}">
-					<input type="text" class="" value="««µÂ¥Ò±€" style="width: 150px;" disabled />
+					<input type="text" class="" value="ÌîºÎìúÎåìÍ∏Ä" style="width: 150px;" disabled />
 		     		 <input type="hidden" id="reportSource" name="reportSource" value="4">    	
 		     		 <input type="hidden" name="no" id="feedCommentNo" value="${report.feedComment.feedCommentNo}"/>
 					</c:if>
@@ -290,14 +290,14 @@ background-color: #EBEDF0 !important;
 
 
 			<div class="form-group">
-				<label for="Reason" class="col-sm-offset-1 col-sm-3 control-label">Ω≈∞Ì
-					ªÁ¿Ø</label>
+				<label for="Reason" class="col-sm-offset-1 col-sm-3 control-label">Ïã†Í≥†
+					ÏÇ¨Ïú†</label>
 				<div class="col-sm-4" id="Reason" style="width: 400px;">
 
-					<input type="checkbox" id="øÂº≥" name="reportReason" value="1" style="margin-left:55px">øÂº≥
-					<input type="checkbox" id="±§∞Ì" name="reportReason" value="2" style="margin-left:30px">±§∞Ì
-					<input type="checkbox" id="±‚≈∏" name="reportReason" value="4" style="margin-left:30px">±‚≈∏
-					<input type="checkbox" id="º∫¿˚" name="reportReason" value="8" style="margin-left:30px">º∫¿˚¿Œ πﬂæ
+					<input type="checkbox" id="ÏöïÏÑ§" name="reportReason" value="1" style="margin-left:55px">ÏöïÏÑ§
+					<input type="checkbox" id="Í¥ëÍ≥†" name="reportReason" value="2" style="margin-left:30px">Í¥ëÍ≥†
+					<input type="checkbox" id="Í∏∞ÌÉÄ" name="reportReason" value="4" style="margin-left:30px">Í∏∞ÌÉÄ
+					<input type="checkbox" id="ÏÑ±Ï†Å" name="reportReason" value="8" style="margin-left:30px">ÏÑ±Ï†ÅÏù∏ Î∞úÏñ∏
 
 				</div>
 			</div>
@@ -305,14 +305,14 @@ background-color: #EBEDF0 !important;
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="left:30px;">
-					<button type="button" class="add add5">µÓ∑œ</button>
-					<button type="button" class="add add6">µ⁄∑Œ</button>
+					<button type="button" class="add add5">Îì±Î°ù</button>
+					<button type="button" class="add add6">Îí§Î°ú</button>
 				</div>
 			</div>
 
 		</form>
 	</div>
-	<!--  »≠∏È±∏º∫ div end /////////////////////////////////////-->
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div end /////////////////////////////////////-->
 
 </body>
 

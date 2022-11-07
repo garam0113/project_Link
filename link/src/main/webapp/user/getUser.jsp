@@ -221,17 +221,23 @@ button {
 					</div>
 					<div class="col-xs-8 col-md-4">${getUser.reportCount}</div>
 				</div>
-			</c:if>
 			<br />
+			</c:if>
 
 			<c:if test="${ fn:trim(user.role) == '1' }">
 				<div class="row1">
 					<div class="col-xs-4 col-md-2 ">
 						<strong>정지상태</strong>
 					</div>
-					<div class="col-xs-8 col-md-4">${fn:trim(getUser.penaltyType) == '0' ? '-' : ''}</div>
-					<div class="col-xs-8 col-md-4">${fn:trim(getUser.penaltyType) == '1' ? '정지' : ''}</div>
-					<div class="col-xs-8 col-md-4">${fn:trim(getUser.penaltyType) == '2' ? '영구정지' : ''}</div>
+			<c:if test="${ fn:trim(getUser.penaltyType) == '0' }">
+					<div class="col-xs-8 col-md-4">-</div>
+			</c:if>
+			<c:if test="${ fn:trim(getUser.penaltyType) == '1' }">
+					<div class="col-xs-8 col-md-4">정지</div>
+			</c:if>
+			<c:if test="${ fn:trim(getUser.penaltyType) == '2' }">
+					<div class="col-xs-8 col-md-4">영구정지</div>
+			</c:if>
 				</div>
 
 				<br />

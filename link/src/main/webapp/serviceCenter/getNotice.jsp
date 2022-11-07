@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,7 +12,7 @@
 <html lang="ko">
 
 <head>
-<title>°øÁö»çÇ× Á¶È¸</title>
+<title>ê³µì§€ì‚¬í•­ ì¡°íšŒ</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -21,27 +21,27 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<script type="text/javascript"> <%-- ÀÚ¹Ù½ºÅ©¸³Æ® ½ÃÀÛ --%>
+<script type="text/javascript"> <%-- ìë°”ìŠ¤í¬ë¦½íŠ¸ ì‹œì‘ --%>
 	$(function() {
 
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			self.location = "/serviceCenter/getNoticeList";
 		})
 
-		$("button:contains('¼öÁ¤')").bind("click", function() {
+		$("button:contains('ìˆ˜ì •')").bind("click", function() {
 			self.location = "/serviceCenter/updateNotice?noticeNo="+$('#noticeNo').val();
 		})
 
-		$("button:contains('»èÁ¦')").bind("click", function() {
+		$("button:contains('ì‚­ì œ')").bind("click", function() {
 			 Swal.fire({
-		          title: 'Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
-		          text: "´Ù½Ã µÇµ¹¸± ¼ö ¾ø½À´Ï´Ù. ½ÅÁßÇÏ¼¼¿ä.",
+		          title: 'ì •ë§ë¡œ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+		          text: "ë‹¤ì‹œ ë˜ëŒë¦´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì‹ ì¤‘í•˜ì„¸ìš”.",
 		          icon: 'warning',
 		          showCancelButton: true,
 		          confirmButtonColor: '#3085d6',
 		          cancelButtonColor: '#d33',
-		          confirmButtonText: '»èÁ¦',
-		          cancelButtonText: 'Ãë¼Ò'
+		          confirmButtonText: 'ì‚­ì œ',
+		          cancelButtonText: 'ì·¨ì†Œ'
 		      }).then((result) => {
 		          if (result.isConfirmed) {
 		        	  self.location = "../serviceCenter/deleteNotice?noticeNo="+$('#noticeNo').val(); 
@@ -106,36 +106,36 @@ background-color: #EBEDF0 !important;
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
 	
 	
-<%-- Å×ÀÌºí ½ÃÀÛ --%>
+<%-- í…Œì´ë¸” ì‹œì‘ --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px; margin-top: 80px;">
-  <h2>°øÁö»çÇ× »ó¼¼º¸±â</h2>
+  <h2>ê³µì§€ì‚¬í•­ ìƒì„¸ë³´ê¸°</h2>
 </div>
 	
 		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
@@ -160,7 +160,7 @@ background-color: #EBEDF0 !important;
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						<pre>${notice.noticeContent}</pre>
@@ -168,9 +168,9 @@ background-color: #EBEDF0 !important;
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Ã·ºÎÆÄÀÏ</th>
+						<th style="text-align-last: center;">ì²¨ë¶€íŒŒì¼</th>
 						<c:if test="${notice.noticeImage1 == null && notice.noticeImage2 ==null }">
-							<td>Ã·ºÎÆÄÀÏ ¾øÀ½</td>
+							<td>ì²¨ë¶€íŒŒì¼ ì—†ìŒ</td>
 						</c:if>
 						<td><c:if test="${notice.noticeImage1 != null }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
@@ -200,12 +200,12 @@ background-color: #EBEDF0 !important;
 									<div> 
 									<c:if test="${user.role=='1'}">
  									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
-									   ¼öÁ¤</button> 
+									   ìˆ˜ì •</button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(370px,0px); ">
-									   »èÁ¦</button> 
+									   ì‚­ì œ</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(370px, 0px); ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 									</div>
 				
 			</div>
