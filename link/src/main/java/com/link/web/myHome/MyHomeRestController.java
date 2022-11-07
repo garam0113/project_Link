@@ -87,17 +87,17 @@ public class MyHomeRestController {
 			search.setPageSize(pageSize);
 			search.setPageUnit(pageUnit);
 			
+			Map<String, Object> map = new HashMap<String, Object>();
 			
-			String userId = ((User) session.getAttribute("user")).getUserId();
-			search.setSearchKeyword(userId);
-		 Map<String, Object> map = new HashMap<String, Object>();
-		 map.put("search",search);
-		 map.put("user", user);	
-		 map.put("list",myHomeService.getFollowList(search).get("list"));
-		 
-		 
-		 
-		 
+			if((User) session.getAttribute("user") != null) {
+				String userId = ((User) session.getAttribute("user")).getUserId();
+				search.setSearchKeyword(userId);
+				
+				map.put("search",search);
+				map.put("user", user);	
+				map.put("list",myHomeService.getFollowList(search).get("list"));
+			}
+			
 		 return map;
 		 
 	 }

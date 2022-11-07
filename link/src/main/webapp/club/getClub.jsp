@@ -346,16 +346,16 @@
 
 	<style>
 		body {
-			padding-top: 70px;
+			/* padding-top: 70px; */
 		}
 		
 		#main {
 			background-color: #f0f2f5 !important;
 		}
 		
-		main {
+		/* main {
 			background-color: #f0f2f5 !important;
-		}
+		} */
 		
 		.plain.button.red.cancel{
 		   background-color: white;
@@ -417,7 +417,7 @@
 		}
 		
 		element.style {
-			margin-bottom: 100px !important;
+			/* margin-bottom: 100px !important; */
 		}
 		
 		
@@ -452,7 +452,7 @@
 </head>
 
 
-<body class="blog masonry-style" style="background: #EBEDF0;">
+<body class="blog masonry-style">
 
 
 
@@ -471,7 +471,7 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
-	<main role="main">
+	<!-- <main role="main"> -->
 
 		<%-- <div id="intro-wrap" data-height="17.35">
 			<!-- 상단 검은색 공통 영역 -->
@@ -498,9 +498,9 @@
 			
 			
 				<%-- chat.js에서 사용위해서 --%>
-					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 				<%-- chat.js에서 사용위해서 --%>
 				<%-- 채팅 --%>
 				<jsp:include page="/chat/chat.jsp" />
@@ -508,20 +508,20 @@
 				
 				
 				
-				<div class="row-content buffer-left buffer-right buffer-bottom">
+				<div class="row-content buffer-left buffer-right buffer-bottom" style="background-color: red; width: 1140px; margin-left: 405px;">
 				
 				
-				<!-- 모임 대표이미지 -->				
-					<div class="club-image" style="margin-left: 190px; margin-top: 20px; margin-bottom: 35px;">
-							<a href="/club/getClub?clubNo=${clubNo}"><img
-								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="800" height="300" name="file" id="clubImage"></a>
+					<!-- 모임 대표이미지 -->				
+					<div class="club-image" style="background-color: blue; width: 1140px; height: 550px; overflow: hidden;">
+						<a href="/club/getClub?clubNo=${clubNo}">
+							<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 1140px;" name="file" id="clubImage">
+						</a>
 					</div>
 				
-				 <!-- 모임버튼 영역 -->			
-					<div class="homeBtn_group">
-						<button type="button" class="homeBtn" style="margin-top: 17px;">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+					 <!-- 모임버튼 영역 -->			
+					<div class="homeBtn_group" style="background-color: yellow;">
+						<button type="button" class="homeBtn" style="margin-top: 55px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</button>
 						
 						<button type="button" class="clubPostBtn">
@@ -538,107 +538,107 @@
 					</div>
 					
 					
-				<div class="form-group" id="btn_group">
-					<!-- <button type="button" class="joinLi"></button> -->
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -65px; margin-left: 900px;">
-		      		
-		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
-					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
-					
-				<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
-						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
-							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
-								<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
-							</c:if>
-						</c:if>				 	
-				 	</c:forEach>	
-									
-				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
-					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
-				</c:if>
-				
-				</div>
-			    </div>
+					<div class="form-group" id="btn_group" style="background-color: green;">
+						<!-- <button type="button" class="joinLi"></button> -->
+						<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -145px; margin-left: 900px; display: flex;">
+				      		
+				      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+							<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
+							
+						<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+								<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+									<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+										<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
+									</c:if>
+								</c:if>				 	
+						 	</c:forEach>	
+											
+						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+							<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
+							<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+						</c:if>
 						
-
-				<div class="mainForm" style="display: inline-flex;">
-					<!-- 클럽상세 -->
-					<div>
-						<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
-
-							<div class="col-xs 6 col-md-6" style="display: contents;">
-								<div class="row">
-									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
-										<strong>모임제목</strong>
+						</div>
+				    </div>
+							
+	
+					<div class="mainForm" style="display: inline-flex; background-color: olive;">
+						<!-- 클럽상세 -->
+						<div>
+							<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
+	
+								<div class="col-xs 6 col-md-6" style="display: contents;">
+									<div class="row">
+										<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
+											<strong>모임제목</strong>
+										</div>
+										<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
 									</div>
-									<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>모임설명</strong>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>모임설명</strong>
+										</div>
+										<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
 									</div>
-									<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>카테고리</strong>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>카테고리</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
 									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>활동영역</strong>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>활동영역</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
 									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
-								</div>
-
-								<hr />
-
-								<div class="row"> 
-									<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
-										<strong>모임원 수</strong>
+	
+									<hr />
+	
+									<div class="row"> 
+										<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
+											<strong>모임원 수</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
 									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
+	
 								</div>
-
-							</div>
-
-						</form>
-
+	
+							</form>
+	
+						</div>
+						<!-- 클럽상세 -->
+	
+						<!-- 달력영역 -->
+						<div class="calendarArea">
+	
+							<jsp:include page="/club/calendar.jsp" />
+	
+						</div>
+						<!-- 달력 영역 -->
+						
+						
+							<%-- ${clubMemberList[0].approvalCondition} --%>
+					 	
+					 	<%-- <c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+					 		<c:if test="${ clubMemberList[k].approvalCondition == 1 }">
+					 			${ clubMemberList[k].user.userId == sessionScope.user.userId }
+					 			'버튼'
+					 		</c:if>				 	
+					 	</c:forEach> --%>
+						
+						
+						
 					</div>
-					<!-- 클럽상세 -->
-
-					<!-- 달력영역 -->
-					<div class="calendarArea">
-
-						<jsp:include page="/club/calendar.jsp" />
-
-					</div>
-					<!-- 달력 영역 -->
-					
-					
-						<%-- ${clubMemberList[0].approvalCondition} --%>
-				 	
-				 	<%-- <c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
-				 		<c:if test="${ clubMemberList[k].approvalCondition == 1 }">
-				 			${ clubMemberList[k].user.userId == sessionScope.user.userId }
-				 			'버튼'
-				 		</c:if>				 	
-				 	</c:forEach> --%>
-					
-					
-					
-				</div>
 				
 					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
@@ -649,62 +649,113 @@
 				 	</c:forEach>
 				</div>
 				<!-- 버튼 원래 자리 -->
-			<%-- 	<div class="form-group" id="btn_group">
-					<!-- <button type="button" class="joinLi"></button> -->
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -20px;">
-		      		
-		      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
-					<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
+				<%-- 	<div class="form-group" id="btn_group">
+						<!-- <button type="button" class="joinLi"></button> -->
+					<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -20px;">
+			      		
+			      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+						<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
+						
+					<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
+						<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
+					</c:if>					
+					<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
+						<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
+						<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
+					</c:if>
 					
-				<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
-					<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
-				</c:if>					
-				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
-					<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">삭&nbsp;제</button>
-				</c:if>
+					</div>
+			    </div> --%>
+				<!-- 모달영역 -->
+				<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
+						<div class="modal-content" style="height: 300px; width: 440px;">
+							<div class="modal-header">
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</button>
+								<h3 class="modal-title" id="exampleModalLabel" style="text-align: center; ">가입신청</h3>
+							</div>
+						<div class="club-add-approval-view">
+							<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
+								<input type="hidden" name="clubNo" value="${ clubNo }">
+								<input type="hidden" name="roomId" value="${ club.roomId }">
+								<div class="clubJoinGreeting">
+									<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요" autocomplete="off" style="margin-top: 10px; margin-left: 45px; height: 130px; width: 365px;">
+								</div>
+								<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
+								<input type="button" class="plain button red cancel" value="신청">
+								<input type="button" class="plain button red cancel" value="취소">
+								</div>
+							</form>
+						</div>
+						</div>
+					</div>
 				
 				</div>
-		    </div> --%>
-			<!-- 모달영역 -->
-			<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
-					<div class="modal-content" style="height: 300px; width: 440px;">
-						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							</button>
-							<h3 class="modal-title" id="exampleModalLabel" style="text-align: center; ">가입신청</h3>
-						</div>
-					<div class="club-add-approval-view">
-						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
-							<input type="hidden" name="clubNo" value="${ clubNo }">
-							<input type="hidden" name="roomId" value="${ club.roomId }">
-							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="가입인사를 작성해주세요" autocomplete="off" style="margin-top: 10px; margin-left: 45px; height: 130px; width: 365px;">
-							</div>
-							<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
-							<input type="button" class="plain button red cancel" value="신청">
-							<input type="button" class="plain button red cancel" value="취소">
-							</div>
-						</form>
-					</div>
-					</div>
-				</div>
-			
+				
+				<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+				<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
+		
+		
+				<input type="hidden" id="clubTitle" value="${club.clubTitle}">
+				<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
+				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
+				<input type="hidden" id="no" value="${clubNo}">
+				<input type="hidden" id="total" value="${clubMemberCount}">
 			</div>
-			
-			<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
-			<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
-		
-		
-					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
-					<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
-					<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
-					<input type="hidden" id="no" value="${clubNo}">
-					<input type="hidden" id="total" value="${clubMemberCount}">
-			</div>	
-	</main>
+	<!-- </main> -->
+	
+	
+	<div style="height: 500px; overflow: hidden;">
+		<div>
+			<img src="/resources/image/uploadFiles/footerImage3.jpg" width="100%">
+		</div>
+		<div class="row" style="position: absolute; top: 100px; left: 100px;">
+			<div class="row-content buffer clear-after">
+				<section id="top-footer">
+					<div class="widget column three"><!-- la class="widget" è forse generata utomaticamente da wp -->
+						<h4>Menu</h4>
+						<ul class="plain">
+							<li><a href="home-01.html">Home</a></li>
+							<li><a href="works-3-columns.html">Portfolio</a></li>
+							<li><a href="blog-4-columns-masonry.html">Blog</a></li>
+							<li><a href="resume.html">Resume</a></li>
+							<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
+						</ul>
+					</div>
+					<div class="widget column three">
+						<h4>Archives</h4>
+						<ul class="plain">
+							<li><a href="#">March 2014</a></li>
+							<li><a href="#">April 2014</a></li>
+							<li><a href="#">May 2014</a></li>
+							<li><a href="#">June 2014</a></li>
+							<li><a href="#">July 2014</a></li>
+						</ul>
+					</div>								
+					<div class="widget column three">
+						<h4>Widget</h4>
+						<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+					</div>				
+					<div class="widget meta-social column three">
+						<h4>Follow Us</h4>
+						<ul class="inline">
+							<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
+							<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
+							<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
+						</ul>
+					</div>														
+				</section><!-- top-footer -->
+				<section id="bottom-footer">
+					<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
+					<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+				</section><!-- bottom-footer -->			
+			</div><!-- row-content -->	
+		</div><!-- row -->	
+	</div>
+	
+	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
 </body>
 </html>

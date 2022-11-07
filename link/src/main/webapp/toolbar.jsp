@@ -166,6 +166,14 @@ header::-webkit-scrollbar {
 	display: none !important;
 }
 
+html {
+	background-color: whitesmoke !important;
+}
+
+#main {
+	background-color: whitesmoke !important;
+}
+
 /* SCROLL */
 
 /* SCROLL */
