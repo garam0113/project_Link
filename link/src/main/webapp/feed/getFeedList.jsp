@@ -16,9 +16,13 @@
 
 <title>Feed</title>
 
+<!-- include summernote css/js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/summernote/summernote-lite.js"></script>
+
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
@@ -28,11 +32,7 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<%-- SUMMER NOTE --%>
-<script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-<%-- SUMMER NOTE --%>
+
 
 <script type="text/javascript">
 	
@@ -2090,7 +2090,6 @@
 }
 
 
-
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -2413,6 +2412,8 @@
 						</div>
 
 						<div class="column three">
+						
+						<script type="text/javascript" charset="utf-8" src="/resources/javascript/myHome/followListForFeed.js"></script>
 
 							<div class="tabs1">
 								<input id="all-follow" type="radio" name="tab_item-follow" checked>
