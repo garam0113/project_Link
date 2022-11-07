@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: whitesmoke !important;
+}
+
+#main {
+  background-color: whitesmoke !important;
+}
+
 body {
   margin: 0;
   padding: 0;

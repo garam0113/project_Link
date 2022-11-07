@@ -166,8 +166,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void sendPasswordSMS(User user) {
 		// TODO Auto-generated method stub
-		String api_key = "NCSLGZJ3SPI5O0HY";
-		String api_secret = "TIVIL4CAH2J6QH0W2ECK5GJUP0HZOMXJ";
+		String api_key = "NCS3OZVLVHTN8NDZ";
+		String api_secret = "Y6R7QYSQFUAMD45Y7NSTREKPS2KKNLB5";
 		Message coolsms = new Message(api_key,api_secret);
 		
 		String phoneNo = user.getPhone1()+user.getPhone2()+user.getPhone3();
@@ -175,7 +175,7 @@ public class UserServiceImpl implements UserService {
 		
 		HashMap<String, String> param = new HashMap<String, String>();
 		param.put("to",phoneNo);
-		param.put("from","01092367535");
+		param.put("from","01084214506");
 		param.put("type","SMS");
 		param.put("text","임시비밀번호발급["+user.getPassword()+"]");
 		param.put("app_version", "test app 1,2");
@@ -211,10 +211,10 @@ public class UserServiceImpl implements UserService {
 			
 			System.out.println("helper 값 : "+helper);
 			
-//			message.setContent("<head><meta charset=\"UTF-8R\"></head><div style='background: #dff0ff; width: 700px; border-radius: 20px; padding: 20px;'>"
-//					+"<a href=http://192.168.0.183:8080/user/login.jsp#getId>"
-//					+"<img style='margin-left: 47px; margin-top: 30px;' src=\'https://192.168.0.183:8443/resources/image/uploadFiles/Log.png\'></a>"
-//					+"<div style='font-size: xx-large;  font-weight: bold;     margin-left: 50px; margin-top: 20px;'>Link에서 보낸 인증코드["+cerNo+"]입니다.</div></div>","text/html;charset=UTF-8"); 
+			message.setContent("<head><meta charset=\"UTF-8R\"></head><div style='background: #dff0ff; width: 700px; border-radius: 20px; padding: 20px;'>"
+					+"<a href=http://192.168.0.183:8080/main.jsp>"
+					+"<img style='margin-left: 47px; margin-top: 30px;' src=\'https://192.168.0.183:8443/resources/image/uploadFiles/Log.png\'></a>"
+					+"<div style='font-size: xx-large;  font-weight: bold;     margin-left: 50px; margin-top: 20px;'>LINK에서 보낸 인증코드["+cerNo+"]입니다.</div></div>","text/html;charset=UTF-8"); 
 			  
 			javaMailSender.send(message);
 			
@@ -247,9 +247,9 @@ public class UserServiceImpl implements UserService {
 			System.out.println("helper 값 : "+helper);
 			
 			message.setContent("<head><meta charset=\"UTF-8R\"></head><div style='background: #dff0ff; width: 700px; border-radius: 20px; padding: 20px;'>"
-					+"<a href=http://192.168.0.183:8080/user/login.jsp#getId>"
+					+"<a href=http://192.168.0.183:8080/main.jsp>"
 					+"<img style='margin-left: 47px; margin-top: 30px;' src=\'https://192.168.0.183:8443/resources/image/uploadFiles/Log.png\'></a>"
-	 				+"<div style='font-size: x-large;  font-weight: bold;    margin-left: 50px; margin-top: 20px;'>Link에서 보낸 임시비밀번호는 ["+user.getPassword()+"]입니다.</div></div>","text/html;charset=UTF-8");
+	 				+"<div style='font-size: x-large;  font-weight: bold;    margin-left: 50px; margin-top: 20px;'>LINK에서 보낸 임시비밀번호는 ["+user.getPassword()+"]입니다.</div></div>","text/html;charset=UTF-8");
 			
 			javaMailSender.send(message);
 			

@@ -1,6 +1,8 @@
+	/* grid-template-columns : 1fr 1fr */
 
-
-
+	main {
+		margin-top: 0px !important;
+	}
 
 	/* DIALOG */
 
@@ -95,7 +97,7 @@
 	/* CHECKED TAB */
 
 	input[type="radio"]:checked + label {
-		background-color: black;
+		border: 2px solid #5F0080;
 	}
 
 	/* CHECKED TAB */
@@ -192,11 +194,11 @@
 	/* BACKGROUND */
 
 	html {
-		background-color: white !important;
+		background-color: whitesmoke !important;
 	}
 
 	#main {
-		background-color: white !important;
+		background-color: whitesmoke !important;
 	}
 
 	/* BACKGROUND */
