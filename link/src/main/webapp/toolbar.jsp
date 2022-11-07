@@ -142,6 +142,7 @@
 <style>
 header {
 	display: flex;
+	background: linear-gradient(0deg, #958c8cc4, black);
 }
 
 /* SCROLL */
@@ -173,6 +174,8 @@ html {
 #main {
 	background-color: whitesmoke !important;
 }
+
+
 
 /* SCROLL */
 

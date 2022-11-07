@@ -71,7 +71,7 @@ public class ServiceCenterController {
 	
 	@RequestMapping(value = "serviceCenterHome", method = RequestMethod.GET)
 	public String serviceCenterHome(HttpSession session, Chat chat, Model model) throws Exception {
-		
+		System.out.println("aaa");
 		
 		
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////

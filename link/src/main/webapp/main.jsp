@@ -30,7 +30,7 @@
 		<section class="row section">
 			<div class="container">
 				
-				<img src="/resources/image/uploadFiles/1667356075.jpg" alt="...">
+				<img src="/resources/image/uploadFiles/" alt="...">
 							
 			</div>
 		</section>

@@ -536,7 +536,7 @@ SELECT uf.user_id AS SEND_USER_ID, deepInner.* FROM users uf, ( SELECT us.user_i
 
 
 
-
+SELECT * FROM USERS;
 
 
 
