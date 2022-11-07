@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -18,21 +18,21 @@
 	rel="stylesheet">
 <head>
 
-	<title>Q&A È®ÀÎ</title>
+	<title>Q&A í™•ì¸</title>
 	
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-	<!-- CDN(Content Delivery Network) È£½ºÆ® »ç¿ë -->
+	<!-- CDN(Content Delivery Network) í˜¸ìŠ¤íŠ¸ ì‚¬ìš© -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	
 $(function(){
 		
-		$("button:contains('È®ÀÎ')").bind("click", function(){
+		$("button:contains('í™•ì¸')").bind("click", function(){
 			self.location = "/serviceCenter/getQandAList";
 		});
 			
-		$("button:contains('»èÁ¦')").bind("click", function(){
+		$("button:contains('ì‚­ì œ')").bind("click", function(){
 		self.location = "../serviceCenter/deleteQandA";
 		})
 	});
@@ -92,25 +92,25 @@ background-color: #EBEDF0 !important;
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
@@ -120,7 +120,7 @@ background-color: #EBEDF0 !important;
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
 		style="transform: translate(-316px, 38px);">
-		<h2>Q&A È®ÀÎ</h2>
+		<h2>Q&A í™•ì¸</h2>
 	</div>
 	<div class="container">
 	<table>
@@ -136,7 +136,7 @@ background-color: #EBEDF0 !important;
 						</td>
 					</tr>
 					<tr class = "title" id ="title">
-					<th style="text-align-last: center;">Á¦¸ñ</th>
+					<th style="text-align-last: center;">ì œëª©</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">		
 						<pre>${qandA.qandATitle}</pre>
@@ -150,7 +150,7 @@ background-color: #EBEDF0 !important;
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 							<pre>	${qandA.qandAContent}</pre>
@@ -158,9 +158,9 @@ background-color: #EBEDF0 !important;
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Ã·ºÎÆÄÀÏ</th>
+						<th style="text-align-last: center;">ì²¨ë¶€íŒŒì¼</th>
 						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
-							<td>Ã·ºÎÆÄÀÏ ¾øÀ½</td>
+							<td>ì²¨ë¶€íŒŒì¼ ì—†ìŒ</td>
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
 						${qandA.qandAImage1}
@@ -185,9 +185,9 @@ background-color: #EBEDF0 !important;
 									<div> 
 								
 									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
-									   »èÁ¦</button> 
+									   ì‚­ì œ</button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
-										È®ÀÎ</button>
+										í™•ì¸</button>
 
 									</div>
 				

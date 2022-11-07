@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -18,29 +18,29 @@
 	rel="stylesheet">
 <head>
 
-	<title>°øÁö»çÇ× È®ÀÎ</title>
+	<title>ê³µì§€ì‚¬í•­ í™•ì¸</title>
 	
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-	<!-- CDN(Content Delivery Network) È£½ºÆ® »ç¿ë -->
+	<!-- CDN(Content Delivery Network) í˜¸ìŠ¤íŠ¸ ì‚¬ìš© -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	
 	$(function(){
 		
-		$("button:contains('È®ÀÎ')").bind("click", function(){
+		$("button:contains('í™•ì¸')").bind("click", function(){
 			self.location = "/serviceCenter/getNoticeList";
 		});
 		
-		$("button:contains('Ãß°¡µî·Ï')").bind("click", function(){
+		$("button:contains('ì¶”ê°€ë“±ë¡')").bind("click", function(){
 			self.location = "../serviceCenter/addNoticeView.jsp";
 		})
 		
-		$("button:contains('¼öÁ¤')").bind("click", function(){
+		$("button:contains('ìˆ˜ì •')").bind("click", function(){
 			self.location = "../serviceCenter/updateNoticeView.jsp";
 		})
 		
-		$("button:contains('»èÁ¦')").bind("click", function(){
+		$("button:contains('ì‚­ì œ')").bind("click", function(){
 		self.location = "../serviceCenter/deleteNotice";
 		})
 	});
@@ -97,10 +97,10 @@ textarea {
 </style>
 </head>
 
-<%-- Å×ÀÌºí ½ÃÀÛ --%>
+<%-- í…Œì´ë¸” ì‹œì‘ --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
-  <h2>°øÁö»çÇ× È®ÀÎÇÏ±â</h2>
+  <h2>ê³µì§€ì‚¬í•­ í™•ì¸í•˜ê¸°</h2>
 </div>
 	
 		<div class="container" style="margin-top: 66px;">
@@ -115,7 +115,7 @@ textarea {
 					<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo}">
 					</tr>
 							<tr class = "title" id ="title">
-						<th style="text-align-last: center;">Á¦¸ñ</th>
+						<th style="text-align-last: center;">ì œëª©</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px; margin-top: 25px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
 					<pre>${notice.noticeTitle}</pre>	
@@ -130,7 +130,7 @@ textarea {
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						<pre>${notice.noticeContent}</pre>
@@ -138,9 +138,9 @@ textarea {
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Ã·ºÎÆÄÀÏ</th>
+						<th style="text-align-last: center;">ì²¨ë¶€íŒŒì¼</th>
 						<c:if test="${notice.noticeImage1 == '' && notice.noticeImage2 ==null }">
-							<td>Ã·ºÎÆÄÀÏ ¾øÀ½</td>
+							<td>ì²¨ë¶€íŒŒì¼ ì—†ìŒ</td>
 						</c:if>
 						<td><c:if test="${notice.noticeImage1 != null && notice.noticeImage1 !='' }">
 						<img src="/resources/image/uploadFiles/${notice.noticeImage1}" 
@@ -170,13 +170,13 @@ textarea {
 									<div> 
 								
  									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
-									   ¼öÁ¤</button> 
+									   ìˆ˜ì •</button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
-									   »èÁ¦</button> 
+									   ì‚­ì œ</button> 
 									 <button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
-										È®ÀÎ</button>
+										í™•ì¸</button>
 										<button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
-										Ãß°¡µî·Ï</button>	
+										ì¶”ê°€ë“±ë¡</button>	
 									</div>
 				
 			</div>

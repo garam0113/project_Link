@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>q&a µî·Ï</title>
+	<title>q&a ë“±ë¡</title>
 	
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
@@ -31,31 +31,31 @@
 		if (title == null || title.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: 'Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù.',
+                title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
             });
 				return;
 			}
 		if (content == null || content.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: '³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.',
+                title: 'ë‚´ìš©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
             });
 				return;
 			}
 
 		
 		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addQandA").submit();
-	} //funtion  ³¡
+	} //funtion  ë
 	
 
 	$(function(){
 				
-		$("button:contains('µî·Ï')").bind("click", function(){
+		$("button:contains('ë“±ë¡')").bind("click", function(){
 			
 			fncAddQandA();
 		});
 
-		$("button:contains('ÀÌÀü')").bind("click", function(){
+		$("button:contains('ì´ì „')").bind("click", function(){
 			if(${empty sessionScope.user.userId}){
 				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit();
 			}
@@ -152,25 +152,25 @@ margin-left: 400px !important;
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
@@ -180,7 +180,7 @@ margin-left: 400px !important;
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
 		style="transform: translate(-316px, 38px);">
-		<h2>Q&A µî·Ï</h2>
+		<h2>Q&A ë“±ë¡</h2>
 	</div>
 	<div class="container">
 	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
@@ -193,32 +193,32 @@ margin-left: 400px !important;
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 			<div class="form-group" style="margin-left: 161px;">
-				<strong>Á¦¸ñ</strong> <label for="title"></label>
+				<strong>ì œëª©</strong> <label for="title"></label>
 				<div class="col-sm-4">
 					<textarea class="qandATitle" id="qandATitle" name="qandATitle" value=""
-						maxlength="66" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
+						maxlength="66" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
 
 
 				</div>
 			</div>
-			<strong style="margin-left: 161px;">³»¿ë</strong>
+			<strong style="margin-left: 161px;">ë‚´ìš©</strong>
 			<div class="form-group">
 				<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 				<div class="col-sm-4">
 					<textarea class="content" id="qandAContent" name="qandAContent" value=""
-						placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä." maxlength="500"
+						placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”." maxlength="500"
 						style="width: 500px; height: 500px; margin-left: 161px;"></textarea>
 				</div>
 			</div>
 
 			<div  style= "display:flex; height: 30px; margin-left: 161px;">
 				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px " />
-				<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" style ="margin-left: 60px; width:auto; height:auto;" checked>³ª¸¸ º¸±â
-			 	<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1" style ="margin-left: 20px; width:auto; height:auto;">ÀüÃ¼ º¸±â
+				<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" style ="margin-left: 60px; width:auto; height:auto;" checked>ë‚˜ë§Œ ë³´ê¸°
+			 	<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1" style ="margin-left: 20px; width:auto; height:auto;">ì „ì²´ ë³´ê¸°
 				</div></form> 
 			
 			<div id="helpBlock" class="help-block"> 
-				<strong class="text-danger" style="margin-left: 161px; display: flex; margin-top: 30px;">»çÁøÀº 2Àå±îÁö °¡´ÉÇÕ´Ï´Ù.</strong>
+				<strong class="text-danger" style="margin-left: 161px; display: flex; margin-top: 30px;">ì‚¬ì§„ì€ 2ì¥ê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤.</strong>
 			</div>
 			
 			</div>
@@ -226,9 +226,9 @@ margin-left: 400px !important;
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">µî·Ï</button>
+						style="transform: translate(220px, 0px);">ë“±ë¡</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">ÀÌÀü</button>
+						style="transform: translate(220px, 0px);">ì´ì „</button>
 				</div>
 			</div>
 			 
@@ -238,7 +238,7 @@ margin-left: 400px !important;
 
 
 	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 
 </body>
 

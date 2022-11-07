@@ -217,7 +217,7 @@ html {
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
                   <li class="menu-item"><a
-                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+                     href="/serviceCenter/serviceCenterHome">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
                      <li class="menu-item"><a href="#" id='login'>로그인</a></li>
                   </c:if>

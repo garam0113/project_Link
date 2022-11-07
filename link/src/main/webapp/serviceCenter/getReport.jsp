@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -10,7 +10,7 @@
 
 <head>
 
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,7 +21,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<title>½Å°í³»¿ë Á¶È¸</title>
+<title>ì‹ ê³ ë‚´ìš© ì¡°íšŒ</title>
 </head>
 
 
@@ -30,7 +30,7 @@
 	$(function() {
 
 
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			if(${user.role=='1'}){
 			self.location = "/serviceCenter/getReportList";
 			}else if (${user.role=='0'}){
@@ -38,17 +38,17 @@
 			}
 		})
 
-		$("button:contains('Ã³¸®')").bind("click", function() {
+		$("button:contains('ì²˜ë¦¬')").bind("click", function() {
 			
 			Swal.fire({
-		          title: '½Å°í Ã³¸®',
-		          html: '<h3>¿å¼³ <input type="checkbox" id="¿å¼³" name="reportReason2" value="1" /></h3><p/>' +
-		         		 '<h3>±¤°í <input type="checkbox" id="±¤°í"  name="reportReason2" value="2"/></h3><p/>' +
-		         		 '<h3>±âÅ¸ <input type="checkbox" id="±âÅ¸" name="reportReason2" value="4" /></h3><p/>' +
-		                '<h3>¼ºÀûÀÎ ¹ß¾ğ <input type="checkbox" id="¼ºÀû" name="reportReason2" value="8" /></h3>',
+		          title: 'ì‹ ê³  ì²˜ë¦¬',
+		          html: '<h3>ìš•ì„¤ <input type="checkbox" id="ìš•ì„¤" name="reportReason2" value="1" /></h3><p/>' +
+		         		 '<h3>ê´‘ê³  <input type="checkbox" id="ê´‘ê³ "  name="reportReason2" value="2"/></h3><p/>' +
+		         		 '<h3>ê¸°íƒ€ <input type="checkbox" id="ê¸°íƒ€" name="reportReason2" value="4" /></h3><p/>' +
+		                '<h3>ì„±ì ì¸ ë°œì–¸ <input type="checkbox" id="ì„±ì " name="reportReason2" value="8" /></h3>',
 		          showCancelButton: true,
 		          cancelButtonColor: '#d33',
-		          confirmButtonText: 'Ã³¸®ÇÏ±â',
+		          confirmButtonText: 'ì²˜ë¦¬í•˜ê¸°',
 		      
 		        }).then((result) => {
 		        	if(result.isConfirmed){
@@ -62,7 +62,7 @@
 		        			
 		        			sum += parseInt(sum2);			
 		        			
-		        		} //for¹® ³¡
+		        		} //forë¬¸ ë
 		        	
 		        		$.ajax({
 		        			url  : "/serviceCenterRest/json/updateReport",
@@ -81,7 +81,7 @@
 		        					
 		        			 success: function(){
 		        				
-		        			 }<!-- success ³¡ -->
+		        			 }<!-- success ë -->
 		        			}), <!-- data -->
 		        				
 		        			}) <!-- ajax (updateReport) -->
@@ -90,11 +90,11 @@
 		        		
 		        	
 
-		        		Swal.fire('½Å°íÃ³¸® µÇ¾ú½À´Ï´Ù.','','success');<!--if¹® -->
+		        		Swal.fire('ì‹ ê³ ì²˜ë¦¬ ë˜ì—ˆìŠµë‹ˆë‹¤.','','success');<!--ifë¬¸ -->
 		        	}else if(result.isDismissed){
 		        	
 		        	}
-		        })<!-- result °ñ¶úÀ» ¶§ -->
+		        })<!-- result ê³¨ëì„ ë•Œ -->
 			
 			
 		<%--	self.location = "/serviceCenter/updateReport?no="+$('#no').val();   --%>
@@ -157,10 +157,10 @@ textarea {
 }
 
 </style>
-<%-- Å×ÀÌºí ½ÃÀÛ --%>
+<%-- í…Œì´ë¸” ì‹œì‘ --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
-  <h2>½Å°í »ó¼¼º¸±â</h2>
+  <h2>ì‹ ê³  ìƒì„¸ë³´ê¸°</h2>
 </div>
 
 		<div class="container" style="margin-top: 37px;">
@@ -173,12 +173,12 @@ textarea {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left" style="display:flex; height: 50px;"><strong>${report.no}¹ø ½Å°í</strong>
+						<td align="left" style="display:flex; height: 50px;"><strong>${report.no}ë²ˆ ì‹ ê³ </strong>
 						<input type="hidden" name="no" id="no" value="${report.no}">
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Á¦¸ñ</th>
+						<th style="text-align-last: center;">ì œëª©</th>
 						<td style="display: flex;  min-height: 40px; max-height:80px; width: 500px; background-color:white; text-align : center; 
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">				
 						${report.title}
@@ -190,7 +190,7 @@ textarea {
 						<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 40px;"><strong>${report.regDate }</strong></td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 500px; background-color:white;    margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						<pre>${report.content}</pre>
@@ -198,62 +198,62 @@ textarea {
 						</td>
 					</tr>
 					<tr>
-					 	<th style="text-align-last: center;"> ½Å°í ÃâÃ³</th>
+					 	<th style="text-align-last: center;"> ì‹ ê³  ì¶œì²˜</th>
 					 	<td align="left" name ="reportRegDate" id="reportRegDate" style="display: flex; height: 70px;">
 					 		<c:if test="${report.reportSource== '1'}"> 
-					 		<input type="text" class="" value="¸ğÀÓ°Ô½Ã¹°" style="width: 150px;" disabled />
+					 		<input type="text" class="" value="ëª¨ì„ê²Œì‹œë¬¼" style="width: 150px;" disabled />
 		     				<input type="hidden" id="reportSource" name="reportSource" value="1">
 		     				 <a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
 		     				 style="transform: translate(-150px, 30px); color: red;"> 
-		     						${report.clubPost.clubPostNo} ¹ø </a>	
+		     						${report.clubPost.clubPostNo} ë²ˆ </a>	
 		     						
 		     						
 		     				</c:if>
 		     				<c:if test="${report.reportSource=='2'}"> 
-							<input type="text" class="" value="¸ğÀÓ°Ô½Ã¹°´ñ±Û" style="width: 150px;" disabled />
+							<input type="text" class="" value="ëª¨ì„ê²Œì‹œë¬¼ëŒ“ê¸€" style="width: 150px;" disabled />
 		     		 		<input type="hidden" id="reportSource" name="reportSource" value="2">
 		     		 	<a href="/clubPost/getClubPost?clubNo=${report.club.clubNo}&clubPostNo=${report.clubPost.clubPostNo}" 
 		     				 style="transform: translate(-150px, 30px); color: red;"> 
-		     						${report.clubPost.clubPostNo}¹ø </a>
+		     						${report.clubPost.clubPostNo}ë²ˆ </a>
 		     		 		</c:if>
 		     		 		<c:if test="${report.reportSource=='3'}">
-							<input type="text" class="" value="ÇÇµå" style="width: 150px;" disabled />
+							<input type="text" class="" value="í”¼ë“œ" style="width: 150px;" disabled />
 		     				 <input type="hidden" id="reportSource" name="reportSource" value="3">
 		     				 
 		     				 <a href="/feed/getFeed?feedNo=${report.feed.feedNo}" style="transform: translate(-150px, 30px);color: red;"> 
-		     				 ${report.feed.feedNo}¹ø </a>
+		     				 ${report.feed.feedNo}ë²ˆ </a>
 		     				</c:if>
 		     				<c:if test="${report.reportSource=='4'}">
-							<input type="text" class="" value="ÇÇµå´ñ±Û" style="width: 150px;" disabled />
+							<input type="text" class="" value="í”¼ë“œëŒ“ê¸€" style="width: 150px;" disabled />
 		     				 <input type="hidden" id="reportSource" name="reportSource" value="4">
 		     				  <a href="/feed/getFeed?feedNo= ${report.feedComment.feedNo}" style="transform: translate(-150px, 30px); color: red;"> 
-		     				 ${report.feedComment.feedNo}¹ø </a>
+		     				 ${report.feedComment.feedNo}ë²ˆ </a>
 		     				 </c:if>
 		     			</td>
-		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>½Å°í¹Ş´Â ´Ğ³×ÀÓ &nbsp;&nbsp;</strong>
+		     			<td style="display:flex; margin-left :200px; margin-top : -70px;"><strong>ì‹ ê³ ë°›ëŠ” ë‹‰ë„¤ì„ &nbsp;&nbsp;</strong>
 		     			 <input type="text" class="" value="${report.user2.nickName}" style="width:auto; height:35px; display:inline;" disabled />
 		     			 <input type="hidden" id="user2" name="user2.userId" value="${report.user2.userId}"/>
 		     			  <input type="hidden" id="user1" name="user2.userId" value="${report.user1.userId}"/>
 		     			</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">½Å°í »çÀ¯</th>
+						<th style="text-align-last: center;">ì‹ ê³  ì‚¬ìœ </th>
 						<td style="display:flex;">
 						<c:if test="${report.reportReason == '1'|| report.reportReason == '3' || report.reportReason == '5' || report.reportReason =='7'|| report.reportReason =='9'
 		 				   || report.reportReason =='11'|| report.reportReason =='13'|| report.reportReason =='15'}">
-		    			  ¿å¼³<input type="checkbox" class="input" id="reportReason" name="reportReason" value="1" checked> 
+		    			  ìš•ì„¤<input type="checkbox" class="input" id="reportReason" name="reportReason" value="1" checked> 
 		    			</c:if>
 		    			 <c:if test="${report.reportReason == '2'|| report.reportReason == '3' || report.reportReason =='6'|| report.reportReason =='7'|| report.reportReason =='10'
 		     			|| report.reportReason =='14'|| report.reportReason =='15'}">
-		    				  ±¤°í<input type="checkbox" class="input" id="reportReason" name="reportReason" value="2" checked>
+		    				  ê´‘ê³ <input type="checkbox" class="input" id="reportReason" name="reportReason" value="2" checked>
 		    			</c:if>
 		    				<c:if test="${report.reportReason == '4'|| report.reportReason == '5' || report.reportReason == '6' || report.reportReason =='7'|| report.reportReason == '12'
 		    			|| report.reportReason =='13'|| report.reportReason =='14'|| report.reportReason =='15'}">
-		   				   ±âÅ¸<input type="checkbox" class="input" id="reportReason" name="reportReason" value="4" checked>
+		   				   ê¸°íƒ€<input type="checkbox" class="input" id="reportReason" name="reportReason" value="4" checked>
 		   				  </c:if>
 		   				 <c:if test="${report.reportReason == '8'|| report.reportReason == '9' || report.reportReason == '10' || report.reportReason == '11' || report.reportReason == '12'
 		    				 || report.reportReason == '11' || report.reportReason == '14' || report.reportReason == '15' }">
-		    			  ¼ºÀûÀÎ ¹ß¾ğ<input type="checkbox" class="input" id="reportReason" name="reportReason" value="8" checked>
+		    			  ì„±ì ì¸ ë°œì–¸<input type="checkbox" class="input" id="reportReason" name="reportReason" value="8" checked>
 		   				</c:if>
 						</td>
 						
@@ -270,11 +270,11 @@ textarea {
 									<div> 
 									<c:if test="${user.role=='1'}">
  									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
-									   Ã³¸®</button> 
+									   ì²˜ë¦¬</button> 
 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 									</div>
 				
 			</div><form></form>
