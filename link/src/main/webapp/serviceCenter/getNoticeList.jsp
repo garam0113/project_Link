@@ -293,6 +293,8 @@ background-color: #EBEDF0 !important;
 							<td></td>
 							<td align="left" style="vertical-align: middle;">${getNoticeList.noticeCount}</td>
 							
+							
+							
 
 							
 					</c:forEach>
