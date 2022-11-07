@@ -773,7 +773,7 @@ $(function() {
 	$(function() {
 
 		$("#follow1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -847,7 +847,7 @@ $(function() {
 		})
 
 		 $("#following1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -899,7 +899,7 @@ $(function() {
 		}) 
 
 		 $("#updateFollow1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -951,7 +951,7 @@ $(function() {
 
 
 		$("#block1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -1025,7 +1025,7 @@ $(function() {
 		})
 
 		$("#stopBlock1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -1077,7 +1077,7 @@ $(function() {
 		})
 
 		$("#updateBlock1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -2059,7 +2059,7 @@ border-radius: 15px !important;
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
-								<input type="hidden" name="userId" id="userId" value="${getUser.userId }">
+								<input type="hidden" name="userId" id="userId2" value="${getUser.userId }">
 								<input type="hidden" name="yuserId" id="yuserId" value="${getUser.userId }">
 									<br/>
 									<div class="profile-usertitle-name">${getUser.nickName }</div>
