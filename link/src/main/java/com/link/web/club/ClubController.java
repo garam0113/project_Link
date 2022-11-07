@@ -513,7 +513,13 @@ public class ClubController {
 		participant.setUser(user);
 		participant.setMeetingNo(Integer.parseInt(meetingNo));
 		
-		clubService.addMeetingMember(participant);
+		// 참가신청 했는지 알아본다
+		int check = clubService.getCheckMeeting(participant);
+		
+		if( check == 0) {
+			// 참가신청 안 했다면
+			clubService.addMeetingMember(participant);
+		}
 		
 		return "forward:/club/getMeetingMemberList";
 	}
@@ -653,7 +659,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="deleteMeetingMember", method=RequestMethod.POST)
-	public String deleteMeeting(@ModelAttribute Participant participant, Model model, HttpSession session, User user, String meetingNo, String clubNo, Map<String, Object> map) throws Exception {
+	public String deleteMeeting(@ModelAttribute Participant participant, Model model, HttpSession session, Search search, User user, String meetingNo, String clubNo, Map<String, Object> map) throws Exception {
 		
 		System.out.println("deleteMeetingMember 시작~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~");
 		
@@ -677,6 +683,12 @@ public class ClubController {
 		model.addAttribute("clubMemberCount", map.get("totalClubMemberCount"));
 		model.addAttribute("meeting", map.get("meeting"));
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
+		
+		// 참가신청 취소한 뒤 참가신청 버튼 나오게 하려면 모임원인지 알아야해서 모임원 리스트 가져간다
+		clubNo = (String) session.getAttribute("clubNo");
+		search.setSearchKeyword(clubNo);
+		Map<String, Object> map2 = clubService.getClubMemberList(search);
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
 		
 		return "forward:/club/getMeeting.jsp";
 	}

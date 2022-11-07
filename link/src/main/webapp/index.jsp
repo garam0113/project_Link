@@ -14,6 +14,62 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="/resources/assets/css/noscript.css" /></noscript>
+		
+	<style>
+	
+	h1 {
+		color: black;
+	}
+	
+	p {
+		color: black;
+	}
+	
+	.btn-5 {
+		width: 130px;
+		height: 40px;
+		line-height: 42px;
+		padding: 0;
+		border: none;
+		background: rgb(255 27 0 / 0%);
+		color: black;
+    	font-weight: 800;
+    	font-size: 1rem;
+    	cursor:pointer;
+	}
+	
+	.btn-5:hover {
+		color: #5F0080;
+		background: transparent;
+		box-shadow: none;
+	}
+	
+	.btn-5:before, .btn-5:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 2px;
+		width: 0;
+		background: #5F0080;
+		box-shadow: -1px -1px 5px 0px #fff, 7px 7px 20px 0px #0003, 4px 4px 5px
+			0px #0002;
+		transition: 400ms ease all;
+	}
+	
+	.btn-5:after {
+		right: inherit;
+		top: inherit;
+		left: 0;
+		bottom: 0;
+	}
+	
+	.btn-5:hover:before, .btn-5:hover:after {
+		width: 100%;
+		transition: 800ms ease all;
+	}
+	</style>
+
 	</head>
 	<body class="is-preload">
 		<div id="wrapper">
@@ -25,15 +81,9 @@
 					<header id="header">
 						<h1>서로를 연결하는</h1>
 						<p>두근거리는 &nbsp;&bull;&nbsp; 서로의 &nbsp;&bull;&nbsp; 만남</p>
-						<nav>
-							<ul>
-								<li><a href="/feed/getFeedList" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-								<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-								<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
-						</nav>
+						
+						<button class="custom-btn btn-5" onclick="location.href='/feed/getFeedList';">지금 만나러 가기</button>
+						
 					</header>
 
 				<!-- Footer -->

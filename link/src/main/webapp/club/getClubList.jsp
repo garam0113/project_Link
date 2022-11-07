@@ -252,6 +252,31 @@ html {
 html::-webkit-scrollbar {
 	display:none !important;
 }
+#addClubBtn{
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 15px;
+	padding: 8px;
+	width: 70px !important;
+	height: 30px !importatn;
+	color: white !important;
+	font-size: 15px !important;
+	border: solid 2px white;
+}
+#addClubBtn:hover{
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 8px, rgba(95, 0, 128, 0.22) 0px 5px 2px;
+	border-radius: 15px;
+	padding: 8px;
+	width: 70px !important;
+	height: 30px !importatn;
+	color: #5F0080 !important;
+	font-size: 15px !important;
+	text-align: center;
+	border: solid 2px purple;
+}
+
+
 
 /* SCROLL */
 
@@ -524,8 +549,11 @@ html::-webkit-scrollbar {
 							<input type="hidden" id="currentPage1" name="currentPage" value="1" />
 
 						</form>
+						<div style="float: right; padding-right: 10px; padding-bottom: 5px;">
+							<button type="button" class="btn btn-addClubBtn" id="addClubBtn">모임개설</button>
+						</div>
 					</div>
-					<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+					<!-- table 위쪽 검색 Start /////////////////////////////////////
 					<%-- <div id="main" class="row" style="width: 800px; background-color: aqua;">
 					
 					

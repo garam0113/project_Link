@@ -290,10 +290,15 @@ public class ClubServiceImpl implements ClubService {
 	//결제
 	@Override
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception {
-		
 	   System.out.println(getClass() + ".updateClubMember(Pay pay, Search search) 도착");
 	   return clubDAO.updateClubMember(pay, search);
-	}	
+	}
+	
+	// 일정에 참가신청 했었는지 안 했었는지 확인
+	public int getCheckMeeting(Participant participant) throws Exception {
+		System.out.println(getClass() + ".getCheckMeeting(Participant participant) 도착");
+		return clubDAO.getCheckMeeting(participant);
+	}
 	
 
 	

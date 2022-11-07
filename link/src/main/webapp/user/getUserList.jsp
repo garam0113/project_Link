@@ -119,12 +119,31 @@ button {
 	<jsp:include page="/sideToolbar.jsp" />
 
 
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- chat.js에서 사용위해서 --%>
+	<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+	<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+	<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+	<%-- chat.js에서 사용위해서 --%>
+	<%-- 채팅 --%>
+	<jsp:include page="/chat/chat.jsp" />
+	<%-- 채팅 --%>
+
+
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="margin-top: 82px; margin-left: 310px; zoom: 1.2;">
-<div class="page-header text-left" style="zoom: 1.2;">
-				<h3 class=" text-info" style="font-weight: bold;">회원목록</h3>
+	<div class="container" style="margin-top: 57px; margin-left: 280px; zoom: 1.2;">
+	<div class="page-header text-left">
+				<h6 class=" text-info" style="font-weight: bold;">회원목록</h6>
 			</div>
 		<div class="row">
 
@@ -215,7 +234,7 @@ button {
 
 <div style="display: flex; justify-content: center;">
 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp" />
+	<jsp:include page="../common/pageNavigator.jsp" />
 	<!-- PageNavigation End... -->
 </div>
 </body>
