@@ -19,7 +19,8 @@
 <title>Q&A 상세보기</title>
 </head>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -31,9 +32,9 @@
 				
 				}else if(${!empty sessionScope.user.userId}){
 					if(${ sessionScope.user.role == '1'}){ //관리자
-						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+						//location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+						history.go(-1);
 					}else if(${sessionScope.user.role == '0' }){ //유저
-						
 						history.go(-1); 	//겟 ==전체보기
 					}
 				}  
@@ -233,7 +234,7 @@ textarea {
 						
 									<div> 
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
 									  <c:if test="${ user.role == 0 }">
 									   수정
 									   </c:if>
@@ -241,11 +242,13 @@ textarea {
 									   답변
 									   </c:if>
 									   </button> 
+
 									 <button class="custom-btn btn-13" style= "transform: translate(540px,0px); ">
 									   삭제</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
 									이전</button>
+
 									
 									</div>
 				

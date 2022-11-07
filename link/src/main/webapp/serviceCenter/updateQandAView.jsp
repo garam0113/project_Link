@@ -44,7 +44,7 @@
 				return;
 			}
 		
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/updateQandA").submit();
+		$($("#updateQandA")).attr("method", "POST").attr("action", "/serviceCenter/updateQandA").submit();
 	}
 			
 	
@@ -176,10 +176,10 @@ textarea {
 </div>
 	
 		<div class="container" style="margin-top: 37px;">
-			<form class="form-horizontal" enctype="multipart/form-data">
+			<form class="form-horizontal" enctype="multipart/form-data" id="updateQandA">
 		 <input type="hidden" id="userId" name="qandA.userId" value ="${SessionScope.user.userId}">
 			<!--  table Start /////////////////////////////////////-->
-			<table style="width:880px; transform: translate(130px, 0px); box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+			<table style="width:880px; transform: translate(130px, 0px);box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
     border-radius: 20px;
     background: #c9c9ff;background-color:aliceblue;">
 				</tbody>
@@ -273,6 +273,7 @@ textarea {
 		
 						
 									<div> 
+
 									<c:if test ="${user.role == '0'}"> <%--회원--%>
 			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
 									   수정</button></c:if>
@@ -281,6 +282,7 @@ textarea {
 									   답변</button></c:if>
 									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
 									이전</button>
+
 									
 									</div>
 				

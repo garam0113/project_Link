@@ -121,6 +121,13 @@
 					})
 				})
 			});
+
+
+			function getModal() {
+				
+				$('#modalLogin').modal();
+			}
+
 			
 			$(function() {
 				$('#login').on('click', function(event) {
@@ -134,6 +141,7 @@
 				})  */
 			}); 
 			
+
 			
 		</script>
 
@@ -217,9 +225,10 @@ html {
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
                   <li class="menu-item"><a
-                     href="/serviceCenter/serviceCenterHome">ServiceCenter</a></li>
+                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="#" id='login'>로그인</a></li>
+                     <li class="menu-item">
+                     <a href="#" id='login'  onClick="getModal()">로그인</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a

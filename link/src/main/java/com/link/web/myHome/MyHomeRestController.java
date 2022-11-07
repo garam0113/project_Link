@@ -292,13 +292,8 @@ public class MyHomeRestController {
             map1.put("url","/club/getMeeting?meetingNo="+( (List<Participant>) map.get("meetingMemberList")).get(i).getMeetingNo());
 			meetingList.add(map1);
 		}
-		//System.out.println("이응이응이응"+ map1.get("title").toString());
-		//System.out.println("이응이응이응"+ map1.get("start").toString());
-			
-			
 		
-		
-       System.out.println(meetingList.toString());	
+       System.out.println("일정 리스트 : " + meetingList.toString());
 		
 		return meetingList;
 

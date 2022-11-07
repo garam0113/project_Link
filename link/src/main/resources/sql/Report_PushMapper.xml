@@ -13,8 +13,6 @@
 	<result property="content" 				column="content" 			jdbcType="VARCHAR" />
 	<result property="reportSource" 		column="report_source"  	jdbcType="VARCHAR" />
 	<result property="regDate" 				column="report_regdate" 	jdbcType="DATE" />
-	<result property="reportImage1" 		column="report_image1" 		jdbcType="VARCHAR" />
-	<result property="reportImage2" 		column="report_image2"	 	jdbcType="VARCHAR" />
 	<result property="type"					column="type"		  		 jdbcType="VARCHAR" />
 	<result property="reportCondition" 		column="report_condition"	 jdbcType="VARCHAR" />
 	<result property="reportReason" 		column="report_reason" 		jdbcType="VARCHAR" />
@@ -81,7 +79,7 @@
 	<insert id="addReport" parameterType="report">
 	INSERT INTO REPORT_PUSH
 	( NO, TITLE, CONTENT, REPORT_SOURCE, CLUB_NO, CLUB_POST_NO, CLUB_POST_COMMENT_NO, FEED_NO, FEED_COMMENT_NO,  USER_ID1,
-	USER_ID2, REPORT_REGDATE, REPORT_IMAGE1, REPORT_IMAGE2, TYPE, REPORT_REASON, REPORT_CONDITION)
+	USER_ID2, REPORT_REGDATE, TYPE, REPORT_REASON, REPORT_CONDITION)
 
 	VALUES (seq_report_push_no.nextval,
 			 #{title:VARCHAR},
@@ -95,8 +93,6 @@
 			 #{user1.userId:VARCHAR},
 			 #{user2.userId:VARCHAR},
 			 SYSDATE,
-			 #{reportImage1:VARCHAR},
-			 #{reportImage2:VARCHAR}, 
 			 #{type:VARCHAR},
 			 #{reportReason:VARCHAR},
 		     #{reportCondition:VARCHAR} )
@@ -234,7 +230,7 @@
 	<select  id="getReportList"  parameterType="map"	resultMap="Report_PushSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT R.NO , R.TITLE , R.USER_ID2 , R.REPORT_CONDITION , R.REPORT_REGDATE, R.REPORT_IMAGE1, R.REPORT_IMAGE2
+	  					FROM		(	SELECT R.NO , R.TITLE , R.USER_ID2 , R.REPORT_CONDITION , R.REPORT_REGDATE
 											FROM REPORT_PUSH R
 											WHERE TYPE = 1
 											<if test="userId==''"></if>
