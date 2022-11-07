@@ -171,16 +171,20 @@ body {
 						<!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal">
 							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
+
 								<label for="userId" style="margin-left: 0px;">아이디</label>
 									<input type="text" class="form-control" id="userId"
 										name="uesrID" style="margin-left: 35px;" value=""
 										placeholder="아이디">
+
 							</div>
 							<div class="form-group"
 								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
+
 								<label for="name" style="text-align-last: start;">이 름</label> <input
 									type="text" class="form-control" id="name" name="name" value=""
 									placeholder="이름" style="margin-left: 50px;">
+
 							</div>
 
 							<div class="form-group"
