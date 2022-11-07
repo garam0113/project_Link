@@ -28,11 +28,13 @@ import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
+import com.link.service.myHome.MyHomeService;
 import com.link.service.serviceCenter.ServiceCenterService;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
+@RequestMapping("/feed/*")
 public class FeedController {
 	
 	@Autowired
@@ -47,6 +49,10 @@ public class FeedController {
 	@Autowired
 	@Qualifier("clubPostServiceImpl")
 	private ClubPostService clubPostService;
+	
+	@Autowired
+	@Qualifier("myHomeServiceImpl")
+	private MyHomeService myHomeService;
 	
 	public FeedController() {
 		// TODO Auto-generated constructor stub
@@ -68,7 +74,7 @@ public class FeedController {
 	
 	
 	// 사용
-	@RequestMapping(value = "/feed/addFeed", method = RequestMethod.POST)
+	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public String addFeed(@ModelAttribute Feed feed, MultipartFile file,
 							User user, Report report, Model model, HttpSession httpSession) throws Exception {
 		
@@ -199,7 +205,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "/feed/getFeed")
+	@RequestMapping(value = "getFeed")
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model, HttpSession httpSession, Chat chat) throws Exception {
 		
@@ -255,7 +261,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "/feed/updateFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "updateFeed", method = RequestMethod.GET)
 	public String updateFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -271,7 +277,7 @@ public class FeedController {
 		return "forward:/feed/updateFeedView.jsp";
 	}
 	
-	@RequestMapping(value = "/feed/updateFeedModal", method = RequestMethod.GET)
+	@RequestMapping(value = "updateFeedModal", method = RequestMethod.GET)
 	public String updateFeedModal(@RequestParam(value = "feedNo") int feedNo, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -288,7 +294,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "/feed/updateFeed", method = RequestMethod.POST)
+	@RequestMapping(value = "updateFeed", method = RequestMethod.POST)
 	public String updateFeed(@ModelAttribute Feed feed, MultipartFile file, Search search, 
 								User user, Heart heart, Model model) throws Exception {
 		
@@ -408,7 +414,7 @@ public class FeedController {
 	}
 	
 	// 사용
-	@RequestMapping(value = "/feed/deleteFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
 	public String deleteFeed(@RequestParam(value = "feedNo") int feedNo, Model model) throws Exception {
 		
 		feedService.deleteFeed(feedNo);
@@ -426,7 +432,7 @@ public class FeedController {
 	
 	
 	// 사용
-	@RequestMapping(value = {"/", "/feed/getFeedList"})
+	@RequestMapping(value = "getFeedList")
 	public String getFeedList(@ModelAttribute Search search, Heart heart, Chat chat,
 								User user, HttpSession httpSession, Map<String, Object> map, Model model) throws Exception {
 		
@@ -454,6 +460,14 @@ public class FeedController {
 		// model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
 		// model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
 		
+		///////////////////////// 팔로우 리스트 가져오기 /////////////////////////
+		
+//		if(user != null) {
+//			search.setSearchKeyword(user.getUserId());
+//			model.addAttribute("list", myHomeService.getFollowList(search).get("list"));
+//		}
+		
+		///////////////////////// 팔로우 리스트 가져오기 /////////////////////////
 		
 		
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
