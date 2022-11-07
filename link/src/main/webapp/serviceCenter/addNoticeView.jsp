@@ -43,7 +43,7 @@
 				return;
 			}
 
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
+		$($("#addNotice")).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
 	
 	//function readURL 끝 사진 미리보기  
@@ -150,7 +150,7 @@ background-color: #EBEDF0 !important;
 		<div class="page-header text-center"></div>
 
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data" id="addNotice">
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 			<div class="form-group" style="margin-left: 161px;">
@@ -175,7 +175,7 @@ background-color: #EBEDF0 !important;
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>첨부파일</strong></label>
 			<div class="col-sm-4" style="margin-left: 161px;">
-				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
+				<input multiple="multiple" type="file" name="file" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
 				
 
 			</div></form>

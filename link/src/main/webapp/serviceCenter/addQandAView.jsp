@@ -44,7 +44,7 @@
 			}
 
 		
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addQandA").submit();
+		$($("#addQandA")).attr("method", "POST").attr("action", "/serviceCenter/addQandA").submit();
 	} //funtion  끝
 	
 
@@ -189,7 +189,8 @@ margin-left: 400px !important;
 		<div class="page-header text-center"></div>
 
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data" id="addQandA">
+		
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 			<div class="form-group" style="margin-left: 161px;">

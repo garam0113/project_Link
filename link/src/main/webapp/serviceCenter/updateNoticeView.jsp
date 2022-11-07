@@ -36,7 +36,7 @@
 			return;
 		}
 
-		$($("form")[0]).attr("method", "POST").attr("action",
+		$($("#updateNotice")).attr("method", "POST").attr("action",
 				"/serviceCenter/updateNotice").submit();
 	} //funtion Notice 끝
 
@@ -155,7 +155,7 @@ textarea {
 			<div class="page-header text-center"></div>
 
 			<!-- form Start /////////////////////////////////////-->
-			<form class="form-horizontal" enctype="multipart/form-data">
+			<form class="form-horizontal" enctype="multipart/form-data" id="updateNotice">
 				<input type="hidden" name="noticeNo" id="noticeNo"
 					value="${notice.noticeNo}"> <input type="hidden"
 					name="userId" id="userId" value="${user.userId}">
