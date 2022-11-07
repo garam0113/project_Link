@@ -23,12 +23,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --> 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/SMSCheck.js"></script>
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/emailCheck.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -116,7 +111,7 @@ color: #white;
 				console.log(phoneNo)
 				
 				swal.fire("아이디는"+Data.userId+"입니다.").then(function() {
-					window.close();
+					$("#modalId").modal("hide");
 				});
 			}
 		})
