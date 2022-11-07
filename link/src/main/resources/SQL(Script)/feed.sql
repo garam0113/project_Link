@@ -533,26 +533,53 @@ SELECT uf.user_id AS SEND_USER_ID, deepInner.* FROM users uf, ( SELECT us.user_i
 
 
 
+DELETE FROM FOLLOW_BLOCK where send_user_id = 'metael'
 
 
-
-SELECT * FROM USERS;
-
-
-
-
-
-
-SELECT
-*
-FROM FOLLOW_BLOCK
-WHERE SEND_USER_ID = 'Link4813'
-AND STATE = '1'
-AND TYPE = '2'
+SELECT * FROM follow_block where send_user_id = 'apayo'
 
 
 
 
 
-SELECT * FROM FEED_COMMENT
+
+CREATE TABLE FEED (
+   feed_no                     NUMBER                                    NOT NULL,
+   user_id                     VARCHAR2(20)                              NOT NULL   REFERENCES users(user_id),
+   feed_open_condition            CHAR(3)                                    NOT NULL,
+   feed_full_content            VARCHAR2(1680),
+   feed_content               VARCHAR2(840),
+   feed_image1                  VARCHAR2(100),
+   feed_image2                  VARCHAR2(100),
+   feed_image3                  VARCHAR2(100),
+   feed_image4                  VARCHAR2(100),
+   feed_video                  VARCHAR2(100),
+   hashtag                     VARCHAR2(840),
+   feed_heart_count            NUMBER                                    NOT NULL,
+   feed_comment_count            NUMBER                                    NOT NULL,
+   feed_reg_date               DATE                                    NOT NULL,
+   feed_update_date            DATE,
+   report_condition            CHAR(3)                                    NOT NULL,
+   delete_condition            CHAR(3)                                    NOT NULL,
+   PRIMARY KEY(feed_no)
+);
+
+
+CREATE TABLE feed_comment (
+   feed_comment_no               NUMBER                                    NOT NULL,
+   feed_no                     NUMBER                                    NOT NULL,
+   user_id                     VARCHAR2(20)                              NOT NULL   REFERENCES users(user_id),
+   feed_comment_content         VARCHAR2(210)                              NOT NULL,
+   feed_comment_heart_count      NUMBER                                    NOT NULL,
+   feed_recomment_count         NUMBER                                    NOT NULL,
+   feed_comment_reg_date         DATE                                    NOT NULL,
+   feed_comment_update_date      DATE,
+   report_condition            CHAR(3)                                    NOT NULL,
+   delete_condition            CHAR(3)                                    NOT NULL,
+   delete_user_id               VARCHAR2(20)                                       REFERENCES users(user_id),
+   parent                     NUMBER                                    NOT NULL,
+   depth                     NUMBER                                    NOT NULL,
+   sequence                  NUMBER                                    NOT NULL,
+   PRIMARY KEY(feed_comment_no)
+);
 
