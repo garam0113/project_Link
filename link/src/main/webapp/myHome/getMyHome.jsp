@@ -566,9 +566,9 @@ function showPopUp(){
 }
 
 function showPopUp2(){
-	var userId = $("#userId").val();
+	var userId = $("#user_Id").val();
 
-    window.open("/user/updateProfile2?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
+    window.open("/user/updateProfile?userId="+userId+"","테스트","width=400, height=600, top=50, left=50");
 
 }
  
@@ -1818,7 +1818,7 @@ input[type="radio"]:checked + label h4 {
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
-								<input type="hidden" name="userId" id="userId" value="${user.userId }">
+								<input type="hidden" name="userId" id="user_Id" value="${user.userId }">
 							
 								
 									<br/>
@@ -1889,7 +1889,7 @@ input[type="radio"]:checked + label h4 {
 				
 				</div>
 				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
-     <div class="col-md-4" id="fl">
+     		<div class="col-md-4" id="fl">
 					 		<br />
 	
 		
