@@ -137,7 +137,7 @@
                     <div id='report' style="margin-top: 20px;">신고내역</div>
                     <div id='QA' style="margin-top: 20px;">관리자Q&A</div>
                     <div id="stop1" style="margin-top: 20px;">정지회원</div>
-                    <div id="stop2" style="margin-top: 20px;">영구회원</div>
+                    <div id="stop2" style="margin-top: 20px;">영구정지회원</div>
                     </c:if>
                     </div>
                 </nav>

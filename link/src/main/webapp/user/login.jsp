@@ -116,7 +116,7 @@ z-index: 10000;
 	function login() {
 
 		//const date = new Date();
-		var id = $("#userId").val();
+		var id = $("#loginUserId").val();
 		var pw = $("#password").val();
 
 		console.log("date : " + Date.now());
@@ -197,7 +197,7 @@ z-index: 10000;
 										<i class='bx bx-user login__icon'></i> <input type="text"
 											onkeyup="enterkey()" placeholder="¾ÆÀÌµð" class="login__input"
 											name="userId" style="font-size: initial; border: none;"
-											id="userId">
+											id="loginUserId">
 									</div>
 									<div class="login__box" style="height: 60px;">
 										<i class='bx bx-lock login__icon'></i> <input type="password"
