@@ -215,7 +215,7 @@ button {
 
 <div style="display: flex; justify-content: center;">
 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp" />
+	<jsp:include page="../common/pageNavigator.jsp" />
 	<!-- PageNavigation End... -->
 </div>
 </body>

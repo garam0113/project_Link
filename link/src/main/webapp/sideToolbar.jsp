@@ -79,6 +79,15 @@
 	}); 
 </script>
 
+<style type="text/css">
+.class_user_pointer{
+	cursor: pointer;
+}
+nav div div a:hover{
+	color: red;
+}
+</style>
+
  <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -91,31 +100,32 @@
 </head>
 
 <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="height: 64px;">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html" style="font-size: larger; color: white; font-weight: bold;">LINK</a>
+            <a class="navbar-brand ps-3" href="index.html" style="font-size: 28px; color: white; font-weight: bold; text-decoration: none; margin-left: 468px;">LINK</a>
             <div style="display: flex;">
-            <div style="margin-left: 585px;"><a href="/" style="font-size: larger; color: white; font-weight: bold;">HOME</a></div>
-            <div style="margin-left: 25px;"><a href="/feed/getFeedList" style="font-size: larger; color: white; font-weight: bold;">FEED</a></div>
+            <div style="margin-left: 78px;"><a href="/" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">HOME</a></div>
+            <div style="margin-left: 24px;"><a href="/feed/getFeedList" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">FEED</a></div>
             <c:if test="${! empty sessionScope.user }">
-            <div style="margin-left: 25px;"><a href="/club/getClubList" style="font-size: larger; color: white; font-weight: bold;">CLUB</a></div>
+            <div style="margin-left: 24px;"><a href="/club/getClubList" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">CLUB</a></div>
             </c:if>
             <c:if test="${ empty sessionScope.user }">
-            <div style="margin-left: 25px;"><a href="#" class="clubNav" onclick="clubNav();" style="font-size: larger; color: white; font-weight: bold;">CLUB</a></div>
+            <div style="margin-left: 24px;"><a href="#" class="clubNav" onclick="clubNav();" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">CLUB</a></div>
             </c:if>
-            <div style="margin-left: 25px;"><a href="/myHome/getMyHome?userId=${sessionScope.user.userId}" style="font-size: larger; color: white; font-weight: bold;">MYHOME</a></div>
-            <div style="margin-left: 25px;"><a href="/serviceCenter/serviceCenterHome.jsp" style="font-size: larger; color: white; font-weight: bold;">SERVICECENTER</a></div>
+            <div style="margin-left: 24px;"><a href="/" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">LIVE</a></div>
+            <div style="margin-left: 24px;"><a href="/myHome/getMyHome?userId=${sessionScope.user.userId}" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">MYHOME</a></div>
+            <div style="margin-left: 24px;"><a href="/serviceCenter/serviceCenterHome.jsp" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">SERVICECENTER</a></div>
             <c:if test="${ empty sessionScope.user }">
-            <div style="margin-left: 25px;"><a href="#" id='login' style="font-size: larger; color: white; font-weight: bold;">로그인</a></div>
+            <div style="margin-left: 24px;"><a href="#" id='login' style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">로그인</a></div>
             </c:if>
             <c:if test="${!empty sessionScope.user }">
-            <div style="margin-left: 25px;"><a href="/user/logout?userId=${sessionScope.user.userId}" style="font-size: larger; color: white; font-weight: bold;">로그아웃</a></div>
+            <div style="margin-left: 24px;"><a href="/user/logout?userId=${sessionScope.user.userId}" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">로그아웃</a></div>
             </c:if>
             <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
-            <div style="margin-left: 25px;"><a href="/user/getUser?userId=${sessionScope.user.userId}" style="font-size: larger; color: white; font-weight: bold;">내정보보기</a></div>
+            <div style="margin-left: 24px;"><a href="/user/getUser?userId=${sessionScope.user.userId}" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">내정보보기</a></div>
             </c:if>
              <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
-            <div style="margin-left: 25px;"><a href="/user/getUserList" style="font-size: larger; color: white; font-weight: bold;">관리자페이지</a></div>
+            <div style="margin-left: 24px;"><a href="/user/getUserList" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">관리자페이지</a></div>
             </c:if>
             </div>
             <!-- Sidebar Toggle-->
@@ -127,17 +137,17 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu" style="text-align: center; font-size: larger; color: white; font-weight: bold;">
                     <c:if test="${ fn:trim(user.role) == '0' }">
-                    <div id='myPage' style="margin-top: 35px;">내정보보기</div>
-                    <div id='updatePage' style="margin-top: 20px;">내정수정</div>
-                    <div id='myReport' style="margin-top: 20px;">내신고내역</div>
-                    <div id='myQA' style="margin-top: 20px;">내Q&A</div> 
+                    <div class="class_user_pointer" id='myPage' style="margin-top: 35px;">내정보보기</div>
+                    <div class="class_user_pointer" id='updatePage' style="margin-top: 20px;">내정보수정</div>
+                    <div class="class_user_pointer" id='myReport' style="margin-top: 20px;">내신고내역</div>
+                    <div class="class_user_pointer" id='myQA' style="margin-top: 20px;">내Q&A</div> 
                     </c:if>
                     <c:if test="${ fn:trim(user.role) == '1' }">
-                    <div id='userPage' style="margin-top: 35px;">회원목록</div>
-                    <div id='report' style="margin-top: 20px;">신고내역</div>
-                    <div id='QA' style="margin-top: 20px;">관리자Q&A</div>
-                    <div id="stop1" style="margin-top: 20px;">정지회원</div>
-                    <div id="stop2" style="margin-top: 20px;">영구정지회원</div>
+                    <div class="class_user_pointer" id='userPage' style="margin-top: 35px;">회원목록</div>
+                    <div class="class_user_pointer" id='report' style="margin-top: 20px;">신고내역</div>
+                    <div class="class_user_pointer" id='QA' style="margin-top: 20px;">관리자Q&A</div>
+                    <div class="class_user_pointer" id="stop1" style="margin-top: 20px;">정지회원</div>
+                    <div class="class_user_pointer" id="stop2" style="margin-top: 20px;">영구정지회원</div>
                     </c:if>
                     </div>
                 </nav>

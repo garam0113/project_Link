@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -8,9 +8,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -82,11 +82,11 @@ button {
 		});
 		$("#out").on("click", function() {
 			swal.fire({
-				title : "Å»ÅğÇÏ½Ã°Ú½À´Ï±î?",
+				title : "íƒˆí‡´í•˜ì‹œê² ìŠµë‹ˆê¹Œ?",
 				icon: 'warning',
 				showCancelButton: true,
-				confirmButtonText: 'Å»Åğ',
-				cancelButtonText: 'Ãë¼Ò'
+				confirmButtonText: 'íƒˆí‡´',
+				cancelButtonText: 'ì·¨ì†Œ'
 			}).then((result) =>{
 				if (result.isConfirmed){
 				self.location = "/user/deleteUser?userId=${getUser.userId}";
@@ -120,49 +120,49 @@ button {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	
 
-	<!-- ToolBar Start /////////////////////////////////////--> 
+	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/sideToolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<div class="container" style="margin-left: 300px; margin-top: 120px; zoom: 1.2;">  
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+	<div class="container" style="margin-left: 280px; margin-top: 98px; zoom: 1.2;">  
 			
 			
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-			<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-			<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-			<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
-			<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- ì±„íŒ… --%>
 				
 				
 				
 		<div style="margin-left: 0px; ">
 			<div class="page-header text-left"> 
 				<c:if test="${fn:trim(user.role) == '0'}">
-					<h3 class=" text-info" style="font-weight: bold;">³»Á¤º¸º¸±â</h3>
+					<h6 class=" text-info" style="font-weight: bold;">ë‚´ì •ë³´ë³´ê¸°</h6>
 				</c:if>
 				<c:if test="${fn:trim(user.role) == '1'}">
-					<h3 class=" text-info" style="font-weight: bold;">È¸¿øÁ¤º¸º¸±â</h3>
+					<h3 class=" text-info" style="font-weight: bold;">íšŒì›ì •ë³´ë³´ê¸°</h3>
 				</c:if>
 			</div>
 			<div class="row1" style="margin-top: 45px;">
 				<div class="col-xs-4 col-md-2">
-					<strong>¾Æ ÀÌ µğ </strong>
+					<strong>ì•„ ì´ ë”” </strong>
 				</div>
 				<div class="col-xs-8 col-md-4" id="userId">${getUser.userId}</div>
 			</div>
@@ -171,7 +171,7 @@ button {
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
-					<strong>ÀÌ ¸§</strong>
+					<strong>ì´ ë¦„</strong>
 				</div>
 				<div class="col-xs-8 col-md-4">${getUser.name}</div>
 			</div>
@@ -180,7 +180,7 @@ button {
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
-					<strong>¼ºº°</strong>
+					<strong>ì„±ë³„</strong>
 				</div>
 				<div class="col-xs-8 col-md-4">${getUser.gender}</div>
 			</div>
@@ -189,7 +189,7 @@ button {
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
-					<strong>ÁÖ¹Î¹øÈ£</strong>
+					<strong>ì£¼ë¯¼ë²ˆí˜¸</strong>
 				</div>
 				<div class="col-xs-8 col-md-4">${ getUser.rrn }</div>
 			</div>
@@ -198,7 +198,7 @@ button {
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
-					<strong>ÈŞ´ëÀüÈ­¹øÈ£</strong>
+					<strong>íœ´ëŒ€ì „í™”ë²ˆí˜¸</strong>
 				</div>
 				<div class="col-xs-8 col-md-4">${ getUser.phoneNo }</div>
 			</div>
@@ -207,7 +207,7 @@ button {
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2">
-					<strong>ÀÌ ¸Ş ÀÏ</strong>
+					<strong>ì´ ë©” ì¼</strong>
 				</div>
 				<div class="col-xs-8 col-md-4">${getUser.email}</div>
 			</div>
@@ -217,7 +217,7 @@ button {
 			<c:if test="${ fn:trim(user.role) == '0' }">
 				<div class="row1">
 					<div class="col-xs-4 col-md-2 ">
-						<strong>´©Àû½Å°íÈ½¼ö</strong>
+						<strong>ëˆ„ì ì‹ ê³ íšŸìˆ˜</strong>
 					</div>
 					<div class="col-xs-8 col-md-4">${getUser.reportCount}</div>
 				</div>
@@ -227,16 +227,16 @@ button {
 			<c:if test="${ fn:trim(user.role) == '1' }">
 				<div class="row1">
 					<div class="col-xs-4 col-md-2 ">
-						<strong>Á¤Áö»óÅÂ</strong>
+						<strong>ì •ì§€ìƒíƒœ</strong>
 					</div>
 			<c:if test="${ fn:trim(getUser.penaltyType) == '0' }">
 					<div class="col-xs-8 col-md-4">-</div>
 			</c:if>
 			<c:if test="${ fn:trim(getUser.penaltyType) == '1' }">
-					<div class="col-xs-8 col-md-4">Á¤Áö</div>
+					<div class="col-xs-8 col-md-4">ì •ì§€</div>
 			</c:if>
 			<c:if test="${ fn:trim(getUser.penaltyType) == '2' }">
-					<div class="col-xs-8 col-md-4">¿µ±¸Á¤Áö</div>
+					<div class="col-xs-8 col-md-4">ì˜êµ¬ì •ì§€</div>
 			</c:if>
 				</div>
 
@@ -244,7 +244,7 @@ button {
 
 				<div class="row1">
 					<div class="col-xs-4 col-md-2 ">
-						<strong>Á¤Áö±â°£</strong>
+						<strong>ì •ì§€ê¸°ê°„</strong>
 					</div>
 					<div class="col-xs-8 col-md-4">${ ! empty getUser.stopStartDate? getUser.stopStartDate : ''}
 						- ${ ! empty getUser.stopEndDate ? getUser.stopEndDate : '' }</div>
@@ -254,22 +254,19 @@ button {
 
 			<div class="row1" style="margin-left: 430px; margin-top: 20px;">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="update"
-						style="font-weight: bold; font-size: medium; border-radius: 13px; ">¼ö &nbsp;Á¤</button>
+					<button type="button" id="update" style="font-weight: bold; font-size: medium; border-radius: 13px; padding: 4px; padding-left: 15px; padding-right: 15px;
+						box-shadow: rgba(102, 051, 102, 0.3) 0px 5px 5px, rgba(95, 0, 128, 0.22) 0px 5px 5px; margin-right: 15px;">ìˆ˜ &nbsp;ì •</button>
 					<c:if test="${fn:trim(user.role) == '0'}">
 						<button type="button" id="out"
-							style="font-weight: bold; font-size: medium; border-radius: 13px; ">È¸¿øÅ»Åğ</button>
+							style="font-weight: bold; font-size: medium; border-radius: 13px; padding: 4px; padding-left: 15px; padding-right: 15px;
+							box-shadow: rgba(102, 051, 102, 0.3) 0px 5px 5px, rgba(95, 0, 128, 0.22) 0px 5px 5px;">íšŒì›íƒˆí‡´</button>
 					</c:if>
 				</div>
-
-				<br /> <br /> <br />
 			</div>
 		</div>
 
 	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<br />
-	<br />
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 </body>
 
 </html>
