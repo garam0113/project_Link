@@ -549,7 +549,7 @@ html::-webkit-scrollbar {
 							<input type="hidden" id="currentPage1" name="currentPage" value="1" />
 
 						</form>
-						<div style="float: right; padding-right: 10px; padding-bottom: 5px;">
+						<div style="float: right; padding-right: 12px; padding-bottom: 5px; margin-bottom: 10px; padding-top: 3px;">
 							<button type="button" class="btn btn-addClubBtn" id="addClubBtn">모임개설</button>
 						</div>
 					</div>
