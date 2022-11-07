@@ -110,7 +110,6 @@
 					
 					Swal.fire({
 						title: '로그인 후 이용해주세요' ,
-						text: "로그인 창으로 이동합니다" ,
 						showCancelButton: false,
 						confirmButtonColor: '#3085d6',
 						cancelButtonColor: '#d33',
@@ -123,10 +122,26 @@
 				})
 			});
 
+
 			function getModal() {
 				
 				$('#modalLogin').modal();
 			}
+
+			
+			$(function() {
+				$('#login').on('click', function(event) {
+				//alert("zmfflr");
+					event.stopPropagation();
+					$('#modalLogin').modal();
+				})
+				/*  $('#ml').on("click", function(event) {
+					event.stopPropagation();
+					$('.modal.fade.login').modal('hide');
+				})  */
+			}); 
+			
+
 			
 		</script>
 
@@ -331,8 +346,6 @@ html {
 				});
 				
 				$("#live").on("click", function() {
-					
-					alert("클릭")
 					
 					if(${ empty sessionScope.user}){
 						swal.fire('로그인이 필요합니다.');

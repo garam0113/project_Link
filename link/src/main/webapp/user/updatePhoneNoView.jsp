@@ -119,10 +119,10 @@ button {
    					success : function(JSONData, status) {
 						
    						console.log("JSONData : "+JSONData.phoneNo);
-   						$("#phoneNo", opener.document).val(JSONData.phoneNo);
+   						$("#phoneNo").val(JSONData.phoneNo);
    						
-   						window.close();
-						}
+   						$('#modalPhone').modal('hide');
+						} 
    				});
 				
 			}
