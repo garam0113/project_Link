@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -16,7 +16,7 @@
 <script src="/resources/javascript/beetle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<title>Q&A »ó¼¼º¸±â</title>
+<title>Q&A ìƒì„¸ë³´ê¸°</title>
 </head>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -24,40 +24,40 @@
 <script type="text/javascript">
 	$(function() {
 
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			
 				if(${empty sessionScope.user.userId}){
-					location.href = "/serviceCenter/getQandAList";  //°Ù ==ÀüÃ¼º¸±â
+					location.href = "/serviceCenter/getQandAList";  //ê²Ÿ ==ì „ì²´ë³´ê¸°
 				
 				}else if(${!empty sessionScope.user.userId}){
-					if(${ sessionScope.user.role == '1'}){ //°ü¸®ÀÚ
-						location.href = "/serviceCenter/getQandAList";  //°Ù ==ÀüÃ¼º¸±â
-					}else if(${sessionScope.user.role == '0' }){ //À¯Àú
+					if(${ sessionScope.user.role == '1'}){ //ê´€ë¦¬ì
+						location.href = "/serviceCenter/getQandAList";  //ê²Ÿ ==ì „ì²´ë³´ê¸°
+					}else if(${sessionScope.user.role == '0' }){ //ìœ ì €
 						
-						history.go(-1); 	//°Ù ==ÀüÃ¼º¸±â
+						history.go(-1); 	//ê²Ÿ ==ì „ì²´ë³´ê¸°
 					}
 				}  
 		});
 
 		
-		$("button:contains('¼öÁ¤')").bind("click", function() {
+		$("button:contains('ìˆ˜ì •')").bind("click", function() {
 			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
 		
-		$("button:contains('´äº¯')").bind("click", function() {
+		$("button:contains('ë‹µë³€')").bind("click", function() {
 			self.location = "/serviceCenter/updateQandA?qandANo="+$('#qandANo').val();
 		})
 
-		$("button:contains('»èÁ¦')").bind("click", function() {
+		$("button:contains('ì‚­ì œ')").bind("click", function() {
 			 Swal.fire({
-		          title: 'Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
-		          text: "´Ù½Ã µÇµ¹¸± ¼ö ¾ø½À´Ï´Ù. ½ÅÁßÇÏ¼¼¿ä.",
+		          title: 'ì •ë§ë¡œ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+		          text: "ë‹¤ì‹œ ë˜ëŒë¦´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì‹ ì¤‘í•˜ì„¸ìš”.",
 		          icon: 'warning',
 		          showCancelButton: true,
 		          confirmButtonColor: '#3085d6',
 		          cancelButtonColor: '#d33',
-		          confirmButtonText: '»èÁ¦',
-		          cancelButtonText: 'Ãë¼Ò'
+		          confirmButtonText: 'ì‚­ì œ',
+		          cancelButtonText: 'ì·¨ì†Œ'
 		      }).then((result) => {
 		          if (result.isConfirmed) {
 		 	self.location = "/serviceCenter/deleteQandA?qandANo="+$('#qandANo').val();
@@ -118,25 +118,25 @@ textarea {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
@@ -145,7 +145,7 @@ textarea {
 <jsp:include page="/toolbar.jsp" />
 
 <div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px;">
-  <h2>Q&A »ó¼¼º¸±â</h2>
+  <h2>Q&A ìƒì„¸ë³´ê¸°</h2>
 </div>
 	
 		<div class="container" style="margin-top: 37px;">
@@ -159,12 +159,12 @@ textarea {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left"><strong>${qandA.qandANo}¹øÂ° Áú¹®</strong>
+						<td align="left"><strong>${qandA.qandANo}ë²ˆì§¸ ì§ˆë¬¸</strong>
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
 					<tr class = "title" id ="title">
-						<th style="text-align-last: center;">Á¦¸ñ</th>
+						<th style="text-align-last: center;">ì œëª©</th>
 						<td style="display: flex; min-height: 40px; max-height:80px; width: 700px; background-color:white; text-align : center; 
 						background: white;  border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%);">${qandA.qandATitle}
 						<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle }">		
@@ -177,7 +177,7 @@ textarea {
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; 
 						background: white; border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
 						<pre>${qandA.qandAContent}</pre>
@@ -185,9 +185,9 @@ textarea {
 						</td>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Ã·ºÎÆÄÀÏ</th>
+						<th style="text-align-last: center;">ì²¨ë¶€íŒŒì¼</th>
 						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
-							<td>Ã·ºÎÆÄÀÏ ¾øÀ½</td>
+							<td>ì²¨ë¶€íŒŒì¼ ì—†ìŒ</td>
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
 						<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" 
@@ -205,15 +205,15 @@ textarea {
 						
 						
 						
-						<c:if test ="${qandA.qandAAnswerRegDate != null}"> <%--°ü¸®ÀÚ--%>
+						<c:if test ="${qandA.qandAAnswerRegDate != null}"> <%--ê´€ë¦¬ì--%>
 					<tr>
 						<th></th>
 						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate"><strong>${qandA.qandAAnswerRegDate }</strong>
-						<strong style="margin-left:300px;">°ü¸®ÀÚ</strong></td>
+						<strong style="margin-left:300px;">ê´€ë¦¬ì</strong></td>
 						<td/>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">´äº¯</th>
+						<th style="text-align-last: center;">ë‹µë³€</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; 
 						background: white; border: 1px solid white; border-radius: 15px; box-shadow: 0 0 10px rgb(0 0 0 / 20%); ">
 						<pre>${qandA.qandAAnswerContent}</pre>
@@ -235,17 +235,19 @@ textarea {
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
  									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
 									  <c:if test="${ user.role == 0 }">
-									   ¼öÁ¤
+									   ìˆ˜ì •
 									   </c:if>
 									   <c:if test="${ user.role == 1 }">
-									   ´äº¯
+									   ë‹µë³€
 									   </c:if>
 									   </button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px); margin:auto; ">
-									   »èÁ¦</button> 
+
+									 <button class="custom-btn btn-13" style= "transform: translate(540px,0px); ">
+									   ì‚­ì œ</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(486px, 0px); margin:auto;">
-									ÀÌÀü</button>
+									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
+									ì´ì „</button>
+
 									
 									</div>
 				

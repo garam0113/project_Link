@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,13 +11,13 @@
 <html>
 
 <head>
-<title>°øÁö»çÇ× ¸ñ·Ï</title>
+<title>ê³µì§€ì‚¬í•­ ëª©ë¡</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--ÆäÀÌÁö ³×ºñ°ÔÀÌ¼Ç css --%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--í˜ì´ì§€ ë„¤ë¹„ê²Œì´ì…˜ css --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="The Page Description">
 
@@ -130,18 +130,18 @@ background-color: #EBEDF0 !important;
 
 				});
 		
-		$("button:contains('°Ë»ö')").bind("click", function() {
+		$("button:contains('ê²€ìƒ‰')").bind("click", function() {
 			fncGetList(1);
 		})
 		
 		
-		$("button:contains('µî·Ï')").bind("click", function() {
+		$("button:contains('ë“±ë¡')").bind("click", function() {
 			self.location = "/serviceCenter/addNoticeView.jsp";
 		})
 		
 
 		
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 		
@@ -158,37 +158,37 @@ background-color: #EBEDF0 !important;
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>  
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>  
 	
 	
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 
 
 
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
-  <h1 >°øÁö»çÇ× ¸®½ºÆ®</h1>
+  <h1 >ê³µì§€ì‚¬í•­ ë¦¬ìŠ¤íŠ¸</h1>
 </div>
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 			
 			
@@ -198,12 +198,12 @@ background-color: #EBEDF0 !important;
 			<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ÀüÃ¼ ${resultPage.totalCount } °Ç¼ö, ÇöÀç
-					${resultPage.currentPage} ÆäÀÌÁö</p>
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
 			</div>
 
 
-			<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+			<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 				
 				<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
 					<form class="form-inline" name="detailForm">
@@ -211,25 +211,25 @@ background-color: #EBEDF0 !important;
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="vertical-align: top;">
 								<option value="1" id="searchCondition"
-									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>Á¦¸ñ</option>
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì œëª©</option>
 							</select>
 
-							<label class="sr-only" for="searchKeyword">°Ë»ö¾î</label> <input
+							<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px" 
-								name="searchKeyword" placeholder="°Ë»ö¾î" style="transform: translate(10px, 8px); width:300px;"
+								name="searchKeyword" placeholder="ê²€ìƒ‰ì–´" style="transform: translate(10px, 8px); width:300px;"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">°Ë»ö</button>
+						<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">ê²€ìƒ‰</button>
 
-						<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+						<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					</form>
 				</div>
 				
 
 			</div>
-			<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+			<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 			
 
 			<!--  table Start /////////////////////////////////////-->
@@ -239,13 +239,13 @@ background-color: #EBEDF0 !important;
 					<tr class = "head" id ="head" >
 						<th align="center">No</th>
 						<td />
-						<th align="center" class="content">Á¦¸ñ</th>
+						<th align="center" class="content">ì œëª©</th>
 						<td />
-						<th align="center">ÀÛ¼ºÀÚ</th>
+						<th align="center">ì‘ì„±ì</th>
 						<td />
-						<th align="center" width ="140px">ÀÛ¼º ³¯Â¥</th>
+						<th align="center" width ="140px">ì‘ì„± ë‚ ì§œ</th>
 						<td />
-						<th align="center" width ="100">Á¶È¸¼ö</th>
+						<th align="center" width ="100">ì¡°íšŒìˆ˜</th>
 					</tr>
 				</thead>
 				</div>
@@ -279,7 +279,7 @@ background-color: #EBEDF0 !important;
 							</c:if>
 								${getNoticeList.noticeTitle}	
 							<c:if test="${getNoticeList.noticeImage1 !=null || getNoticeList.noticeImage2 != null}">
-							<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+							<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 							</c:if>	
 								</div>
 							</td>
@@ -328,10 +328,10 @@ background-color: #EBEDF0 !important;
 									<c:if test="${ user.role == '1' }">
 									
 									  <button class="custom-btn btn-13" style= "transform: translate(950px, -90px); ">
-									   µî·Ï</button> 
+									   ë“±ë¡</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(980px, -90px); margin-left::20px; ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 									</div>
 								
 
@@ -344,7 +344,7 @@ background-color: #EBEDF0 !important;
 			</table>
 			</div>
 
-	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 
 
 </body>

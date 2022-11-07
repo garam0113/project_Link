@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,9 +10,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 
-<!-- ÂüÁ¶ : http://getbootsdivap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootsdivap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootsdivap, jQuery CDN ////////////////////////// -->
@@ -32,6 +32,7 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/divemes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -119,38 +120,38 @@ button {
     		var penalty = $("#penalty").val();
     		var stopEndDate = $("#stopEnd").val();
     		
-    		console.log("ÆĞ³ÎÆ¼ °ª : "+penalty);
-    		//console.log("Á¤Áö ³¯Â¥ : "+stopEnd.datepicker({ dateFormat: 'yy-mm-dd' }));
+    		console.log("íŒ¨ë„í‹° ê°’ : "+penalty);
+    		//console.log("ì •ì§€ ë‚ ì§œ : "+stopEnd.datepicker({ dateFormat: 'yy-mm-dd' }));
     		
     		if(${user.role == '0'} && (pw == null || pw.length < 1)){
-    			swal.fire("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+    			swal.fire("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
     			return;
     		}
     		
     		if(${user.role == '0'}){
     		
     			if(6 > pw.length || pw.length > 12){
-    				swal.fire("ºñ¹Ğ¹øÈ£´Â ¿µ¾î, ¼ıÀÚÁ¶ÇÕ 6~12ÀÚ ÀÔ´Ï´Ù.");
+    				swal.fire("ë¹„ë°€ë²ˆí˜¸ëŠ” ì˜ì–´, ìˆ«ìì¡°í•© 6~12ì ì…ë‹ˆë‹¤.");
     				return;
     			}
     		
     			if(!regExp.test(pw)){
-    				swal.fire("ºñ¹Ğ¹øÈ£´Â ¿µ¾î, ¼ıÀÚÁ¶ÇÕ 6~12ÀÚ ÀÔ´Ï´Ù.");
+    				swal.fire("ë¹„ë°€ë²ˆí˜¸ëŠ” ì˜ì–´, ìˆ«ìì¡°í•© 6~12ì ì…ë‹ˆë‹¤.");
     				return;
     			}
     			
     			if(pw != pw2){
-    				swal.fire("ºñ¹Ğ¹øÈ£°¡ ´Ù¸¨´Ï´Ù.");
+    				swal.fire("ë¹„ë°€ë²ˆí˜¸ê°€ ë‹¤ë¦…ë‹ˆë‹¤.");
     				return;
     			}
     				
     			if(email == null || email.length < 1){
-    				swal.fire("ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+    				swal.fire("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
     				return;
     			}
     		
     			if(!regEmail.test(email)){
-    				swal.fire("ÀÌ¸ŞÀÏÀ» Á¦´ë·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+    				swal.fire("ì´ë©”ì¼ì„ ì œëŒ€ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
     				return;
     			}
     		
@@ -168,12 +169,12 @@ button {
     				"Accept" : "application/json"
     			},
     			success : function(Data, status) {
-					console.log("updateµÈ ÆĞ³ÎÆ¼ °ª : "+Data.penaltyType)
-					console.log("updateµÈ Á¤Áö³¯Â¥ : "+Data.stopEndDate)
+					console.log("updateëœ íŒ¨ë„í‹° ê°’ : "+Data.penaltyType)
+					console.log("updateëœ ì •ì§€ë‚ ì§œ : "+Data.stopEndDate)
 				}
     		});
     */	    
-    		$("form").attr("method", "POST").attr("action", "/user/updateUser").submit();
+    		$($("form")[0]).attr("method", "POST").attr("action", "/user/updateUser").submit();
 		}
     
     function popup(){
@@ -184,19 +185,17 @@ button {
     }
     
     $.datepicker.setDefaults({
-		dateFormat : 'yy-mm-dd',
-		prevText : 'ÀÌÀü ´Ş',
-		nextText : '´ÙÀ½ ´Ş',
-		monthNames : [ '1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù',
-				'10¿ù', '11¿ù', '12¿ù' ],
-		monthNamesShort : [ '1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù',
-				'9¿ù', '10¿ù', '11¿ù', '12¿ù' ],
-		dayNames : [ 'ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä' ],
-		dayNamesShort : [ 'ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä' ],
-		dayNamesMin : [ 'ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä' ],
-		showMonthAfterYear : true,
-		yearSuffix : '³â'
-	});
+		dateFormat : 'yy-mm-dd' ,
+		prevText: 'ì´ì „ ë‹¬' ,
+		nextText: 'ë‹¤ìŒ ë‹¬',
+        monthNames: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        monthNamesShort: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        dayNames: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesShort: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesMin: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        showMonthAfterYear: true,
+        yearSuffix: 'ë…„' 
+	})
 
 	$(function() {
 		$("#stopEndDateString").datepicker();
@@ -208,14 +207,14 @@ button {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	
 	
@@ -226,116 +225,116 @@ button {
 			
 			
 	
-				<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-				<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-				<%-- Ã¤ÆÃ --%>
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+				<%-- ì±„íŒ… --%>
 				<jsp:include page="/chat/chat.jsp" />
-				<%-- Ã¤ÆÃ --%>
+				<%-- ì±„íŒ… --%>
 			
 			
 			
 				<div class="form_txtInput" style="margin-left: 200px;">
 					<c:if test="${fn:trim(user.role) == '0'}">
-						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">³»Á¤º¸º¸±â>³»Á¤º¸¼öÁ¤</h3>
+						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">ë‚´ì •ë³´ë³´ê¸°>ë‚´ì •ë³´ìˆ˜ì •</h3>
 					</c:if>
 					<c:if test="${fn:trim(user.role) == '1'}">
-						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">È¸¿øÁ¤º¸¼öÁ¤</h3>
+						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">íšŒì›ì •ë³´ìˆ˜ì •</h3>
 					</c:if>
 					<div class="join_form">
 						<div>
 							<div style="margin-top: 40px;">
 								<div class="group">
-									<strong class="title">¾ÆÀÌµğ</strong>
+									<strong class="title">ì•„ì´ë””</strong>
 									<div class="value">
 										<input disabled="disabled" class="form-control" id="userId" 
-											name="userId" style="background: none; border: none; font-weight: bold; " value="${getUser.userId }"> <input
+											name="userId" style="background: none; border: none; font-weight: bold; " value="${requestScope.getUser.userId }"> <input
 											type="hidden" class="form-control" id="userId" name="userId"
-											value="${getUser.userId }">
+											value="${requestScope.getUser.userId }">
 									</div>
 								</div>
 								<br/>
 								<div class="group">
-									<strong class="title">ÀÌ¸§</strong>
+									<strong class="title">ì´ë¦„</strong>
 									<div class="value">
 										<input disabled="disabled" type="text" class="form-control" style="background: none; border: none; font-weight: bold; "
-											id="name" name="name" value="${getUser.name}"> <input
+											id="name" name="name" value="${requestScope.getUser.name}"> <input
 											type="hidden" class="form-control" id="name" name="name"
-											value="${getUser.name }">
+											value="${requestScope.getUser.name }">
 									</div>
 								</div>
 								<br/>
 								<div class="group">
-									<strong class="title">¼ºº°</strong>
+									<strong class="title">ì„±ë³„</strong>
 									<div class="value">
 										<input disabled="disabled" type="text" class="form-control" style="background: none; border: none; font-weight: bold; "
-											id="gender" name="gender" value="${getUser.gender}">
+											id="gender" name="gender" value="${requestScope.getUser.gender}">
 										<input type="hidden" class="form-control" id="gender"
-											name="gender" value="${getUser.gender }">
+											name="gender" value="${requestScope.getUser.gender }">
 									</div>
 								</div>
 								<br/>
 								<div class="group">
-									<strong class="title">ÁÖ¹Î¹øÈ£</strong>
+									<strong class="title">ì£¼ë¯¼ë²ˆí˜¸</strong>
 									<div class="value">
 										<input disabled="disabled" type="text" class="form-control" style="background: none; border: none; font-weight: bold; "
-											id="rrn" name="rrn" value="${getUser.rrn}"> <input
+											id="rrn" name="rrn" value="${requestScope.getUser.rrn}"> <input
 											type="hidden" class="form-control" id="rrn" name="rrn"
-											value="${getUser.rrn }">
+											value="${requestScope.getUser.rrn }">
 									</div>
 								</div>
 								<br/>
 								<c:if test="${fn:trim(user.role) == '0'}">
 									<div class="group">
-										<strong class="title">ºñ¹Ğ¹øÈ£</strong>
+										<strong class="title">ë¹„ë°€ë²ˆí˜¸</strong>
 										<div class="value">
 											<input type="password" class="form-control" id="password" style="font-weight: bold; "
-												name="password" placeholder="º¯°æºñ¹Ğ¹øÈ£"> <strong
+												name="password" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸"> <strong
 												id="helpBlock" class="help-block" style="color: red;">
-												¿µ¾î, ¼ıÀÚ Á¶ÇÕ 6~12ÀÚ </strong>
+												ì˜ì–´, ìˆ«ì ì¡°í•© 6~12ì </strong>
 										</div>
 									</div>
 								<br/>
 								</c:if>
 								<c:if test="${fn:trim(user.role) == '0'}">
 									<div class="group">
-										<strong class="title">ºñ¹Ğ¹øÈ£È®ÀÎ</strong>
+										<strong class="title">ë¹„ë°€ë²ˆí˜¸í™•ì¸</strong>
 										<div class="value">
 											<input type="password" class="form-control" id="password2" style="font-weight: bold; "
-												name="password2" placeholder="º¯°æºñ¹Ğ¹øÈ£ È®ÀÎ"> <strong
+												name="password2" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸ í™•ì¸"> <strong
 												id="helpBlock" class="help-block" style="color: red;">
-												¿µ¾î, ¼ıÀÚ Á¶ÇÕ 6~12ÀÚ </strong>
+												ì˜ì–´, ìˆ«ì ì¡°í•© 6~12ì </strong>
 										</div>
 									</div>
 								<br/>
 								</c:if>
 								<div class="group">
-									<strong class="title">ÀÌ¸ŞÀÏ</strong>
+									<strong class="title">ì´ë©”ì¼</strong>
 									<div class="value">
 										<c:if test="${fn:trim(user.role) == '0'}">
 											<input type="text" class="form-control" id="email" style="font-weight: bold; "
-												name="email" value="${getUser.email}" placeholder="º¯°æÀÌ¸ŞÀÏ">
+												name="email" value="${requestScope.getUser.email}" placeholder="ë³€ê²½ì´ë©”ì¼">
 										</c:if>
 										<c:if test="${fn:trim(user.role) == '1'}">
 											<input disabled="disabled" type="text" class="form-control"
-												id="email" name="email" value="${getUser.email}"
-												placeholder="º¯°æÀÌ¸ŞÀÏ">
+												id="email" name="email" value="${requestScope.getUser.email}"
+												placeholder="ë³€ê²½ì´ë©”ì¼">
 										</c:if>
 									</div>
 								</div>
 								<br/>
 								<div class="group">
-									<strong class="title">ÈŞ´ëÆù¹øÈ£</strong>
+									<strong class="title">íœ´ëŒ€í°ë²ˆí˜¸</strong>
 									<div class="value">
 										<div style="display: flex;">
 											<input disabled="disabled" type="text" class="form-control" style="background: none; border: none; font-weight: bold; "
-												id="phoneNo" name="phoneNo" value="${ getUser.phoneNo }">
+												id="phoneNo" name="phoneNo" value="${ requestScope.getUser.phoneNo }">
 											<c:if test="${fn:trim(user.role) == '0'}">
 												<button type="button"
 													style="font-weight: 900; border-radius: 10px; border: solid 2px #5F0080;"
-													id="phoneChange">º¯&nbsp;°æ</button>
+													id="phoneChange">ë³€&nbsp;ê²½</button>
 											</c:if>
 										</div>
 									</div>
@@ -343,14 +342,14 @@ button {
 								<br/>
 								<c:if test="${fn:trim(user.role) == '1'}">
 									<div class="group">
-										<strong class="title">Á¤Áö»óÅÂ</strong>
+										<strong class="title">ì •ì§€ìƒíƒœ</strong>
 										<div class="value">
 											<select name="penaltyType" id="penaltyType"
 												style="border-color: #00000038; font-weight: bold; height: 44px; border-radius: 10px; padding: 10px;">
-												<option selected="selected">¼±ÅÃÇØÁÖ¼¼¿ä</option>
-												<option>¤Ñ</option>
-												<option>Á¤Áö</option>
-												<option>¿µ±¸Á¤Áö</option>
+												<option selected="selected">ì„ íƒí•´ì£¼ì„¸ìš”</option>
+												<option>ã…¡</option>
+												<option>ì •ì§€</option>
+												<option>ì˜êµ¬ì •ì§€</option>
 											</select>
 										</div>
 									</div>
@@ -358,7 +357,7 @@ button {
 								<br/>
 								<c:if test="${fn:trim(user.role) == '1'}">
 									<div class="group">
-										<strong class="title">Á¤Áö±â°£</strong>
+										<strong class="title">ì •ì§€ê¸°ê°„</strong>
 										<div class="value">
 											<input class="form-control" id="stopEndDateString" style="font-weight: bold; "
 												readonly="readonly" name="stopEndDateString" value="" />
@@ -369,11 +368,11 @@ button {
 						</div>
 						<div style="margin-left: 480px;">
 							<button type="button"  id="update"
-								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">¼ö
-								&nbsp;Á¤</button>
+								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">ìˆ˜
+								&nbsp;ì •</button>
 							<button type="button"  id="cancel"
-								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">Ãë
-								&nbsp;¼Ò</button>
+								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">ì·¨
+								&nbsp;ì†Œ</button>
 						</div>
 						<br /> <br />
 					</div>

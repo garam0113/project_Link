@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,9 +10,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -62,7 +62,7 @@ button {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-	//=============    °Ë»ö / page µÎ°¡Áö °æ¿ì ¸ğµÎ  Event  Ã³¸® =============	
+	//=============    ê²€ìƒ‰ / page ë‘ê°€ì§€ ê²½ìš° ëª¨ë‘  Event  ì²˜ë¦¬ =============	
 	function enterkey() {
 		if (window.event.keyCode == 13) {
 			$("#currentPage1").val(currentPage)
@@ -77,18 +77,18 @@ button {
 				.submit();
 	}
 
-	//============= "°Ë»ö"  Event  Ã³¸® =============	
+	//============= "ê²€ìƒ‰"  Event  ì²˜ë¦¬ =============	
 	$(function() {
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("button.btn.btn-default").on("click", function() {
 			fncGetUserList(1);
 		});
 	});
 
-	//============= userId ¿¡ È¸¿øÁ¤º¸º¸±â  Event  Ã³¸®(Click) =============	
+	//============= userId ì— íšŒì›ì •ë³´ë³´ê¸°  Event  ì²˜ë¦¬(Click) =============	
 	$(function() {
 
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("td:nth-child(2)").on("click", function() {
 			self.location = "/user/getUser?userId=" + $(this).text().trim();
 		});
@@ -103,11 +103,11 @@ button {
 
 	 $("#" + userId).on("click", function() {
 
-	 alert("Å¬¸¯");
+	 alert("í´ë¦­");
 
-	 var recId = $(this).parent().text().trim().replace("Â÷´Ü");
+	 var recId = $(this).parent().text().trim().replace("ì°¨ë‹¨");
 
-	 console.log("recId °ª : " + recId);
+	 console.log("recId ê°’ : " + recId);
 	 })
 	 })
 	 */
@@ -121,16 +121,16 @@ button {
 
 	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container" style="margin-top: 82px; margin-left: 310px; zoom: 1.2;">
 <div class="page-header text-left" style="zoom: 1.2;">
-				<h3 class=" text-info" style="font-weight: bold;">È¸¿ø¸ñ·Ï</h3>
+				<h3 class=" text-info" style="font-weight: bold;">íšŒì›ëª©ë¡</h3>
 			</div>
 		<div class="row">
 
 			<div class=" text-left" style="font-weight: bold;">
-				<p class="text-primary" style="margin-left: 0px;">ÀüÃ¼ ${resultPage.totalCount } °Ç¼ö, ÇöÀç
-					${resultPage.currentPage} ÆäÀÌÁö</p>
+				<p class="text-primary" style="margin-left: 0px;">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
 			</div>
 
 			<div class="col-md-6 left">
@@ -142,22 +142,22 @@ button {
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" style="width: 75px;">
 								<option value="0"
-									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>È¸¿øID</option>
+									${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>íšŒì›ID</option>
 								<option value="1"
-									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>´Ğ³×ÀÓ</option>
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ë‹‰ë„¤ì„</option>
 							</select> 
 						</div>
  
 						<div class="form-group" style="margin-left: 10px;"> 
-							<label class="sr-only" for="searchKeyword">°Ë»ö¾î</label> <input
+							<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label> <input
 								type="text" class="form-control" id="searchKeyword"
-								name="searchKeyword" placeholder="°Ë»ö¾î" onkeyup="enterkey()"
+								name="searchKeyword" placeholder="ê²€ìƒ‰ì–´" onkeyup="enterkey()"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-						<button type="button" class="btn btn-default" style="margin-left: 10px;">°Ë»ö</button>
+						<button type="button" class="btn btn-default" style="margin-left: 10px;">ê²€ìƒ‰</button>
 
-						<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+						<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 					</c:if>
 					<c:if
 						test="${ (search.searchKeyword == '1') or (search.searchKeyword == '2')}">
@@ -169,7 +169,7 @@ button {
 
 
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 
 		<!--  table Start /////////////////////////////////////-->
@@ -179,11 +179,11 @@ button {
 			<thead>
 				<tr>
 					<th align="center" style="text-align: center;">No</th>
-					<th align="center" style="text-align: center;">È¸¿ø ID</th>
-					<th align="center" style="text-align: center;">´Ğ³×ÀÓ</th>
-					<th align="center" style="text-align: center;">´©Àû½Å°íÈ½¼ö</th>
-					<th align="center" style="text-align: center;">Á¤Áö»óÅÂ</th>
-					<th align="center" style="text-align: center;">Á¤Áö±â°£</th>
+					<th align="center" style="text-align: center;">íšŒì› ID</th>
+					<th align="center" style="text-align: center;">ë‹‰ë„¤ì„</th>
+					<th align="center" style="text-align: center;">ëˆ„ì ì‹ ê³ íšŸìˆ˜</th>
+					<th align="center" style="text-align: center;">ì •ì§€ìƒíƒœ</th>
+					<th align="center" style="text-align: center;">ì •ì§€ê¸°ê°„</th>
 				</tr>
 			</thead>
 
@@ -194,12 +194,12 @@ button {
 					<c:set var="i" value="${ i+1 }" />
 					<tr>
 						<td align="center">${ i }</td>
-						<td align="center" id="${ user.userId }" title="Click : È¸¿øÁ¤º¸ È®ÀÎ"><a href='#'>${user.userId}</a>
+						<td align="center" id="${ user.userId }" title="Click : íšŒì›ì •ë³´ í™•ì¸"><a href='#'>${user.userId}</a>
 						</td>
 						<td align="center">${user.nickName}</td>
 						<td align="center">${ user.reportCount }</td>
 						<td align="center">${ fn:trim(user.penaltyType) == 0 ? "-" : ""}
-							${ fn:trim(user.penaltyType) == 1 ? "Á¤Áö" : ""} ${ fn:trim(user.penaltyType) == 2 ? "¿µ±¸Á¤Áö" : ""}</td>
+							${ fn:trim(user.penaltyType) == 1 ? "ì •ì§€" : ""} ${ fn:trim(user.penaltyType) == 2 ? "ì˜êµ¬ì •ì§€" : ""}</td>
 						<td align="center">${ !empty user.stopStartDate ? user.stopStartDate : ""}
 							- ${ !empty user.stopEndDate ? user.stopEndDate : ""}</td>
 					</tr>
@@ -211,7 +211,7 @@ button {
 		<!--  table End /////////////////////////////////////-->
 <br/><br/>
 	</div>
-	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 
 <div style="display: flex; justify-content: center;">
 	<!-- PageNavigation Start... -->
