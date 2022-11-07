@@ -95,7 +95,7 @@ public class UserController {
 
 		session.setAttribute("user", getUser);
 
-		return "redirect:/";
+		return "redirect:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
@@ -181,7 +181,7 @@ public class UserController {
 
 		} else {
 
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 	}
 
@@ -230,7 +230,7 @@ public class UserController {
 
 			return "forward:/user/updateUserView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 
 	}
@@ -307,7 +307,7 @@ public class UserController {
 
 			return "forward:/user/updateProfileView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 	}
 
@@ -378,7 +378,7 @@ public class UserController {
 			session.setAttribute("user", getUser);
 		}
 
-		return "forward:/";
+		return "forward:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
@@ -426,7 +426,7 @@ public class UserController {
 			session.setAttribute("follow", map.get("list"));
 		}
 
-		return "redirect:/";
+		return "redirect:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)

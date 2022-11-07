@@ -6,13 +6,13 @@
 	}
 	.di{
 		border-radius:15px;
+		cursor: pointer;
 	}
 
 	.btnSimpleProfile{
 
 	   background-color: white;
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	   border: solid 2px;
 	   color:blueviolet;
 	}
 	.btnSimpleProfile:hover{
@@ -23,11 +23,14 @@
 
 	.ui-dialog-titlebar{
 		border: hidden !important;
-		background-color: whitesmoke !important;
+		background-color: white !important;
 		border: none !important;
 		border-radius: 15px !important;
 	}
 
+	.dll {
+		cursor: pointer;
+	}
 	
 	/* 프로필 요약 보기 */
 	
