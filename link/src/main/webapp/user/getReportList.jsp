@@ -108,7 +108,7 @@ $(function() {
 	
 	
 	<jsp:include page="/sideToolbar.jsp" />
-	<div class="container" style="margin-top: 82px; margin-left: 310px; zoom: 1.2;">
+	<div class="container" style="margin-top: 57px; margin-left: 280px; zoom: 1.2;">
 			
 			
 	
@@ -125,7 +125,7 @@ $(function() {
 			
 		<c:if test="${user.role == '0'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold; font-size: xx-large;">내정보보기>신고내역</h3>
+				<h6 class=" text-info" style="font-weight: bold;">내정보보기 > 신고내역</h6>
 			</div>
 		</c:if>
 		<c:if test="${user.role == '1'}">
@@ -221,7 +221,7 @@ $(function() {
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
 	<div style="display: flex; justify-content: center;">
-		<jsp:include page="../common/pageNavigator_new.jsp" />
+		<jsp:include page="../common/pageNavigator.jsp" />
 	</div>
 <br/><br/>
 

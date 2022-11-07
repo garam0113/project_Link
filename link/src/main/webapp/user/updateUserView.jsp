@@ -217,7 +217,7 @@ button {
 	
 	<jsp:include page="/sideToolbar.jsp" />
 	<form>
-		<div class="wrap wd668" style="zoom: 1.2; margin-top: 80px; margin-left: 100px;">		
+		<div class="wrap wd668" style="zoom: 1.2; margin-top: 57px; margin-left: 80px;">		
 			<div class="container" style="margin-left: 0px;">
 			
 			
@@ -235,7 +235,7 @@ button {
 			
 				<div class="form_txtInput" style="margin-left: 200px;">
 					<c:if test="${fn:trim(user.role) == '0'}">
-						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">내정보보기>내정보수정</h3>
+						<h6 class=" text-info" style="color: #31708f; font-weight: bold;">내정보보기 > 내정보수정</h6>
 					</c:if>
 					<c:if test="${fn:trim(user.role) == '1'}">
 						<h3 class=" text-info" style="color: #31708f; font-weight: bold;">회원정보수정</h3>
@@ -330,7 +330,8 @@ button {
 												id="phoneNo" name="phoneNo" value="${ requestScope.getUser.phoneNo }">
 											<c:if test="${fn:trim(user.role) == '0'}">
 												<button type="button"
-													style="font-weight: 900; border-radius: 10px; border: solid 2px #5F0080;"
+													style="font-weight: bold; font-size: medium; border-radius: 13px; padding: 4px; padding-left: 15px; padding-right: 15px;
+													box-shadow: rgba(102, 051, 102, 0.3) 0px 5px 5px, rgba(95, 0, 128, 0.22) 0px 5px 5px;"
 													id="phoneChange">변&nbsp;경</button>
 											</c:if>
 										</div>
@@ -365,20 +366,18 @@ button {
 						</div>
 						<div style="margin-left: 480px;">
 							<button type="button"  id="update"
-								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">수
-								&nbsp;정</button>
+								style="font-weight: bold; font-size: medium; border-radius: 13px; padding: 4px; padding-left: 15px; padding-right: 15px;
+							box-shadow: rgba(102, 051, 102, 0.3) 0px 5px 5px, rgba(95, 0, 128, 0.22) 0px 5px 5px; margin-right: 15px;">수&nbsp;정</button>
 							<button type="button"  id="cancel"
-								style="font-weight: bold; border: solid 2px #5F0080; border-radius: 10px">취
-								&nbsp;소</button>
+								style="font-weight: bold; font-size: medium; border-radius: 13px; padding: 4px; padding-left: 15px; padding-right: 15px;
+							box-shadow: rgba(102, 051, 102, 0.3) 0px 5px 5px, rgba(95, 0, 128, 0.22) 0px 5px 5px;">취&nbsp;소</button>
 						</div>
-						<br /> <br />
 					</div>
 				</div>
 				<!-- form_txtInput E -->
 			</div>
 			<!-- content E-->
 		</div>
-		<br /> <br />
 		<!-- container E -->
 	</form>
 		<jsp:include page="/user/updatePhoneNoView.jsp" />

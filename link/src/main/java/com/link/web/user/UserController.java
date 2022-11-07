@@ -117,8 +117,11 @@ public class UserController {
 				no += ran;
 
 			}
+			
 			user.setUserId("Link" + no); // SNS회원 ID 임의로 생성 하여 저장
-
+			
+			user.setProfileImage("default.png");
+			
 			System.out.println("User에 입력된 Data : " + user);
 
 			getUser = userService.getUser(user);
@@ -128,7 +131,7 @@ public class UserController {
 				userService.addUser(user); // SNS회원 ID, 가입유형, 가입날짜 DB저장
 
 				login = userService.getUser(user);
-
+ 
 				session.setAttribute("user", login);
 
 				break;

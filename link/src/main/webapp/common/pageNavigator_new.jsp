@@ -65,8 +65,7 @@ function YesScroll () {
 			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
 			</c:if>
 				<li>
-			<a href="javascript:fncGetUserList('${resultPage.endUnitPage+1}')"
-				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+			<a href="javascript:fncGetUserList('${resultPage.endUnitPage+1}')" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a>
 			</li>
 		</ul>
