@@ -2242,7 +2242,7 @@ $(function() {
 });
 	
 	$(".tab_item-following").on("click" , function(e) {
-		var userId = $("#userId").val();
+		var userId = $("#user_Id").val();
 		console.log(userId);
 		$(".tab_item-following").off(e);
 	$.ajax({
