@@ -142,6 +142,7 @@
 <style>
 header {
 	display: flex;
+	background: linear-gradient(0deg, #958c8cc4, black);
 }
 
 /* SCROLL */
@@ -165,6 +166,16 @@ header {
 header::-webkit-scrollbar {
 	display: none !important;
 }
+
+html {
+	background-color: whitesmoke !important;
+}
+
+#main {
+	background-color: whitesmoke !important;
+}
+
+
 
 /* SCROLL */
 

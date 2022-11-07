@@ -579,10 +579,12 @@
 		
 		<%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
 		
+		var user_id = "";
+		
 		$(document).on("click", ".dl", function(event){
 				event.stopPropagation();
 			
-				var user_Id = $(this).parent().parent().attr("id");
+				user_Id = $(this).parent().parent().attr("id");
 				var nickName = $("."+user_Id+"").val();
 				var profileImage = $(this).attr("alt");
 				
@@ -732,18 +734,17 @@
 		   })
 
 		   
-		   $(document).on("click", ".main", function(){
-
-			    $("div[name='dialog']").parent().dialog("close");
-
-			}) 
-			
 		})//end of class="dl" 클릭시
+		
+		$(".main").on("click",function(){
+
+			   $("div[name='dialog']").parent().dialog("close");
+
+		}) 
 		
 		$(document).on("click",".dll",function(event){
 			
-		   
-		   var user_Id = $(this).parent().parent().attr("id");
+		   user_Id = $(this).parent().parent().attr("id");
 		   var nickName = $("."+user_Id+"").val();
 		   var profileImage = $(this).attr("id");
 		   
@@ -893,15 +894,16 @@
 		      }
 		   })
 		   
-		   $(document).on("click", ".main", function(){
-
-			    $("div[name='dialog']").parent().dialog("close");
-
-			});
+		  
 		   
 
 		});//end of class="dll" 클릭시
 		
+		 $(".main").on("click",function(){
+
+			    $("div[name='dialog']").parent().dialog("close");
+
+		});
 		
 		//다이얼로그 창의 차단버튼과 팔로우 활성화
 
@@ -2313,15 +2315,6 @@
 	
 	<%--신고처리 --%>
 	
-	.main{
-		height:100vh;
-		width:100%;  
-		display:flex;
-		align-items:center;
-		justify-content:center;
-		text-align:center;
-	}
-	
 	h3{
 		text-align:center;
 		text-transform: uppercase;
@@ -2424,8 +2417,8 @@
 	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
 
 	<jsp:include page="/toolbar.jsp" />
-
-	<main role="main">
+	
+	<main role="main" class="main">
 
 		<div id="main">
 		
@@ -2532,7 +2525,7 @@
 												<div class="feedLeft">
 													<div class="feedInner">
 														<div class="feedCover">
-															<img class="feedProfileImage dl" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
+															<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
 															
 														</div>
 														<div class="feedName dlFeednickName">${feed.user.nickName}</div>
@@ -2974,8 +2967,7 @@
 		</div>
 	</div>
 	<!-- 수정 Modal -->
-
+	
 	</main>
-
 </body>
 </html>

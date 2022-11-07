@@ -457,8 +457,7 @@ WHERE TRIM(user_id) NOT IN (
 															)						
 															
 															
-															
-															
+SELECT * FROM club_Post
 															
 SELECT f.send_user_Id , f.recv_user_id, f.state, f.type, u.nickname , u.profile_image FROM users u, follow_block f WHERE u.user_id = f.recv_user_id and f.send_user_id = 'meptael' and f.recv_user_id = 'garam113'											
 															
@@ -537,7 +536,7 @@ SELECT uf.user_id AS SEND_USER_ID, deepInner.* FROM users uf, ( SELECT us.user_i
 
 
 
-
+SELECT * FROM USERS;
 
 
 

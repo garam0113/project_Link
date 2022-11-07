@@ -1748,6 +1748,11 @@ border-radius:15px;
 .goHome{
 margin-left:10px;
 }
+
+input[type="radio"]:checked + label {
+	background-color: #5F0080 !important;
+	color: white !important;
+}
 </style>
 </head>
 
