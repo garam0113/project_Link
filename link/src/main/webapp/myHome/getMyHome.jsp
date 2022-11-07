@@ -1751,8 +1751,12 @@ margin-left:10px;
 
 input[type="radio"]:checked + label {
 	background-color: #5F0080 !important;
+}
+
+input[type="radio"]:checked + label h4 {
 	color: white !important;
 }
+
 </style>
 </head>
 
