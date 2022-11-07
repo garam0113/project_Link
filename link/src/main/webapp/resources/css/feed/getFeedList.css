@@ -1,10 +1,121 @@
+	/* grid-template-columns : 1fr 1fr */
+
+	main {
+		margin-top: 0px !important;
+	}
+
+	/* DIALOG */
+
+
+	/* DIALOG */
+
+
+
+	/* UPDATE FEED MODAL */
+
+	#updateModal {
+		top : 15px !important;
+	}
+
+	button.btn_updateFeedCancel {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.btn_updateFeedCancel:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	button.btn_updateFeed {
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+		float: right;
+	}
+
+	button.btn_updateFeed:hover{
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	.updateModalLeft {
+		display: flex;
+		align-items: center;
+	}
+
+	.updateModalInner {
+		display: flex;
+		align-items: center;
+	}
+
+	.updateModalInner img {
+		width: 50px
+	}
+
+	.updateCover {
+		display: flex;
+		margin: 10px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.modal-dialog {
+		top : 100px;
+	}
+
+	.updateFormName {
+		font-weight: 700 !important;
+		cursor: pointer;
+	}
+
+	.updateFeedDate {
+		margin: 10px;
+    	font-size: 0.778rem;
+    	font-weight: 700 !important;
+	}
+
+	.updateFeedProfileImage{
+		border-radius: 25% !important;
+		cursor: pointer;
+	}
+	
+	/* UPDATE FEED MODAL */
+	
+
+	
+	/* CHECKED TAB */
+
+	input[type="radio"]:checked + label {
+		background-color: #5F0080 !important;
+		color: white !important;
+	}
+
+	/* CHECKED TAB */
+
+
+
 	/* RIGHT SCROLL */
 
 	section {
 		overflow-x: initial !important;
 	}
 
-	/* �ǵ� ����Ʈ���� ���? ���? */
+	/* RIGHT SCROLL */
+
+
+
+	/* MODAL COMMENT */
 
 	.commentContentTitle {
 		display: flex;
@@ -17,7 +128,7 @@
    		resize: none;
 	}
 
-	/* �ǵ� ����Ʈ���� ���? ���? */
+	/* MODAL COMMENT */
 
 
 
@@ -37,8 +148,10 @@
 	.feedVideo {
 		margin-top: 10px;
 	}
-		
-	/* ���� Ŭ�� �������� */
+
+
+
+	/* RECOMMEND CLUB */
 
 	.clubRandomCover {
 		margin-top: 475px;
@@ -66,32 +179,32 @@
 		border-radius: 25px
 	}
 
+	
 
-	/* ���� Ŭ�� �������� */
+	/* RECOMMEND CLUB */
 
-	/* ��ũ�ѹ� �Ⱥ������� ���� */
 
-	html {
-		-ms-overflow-style:none !important; 
-	}
 
-	html::-webkit-scrollbar {
-		display:none !important;
-	}
+	/* SCROLL */
 
-	/* ��ũ�ѹ� �Ⱥ������� ���� */
 
-	/* ������ */
+	/* SCROLL */
+
+
+	
+	/* BACKGROUND */
 
 	html {
-		background-color: #EBEDF0 !important;
+		background-color: whitesmoke !important;
 	}
 
 	#main {
-		background-color: #EBEDF0 !important;
+		background-color: whitesmoke !important;
 	}
 
-	/* ������ */
+	/* BACKGROUND */
+
+	
 	
 	/* FONT COLOR rgba(171,148,233,1) */
 
@@ -113,10 +226,6 @@
 	
 	.note-editor {
 		background-color: white;
-	}
-
-	.note-editor .note-editable {
-		line-height: 10%;
 	}
 
 	div.note-toolbar {
@@ -725,7 +834,8 @@
 		overflow: hidden;
 		overflow-y: auto;
 		scrollbar-width: none;
-	    width: inherit;
+		width: inherit;
+		font-size: 0.9rem;
 	}
 	.tab_content-follow {
 		position: fixed;
@@ -736,6 +846,7 @@
 		overflow-y: auto;
 		scrollbar-width: none;
 		width: inherit;
+		font-size: 0.9rem;
 	}
 	
 	/* ��ũ�ѹ� �Ⱥ��̱� */
@@ -759,25 +870,31 @@
 	.follow-section {
 		margin: 0px;
 	    display: flex;
-	    justify-content: space-around;
+	    justify-content: space-between !important;
 	    align-items: center;
-	    margin-bottom: 20px;
+		margin-bottom: 20px;
+		margin-left: 10px;
+    	margin-right: 10px;
 	}
 	
 	.following-section {
 		margin: 0px;
 	    display: flex;
-	    justify-content: space-around;
+	    justify-content: space-between !important;
 	    align-items: center;
-	    margin-bottom: 20px;
+		margin-bottom: 20px;
+		margin-left: 10px;
+    	margin-right: 10px;
 	}
 
 	.follow-section img {
 		border-radius: 15px;
+		margin-right: 10px;
 	}
 
 	.following-section img {
 		border-radius: 15px;
+		margin-right: 10px;
 	}
 
 	label.tab_item-follow:hover {

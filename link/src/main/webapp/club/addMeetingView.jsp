@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,20 +17,20 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
   <link rel="stylesheet" href="/resources/demos/style.css">
   
   <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css">
-  	<!--  	jQuery UI toolTip »ç¿ë JS -->
+  	<!--  	jQuery UI toolTip ì‚¬ìš© JS -->
   <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
   
   
-  <!-- µ¥ÀÌÆ®ÇÇÄ¿ -->
+  <!-- ë°ì´íŠ¸í”¼ì»¤ -->
   <link rel="stylesheet" href="datepicker.css">
 <script src="datepicker.js"></script>
   
@@ -41,7 +41,7 @@
   
   
   
-  <!-- Å¸ÀÓÇÇÄ¿ -->
+  <!-- íƒ€ì„í”¼ì»¤ -->
   	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -53,7 +53,7 @@
 
 	$(function() {
 		$("#locate").click(function() {
-			navigator.geolocation.getCurrentPosition(function(position){ //ÁÂÇ¥ ÃßÃâ
+			navigator.geolocation.getCurrentPosition(function(position){ //ì¢Œí‘œ ì¶”ì¶œ
 				var geocoder = new kakao.maps.services.Geocoder();
 				var callback = function(result, status) {
 					if(status == kakao.maps.services.Status.OK) {
@@ -61,7 +61,7 @@
 					}
 				}
 			
-				geocoder.coord2RegionCode(position.coords.longitude, position.coords.latitude, callback); //ÇöÀçÀ§Ä¡ ÁÂÇ¥ °¡Á®¿À±â
+				geocoder.coord2RegionCode(position.coords.longitude, position.coords.latitude, callback); //í˜„ì¬ìœ„ì¹˜ ì¢Œí‘œ ê°€ì ¸ì˜¤ê¸°
 			});
 			
 		});
@@ -81,7 +81,7 @@
 		if (title == null || title.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -89,7 +89,7 @@
 		if( date == null || date.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ë‚ ì§œëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -97,7 +97,7 @@
 		if( time == null || time.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤½Ã°£Àº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ì‹œê°„ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -105,7 +105,7 @@
 		if( content == null || content.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'ÀÏÁ¤³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì¼ì •ë‚´ìš©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -113,7 +113,7 @@
 		if( member == null || member.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: 'Á¤¿øÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ì •ì›ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -121,7 +121,7 @@
 		if( place == null || place.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ğÀÓÀå¼Ò´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ì„ì¥ì†ŒëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -148,15 +148,15 @@
 	
 	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd' ,
-		prevText: 'ÀÌÀü ´Ş' ,
-		nextText: '´ÙÀ½ ´Ş',
-        monthNames: ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù'],
-        monthNamesShort: ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù'],
-        dayNames: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä'],
-        dayNamesShort: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä'],
-        dayNamesMin: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä'],
+		prevText: 'ì´ì „ ë‹¬' ,
+		nextText: 'ë‹¤ìŒ ë‹¬',
+        monthNames: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        monthNamesShort: ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”'],
+        dayNames: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesShort: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
+        dayNamesMin: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† '],
         showMonthAfterYear: true,
-        yearSuffix: '³â'
+        yearSuffix: 'ë…„'
 	})
 	
 	$(function(){
@@ -177,8 +177,8 @@
 	
 	
 	
-	//Àá½Ã ÁÖ¼®!
-	/* var openWin;
+	//ì ì‹œ ì£¼ì„!
+	var openWin;
 	function popup() {
 		var url = "/club/searchPlace.jsp";
 		var name = "searchPlace";
@@ -191,10 +191,10 @@
 			popup();
 		});
 		
-	}); */
+	});
 	
 	
-	//ÀÚ½ÄÃ¢¿¡¼­ ºÎ¸ğÃ¢À¸·Î °ª Àü´ŞÇÏ±â
+	//ìì‹ì°½ì—ì„œ ë¶€ëª¨ì°½ìœ¼ë¡œ ê°’ ì „ë‹¬í•˜ê¸°
 	function openChild()
 	{
 		window.name = "addMeetingView";
@@ -257,8 +257,8 @@
 		<div class="wrap wd668" style="background-color: #f0f2f5;">
 			<div class="container" style="background-color: white; border: outset;">
 				<div class="form_txtInput" style="margin-top: 150px;">
-					<h2 class="sub_tit_txt">¸ğÀÓÀÏÁ¤µî·Ï</h2>
-					<p class="exTxt">»õ·Î¿î ÀÏÁ¤À» µî·ÏÇØº¸¼¼¿ä...</p>
+					<h2 class="sub_tit_txt">ëª¨ì„ì¼ì •ë“±ë¡</h2>
+					<p class="exTxt">ìƒˆë¡œìš´ ì¼ì •ì„ ë“±ë¡í•´ë³´ì„¸ìš”...</p>
 					<div class="join_form">
 					
 					<table>
@@ -269,40 +269,40 @@
 						
 						<tbody>
 							<tr>
-								<th><span>ÀÏ Á¤ Á¦ ¸ñ</span></th>
-								<td><textarea class="meetingTitle" id="meetingTitle" name="meetingTitle" value="" maxlength="80" placeholder="ÀÏÁ¤ Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä." style="width: 280px; height: 50px;"></textarea>
+								<th><span>ì¼ ì • ì œ ëª©</span></th>
+								<td><textarea class="meetingTitle" id="meetingTitle" name="meetingTitle" value="" maxlength="80" placeholder="ì¼ì • ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”." style="width: 280px; height: 50px;"></textarea>
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ğ ÀÓ ³¯ Â¥</span></th>
-								<td><input type="text" id="datepicker" name="meetingDate" placeholder="¸ğÀÓ³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù." style="height: 40px" autocomplete='off'></td>
+								<th><span>ëª¨ ì„ ë‚  ì§œ</span></th>
+								<td><input type="text" id="datepicker" name="meetingDate" placeholder="ëª¨ì„ë‚ ì§œëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤." style="height: 40px" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ğ ÀÓ ½Ã °£</span></th>
-								<td><input type="text" class="timepicker" id="timepicker" name="meetingTime" placeholder="¸ğÀÓ½Ã°£Àº ÇÊ¼öÀÔ´Ï´Ù." style="height: 40px" autocomplete='off'></td>
+								<th><span>ëª¨ ì„ ì‹œ ê°„</span></th>
+								<td><input type="text" class="timepicker" id="timepicker" name="meetingTime" placeholder="ëª¨ì„ì‹œê°„ì€ í•„ìˆ˜ì…ë‹ˆë‹¤." style="height: 40px" autocomplete='off'></td>
 							</tr>
 							
 							<tr>
-								<th><span>ÀÏ Á¤ ³» ¿ë</span></th>
-								<td><textarea class="meetingContent" id="meetingContent" name="meetingContent" maxlength="500" placeholder="ÀÏÁ¤ ³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä." style="width: 280px; height: 200px;"></textarea>
+								<th><span>ì¼ ì • ë‚´ ìš©</span></th>
+								<td><textarea class="meetingContent" id="meetingContent" name="meetingContent" maxlength="500" placeholder="ì¼ì • ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”." style="width: 280px; height: 200px;"></textarea>
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>Á¤ ¿ø</span>
+								<th><span>ì • ì›</span>
 								<td>
 									<textarea class="meetingMaximumMember" id="meetingMaximumMember" name="meetingMaximumMember" maxlength="50" style="width:80px; height: 40px;"></textarea>
 								</td>
 							</tr>
 							
 							<tr>
-								<th><span>¸ğ ÀÓ Àå ¼Ò</span></th>
-								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="¸ğÀÓÀå¼Ò´Â ÇÊ¼öÀÔ´Ï´Ù." autocomplete='off' onclick="openChild()"></td>
+								<th><span>ëª¨ ì„ ì¥ ì†Œ</span></th>
+								<td><input type="text" id="meetingPlace" name="meetingPlace" placeholder="ëª¨ì„ì¥ì†ŒëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤." autocomplete='off' onclick="openChild()"></td>
 							<tr>
 								<th></th>
-								<!-- <td><button type="button" value="Àå¼Ò °Ë»ö" onclick="openChild()">Àå¼Ò°Ë»ö</button></td> -->
+								<!-- <td><button type="button" value="ì¥ì†Œ ê²€ìƒ‰" onclick="openChild()">ì¥ì†Œê²€ìƒ‰</button></td> -->
 								
 							
 								
@@ -320,8 +320,8 @@
 				
 				<div class="form-group">
 					<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 24%;">
-			      		<button type="button" class="plain button red cancel" id="addMeeting">µî &nbsp;·Ï</button>
-						<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+			      		<button type="button" class="plain button red cancel" id="addMeeting">ë“± &nbsp;ë¡</button>
+						<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 			    	</div>
 				</div>
 					
@@ -332,47 +332,47 @@
 
 
 <!-- <div class="form-group">
-				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">¸ğ ÀÓ ÀÏ Á¤ Á¦ ¸ñ</label>
+				<label for="meetingTitle" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ì„ ì¼ ì • ì œ ëª©</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" placeholder="¸ğÀÓÀÏÁ¤Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù">
+					<input type="text" class="form-control" id="meetingTitle" name="meetingTitle" placeholder="ëª¨ì„ì¼ì •ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤">
 				</div>					
 			</div>
 			
 			
 		
 		 	<div class="form-group">
-				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">¸ğ ÀÓ ³¯ Â¥</label>
+				<label for="meetingDate" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ì„ ë‚  ì§œ</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="¸ğÀÓ³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù.">
-					<p><input type="text" id="datepicker" name="meetingDate" placeholder="¸ğÀÓ³¯Â¥´Â ÇÊ¼öÀÔ´Ï´Ù." height="150px"></p> 
+					<input type="text" height="150px" class="form-control" id="meetingDate" name="meetingDate" placeholder="ëª¨ì„ë‚ ì§œëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤.">
+					<p><input type="text" id="datepicker" name="meetingDate" placeholder="ëª¨ì„ë‚ ì§œëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤." height="150px"></p> 
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">¸ğ ÀÓ ½Ã °£</label>
+				<label for="meetingTime" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ì„ ì‹œ ê°„</label>
 				<div class="col-sm-4">
-					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" placeholder="¸ğÀÓ½Ã°£Àº ÇÊ¼öÀÔ´Ï´Ù.">
+					<input type="text" height="150px" class="form-control" id="meetingTime" name="meetingTime" placeholder="ëª¨ì„ì‹œê°„ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">ÀÏ Á¤ ³» ¿ë</label>
+				<label for="meetingContent" class="col-sm-offset-1 col-sm-3 control-label">ì¼ ì • ë‚´ ìš©</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingContent" name="meetingContent" placeholder="ÀÏÁ¤³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.">
+					<input type="text" class="form-control" id="meetingContent" name="meetingContent" placeholder="ì¼ì •ë‚´ìš©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> Á¤ ¿ø</label>
+				<label for="meetingMaximumMember" class="col-sm-offset-1 col-sm-3 control-label"> ì • ì›</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="Á¤¿øÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.">
+					<input type="text" class="form-control" id="meetingMaximumMember" name="meetingMaximumMember" placeholder="ì •ì›ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.">
 				</div>		
 			</div>
 			
 			
 			<div class="form-group">
-				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">¸ğ ÀÓ Àå ¼Ò</label>
+				<label for="meetingPlace" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ ì„ ì¥ ì†Œ</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" placeholder="¸ğÀÓÀå¼Ò´Â ÇÊ¼öÀÔ´Ï´Ù.">
+					<input type="text" class="form-control" id="meetingPlace" name="meetingPlace" placeholder="ëª¨ì„ì¥ì†ŒëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤.">
 				</div>		
 			</div> -->

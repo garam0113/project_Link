@@ -773,7 +773,7 @@ $(function() {
 	$(function() {
 
 		$("#follow1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -847,7 +847,7 @@ $(function() {
 		})
 
 		 $("#following1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -899,7 +899,7 @@ $(function() {
 		}) 
 
 		 $("#updateFollow1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -951,7 +951,7 @@ $(function() {
 
 
 		$("#block1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -1025,7 +1025,7 @@ $(function() {
 		})
 
 		$("#stopBlock1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -1077,7 +1077,7 @@ $(function() {
 		})
 
 		$("#updateBlock1").on("click", function() {
-			var userId = $("#userId").val();
+			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
 
 			$.ajax("/myHomeRest/json/getFollow", {
@@ -2001,13 +2001,40 @@ border-radius: 15px !important;
 
 <body class="blog masonry-style">
 
-	
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+
+
 
 	<main role="main" class="main">
 		
 			
 
 			<div id="main" class="row">
+
+
+
+				<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+				<%-- chat.js에서 사용위해서 --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+				<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+				
+				
+				
 			<div>
 			<jsp:include page="/toolbar.jsp" />
 			</div>
@@ -2032,7 +2059,7 @@ border-radius: 15px !important;
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
-								<input type="hidden" name="userId" id="userId" value="${getUser.userId }">
+								<input type="hidden" name="userId" id="userId2" value="${getUser.userId }">
 								<input type="hidden" name="yuserId" id="yuserId" value="${getUser.userId }">
 									<br/>
 									<div class="profile-usertitle-name">${getUser.nickName }</div>

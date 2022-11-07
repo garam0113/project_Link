@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -10,9 +8,9 @@
 
 <!-- <link rel="stylesheet" href="/css/admin.css" type="text/css"> -->
 
-<title>¸ğÀÓ»ó¼¼Á¶È¸</title>
+<title>ëª¨ì„ìƒì„¸ì¡°íšŒ</title>
 
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- alert -->
@@ -37,14 +35,14 @@
 		$(document).on("click","#deleteClub", function() {
 		
 			Swal.fire({
-				  title: 'Á¤¸» ¸ğÀÓÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
-				  text: "»èÁ¦ÇÑ ¸ğÀÓÀº º¹±¸°¡ ºÒ°¡´ÉÇÕ´Ï´Ù.",
+				  title: 'ì •ë§ ëª¨ì„ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+				  text: "ì‚­ì œí•œ ëª¨ì„ì€ ë³µêµ¬ê°€ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: '»èÁ¦',
-				  cancelButtonText: 'Ãë¼Ò' ,
+				  confirmButtonText: 'ì‚­ì œ',
+				  cancelButtonText: 'ì·¨ì†Œ' ,
 				}).then((result) => {
 				  if (result.value) {
 				    
@@ -64,18 +62,18 @@
 			//alert(joinClubLimit);
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
-			//¸ğ´ŞÃ¢ ¿­±â
+			//ëª¨ë‹¬ì°½ ì—´ê¸°
 			$('#approvalModal').modal("show");
 			} else {
 				
 				Swal.fire({
-					title: '¸ğÀÓ ÃÖ´ë ÇÑµµ ¼ö¸¦ ÃÊ°úÇÏ¿´½À´Ï´Ù.' ,
-					text: "°áÁ¦¸¦ ÅëÇØ ¸ğÀÓ ÇÑµµ¸¦ ´Ã¸± ¼ö ÀÖ½À´Ï´Ù." ,
+					title: 'ëª¨ì„ ìµœëŒ€ í•œë„ ìˆ˜ë¥¼ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.' ,
+					text: "ê²°ì œë¥¼ í†µí•´ ëª¨ì„ í•œë„ë¥¼ ëŠ˜ë¦´ ìˆ˜ ìˆìŠµë‹ˆë‹¤." ,
 					icon: 'warning',
 					showCancelButton: false,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
-					confirmButtonText: 'È®ÀÎ',
+					confirmButtonText: 'í™•ì¸',
 				}).then((result) => {
 					if(result.value){
 					
@@ -85,12 +83,12 @@
 			}
 		});
 		
-		$("input[value='½ÅÃ»']").bind("click", function() {
+		$("input[value='ì‹ ì²­']").bind("click", function() {
 			
 			if($.trim($("input[name='joinGreeting']").val()) == '' ){
 				Swal.fire({
 					icon: 'error' ,
-					title: 'Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù'
+					title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤'
 				})
 				return;
 			}
@@ -99,9 +97,9 @@
 		});
 		
 		
-		$("input[value='Ãë¼Ò']").bind("click", function() {
+		$("input[value='ì·¨ì†Œ']").bind("click", function() {
 			
-			//¸ğ´ŞÃ¢ ´İ±â
+			//ëª¨ë‹¬ì°½ ë‹«ê¸°
 			$('#approvalModal').modal("hide");
 		});
 		
@@ -133,14 +131,14 @@
 		$(document).on("click","#deleteApprovalCondition", function() {
 		
 			Swal.fire({
-				  title: 'Á¤¸» ¸ğÀÓÀ» Å»ÅğÇÏ½Ã°Ú½À´Ï±î?',
-				  text: "Å»Åğ ½Ã ´Ù½Ã °¡ÀÔ ½ÅÃ»À» ÇØ¾ßÇÕ´Ï´Ù",
+				  title: 'ì •ë§ ëª¨ì„ì„ íƒˆí‡´í•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+				  text: "íƒˆí‡´ ì‹œ ë‹¤ì‹œ ê°€ì… ì‹ ì²­ì„ í•´ì•¼í•©ë‹ˆë‹¤",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: '»èÁ¦',
-				  cancelButtonText: 'Ãë¼Ò' ,
+				  confirmButtonText: 'ì‚­ì œ',
+				  cancelButtonText: 'ì·¨ì†Œ' ,
 				}).then((result) => {
 				  if (result.value) {
 				    
@@ -168,6 +166,10 @@
 	
 	$(function() {
 		$(".clubPostBtn").on("click", function() {
+			
+			
+			
+			
 			self.location="/clubPost/getClubPostList"
 		});
 	});
@@ -192,7 +194,7 @@
 		socket = io.connect(url);
 
 		socket.on("connect", function() {
-			//alert("¼ÒÄÏ¿¬°á ¿Ï·á");
+			//alert("ì†Œì¼“ì—°ê²° ì™„ë£Œ");
 		});
 		
 		$(".live").on("click", function() {
@@ -223,24 +225,24 @@
 						+(index+1)+". "+data.viewRoomName+"</span><span style='font-size: larger; font-weight: bold;" 
 						+"color: black;'>("+data.member+"/"+data.limit+")</span><button type='button'" 
 						+"class='joinLive' style=' margin-left: 20px;'><input type='hidden'"
-						+"value='"+data.viewRoomName+"'/>ÀÔÀå</button></div>";
+						+"value='"+data.viewRoomName+"'/>ì…ì¥</button></div>";
 					})
 					swal.fire({
-						title : clubTitle+"¸ğÀÓÀÇ Ã¤ÆÃ¹æ",
+						title : clubTitle+"ëª¨ì„ì˜ ì±„íŒ…ë°©",
 						showCancelButton : true,
-						cancelButtonText : 'Ãë¼Ò',
-						confirmButtonText : 'Ã¤ÆÃ¹æ°³¼³',
+						cancelButtonText : 'ì·¨ì†Œ',
+						confirmButtonText : 'ì±„íŒ…ë°©ê°œì„¤',
 						html: "<div id='roomNameList' style='text-align-last: left; margin-left: 70px;'></div>",
 					}).then((result) => { 
 						var viewName;
 						if(result.isConfirmed){
 						swal.fire({
-							title : "Ã¤ÆÃ¹æ°³¼³",
-							html : "<input type='text' id='roomName' class='swal2-input' placeholder='¹æÁ¦¸ñ'>" +
-							"<input type='text' id='total' class='swal2-input' placeholder='ÀÎ¿ø¼ö'>",
+							title : "ì±„íŒ…ë°©ê°œì„¤",
+							html : "<input type='text' id='roomName' class='swal2-input' placeholder='ë°©ì œëª©'>" +
+							"<input type='text' id='total' class='swal2-input' placeholder='ì¸ì›ìˆ˜'>",
 							showCancelButton : true,
-							cancelButtonText : 'Ãë¼Ò',
-							confirmButtonText : '°³¼³',
+							cancelButtonText : 'ì·¨ì†Œ',
+							confirmButtonText : 'ê°œì„¤',
 							preConfirm : () => {
 								var total = Swal.getPopup().querySelector('#total').value
 								var roomName = Swal.getPopup().querySelector('#roomName').value
@@ -315,7 +317,7 @@
 		
 		socket.on("reRoomName", function(data) {
 			var clubNo = $("#no").val();
-			console.log("socket¼­¹ö¿¡¼­ ¹ŞÀº Data : "+data);
+			console.log("socketì„œë²„ì—ì„œ ë°›ì€ Data : "+data);
 			if(data != null){
 			$.ajax("/liveRest/json/exitLive", {
 				method : "POST",
@@ -344,16 +346,16 @@
 
 	<style>
 		body {
-			padding-top: 70px;
+			/* padding-top: 70px; */
 		}
 		
 		#main {
 			background-color: #f0f2f5 !important;
 		}
 		
-		main {
+		/* main {
 			background-color: #f0f2f5 !important;
-		}
+		} */
 		
 		.plain.button.red.cancel{
 		   background-color: white;
@@ -379,13 +381,13 @@
 		   font-size: 16px !important;
 		}
 		
-		.darkover {
+		/* .darkover {
 			position: sticky;
 			top: auto;
 			bottom: 0;
 			left: 0;
 			background: rgba(0, 0, 0, 0.35);
-		}
+		} */
 		
 		.club-wrap {
 			width: 100%;
@@ -415,7 +417,7 @@
 		}
 		
 		element.style {
-			margin-bottom: 100px !important;
+			/* margin-bottom: 100px !important; */
 		}
 		
 		
@@ -450,16 +452,29 @@
 </head>
 
 
-<body class="blog masonry-style" style="background: #EBEDF0;">
+<body class="blog masonry-style">
+
+
+
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- ì±„íŒ… js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- ì±„íŒ… css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	
+	
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
-	<main role="main">
+	<!-- <main role="main"> -->
 
-		<div id="intro-wrap" data-height="17.35">
-			<!-- »ó´Ü °ËÀº»ö °øÅë ¿µ¿ª -->
+		<%-- <div id="intro-wrap" data-height="17.35">
+			<!-- ìƒë‹¨ ê²€ì€ìƒ‰ ê³µí†µ ì˜ì—­ -->
 			<div id="intro" class="preload darken">
 				<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
 				<div class="intro-item">
@@ -476,13 +491,37 @@
 				</div>
 				<!-- intro -->
 			</div>
-		<!-- intro-wrap -->
+		<!-- intro-wrap --> --%>
 		
-			<div id="main" class="row"><!-- Áß°£ °³º°¿µ¿ª -->
-				<div class="row-content buffer-left buffer-right buffer-bottom">
-					<div class="homeBtn_group">
-						<button type="button" class="homeBtn" style="margin-top: 17px;">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+			<div id="main" class="row"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
+			
+			
+			
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+				<%-- ì±„íŒ… --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- ì±„íŒ… --%>
+				
+				
+				
+				<div class="row-content buffer-left buffer-right buffer-bottom" style="background-color: red; width: 1140px; margin-left: 405px;">
+				
+				
+					<!-- ëª¨ì„ ëŒ€í‘œì´ë¯¸ì§€ -->				
+					<div class="club-image" style="background-color: blue; width: 1140px; height: 550px; overflow: hidden;">
+						<a href="/club/getClub?clubNo=${clubNo}">
+							<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 1140px;" name="file" id="clubImage">
+						</a>
+					</div>
+				
+					 <!-- ëª¨ì„ë²„íŠ¼ ì˜ì—­ -->			
+					<div class="homeBtn_group" style="background-color: yellow;">
+						<button type="button" class="homeBtn" style="margin-top: 55px;">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</button>
 						
 						<button type="button" class="clubPostBtn">
@@ -496,144 +535,227 @@
 						<button type="button" class="live">
 							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
 						</button>
-					</div>	
-					
-				<%-- 	${clubMemberList} 
-					
-					<p>
-					${club }
-					
-					<p>
-					${club.user.userId } --%>
-					
-		
-
-				<div class="mainForm" style="display: inline-flex;">
-					<!-- Å¬·´»ó¼¼ -->
-					<div>
-						<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
-
-							<div class="col-xs 6 col-md-6" style="display: contents;">
-								<div class="row">
-									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
-										<strong>¸ğÀÓÁ¦¸ñ</strong>
-									</div>
-									<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>¸ğÀÓ¼³¸í</strong>
-									</div>
-									<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>Ä«Å×°í¸®</strong>
-									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
-								</div>
-
-								<hr />
-
-								<div class="row">
-									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>È°µ¿¿µ¿ª</strong>
-									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
-								</div>
-
-								<hr />
-
-								<div class="row"> 
-									<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
-										<strong>¸ğÀÓ¿ø ¼ö</strong>
-									</div>
-									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
-								</div>
-
-							</div>
-
-						</form>
-
 					</div>
-					<!-- Å¬·´»ó¼¼ -->
-
-					<!-- ´Ş·Â¿µ¿ª -->
-					<div class="calendarArea">
-
-						<jsp:include page="/club/calendar.jsp" />
-
-					</div>
-					<!-- ´Ş·Â ¿µ¿ª -->
-				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">ÀÏÁ¤»ı¼º</button>
-				</div>
-				
-				<div class="form-group" id="btn_group">
-					<!-- <button type="button" class="joinLi"></button> -->
-				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
-		      		
-		      		<button type="button" class="plain button red cancel" id="club-add-approval">°¡ÀÔ½ÅÃ»</button>
-					<button type="button" class="plain button red cancel" id="cancel">ÀÌ&nbsp;Àü</button>
 					
-				<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
-					<button type="button" class="plain button red cancel" id="deleteApprovalCondition">Å»Åğ</button>
-				</c:if>					
-				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
-					<button type="button" class="plain button red cancel" id="updateClub">¼ö&nbsp;Á¤</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">»è&nbsp;Á¦</button>
-				</c:if>
-				
-				</div>
-		    </div>
-				
-				
-			
-			<!-- ¸ğ´Ş¿µ¿ª -->
-			<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
-					<div class="modal-content" style="height: 300px; width: 440px;">
-						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							</button>
-							<h3 class="modal-title" id="exampleModalLabel" style="text-align: center; ">°¡ÀÔ½ÅÃ»</h3>
+					
+					<div class="form-group" id="btn_group" style="background-color: green;">
+						<!-- <button type="button" class="joinLi"></button> -->
+						<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -145px; margin-left: 900px; display: flex;">
+				      		
+				      		<button type="button" class="plain button red cancel" id="club-add-approval">ê°€ì…ì‹ ì²­</button>
+							<button type="button" class="plain button red cancel" id="cancel">ì´&nbsp;ì „</button>
+							
+						<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+								<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+									<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+										<button type="button" class="plain button red cancel" id="deleteApprovalCondition">íƒˆí‡´</button>
+									</c:if>
+								</c:if>				 	
+						 	</c:forEach>	
+											
+						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+							<button type="button" class="plain button red cancel" id="updateClub">ìˆ˜&nbsp;ì •</button>
+							<button type="button" class="plain button red cancel" id="deleteClub">ì‚­&nbsp;ì œ</button>
+						</c:if>
+						
 						</div>
-					<div class="club-add-approval-view">
-						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
-							<input type="hidden" name="clubNo" value="${ clubNo }">
-							<input type="hidden" name="roomId" value="${ club.roomId }">
-							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="°¡ÀÔÀÎ»ç¸¦ ÀÛ¼ºÇØÁÖ¼¼¿ä" autocomplete="off" style="margin-top: 10px; margin-left: 45px; height: 130px; width: 365px;">
-							</div>
-							<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
-							<input type="button" class="plain button red cancel" value="½ÅÃ»">
-							<input type="button" class="plain button red cancel" value="Ãë¼Ò">
-							</div>
-						</form>
+				    </div>
+							
+	
+					<div class="mainForm" style="display: inline-flex; background-color: olive;">
+						<!-- í´ëŸ½ìƒì„¸ -->
+						<div>
+							<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
+	
+								<div class="col-xs 6 col-md-6" style="display: contents;">
+									<div class="row">
+										<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
+											<strong>ëª¨ì„ì œëª©</strong>
+										</div>
+										<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
+									</div>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>ëª¨ì„ì„¤ëª…</strong>
+										</div>
+										<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
+									</div>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>ì¹´í…Œê³ ë¦¬</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
+									</div>
+	
+									<hr />
+	
+									<div class="row">
+										<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
+											<strong>í™œë™ì˜ì—­</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
+									</div>
+	
+									<hr />
+	
+									<div class="row"> 
+										<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
+											<strong>ëª¨ì„ì› ìˆ˜</strong>
+										</div>
+										<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
+									</div>
+	
+								</div>
+	
+							</form>
+	
+						</div>
+						<!-- í´ëŸ½ìƒì„¸ -->
+	
+						<!-- ë‹¬ë ¥ì˜ì—­ -->
+						<div class="calendarArea">
+	
+							<jsp:include page="/club/calendar.jsp" />
+	
+						</div>
+						<!-- ë‹¬ë ¥ ì˜ì—­ -->
+						
+						
+							<%-- ${clubMemberList[0].approvalCondition} --%>
+					 	
+					 	<%-- <c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+					 		<c:if test="${ clubMemberList[k].approvalCondition == 1 }">
+					 			${ clubMemberList[k].user.userId == sessionScope.user.userId }
+					 			'ë²„íŠ¼'
+					 		</c:if>				 	
+					 	</c:forEach> --%>
+						
+						
+						
 					</div>
-					</div>
+				
+					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+								<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">ì¼ì •ìƒì„±</button>
+							</c:if>
+						</c:if>				 	
+				 	</c:forEach>
 				</div>
-			
+				<!-- ë²„íŠ¼ ì›ë˜ ìë¦¬ -->
+				<%-- 	<div class="form-group" id="btn_group">
+						<!-- <button type="button" class="joinLi"></button> -->
+					<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -20px;">
+			      		
+			      		<button type="button" class="plain button red cancel" id="club-add-approval">ê°€ì…ì‹ ì²­</button>
+						<button type="button" class="plain button red cancel" id="cancel">ì´&nbsp;ì „</button>
+						
+					<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
+						<button type="button" class="plain button red cancel" id="deleteApprovalCondition">íƒˆí‡´</button>
+					</c:if>					
+					<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
+						<button type="button" class="plain button red cancel" id="updateClub">ìˆ˜&nbsp;ì •</button>
+						<button type="button" class="plain button red cancel" id="deleteClub">ì‚­&nbsp;ì œ</button>
+					</c:if>
+					
+					</div>
+			    </div> --%>
+				<!-- ëª¨ë‹¬ì˜ì—­ -->
+				<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
+						<div class="modal-content" style="height: 300px; width: 440px;">
+							<div class="modal-header">
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</button>
+								<h3 class="modal-title" id="exampleModalLabel" style="text-align: center; ">ê°€ì…ì‹ ì²­</h3>
+							</div>
+						<div class="club-add-approval-view">
+							<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
+								<input type="hidden" name="clubNo" value="${ clubNo }">
+								<input type="hidden" name="roomId" value="${ club.roomId }">
+								<div class="clubJoinGreeting">
+									<input type="text" name="joinGreeting" placeholder="ê°€ì…ì¸ì‚¬ë¥¼ ì‘ì„±í•´ì£¼ì„¸ìš”" autocomplete="off" style="margin-top: 10px; margin-left: 45px; height: 130px; width: 365px;">
+								</div>
+								<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
+								<input type="button" class="plain button red cancel" value="ì‹ ì²­">
+								<input type="button" class="plain button red cancel" value="ì·¨ì†Œ">
+								</div>
+							</form>
+						</div>
+						</div>
+					</div>
+				
+				</div>
+				
+				<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
+				<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
+		
+		
+				<input type="hidden" id="clubTitle" value="${club.clubTitle}">
+				<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
+				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
+				<input type="hidden" id="no" value="${clubNo}">
+				<input type="hidden" id="total" value="${clubMemberCount}">
 			</div>
-			
-			<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${totalApprovalConditionCount}">
-			<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
-		
-		
-					<input type="hidden" id="clubTitle" value="${club.clubTitle}">
-					<input type="hidden" id="nickName" value="${sessionScope.user.nickName }">
-					<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
-					<input type="hidden" id="no" value="${clubNo}">
-					<input type="hidden" id="total" value="${clubMemberCount}">
-			</div>	
-	</main>
+	<!-- </main> -->
+	
+	
+	<div style="height: 500px; overflow: hidden;">
+		<div>
+			<img src="/resources/image/uploadFiles/footerImage3.jpg" width="100%">
+		</div>
+		<div class="row" style="position: absolute; top: 100px; left: 100px;">
+			<div class="row-content buffer clear-after">
+				<section id="top-footer">
+					<div class="widget column three"><!-- la class="widget" Ã¨ forse generata utomaticamente da wp -->
+						<h4>Menu</h4>
+						<ul class="plain">
+							<li><a href="home-01.html">Home</a></li>
+							<li><a href="works-3-columns.html">Portfolio</a></li>
+							<li><a href="blog-4-columns-masonry.html">Blog</a></li>
+							<li><a href="resume.html">Resume</a></li>
+							<li><a href="file:///Users/pasqualevitiello/My%20Folder/Job/Envato/PR%20Themeforest/Flattie/Markup/Beetle/contact.html">Contact</a></li>
+						</ul>
+					</div>
+					<div class="widget column three">
+						<h4>Archives</h4>
+						<ul class="plain">
+							<li><a href="#">March 2014</a></li>
+							<li><a href="#">April 2014</a></li>
+							<li><a href="#">May 2014</a></li>
+							<li><a href="#">June 2014</a></li>
+							<li><a href="#">July 2014</a></li>
+						</ul>
+					</div>								
+					<div class="widget column three">
+						<h4>Widget</h4>
+						<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+					</div>				
+					<div class="widget meta-social column three">
+						<h4>Follow Us</h4>
+						<ul class="inline">
+							<li><a href="#" class="twitter-share border-box"><i class="fa fa-twitter fa-lg"></i></a></li>
+							<li><a href="#" class="facebook-share border-box"><i class="fa fa-facebook fa-lg"></i></a></li>
+							<li><a href="#" class="pinterest-share border-box"><i class="fa fa-pinterest fa-lg"></i></a></li>
+						</ul>
+					</div>														
+				</section><!-- top-footer -->
+				<section id="bottom-footer">
+					<p class="keep-left">&copy; 2014 <a href="http://mokaine.com/" alt="Mokaine Lab">Mokaine</a>. All Rights Reserved.</p>
+					<p class="keep-right">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+				</section><!-- bottom-footer -->			
+			</div><!-- row-content -->	
+		</div><!-- row -->	
+	</div>
+	
+	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
 </body>
 </html>

@@ -185,7 +185,9 @@ public class EchoHandler extends TextWebSocketHandler {
 				} else if(type.equals("follow")) {
 					
 					WebSocketSession targetSession = users.get(target);
-					targetSession.sendMessage(new TextMessage(senderNickName + content));
+					if(targetSession!=null) {
+						targetSession.sendMessage(new TextMessage(senderNickName + content + " <a href='/feed/getFeed?feedNo="+ url + "'>이동</a>"));
+					}
 					
 				} else if(type.equals("club")) {
 					

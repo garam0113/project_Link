@@ -14,8 +14,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -37,20 +37,24 @@
 	display: flex;
 }
 
-.container {
+/* .container {
 	border: solid 2px rgb(179, 207, 249);
 	border-radius: 10px;
 	background: #ecf4ff;
-}
+} */
 
 .col-xs-8.col-md-4 {
 	margin-left: 30px;
+	    padding: 10px;
+    font-weight: bold;
 }
 
 .col-xs-4.col-md-2 {
 	border-radius: 10px;
 	text-align: center;
-	background-color: #e9e9e9;
+	background-color: #e9e9e9; 
+	width: 140px;
+	padding: 10px;
 }
 
 button:hover {
@@ -65,9 +69,10 @@ button:hover {
 button {
 	background-color: white;
 	border: solid 2px #5F0080;
-	border-radius: 10px;
+	border-radius: 20px; 
 	color:;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -111,31 +116,58 @@ button {
 </script>
 </head>
 
-<body style="background-color: #EBEDF0;">
+<body style="background-color: whitesmoke;">
 
-	<!-- ToolBar Start /////////////////////////////////////-->
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+
+	<!-- ToolBar Start /////////////////////////////////////--> 
 	<jsp:include page="/sideToolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="margin-left: 400px;">
-		<div style="margin-left: 200px;">
-			<div class="page-header text-left">
+	<div class="container" style="margin-left: 300px; margin-top: 120px; zoom: 1.2;">  
+			
+			
+	
+		<%-- chat.js에서 사용위해서 --%>
+			<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+			<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+			<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+			<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+				
+				
+				
+		<div style="margin-left: 0px; ">
+			<div class="page-header text-left"> 
 				<c:if test="${fn:trim(user.role) == '0'}">
-					<h3 class=" text-info">내정보보기</h3>
+					<h3 class=" text-info" style="font-weight: bold;">내정보보기</h3>
 				</c:if>
 				<c:if test="${fn:trim(user.role) == '1'}">
-					<h3 class=" text-info">회원정보보기</h3>
+					<h3 class=" text-info" style="font-weight: bold;">회원정보보기</h3>
 				</c:if>
 			</div>
-			<div class="row1">
+			<div class="row1" style="margin-top: 45px;">
 				<div class="col-xs-4 col-md-2">
 					<strong>아 이 디 </strong>
 				</div>
 				<div class="col-xs-8 col-md-4" id="userId">${getUser.userId}</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
@@ -144,7 +176,7 @@ button {
 				<div class="col-xs-8 col-md-4">${getUser.name}</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
@@ -153,7 +185,7 @@ button {
 				<div class="col-xs-8 col-md-4">${getUser.gender}</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
@@ -162,7 +194,7 @@ button {
 				<div class="col-xs-8 col-md-4">${ getUser.rrn }</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2 ">
@@ -171,7 +203,7 @@ button {
 				<div class="col-xs-8 col-md-4">${ getUser.phoneNo }</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<div class="row1">
 				<div class="col-xs-4 col-md-2">
@@ -180,7 +212,7 @@ button {
 				<div class="col-xs-8 col-md-4">${getUser.email}</div>
 			</div>
 
-			<hr />
+			<br />
 
 			<c:if test="${ fn:trim(user.role) == '0' }">
 				<div class="row1">
@@ -190,6 +222,7 @@ button {
 					<div class="col-xs-8 col-md-4">${getUser.reportCount}</div>
 				</div>
 			</c:if>
+			<br />
 
 			<c:if test="${ fn:trim(user.role) == '1' }">
 				<div class="row1">
@@ -201,7 +234,7 @@ button {
 					<div class="col-xs-8 col-md-4">${fn:trim(getUser.penaltyType) == '2' ? '영구정지' : ''}</div>
 				</div>
 
-				<hr />
+				<br />
 
 				<div class="row1">
 					<div class="col-xs-4 col-md-2 ">
@@ -213,13 +246,13 @@ button {
 
 			</c:if>
 
-			<div class="row1" style="margin-left: -194px; margin-top: 20px;">
+			<div class="row1" style="margin-left: 430px; margin-top: 20px;">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" id="update"
-						style="font-weight: bold; font-size: medium;">수 &nbsp;정</button>
+						style="font-weight: bold; font-size: medium; border-radius: 13px; ">수 &nbsp;정</button>
 					<c:if test="${fn:trim(user.role) == '0'}">
 						<button type="button" id="out"
-							style="font-weight: bold; font-size: medium;">회원탈퇴</button>
+							style="font-weight: bold; font-size: medium; border-radius: 13px; ">회원탈퇴</button>
 					</c:if>
 				</div>
 

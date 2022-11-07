@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--   jQuery , Bootstrap CDN  -->
@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- alertÃ¢ CDN -->
+<!-- alertì°½ CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- Bootstrap Dropdown Hover CSS -->
@@ -23,24 +23,24 @@
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("button:contains('°Ô½Ã¹° µî·ÏÇÏ±â')").bind("click", function() {
-			//swal.fire("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		$("button:contains('ê²Œì‹œë¬¼ ë“±ë¡í•˜ê¸°')").bind("click", function() {
+			//swal.fire("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 			//self.location = "/clubPost/addClubPostView?clubNo=2";
 			location.href = "/clubPost/addClubPostView?clubNo=2";
 		});
-		$("b:contains('ÃÖ½Å¼ø')").bind("click", function() {
+		$("b:contains('ìµœì‹ ìˆœ')").bind("click", function() {
 			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=0";
 		});
-		$("b:contains('¿À·¡µÈ¼ø')").bind("click", function() {
+		$("b:contains('ì˜¤ë˜ëœìˆœ')").bind("click", function() {
 			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=1";
 		});
-		$("b:contains('ÁÁ¾Æ¿ä ¸¹Àº¼ø')").bind("click", function() {
+		$("b:contains('ì¢‹ì•„ìš” ë§ì€ìˆœ')").bind("click", function() {
 			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=2";
 		});
-		$("b:contains('³»°¡ ÀÛ¼ºÇÑ °Ô½Ã¹°')").bind("click", function() {
+		$("b:contains('ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œë¬¼')").bind("click", function() {
 			location.href = "/clubPost/getClubPostList?clubNo="+${ clubPostList[0].clubNo }+"&order=3";
 		});
-		$("button:contains('°Ë»ö')").bind("click", function() {
+		$("button:contains('ê²€ìƒ‰')").bind("click", function() {
 			$("input[name='currentPage']").val("1");
 			$("form").submit();
 		});
@@ -91,8 +91,8 @@
 			}// end of if			
 		}); // end of scroll
 		
-		$("b:contains('°áÁ¦')").bind("click", function(){
-			//alert('°áÁ¦');
+		$("b:contains('ê²°ì œ')").bind("click", function(){
+			//alert('ê²°ì œ');
 			location.href = "/clubPost/addPayView?clubNo="+${ clubPostList[0].clubNo };
 		});
 		
@@ -100,7 +100,7 @@
 		
 	});// end of function()
 	
-	//½æ³×ÀÏ Å¬¸¯½Ã »ó¼¼»óÇ°Á¶È¸ ÆäÀÌÁö or »óÇ°¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
+	//ì¸ë„¤ì¼ í´ë¦­ì‹œ ìƒì„¸ìƒí’ˆì¡°íšŒ í˜ì´ì§€ or ìƒí’ˆìˆ˜ì • í˜ì´ì§€ë¡œ ì´ë™
 	function getClubPostGo(clubPostNo){
 		location.href = "/clubPost/getClubPost?clubPostNo="+clubPostNo;
 	}
@@ -111,27 +111,27 @@
 	<%-- <jsp:include page="/toolbar.jsp" /> --%>
 	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="contains">
 	<hr/><hr/><hr/>
 	
 		<div class="page-header text-info">
-	       <h3>¸ğÀÓ°Ô½Ã¹°¸®½ºÆ®</h3>
+	       <h3>ëª¨ì„ê²Œì‹œë¬¼ë¦¬ìŠ¤íŠ¸</h3>
 	    </div>
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	    <div class="row">
 	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${ map.clubPostListCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage} ÆäÀÌÁö&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<b>ÃÖ½Å¼ø</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-					<b>¿À·¡µÈ¼ø</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-					<b>ÁÁ¾Æ¿ä ¸¹Àº¼ø</b>&nbsp;&nbsp;/&nbsp;&nbsp;
-					<b>³»°¡ ÀÛ¼ºÇÑ °Ô½Ã¹°</b>	&nbsp;&nbsp;&nbsp;
-					<b>°áÁ¦</b>	&nbsp;&nbsp;&nbsp;
-					<!-- <a href="/clubPost/getClubNoticeList">¸ğÀÓ°øÁö»çÇ×</a> -->
-					<button type="button" class="btn btn-default">°Ô½Ã¹° µî·ÏÇÏ±â</button>
+		    		ì „ì²´  ${ map.clubPostListCount } ê±´ìˆ˜, í˜„ì¬ ${resultPage.currentPage} í˜ì´ì§€&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<b>ìµœì‹ ìˆœ</b>&nbsp;&nbsp;/&nbsp;&nbsp;
+					<b>ì˜¤ë˜ëœìˆœ</b>&nbsp;&nbsp;/&nbsp;&nbsp;
+					<b>ì¢‹ì•„ìš” ë§ì€ìˆœ</b>&nbsp;&nbsp;/&nbsp;&nbsp;
+					<b>ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œë¬¼</b>	&nbsp;&nbsp;&nbsp;
+					<b>ê²°ì œ</b>	&nbsp;&nbsp;&nbsp;
+					<!-- <a href="/clubPost/getClubNoticeList">ëª¨ì„ê³µì§€ì‚¬í•­</a> -->
+					<button type="button" class="btn btn-default">ê²Œì‹œë¬¼ ë“±ë¡í•˜ê¸°</button>
 		    	</p>
 		    </div>
 		    
@@ -140,19 +140,19 @@
 			 
 			<div class="form-group">
 				<select class="form-control" name="searchCondition" >
-					<option value="0"  ${ ! empty search.searchCondition && search.searchCondition == 0 ? "selected" : "" }>¾ÆÀÌµğ</option>
-					<option value="1"  ${ ! empty search.searchCondition && search.searchCondition == 1 ? "selected" : "" }>³»¿ë</option>
+					<option value="0"  ${ ! empty search.searchCondition && search.searchCondition == 0 ? "selected" : "" }>ì•„ì´ë””</option>
+					<option value="1"  ${ ! empty search.searchCondition && search.searchCondition == 1 ? "selected" : "" }>ë‚´ìš©</option>
 				</select>
 			</div>
 			 
 			<div class="form-group">
-				<label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î" value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´" value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 			</div>
 			
-			<button type="button" class="btn btn-default">°Ë»ö</button>
+			<button type="button" class="btn btn-default">ê²€ìƒ‰</button>
 			
-			<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+			<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 			<input type="hidden" name="currentPage" value=""/>
 			<input type="hidden" name="order" value="${ search.order }">
 			  
@@ -162,11 +162,11 @@
 		</div>		
 	  
  	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
  	
  	
  	
- 	<!-- ½æ³×ÀÏ·Î list display start -->
+ 	<!-- ì¸ë„¤ì¼ë¡œ list display start -->
 	<div class="contains" id="container">
 		<c:set var="i" value="${ clubPostList }"></c:set>
 		<c:if test="${ clubPostListCount > 0}">
@@ -176,16 +176,16 @@
 					<img src="/images/uploadFiles/${ uploadList[i] }" height="350" width="350">
 				</a>
 				<p align="center" style="font-size: 30px">${ clubPostList[i].clubPostNo }</p>
-				<p align="center" style="font-size: 20px">Á¦¸ñ : ${ clubPostList[i].clubPostTitle }</p>
-				<p align="center" style="font-size: 20px">ÁÁ¾Æ¿ä ¼ö : ${ clubPostList[i].clubPostHeartCount }</p>
-				<p align="center" style="font-size: 20px; color: red;">ÀÛ¼ºÀÚ ¾ÆÀÌµğ : ${ clubPostList[i].user.userId }</p>
-				<p align="center" style="font-size: 20px; color: red;">ÀÛ¼ºÀÚ ´Ğ³×ÀÓ : ${ clubPostList[i].user.nickName }</p>
-				<p align="center" style="font-size: 20px; color: red;">ÀÛ¼ºÀÚ ÇÁ·ÎÇÊÀÌ¹ÌÁö : ${ clubPostList[i].user.profileImage }</p>
+				<p align="center" style="font-size: 20px">ì œëª© : ${ clubPostList[i].clubPostTitle }</p>
+				<p align="center" style="font-size: 20px">ì¢‹ì•„ìš” ìˆ˜ : ${ clubPostList[i].clubPostHeartCount }</p>
+				<p align="center" style="font-size: 20px; color: red;">ì‘ì„±ì ì•„ì´ë”” : ${ clubPostList[i].user.userId }</p>
+				<p align="center" style="font-size: 20px; color: red;">ì‘ì„±ì ë‹‰ë„¤ì„ : ${ clubPostList[i].user.nickName }</p>
+				<p align="center" style="font-size: 20px; color: red;">ì‘ì„±ì í”„ë¡œí•„ì´ë¯¸ì§€ : ${ clubPostList[i].user.profileImage }</p>
 			</div>
 		</c:forEach>
 		</c:if>
 	</div> 	
-	<!-- ½æ³×ÀÏ·Î list display end -->
+	<!-- ì¸ë„¤ì¼ë¡œ list display end -->
 
 
 	

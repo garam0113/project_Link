@@ -1,10 +1,10 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- °¡´É? -->
+<!-- ê°€ëŠ¥? -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -14,8 +14,8 @@
 <html lang="ko">
 	
 <head>
-	<title>¸ğÀÓ¸®½ºÆ®</title>
-	<meta charset="EUC-KR">
+	<title>ëª¨ì„ë¦¬ìŠ¤íŠ¸</title>
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -27,11 +27,11 @@
 	
 	
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
+	  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 
- 	 <!-- µû·Î °¡´É?? -->
+ 	 <!-- ë”°ë¡œ ê°€ëŠ¥?? -->
  	 	<meta name="description" content="The Page Description">
 		<style type="text/css">@-ms-viewport{width: device-width;}</style>
 		<title>Beetle - Home page</title>
@@ -93,7 +93,7 @@
 	function fncUpdateMemberRole() {
 		
 		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
-		alert("¸ğÀÓ¿ø ¼öÁ¤ È­¸é")
+		alert("ëª¨ì„ì› ìˆ˜ì • í™”ë©´")
 		.submit();
 	}
 	
@@ -111,7 +111,7 @@
 		});
 	});
 	
-	//¹«ÇÑ ÆäÀÌÂ¡
+	//ë¬´í•œ í˜ì´ì§•
 	var currentPage = 1;
 	$(window).scroll(function() {
 		var maxHeight = $(document).height();
@@ -183,18 +183,18 @@
                   <li class="menu-item"><a
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="/user/login">·Î±×ÀÎ</a></li>
-                     <li class="menu-item"><a href="/user/addUser">È¸¿ø°¡ÀÔ</a></li>
+                     <li class="menu-item"><a href="/user/login">ë¡œê·¸ì¸</a></li>
+                     <li class="menu-item"><a href="/user/addUser">íšŒì›ê°€ì…</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a
-                        href="/user/logout?userId=${user.userId}">·Î±×¾Æ¿ô</a></li>
+                        href="/user/logout?userId=${user.userId}">ë¡œê·¸ì•„ì›ƒ</a></li>
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
-                           href="/user/getUser?userId=${user.userId}">³»Á¤º¸º¸±â</a></li>
+                           href="/user/getUser?userId=${user.userId}">ë‚´ì •ë³´ë³´ê¸°</a></li>
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
-                        <li class="menu-item"><a href="/user/getUserList">°ü¸®ÀÚÆäÀÌÁö</a></li>
+                        <li class="menu-item"><a href="/user/getUserList">ê´€ë¦¬ìí˜ì´ì§€</a></li>
                      </c:if>
                   </c:if>
                </ul>
@@ -229,10 +229,10 @@
 			</div>
 		
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	    <div id="main" class="row">
 	    
 		    
@@ -241,30 +241,30 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>¸ğÀÓÀÌ¸§</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>¸ğÀÓÄ«Å×°í¸®</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ëª¨ì„ì´ë¦„</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ëª¨ì„ì¹´í…Œê³ ë¦¬</option>
 					</select>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+				    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
 				  <div class="form-group">
-				  <button type="button" class="btn btn-default">°Ë»ö</button>
-				  <button type="button" class="btn btn-primary">°¡ÀÔÇöÈ²¸®½ºÆ®</button>
+				  <button type="button" class="btn btn-default">ê²€ìƒ‰</button>
+				  <button type="button" class="btn btn-primary">ê°€ì…í˜„í™©ë¦¬ìŠ¤íŠ¸</button>
 				  </div>
 				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
 				</form>
 	    	</div>
 	    	
 
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 		
 		
       <!--  table Start /////////////////////////////////////-->
@@ -273,14 +273,14 @@
     <!--     <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >¸ğÀÓ Á¦¸ñ</th>
-            <th align="left">¸ğÀÓ »ó¼¼¼³¸í</th>
-            <th align="left">¸ğÀÓ Ä«Å×°í¸®</th>
-            <th align="left">ÇöÀç °¡ÀÔÀÎ¿ø ¼ö </th>
-            <th align="left">ÃÖ´ë ¸ğÀÓ¿ø ¼ö</th>
-            <th align="left">¸ğÀÓ È°µ¿¿µ¿ª</th>
-            <th align="left">¸ğÀÓ ÀÌ¹ÌÁö</th>
-            <th align="left">°¡ÀÔÇöÈ²¸®½ºÆ®</th>
+            <th align="left" >ëª¨ì„ ì œëª©</th>
+            <th align="left">ëª¨ì„ ìƒì„¸ì„¤ëª…</th>
+            <th align="left">ëª¨ì„ ì¹´í…Œê³ ë¦¬</th>
+            <th align="left">í˜„ì¬ ê°€ì…ì¸ì› ìˆ˜ </th>
+            <th align="left">ìµœëŒ€ ëª¨ì„ì› ìˆ˜</th>
+            <th align="left">ëª¨ì„ í™œë™ì˜ì—­</th>
+            <th align="left">ëª¨ì„ ì´ë¯¸ì§€</th>
+            <th align="left">ê°€ì…í˜„í™©ë¦¬ìŠ¤íŠ¸</th>
           </tr>
         </thead> -->
        
@@ -294,9 +294,9 @@
 			  <div class="caption">
 			  	<p>${i.clubTitle}</p>
 			  	<p>${i.clubArea}</p>
-			  	<p>ÇöÀçÀÎ¿ø : ${i.currentMember}</p>
-			  	<p>ÃÖ´ëÀÎ¿ø : ${i.clubMaxMember}</p>
-			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">¸ğÀÓº¸±â</a></p>
+			  	<p>í˜„ì¬ì¸ì› : ${i.currentMember}</p>
+			  	<p>ìµœëŒ€ì¸ì› : ${i.clubMaxMember}</p>
+			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-success" role="button">ëª¨ì„ë³´ê¸°</a></p>
 			  	
 			  </div>
 			  </div>
@@ -312,7 +312,7 @@
 	  
  		</div>
 		</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
  	</main>
 
 	

@@ -25,7 +25,7 @@ $(function(){
 	/*채팅 X표 클릭시 채팅 닫기*/
 	$("#allChat-toolbar-close").bind("click", function (){
 		$("#allChat").attr("style", "display: none;");
-		$("#chat-icon").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+		$("#chat-icon").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 60px; height: 60px; border-radius: 50px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
 	});
 	
 	/*일대다 이미지 클릭시 모임 채팅 리스트 보이기*/
@@ -174,14 +174,14 @@ function setChat(){
 	
 	//사용자 참가
 	socket.off('join').on('join', data => {
-	    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');
+	    /*$('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 입장하셨습니다</div>');*/
 	});
 	
 	
 	
 	//사용자 종료
 	socket.off('leave').on('leave', data => {
-	    $('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 나가셨습니다</div>');
+	    /*$('#chatLog').append('<div style="font-size: 20px;">' + data.username + '님이 나가셨습니다</div>');*/
 	});
 	
 	

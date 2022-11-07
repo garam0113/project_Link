@@ -15,7 +15,7 @@
 		<result property="profileImage" column="profile_image"
 			jdbcType="NUMERIC" /> 
 		<result property="type" column="type" jdbcType="CHAR" />
-		<result property="club_no" column="clubNo" jdbcType="NUMERIC" />
+		<result property="clubNo" column="club_no" jdbcType="NUMERIC" />
 	</resultMap>  
 	<!-- <sql id="select-list"> SELECT roomid , limit , member FROM live <where> 
 		<if test="(searchCondition == 0 and searchKeyword != '')"> user_id LIKE(#{searchKeyword}||'%') 
@@ -41,15 +41,25 @@
 		SELECT
 		roomid , limit , member, profile_image, type, club_no
 		FROM live
+		<if test="clubNo != null">
 		WHERE roomid = #{roomName} AND type = #{type} AND club_no = #{clubNo}
+		</if>
+		<if test="clubNo == null">
+		WHERE roomid = #{roomName} AND type = #{type}
+		</if>
 	</select>
 
-	<select id="getLiveList" parameterType="live"
+	<select id="getLiveList" parameterType="live" 
 		resultMap="liveSelectMap">
 		SELECT
 		roomid , limit , member, profile_image, type, club_no 
 		FROM live
+		<if test="clubNo != null">
 		WHERE type = #{type} AND club_no = #{clubNo}
+		</if>
+		<if test="clubNo == null">
+		WHERE type = #{type}
+		</if>
 	</select>  
 
 	<delete id="deleteLive" parameterType="live">

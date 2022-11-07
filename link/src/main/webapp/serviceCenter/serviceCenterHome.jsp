@@ -164,6 +164,33 @@ $(function() {
 
 
 <body style="overflow-x: hidden">
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+	
 	<%--검은색 화면 --%>
 	<%-- --%>
 	<div style="text-align: center; margin-top: 100px; transform: translateX(-23px);">
@@ -175,8 +202,6 @@ $(function() {
 
 			
    <div class="container" style="transform: translate(300px, -200px);">
-   
-   
       <div class="row2" style="display:flex; margin-top: -40px;">
         <div class="col-4" style ="">
           

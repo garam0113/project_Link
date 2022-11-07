@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- бЭа╤ : http://getbootstrap.com/css/   бЭа╤ -->
+	<!-- Л╟╦Л║╟ : http://getbootstrap.com/css/   Л╟╦Л║╟ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,13 +17,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
    
-   <!-- jQuery UI toolTip ╩Г©К CSS-->
+   <!-- jQuery UI toolTip Л┌╛Л ╘ CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
   
   <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css">
   
-  	<!--  	jQuery UI toolTip ╩Г©К JS -->
+  	<!--  	jQuery UI toolTip Л┌╛Л ╘ JS -->
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <!-- <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
@@ -58,7 +58,7 @@
 	$(function() {
 
 		$("button.btn.btn-primary").on("click", function() {
-			//alert($("td.ct_btn01:contains('╣Н╥о')").html());
+			//alert($("td.ct_btn01:contains('К⌠╠К║²')").html());
 			fncUpdateClub();
 		});
 	});
@@ -82,12 +82,12 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">╦П юс ╪Ж а╓</h1>
+		<h1 class="bg-primary text-center">К╙╗ Л·└ Л┬≤ Л═∙</h1>
 		
 		<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
 		
 			<div class="form-group">
-				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">╦П юс а╕ ╦Я</label>
+				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label">К╙╗ Л·└ Л═° К╙╘</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="clubTitle" name="clubTitle" value="${club.clubTitle}">
 				</div>					
@@ -96,38 +96,38 @@
 			
 		
 			<div class="form-group">
-				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">╦П юс ╪Ё ╦М</label>
+				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label">К╙╗ Л·└ Л└╓ К╙┘</label>
 				<div class="col-sm-4">
 					<input type="text" height="150px" class="form-control" id="clubDetail" name="clubDetail" value="${club.clubDetail}">
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">╦Пюсд╚ев╟М╦╝</label>
+				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label">К╙╗Л·└Л╧╢М┘▄ЙЁ═К╕╛</label>
 				<div class="col-sm-4">
 					<select class="form-control" id="clubCategory" name="clubCategory">
-						<option value="©Н╣©">©Н╣©</option>
-  						<option value="╨ю╩Гх╟╣©">╨ю╩Гх╟╣©</option>
-  						<option value="ю╫╫д">ю╫╫д</option>
-						<option value="©╘гЮ">©╘гЮ</option>
-						<option value="╧щ╥а╣©╧╟">╧щ╥а╣©╧╟</option>
-						<option value="╟тюс">╟тюс</option>
-						<option value="ю╫╬г/╢М╫╨">ю╫╬г/╢М╫╨</option>
-						<option value="╣╤╪╜">╣╤╪╜</option>
-						<option value="╠Бе╦">╠Бе╦</option>
+						<option value="Л ╢К▐≥">Л ╢К▐≥</option>
+  						<option value="К╢┴Л┌╛М≥°К▐≥">К╢┴Л┌╛М≥°К▐≥</option>
+  						<option value="Л²▄Л▀²">Л²▄Л▀²</option>
+						<option value="Л≈╛М√┴">Л≈╛М√┴</option>
+						<option value="К╟≤К═╓К▐≥К╛╪">К╟≤К═╓К▐≥К╛╪</option>
+						<option value="Й╡▄Л·└">Й╡▄Л·└</option>
+						<option value="Л²▄Л∙┘/К▄└Л┼╓">Л²▄Л∙┘/К▄└Л┼╓</option>
+						<option value="К▐┘Л└°">К▐┘Л└°</option>
+						<option value="Й╦╟М┐─">Й╦╟М┐─</option>
 					</select>
 				</div>			    
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">х╟ ╣© ©╣ ©╙</label>
+				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label">М≥° К▐≥ Л≤│ Л≈╜</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" id="clubArea" name="clubArea" value="${club.clubArea}">
 				</div>		
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">╦Пюсюл╧лаЖ</label>
+				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label">К╙╗Л·└Л²╢К╞╦Л╖─</label>
 				<div class="col-sm-4">
 					<input type="file" class="file" id="clubImage" name="file" multiple="multiple">
 				</div>		
@@ -137,8 +137,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="btn btn-primary"  >╪Ж &nbsp;а╓</button>
-					<a class="btn btn-primary btn" href="#" role="button">цК&nbsp;╪р</a>
+		      		<button type="button" class="btn btn-primary"  >Л┬≤ &nbsp;Л═∙</button>
+					<a class="btn btn-primary btn" href="#" role="button">Л╥╗&nbsp;Л├▄</a>
 		    </div>
 			</div>
 		</form>	

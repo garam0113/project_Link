@@ -102,6 +102,36 @@ background-color: #EBEDF0 !important;
 </style>
 
 </head>
+<body>
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+	
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px; margin-top: 80px;">
@@ -109,6 +139,9 @@ background-color: #EBEDF0 !important;
 </div>
 	
 		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
+	
+	
+	
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">

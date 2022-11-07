@@ -13,7 +13,7 @@ import com.link.service.domain.Pay;
 
 public interface ClubDAO {
 
-	public void addClub(Club club) throws Exception;
+	public int addClub(Club club) throws Exception;
 	
 //	public Club getClub(int clubNo) throws Exception;
 	

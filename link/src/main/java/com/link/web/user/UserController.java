@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
+import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.User;
 import com.link.service.myHome.MyHomeService;
 import com.link.service.user.UserService;
@@ -35,6 +37,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("myHomeServiceImpl")
 	private MyHomeService myHomeService;
+	
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
+	private ClubPostService clubPostService;
 
 	public UserController() {
 		// TODO Auto-generated constructor stub
@@ -134,7 +140,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
-	public String getUser(@ModelAttribute("userId") String userId, Model model, HttpSession session) throws Exception {
+	public String getUser(@ModelAttribute("userId") String userId, Model model, HttpSession session, Chat chat) throws Exception {
 
 		System.out.println("/user/getUser : GET");
 
@@ -153,6 +159,18 @@ public class UserController {
 		User getUser = userService.getUser(user); // 회원의 정보를 얻기위해 회원ID DB전송
 
 		model.addAttribute("getUser", getUser); // DB에서 전송받은 회원의 정보를 Key(user)에 저장
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		if (userId.equals(sessionId) || ((User) session.getAttribute("user")).getRole().equals("1")) {
 
@@ -173,7 +191,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
-	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session)
+	public String updateUser(@ModelAttribute("userId") String userId, Model model, HttpSession session, Chat chat)
 			throws Exception {
 
 		System.out.println("/user/updateUser : GET");
@@ -183,6 +201,18 @@ public class UserController {
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
 
 		System.out.println("세션에 저장된 UserId : " + sessionId);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		if (userId == null || userId.equals("")) {
 
@@ -253,7 +283,7 @@ public class UserController {
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 
-	@RequestMapping(value = "updateProfile2", method = RequestMethod.GET)
+	@RequestMapping(value = "updateProfile", method = RequestMethod.GET)
 	public String updateProfile(@ModelAttribute("userId") String userId, Model model, HttpSession session)
 			throws Exception {
 
