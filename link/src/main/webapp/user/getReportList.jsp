@@ -113,12 +113,12 @@ $(function() {
 			
 	
 		<%-- chat.js에서 사용위해서 --%>
-			<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-			<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-			<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 		<%-- chat.js에서 사용위해서 --%>
 		<%-- 채팅 --%>
-			<jsp:include page="/chat/chat.jsp" />
+		<jsp:include page="/chat/chat.jsp" />
 		<%-- 채팅 --%>
 			
 			
@@ -130,7 +130,7 @@ $(function() {
 		</c:if>
 		<c:if test="${user.role == '1'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold;">신고내역</h3>
+				<h6 class=" text-info" style="font-weight: bold;">신고내역</h6>
 			</div>
 		</c:if>
 		<div class="row1">

@@ -31,9 +31,9 @@
 				
 				}else if(${!empty sessionScope.user.userId}){
 					if(${ sessionScope.user.role == '1'}){ //관리자
-						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+						//location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+						history.go(-1);
 					}else if(${sessionScope.user.role == '0' }){ //유저
-						
 						history.go(-1); 	//겟 ==전체보기
 					}
 				}  

@@ -71,7 +71,7 @@ public class ServiceCenterController {
 	
 	@RequestMapping(value = "serviceCenterHome", method = RequestMethod.GET)
 	public String serviceCenterHome(HttpSession session, Chat chat, Model model) throws Exception {
-		System.out.println("aaa");
+		
 		
 		
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
@@ -548,7 +548,7 @@ public class ServiceCenterController {
 	
 	//정민이형 요구사항 
 	@RequestMapping(value = "getUserQandAList", method = RequestMethod.GET)
-	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model,
+	public String getUserQandAList(@ModelAttribute("search") Search search, QandA qandA, Model model, HttpSession session, Chat chat,
 			@RequestParam(value = "menu", defaultValue = "search") String menu) throws Exception {
 
 		System.out.println("/serviceCenter/getQandAList : GET ");
@@ -567,6 +567,20 @@ public class ServiceCenterController {
 		model.addAttribute("getQandAList", map.get("getQandAList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/user/getQandAList.jsp";
 	}
@@ -697,7 +711,7 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getReportList", method = RequestMethod.GET)
-	public String getReportList(@ModelAttribute("search") Search search, Report report, Model model) throws Exception {
+	public String getReportList(@ModelAttribute("search") Search search, Report report, Model model, Chat chat, HttpSession session) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 
@@ -717,6 +731,20 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/serviceCenter/getReportList.jsp";
 	}
@@ -758,7 +786,7 @@ public class ServiceCenterController {
 	}
 	//정민이형 요구사항
 	@RequestMapping(value = "getUserReportList", method = RequestMethod.GET)
-	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model, Chat chat) throws Exception {
+	public String getUserReportList(@ModelAttribute("search") Search search, Report report, Model model, Chat chat, HttpSession session) throws Exception {
 
 		System.out.println("/serviceCenter/getReportList : GET & POST");
 
@@ -778,6 +806,18 @@ public class ServiceCenterController {
 		model.addAttribute("getReportList", map.get("getReportList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
 		
 		
 
