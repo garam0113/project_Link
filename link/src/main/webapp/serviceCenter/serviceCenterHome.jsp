@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
 
-<title>°í°´¼¾ÅÍ</title>
+<title>ê³ ê°ì„¼í„°</title>
 
 
 <style>
@@ -116,7 +116,7 @@ function fncGetReport(){
 	if(${user.role==null}){
 		 	Swal.fire({
                 icon: 'error',
-                title: '·Î±×ÀÎ ÈÄ °¡´ÉÇÕ´Ï´Ù.',
+                title: 'ë¡œê·¸ì¸ í›„ ê°€ëŠ¥í•©ë‹ˆë‹¤.',
             });
 				return;
 			
@@ -127,7 +127,7 @@ function fncGetQandA(){
 	if(${user.role==null}){
 	 	Swal.fire({
             icon: 'error',
-            title: '·Î±×ÀÎ ÈÄ °¡´ÉÇÕ´Ï´Ù.',
+            title: 'ë¡œê·¸ì¸ í›„ ê°€ëŠ¥í•©ë‹ˆë‹¤.',
         });
 			return;
 		
@@ -135,20 +135,20 @@ function fncGetQandA(){
 	$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
 }
 $(function() {
-	$("button:contains('°øÁö»çÇ× º¸±â')").bind("click", function() {
+	$("button:contains('ê³µì§€ì‚¬í•­ ë³´ê¸°')").bind("click", function() {
 		location.href = "/serviceCenter/getNoticeList";
 	});
 
-	$("button:contains('Q&Aº¸±â')").bind("click", function() {
+	$("button:contains('Q&Aë³´ê¸°')").bind("click", function() {
 		location.href = "/serviceCenter/getQandAList";
 		
 	});
 
-	$("button:contains('½Å°í ¸ñ·Ï')").bind("click", function() {
+	$("button:contains('ì‹ ê³  ëª©ë¡')").bind("click", function() {
 		location.href = "/serviceCenter/getReportList";
 	});
 	
-	$("button:contains('°ü¸®ÀÚ Áú¹®')").bind("click", function() {
+	$("button:contains('ê´€ë¦¬ì ì§ˆë¬¸')").bind("click", function() {
 		
 		location.href = "/serviceCenter/getQandAList";
 	});
@@ -167,36 +167,36 @@ $(function() {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
 	
 	
-	<%--°ËÀº»ö È­¸é --%>
+	<%--ê²€ì€ìƒ‰ í™”ë©´ --%>
 	<%-- --%>
 	<div style="text-align: center; margin-top: 100px; transform: translateX(-23px);">
-	<h1 >°í  °´  ¼¾  ÅÍ</h1>
+	<h1 >ê³   ê°  ì„¼  í„°</h1>
 	<h4>
-		°í°´¼¾ÅÍ¸¦ ÅëÇØ ±Ã±İÁõÀ» ÇØ°áÇÏ¼¼¿ä
+		ê³ ê°ì„¼í„°ë¥¼ í†µí•´ ê¶ê¸ˆì¦ì„ í•´ê²°í•˜ì„¸ìš”
 	<h4>
 	</div>	
 
@@ -209,11 +209,11 @@ $(function() {
             <div class="card-header">
              
             </div>
-           <img src="/resources/image/uploadFiles/°øÁö»çÇ×.png" class="image1" height="220px"/>
+           <img src="/resources/image/uploadFiles/ê³µì§€ì‚¬í•­.png" class="image1" height="220px"/>
             <div class="card-body">
-              <h3 class="card-title" align="center">°øÁö»çÇ×</h3>
-             <p class="card-text" align="center"> »çÀÌÆ® ³» °øÁö»çÇ×À»</br> Á¶È¸ ÇÒ ¼ö ÀÖ½À´Ï´Ù.</p>
-              	<button type="submit" class="button1 button1" style="transform: translate(60px, 0px); width: 150px;left: 30px;">°øÁö»çÇ× º¸±â</button>
+              <h3 class="card-title" align="center">ê³µì§€ì‚¬í•­</h3>
+             <p class="card-text" align="center"> ì‚¬ì´íŠ¸ ë‚´ ê³µì§€ì‚¬í•­ì„</br> ì¡°íšŒ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.</p>
+              	<button type="submit" class="button1 button1" style="transform: translate(60px, 0px); width: 150px;left: 30px;">ê³µì§€ì‚¬í•­ ë³´ê¸°</button>
             </div>
           </div>
         </div>
@@ -225,8 +225,8 @@ $(function() {
            <img src="/resources/image/uploadFiles/q&a.jpg" class="image2" height="220px" />
             <div class="card-body">
              <h3 class="card-title" align="center">Q&A</h3>
-              <p class="card-text" align="center">»çÀÌÆ® ³»¿¡ ±Ã±İÇÏ½Å Á¡ÀÌ³ª</br> ÀÇ°ßÀ» ³²±æ ¼ö ÀÖ½À´Ï´Ù.</p>
-              <button type="submit" class="button1 button2" style="transform: translate(60px, 0px);	width: 150px;left: 30px;">Q&Aº¸±â</button>
+              <p class="card-text" align="center">ì‚¬ì´íŠ¸ ë‚´ì— ê¶ê¸ˆí•˜ì‹  ì ì´ë‚˜</br> ì˜ê²¬ì„ ë‚¨ê¸¸ ìˆ˜ ìˆìŠµë‹ˆë‹¤.</p>
+              <button type="submit" class="button1 button2" style="transform: translate(60px, 0px);	width: 150px;left: 30px;">Q&Aë³´ê¸°</button>
               
             </div>
           </div>
@@ -235,19 +235,19 @@ $(function() {
               <div class="card" style="transform: translate(-320px, 280px);">
             <div class="card-header">
             </div>
-            <img src="/resources/image/uploadFiles/¹°À½Ç¥.jpg" class="image3" height="220px" />
+            <img src="/resources/image/uploadFiles/ë¬¼ìŒí‘œ.jpg" class="image3" height="220px" />
             <div class="card-body">
-              <h3 class="card-title" align="center">³» ½Å°í ¹× Q&A º¸±â</h3>
-              <p class="card-text" align="center">³» ½Å°í ¹× Q&A ³»¿ªÀ» </br>È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù. </p>
+              <h3 class="card-title" align="center">ë‚´ ì‹ ê³  ë° Q&A ë³´ê¸°</h3>
+              <p class="card-text" align="center">ë‚´ ì‹ ê³  ë° Q&A ë‚´ì—­ì„ </br>í™•ì¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. </p>
               <c:if test="${ user.role == '0' || user.role== null }">
               	<form>
-              	<input type="button" class="button3" value="³» ½Å°íº¸±â" onClick="fncGetReport()" style="transform:translate(15px,0px);">
-				<input type="button" class="button4" value="³» Áú¹®º¸±â" onClick="fncGetQandA()" style=" transform: translate(27px, 0px);" >
+              	<input type="button" class="button3" value="ë‚´ ì‹ ê³ ë³´ê¸°" onClick="fncGetReport()" style="transform:translate(15px,0px);">
+				<input type="button" class="button4" value="ë‚´ ì§ˆë¬¸ë³´ê¸°" onClick="fncGetQandA()" style=" transform: translate(27px, 0px);" >
 				</form>
 				</c:if>
 				<c:if test="${ user.role == '1'  }">
-				<button class="button3" style="transform: translate(15px, 0px);">½Å°í ¸ñ·Ï</button>
-				<button class="button4" style="transform: translate(40px, 0px);">°ü¸®ÀÚ Áú¹®</button>
+				<button class="button3" style="transform: translate(15px, 0px);">ì‹ ê³  ëª©ë¡</button>
+				<button class="button4" style="transform: translate(40px, 0px);">ê´€ë¦¬ì ì§ˆë¬¸</button>
 				</c:if>
             </div>
           </div>

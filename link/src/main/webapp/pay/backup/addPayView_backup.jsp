@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -9,9 +9,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -32,14 +32,14 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
-<!-- import¸¦ »ç¿ëÇÏ±â À§ÇÔ -->
+<!-- importë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•¨ -->
 
 <script type="text/javascript">
 	$(function(){
-		$("input[value='°áÁ¦ÇÏ±â']").bind("click", function(){
+		$("input[value='ê²°ì œí•˜ê¸°']").bind("click", function(){
 			requestPayment();
 		});
-		$("input[value='Ãë¼ÒÇÏ±â']").bind("click", function(){
+		$("input[value='ì·¨ì†Œí•˜ê¸°']").bind("click", function(){
 			history.go(-1);
 		});
 		
@@ -60,11 +60,11 @@
 			
 			if( maxPay == totalPrice ){
 				alert('if');
-				${ pay.clubNo } == 0 ? $(".result").text( "ÇÑ¸í´ç ÃÖ´ë·Î °¡ÀÔ ÇÒ ¼ö ÀÖ´Â ¸ğÀÓÀº 10°³ÀÔ´Ï´Ù" ): $(".result").text( "ÇÏ³ªÀÇ ¸ğÀÓ´ç ÃÖ´ë ¸ğÀÓ¿øÀº 50¸íÀÔ´Ï´Ù" );
+				${ pay.clubNo } == 0 ? $(".result").text( "í•œëª…ë‹¹ ìµœëŒ€ë¡œ ê°€ì… í•  ìˆ˜ ìˆëŠ” ëª¨ì„ì€ 10ê°œì…ë‹ˆë‹¤" ): $(".result").text( "í•˜ë‚˜ì˜ ëª¨ì„ë‹¹ ìµœëŒ€ ëª¨ì„ì›ì€ 50ëª…ì…ë‹ˆë‹¤" );
 			}else{
 				alert('else');
 				if( clubNo != 0 ){
-					// È¸¿øÀÌ ¸ğÀÔ°¡ÀÔ½ÅÃ» ÇßÀ»¶§
+					// íšŒì›ì´ ëª¨ì…ê°€ì…ì‹ ì²­ í–ˆì„ë•Œ
 					alert('if');
 					$(".payProduct-club").text( parseInt( updateClubCount ) + 2 );
 					$(".return-club-limit").text( parseInt( $(".return-club-limit").text() ) + 2 );
@@ -89,7 +89,7 @@
 			
 			if( totalPrice == 5000 ){
 				alert('if');
-				$(".result").text( "ÃÖ¼Ò °áÁ¦ ±İ¾×Àº 5000¿øÀÔ´Ï´Ù" );
+				$(".result").text( "ìµœì†Œ ê²°ì œ ê¸ˆì•¡ì€ 5000ì›ì…ë‹ˆë‹¤" );
 			}else{
 				alert('else');
 				if( clubNo == 0 ){
@@ -113,15 +113,15 @@
 
 <script type="text/javascript">
 	function requestPayment() {
-		//alert('¿©±â·Î ¿À³ª?');
+		//alert('ì—¬ê¸°ë¡œ ì˜¤ë‚˜?');
 		
 		var email = "${ user.email }";
 		var phoneNo = "${ user.phoneNo }";
 		var totalPrice = $(".totalPrice").text();
-		var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "¸ğÀÓ¿ø Ãß°¡": "¸ğÀÓ Ãß°¡";
+		var payProduct = ${ pay.clubNo != 0 && pay.payNavigation != 1 } ? "ëª¨ì„ì› ì¶”ê°€": "ëª¨ì„ ì¶”ê°€";
 		var pg = $("input[name='payOption']:checked").attr("pg");
 		var pay_method = $("input[name='payOption']:checked").attr("pay_method");
-		var name = payProduct===0 ? "ÃÖ´ë ¸ğÀÓ ¼ö Áõ°¡" : "ÃÖ´ë ¸ğÀÓ¿ø ¼ö Áõ°¡";
+		var name = payProduct===0 ? "ìµœëŒ€ ëª¨ì„ ìˆ˜ ì¦ê°€" : "ìµœëŒ€ ëª¨ì„ì› ìˆ˜ ì¦ê°€";
 		var updateClubMemberCount = $(".payProduct-member").text();
 		var updateClubCount = $(".payProduct-club").text();
 		
@@ -138,34 +138,34 @@
 		$("input[name='updateClubCount']").val( updateClubCount );
 		$("input[name='clubNo']").val( ${ pay.clubNo } );		
 		
-		IMP.init("imp83557107"); // °¡¸ÍÁ¡ ½Äº°ÄÚµå·Î IMP °´Ã¼¸¦ ÃÊ±âÈ­ÇÑ´Ù
-		//IMP.init("imp36216644"); // °¡¸ÍÁ¡ ½Äº°ÄÚµå·Î IMP °´Ã¼¸¦ ÃÊ±âÈ­ÇÑ´Ù
+		IMP.init("imp83557107"); // ê°€ë§¹ì  ì‹ë³„ì½”ë“œë¡œ IMP ê°ì²´ë¥¼ ì´ˆê¸°í™”í•œë‹¤
+		//IMP.init("imp36216644"); // ê°€ë§¹ì  ì‹ë³„ì½”ë“œë¡œ IMP ê°ì²´ë¥¼ ì´ˆê¸°í™”í•œë‹¤
 		
 		IMP.request_pay({
 				pg : pg,
 				pay_method : pay_method,
-				merchant_uid: 'merchant_' + new Date().getTime(), // »óÁ¡¿¡¼­ °ü¸®ÇÏ´Â ÁÖ¹® ¹øÈ£
+				merchant_uid: 'merchant_' + new Date().getTime(), // ìƒì ì—ì„œ ê´€ë¦¬í•˜ëŠ” ì£¼ë¬¸ ë²ˆí˜¸
 				name : name,
 				amount : totalPrice,
-				customer_uid : 'your-customer-unique-id', // ÇÊ¼ö ÀÔ·Â.
+				customer_uid : 'your-customer-unique-id', // í•„ìˆ˜ ì…ë ¥.
 				buyer_email : email,
-				buyer_name : '»óµğ',
+				buyer_name : 'ìƒë””',
 				buyer_tel : ${ user.phoneNo }
-			    //buyer_addr : '¼­¿ïÆ¯º°½Ã °­³²±¸ »ï¼ºµ¿',
+			    //buyer_addr : 'ì„œìš¸íŠ¹ë³„ì‹œ ê°•ë‚¨êµ¬ ì‚¼ì„±ë™',
 			    //buyer_postcode : '123-456'
 
 		}, function(rsp) { // callback
 			if (rsp.success) {
-				msg += '\n°íÀ¯ID : ' + rsp.imp_uid;
-    			msg += '\n»óÁ¡ °Å·¡ID : ' + rsp.merchant_uid;
-    			msg += '\n°áÁ¦ ±İ¾× : ' + rsp.paid_amount;
-    			msg += '\nÄ«µå ½ÂÀÎ¹øÈ£ : ' + rsp.apply_num;
+				msg += '\nê³ ìœ ID : ' + rsp.imp_uid;
+    			msg += '\nìƒì  ê±°ë˜ID : ' + rsp.merchant_uid;
+    			msg += '\nê²°ì œ ê¸ˆì•¡ : ' + rsp.paid_amount;
+    			msg += '\nì¹´ë“œ ìŠ¹ì¸ë²ˆí˜¸ : ' + rsp.apply_num;
     			alert(msg);
     			$("input[name='merchant_uid']").val( rsp.merchant_uid );
     			$("form").attr("method", "post").attr("action", "/clubPost/addPay").submit();
 			} else {
-				var msg = '°áÁ¦¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.';
-				msg += '¿¡·¯³»¿ë : ' + rsp.error_msg;
+				var msg = 'ê²°ì œì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.';
+				msg += 'ì—ëŸ¬ë‚´ìš© : ' + rsp.error_msg;
 				alert(msg);
 			}
 		});
@@ -187,22 +187,22 @@
 		<input type="text" name="payNavigation" value="${ pay.payNavigation }">
 		</br></br></br>
 		
-		<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+		<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 		<div class="pay-view">
 		
 			<div class="pay-payOption">				
-				°áÁ¦¹æ¹ı&nbsp;&nbsp;:&nbsp;&nbsp;
-				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="½Å¿ëÄ«µå">½Å¿ëÄ«µå
-				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="Ä«Ä«¿ÀÆäÀÌ">Ä«Ä«¿ÀÆäÀÌ
-				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="ÈŞ´ëÆù°áÁ¦">ÈŞ´ëÆù°áÁ¦
-				<input type="radio" name="payOption" pg="tosspay" pay_method="card" value="Åä½ºÆäÀÌ">Åä½ºÆäÀÌ
-				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="½Ç½Ã°£ °èÁÂÀÌÃ¼">½Ç½Ã°£ °èÁÂÀÌÃ¼
+				ê²°ì œë°©ë²•&nbsp;&nbsp;:&nbsp;&nbsp;
+				<input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="ì‹ ìš©ì¹´ë“œ">ì‹ ìš©ì¹´ë“œ
+				<input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="ì¹´ì¹´ì˜¤í˜ì´">ì¹´ì¹´ì˜¤í˜ì´
+				<input type="radio" name="payOption" pg="kcp" pay_method="phone" value="íœ´ëŒ€í°ê²°ì œ">íœ´ëŒ€í°ê²°ì œ
+				<input type="radio" name="payOption" pg="tosspay" pay_method="card" value="í† ìŠ¤í˜ì´">í† ìŠ¤í˜ì´
+				<input type="radio" name="payOption" pg="kcp" pay_method="trans" value="ì‹¤ì‹œê°„ ê³„ì¢Œì´ì²´">ì‹¤ì‹œê°„ ê³„ì¢Œì´ì²´
 				</br></br>
 
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1  }">°áÁ¦ ÈÄ ÇØ´ç ¸ğÀÓÀÇ ÃÑ ¸ğÀÓ¿ø¼ö´Â <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>¸í</c:when><%-- ¸ğÀÓ¿ø¸®½ºÆ®·Î --%>
-					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">°áÁ¦ ÈÄ ÇØ´ç È¸¿øÀÇ ÃÑ ¸ğÀÓ¼ö´Â <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>°³¹æ</c:when><%-- ¸ğÀÓ¸®½ºÆ®·Î ÀÌµ¿ --%>
-					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">°áÁ¦ ÈÄ ÇØ´ç È¸¿øÀÇ ÃÑ ¸ğÀÓ¼ö´Â <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>°³¹æ</c:when><%-- ¸ğÀÓ»ó¼¼º¸±â·Î ÀÌµ¿ --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1  }">ê²°ì œ í›„ í•´ë‹¹ ëª¨ì„ì˜ ì´ ëª¨ì„ì›ìˆ˜ëŠ” <b class="return-max-member">${ returnClub.clubMaxMember + 10 }</b>ëª…</c:when><%-- ëª¨ì„ì›ë¦¬ìŠ¤íŠ¸ë¡œ --%>
+					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">ê²°ì œ í›„ í•´ë‹¹ íšŒì›ì˜ ì´ ëª¨ì„ìˆ˜ëŠ” <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>ê°œë°©</c:when><%-- ëª¨ì„ë¦¬ìŠ¤íŠ¸ë¡œ ì´ë™ --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">ê²°ì œ í›„ í•´ë‹¹ íšŒì›ì˜ ì´ ëª¨ì„ìˆ˜ëŠ” <b class="return-club-limit">${ returnUser.joinClubLimit + 2 }</b>ê°œë°©</c:when><%-- ëª¨ì„ìƒì„¸ë³´ê¸°ë¡œ ì´ë™ --%>
 				</c:choose>
 			</div>
 			</br>
@@ -211,9 +211,9 @@
 			<div class="pay-payProduct">
 			&nbsp;&nbsp;<b class="plus">+</b>
 				<c:choose>
-					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1 }">Ãß°¡ÇÒ ¸ğÀÓ¿ø ¼ö<b class="payProduct-member">10</b>¸í</c:when><%-- ¸ğÀÓ¿ø¸®½ºÆ®·Î --%>
-					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">Ãß°¡ÇÒ ¸ğÀÓ ¼ö<b class="payProduct-club">2</b>°³¹æ</c:when><%-- ¸ğÀÓ¸®½ºÆ®·Î ÀÌµ¿ --%>
-					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">Ãß°¡ÇÒ ¸ğÀÓ ¼ö<b class="payProduct-club">2</b>°³¹æ</c:when><%-- ¸ğÀÓ»ó¼¼º¸±â·Î ÀÌµ¿ --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation != 1 }">ì¶”ê°€í•  ëª¨ì„ì› ìˆ˜<b class="payProduct-member">10</b>ëª…</c:when><%-- ëª¨ì„ì›ë¦¬ìŠ¤íŠ¸ë¡œ --%>
+					<c:when test="${ pay.clubNo == 0 && pay.payNavigation != 1 }">ì¶”ê°€í•  ëª¨ì„ ìˆ˜<b class="payProduct-club">2</b>ê°œë°©</c:when><%-- ëª¨ì„ë¦¬ìŠ¤íŠ¸ë¡œ ì´ë™ --%>
+					<c:when test="${ pay.clubNo != 0 && pay.payNavigation == 1 }">ì¶”ê°€í•  ëª¨ì„ ìˆ˜<b class="payProduct-club">2</b>ê°œë°©</c:when><%-- ëª¨ì„ìƒì„¸ë³´ê¸°ë¡œ ì´ë™ --%>
 				</c:choose>
 			<b class="minus">-</b>
 			<b class="result"></b>
@@ -221,17 +221,17 @@
 			</br>
 			
 			<div class="pay-totalPrice">
-				ÃÑ °áÁ¦±İ¾× : <b class="totalPrice">5000</b>¿ø
+				ì´ ê²°ì œê¸ˆì•¡ : <b class="totalPrice">5000</b>ì›
 			</div>
 			</br>
 			
 			<div>
-				<input type="button" value="°áÁ¦ÇÏ±â">
-				<input type="button" value="Ãë¼ÒÇÏ±â">
+				<input type="button" value="ê²°ì œí•˜ê¸°">
+				<input type="button" value="ì·¨ì†Œí•˜ê¸°">
 			</div>
 		
 		</div>
-		<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+		<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	</form>
 
 </body>

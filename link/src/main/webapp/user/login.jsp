@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -86,11 +86,11 @@ z-index: 10000;
 
 	$(function() {
 		$(".login__button").on("click", function() {
-			login(); //·Î±×ÀÎ
+			login(); //ë¡œê·¸ì¸
 		});
 
 		$("#sign-up").on("click", function() {
-			self.location = "/user/addUser" //È¸¿ø°¡ÀÔ
+			self.location = "/user/addUser" //íšŒì›ê°€ì…
 		});
 
 		$("a[href='#getId']").on(
@@ -123,13 +123,13 @@ z-index: 10000;
 
 		if (id == null || id.length < 1) {
 			event.stopPropagation();
-			swal.fire("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			swal.fire("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (pw == null || pw.length < 1) {
 			event.stopPropagation();
-			swal.fire("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			swal.fire("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
@@ -150,21 +150,21 @@ z-index: 10000;
 
 				if (Data.userId == "" || Data.outUserState == 1) {
 					event.stopPropagation();
-					swal.fire("Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+					swal.fire("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
 					return;
 				} else if (Data.userId != "" && pw != Data.password) {
 					event.stopPropagation();
-					swal.fire("ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
+					swal.fire("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.");
 					return;
 				} else if (Data.penaltyType == 2) {
 					event.stopPropagation();
-					swal.fire("È¸¿øÀº ¿µ±¸Á¤Áö ´ë»óÀÚ·Î ·Î±×ÀÎÀÌ Á¦ÇÑµË´Ï´Ù.");
+					swal.fire("íšŒì›ì€ ì˜êµ¬ì •ì§€ ëŒ€ìƒìë¡œ ë¡œê·¸ì¸ì´ ì œí•œë©ë‹ˆë‹¤.");
 					return;
 				} else if (Data.penaltyType == 1
 						&& Date.now() < Data.stopEndDate) {
 					event.stopPropagation();
-					swal.fire("È¸¿øÀº Á¤Áö´ë»óÀÚ·Î [" + Data.stopStartDateString + " ~ "
-							+ Data.stopEndDateString + "±îÁö ·Î±×ÀÎÀÌ Á¦ÇÑµË´Ï´Ù.");
+					swal.fire("íšŒì›ì€ ì •ì§€ëŒ€ìƒìë¡œ [" + Data.stopStartDateString + " ~ "
+							+ Data.stopEndDateString + "ê¹Œì§€ ë¡œê·¸ì¸ì´ ì œí•œë©ë‹ˆë‹¤.");
 					return;
 				} else if (Data.userID != "" && pw == Data.password) {
 
@@ -195,28 +195,28 @@ z-index: 10000;
 									<h1 class="login__title">Sign In</h1>
 									<div class="login__box" style="height: 60px;">
 										<i class='bx bx-user login__icon'></i> <input type="text"
-											onkeyup="enterkey()" placeholder="¾ÆÀÌµğ" class="login__input"
+											onkeyup="enterkey()" placeholder="ì•„ì´ë””" class="login__input"
 											name="userId" style="font-size: initial; border: none;"
 											id="loginUserId">
 									</div>
 									<div class="login__box" style="height: 60px;">
 										<i class='bx bx-lock login__icon'></i> <input type="password"
-											placeholder="ºñ¹Ğ¹øÈ£" class="login__input" name="password"
+											placeholder="ë¹„ë°€ë²ˆí˜¸" class="login__input" name="password"
 											onkeyup="enterkey()"
 											style="font-size: initial; border: none;" id="password">
 									</div>
 									<div style="display: flex; margin-top: 10px;">
 										<a href="#getId" class="login__forgot"
-											style="font-size: small; margin-right: -181px;">¾ÆÀÌµğ Ã£±â </a><a
+											style="font-size: small; margin-right: -181px;">ì•„ì´ë”” ì°¾ê¸° </a><a
 											href="#getPassword" class="login__forgot"
-											style="font-size: small;">ºñ¹Ğ¹øÈ£Ã£±â </a>
+											style="font-size: small;">ë¹„ë°€ë²ˆí˜¸ì°¾ê¸° </a>
 									</div>
 									<a href="#login" class="login__button" id="qwe">Sign In</a>
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6 text-center" style="margin-left: 220px; margin-top: -20px;">
 											<button class="button" type="button" onclick="kakaoLogin();" style=" background: transparent;">
 												<img src="/resources/image/kakao_talk.png" style="width: 47px; height: 47px; border-radius: 70px; margin-bottom: -3px;"
-								 					alt="Ä«Ä«¿À°èÁ¤ ·Î±×ÀÎ" />
+								 					alt="ì¹´ì¹´ì˜¤ê³„ì • ë¡œê·¸ì¸" />
 											</button><button id='naverButton' type="button" style=" background: transparent; border: none;"><img src="/resources/image/naver.png" style="width: 40px; height: 40px; border-radius: 70px;"></button>
 											<input type="hidden" class="kakao" name="snsUserId"
 												id="snsUserId"> <input type="hidden" class="snsType"
@@ -255,7 +255,7 @@ z-index: 10000;
 	<script type="text/javascript">
 	$(function(){
 		$("#naverButton").on("click", function() {
-			//alert("Å¬¸¯");
+			//alert("í´ë¦­");
 		//$("#naver_id_login").click();  
 		//$('#naver_id_login_anchor').click()
 		location.href=$('#naver_id_login > a').attr('href')
@@ -297,18 +297,18 @@ z-index: 10000;
 					"Accept" : "application/json"
 				},
 				success : function(Data, status) {
-					console.log("¼­¹ö·Î ¹Ş´Â µ¥ÀÌÅ¸ : " + Data.userId)
-					console.log("¼­¹ö·Î ¹Ş´Â µ¥ÀÌÅ¸ : " + Data.penaltyType)
-					console.log("¼­¹ö·Î ¹Ş´Â µ¥ÀÌÅ¸ : " + Data.stopEndDate)
+					console.log("ì„œë²„ë¡œ ë°›ëŠ” ë°ì´íƒ€ : " + Data.userId)
+					console.log("ì„œë²„ë¡œ ë°›ëŠ” ë°ì´íƒ€ : " + Data.penaltyType)
+					console.log("ì„œë²„ë¡œ ë°›ëŠ” ë°ì´íƒ€ : " + Data.stopEndDate)
 
 					if (Data.penaltyType == 2) {
-						swal.fire("È¸¿øÀº ¿µ±¸Á¤Áö ´ë»óÀÚ·Î ·Î±×ÀÎÀÌ Á¦ÇÑµË´Ï´Ù.");
+						swal.fire("íšŒì›ì€ ì˜êµ¬ì •ì§€ ëŒ€ìƒìë¡œ ë¡œê·¸ì¸ì´ ì œí•œë©ë‹ˆë‹¤.");
 						return;
 					} else if (Data.penaltyType == 1
 							&& Date.now() < Data.stopEndDate) {
-						swal.fire("È¸¿øÀº Á¤Áö´ë»óÀÚ·Î [" + Data.stopStartDateString
+						swal.fire("íšŒì›ì€ ì •ì§€ëŒ€ìƒìë¡œ [" + Data.stopStartDateString
 								+ " ~ " + Data.stopEndDateString
-								+ "±îÁö ·Î±×ÀÎÀÌ Á¦ÇÑµË´Ï´Ù.");
+								+ "ê¹Œì§€ ë¡œê·¸ì¸ì´ ì œí•œë©ë‹ˆë‹¤.");
 						return;
 					}
 					$("form").attr("method", "POST").attr("action",

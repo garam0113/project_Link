@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,7 +10,7 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/resources/javascript/plugins.js"></script>
@@ -18,7 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--ÆäÀÌÁö ³×ºñ°ÔÀÌ¼Ç css --%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <%--í˜ì´ì§€ ë„¤ë¹„ê²Œì´ì…˜ css --%>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 .page-header{
@@ -114,12 +114,12 @@ function fncGetList(currentPage) {
 	
 	if(${user.role=='1'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "GET").attr("action", "/serviceCenter/getReportList")   //ÀüÃ¼º¸±â
+		$("form").attr("method", "GET").attr("action", "/serviceCenter/getReportList")   //ì „ì²´ë³´ê¸°
 				.submit();
 		
 	}else if (${user.role=='0'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();   //³ª¸¸º¸±â
+		$("form").attr("method","post").attr("action","/serviceCenter/getReportList/${sessionScope.user.userId}").submit();   //ë‚˜ë§Œë³´ê¸°
 				
     }
 }
@@ -130,11 +130,11 @@ function fncGetList(currentPage) {
 					self.location = "/serviceCenter/getReport?no="+ $(this).parent().find($("input[name='no']")).val();
 							});
 
-		$("button:contains('ÀÌÀü')").bind("click", function() {
+		$("button:contains('ì´ì „')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 		
-		$("button:contains('°Ë»ö')").bind("click", function() {
+		$("button:contains('ê²€ìƒ‰')").bind("click", function() {
 			fncGetList(1);
 		})
 
@@ -152,32 +152,32 @@ function fncGetList(currentPage) {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
 	
 	
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
-  <h1 >½Å°í ¸®½ºÆ®</h1>
+  <h1 >ì‹ ê³  ë¦¬ìŠ¤íŠ¸</h1>
 </div>
 	<div class="container">
 
@@ -186,12 +186,12 @@ function fncGetList(currentPage) {
 		<div class=" text-left">
 				<div class="col-md-3 col-sm-3 col-xs-6"> 
 									</div>
-				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ÀüÃ¼ ${resultPage.totalCount } °Ç¼ö, ÇöÀç
-					${resultPage.currentPage} ÆäÀÌÁö</p>
+				<p class="text" style="text-align-last:end; transform: translate(-44px, 22px);">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
 			</div>
 
 
-			<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+			<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 			<div class="col-md-6 text-right" style= "transform: translate(600px, 0px);">
 					<form class="form-inline" name="detailForm">
@@ -199,25 +199,25 @@ function fncGetList(currentPage) {
 						<div class="form-group">
 							<select class="form-control" name="searchCondition" >
 								<option value="1"
-									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>Á¦¸ñ</option>
+									${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì œëª©</option>
 							</select>
 
-							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">°Ë»ö¾î</label> <input
+							<label class="sr-only" for="searchKeyword" style="color:#BD76FF;">ê²€ìƒ‰ì–´</label> <input
 								type="text" class="form-control" id="searchKeyword" width="200px"
-								name="searchKeyword" placeholder="°Ë»ö¾î" style="transform: translate(10px, 8px); width:300px; "
+								name="searchKeyword" placeholder="ê²€ìƒ‰ì–´" style="transform: translate(10px, 8px); width:300px; "
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 						</div>
 
-							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">°Ë»ö</button>
+							<button type="button" class="custom-btn btn-13" style="transform: translate(20px, 0px); width: 70px; height :26px;">ê²€ìƒ‰</button>
 
-						<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+						<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					</form>
 				</div>
 
 
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 
 		<!--  table Start /////////////////////////////////////-->
@@ -227,13 +227,13 @@ function fncGetList(currentPage) {
 					<tr class = "head" id ="head" >
 						<th align="center">No</th>
 						<td />
-						<th align="center" class="content">Á¦¸ñ</th>
+						<th align="center" class="content">ì œëª©</th>
 						<td />
-						<th align="center">ÁøÇà»óÈ²</th>
+						<th align="center">ì§„í–‰ìƒí™©</th>
 						<td />
-						<th align="center">½Å°í¹Ş´Â ID</th>
+						<th align="center">ì‹ ê³ ë°›ëŠ” ID</th>
 						<td />
-						<th align="center" width="140">ÀÛ¼º ³¯Â¥</th>
+						<th align="center" width="140">ì‘ì„± ë‚ ì§œ</th>
 					</tr>
 				</thead>
 				
@@ -250,15 +250,15 @@ function fncGetList(currentPage) {
 							<td></td>
 							<td align="center" class="content" style="cursor:pointer;">${getReportList.title}	
 							<c:if test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
-							<img src="/resources/image/uploadFiles/ÆÄÀÏ.png" style="width:15px; height:15px; display: inline;">
+							<img src="/resources/image/uploadFiles/íŒŒì¼.png" style="width:15px; height:15px; display: inline;">
 							</c:if>	
 							</td>
 							<td></td>
 							<c:if test="${getReportList.reportCondition=='1'}">
-								<td align="center" >Ã³¸®¿Ï·á</td>
+								<td align="center" >ì²˜ë¦¬ì™„ë£Œ</td>
 							</c:if>
 							<c:if test="${getReportList.reportCondition=='0'}">
-								<td align="center" >´ë±âÁß</td>
+								<td align="center" >ëŒ€ê¸°ì¤‘</td>
 							</c:if>
 							<td></td>
 							<td align="center">${getReportList.user2.userId}</td>
@@ -301,7 +301,7 @@ function fncGetList(currentPage) {
 							<div class="col-md-3 col-sm-3 col-xs-6">
 
 								<button class="custom-btn btn-13" style= "transform: translate(1038px, -90px); margin-left::20px; ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 							</div>
 
 
@@ -314,7 +314,7 @@ function fncGetList(currentPage) {
 	</div>
 	</div>
 	</div>
-	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 
 
 

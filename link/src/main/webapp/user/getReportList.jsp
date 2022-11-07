@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -61,12 +61,12 @@ function fncGetList(currentPage) {
 	
 	if(${user.role=='1'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "GET").attr("action", "/serviceCenter/getUserReportList")   //ÀüÃ¼º¸±â
+		$("form").attr("method", "GET").attr("action", "/serviceCenter/getUserReportList")   //ì „ì²´ë³´ê¸°
 				.submit();
 		
 	}else if (${user.role=='0'}){
 		$("#currentPage").val(currentPage)
-		$("form").attr("method","post").attr("action","/serviceCenter/getUserReportList/${sessionScope.user.userId}").submit();   //³ª¸¸º¸±â
+		$("form").attr("method","post").attr("action","/serviceCenter/getUserReportList/${sessionScope.user.userId}").submit();   //ë‚˜ë§Œë³´ê¸°
 				
     }
 }
@@ -96,14 +96,14 @@ $(function() {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	
 	
@@ -112,36 +112,36 @@ $(function() {
 			
 			
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 			<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 			<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 			<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 			<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 			
 			
 			
 		<c:if test="${user.role == '0'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold; font-size: xx-large;">³»Á¤º¸º¸±â>½Å°í³»¿ª</h3>
+				<h3 class=" text-info" style="font-weight: bold; font-size: xx-large;">ë‚´ì •ë³´ë³´ê¸°>ì‹ ê³ ë‚´ì—­</h3>
 			</div>
 		</c:if>
 		<c:if test="${user.role == '1'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold;">½Å°í³»¿ª</h3>
+				<h3 class=" text-info" style="font-weight: bold;">ì‹ ê³ ë‚´ì—­</h3>
 			</div>
 		</c:if>
 		<div class="row1">
 
 			<div class=" text-left">
-				<p class="text-primary" style="font-weight: bold;">ÀüÃ¼ ${resultPage.totalCount } °Ç¼ö, ÇöÀç
-					${resultPage.currentPage} ÆäÀÌÁö</p>
+				<p class="text-primary" style="font-weight: bold;">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
 			</div>
 
 
-			<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+			<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 			<div class="col-md-6 left">
 				<form class="form-inline" name="detailForm" style="display: flex;">
@@ -149,27 +149,27 @@ $(function() {
 					<div class="form-group">
 						<select class="form-control" name="searchCondition" style="width: 75px; text-align: center;">
 							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>¹øÈ£</option>
+								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ë²ˆí˜¸</option>
 							<option value="1"
-								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>Á¦¸ñ</option>
+								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì œëª©</option>
 						</select>
 					</div>
 					<div class="form-group" style="margin-left: 10px;">
-						<label class="sr-only" for="searchKeyword">°Ë»ö¾î</label> <input
+						<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label> <input
 							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="°Ë»ö¾î"
+							name="searchKeyword" placeholder="ê²€ìƒ‰ì–´"
 							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 					</div>
 
-					<button type="button" class="btn btn-default" style="margin-left: 10px;">°Ë»ö</button>
+					<button type="button" class="btn btn-default" style="margin-left: 10px;">ê²€ìƒ‰</button>
 
-					<!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+					<!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 					<input type="hidden" id="currentPage" name="currentPage" value="1" />
 				</form>
 			</div>
 
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 
 
 		<!--  table Start /////////////////////////////////////-->
@@ -178,10 +178,10 @@ $(function() {
 			<thead>
 				<tr>
 					<th align="center" style="text-align: center;">No</th>
-					<th align="center" style="text-align: center;">Á¦¸ñ</th>
-					<th align="center" style="text-align: center;">ÁøÇà»óÈ²</th>
-					<th align="center" style="text-align: center;">½Å°í¹Ş´Â ID</th>
-					<th align="center" style="text-align: center;">ÀÛ¼º ³¯Â¥</th>
+					<th align="center" style="text-align: center;">ì œëª©</th>
+					<th align="center" style="text-align: center;">ì§„í–‰ìƒí™©</th>
+					<th align="center" style="text-align: center;">ì‹ ê³ ë°›ëŠ” ID</th>
+					<th align="center" style="text-align: center;">ì‘ì„± ë‚ ì§œ</th>
 				</tr>
 			</thead>
 
@@ -197,15 +197,15 @@ $(function() {
 							</td>
 						<td align="center" class="content"><a href='#'>${getReportList.title}</a><c:if
 								test="${getReportList.reportImage1 !=null || getReportList.reportImage2 != null}">
-								<img src="/resources/image/uploadFiles/ÆÄÀÏ.png"
+								<img src="/resources/image/uploadFiles/íŒŒì¼.png"
 									style="width: 15px; height: 15px; display: inline;">
 							</c:if>
 						</td>
 						<c:if test="${getReportList.reportCondition=='1'}">
-							<td align="center">Ã³¸®¿Ï·á</td>
+							<td align="center">ì²˜ë¦¬ì™„ë£Œ</td>
 						</c:if>
 						<c:if test="${getReportList.reportCondition=='0'}">
-							<td align="center">´ë±âÁß</td>
+							<td align="center">ëŒ€ê¸°ì¤‘</td>
 						</c:if>
 						<td align="center">${getReportList.user2.userId}</td>
 						<td align="center">${getReportList.regDate}</td>
@@ -219,7 +219,7 @@ $(function() {
 		<!-- PageNavigation End... -->
 <br/><br/>
 	</div>
-	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 	<div style="display: flex; justify-content: center;">
 		<jsp:include page="../common/pageNavigator_new.jsp" />
 	</div>
