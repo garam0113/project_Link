@@ -579,10 +579,12 @@
 		
 		<%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
 		
+		var user_id = "";
+		
 		$(document).on("click", ".dl", function(event){
 				event.stopPropagation();
 			
-				var user_Id = $(this).parent().parent().attr("id");
+				user_Id = $(this).parent().parent().attr("id");
 				var nickName = $("."+user_Id+"").val();
 				var profileImage = $(this).attr("alt");
 				
@@ -742,8 +744,7 @@
 		
 		$(document).on("click",".dll",function(event){
 			
-		   
-		   var user_Id = $(this).parent().parent().attr("id");
+		   user_Id = $(this).parent().parent().attr("id");
 		   var nickName = $("."+user_Id+"").val();
 		   var profileImage = $(this).attr("id");
 		   
@@ -2425,8 +2426,6 @@
 
 	<jsp:include page="/toolbar.jsp" />
 
-	<main role="main">
-
 		<div id="main">
 		
 			<c:if test="${ sessionScope.user != null }">
@@ -2532,7 +2531,7 @@
 												<div class="feedLeft">
 													<div class="feedInner">
 														<div class="feedCover">
-															<img class="feedProfileImage dl" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
+															<img class="feedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
 															
 														</div>
 														<div class="feedName dlFeednickName">${feed.user.nickName}</div>
@@ -2974,8 +2973,6 @@
 		</div>
 	</div>
 	<!-- 수정 Modal -->
-
-	</main>
 
 </body>
 </html>
