@@ -41,15 +41,25 @@
 		SELECT
 		roomid , limit , member, profile_image, type, club_no
 		FROM live
+		<if test="clubNo != null">
 		WHERE roomid = #{roomName} AND type = #{type} AND club_no = #{clubNo}
+		</if>
+		<if test="clubNo == null">
+		WHERE roomid = #{roomName} AND type = #{type}
+		</if>
 	</select>
 
-	<select id="getLiveList" parameterType="live"
+	<select id="getLiveList" parameterType="live" 
 		resultMap="liveSelectMap">
 		SELECT
 		roomid , limit , member, profile_image, type, club_no 
 		FROM live
+		<if test="clubNo != null">
 		WHERE type = #{type} AND club_no = #{clubNo}
+		</if>
+		<if test="clubNo == null">
+		WHERE type = #{type}
+		</if>
 	</select>  
 
 	<delete id="deleteLive" parameterType="live">

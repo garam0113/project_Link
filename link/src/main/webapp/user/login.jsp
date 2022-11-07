@@ -205,11 +205,11 @@ z-index: 10000;
 											onkeyup="enterkey()"
 											style="font-size: initial; border: none;" id="password">
 									</div>
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 10px;">
 										<a href="#getId" class="login__forgot"
-											style="font-size: small; margin-right: -181px;">Forgot Id? </a> <a
+											style="font-size: small; margin-right: -181px;">아이디 찾기 </a><a
 											href="#getPassword" class="login__forgot"
-											style="font-size: small;">Forgot Password? </a>
+											style="font-size: small;">비밀번호찾기 </a>
 									</div>
 									<a href="#login" class="login__button" id="qwe">Sign In</a>
 									<div class="form-group">
