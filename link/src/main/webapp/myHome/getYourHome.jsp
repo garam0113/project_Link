@@ -1643,12 +1643,13 @@ position:relative;
 }
 
 .follow-section {
-	margin-right: 100px;
-	margin-top: 50px;
-	width: 500px;
-	display: inline-block;
-	justify-content: center;
-	float: left;
+	margin: 0px;
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .following-section img {
   vertical-align: sub;
@@ -1661,12 +1662,13 @@ position:relative;
 	
 }
 .following-section {
-	margin-right: 100px;
-	margin-top: 50px;
-	width: 500px;
-	display: inline-block;
-	justify-content: center;
-	float: left;
+	margin: 0px;
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .single-comment {
@@ -2134,9 +2136,9 @@ border-radius: 15px !important;
 		<c:forEach var = "list" items = "${list}">
 			<c:set var = "i" value = "${i + 1}" />
 			<div class="follow-section" style="margin-left:50px;" id="${list.receiveId.userId }">
-			<div style="display: inline-block; margin-left :-50px;"><img class="dl" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" id="${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right; margin-right:380px;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
+			<div style="display: inline-block; margin-left :-50px;"><img class="dl" src="/resources/image/uploadFiles/${list.receiveId.profileImage}" id="${list.receiveId.profileImage}" width="100" height="100" /></div><div style="float: right;"><h4 class="yourHome">${list.receiveId.nickName}</h4>
 			</div>
-					<div id="${list.receiveId.nickName }"></div>
+					<div id="${list.receiveId.nickName }" style="display:none;"></div>
 					<input type="hidden" class="${list.receiveId.userId }" value="${list.receiveId.nickName }">
 				</div>
 			</c:forEach>
@@ -2145,7 +2147,7 @@ border-radius: 15px !important;
 		
 				</div>
 				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
-     <div class="col-md-4" id="fl">
+     <div id="fl">
 					 		<br />
 			
 								
@@ -2503,9 +2505,9 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
-			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' id='"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
-			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1'></div>"+"<input type='hidden' class='"+item.userId+"' value='"+item.nickName+"'>"+
+				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' id='"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right;'>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1' style='display:none;'></div>"+"<input type='hidden' class='"+item.userId+"' value='"+item.nickName+"'>"+
 		"</div>";
 			
 			
