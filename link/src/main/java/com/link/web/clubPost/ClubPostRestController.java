@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +30,6 @@ import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Comment;
 import com.link.service.domain.Heart;
-import com.link.service.domain.Notice;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.serviceCenter.ServiceCenterService;
@@ -221,7 +219,7 @@ public class ClubPostRestController {
 		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 		String savedFileName = multipartFile.getOriginalFilename();	//저장될 파일 명
 		
-		File targetFile = new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);	//저장될 전체 파일 경로 + 파일명
+		File targetFile = new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);	//저장될 전체 파일 경로 + 파일명
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
@@ -449,35 +447,6 @@ public class ClubPostRestController {
 		
 		// 댓글 삭제
 		return clubPostServiceImpl.deleteClubPostComment(comment);
-	}
-	
-	/*
-	@RequestMapping(value = "updateClubPostCommentHeart", method = RequestMethod.POST)
-	public int updateClubPostCommentHeart(@ModelAttribute Comment comment, Heart heart) throws Exception {
-		System.out.println("/updateClubPostCommentHeart : POST : 모임게시물 댓글 좋아요하다/좋아요 취소하다");
-		return clubPostServiceImpl.updateClubPostCommentHeart(comment, heart);
-	}
-	*/
-	
-
-	
-///////////////////////////////////////////////////////////////////////////////////// Notice /////////////////////////////////////////////////////////////////////////////////////	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "getClubNotice", method = RequestMethod.POST)
-	public Notice getClubNotice(@RequestBody Notice notice) throws Exception {
-		System.out.println("/getClubNotice : POST : 모임공지사항 상세보기");
-		return clubPostServiceImpl.getClubNotice(notice);
-	}
-
-	@RequestMapping(value = "deleteClubNotice", method = RequestMethod.POST)
-	public Map<String, Object> deleteClubNotice(@RequestBody Search search, Notice notice) throws Exception {
-		System.out.println("/deleteClubNotice : POST : 모임공지사항 삭제, 모임공지사항 리스트");
-		// 모임공지사항 리스트 : getClubNoticeList, 모임공지사항 리스트 개수 : getClubNoticeListCount
-		return clubPostServiceImpl.deleteClubNotice(search, notice);
 	}
 
 }

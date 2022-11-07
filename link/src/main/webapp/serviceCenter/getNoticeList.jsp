@@ -141,7 +141,7 @@ background-color: #EBEDF0 !important;
 		
 
 		
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/serviceCenterHome.jsp";
 		})
 		
@@ -154,7 +154,34 @@ background-color: #EBEDF0 !important;
 		<jsp:include page="/toolbar.jsp" />
 
 	<!-- ToolBar End /////////////////////////////////////-->
-<body>  
+<body>
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>  
+	
+	
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+
 
 
 <div class="page-header" align="center" style="transform: translate(-395px, 149px);">
@@ -163,6 +190,8 @@ background-color: #EBEDF0 !important;
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+			
+			
 			
 		<div class="row1">
 
@@ -302,7 +331,7 @@ background-color: #EBEDF0 !important;
 									   등록</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(980px, -90px); margin-left::20px; ">
-									뒤로</button>
+									이전</button>
 									</div>
 								
 

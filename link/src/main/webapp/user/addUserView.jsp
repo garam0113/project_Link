@@ -251,7 +251,7 @@ body>div.container {
 
 </head>
 
-<body style="background-color: #EBEDF0;">
+<body style="background-color: whitesmoke;">
 	<form>
 		<div class="wrap wd668">
 			<br />

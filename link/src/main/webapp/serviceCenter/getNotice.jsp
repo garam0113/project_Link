@@ -24,7 +24,7 @@
 <script type="text/javascript"> <%-- 자바스크립트 시작 --%>
 	$(function() {
 
-		$("button:contains('뒤로')").bind("click", function() {
+		$("button:contains('이전')").bind("click", function() {
 			self.location = "/serviceCenter/getNoticeList";
 		})
 
@@ -102,6 +102,36 @@ background-color: #EBEDF0 !important;
 </style>
 
 </head>
+<body>
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+	
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px; margin-top: 80px;">
@@ -109,6 +139,9 @@ background-color: #EBEDF0 !important;
 </div>
 	
 		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
+	
+	
+	
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
@@ -130,7 +163,7 @@ background-color: #EBEDF0 !important;
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-						${notice.noticeContent}
+						<pre>${notice.noticeContent}</pre>
 						<input type="hidden" id="noticeContent" name="noticeContent" value="${notice.noticeContent}">
 						</td>
 					</tr>
@@ -172,7 +205,7 @@ background-color: #EBEDF0 !important;
 									   삭제</button> 
 									</c:if>
 									<button class="custom-btn btn-13" style= "transform: translate(370px, 0px); ">
-									뒤로</button>
+									이전</button>
 									</div>
 				
 			</div>

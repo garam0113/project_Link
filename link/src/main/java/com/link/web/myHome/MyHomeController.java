@@ -25,6 +25,7 @@ import com.link.common.Search;
 import com.link.service.club.ClubDAO;
 import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubPost;
 import com.link.service.domain.Feed;
@@ -72,7 +73,7 @@ public class MyHomeController {
 	
 	@RequestMapping(value = "getMyHome")
 	public String getMyHome(@ModelAttribute Search search, Heart heart, String userId,
-		       Model model,HttpSession session) throws Exception{
+		       Model model,HttpSession session, Chat chat) throws Exception{
 		
 		System.out.println("/myHome/getMyHome : GET");
 
@@ -101,13 +102,24 @@ public class MyHomeController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("heart", heart);
 		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
-	
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		return "forward:/myHome/getMyHome.jsp";
 	}  
 	@RequestMapping(value = "getYourHome" ,method=RequestMethod.GET)
 	public String getYourHome(@ModelAttribute Search search, Heart heart, String userId, HttpSession session,
-		       Model model) throws Exception{
+		       Model model, Chat chat) throws Exception{
 		
 		System.out.println("/myHome/getYourHome : GET");
 		 search.setSearchCondition("2");
@@ -183,7 +195,19 @@ public class MyHomeController {
 		model.addAttribute("followUser", followUserId.get("follow"));
 		System.out.println("세션아이디"+sessoinId);
 		System.out.println("유저아이디"+userId);
-	
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
 		if(users1 != null) {
 			if(users1.getFbState().trim().equals("2")) {
 			return "forward:/myHome/getYourHome.jsp";

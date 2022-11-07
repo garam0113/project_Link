@@ -134,6 +134,33 @@ textarea {
 
 </style>
 </head>
+<body>
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
 
 <jsp:include page="/toolbar.jsp" />
 
@@ -152,7 +179,9 @@ textarea {
 			<form class="form-horizontal" enctype="multipart/form-data">
 		 <input type="hidden" id="userId" name="qandA.userId" value ="${SessionScope.user.userId}">
 			<!--  table Start /////////////////////////////////////-->
-			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
+			<table style="width:880px; transform: translate(130px, 0px); box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;background-color:aliceblue;">
 				</tbody>
 					 <tr class = "body" id ="body" >
 					 
@@ -251,7 +280,7 @@ textarea {
 										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
 									   답변</button></c:if>
 									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
-									뒤로</button>
+									이전</button>
 									
 									</div>
 				

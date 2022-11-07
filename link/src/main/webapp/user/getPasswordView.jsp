@@ -16,20 +16,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script type="text/javascript" charset="utf-8"
 	src="/resources/javascript/user/SMSCheck.js"></script>
 <script type="text/javascript" charset="utf-8"
 	src="/resources/javascript/user/emailCheck.js"></script>
-
+ 
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -40,13 +40,24 @@ body {
 
 <script type="text/javascript">
 	$(function() {
-		$("#chack").on("click", function() {
+		$(".btn.check12").on("click", function() {
 			fncGetPassword();
-		});
-		$("#back").on("click", function() {
-			window.close();
+		}); 
+		$(".btn.black1").on("click", function() {
+			$('#modalPass').modal('hide');
 		});
 	});
+	
+	$(function() {
+		 $("a[href='#q']").on("click", function() {
+			 $("#home1").hide();
+			 $("#profile1").show();
+		})
+		$("a[href='#n']").on("click", function() {
+			 $("#profile1").hide();
+			 $("#home1").css('display','flex');
+		}) 
+	})
 
 	function fncGetPassword() {
 
@@ -54,16 +65,16 @@ body {
 		var name = $("#name").val();
 		var rrn1 = $("#rrn1").val();
 		var rrn2 = $("#rrn2").val();
-		var rrn = rrn1+"-"+rrn2;
+		var rrn = rrn1 + "-" + rrn2;
 		var phone2 = $("#phone2").val();
 		var phone3 = $("#phone3").val();
 		var phoneNo = $("#phone1").val() + "-" + phone2 + "-" + phone3;
 		var checkNo = $("#checkNo").val();
 		var email = $("#email").val();
-	
+
 		$("#rrn").val(rrn);
-		
-		console.log("rrn 값 : "+$("#rrn").val());
+
+		console.log("rrn 값 : " + $("#rrn").val());
 		console.log("phone2 : " + phone2 + ", phone3 : " + phone3);
 		console.log("email : " + email);
 
@@ -91,11 +102,6 @@ body {
 			swal.fire("인증이 필요합니다.");
 			return;
 		}
-
-		$('#myTabs a').click(function(e) {
-			e.preventDefault()
-			$(this).tab('show')
-		})
 
 		$.ajax("/userRest/json/getUserId", {
 
@@ -135,15 +141,17 @@ body {
 						console.log(JsonData)
 
 						if (email == null || email.length < 1) {
-							swal.fire("임시 비밀번호가 핸드폰번호로 전송되었습니다.").then(function() {
-							window.close();
-							});
+							swal.fire("임시 비밀번호가 핸드폰번호로 전송되었습니다.").then(
+									function() {
+										window.close();
+									});
 						}
 
 						if (phone2.length < 1 || phone3.length < 1) {
-							swal.fire("임시 비밀번호가 이메일로 전송되었습니다.").then(function() {
-							window.close();
-							});
+							swal.fire("임시 비밀번호가 이메일로 전송되었습니다.").then(
+									function() {
+										window.close();
+									});
 						}
 					}
 				})
@@ -159,126 +167,125 @@ body {
 </head>
 
 <body>
+	<div class='modal fade' id='modalPass'
+		style='display: none; width: fit-content; height: fit-content; margin-left: 515px; border-radius: 30px; zoom: 1.2;'>
+		<div class='madal-dialog'>
+			<div class='modal-content' style="background-color: whitesmoke;">
+				<div class='modal-header'>
+					<!--  화면구성 div Start /////////////////////////////////////-->
+					<div class="container" style="width: 500px;">
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="background-color: lavenderblush;">
+						<!-- form Start /////////////////////////////////////-->
+						<form class="form-horizontal">
+							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
+								<label for="userId" style="margin-left: 0px;">아이디</label>
+									<input type="text" class="form-control" id="userId"
+										name="uesrID" style="margin-left: 35px;" value=""
+										placeholder="아이디">
+							</div>
+							<div class="form-group"
+								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
+								<label for="name" style="text-align-last: start;">이 름</label> <input
+									type="text" class="form-control" id="name" name="name" value=""
+									placeholder="이름" style="margin-left: 50px;">
+							</div>
 
-		<h1 style="font-weight: bold; margin-bottom: 30px; margin-left: 60px;">비밀번호찾기</h1>
+							<div class="form-group"
+								style="display: flex; margin-left: 20px; height: 30px; margin-top: 20px;">
+								<label for="rrn" style="text-align-last: start;">주민번호</label>
+								<div>
+									<input type="text" class="form-control" id="rrn1" name="rrn1"
+										value="" style="margin-left: 20px; width: 100px">
+								</div>
+								<div>
+									<input type="password" class="form-control" id="rrn2"
+										name="rrn2" value="" style="margin-left: 10px; width: 100px">
+								</div>
+								<input type="hidden" id="rrn" name="rrn">
+							</div>
 
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+							<ul class="nav nav-tabs" role="tablist"
+								style="margin-left: 20px; display: flex; margin-top: 30px;">
+								<li role="presentation" class="active"><a href="#n"
+									aria-controls="home" role="tab" data-toggle="tab">핸드폰</a></li>
+								<li role="presentation"><a href="#q"
+									aria-controls="profile" role="tab" data-toggle="tab">이메일</a></li>
+							</ul>
 
-			<div class="form-group">
-				<label for="userId" class="col-sm-offset-1 col-sm-3 control-label"
-					style="margin-left: -55px;">아이디</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userId" name="uesrID"
-						style="margin-left: 29px;" value="" placeholder="아이디">
+							<div class="tab-content" style="margin-top: 15px;">
+								<div role="tabpanel" class="tab-pane active" id="home1"
+									style="display: flex; margin-left: 20px;">
+									<div>
+										<select class="form-control" name="phone1" id="phone1"
+											style="margin-top: 10px; margin-left: 0px; width: auto; font-size: large;">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+										</select>
+									</div>
+
+									<div style="margin: 10px">
+										<input type="text" class="form-control" id="phone2"
+											name="phone2" style="width: 75px;">
+									</div>
+
+									<div style="margin: 10px">
+										<input type="text" class="form-control" id="phone3"
+											name="phone3" style="margin-left: -10px; width: 75px;">
+									</div>
+									<input type="hidden" name="phoneNo" />
+
+									<div style="margin: 7px;">
+										<button type="button" id="sendPhoneNumber" class="btn"
+											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
+									</div>
+								</div>
+
+								<div role="tabpanel" class="tab-pane" id="profile1"
+									style="display: none; margin-left: 30px; margin-top: 20px;">
+									<div>
+										<input type="text" class="form-control" id="email"
+											name="email"
+											style="margin-top: 0px; margin-left: 0px; width: 220px;"
+											placeholder="변경이메일">
+									</div>
+									<div>
+										<button type="button" id="sendEmail" class="btn "
+											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group"
+								style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
+								<input type="text" class="form-control"
+									id="inputCertifiedNumber" style="width: 100px; height: 40px;"
+									name="inputCertifiedNumber" placeholder="인증번호">
+								<div>
+									<button type="button" id="checkBtn" class="btn "
+										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호확인</button>
+									<input type="hidden" id=checkNo>
+								</div>
+							</div>
+
+							<div class="form-group" style="display: flex;">
+								<button type="button" id="check12" class="btn check12"
+									style="margin-left: 182px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">확
+									&nbsp;인</button>
+								<button type="button" id="black1" class="btn black1"
+									style="margin-left: 10px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">취
+									&nbsp;소</button>
+							</div>
+						</form>
+						<!-- form Start /////////////////////////////////////-->
+
+					</div>
 				</div>
 			</div>
-
-			<div class="form-group">
-				<label for="name" class="col-sm-offset-1 col-sm-3 control-label"
-					style="margin-left: -65px;">이 름</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="name" name="name"
-						style="margin-left: 39px;" value="" placeholder="이름">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="rrn" class="col-sm-offset-1 col-sm-3 control-label"
-					style="margin-left: -42px;">주민번호</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="rrn1" name="rrn1"
-						style="margin-left: 16px; width: 100px" value="">
-				</div>
-				<div class="col-sm-4">
-					<input type="password" class="form-control" id="rrn2" name="rrn2"
-						style="margin-left: -115px; width: 100px" value="">
-				</div>
-				<input type="hidden" id="rrn" name="rrn">
-			</div>
-
-			<ul class="nav nav-tabs" role="tablist" style="margin-left: 55px;">
-				<li role="presentation" class="active"><a href="#home"
-					aria-controls="home" role="tab" data-toggle="tab">핸드폰</a></li>
-				<li role="presentation"><a href="#profile"
-					aria-controls="profile" role="tab" data-toggle="tab">이메일</a></li>
-			</ul>
-
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="home">
-					<label for="phoneNo" class="col-sm-offset-1 col-sm-3 control-label"
-						style="margin-left: -23px; margin-top: 10px;">휴대전화번호</label>
-					<div class="col-sm-2">
-						<select class="form-control" name="phone1" id="phone1"
-							style="margin-top: 10px; margin-left: -10px;">
-							<option value="010">010</option>
-							<option value="011">011</option>
-							<option value="016">016</option>
-							<option value="018">018</option>
-							<option value="019">019</option>
-						</select>
-					</div>
-
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="phone2" name="phone2"
-							style="margin-top: 10px; margin-left: -20px;">
-					</div>
-
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="phone3" name="phone3"
-							style="margin-top: 10px; margin-left: -30px;">
-					</div>
-					<input type="hidden" name="phoneNo" />
-
-					<div class="col-sm-2">
-						<button type="button" id="sendPhoneNumber" class="btn "
-							style="margin-top: 11px; margin-left: -40px; background-color: white; border-color: #5F0080;">인증번호전송</button>
-					</div>
-				</div>
-
-				<div role="tabpanel" class="tab-pane" id="profile">
-					<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"
-						style="margin-left: -63px; margin-top: 10px; ">이메일</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="email" name="email" style="margin-top: 10px; margin-left: 30px; width: 220px;"
-							placeholder="변경이메일">
-					</div>
-					<div class="col-sm-4">
-						<button type="button" id="sendEmail" class="btn " style="margin-top: 11px; margin-left: 30px; background-color: white; border-color: #5F0080;">인증번호전송</button>
-						<input type="hidden" id=checkNo>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"
-					style="margin-left: -43px; margin-top: 10px;">인증번호</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="inputCertifiedNumber"
-						style="margin-top: 10px; margin-left: 17px;"
-						name="inputCertifiedNumber" placeholder="인증번호">
-				</div>
-				<div class="col-sm-4">
-					<button type="button" id="checkBtn" class="btn "
-						style="margin-top: 10px; background: white; border-color: #5F0080; margin-left: 7px;">인증번호확인</button>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="chack" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">확
-						&nbsp;인</button>
-					<button type="button" id="back" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">취 &nbsp;소</button>
-				</div>
-			</div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-
+		</div>
 	</div>
-	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
 

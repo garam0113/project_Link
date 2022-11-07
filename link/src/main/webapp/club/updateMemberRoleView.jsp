@@ -1,18 +1,17 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 
 <!DOCTYPE html>
 
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -94,8 +93,8 @@
  
 
  			var userId = $("#userId").val();
-  			//alert("À¯Àú ¾ÆÀÌµğ :"+userId);
-  			//alert("À¯Àú³Ñ¹ö´Â? :"+clubUserNo);
+  			//alert("ìœ ì € ì•„ì´ë”” :"+userId);
+  			//alert("ìœ ì €ë„˜ë²„ëŠ”? :"+clubUserNo);
   			
   			/* var memberRole = #("#memberRole").val();
   			alert(memberRole); */
@@ -128,8 +127,8 @@
    						"Accept" : "application/json"	
    					},
    					success : function(JSONData, status) {
-						alert('¼öÁ¤¿Ï·á');
-   						console.log("¼öÁ¤¿Ï·á");
+						alert('ìˆ˜ì •ì™„ë£Œ');
+   						console.log("ìˆ˜ì •ì™„ë£Œ");
 
    						window.close();
 						}
@@ -144,12 +143,12 @@
     </head>
 
 <body>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="wrap wd668">
 		<div class="container">
 			<div class="form_txtInput">
-				<h2 class="sub_tit_txt">Á÷ Ã¥ ¼ö Á¤</h2>
-				<p class="exTxt">¸ğÀÓ¿øÀÇ Á÷Ã¥À» ¼öÁ¤ÇØº¸¼¼¿ä...</p>
+				<h2 class="sub_tit_txt">ì§ ì±… ìˆ˜ ì •</h2>
+				<p class="exTxt">ëª¨ì„ì›ì˜ ì§ì±…ì„ ìˆ˜ì •í•´ë³´ì„¸ìš”...</p>
 			
 			</div>
 			
@@ -163,33 +162,33 @@
 		<!-- <input type="text" id="memberRole" value=""> -->
 		
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">¸ğÀÓ¿ø ¾ÆÀÌµğ</label>
+				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ì„ì› ì•„ì´ë””</label>
 				<div class="col-sm-2">
 					<input type="text" id="userId" value="" style="height:34px; width: 160%; border-color:#BD76FF; border-width: thin;">
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">Á÷Ã¥</label>
+				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ì§ì±…</label>
 				<div class="col-sm-2">
 					<select class="form-control" name="memberRole" id="memberRole" style="border-color:#BD76FF;">
-						<option value="1">¸ğÀÓºÎ´ëÇ¥</option>
-						<option value="0" selected>¸ğÀÓ¿ø</option>
+						<option value="1">ëª¨ì„ë¶€ëŒ€í‘œ</option>
+						<option value="0" selected>ëª¨ì„ì›</option>
 					</select>
 				</div>
 			</div>
 			
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="change" class="plain button red cancel">¼ö &nbsp;Á¤</button>
-					<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+					<button type="button" id="change" class="plain button red cancel">ìˆ˜ &nbsp;ì •</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 				</div>
 			</div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 	    
  	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	</div>
  	
 </body>

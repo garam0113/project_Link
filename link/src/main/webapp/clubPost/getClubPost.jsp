@@ -15,7 +15,6 @@
 		
 		<!-- 사용자 정의 css -->
 		<link rel="stylesheet" href="/resources/css/clubPost/clubPost.css" type="text/css" media="screen" title="no title">
-		<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title"><!-- 채팅 css -->
 
 		<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
 		
@@ -41,7 +40,6 @@
 		
 	
 		<!-- 템플릿에 있던 코드 -->
-		<!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
 		<script src="/resources/javascript/plugins.js"></script>
 		<script src="/resources/javascript/beetle.js"></script>
 		
@@ -443,11 +441,19 @@
 			
 			<%-- 해당 게시물에 댓글 등록 --%>
 			$(document).on("click", ".plain.button.red.add", function(){
-				//alert('댓글 등록완료');
+				//alert('댓글 등록완료');				
 				var clubPostNo = ${ clubPost.getClubPost.clubPostNo };
 				var commentContent = $(this).prev().val();
 				var depth = $(this).parent().parent().prev().attr("depth");
 				var clubPostCommentNo = $(this).parent().parent().prev().attr("commentNo");
+				
+				if( commentContent.trim().length == 0 ){
+					Swal.fire({
+						  icon: 'error',
+						  title: '댓글 내용은 필수입니다'
+						})
+						return;
+				}
 				
 				if( depth <= 0 ){
 					//alert("게시물의 댓글 등록!");
@@ -641,6 +647,14 @@
 				//alert( "해당댓글의번호 : " + clubPostCommentNo );
 				//alert( divClassName );
 				
+				if( commentContent.trim().length == 0 ){
+					Swal.fire({
+						  icon: 'error',
+						  title: '댓글 내용은 필수입니다'
+						})
+						return;
+				}
+				
 				$.ajax( "/clubPostRest/json/updateClubPostComment",
 						{
 							method : "POST",
@@ -708,14 +722,12 @@
 									dataType : "json",
 									success : function(JSONData, status){
 										//alert(status);
-										//alert(JSONData.clubPostCommentCount);
-										//alert(JSONData.commentCount);
-										//alert(JSONData.parent);
-
-										// 삭제된것도 가져와서 댓글개수 변경 안해도 된다
+										console.log("게시물 댓글 수 : " + JSONData.clubPostCommentCount);
+										console.log("댓글의 댓글 수 : " + JSONData.commentCount);
+										console.log("부모 댓글 번호 : " + JSONData.parent);
 										
 										// 게시물 댓글개수 수정
-										//$(".comment_count").text( JSONData.clubPostCommentCount );
+										$(".comment_count").text( JSONData.clubPostCommentCount );
 										
 										// 게시물 댓글의 댓글개수 수정
 										//$("div .single-comment"+JSONData.parent).find("b").text( JSONData.commentCount );
@@ -891,7 +903,7 @@
 								$(".clubPost-body-content").empty();
 								
 								tmp = JSONData.clubPostContent.substring(3, JSONData.clubPostContent.length - 4 );
-								//alert("앞 뒤 p태그 자른 string : " + content);
+								//alert("앞 뒤 p태그 자른 string : " + content); b
 								var content = tmp.split("</p><p>");
 								for (var i = 0; i < content.length; i++) {
 									$(".clubPost-body-content").append( content[i] );
@@ -1015,21 +1027,7 @@
 			self.location="/club/getClubMemberList"
 		});
 	});
-		
-	
-	$(function(){
-		//소켓서버에 접속시킨다.
-		/* let socket = io("http://192.168.0.74:3000/clubchat", { // clubchat 네임스페이스
-			cors: { origin: "*" },
-			path: '/socket.io',
-			query: {
-				userId : $("#session_userId").val(),
-				profileImage : $("#session_profileImage").val(),
-				nickName : $("#session_nickName").val(),
-				roomId : '74a6518c-7620-4f6c-b59d-ec66fa8a4008',
-			}
-		}); */
-	});
+
 		</script>
 		
 	</head>
@@ -1040,15 +1038,14 @@
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 		
-	<!-- 모임채팅 -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-		
+		<!-- 모임채팅 -->
+		<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
 		<!-- 채팅 javascript -->
 		<script src="/resources/javascript/chat/chat.js"></script>
-		
-		<%-- <jsp:include page="/chat/chat.jsp" /> --%>
-	
+		<!-- 채팅 css -->
+		<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+
+
 
 		<main role="main" style="background: #EBEDF0;">
 
@@ -1078,119 +1075,17 @@
 					</form>
 					
 					<%-- chat.js에서 사용위해서 --%>
-						<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-						<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-						<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 					<%-- chat.js에서 사용위해서 --%>
 		
 		
+					<%-- 채팅 --%>
+					<jsp:include page="/chat/chat.jsp" />
+					<%-- 채팅 --%>
 				
-					<!-- 채팅 이미지 start -->
-					<div>
-						<img id="chat-icon" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
-					</div>
-					<!-- 채팅 이미지 end -->
-		
-					<!-- 채팅 start -->
-					<div id="allChat" style="display: none;">
-						<!-- 채팅 상단 툴바 start -->
-						<div id="allChat-toolbar">
-							<div>
-								<!-- 로고 -->
-								<span id="allChat-toobar-title">LINK</span>
-								<!-- 뒤로가기 -->
-								<span id="allChat-toobar-back" class="chat-toolbar-back" style="display: none;"><img src="/resources/image/uploadFiles/back5.png" height="60px" width="60px"></span>
-							</div>
-							<div></div>
-							<div>
-								<!-- 닫기 -->
-								<span id="allChat-toolbar-close" class="chat-toolbar-back">X</span>
-							</div>
-						</div>
-						<!-- 채팅 상단 툴바 end -->
-						<!-- 채팅 body start -->
-						<div id="chat-body">
-							<!-- 채팅 list start -->
-							<div id="chat-list-content">
-								<!-- 채팅 사이드바 -->
-								<div id="chat-body-sidebar">
-									<img class="chat-img-sidebar people-users" style="box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;" src="/resources/image/uploadFiles/people.jpg">
-									<img class="chat-img-sidebar people-user" src="/resources/image/uploadFiles/one_user.jpg">
-								</div>
-								<!-- 모임 채팅과 1:1 채팅 리스트 start -->
-								<div id="chat-list-one-content">
-									<div id="club-chat-list">
-										<c:if test="${ fn:length(roomList) > 0 }">
-										<c:forEach var="i" begin="0" end="${ fn:length(roomList) - 1 }" step="1">
-											<div class="chat-content chat-content-onechat" roomId="${ roomList[i].roomId }" namespace="clubchat">
-												<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ roomList[i].clubImage }"></div>
-												<div>${ roomList[i].clubTitle }</div>
-											</div>
-										</c:forEach>
-										</c:if>
-									</div>
-									<div id="user-chat-list" style="display: none;">
-										<c:if test="${ fn:length(getChat) > 0 }">
-										<c:forEach var="i" begin="0" end="${ fn:length(getChat) - 1 }" step="1">
-											<div class="chat-content chat-content-onechat" roomId="${ getChat[i].roomId }" namespace="userchat">
-												
-												<c:choose>
-													<c:when test="${ getChat[i].user.nickName != sessionScope.user.nickName }">
-														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user.profileImage }"></div>
-														<div>${ getChat[i].user.nickName }</div>
-													</c:when>
-													<c:otherwise>
-														<div><img class="chat-img-main" src="/resources/image/uploadFiles/${ getChat[i].user2.profileImage }"></div>
-														<div>${ getChat[i].user2.nickName }</div>
-													</c:otherwise>
-												</c:choose>
-												
-											</div>
-										</c:forEach>
-										</c:if>
-									</div>
-								</div>
-								<!-- 모임 채팅과 1:1 채팅 리스트 end -->
-							</div>
-							<!-- 채팅 list end -->
-							
-							<!-- 채팅방 start -->
-							<div id="chat-room-content" style="display: none;">
-								<div id="chat-room">
-									<div id="chatLog">
-										<%-- <div style="display: grid; grid-template-columns: 1fr 6fr;">
-											<div><img src="/resources/image/uploadFiles/robin.jpg" height="50px" width="50px" style="border-radius: 100px;"></div>
-											<div>
-												<div>닉네임</div>
-												<div style="position: relative; height: auto; background-color: red;">
-													<img src="/resources/image/uploadFiles/no_heart.jpg" style="vertical-align: middle;">
-													<div style="text-align: center; position: absolute; top: 3%; left: 5%; right: 13%;">루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-												</div>
-											</div>
-											<div>
-												<div>로빈</div>
-												<div>
-													<div>루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-												</div>
-											</div>
-										</div> --%>
-									</div>
-								</div>
-								<!-- 채팅 메세지 전송 start -->
-								<form action="" id="sendForm">
-								<div id="input-chatLog">
-									<div><input type="text" name="message" autocomplete="off"></div>
-									<div><button id="chat_send_button">전송</button></div>
-								</div>
-								</form>
-								<!-- 채팅 메세지 전송 end -->
-							</div>
-							<!-- 채팅방 end -->
-							
-						</div>
-						<!-- 채팅 body end -->						
-					</div>
-					<!-- 채팅 end -->
+					
 				
 				
 				
@@ -1282,9 +1177,11 @@
 								<br><br>
 								
 								<%-- id는 프로필 이미지 클릭했을 때 나오는 다이얼로그 나오는 위치이다 --%>
-								<div class="clubPost-body-title" id="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.clubPostTitle }</div>
+								<div class="clubPost-body-title">${ clubPost.getClubPost.clubPostTitle }</div>
 								
 								<br><br>
+								
+								<div style="display: none;" id="${ clubPost.getClubPost.user.userId }"></div>
 								
 								<div class="clubPost-body-content">
 									<p>${ clubPost.getClubPost.clubPostContent }</p>
@@ -1652,11 +1549,11 @@
 		<script type="text/javascript">
 		<%-- 이미지 클릭시 다이얼로그 온 --%>
 		$(function(){
+
 			
 			var user_Id = "";
 			
-			   
-			   $('.dl').on("click",function(){
+			   $(document).on("click", ".dl", function(event){
 			      
 			   user_Id = $(this).parent().attr("userId");
 			   var nickName = $(this).attr("nickName");
@@ -1764,9 +1661,9 @@
 			               },
 			               position: {
 			                  
-			                  my:"center",
-			                  at:"center",
-			                  of:"#"+user_Id+""
+			                  my:"left",
+			                  at:"right",
+			                  of: event
 			               }
 			               
 			            });
@@ -1796,9 +1693,9 @@
 			               },
 			               position: {
 			                  
-			                  my:"right",
-			                  at:"right",
-			                  of:"#"+user_Id+""
+			                  my: "left",
+			                  at: "right",
+			                  of: event
 			               }
 			               
 			            });
@@ -1821,13 +1718,13 @@
 
 			   
 			   
-		<%-- 이미지 클릭시 다이얼로그 온 --%>
+		//이미지 클릭시 다이얼로그 온
 		
 		
 		
 		
 		
-		<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
+		//다이얼로그 창의 차단버튼과 팔로우 활성화
 
 		      $(document).on("click","#follow", function() {
 		         var userId = $(this).parent().parent().attr("id");
@@ -2200,7 +2097,9 @@
 		            }
 		         })
 		      })
-		    
+
+		      
+		      
 		    <%-- 1:1 채팅 --%>
 			$(document).on("click","button:contains('채팅')", function() {
 				//alert("a");
@@ -2268,6 +2167,7 @@
 								//alert( make_roomId );
 								console.log(socket)
 								
+								// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
 								//소켓서버에 접속시킨다.
 								socket = io("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
 									cors: { origin: "*" },
@@ -2291,59 +2191,7 @@
 							}//end of success	
 						});// end of ajax
 			
-						
-				// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
-				//alert( make_roomId );
 				
-				//소켓서버에 접속시킨다.
-				/* socket = io.connect("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
-					cors: { origin: "*" },
-					path: '/socket.io',
-					query: {
-						userId : $("#session_userId").val(),
-						profileImage : $("#session_profileImage").val(),
-						nickName : $("#session_nickName").val(),
-						roomId : make_roomId,
-					},
-					forceNew: true
-				}); */
-				// 소켓 접속
-				
-				//server message 라는 이벤트명으로 대기
-				/* socket.on('server message', function(data){
-				    //console.log(data);
-				    
-				    var display = "";
-					    
-					    if( $("#session_nickName").val() != data.username ){
-					    	display = "<div style='display: grid; grid-template-columns: 1fr 8fr;'>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-										+"<div>"
-											+"<div>"+data.username+"</div>"
-											+"<div>"
-												+"<div>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-									+"</div>";
-					    		
-					    }else{
-					    	display = "<div style='display: grid; grid-template-columns: 8fr 1fr;'>"
-										+"<div>"
-											+"<div style='float: right;'>"+data.username+"</div>"
-											+"<div>"
-												+"<div style='float: right;'>"+data.message+"</div>"
-											+"</div>"
-										+"</div>"
-										+"<div><img src='/resources/image/uploadFiles/"+data.profileImage+"' height='50px' width='50px' style='border-radius: 100px;'></div>"
-									+"</div>";
-					    }
-				    					    
-				    
-				    //소켓서버로부터 수신한 메시지를 화면에 출력한다.
-					$('#chatLog').append(display);
-				    
-				}); */
-				// 이벤트명으로 대기하다가 서버에서 데이터가 오면 출력한다
 			 	  
 			});//end of 프로필사진의 채팅 클릭시 1:1 채팅
 
@@ -2352,7 +2200,7 @@
 			
 			
 		   });//end of $(function
-		<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
+			<%-- 다이얼로그 창의 차단버튼과 팔로우 활성화 --%>
 		
 		</script>
 		

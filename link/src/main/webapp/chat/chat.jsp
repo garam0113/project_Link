@@ -8,6 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+
+
+
+
+
+
 <!-- 채팅 이미지 start -->
 <div>
 	<img id="chat-icon" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
@@ -81,22 +88,6 @@
 		<div id="chat-room-content" style="display: none;">
 			<div id="chat-room">
 				<div id="chatLog">
-					<%-- <div style="display: grid; grid-template-columns: 1fr 6fr;">
-						<div><img src="/resources/image/uploadFiles/robin.jpg" height="50px" width="50px" style="border-radius: 100px;"></div>
-						<div>
-							<div>닉네임</div>
-							<div style="position: relative; height: auto; background-color: red;">
-								<img src="/resources/image/uploadFiles/no_heart.jpg" style="vertical-align: middle;">
-								<div style="text-align: center; position: absolute; top: 3%; left: 5%; right: 13%;">루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-							</div>
-						</div>
-						<div>
-							<div>로빈</div>
-							<div>
-								<div>루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 메세지가 나오는 공간입니다 많이 나오면 어떻게 될까요? 루피 조로 나미 우솝 상디 쵸파 로빈 프랭키 브룩 가 나 다 라 마 바 사 아 자 차 카 타 파 하 1ㅏ 2ㅏ 3ㅏ 4ㅏ 5ㅏ 6 ㅏ7 ㅏ8 ㅏ9 10</div>
-							</div>
-						</div>
-					</div> --%>
 				</div>
 			</div>
 			<!-- 채팅 메세지 전송 start -->
@@ -114,5 +105,12 @@
 	<!-- 채팅 body end -->						
 </div>
 <!-- 채팅 end -->
+
+
+
+
+
+
+
 </body>
 </html>

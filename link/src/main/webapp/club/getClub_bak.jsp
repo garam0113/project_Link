@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -10,9 +10,9 @@
 
 <!-- <link rel="stylesheet" href="/css/admin.css" type="text/css"> -->
 
-<title>¸ğÀÓ»ó¼¼Á¶È¸</title>
+<title>ëª¨ì„ìƒì„¸ì¡°íšŒ</title>
 
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- alert -->
@@ -37,14 +37,14 @@
 		$(document).on("click","#deleteClub", function() {
 		
 			Swal.fire({
-				  title: 'Á¤¸» ¸ğÀÓÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?',
-				  text: "»èÁ¦ÇÑ ¸ğÀÓÀº º¹±¸°¡ ºÒ°¡´ÉÇÕ´Ï´Ù.",
+				  title: 'ì •ë§ ëª¨ì„ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+				  text: "ì‚­ì œí•œ ëª¨ì„ì€ ë³µêµ¬ê°€ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: '»èÁ¦',
-				  cancelButtonText: 'Ãë¼Ò' ,
+				  confirmButtonText: 'ì‚­ì œ',
+				  cancelButtonText: 'ì·¨ì†Œ' ,
 				}).then((result) => {
 				  if (result.value) {
 				    
@@ -64,18 +64,18 @@
 			//alert(joinClubLimit);
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
-			//¸ğ´ŞÃ¢ ¿­±â
+			//ëª¨ë‹¬ì°½ ì—´ê¸°
 			$('#club-add-approval-modal').modal("show");
 			} else {
 				
 				Swal.fire({
-					title: '¸ğÀÓ ÃÖ´ë ÇÑµµ ¼ö¸¦ ÃÊ°úÇÏ¿´½À´Ï´Ù.' ,
-					text: "°áÁ¦¸¦ ÅëÇØ ¸ğÀÓ ÇÑµµ¸¦ ´Ã¸± ¼ö ÀÖ½À´Ï´Ù." ,
+					title: 'ëª¨ì„ ìµœëŒ€ í•œë„ ìˆ˜ë¥¼ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.' ,
+					text: "ê²°ì œë¥¼ í†µí•´ ëª¨ì„ í•œë„ë¥¼ ëŠ˜ë¦´ ìˆ˜ ìˆìŠµë‹ˆë‹¤." ,
 					icon: 'warning',
 					showCancelButton: false,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
-					confirmButtonText: 'È®ÀÎ',
+					confirmButtonText: 'í™•ì¸',
 				}).then((result) => {
 					if(result.value){
 					
@@ -85,12 +85,12 @@
 			}
 		});
 		
-		$("input[value='½ÅÃ»']").bind("click", function() {
+		$("input[value='ì‹ ì²­']").bind("click", function() {
 			
 			if($.trim($("input[name='joinGreeting']").val()) == '' ){
 				Swal.fire({
 					icon: 'error' ,
-					title: 'Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù'
+					title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤'
 				})
 				return;
 			}
@@ -99,9 +99,9 @@
 		});
 		
 		
-		$("input[value='Ãë¼Ò']").bind("click", function() {
+		$("input[value='ì·¨ì†Œ']").bind("click", function() {
 			
-			//¸ğ´ŞÃ¢ ´İ±â
+			//ëª¨ë‹¬ì°½ ë‹«ê¸°
 			$('#club-add-approval-modal').modal("hide");
 		});
 		
@@ -133,14 +133,14 @@
 		$(document).on("click","#deleteApprovalCondition", function() {
 		
 			Swal.fire({
-				  title: 'Á¤¸» ¸ğÀÓÀ» Å»ÅğÇÏ½Ã°Ú½À´Ï±î?',
-				  text: "Å»Åğ ½Ã ´Ù½Ã °¡ÀÔ ½ÅÃ»À» ÇØ¾ßÇÕ´Ï´Ù",
+				  title: 'ì •ë§ ëª¨ì„ì„ íƒˆí‡´í•˜ì‹œê² ìŠµë‹ˆê¹Œ?',
+				  text: "íƒˆí‡´ ì‹œ ë‹¤ì‹œ ê°€ì… ì‹ ì²­ì„ í•´ì•¼í•©ë‹ˆë‹¤",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: '»èÁ¦',
-				  cancelButtonText: 'Ãë¼Ò' ,
+				  confirmButtonText: 'ì‚­ì œ',
+				  cancelButtonText: 'ì·¨ì†Œ' ,
 				}).then((result) => {
 				  if (result.value) {
 				    
@@ -198,7 +198,7 @@
 		socket = io.connect(url);
 
 		socket.on("connect", function() {
-			//alert("¼ÒÄÏ¿¬°á ¿Ï·á");
+			//alert("ì†Œì¼“ì—°ê²° ì™„ë£Œ");
 		});
 		
 		$(".live").on("click", function() {
@@ -228,24 +228,24 @@
 						+(index+1)+". "+data.viewRoomName+"</span><span style='font-size: larger; font-weight: bold;" 
 						+"color: black;'>("+data.member+"/"+data.limit+")</span><button type='button'" 
 						+"class='joinLive' style=' margin-left: 20px;'><input type='hidden'"
-						+"value='"+data.viewRoomName+"'/>ÀÔÀå</button></div>";
+						+"value='"+data.viewRoomName+"'/>ì…ì¥</button></div>";
 					})
 					swal.fire({
-						title : clubTitle+"¸ğÀÓÀÇ Ã¤ÆÃ¹æ",
+						title : clubTitle+"ëª¨ì„ì˜ ì±„íŒ…ë°©",
 						showCancelButton : true,
-						cancelButtonText : 'Ãë¼Ò',
-						confirmButtonText : 'Ã¤ÆÃ¹æ°³¼³',
+						cancelButtonText : 'ì·¨ì†Œ',
+						confirmButtonText : 'ì±„íŒ…ë°©ê°œì„¤',
 						html: "<div id='roomNameList' style='text-align-last: left; margin-left: 70px;'></div>",
 					}).then((result) => { 
 						var viewName;
 						if(result.isConfirmed){
 						swal.fire({
-							title : "Ã¤ÆÃ¹æ°³¼³",
-							html : "<input type='text' id='roomName' class='swal2-input' placeholder='¹æÁ¦¸ñ'>" +
-							"<input type='text' id='total' class='swal2-input' placeholder='ÀÎ¿ø¼ö'>",
+							title : "ì±„íŒ…ë°©ê°œì„¤",
+							html : "<input type='text' id='roomName' class='swal2-input' placeholder='ë°©ì œëª©'>" +
+							"<input type='text' id='total' class='swal2-input' placeholder='ì¸ì›ìˆ˜'>",
 							showCancelButton : true,
-							cancelButtonText : 'Ãë¼Ò',
-							confirmButtonText : '°³¼³',
+							cancelButtonText : 'ì·¨ì†Œ',
+							confirmButtonText : 'ê°œì„¤',
 							preConfirm : () => {
 								var total = Swal.getPopup().querySelector('#total').value
 								var roomName = Swal.getPopup().querySelector('#roomName').value
@@ -316,7 +316,7 @@
 		})
 		
 		socket.on("reRoomName", function(data) {
-			console.log("socket¼­¹ö¿¡¼­ ¹ŞÀº Data : "+data);
+			console.log("socketì„œë²„ì—ì„œ ë°›ì€ Data : "+data);
 			if(data != null){
 			$.ajax("/liveRest/json/exitLive", {
 				method : "POST",
@@ -459,7 +459,7 @@
 	<main role="main">
 
 		<div id="intro-wrap" data-height="17.35">
-			<!-- »ó´Ü °ËÀº»ö °øÅë ¿µ¿ª -->
+			<!-- ìƒë‹¨ ê²€ì€ìƒ‰ ê³µí†µ ì˜ì—­ -->
 			<div id="intro" class="preload darken">
 				<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
 				<div class="intro-item">
@@ -478,7 +478,7 @@
 			</div>
 		<!-- intro-wrap -->
 		
-			<div id="main" class="row"><!-- Áß°£ °³º°¿µ¿ª -->
+			<div id="main" class="row"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 					<div class="homeBtn_group">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
@@ -504,14 +504,14 @@
 		
 
 				<div class="mainForm" style="display: inline-flex;">
-					<!-- Å¬·´»ó¼¼ -->
+					<!-- í´ëŸ½ìƒì„¸ -->
 					<div>
 						<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
 
 							<div class="col-xs 6 col-md-6" style="display: contents;">
 								<div class="row">
 									<div class="col-xs-4 col-md-6" style="margin-left: 10px;">
-										<strong>¸ğÀÓÁ¦¸ñ</strong>
+										<strong>ëª¨ì„ì œëª©</strong>
 									</div>
 									<div class="col" style="margin-left: 30px;">${club.clubTitle}</div>
 								</div>
@@ -520,7 +520,7 @@
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>¸ğÀÓ¼³¸í</strong>
+										<strong>ëª¨ì„ì„¤ëª…</strong>
 									</div>
 									<div class="col" style="margin-left: 30px; height: 100px;">${club.clubDetail}</div>
 								</div>
@@ -529,7 +529,7 @@
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>Ä«Å×°í¸®</strong>
+										<strong>ì¹´í…Œê³ ë¦¬</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubCategory}</div>
 								</div>
@@ -538,7 +538,7 @@
 
 								<div class="row">
 									<div class="col-xs-4 col-md-6 " style="margin-left: 10px;">
-										<strong>È°µ¿¿µ¿ª</strong>
+										<strong>í™œë™ì˜ì—­</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${club.clubArea}</div>
 								</div>
@@ -547,7 +547,7 @@
 
 								<div class="row"> 
 									<div class="col-s-4 col-md-6 " style="margin-left: 10px;">
-										<strong>¸ğÀÓ¿ø ¼ö</strong>
+										<strong>ëª¨ì„ì› ìˆ˜</strong>
 									</div>
 									<div class="col-xs-8 col-md-4" style="margin-left: 15px;">${clubMemberCount}/${club.clubMaxMember}</div>
 								</div>
@@ -557,32 +557,32 @@
 						</form>
 
 					</div>
-					<!-- Å¬·´»ó¼¼ -->
+					<!-- í´ëŸ½ìƒì„¸ -->
 
-					<!-- ´Ş·Â¿µ¿ª -->
+					<!-- ë‹¬ë ¥ì˜ì—­ -->
 					<div class="calendarArea">
 
 						<jsp:include page="/club/calendar.jsp" />
 
 					</div>
-					<!-- ´Ş·Â ¿µ¿ª -->
+					<!-- ë‹¬ë ¥ ì˜ì—­ -->
 				</div>
-					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">ÀÏÁ¤»ı¼º</button>
+					<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">ì¼ì •ìƒì„±</button>
 				</div>
 				
 				<div class="form-group" id="btn_group">
 					<!-- <button type="button" class="joinLi"></button> -->
 				<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -140px;">
 		      		
-		      		<button type="button" class="plain button red cancel" id="club-add-approval">°¡ÀÔ½ÅÃ»</button>
-					<button type="button" class="plain button red cancel" id="cancel">ÀÌ&nbsp;Àü</button>
+		      		<button type="button" class="plain button red cancel" id="club-add-approval">ê°€ì…ì‹ ì²­</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì´&nbsp;ì „</button>
 					
 				<c:if test="${ fn:trim(sessionScope.user.userId) != fn:trim(club.user.userId) }">	
-					<button type="button" class="plain button red cancel" id="deleteApprovalCondition">Å»Åğ</button>
+					<button type="button" class="plain button red cancel" id="deleteApprovalCondition">íƒˆí‡´</button>
 				</c:if>					
 				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">				
-					<button type="button" class="plain button red cancel" id="updateClub">¼ö&nbsp;Á¤</button>
-					<button type="button" class="plain button red cancel" id="deleteClub">»è&nbsp;Á¦</button>
+					<button type="button" class="plain button red cancel" id="updateClub">ìˆ˜&nbsp;ì •</button>
+					<button type="button" class="plain button red cancel" id="deleteClub">ì‚­&nbsp;ì œ</button>
 				</c:if>
 				
 				</div>
@@ -590,7 +590,7 @@
 				
 				
 			
-			<!-- ¸ğ´Ş¿µ¿ª -->
+			<!-- ëª¨ë‹¬ì˜ì—­ -->
 			<div class="modal fade" id="club-add-approval-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
 					<div class="modal-content" style="height: 300px; width: 440px;">
@@ -598,18 +598,18 @@
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</button>
-							<h3 class="modal-title" id="exampleModalLabel">°¡ÀÔ½ÅÃ»</h3>
+							<h3 class="modal-title" id="exampleModalLabel">ê°€ì…ì‹ ì²­</h3>
 						</div>
 					<div class="club-add-approval-view">
 						<form name="addApprovalCondition" method="post" action="/club/addApprovalCondition" enctype=multipart/form-data>
 							<input type="hidden" name="clubNo" value="${ clubNo }">
 							<input type="hidden" name="roomId" value="${ club.roomId }">
 							<div class="clubJoinGreeting">
-								<input type="text" name="joinGreeting" placeholder="°¡ÀÔÀÎ»ç¸¦ ÀÛ¼ºÇØÁÖ¼¼¿ä" style="margin-top: 10px; margin-left: 10px; height: 130px; width: 365px;">
+								<input type="text" name="joinGreeting" placeholder="ê°€ì…ì¸ì‚¬ë¥¼ ì‘ì„±í•´ì£¼ì„¸ìš”" style="margin-top: 10px; margin-left: 10px; height: 130px; width: 365px;">
 							</div>
 							<div class="modalBtn" style="margin-top: -20px; margin-left: 98px;">
-							<input type="button" class="plain button red cancel" value="½ÅÃ»">
-							<input type="button" class="plain button red cancel" value="Ãë¼Ò">
+							<input type="button" class="plain button red cancel" value="ì‹ ì²­">
+							<input type="button" class="plain button red cancel" value="ì·¨ì†Œ">
 							</div>
 						</form>
 					</div>

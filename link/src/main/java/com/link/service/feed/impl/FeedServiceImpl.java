@@ -126,7 +126,6 @@ public class FeedServiceImpl implements FeedService {
 		originalComment.setSequence(((Comment) map.get("comment")).getSequence());
 		feedDAO.addFeedComment((originalComment));
 		
-		feedDAO.addPush(null);
 		
 	}
 	

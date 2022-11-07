@@ -21,23 +21,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.link.common.Page;
 import com.link.common.Search;
-import com.link.common.socket.EchoHandler;
+import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.Feed;
 import com.link.service.domain.Heart;
 import com.link.service.domain.Report;
 import com.link.service.domain.User;
 import com.link.service.feed.FeedService;
 import com.link.service.serviceCenter.ServiceCenterService;
-import com.link.service.user.UserService;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 public class FeedController {
-
-	@Autowired
-	@Qualifier("userServiceImpl")
-	private UserService userService;
 	
 	@Autowired
 	@Qualifier("feedServiceImpl")
@@ -46,6 +42,11 @@ public class FeedController {
 	@Autowired
 	@Qualifier("ServiceCenterServiceImpl")
 	private ServiceCenterService serviceCenterService;
+	
+	// 채팅에 필요한 코딩
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
+	private ClubPostService clubPostService;
 	
 	public FeedController() {
 		// TODO Auto-generated constructor stub
@@ -200,7 +201,7 @@ public class FeedController {
 	// 사용
 	@RequestMapping(value = "/feed/getFeed")
 	public String getFeed(@RequestParam(value = "feedNo") int feedNo, Search search, 
-								User user, Heart heart, Model model, HttpSession httpSession) throws Exception {
+								User user, Heart heart, Model model, HttpSession httpSession, Chat chat) throws Exception {
 		
 		user = (User) httpSession.getAttribute("user");
 		
@@ -235,6 +236,20 @@ public class FeedController {
 		model.addAttribute("feed", map.get("feed"));
 		model.addAttribute("commentList", commentMap.get("commentList"));
 		model.addAttribute("totalFeedCommentCount", commentMap.get("totalFeedCommentCount"));
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(httpSession.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		return "forward:/feed/getFeed.jsp";
 	}
@@ -412,7 +427,7 @@ public class FeedController {
 	
 	// 사용
 	@RequestMapping(value = {"/", "/feed/getFeedList"})
-	public String getFeedList(@ModelAttribute Search search, Heart heart,
+	public String getFeedList(@ModelAttribute Search search, Heart heart, Chat chat,
 								User user, HttpSession httpSession, Map<String, Object> map, Model model) throws Exception {
 		
 		user = (User) httpSession.getAttribute("user");
@@ -438,6 +453,20 @@ public class FeedController {
 		model.addAttribute("feedList", map.get("feedList"));
 		// model.addAttribute("alarm", serviceCenterService.getPushList(user).get("alarm"));
 		// model.addAttribute("alarmCount", serviceCenterService.getPushList(user).get("alarmCount"));
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(httpSession.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		return "forward:/feed/getFeedList.jsp";
 	}

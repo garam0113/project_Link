@@ -53,9 +53,6 @@ body>div.container {
 		$("#update").on("click", function() {
 			fncUpdateProfile();
 		});
-		$("#cancel").on("click", function() {
-			history.back();
-		});
 	});
 	
 	function fncUpdateProfile() {
@@ -244,8 +241,6 @@ body>div.container {
 										<td align="center">
 											<button type="button" class="btn btn-primary" id="update">등
 												&nbsp;록</button>
-											<button type="button" class="btn btn-primary" id="cancel">취
-												&nbsp;소</button>
 										</td>
 									</tr>
 								</tbody>

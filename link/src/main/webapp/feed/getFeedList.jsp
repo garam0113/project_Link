@@ -22,26 +22,17 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <%-- SUMMER NOTE --%>
 <script src="/resources/summernote/summernote-lite.js"></script>
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 <%-- SUMMER NOTE --%>
-
-<%-- ALERT --%>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<%-- ALERT --%>
-
-<%-- BOOTSTRAP ICON --%>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<%-- BOOTSTRAP ICON --%>
 
 <script type="text/javascript">
 	
@@ -602,9 +593,6 @@
 				if(user_Id == null) {
 					user_Id = $(this).parents(".feedHeader").siblings("input[name='user2']").val();
 					nickName = $(this).parent().next().text().trim();
-					
-					console.log("다른곳 :: " + user_Id);
-					console.log("다른곳 :: " + nickName);
 				}
 				
 				//alert(followUser.receiveId.userId);
@@ -700,10 +688,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -732,10 +719,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -745,18 +731,30 @@
 		      }
 		   })
 
-		}) 
-		$(".main").on("click",function(){
+		   
+		   $(document).on("click", ".main", function(){
 
-		    $("div[name='dialog']").parent().dialog("close");
+			    $("div[name='dialog']").parent().dialog("close");
 
-		}) 
-
-		$(document).on("click",".dll",function(){
+			}) 
+			
+		})//end of class="dl" 클릭시
+		
+		$(document).on("click",".dll",function(event){
+			
 		   
 		   var user_Id = $(this).parent().parent().attr("id");
 		   var nickName = $("."+user_Id+"").val();
 		   var profileImage = $(this).attr("id");
+		   
+		  	console.log(user_Id);
+			console.log(nickName);
+			console.log(profileImage);
+			
+			if(user_Id == null) {
+				user_Id = $(this).parents(".feedHeader").siblings("input[name='user2']").val();
+				nickName = $(this).parent().next().text().trim();
+			}
 		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 
@@ -796,9 +794,6 @@
 		         var bfbType = "";
 		         var bfbState = "";
 		      }
-		         
-		         
-		         
 		      
 		         
 		         if( freceiveId == user_Id && ffbType.trim() == '1' && ffbState.trim() == '1' && bfbType.trim() == '2' && bfbState.trim() == '1' ){
@@ -854,10 +849,9 @@
 		                    duration: 1000
 		               },
 		               position: {
-		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		            	   my: 'left',
+		            	   at: 'right',
+		            	   of: event
 		               }
 		               
 		            });
@@ -887,9 +881,9 @@
 		               },
 		               position: {
 		                  
-		                  my:"center",
-		                  at:"center",
-		                  of:"div[name='"+nickName+"']"
+		                  my:"left",
+		                  at:"right",
+		                  of:event
 		               }
 		               
 		            });
@@ -898,15 +892,487 @@
 		             $("#"+nickName+"1").dialog("open");
 		      }
 		   })
+		   
+		   $(document).on("click", ".main", function(){
 
-		})
+			    $("div[name='dialog']").parent().dialog("close");
+
+			});
+		   
+
+		});//end of class="dll" 클릭시
 		
-		$(".main").on("click",function(){
-
-		    $("div[name='dialog1']").parent().dialog("close");
-
-		})
 		
+		//다이얼로그 창의 차단버튼과 팔로우 활성화
+
+	      $(document).on("click","#follow", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "1"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log(data);
+	               console.log(data.follow);
+	            if(data.follow != null ){
+	               console.log("서버로 받은 데이터 : " + data.follow.userId);
+	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
+	               var fbState = "";
+	               if(data.follow.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.follow.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/myHomeRest/json/updateFollow", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "1",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+	                     if(update.follow.fbState == 1){
+	                        $("#follow").text("팔로잉");
+	                           if(sock) {
+	                                 var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+	                                 sock.send(Msg);
+	                           }
+	                        }else if(update.follow.fbState == 2){
+	                        $("#follow").text("팔로우");
+	                        }
+	                  }
+	               })
+	               }else if(data.follow ==null){
+	                  console.log("서버로 받은 데이터(error) : " + data.follow);
+
+	                  $.ajax("/myHomeRest/json/addFollow", {
+	                     type : "POST",
+	                     data : JSON.stringify({
+	                        receiveId : userId
+	                     }),
+	                     dataType : "json",
+	                     contentType : "application/json",
+	                     headers : {
+	                        "Accetp" : "application/json"
+	                     },
+	                     success : function(Data, status) {
+	                        console.log("서버로부터 받은 Data(error) : " + Data);
+	                        $("#follow").text("팔로잉");
+	                        
+	                        if(sock) {
+	                              var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+	                              sock.send(Msg);
+	                        }
+	                     }
+	                  })
+	               } 
+	            }
+	            
+	         })
+	      })
+
+	       $(document).on("click","#following", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+	           
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "1"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log(data);
+	               console.log("서버로 받은 데이터 : " + data.follow.userId);
+	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
+	               var fbState = "";
+	               if(data.follow.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.follow.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/myHomeRest/json/updateFollow", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "1",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+	                     if(update.follow.fbState == 1){
+	                     $("#following").text("팔로잉");
+	                     if(sock) {
+	                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+	                           sock.send(Msg);
+	                     }
+	                     }else if(update.follow.fbState == 2){
+	                     $("#following").text("팔로우");
+	                     }
+	                  }
+	               })
+	            }
+	         })
+	      }) 
+
+	       $(document).on("click","#updateFollow", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "1"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log("서버로 받은 데이터 : " + data.follow.userId);
+	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
+	               var fbState = "";
+	               if(data.follow.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.follow.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/myHomeRest/json/updateFollow", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "1",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
+	                     if(update.follow.fbState == 1){
+	                     $("#updateFollow").text("팔로잉");
+	                     if(sock) {
+	                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
+	                           sock.send(Msg);
+	                     }
+	                     }else if(update.follow.fbState == 2){
+	                     $("#updateFollow").text("팔로우");
+	                     }
+	                  }
+	               })
+	            }
+	         })
+	      })
+
+
+	      $(document).on("click","#block", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "2"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log(data);
+	               console.log(data.block);
+	               if(data.block != null ){
+	               console.log("서버로 받은 데이터 : " + data.block.userId);
+	               console.log("서버로 받은 데이터 : " + data.block.fbState);
+	               var fbState = "";
+	               if(data.block.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.block.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/userRest/json/updateBlock", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "2",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+	                     if(update.block.fbState == 1){
+	                        $("#block").text("차단해제");
+	                        }else if(update.block.fbState == 2){
+	                        $("#block").text("차단");
+	                        }
+	                  }
+	               })
+	               }else if(data.block ==null){
+	                  console.log("서버로 받은 데이터(error) : " + data.block);
+
+	                  $.ajax("/userRest/json/addBlock", {
+	                     type : "POST",
+	                     data : JSON.stringify({
+	                        receiveId : userId
+	                     }),
+	                     dataType : "json",
+	                     contentType : "application/json",
+	                     headers : {
+	                        "Accetp" : "application/json"
+	                     },
+	                     success : function(Data, status) {
+	                        console.log("서버로부터 받은 Data(error) : " + Data);
+	                        $("#block").text("차단해제");
+	                     }
+	                  })
+	               }
+	            }
+	            
+	         })
+	      })
+
+	      $(document).on("click","#stopBlock", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "2"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log(data);
+	               console.log("서버로 받은 데이터 : " + data.block.userId);
+	               console.log("서버로 받은 데이터 : " + data.block.fbState);
+	               var fbState = "";
+	               if(data.block.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.block.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/userRest/json/updateBlock", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "2",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+	                     if(update.block.fbState == 1){
+	                     $("#stopBlock").text("차단해제");
+	                     }else if(update.block.fbState == 2){
+	                     $("#stopBlock").text("차단");
+	                     }
+	                  }
+	               })
+	            }
+	         })
+	      })
+
+	      $(document).on("click","#updateBlock", function() {
+	         var userId = $(this).parent().parent().attr("id");
+	         console.log("전달받은 회원 Id : " + userId);
+
+	         $.ajax("/myHomeRest/json/getFollow", {
+	            type : "POST",
+	            data : JSON.stringify({
+	               receiveId : userId,
+	               fbType : "2"
+	            }),
+	            dataType : "json",
+	            contentType : "application/json",
+	            headers : {
+	               "Accept" : "application/json"
+	            },
+	            success : function(data, status) {
+	               console.log("서버로 받은 데이터 : " + data.block.userId);
+	               console.log("서버로 받은 데이터 : " + data.block.fbState);
+	               var fbState = "";
+	               if(data.block.fbState == 1){
+	                  fbState = "2";
+	               }else if(data.block.fbState == 2){
+	                  fbState = "1";
+	               }
+	               
+	               console.log("state 값 : "+fbState);
+	               $.ajax("/userRest/json/updateBlock", {
+	                  type : "POST",
+	                  data : JSON.stringify({
+	                     receiveId : userId,
+	                     fbType : "2",
+	                     fbState : fbState
+	                  }),
+	                  dataType : "json",
+	                  contentType : "application/json",
+	                  headers : {
+	                     "Accept" : "application/json"
+	                  },
+	                  success : function(update, status) {
+	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
+	                     if(update.block.fbState == 1){
+	                     $("#updateBlock").text("차단해제");
+	                     }else if(update.block.fbState == 2){
+	                     $("#updateBlock").text("차단");
+	                     }
+	                  }
+	               })
+	            }
+	         })
+	      })
+
+	      
+	      
+	    <%-- 1:1 채팅 --%>
+		$(document).on("click","button:contains('채팅')", function() {
+			alert("1:1채팅");
+			$("#chat-icon").attr("style", "display:none");
+			// 채팅창 보인다
+			$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+			 	  
+			// 1:1채팅 보이고 모임채팅 숨긴다
+			$("#user-chat-list").removeAttr("style");
+			$("#club-chat-list").attr("style", "display: none");
+			// 1:1채팅 이미지 테두리 이벤트, 모임채팅 이미지 테두리 이벤트 없애기
+			$(this).attr("style", "box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;");
+			$(".chat-img-sidebar.people-users").removeAttr("style");
+			
+			//alert( "1:1 채팅하고하는 상대방 아이디 : " + user_Id );
+			var make_roomId = "";
+			
+
+			socket.disconnect();
+			$('#chatLog').empty();
+			
+			$("#allChat-toobar-title").attr("style", "display: none");
+			$("#allChat-toobar-back").removeAttr("style");
+			
+			$("#chat-list-content").attr("style", "display: none");
+			$("#chat-room-content").removeAttr("style");
+			
+			// ajax로 roomId 만들어서 DB에 넣고
+			$.ajax( "/clubPostRest/json/addChat",
+					{
+						method : "POST",
+						data : JSON.stringify({
+							userId2 : user_Id
+						}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							//alert(status);
+							
+							var user_chat_list = "";
+							$("#user-chat-list").empty();
+							
+							for (var i = 0; i < JSONData.length; i++) {
+								//alert(JSONData[i].roomId);
+								//alert(JSONData[i].user2.nickName);
+								//alert(JSONData[i].user2.profileImage);
+								//alert(JSONData[i].currentRoomId);
+								
+								make_roomId = JSONData[i].currentRoomId;
+
+								// 넣은 roomId까지 가져와서 1:1채팅 리스트 돌리고
+								user_chat_list = "<div class='chat-content chat-content-onechat' roomId='"+JSONData[i].roomId+"' namespace='userchat'>"
+														+"<div>"
+															+"<img class='chat-img-main' src='/resources/image/uploadFiles/"+JSONData[i].user2.profileImage+"'>"
+														+"</div>"
+														+"<div>"+JSONData[i].user2.nickName+"</div>"
+													+"</div>";
+								
+								$("#user-chat-list").append( user_chat_list );
+							}
+							
+							//alert( make_roomId );
+							console.log(socket)
+							
+							// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
+							//소켓서버에 접속시킨다.
+							socket = io("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
+								cors: { origin: "*" },
+								path: '/socket.io',
+								query: {
+									userId : $("#session_userId").val(),
+									profileImage : $("#session_profileImage").val(),
+									nickName : $("#session_nickName").val(),
+									roomId : make_roomId
+								},
+								forceNew: true,
+								autoConnect:false
+							});
+							console.log(socket)
+							
+							setChat()
+							
+							socket.connect()
+							
+							
+						}//end of success	
+					});// end of ajax
+		
+			
+		 	  
+		});//end of 프로필사진의 채팅 클릭시 1:1 채팅
 		
 		
 		<%-- 사이드 바 팔로우에서 이미지 클릭시 반장님 코드 --%>
@@ -1123,16 +1589,40 @@
 		$(document).on("click", ".comment", function(event) {
 			event.stopPropagation();
 			
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
+				
 			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
 			
 			$("#commentModalFeedNo").val(feedNo);
 			$("#commentModal").modal();
+			
 		});
 		
 		$(document).on("click", ".addCommentByModal", function(event) {
 			event.stopPropagation();
 			
-			if('${sessionScope.user}' == null) return false;
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
 			
 			var sessionUser = '${sessionScope.user.userId}';
 			var content = $("#contentModal").val();
@@ -1194,8 +1684,9 @@
 		
 		<%-- 무한 스크롤 --%>
 		
-		$(window).scroll(function() {
+		$(window).scroll(function(event) {
 			console.log(($("#pageFlag").val()));
+			
 			if($("#pageFlag").val() == "true") {
 			
 				if((Math.ceil($(window).scrollTop() + $(window).height())) >= ( $(document).height() )) {
@@ -1261,6 +1752,7 @@
 										if(sessionUser == item.user.userId) {
 											addHtml += '<div class="udIcon">' +
 														'<span class="glyphicon glyphicon-trash btn_delete" aria-hidden="true" ></span>' +
+														'<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>' +
 														'</div>'
 										}
 										
@@ -1389,6 +1881,7 @@
 									
 									if(addHtml == "") {
 										$("#pageFlag").val(false);
+										
 									}
 									
 								} // success close
@@ -1399,7 +1892,9 @@
 					
 				} // scroll if close
 			
-			} // pageFlag close;
+			} else { // 여기에 스크롤 이벤트 종료
+				event.preventDefault();
+			}// pageFlag close;
 		
 		}); // window scroll event close
 		
@@ -1436,8 +1931,37 @@
 		
 		<%-- SUMMER NOTE WEB LOADING --%>
 		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		$('#summernoteUpdate').summernote({
+			toolbar: [
+                // [groupName, [list of button]]
+                ['Insert', ['picture', 'video']],
+            ],
+            
+            disableResizeEditor: true,
+			height: 200,                 	// 에디터 높이
+			minHeight: null,             	// 최소 높이
+			maxHeight: null,             	// 최대 높이
+			focus: true,                 	// 에디터 로딩후 포커스를 맞출지 여부
+			
+			callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+           			// 파일 업로드(다중업로드를 위해 반복문 사용)
+					for (var i = files.length - 1; i >= 0; i--) {
+			            uploadSummernoteImageFile(files[i],
+			            this);
+		            		
+					}
+          		}
+            }
+		
+		});
+		
+		<%-- SUMMER NOTE WEB LOADING --%>
+		
 		<%-- GET_FEED --%>
 		$(document).on("click", ".feedForm", function(event) {
+			alert("a");
 			event.stopPropagation();
 			var feedNumber = $(this).children("input[name='feedNo']").val();
 			
@@ -1465,7 +1989,7 @@
 					  showConfirmButton : false,
 				})
 			} else {
-				$(this.form).attr("method", "POST").attr("accept-charset", "euc-kr").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+				$(this.form).attr("method", "POST").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
 				
 				$.ajax (
 						{
@@ -1498,25 +2022,19 @@
 		<%-- UPDATE_FEED --%>
 		$(document).on("click", ".btn_update", function(event){
 			event.stopPropagation();
-			// console.log("피드 수정 버튼");
-			// console.log($(this).parents(".feedForm").html())
-			
-			// $(this).parent().parents(".feedForm").attr("method", "GET").attr("action", "/feed/updateFeed").submit();
-			
-			// alert($(this).parents(".feedHeader").siblings(".feedContent").find(".feedLetter").html().trim())
 			
 			$(".updateCover").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedCover").html().trim())
 			$(".updateFormName").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedName").html().trim())
 			$(".updateFeedDate").html($(this).parents(".udIcon").siblings(".feedLeft").find(".feedDate").html().trim())
-			$("#updateFeedForm textarea").html($(this).parents(".feedHeader").siblings(".feedContent").html())
-			
+			$("#updateFeedForm").find("input[name='feedNo']").val($(this).parents(".feedHeader").siblings("input[name='feedNo']").val());
+			$("#summernoteUpdate").next().find(".note-editable").html($(this).parents(".feedHeader").siblings("input[name='forUpdateFullContent']").val())
 			
 			$('#updateModal').modal();
 		});
 		
 		$(document).on("click", ".btn_updateFeed", function(event) {
 			console.log("수정하기");
-			$("#updateFeedForm").attr("method", "GET").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+			$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 		})
 		<%-- UPDATE_FEED --%>
 		
@@ -1653,18 +2171,30 @@
 		$(document).on("click", ".report", function(event) {
 			event.stopPropagation();
 			
-			// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
-			// $(".modal-content").load("/loginModal");
-			var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
-			var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+			var sessionUser = '${sessionScope.user}';
 			
-			// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+			if(sessionUser == "" || sessionUser == null) {
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+			} else {
 			
-			$("#user2").val(reportedUser);
-			$("#feedNo").val(feedNo);
-			
-			$('#reportModal').modal();
-
+				// $(this).parent().parents(".feedForm").attr("method", "POST").attr("action", "/serviceCenter/addReport").submit();
+				// $(".modal-content").load("/loginModal");
+				var reportedUser = $(this).parents(".lastBar").siblings("input[name='user2']").val();
+				var feedNo = $(this).parents(".lastBar").siblings("input[name='feedNo']").val();
+				
+				// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
+				
+				$("#user2").val(reportedUser);
+				$("#feedNo").val(feedNo);
+				
+				$('#reportModal').modal();
+			}
 			//	window.open('/serviceCenter/addReportView.jsp',  '_blank', 'width=200,height=200,resizeable,scrollbars');
 		})	// .report evenet close
 		
@@ -1766,7 +2296,6 @@
  	 outline: none;
  	 box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
  	 border-radius: 10px;
-  	 padding: 10px;
    	 color: #5F0080 !important;
 	 font-size: 16px !important;
 	 text-align: center;
@@ -1874,6 +2403,7 @@
 		}
 	}
 }
+
 </style>
 
 <!------------------------------ CSS ------------------------------>
@@ -1883,12 +2413,34 @@
 </head>
 
 <body>
+		
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
 
 	<jsp:include page="/toolbar.jsp" />
 
 	<main role="main">
 
 		<div id="main">
+		
+			<c:if test="${ sessionScope.user != null }">
+	
+				<%-- chat.js에서 사용위해서 --%>
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.js에서 사용위해서 --%>
+				<%-- 채팅 --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- 채팅 --%>
+			
+			</c:if>
 
 			<section class="row section">
 				<div class="container">
@@ -1900,8 +2452,7 @@
 									onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 	
 								<%-- 검색 --%>
-								<form id="searchForm" method="POST" action="/feed/getFeedList"
-									accept-charset="euc-kr">
+								<form id="searchForm" method="POST" action="/feed/getFeedList">
 	
 									<input type="text" id="searchKeyword" placeholder="검색"
 										name="searchKeyword" value="${search.searchKeyword}">
@@ -1922,9 +2473,11 @@
 							</h3>
 							
 							
+							<%--
 							
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
-
+							
+							--%>
 						</div>
 
 						<div class="column six">
@@ -1980,7 +2533,7 @@
 													<div class="feedInner">
 														<div class="feedCover">
 															<img class="feedProfileImage dl" src="/resources/image/uploadFiles/${feed.user.profileImage}" alt="${feed.user.profileImage}"/>
-															<div class="${feed.user.nickName}"></div>
+															
 														</div>
 														<div class="feedName dlFeednickName">${feed.user.nickName}</div>
 													</div>
@@ -1995,7 +2548,7 @@
 
 													<div class="udIcon">
 														<%-- 수정 버튼 --%>
-														<%-- <span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span> --%>
+														<span class="glyphicon glyphicon-paperclip btn_update" aria-hidden="true"></span>
 														<%-- 수정 버튼 --%>
 
 														<%-- 삭제 버튼 --%>
@@ -2112,6 +2665,8 @@
 											<input type="hidden" name="feedNo" value="${feed.feedNo}">
 											<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}">
 											<input type="hidden" name="openCondition" value="3">
+											
+											<input type="hidden" name="forUpdateFullContent" value='${feed.fullContent}'>
 
 											<!-- 피드 좋아요 댓글수 신고 -->
 											<section class="row section lastBar">
@@ -2357,19 +2912,68 @@
 					</form>
 
 					<div class="modal-footer">
-						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
-							Close
-						</button>
-						
 
 						<button type="button" class="custom-btn btn-13">등록</button>
-
 						
+						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
+							취소
+						</button>
 
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<!-- 수정 Modal -->
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<form id="updateFeedForm">
+
+					<!-- 피드 내용 -->
+					<div class="post-area clear-after">
+
+						<article role="main">
+							<div class="updateModalHeader">
+								<div class="updateModalLeft">
+									<div class="updateModalInner">
+										<div class="updateCover">
+											<img class="updateFeedProfileImage" src="/resources/image/uploadFiles/${feed.user.profileImage}" />
+										</div>
+
+										<div class="updateFormName">${feed.user.nickName}</div>
+									</div>
+
+									<div class="updateFeedDate">
+									</div>
+								</div>
+							</div>
+
+							<textarea id="summernoteUpdate" name="fullContent"></textarea>
+
+						</article>
+
+					</div>
+
+					<!-- 댓글 관련 hidden -->
+					<input type="hidden" name="source" value="0">
+					<input type="hidden" name="openCondition" value="3">
+					<input type="hidden" name="userId" value="${sessionScope.user.userId}">
+					<input type="hidden" name="feedNo" value="">
+
+					<!-- 댓글 관련 hidden -->
+				</form>
+
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default btn_updateFeedCancel" data-dismiss="modal">이전</button>
+					<button class="btn btn-primary btn_updateFeed" type="button">수정</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 수정 Modal -->
 
 	</main>
 

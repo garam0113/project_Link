@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,8 +11,8 @@
 <html lang="ko">
 	
 <head>
-	<title>¸ğÀÓ¿ø¸®½ºÆ®</title>
-	<meta charset="EUC-KR">
+	<title>ëª¨ì„ì›ë¦¬ìŠ¤íŠ¸</title>
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -22,9 +22,9 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 		
-	 <!-- jQuery UI toolTip »ç¿ë CSS-->
+	 <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
+	  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
  	 <!-- alert -->
@@ -94,7 +94,7 @@
 	function fncUpdateMemberRole() {
 		
 		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
-		alert("¸ğÀÓ¿ø ¼öÁ¤ È­¸é")
+		alert("ëª¨ì„ì› ìˆ˜ì • í™”ë©´")
 		.submit();
 	}
 	
@@ -102,22 +102,22 @@
 		location.reload();
 	}
 	
-	//´Ğ³×ÀÓ, ÇÁ·ÎÇÊ»çÁø Å¬¸¯½Ã ÇØ´ç À¯ÀúÀÇ ¸¶ÀÌÈ¨ÇÇ·Î ÀÌµ¿
+	//ë‹‰ë„¤ì„, í”„ë¡œí•„ì‚¬ì§„ í´ë¦­ì‹œ í•´ë‹¹ ìœ ì €ì˜ ë§ˆì´í™ˆí”¼ë¡œ ì´ë™
 	function getMyHomeGo(userId){
 		location.href = "/myHome/getYourHome?userId="+userId;
 	}
 
 	
-	//Ãß¹æ ±×³É ÄÁÆ®·Ñ·¯
+	//ì¶”ë°© ê·¸ëƒ¥ ì»¨íŠ¸ë¡¤ëŸ¬
 	 $(function() {
 		$("#banMember").on("click", function() {
-			//alert("¸ğÀÓ¿øÀ» Ãß¹æÇÕ´Ï´Ù : ");
+			//alert("ëª¨ì„ì›ì„ ì¶”ë°©í•©ë‹ˆë‹¤ : ");
 			
 			$("form").attr("method", "POST").attr("action", "/club/deleteClubMember").submit();
 		 });
 
 
-			//Ãß¹æ ±×³É ÄÁÆ®·Ñ·¯	
+			//ì¶”ë°© ê·¸ëƒ¥ ì»¨íŠ¸ë¡¤ëŸ¬	
 			
 		$(function() {	
 			$(document).on("click", "#banMember", function(){
@@ -138,7 +138,7 @@
 						} // end of success  
 					}); //end of ajax
 					refreshMemList();
-			}); //¸ğÀÓ¿ø Ãß¹æ 
+			}); //ëª¨ì„ì› ì¶”ë°© 
 	 	});
 	 
 	 
@@ -146,7 +146,7 @@
 			$(function() {
 				
 				$(".updateApprovalConditionBtn").on("click", function() {
-					//alert("¸ğÀÓ¿øÀ» ½ÂÀÎÇÕ´Ï´Ù : ");
+					//alert("ëª¨ì„ì›ì„ ìŠ¹ì¸í•©ë‹ˆë‹¤ : ");
 					
 					var totalClubMemberCount = $("input[name='totalClubMemberCount']").val();
 					var clubMaxMember = $("input[name='clubMaxMember']").val();
@@ -157,13 +157,13 @@
 					if(totalClubMemberCount >= clubMaxMember) {
 							
 						Swal.fire({
-							title: '¸ğÀÓ¿ø ÇÑµµ ÃÊ°úÀÔ´Ï´Ù.' ,
-							text: "°áÁ¦¸¦ ÅëÇØ ¸ğÀÓ¿ø ÇÑµµ¸¦ ´Ã¸± ¼ö ÀÖ½À´Ï´Ù." ,
+							title: 'ëª¨ì„ì› í•œë„ ì´ˆê³¼ì…ë‹ˆë‹¤.' ,
+							text: "ê²°ì œë¥¼ í†µí•´ ëª¨ì„ì› í•œë„ë¥¼ ëŠ˜ë¦´ ìˆ˜ ìˆìŠµë‹ˆë‹¤." ,
 							icon: 'warning',
 							schowCancelButton: false ,
 							confirmButtonColor: '#3085d6',
 							cancelButtonColor: '#d33',
-							confirmButtonText: 'È®ÀÎ',
+							confirmButtonText: 'í™•ì¸',
 						}).then((result) => {
 							if(result.value){
 							
@@ -180,7 +180,7 @@
 			});
 				
 			$(document).on("click", ".updateApprovalConditionBtn", function(){
-				//alert('½ÂÀÎ');
+				//alert('ìŠ¹ì¸');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr('approvalCondition');
  				//alert(clubUserNo);
@@ -202,7 +202,7 @@
 							} // end of success
 						}); // end of ajax
 						refreshMemList();
-				}); // end of ½ÂÀÎ
+				}); // end of ìŠ¹ì¸
 			});
 
 	
@@ -227,7 +227,7 @@
 			popup();
 		});
 		
-		$("button:contains('Àü´Ş')").on("click", function() {
+		$("button:contains('ì „ë‹¬')").on("click", function() {
 			openWin.document.getElementById("clubUserNo").value = $(this).val();
 			openWin.document.getElementById("memberRole").value = $(this).attr("memberRole") ;
 			openWin.document.getElementById("userId").value = $(this).attr("userId");
@@ -235,7 +235,7 @@
 	});
 	
 	
-	//È¨¹öÆ°
+	//í™ˆë²„íŠ¼
 	$(function() {
 		$(".homeBtn").on("click", function() {
 			self.location="/club/getClub?clubNo="+${clubNo};
@@ -260,60 +260,85 @@
 
 	
 	<body class="blog masonry-style" style="background: #EBEDF0;">
+
+
+
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- ì±„íŒ… js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- ì±„íŒ… css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	
+	
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	
 	<jsp:include page="/toolbar.jsp" />
 	
-	<!-- <main role="main">
 		
-			<div id="intro-wrap" data-height="20">»ó´Ü °ËÀº»ö °øÅë ¿µ¿ª
-				<div id="intro" class="preload darken">					
-					<div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);">
-						<div class="caption">
-							<h2>CLUB MEMBER LIST</h2>
-							<p>Manage the members of the club...</p>
-						</div>
-					</div>								
-				</div>intro
-			</div>intro-wrap -->
+			<div id="main" class="row"><!-- ì¤‘ê°„ ê°œë³„ì˜ì—­ -->
 			
-		
-			<div id="main" class="row"><!-- Áß°£ °³º°¿µ¿ª -->
+			
+			
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+				<%-- ì±„íŒ… --%>
+				<jsp:include page="/chat/chat.jsp" />
+				<%-- ì±„íŒ… --%>
+				
+				
 			
 				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px; padding-bottom: 20%;">
+				
+				<!-- ì´ë¯¸ì§€ë‘ í•©ì¹œ div -->
+					<div>
 					
-				<div class="homeBtn_group">
-						<button type="button" class="homeBtn" style="margin-top: 17px;">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
-						</button>
-						
-						<button type="button" class="clubPostBtn">
-							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="clubMemberBtn">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="live">
-							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
-						</button>
-				</div>
+						<!-- ëª¨ì„ ëŒ€í‘œì´ë¯¸ì§€ -->				
+						<div class="club-image" style="margin-left: 130px; margin-top: -45px; margin-bottom: 35px;">
+							<a href="/club/getClub?clubNo=${clubNo}"><img
+								src="/resources/image/uploadFiles/${club.clubImage}"
+								width="800" height="300" name="file" id="clubImage"></a>
+						</div>
+					
+					
+					
+						<div class="homeBtn_group">
+								<button type="button" class="homeBtn" style="margin-top: 17px;">
+									<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+								</button>
+								
+								<button type="button" class="clubPostBtn">
+									<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+								</button>
+								
+								<button type="button" class="clubMemberBtn">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</button>
+								
+								<button type="button" class="live">
+									 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+								</button>
+						</div>
 		
 
 	<div class="container">
 	
 		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">${club.clubTitle}ÀÇ ¸ğÀÓ¿ø </h2>
+			<h2 class="sub_tit_txt">${club.clubTitle}ì˜ ëª¨ì„ì› </h2>
 		</div>
 	
 		<input type="hidden" id="totalClubMemberCount" name="totalClubMemberCount" value="${totalClubMemberCount}">
 		<input type="hidden" id="clubMaxMember" name="clubMaxMember" value="${club.clubMaxMember}">
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	  		  <div class="row">
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
 				  
 				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
@@ -321,15 +346,15 @@
 					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
 						
 						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-							<button type="button" class="plain1 button red cancel" id="updateMemberRole">Á÷Ã¥¼öÁ¤</button>
+							<button type="button" class="plain1 button red cancel" id="updateMemberRole">ì§ì±…ìˆ˜ì •</button>
 						</c:if>
-						<button type="button" class="plain1 button red cancel" id="cancel">ÀÌ&nbsp;Àü</button>
+						<button type="button" class="plain1 button red cancel" id="cancel">ì´&nbsp;ì „</button>
 		  			</div>
 				</div>	
 	    	
 	
 	
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 		
 	
 	<div class="listForm" style="margin-top: 35px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >	
@@ -338,17 +363,17 @@
       
         <thead>
           <tr>
-            <th align="center">ÇÁ·ÎÇÊ»çÁø</th>	
-            <th align="left" >È¸¿ø ID</th>
-            <th align="left">È¸¿ø ´Ğ³×ÀÓ</th>
-            <th align="left">¸ğÀÓÁ÷Ã¥</th>
-            <th align="left">¸¶Áö¸· Á¢¼Ó½Ã°£</th>
-            <th align="left">¸ğÀÓ°¡ÀÔ³¯Â¥</th>
-            <th align="left">½ÂÀÎ»óÅÂ</th>
+            <th align="center">í”„ë¡œí•„ì‚¬ì§„</th>	
+            <th align="left" >íšŒì› ID</th>
+            <th align="left">íšŒì› ë‹‰ë„¤ì„</th>
+            <th align="left">ëª¨ì„ì§ì±…</th>
+            <th align="left">ë§ˆì§€ë§‰ ì ‘ì†ì‹œê°„</th>
+            <th align="left">ëª¨ì„ê°€ì…ë‚ ì§œ</th>
+            <th align="left">ìŠ¹ì¸ìƒíƒœ</th>
 	            <c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-		            <th align="left">Á÷Ã¥¼öÁ¤</th>
-		            <th align="left">Ãß¹æ</th>
-		            <th align="left">½ÂÀÎ/°ÅÀı</th>
+		            <th align="left">ì§ì±…ìˆ˜ì •</th>
+		            <th align="left">ì¶”ë°©</th>
+		            <th align="left">ìŠ¹ì¸/ê±°ì ˆ</th>
 		            <th align="left">Max</th>
 		        </c:if>
           	</tr>
@@ -368,16 +393,16 @@
 			  <td >${i.user.userId}</td>
 			  <td align="left">${i.user.nickName}</td>
 			  <%-- <td align="center">${i.memberRole}</td> --%>
-			  <td align="left">${ fn:trim(i.memberRole) == 0 ? "¸ğÀÓ¿ø" : ""} ${ fn:trim(i.memberRole) == 1 ? "¸ğÀÓºÎ´ëÇ¥" : ""} ${fn:trim(i.memberRole) == 2 ? "¸ğÀÓ´ëÇ¥" : ""}</td>
+			  <td align="left">${ fn:trim(i.memberRole) == 0 ? "ëª¨ì„ì›" : ""} ${ fn:trim(i.memberRole) == 1 ? "ëª¨ì„ë¶€ëŒ€í‘œ" : ""} ${fn:trim(i.memberRole) == 2 ? "ëª¨ì„ëŒ€í‘œ" : ""}</td>
 			  <td align="left">${i.logoutDate}</td>
 			  <td align="left">${i.joinRegDate}</td>
-			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "½ÂÀÎ´ë±â" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "½ÂÀÎ¿Ï·á" : ""}</td> 
+			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "ìŠ¹ì¸ëŒ€ê¸°" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "ìŠ¹ì¸ì™„ë£Œ" : ""}</td> 
 <%-- 			  <td align="center">${i.approvalCondition}</td> --%>
 				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">Àü´Ş</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">ì „ë‹¬</button></td>
 			  	
-			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">Ãß¹æ</button></td>
-			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">½ÂÀÎ</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">ì¶”ë°©</button></td>
+			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">ìŠ¹ì¸</button></td>
 					<td>${i.club.clubMaxMember}</td>
 				</c:if>
 			</tr>
@@ -388,7 +413,10 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
 	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
+ 	
+ 	<!-- ì´ë¯¸ì§€ë‘ í•©ì¹œ div -->
+ 	</div>
  	
 	</div>
 	</div>

@@ -789,13 +789,41 @@ select count(*) from ( select * from heart where trim(source) = 2 and source_no 
 
 
 
-select * from report_push where type = 2 and club_post_comment_no is not null;
-
-delete from report_push where club_post_comment_no = 1
-
-select club_post_comment_no, club_post_no, user_id, comment_count, parent, depth, comment_heart_count, comment_content from club_post_comment where delete_condition = 0
+INSERT INTO PAY (PAY_NO, USER_ID, CLUB_NO, PAY_PRODUCT, PAY_OPTION, TOTAL_PRICE, PAY_REG_DATE, UPDATE_CLUB_COUNT, UPDATE_CLUB_MEMBER_COUNT, MERCHANT_UID)
+VALUES (seq_pay_no.NEXTVAL, 'garam113', 2, '1', '2', 10000, SYSDATE, 0, 20, 'AIELF-WOHAS-2DJHE2')
 
 
+
+
+
+
+
+UPDATE CLUB_POST_COMMENT SET DELETE_CONDITION = '1', DELETE_USER_ID = 'food1' WHERE PARENT = 38
+
+
+
+SELECT *
+FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+				FROM club
+				ORDER BY club_no ) inner_table
+		WHERE ROWNUM <= 12 )
+WHERE row_seq BETWEEN 1 AND 12
+
+
+SELECT V3.*
+FROM ( SELECT V2.*
+		FROM ( SELECT ROW_NUMBER() OVER( ORDER BY club_no DESC ) AS row_seq, V1.*
+			  	FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+						FROM club
+						ORDER BY club_no ) V1
+			 ) V2
+		) V3
+WHERE row_seq BETWEEN 1 AND 4
+
+SELECT *
+FROM ( SELECT * FROM CLUB WHERE USER_ID = 'food1' ORDER BY CLUB_NO DESC )
+WHERE ROWNUM = 1
 
 
 

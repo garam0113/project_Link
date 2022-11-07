@@ -55,7 +55,7 @@
 			fncAddQandA();
 		});
 
-		$("button:contains('뒤로')").bind("click", function(){
+		$("button:contains('이전')").bind("click", function(){
 			if(${empty sessionScope.user.userId}){
 				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit();
 			}
@@ -150,6 +150,32 @@ margin-left: 400px !important;
 
 <body>
 
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
@@ -202,7 +228,7 @@ margin-left: 400px !important;
 					<button class="custom-btn btn-13"
 						style="transform: translate(220px, 0px);">등록</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">뒤로</button>
+						style="transform: translate(220px, 0px);">이전</button>
 				</div>
 			</div>
 			 

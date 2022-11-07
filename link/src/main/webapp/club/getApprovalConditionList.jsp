@@ -1,10 +1,10 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- °¡´É?? -->
+<!-- ê°€ëŠ¥?? -->
 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -14,8 +14,8 @@
 <html lang="ko">
 	
 <head>
-	<title>°¡ÀÔÇöÈ²¸®½ºÆ®</title>
-	<meta charset="EUC-KR">
+	<title>ê°€ì…í˜„í™©ë¦¬ìŠ¤íŠ¸</title>
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -27,7 +27,7 @@
 	
 	
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <!-- jQuery UI toolTip »ç¿ë JS-->
+	  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
  	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	 
 	 	 <meta name="description" content="The Page Description">
@@ -126,7 +126,7 @@
 	function fncUpdateMemberRole() {
 		
 		$("form").attr("method", "POST").attr("action", "/club/updateMemberRole")
-		alert("¸ğÀÓ¿ø ¼öÁ¤ È­¸é")
+		alert("ëª¨ì„ì› ìˆ˜ì • í™”ë©´")
 		.submit();
 	}
 	
@@ -162,18 +162,18 @@
                   <li class="menu-item"><a
                      href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="/user/login">·Î±×ÀÎ</a></li>
-                     <li class="menu-item"><a href="/user/addUser">È¸¿ø°¡ÀÔ</a></li>
+                     <li class="menu-item"><a href="/user/login">ë¡œê·¸ì¸</a></li>
+                     <li class="menu-item"><a href="/user/addUser">íšŒì›ê°€ì…</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a
-                        href="/user/logout?userId=${user.userId}">·Î±×¾Æ¿ô</a></li>
+                        href="/user/logout?userId=${user.userId}">ë¡œê·¸ì•„ì›ƒ</a></li>
                      <c:if test="${fn:trim(sessionScope.user.role) == '0' }">
                         <li class="menu-item"><a
-                           href="/user/getUser?userId=${user.userId}">³»Á¤º¸º¸±â</a></li>
+                           href="/user/getUser?userId=${user.userId}">ë‚´ì •ë³´ë³´ê¸°</a></li>
                      </c:if>
                      <c:if test="${fn:trim(sessionScope.user.role) == '1' }">
-                        <li class="menu-item"><a href="/user/getUserList">°ü¸®ÀÚÆäÀÌÁö</a></li>
+                        <li class="menu-item"><a href="/user/getUserList">ê´€ë¦¬ìí˜ì´ì§€</a></li>
                      </c:if>
                   </c:if>
                </ul>
@@ -208,7 +208,7 @@
 			<!-- intro-wrap -->
 
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	
 	<div class="container">
 	
@@ -220,19 +220,19 @@
 			
 			<div class="thumbnail" style="">
 			  <img src="/resources/image/uploadFiles/${i.clubImage}" alt=".">
-			  	<p class="club-cT"><strong>¸ğÀÓÁ¦¸ñ : ${i.clubTitle}</strong></p>
+			  	<p class="club-cT"><strong>ëª¨ì„ì œëª© : ${i.clubTitle}</strong></p>
 			  	<p>${i.clubArea}</p>
-			  	<%-- <p>ÇöÀçÀÎ¿ø : ${i.currentMember}</p> --%>
-			  	<p>ÃÖ´ëÀÎ¿ø : ${i.clubMaxMember}</p>
-			  	<p>½ÅÃ»ÇöÈ² : ${ fn:trim(i.approvalCondition) == 0 ? "½ÂÀÎ´ë±â" : "" } ${ fn:trim(i.approvalCondition) == 1 ? "½ÂÀÎ¿Ï·á" : ""}
-			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">¸ğÀÓº¸±â</p></a>			
+			  	<%-- <p>í˜„ì¬ì¸ì› : ${i.currentMember}</p> --%>
+			  	<p>ìµœëŒ€ì¸ì› : ${i.clubMaxMember}</p>
+			  	<p>ì‹ ì²­í˜„í™© : ${ fn:trim(i.approvalCondition) == 0 ? "ìŠ¹ì¸ëŒ€ê¸°" : "" } ${ fn:trim(i.approvalCondition) == 1 ? "ìŠ¹ì¸ì™„ë£Œ" : ""}
+			  	<p><a href="/club/getClub?clubNo=${i.clubNo}" class="btn btn-btn" role="button" style="margin-left: 5px;">ëª¨ì„ë³´ê¸°</p></a>			
 			</div>
 		</div>
    	</c:forEach>
 	</div>
 	  <!--  table End /////////////////////////////////////-->
 	  </div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
 	</main>
 </body>
 

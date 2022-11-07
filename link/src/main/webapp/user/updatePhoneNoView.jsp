@@ -10,17 +10,18 @@
 <html lang="ko">
 	
 <head>
+
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 	<script type="text/javascript" charset="utf-8" src="/resources/javascript/user/SMSCheck.js"></script>
 	
@@ -29,6 +30,21 @@
 		body {
             padding-top : 50px;
         }
+/*         button:hover {
+	border-style: hidden;
+	background-color: #5F0080;
+	color: white;
+	border-radius: 10px;
+	font-weight: bold;
+	border: solid 2px white;
+}
+
+button {
+	background-color: white;
+	border: solid 2px #5F0080;
+	border-radius: 20px; 
+	color:;
+} */
     </style>
     
     <script type="text/javascript">
@@ -39,7 +55,7 @@
 		});
 		
 		$("#back").on("click", function() {
-			window.close();
+			$('#modalPhone').modal('hide');
 		});
 	})
     
@@ -123,18 +139,19 @@
 
 <body>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="background-color: lavenderblush;" >
+	<div class='modal fade' id='modalPhone' style=" width: 850px; height: fit-content; margin-top: 420px; margin-left: 440px;">
+	<div class='modal-dialog'>
+	<div class='modal-content' style="width: fit-content; border-radius: 30px;"> 
+	<div class='modal-header' style="width: 560px; border: none;">
+	<div style="width: fit-content; margin-left: -20px;" >
 	
-			<h1 style="font-weight: bold; margin-bottom: 30px; margin-left: 60px;">핸드폰번호 변경</h1>
-	    
 	    <!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" >
 		
 		<input type="hidden" id = "userId" name="userId" value="${ user.userId }">
-		  <div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: -10px;">휴대전화번호</label>
-				<div class="col-sm-2">
-					<select class="form-control" name="phone1" id="phone1" style="margin-left: -10px;">
+		  <div class="form-group" style="display: flex; margin-left: 60px; margin-top: 30px;">
+				<div >
+					<select class="form-control" name="phone1" id="phone1" style="width: 80px; margin-left: 0px; font-size: large;">
 						<option value="010">010</option>
 						<option value="011">011</option>
 						<option value="016">016</option>
@@ -143,36 +160,33 @@
 					</select>
 				</div>
 			
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone2" name="phone2" style="margin-left: -20px;"
+				<div style="margin-left: 10px;">
+					<input type="text" class="form-control" id="phone2" name="phone2" style="margin-left: 0px; width: 110px; height: 41px;"
 						placeholder="번호">
 				</div>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="phone3" name="phone3" style="margin-left: -30px;"
+				<div style="margin-left: 10px;">
+					<input type="text" class="form-control" id="phone3" name="phone3" style="margin-left: 0px; width: 110px; height: 41px;"
 						placeholder="번호">
 				</div>
 				<input type="hidden" id="phoneNo" name="phoneNo" />
-				<div class="col-sm-2">
-					<button type="button" id="sendPhoneNumber" class="btn " style="margin-left: -40px; background: white; border-color: #5F0080;">인증번호전송</button>
+				<div style="margin-left: 10px;">
+					<button type="button" id="sendPhoneNumber" style="margin-left: 0px; border-radius: 12px; font-weight: bold; height: 38px;">인증번호전송</button>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: -20px;">인증번호</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="inputCertifiedNumber"
+			<div class="form-group" style="display: flex; margin-left: 60px; margin-top: 20px;">
+					<input type="text" class="form-control" id="inputCertifiedNumber" style=" width: 127px;"
 						name="inputCertifiedNumber" placeholder="인증번호">
 					<input type="hidden" id="checkNo">
-				</div>
-				<div class="col-sm-2">
-					<button type="button" id="checkBtn" class="btn "style="margin-left: -10px; background: white; border-color: #5F0080;">인증번호확인</button>
+				<div>
+					<button type="button" id="checkBtn" style="margin-left: 10px; border-radius: 12px; font-weight: bold; height: 38px;">인증번호확인</button>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" id="chang" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">확 &nbsp;인</button>
-					<button type="button" id="back" class="btn" style="background-color: #5F0080; border-style: hidden; color: white;">취&nbsp;소</button>
+				<div style="margin-left: 222px;	margin-top: 20px;">
+					<button type="button" id="chang" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">확 &nbsp;인</button>
+					<button type="button" id="back" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">취&nbsp;소</button>
 				</div>
 			</div>
 		</form>
@@ -180,7 +194,10 @@
 	    
  	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
- 	
+ 	</div>
+ 	</div>
+ 	</div>
+ 	</div>
 </body>
 
 </html>

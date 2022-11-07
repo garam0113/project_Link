@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,9 +17,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 <!--    
-   jQuery UI toolTip »ç¿ë CSS
+   jQuery UI toolTip ì‚¬ìš© CSS
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
-  	 	jQuery UI toolTip »ç¿ë JS
+  	 	jQuery UI toolTip ì‚¬ìš© JS
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -102,7 +102,7 @@
 		if ( joinGreeting == null || joinGreeting.length < 1 ) {
 			Swal.fire({
 				icon: 'error',
-				title: '°¡ÀÔÀÎ»ç´Â ÇÊ¼öÀÔ´Ï´Ù.' ,
+				title: 'ê°€ì…ì¸ì‚¬ëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤.' ,
 			});
 			return;
 		}
@@ -123,21 +123,21 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center" style="background-color:#ffffff; border-color:#BD76FF; color:#BD76FF; width:700px; margin-left: -87px;">¸ğ ÀÓ °¡ ÀÔ ½Å Ã»</h1>
+		<h1 class="bg-primary text-center" style="background-color:#ffffff; border-color:#BD76FF; color:#BD76FF; width:700px; margin-left: -87px;">ëª¨ ì„ ê°€ ì… ì‹  ì²­</h1>
 		
 		<form class="form-horizontal">
 		
 		<!-- 	<div class="form-group">
-				<label for="user.userId" class="col-sm-offset-1 col-sm-3 control-label">¾Æ ÀÌ µğ</label>
+				<label for="user.userId" class="col-sm-offset-1 col-sm-3 control-label">ì•„ ì´ ë””</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="user.userId" name="user.userId" placeholder="ÀÌ¸§Àº ÇÊ¼öÀÔ´Ï´Ù">
+					<input type="text" class="form-control" id="user.userId" name="user.userId" placeholder="ì´ë¦„ì€ í•„ìˆ˜ì…ë‹ˆë‹¤">
 				</div>					
 			</div> -->
 						
 			<div class="form-group">
-				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> °¡ ÀÔ ÀÎ »ç</label>
+				<label for="joinGreeting" class="col-sm-offset-1 col-sm-3 control-label"> ê°€ ì… ì¸ ì‚¬</label>
 				<div class="col-sm-4">
-					<textarea class="joinGreeting" id="joinGreeting" name="joinGreeting" maxlength="100" style="width: 300px; height: 50px;" placeholder="°¡ÀÔÀÎ»ç´Â ÇÊ¼öÀÔ´Ï´Ù."></textarea>
+					<textarea class="joinGreeting" id="joinGreeting" name="joinGreeting" maxlength="100" style="width: 300px; height: 50px;" placeholder="ê°€ì…ì¸ì‚¬ëŠ” í•„ìˆ˜ì…ë‹ˆë‹¤."></textarea>
 				</div>		
 			</div>
 			
@@ -145,8 +145,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-		      		<button type="button" class="plain button red cancel" id="apply">½Å&nbsp;Ã»</button>
-					<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+		      		<button type="button" class="plain button red cancel" id="apply">ì‹ &nbsp;ì²­</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 		    </div>
 			</div>
 		</form>	

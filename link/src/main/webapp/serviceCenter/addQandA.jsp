@@ -90,6 +90,32 @@ background-color: #EBEDF0 !important;
 
 <body>
 
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
@@ -113,7 +139,7 @@ background-color: #EBEDF0 !important;
 					<th style="text-align-last: center;">제목</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">		
-						${qandA.qandATitle}
+						<pre>${qandA.qandATitle}</pre>
 							<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}">
 					</td>	
 					</tr>
@@ -127,7 +153,7 @@ background-color: #EBEDF0 !important;
 						<th style="text-align-last: center;">내용</th>
 						<td style="display: flex; min-height : 150px; max-height: 800px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">
-								${qandA.qandAContent}
+							<pre>	${qandA.qandAContent}</pre>
 						<input type="hidden" id="qandAContent" name="qandAContent" value="${qandA.qandAContent}">
 						</td>
 					</tr>

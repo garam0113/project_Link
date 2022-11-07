@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
@@ -7,9 +7,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -19,15 +19,15 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">  
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
   
   <!-- addMeetingCss -->
   <link rel="stylesheet" href="/resources/css/addUser.css">
   
   
-  	<!--  	jQuery UI toolTip »ç¿ë JS -->
+  	<!--  	jQuery UI toolTip ì‚¬ìš© JS -->
   <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
   
@@ -60,7 +60,8 @@
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: #5F0080 !important;
 	   font-size: 16px !important;
 	   text-align: center;
@@ -73,7 +74,8 @@
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: white !important;
 	   font-size: 16px !important;
 	}
@@ -103,7 +105,7 @@
 		if (title == null || title.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓÀÌ¸§Àº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ì´ë¦„ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -111,7 +113,7 @@
 		if( content == null || content.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓ¼³¸íÀº ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ì„¤ëª…ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -119,7 +121,7 @@
 		if( image == null || image.length < 1) {
 			Swal.fire({
 				icon: 'error',
-				title: '¸ðÀÓ´ëÇ¥ÀÌ¹ÌÁö´Â ÇÊ¼öÀÔ´Ï´Ù.',
+				title: 'ëª¨ìž„ëŒ€í‘œì´ë¯¸ì§€ëŠ” í•„ìˆ˜ìž…ë‹ˆë‹¤.',
 			});
 			return;
 		}
@@ -131,7 +133,7 @@
 	$(function() {
 
 		$("#addClub").on("click", function() {
-			//alert($("td.ct_btn01:contains('µî·Ï')").html());
+			//alert($("td.ct_btn01:contains('ë“±ë¡')").html());
 			fncAddClub();
 		});
 	});
@@ -169,7 +171,7 @@
 	
 	
 	/* $.ajax({
-			url:'https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent('¼­¿ï½Ã µ¿´ë¹®±¸'),
+			url:'https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent('ì„œìš¸ì‹œ ë™ëŒ€ë¬¸êµ¬'),
 			type: 'GET' ,
 			headers: {'Authorization' : 'KakaoAK 6ee01fc9434961a580560a7920b95e95'} ,
 			
@@ -194,23 +196,23 @@
 		var latitude = position.coords.latitude;
 		console.log(longitude);
 	    console.log(latitude);
-	    //¡Ú¡ÚÀ§µµ °æµµ Á¤º¸¸¦ °¡Áö°í ¼­¹ö »çÀÌµå·Î ³Ñ¾î°¡´Â ºÎºÐ
+	    //â˜…â˜…ìœ„ë„ ê²½ë„ ì •ë³´ë¥¼ ê°€ì§€ê³  ì„œë²„ ì‚¬ì´ë“œë¡œ ë„˜ì–´ê°€ëŠ” ë¶€ë¶„
 		location.href = "/mbl/test/selectAddressList.do?longitude=" + longitude + "&latitude=" + latitude;
 	}
 
-	//¿¡·¯³µÀ» ¶§
+	//ì—ëŸ¬ë‚¬ì„ ë•Œ
 	function redirectLocation(error) {
 		location.href = "/mbl/error/selectAddressList.do";
 	}
 
-	//Å¸ÀÓ¾Æ¿ô
+	//íƒ€ìž„ì•„ì›ƒ
 	var geo_options = {
 		maximumAge        : 5000, 
 		timeout           : 3000
 	};
 	
 	
-	//ÆÄÀÏ µå·¡±× ¾Ø µå·Ó
+	//íŒŒì¼ ë“œëž˜ê·¸ ì•¤ ë“œë¡­
 	
 	$('#imageArea')
 		.on("dragover", dragOver)
@@ -243,7 +245,7 @@
 		    var files = e.target.files || e.dataTransfer.files;
 		 
 		    if (files.length > 1) {
-		        alert('ÇÏ³ª¸¸ ¿Ã·Á¶ó.');
+		        alert('í•˜ë‚˜ë§Œ ì˜¬ë ¤ë¼.');
 		        return;
 		    }
 		    
@@ -254,7 +256,7 @@
             "background-size": "100% 100%"
 		        });
 		    }else{
-		      alert('ÀÌ¹ÌÁö°¡ ¾Æ´Õ´Ï´Ù.');
+		      alert('ì´ë¯¸ì§€ê°€ ì•„ë‹™ë‹ˆë‹¤.');
 		      return;
 		    }
 		}
@@ -272,17 +274,17 @@
 		<div class="wrap wd668">
 			<div class="container" style="background: white;">
 				<div class="form_txtInput" style="margin-top: 150px;">
-					<h2 class="sub_tit_txt">¸ð ÀÓ µî ·Ï</h2>
-					<p class="exTxt">»õ·Î¿î ¸ðÀÓÀ» µî·ÏÇØº¸¼¼¿ä...</p>
+					<h2 class="sub_tit_txt">ëª¨ ìž„ ë“± ë¡</h2>
+					<p class="exTxt">ìƒˆë¡œìš´ ëª¨ìž„ì„ ë“±ë¡í•´ë³´ì„¸ìš”...</p>
 					<div class="join_form">
 		
 		<!-- <form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data"> -->
 		
 			<div class="form-group">
 				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
-				<!-- <strong>¸ð ÀÓ ÀÌ ¸§</strong><label for="clubTitle"></label> -->
+				<!-- <strong>ëª¨ ìž„ ì´ ë¦„</strong><label for="clubTitle"></label> -->
 				<div class="col-sm-4">
-					<strong>¸ð ÀÓ ÀÌ ¸§</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" placeholder="¸ðÀÓ ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
+					<strong>ëª¨ ìž„ ì´ ë¦„</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" placeholder="ëª¨ìž„ ì´ë¦„ì„ ìž…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
 				</div>					
 			</div>
 			
@@ -291,7 +293,7 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
-					<strong>¸ð ÀÓ ¼³ ¸í</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" placeholder="¸ðÀÓ¼³¸íÀº ÇÊ¼öÀÔ´Ï´Ù. (ÃÖ´ë 500ÀÚ)" maxlength="500" style="width: 500px; height: 300px;"></textarea>
+					<strong>ëª¨ ìž„ ì„¤ ëª…</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" placeholder="ëª¨ìž„ì„¤ëª…ì€ í•„ìˆ˜ìž…ë‹ˆë‹¤. (ìµœëŒ€ 500ìž)" maxlength="500" style="width: 500px; height: 300px;"></textarea>
 				</div>		
 			</div>
 			
@@ -299,17 +301,17 @@
 				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <select class="form-control"> -->
-					<strong>Ä«Å×°í¸®</strong>
+					<strong>ì¹´í…Œê³ ë¦¬</strong>
 					<select class="form-control" id="clubCategory" name="clubCategory" style="text-align: left; width: 350px;">
-						<option value="¿îµ¿">¿îµ¿</option>
-  						<option value="ºÀ»çÈ°µ¿">ºÀ»çÈ°µ¿</option>
-  						<option value="À½½Ä">À½½Ä</option>
-						<option value="¿©Çà">¿©Çà</option>
-						<option value="¹Ý·Áµ¿¹°">¹Ý·Áµ¿¹°</option>
-						<option value="°ÔÀÓ">°ÔÀÓ</option>
-						<option value="À½¾Ç/´í½º">À½¾Ç/´í½º</option>
-						<option value="µ¶¼­">µ¶¼­</option>
-						<option value="±âÅ¸">±âÅ¸</option>
+						<option value="ìš´ë™">ìš´ë™</option>
+  						<option value="ë´‰ì‚¬í™œë™">ë´‰ì‚¬í™œë™</option>
+  						<option value="ìŒì‹">ìŒì‹</option>
+						<option value="ì—¬í–‰">ì—¬í–‰</option>
+						<option value="ë°˜ë ¤ë™ë¬¼">ë°˜ë ¤ë™ë¬¼</option>
+						<option value="ê²Œìž„">ê²Œìž„</option>
+						<option value="ìŒì•…/ëŒ„ìŠ¤">ìŒì•…/ëŒ„ìŠ¤</option>
+						<option value="ë…ì„œ">ë…ì„œ</option>
+						<option value="ê¸°íƒ€">ê¸°íƒ€</option>
 					</select>
 				</div>			    
 			</div>			
@@ -317,33 +319,33 @@
 			<div class="form-group">
 				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
-					<strong>Áö¿ª</strong>
+					<strong>ì§€ì—­</strong>
 					<select class="form-control" id="clubArea" name="clubArea" style="text-align: left; width: 350px;">
-						<option value="°­³²±¸">°­³²±¸</option>
-						<option value="°­µ¿±¸">°­µ¿±¸</option>
-						<option value="°­ºÏ±¸">°­ºÏ±¸</option>
-						<option value="°­¼­±¸">°­¼­±¸</option>
-						<option value="°ü¾Ç±¸">°ü¾Ç±¸</option>
-						<option value="±¤Áø±¸">±¤Áø±¸</option>
-						<option value="±¸·Î±¸">±¸·Î±¸</option>
-						<option value="±ÝÃµ±¸">±ÝÃµ±¸</option>
-						<option value="³ë¿ø±¸">³ë¿ø±¸</option>
-						<option value="µµºÀ±¸">µµºÀ±¸</option>
-						<option value="µ¿´ë¹®±¸">µ¿´ë¹®±¸</option>
-						<option value="µ¿ÀÛ±¸">µ¿ÀÛ±¸</option>
-						<option value="¸¶Æ÷±¸">¸¶Æ÷±¸</option>
-						<option value="¼­´ë¹®±¸">¼­´ë¹®±¸</option>
-						<option value="¼­ÃÊ±¸">¼­ÃÊ±¸</option>
-						<option value="¼ºµ¿±¸">¼ºµ¿±¸</option>
-						<option value="¼ººÏ±¸">¼ººÏ±¸</option>
-						<option value="¼ÛÆÄ±¸">¼ÛÆÄ±¸</option>
-						<option value="¾çÃµ±¸">¾çÃµ±¸</option>
-						<option value="¿µµîÆ÷±¸">¿µµîÆ÷±¸</option>
-						<option value="¿ë»ê±¸">¿ë»ê±¸</option>
-						<option value="ÀºÆò±¸">ÀºÆò±¸</option>
-						<option value="Á¾·Î±¸">Á¾·Î±¸</option>
-						<option value="Áß±¸">Áß±¸</option>
-						<option value="Áß¶û±¸">Áß¶û±¸</option>
+						<option value="ê°•ë‚¨êµ¬">ê°•ë‚¨êµ¬</option>
+						<option value="ê°•ë™êµ¬">ê°•ë™êµ¬</option>
+						<option value="ê°•ë¶êµ¬">ê°•ë¶êµ¬</option>
+						<option value="ê°•ì„œêµ¬">ê°•ì„œêµ¬</option>
+						<option value="ê´€ì•…êµ¬">ê´€ì•…êµ¬</option>
+						<option value="ê´‘ì§„êµ¬">ê´‘ì§„êµ¬</option>
+						<option value="êµ¬ë¡œêµ¬">êµ¬ë¡œêµ¬</option>
+						<option value="ê¸ˆì²œêµ¬">ê¸ˆì²œêµ¬</option>
+						<option value="ë…¸ì›êµ¬">ë…¸ì›êµ¬</option>
+						<option value="ë„ë´‰êµ¬">ë„ë´‰êµ¬</option>
+						<option value="ë™ëŒ€ë¬¸êµ¬">ë™ëŒ€ë¬¸êµ¬</option>
+						<option value="ë™ìž‘êµ¬">ë™ìž‘êµ¬</option>
+						<option value="ë§ˆí¬êµ¬">ë§ˆí¬êµ¬</option>
+						<option value="ì„œëŒ€ë¬¸êµ¬">ì„œëŒ€ë¬¸êµ¬</option>
+						<option value="ì„œì´ˆêµ¬">ì„œì´ˆêµ¬</option>
+						<option value="ì„±ë™êµ¬">ì„±ë™êµ¬</option>
+						<option value="ì„±ë¶êµ¬">ì„±ë¶êµ¬</option>
+						<option value="ì†¡íŒŒêµ¬">ì†¡íŒŒêµ¬</option>
+						<option value="ì–‘ì²œêµ¬">ì–‘ì²œêµ¬</option>
+						<option value="ì˜ë“±í¬êµ¬">ì˜ë“±í¬êµ¬</option>
+						<option value="ìš©ì‚°êµ¬">ìš©ì‚°êµ¬</option>
+						<option value="ì€í‰êµ¬">ì€í‰êµ¬</option>
+						<option value="ì¢…ë¡œêµ¬">ì¢…ë¡œêµ¬</option>
+						<option value="ì¤‘êµ¬">ì¤‘êµ¬</option>
+						<option value="ì¤‘ëž‘êµ¬">ì¤‘ëž‘êµ¬</option>
 					</select>
 				</div>		
 			</div>			
@@ -352,7 +354,7 @@
 				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<!-- <input type="file" name="file" class="file" id="clubImage" multiple="multiple"> -->
-					<strong>¸ðÀÓÀÌ¹ÌÁö</strong><input type="file" name="file" class="file" id="clubImage" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file"/>
+					<strong>ëª¨ìž„ì´ë¯¸ì§€</strong><input type="file" name="file" class="file" id="clubImage" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file"/>
 					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width: 300px; max-width: 260%;"/></button>
 				</div>		
 			</div>
@@ -361,8 +363,8 @@
 			
 			<div class="form-group" id="btn_group">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 28%;">
-		      		<button type="button" class="plain button red cancel" id="addClub">µî &nbsp;·Ï</button>
-					<button type="button" class="plain button red cancel" id="cancel">Ãë&nbsp;¼Ò</button>
+		      		<button type="button" class="plain button red cancel" id="addClub">ë“± &nbsp;ë¡</button>
+					<button type="button" class="plain button red cancel" id="cancel">ì·¨&nbsp;ì†Œ</button>
 		    </div>
 			</div>
 			</div>

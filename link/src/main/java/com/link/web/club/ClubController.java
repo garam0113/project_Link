@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.link.common.Page;
 import com.link.common.Search;
 import com.link.service.club.ClubService;
+import com.link.service.clubPost.ClubPostService;
+import com.link.service.domain.Chat;
 import com.link.service.domain.Club;
 import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
@@ -46,6 +48,11 @@ public class ClubController {
 	@Qualifier("ServiceCenterServiceImpl")
 	private ServiceCenterService serviceCenterService;
 	
+	// 채팅에 필요한 코딩
+	@Autowired
+	@Qualifier("clubPostServiceImpl")
+	private ClubPostService clubPostService;
+	
 	public ClubController() {
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass() + " default constructor");
@@ -62,7 +69,8 @@ public class ClubController {
 
 	@RequestMapping(value="addClub", method=RequestMethod.POST)
 	//public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("clubImage") List<MultipartFile> file) throws Exception {
-	public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, @RequestParam("file") MultipartFile file) throws Exception {
+	public String addClub(@ModelAttribute Club club, HttpSession httpSession, User user, ClubUser clubUser, Chat chat,
+			Search search, Model model, @RequestParam("file") MultipartFile file) throws Exception {
 		
 		System.out.println("club/addClub : POST");
 		
@@ -93,12 +101,31 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			//file.transferTo( new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 					club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
-		clubService.addClub(club);
+		int clubNo = clubService.addClub(club);
+		System.out.println("가장 최근 모임번호 : " + clubNo);
 		clubService.addApprovalCondition(clubUser);
+		
+		search.setSearchKeyword(clubNo+"");
+		Map<String, Object> map2 = clubService.getClubMemberList(search);
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)httpSession.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
+		
 		return "forward:/club/getClub.jsp";
 	}
 	
@@ -113,7 +140,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getClub", method=RequestMethod.GET)
-	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user, Search search) throws Exception {
+	public String getClub(@RequestParam("clubNo") String clubNo, Model model, HttpSession session, User user, Search search, Chat chat) throws Exception {
 		
 		System.out.println("/club/getClub : GET");
 		
@@ -146,6 +173,18 @@ public class ClubController {
 		System.out.println(" Map1 값은? : "+map1.get("totalApprovalConditionCount"));
 		System.out.println("Map2 값은? : "+map2.get("clubMemberList"));
 		System.out.println("클럽 넘버 세션은? : "+clubNo);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		return "forward:/club/getClub.jsp";
 		
@@ -186,7 +225,7 @@ public class ClubController {
 		
 		if (file != null && file.getSize() > 0) {
 			
-			file.transferTo( new File(clubUploadTempDir, user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
+			file.transferTo( new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\", user.getUserId()+ sysName + dateNow + ("_") + file.getOriginalFilename() ) );
 			club.setClubImage(user.getUserId() + sysName + dateNow + ("_") + file.getOriginalFilename());
 		}
 		
@@ -221,7 +260,7 @@ public class ClubController {
 	}
 		
 	@RequestMapping(value="getClubList")
-	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user) throws Exception {
+	public String getClubList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, Chat chat) throws Exception {
 		
 		System.out.println("/club/getClubList : GET/POST");
 		
@@ -250,6 +289,17 @@ public class ClubController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search",search);
 		model.addAttribute("totalApprovalConditionCount", map1.get("totalApprovalConditionCount"));
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
 		
 		
 		return "forward:/club/getClubList.jsp";
@@ -338,7 +388,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getClubMemberList")
-	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, ClubUser clubUser, Club club, String clubNo) throws Exception {
+	public String getClubMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, ClubUser clubUser, Club club, String clubNo, Chat chat) throws Exception {
 		
 		System.out.println("/club/getClubMemberList : GET/POST");
 		
@@ -361,7 +411,19 @@ public class ClubController {
 		model.addAttribute("clubMemberList",map.get("clubMemberList"));
 //		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("totalClubMemberCount",map.get("totalClubMemberCount"));
-		model.addAttribute("search",search);		
+		model.addAttribute("search",search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 		
 		return "forward:/club/getClubMemberList.jsp";
 	}
@@ -505,13 +567,17 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getMeeting", method=RequestMethod.GET)
-	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model, HttpSession session) throws Exception {
+	public String getMeeting(@RequestParam("meetingNo") String meetingNo, Model model, HttpSession session, Search search, String clubNo) throws Exception {
 	
 		System.out.println("/club/getMeeting : GET");
 		
+		clubNo = (String) session.getAttribute("clubNo");
+		
+		search.setSearchKeyword(clubNo);
 		
 		//Business Logic
 		Map<String, Object> map = clubService.getMeeting(Integer.parseInt(meetingNo));
+		Map<String, Object> map2 = clubService.getClubMemberList(search);
 		// 미팅정보 : meeting, 미팅의 총 참여자 수 : totalMeetingMemberCount
 		
 		//Model 과 View 연결
@@ -519,10 +585,12 @@ public class ClubController {
 		
 		model.addAttribute("meeting", map.get("meeting"));
 		model.addAttribute("meetingCount", map.get("totalMeetingMemberCount"));
+		model.addAttribute("clubMemberList", map2.get("clubMemberList"));
 		session.setAttribute("meetingNo", meetingNo);
 		
 		System.out.println("미팅 맵에 뭐 있나? : " + map.get("meeting"));
 		System.out.println("겟에서 세션에 들어갔나? :"+meetingNo);
+		System.out.println("Map2 값은? : "+map2.get("clubMemberList"));
 		return "forward:/club/getMeeting.jsp";
 	}
 	

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,18 +8,18 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("input[value='¼öÁ¤']").bind("click", function(){
+	$("input[value='ìˆ˜ì •']").bind("click", function(){
 		$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 	});
-	$("input[value='»èÁ¦']").bind("click", function(){
-		alert("¸ğÀÓ °Ô½Ã¹° ¹øÈ£ : " + ${ clubPost.getClubPost.clubPostNo });
+	$("input[value='ì‚­ì œ']").bind("click", function(){
+		alert("ëª¨ì„ ê²Œì‹œë¬¼ ë²ˆí˜¸ : " + ${ clubPost.getClubPost.clubPostNo });
 		$("form").attr("method", "post").attr("action", "/clubPost/deleteClubPost?clubNo=2&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 	});
-	$("input[value='¸®½ºÆ®·ÎÀÌµ¿']").bind("click", function(){
+	$("input[value='ë¦¬ìŠ¤íŠ¸ë¡œì´ë™']").bind("click", function(){
 		location.href = "/clubPost/getClubPostList?clubNo=2&order=0";
 	});
-	$("a:contains('ÇÏÆ®')").bind("click", function(){
-		alert('ÇÏÆ®');
+	$("a:contains('í•˜íŠ¸')").bind("click", function(){
+		alert('í•˜íŠ¸');
 		$.ajax( "/clubPostRest/json/updateClubPost",
 				{
 					method : "POST",
@@ -38,9 +38,9 @@ $(function(){
 						$("a[href='#']").text(JSONData);
 					}
 				});
-	}); // end of ÇÏÆ®
-	$(document).on("click", "b:contains('´ñ±Û ¼ö')", function(){
-		alert("´ñ±Û ¼ö");
+	}); // end of í•˜íŠ¸
+	$(document).on("click", "b:contains('ëŒ“ê¸€ ìˆ˜')", function(){
+		alert("ëŒ“ê¸€ ìˆ˜");
 		var clubPostCommentNo = $(this).attr("clubPostCommentNo");
 		var clubPostNo = $(this).attr("clubPostNo");
 		$.ajax( "/clubPostRest/json/getClubPostCommentList",
@@ -59,21 +59,21 @@ $(function(){
 						alert(status);
 						$.each( JSONData, function( index, el ){
 							var display = "<nav>"
-											+"´ñ±Û ³»¿ë : <div class='" + el.clubPostCommentNo + "'>" + el.commentContent + "</div>"
-											+"<button class='" + el.clubPostCommentNo + "'>¼öÁ¤</button>"
-											+"<input type='button' class='" + el.clubPostCommentNo + "' value='»èÁ¦'>"
-											+"<b style='color : blue;'>´ñ±Û¹øÈ£ : " + el.clubPostCommentNo + "</b></br>"
-											+"´ñ±Ûµî·Ï³¯Â¥ : " + el.commentRegDate + "</br>"
-											+"´ñ±Û¼öÁ¤³¯Â¥ : " + el.commentUpdateDate + "</br>"
-											+"´ñ±Û ÁÁ¾Æ¿ä ¼ö : " + el.commentHeartCount + "</br>"
-											+"´ñ±Û ½Å°í¿©ºÎ : " + el.reportCondition + "</br>"
-											+"´ñ±Û »èÁ¦¿©ºÎ : " + el.deleteCondition + "</br>"
-											+"´ñ±Û ºÎ¸ğ¹øÈ£ : " + el.parent + "</br>"
-											+"´ñ±Û ±íÀÌ : " + el.depth + "</br>"
-											+"´ñ±Û ¼ø¼­ : " + el.sequence + "</br>"
+											+"ëŒ“ê¸€ ë‚´ìš© : <div class='" + el.clubPostCommentNo + "'>" + el.commentContent + "</div>"
+											+"<button class='" + el.clubPostCommentNo + "'>ìˆ˜ì •</button>"
+											+"<input type='button' class='" + el.clubPostCommentNo + "' value='ì‚­ì œ'>"
+											+"<b style='color : blue;'>ëŒ“ê¸€ë²ˆí˜¸ : " + el.clubPostCommentNo + "</b></br>"
+											+"ëŒ“ê¸€ë“±ë¡ë‚ ì§œ : " + el.commentRegDate + "</br>"
+											+"ëŒ“ê¸€ìˆ˜ì •ë‚ ì§œ : " + el.commentUpdateDate + "</br>"
+											+"ëŒ“ê¸€ ì¢‹ì•„ìš” ìˆ˜ : " + el.commentHeartCount + "</br>"
+											+"ëŒ“ê¸€ ì‹ ê³ ì—¬ë¶€ : " + el.reportCondition + "</br>"
+											+"ëŒ“ê¸€ ì‚­ì œì—¬ë¶€ : " + el.deleteCondition + "</br>"
+											+"ëŒ“ê¸€ ë¶€ëª¨ë²ˆí˜¸ : " + el.parent + "</br>"
+											+"ëŒ“ê¸€ ê¹Šì´ : " + el.depth + "</br>"
+											+"ëŒ“ê¸€ ìˆœì„œ : " + el.sequence + "</br>"
 											//+"<div class='"+el.clubPostCommentNo+"'>"
 											//+"<b style='color : green;' clubPostNo="+el.clubPostNo+" clubPostCommentNo="
-													//+el.clubPostCommentNo+">´ñ±Û ¼ö " + el.commentCount + "</b></br>"
+													//+el.clubPostCommentNo+">ëŒ“ê¸€ ìˆ˜ " + el.commentCount + "</b></br>"
 											//+"</div>"
 											+"</nav>";
 							alert(display);
@@ -82,15 +82,15 @@ $(function(){
 						});
 					} // end of success
 				}); // end of ajax
-	}); // end of ´ñ±Û ¼ö
+	}); // end of ëŒ“ê¸€ ìˆ˜
 	$(document).on("click", "button", function(){
 		alert("button");
 		var text = $(this).prev().html();
-		var inputText = "<input type='text' value='"+text+"'><input type='button' value='¼öÁ¤¿Ï·á'>";
+		var inputText = "<input type='text' value='"+text+"'><input type='button' value='ìˆ˜ì •ì™„ë£Œ'>";
 		$(this).parent().prepend(inputText);
 	});
-	$(document).on("click", "input[value='¼öÁ¤¿Ï·á']", function(){
-		alert("¼öÁ¤¿Ï·á");
+	$(document).on("click", "input[value='ìˆ˜ì •ì™„ë£Œ']", function(){
+		alert("ìˆ˜ì •ì™„ë£Œ");
 		var commentContent = $("input[type='text']").val();
 		$.ajax( "/clubPostRest/json/updateClubPostComment",
 				{
@@ -108,9 +108,9 @@ $(function(){
 						alert(status);
 					} // end of success
 				}); // end of ajax
-	}); // end of ¼öÁ¤¿Ï·á
-	$(document).on("click", "input[value='»èÁ¦']", function(){
-		alert("»èÁ¦");
+	}); // end of ìˆ˜ì •ì™„ë£Œ
+	$(document).on("click", "input[value='ì‚­ì œ']", function(){
+		alert("ì‚­ì œ");
 		var clubPostCommentNo = $(this).attr("class");
 		alert(clubPostCommentNo);
 		$.ajax( "/clubPostRest/json/deleteClubPostComment",
@@ -128,14 +128,14 @@ $(function(){
 						alert(status);
 					} // end of success
 				}); // end of ajax
-	}); // end of »èÁ¦
-	$(document).on("click", "input[value='µî·Ï']", function(){
-		alert("µî·Ï");
-		var inputText = "<input type='text' value=''><input type='button' value='µî·Ï¿Ï·á'>";
+	}); // end of ì‚­ì œ
+	$(document).on("click", "input[value='ë“±ë¡']", function(){
+		alert("ë“±ë¡");
+		var inputText = "<input type='text' value=''><input type='button' value='ë“±ë¡ì™„ë£Œ'>";
 		$(this).parent().prepend(inputText);
-	}); // end of µî·Ï
-	$(document).on("click", "input[value='µî·Ï¿Ï·á']", function(){
-		alert("µî·Ï¿Ï·á");
+	}); // end of ë“±ë¡
+	$(document).on("click", "input[value='ë“±ë¡ì™„ë£Œ']", function(){
+		alert("ë“±ë¡ì™„ë£Œ");
 		var commentContent = $("input[type='text']").val();
 		alert(commentContent);
 		$.ajax( "/clubPostRest/json/addClubPostComment",
@@ -156,9 +156,9 @@ $(function(){
 						alert(JSONData);
 					} // end of success
 				}); // end of ajax
-	}); // end of µî·Ï¿Ï·á
-	$(document).on("click", "a:contains('´ñ±ÛÁÁ¾Æ¿ä')", function(){
-		alert('´ñ±ÛÁÁ¾Æ¿ä');
+	}); // end of ë“±ë¡ì™„ë£Œ
+	$(document).on("click", "a:contains('ëŒ“ê¸€ì¢‹ì•„ìš”')", function(){
+		alert('ëŒ“ê¸€ì¢‹ì•„ìš”');
 		$.ajax( "/clubPostRest/json/updateClubPostComment",
 				{
 					method : "POST",
@@ -178,8 +178,8 @@ $(function(){
 						$("a[href='###']").text(JSONData);
 					}
 				});
-	}); // end of ´ñ±ÛÁÁ¾Æ¿ä
-	//°Ë»ö¹öÆ° Å¬¸¯½Ã °Ë»ö ³»¿ë¿¡ ¸Â´Â »óÇ°¸®½ºÆ®¸¦ display
+	}); // end of ëŒ“ê¸€ì¢‹ì•„ìš”
+	//ê²€ìƒ‰ë²„íŠ¼ í´ë¦­ì‹œ ê²€ìƒ‰ ë‚´ìš©ì— ë§ëŠ” ìƒí’ˆë¦¬ìŠ¤íŠ¸ë¥¼ display
 	function fncGetProductList() {
 		document.detailForm.searchCondition.value = document.detailForm.searchCondition.value;
 		document.forms[0].elements[1].value = document.forms[0].elements[1].value;
@@ -191,43 +191,43 @@ $(function(){
 </head>
 <body>
 <form>
-<input type="button" value="¼öÁ¤">
-<input type="button" value="»èÁ¦">
-<input type="button" value="¸®½ºÆ®·ÎÀÌµ¿">
-<a href="#"><img alt="" src="abcd.jpg">ÇÏÆ®</a></br>
-<%-- ¸ğÀÓ °Ô½Ã¹° µî·Ï È¸¿ø Á¤º¸ : ${ clubPost.getClubPost.user }</br> --%>
-¸ğÀÓ °Ô½Ã¹° µî·Ï È¸¿ø ¾ÆÀÌµğ : ${ clubPost.getClubPost.user.userId }</br>
-<%-- ¸ğÀÓ °Ô½Ã¹° µî·Ï È¸¿ø ´Ğ³×ÀÓ : ${ clubPost.getClubPost.user.nickName }</br> --%>
-¸ğÀÓ ¹øÈ£ : ${ clubPost.getClubPost.clubNo }</br>
-¸ğÀÓ °Ô½Ã¹° ¹øÈ£ : ${ clubPost.getClubPost.clubPostNo }</br>
-¸ğÀÓ °Ô½Ã¹° Á¦¸ñ : ${ clubPost.getClubPost.clubPostTitle }</br>
-¸ğÀÓ °Ô½Ã¹° ³»¿ë : ${ clubPost.getClubPost.clubPostContent }</br>
-¸ğÀÓ °Ô½Ã¹° ¿µ»ó1 : <%-- <iframe width="1280" height="716" src="https://www.youtube.com/embed/${  clubPost.getClubPost.clubPostVideo1 }"
+<input type="button" value="ìˆ˜ì •">
+<input type="button" value="ì‚­ì œ">
+<input type="button" value="ë¦¬ìŠ¤íŠ¸ë¡œì´ë™">
+<a href="#"><img alt="" src="abcd.jpg">í•˜íŠ¸</a></br>
+<%-- ëª¨ì„ ê²Œì‹œë¬¼ ë“±ë¡ íšŒì› ì •ë³´ : ${ clubPost.getClubPost.user }</br> --%>
+ëª¨ì„ ê²Œì‹œë¬¼ ë“±ë¡ íšŒì› ì•„ì´ë”” : ${ clubPost.getClubPost.user.userId }</br>
+<%-- ëª¨ì„ ê²Œì‹œë¬¼ ë“±ë¡ íšŒì› ë‹‰ë„¤ì„ : ${ clubPost.getClubPost.user.nickName }</br> --%>
+ëª¨ì„ ë²ˆí˜¸ : ${ clubPost.getClubPost.clubNo }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ë²ˆí˜¸ : ${ clubPost.getClubPost.clubPostNo }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì œëª© : ${ clubPost.getClubPost.clubPostTitle }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ë‚´ìš© : ${ clubPost.getClubPost.clubPostContent }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì˜ìƒ1 : <%-- <iframe width="1280" height="716" src="https://www.youtube.com/embed/${  clubPost.getClubPost.clubPostVideo1 }"
 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --%></br>
-¸ğÀÓ °Ô½Ã¹° ¿µ»ó2 : ${ clubPost.getClubPost.clubPostVideo2 }</br>
-¸ğÀÓ °Ô½Ã¹° ¿µ»ó3 : ${ clubPost.getClubPost.clubPostVideo3 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö1 : ${ clubPost.getClubPost.image1 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö2 : ${ clubPost.getClubPost.image2 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö3 : ${ clubPost.getClubPost.image3 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö4 : ${ clubPost.getClubPost.image4 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö5 : ${ clubPost.getClubPost.image5 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö6 : ${ clubPost.getClubPost.image6 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö7 : ${ clubPost.getClubPost.image7 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö8 : ${ clubPost.getClubPost.image8 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö9 : ${ clubPost.getClubPost.image9 }</br>
-¸ğÀÓ °Ô½Ã¹° ÀÌ¹ÌÁö10 : ${ clubPost.getClubPost.image10 }</br>
-¸ğÀÓ °Ô½Ã¹° µî·Ï³¯Â¥ : ${ clubPost.getClubPost.clubPostRegDate }</br>
-¸ğÀÓ °Ô½Ã¹° ¼öÁ¤³¯Â¥ : ${ clubPost.getClubPost.clubPostUpdateDate }</br>
-¸ğÀÓ °Ô½Ã¹° ÁÁ¾Æ¿ä ¼ö : ${ clubPost.getClubPost.clubPostHeartCount }</br>
-¸ğÀÓ °Ô½Ã¹° ´ñ±Û °³¼ö : ${ clubPost.getClubPost.clubPostCommentCount }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì˜ìƒ2 : ${ clubPost.getClubPost.clubPostVideo2 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì˜ìƒ3 : ${ clubPost.getClubPost.clubPostVideo3 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€1 : ${ clubPost.getClubPost.image1 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€2 : ${ clubPost.getClubPost.image2 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€3 : ${ clubPost.getClubPost.image3 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€4 : ${ clubPost.getClubPost.image4 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€5 : ${ clubPost.getClubPost.image5 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€6 : ${ clubPost.getClubPost.image6 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€7 : ${ clubPost.getClubPost.image7 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€8 : ${ clubPost.getClubPost.image8 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€9 : ${ clubPost.getClubPost.image9 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì´ë¯¸ì§€10 : ${ clubPost.getClubPost.image10 }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ë“±ë¡ë‚ ì§œ : ${ clubPost.getClubPost.clubPostRegDate }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ìˆ˜ì •ë‚ ì§œ : ${ clubPost.getClubPost.clubPostUpdateDate }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ì¢‹ì•„ìš” ìˆ˜ : ${ clubPost.getClubPost.clubPostHeartCount }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ê°œìˆ˜ : ${ clubPost.getClubPost.clubPostCommentCount }</br>
 <c:if test="${ clubPost.getClubPost.clubPostCommentCount > 0 }">
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
-¸ğÀÓ °Ô½Ã¹° ´ñ±Û ¸®½ºÆ®</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ë¦¬ìŠ¤íŠ¸</br>
 <div add="add" clubPostNo="${ clubPost.getClubPost.clubPostNo }">
-<input type="button" value="µî·Ï">
-<a href="###"><img alt="" src="abcd.jpg">´ñ±ÛÁÁ¾Æ¿ä</a></br>
+<input type="button" value="ë“±ë¡">
+<a href="###"><img alt="" src="abcd.jpg">ëŒ“ê¸€ì¢‹ì•„ìš”</a></br>
 </div>
 //////////////////////////////////////////////////////////////////////</br>
 //////////////////////////////////////////////////////////////////////</br>
@@ -235,28 +235,28 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 <c:forEach var="i" begin="0" end="${ clubPost.getClubPost.clubPostCommentCount - 1 }" step="1">
 <c:if test="${ clubPost.getClubPostCommentList[i].parent == clubPost.getClubPost.clubPostNo }">
 <nav class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
-´ñ±Û ³»¿ë : <div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
+ëŒ“ê¸€ ë‚´ìš© : <div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
 ${ clubPost.getClubPostCommentList[i].commentContent }</div>
 <c:if test="${ user.userId == clubPost.getClubPostCommentList[i].user.userId }">
-<button class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">¼öÁ¤</button>
+<button class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">ìˆ˜ì •</button>
 </c:if></br>
-¸ğÀÓ °Ô½Ã¹° ¹øÈ£ : ${ clubPost.getClubPostCommentList[i].clubPostNo }</br>
-¸ğÀÓ °Ô½Ã¹° ´ñ±Û ¹øÈ£ : ${ clubPost.getClubPostCommentList[i].clubPostCommentNo }</br>
-¸ğÀÓ °Ô½Ã¹° ´ñ±Û µî·Ï È¸¿ø ¾ÆÀÌµğ : ${ clubPost.getClubPostCommentList[i].user.userId }</br>
-¸ğÀÓ °Ô½Ã¹° ´ñ±Û µî·Ï È¸¿ø ´Ğ³×ÀÓ : ${ clubPost.getClubPostCommentList[i].user.nickName }</br>
-´ñ±Û µî·Ï³¯Â¥ : ${ clubPost.getClubPostCommentList[i].commentRegDate }</br>
-´ñ±Û ¼öÁ¤³¯Â¥ : ${ clubPost.getClubPostCommentList[i].commentUpdateDate }</br>
-´ñ±Û ÁÁ¾Æ¿ä ¼ö : ${ clubPost.getClubPostCommentList[i].commentHeartCount }</br>
-½Å°í¿©ºÎ : ${ clubPost.getClubPostCommentList[i].reportCondition }</br>
-»èÁ¦¿©ºÎ : ${ clubPost.getClubPostCommentList[i].deleteCondition }</br>
-´ñ±Û ºÎ¸ğ¹øÈ£ : ${ clubPost.getClubPostCommentList[i].parent }</br>
-´ñ±Û ±íÀÌ : ${ clubPost.getClubPostCommentList[i].depth }</br>
-´ñ±Û ¼ø¼­ : ${ clubPost.getClubPostCommentList[i].sequence }</br>
-<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPost.getClubPostCommentList[i].clubPostCommentNo }&depth=0">´ñ±Û ¼ö : ${ clubPost.getClubPostCommentList[i].commentCount }</a></br> --%>
+ëª¨ì„ ê²Œì‹œë¬¼ ë²ˆí˜¸ : ${ clubPost.getClubPostCommentList[i].clubPostNo }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ë²ˆí˜¸ : ${ clubPost.getClubPostCommentList[i].clubPostCommentNo }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ë“±ë¡ íšŒì› ì•„ì´ë”” : ${ clubPost.getClubPostCommentList[i].user.userId }</br>
+ëª¨ì„ ê²Œì‹œë¬¼ ëŒ“ê¸€ ë“±ë¡ íšŒì› ë‹‰ë„¤ì„ : ${ clubPost.getClubPostCommentList[i].user.nickName }</br>
+ëŒ“ê¸€ ë“±ë¡ë‚ ì§œ : ${ clubPost.getClubPostCommentList[i].commentRegDate }</br>
+ëŒ“ê¸€ ìˆ˜ì •ë‚ ì§œ : ${ clubPost.getClubPostCommentList[i].commentUpdateDate }</br>
+ëŒ“ê¸€ ì¢‹ì•„ìš” ìˆ˜ : ${ clubPost.getClubPostCommentList[i].commentHeartCount }</br>
+ì‹ ê³ ì—¬ë¶€ : ${ clubPost.getClubPostCommentList[i].reportCondition }</br>
+ì‚­ì œì—¬ë¶€ : ${ clubPost.getClubPostCommentList[i].deleteCondition }</br>
+ëŒ“ê¸€ ë¶€ëª¨ë²ˆí˜¸ : ${ clubPost.getClubPostCommentList[i].parent }</br>
+ëŒ“ê¸€ ê¹Šì´ : ${ clubPost.getClubPostCommentList[i].depth }</br>
+ëŒ“ê¸€ ìˆœì„œ : ${ clubPost.getClubPostCommentList[i].sequence }</br>
+<%-- <a href="/clubPostRest/getClubPostCommentList?clubPostCommentNo=${ clubPost.getClubPostCommentList[i].clubPostCommentNo }&depth=0">ëŒ“ê¸€ ìˆ˜ : ${ clubPost.getClubPostCommentList[i].commentCount }</a></br> --%>
 <div class="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }">
 	<b style="color : red;" clubPostCommentNo="${ clubPost.getClubPostCommentList[i].clubPostCommentNo }"
 	clubPostNo="${ clubPost.getClubPostCommentList[i].clubPostNo }">
-	´ñ±Û ¼ö ${ clubPost.getClubPostCommentList[i].commentCount }</b></br>
+	ëŒ“ê¸€ ìˆ˜ ${ clubPost.getClubPostCommentList[i].commentCount }</b></br>
 </div>
 </nav>
 //////////////////////////////////////////////////////////////////////</br>
