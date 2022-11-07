@@ -17,7 +17,7 @@
 
 <!-- 채팅 이미지 start -->
 <div>
-	<img id="chat-icon" src="/resources/image/uploadFiles/chat_image.jpg" height="80px" width="80px">
+	<img id="chat-icon" style="background-color: yellow; height: 60px; width: 60px;" src="/resources/image/uploadFiles/chat_image.jpg">
 </div>
 <!-- 채팅 이미지 end -->
 

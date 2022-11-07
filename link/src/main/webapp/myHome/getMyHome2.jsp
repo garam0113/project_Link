@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -10,28 +10,28 @@
 
 <head>
 
-<title>È¸¿øÁ¤º¸Á¶È¸</title>
+<title>íšŒì›ì •ë³´ì¡°íšŒ</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<!-- CDN(Content Delivery Network) È£½ºÆ® »ç¿ë -->
+<!-- CDN(Content Delivery Network) í˜¸ìŠ¤íŠ¸ ì‚¬ìš© -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script type="text/javascript">
 		
-		//==> Ãß°¡µÈºÎºĞ : "¼öÁ¤" "È®ÀÎ"  Event ¿¬°á ¹× Ã³¸®
+		//==> ì¶”ê°€ëœë¶€ë¶„ : "ìˆ˜ì •" "í™•ì¸"  Event ì—°ê²° ë° ì²˜ë¦¬
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#sgr:contains('ÇÁ·ÎÇÊ')").on("click" , function() {
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+ 	$("#sgr:contains('í”„ë¡œí•„')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
 		self.location = "/myHome/getProfile?userId=${user.userId}"
 	}); 
-	$("#gg:contains('¾÷µ¥ÀÌÆ®')").on("click" , function() {
+	$("#gg:contains('ì—…ë°ì´íŠ¸')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
 		self.location = "/myHome/updateProfile?userId=${user.userId}"
 	});
-	$("#ff:contains('ÆÈ·Î¿ì¸®½ºÆ®')").on("click" , function() {
+	$("#ff:contains('íŒ”ë¡œìš°ë¦¬ìŠ¤íŠ¸')").on("click" , function() {
 		//$(self.location).attr("href","/user/logout");
 		self.location = "/myHome/getFollowList?userId=${user.userId}"
 	}); 
@@ -46,20 +46,20 @@ $(function() {
    
            var userId = $(".pp").html();
            //console.log(userId);
-           //alert("»ı¼º");
-           // ÀÌ°Ô¾ÈµÈ´Ù´Â°ÅÁö?¤·¤·¤·¤·
+           //alert("ìƒì„±");
+           // ì´ê²Œì•ˆëœë‹¤ëŠ”ê±°ì§€?ã…‡ã…‡ã…‡ã…‡
            $(document).ready(function(){
         		$.ajax({
-        			type: 'GET',   //get¹æ½ÄÀ¸·Î ¸í½Ã
-        			url : '/myHomeRest/json/addFollow/'+userId,  //ÀÌµ¿ÇÒ jsp ÆÄÀÏ ÁÖ¼Ò
-        			dataType:'json',   //¹®ÀÚÇü½ÄÀ¸·Î ¹Ş±â
-        			success: function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â ¼º°øÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        	            //function(data)¸¦ ¾²°Ô µÇ¸é Àü´Ş¹ŞÀº µ¥ÀÌÅÍ°¡ data¾È¿¡ ´ã¾Æ¼­ µé¾î¿À°Ô µÈ´Ù. 
+        			type: 'GET',   //getë°©ì‹ìœ¼ë¡œ ëª…ì‹œ
+        			url : '/myHomeRest/json/addFollow/'+userId,  //ì´ë™í•  jsp íŒŒì¼ ì£¼ì†Œ
+        			dataType:'json',   //ë¬¸ìí˜•ì‹ìœ¼ë¡œ ë°›ê¸°
+        			success: function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸° ì„±ê³µí–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+        	            //function(data)ë¥¼ ì“°ê²Œ ë˜ë©´ ì „ë‹¬ë°›ì€ ë°ì´í„°ê°€ dataì•ˆì— ë‹´ì•„ì„œ ë“¤ì–´ì˜¤ê²Œ ëœë‹¤. 
         				//alert(data); 
         			    console.log("userId : "+data);
         			},
-        			error:function(data){   //µ¥ÀÌÅÍ ÁÖ°í¹Ş±â°¡ ½ÇÆĞÇßÀ» °æ¿ì ½ÇÇàÇÒ °á°ú
-        				//alert('½ÇÆĞ');
+        			error:function(data){   //ë°ì´í„° ì£¼ê³ ë°›ê¸°ê°€ ì‹¤íŒ¨í–ˆì„ ê²½ìš° ì‹¤í–‰í•  ê²°ê³¼
+        				//alert('ì‹¤íŒ¨');
         			}
         		})
         	});
@@ -125,7 +125,7 @@ width : 1400px;
 				</tr>
 				<tr>
                     
-					<td width="104" class="ct_write">¾ÆÀÌµğ</td>
+					<td width="104" class="ct_write">ì•„ì´ë””</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					<td class="ct_write01">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -141,7 +141,7 @@ width : 1400px;
 				</tr>
 
 				<tr>
-					<td width="104" class="ct_write">ÀÌ¸§</td>
+					<td width="104" class="ct_write">ì´ë¦„</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					<td class="ct_write01">${user.nickName}</td>
 				</tr>
@@ -149,7 +149,7 @@ width : 1400px;
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
 				<tr>
-					<td width="104" class="ct_write">ÁÖ¼Ò</td>
+					<td width="104" class="ct_write">ì£¼ì†Œ</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 
 				</tr>
@@ -161,7 +161,7 @@ width : 1400px;
 					<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 				</tr>
 				<tr>
-					<td width="104" class="ct_write">ÀÌ¸ŞÀÏ</td>
+					<td width="104" class="ct_write">ì´ë©”ì¼</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					<td class="ct_write01">
 						<table border="0" cellspacing="0" cellpadding="0">
@@ -178,7 +178,7 @@ width : 1400px;
 				</tr>
 
 				<tr>
-					<td width="104" class="ct_write">°¡ÀÔÀÏÀÚ</td>
+					<td width="104" class="ct_write">ê°€ì…ì¼ì</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 					<!--
 					<td height="26">${club.clubTitle}</td>
@@ -192,31 +192,31 @@ width : 1400px;
 
 				</tr>
 				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
+					<td width="104" class="ct_write">ìê¸°ì†Œê°œ</td>
 					<td bgcolor="D6D6D6" width="1"></td>
-					<li><a href="#" id="ss">ÆÈ·Î¿ì</a></li>
+					<li><a href="#" id="ss">íŒ”ë¡œìš°</a></li>
 				</tr>
 			</table>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"
 				style="margin-top: 10px;">
 				<tr>
-					<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
+					<td width="104" class="ct_write">ìê¸°ì†Œê°œ</td>
 					<td bgcolor="D6D6D6" width="1"></td>
 
 					<td width="53%"></td>
 					<td align="right">
 						<table border="0" cellspacing="0" cellpadding="0">
 
-							<li><a href="#" id="sgr">ÇÁ·ÎÇÊ</a></li>
-							<li><a href="#" id="gg">¾÷µ¥ÀÌÆ®</a></li>
-							<li><a href="#" id="ff">ÆÈ·Î¿ì¸®½ºÆ®</a></li>
-							<li><a href="#" id="zz">ÆÈÆÈ¸®½ºÆ®</a></li>
-<a href="/myHome/getYourHome?userId=user33" id="zz">À¯Àú33</a></li>
+							<li><a href="#" id="sgr">í”„ë¡œí•„</a></li>
+							<li><a href="#" id="gg">ì—…ë°ì´íŠ¸</a></li>
+							<li><a href="#" id="ff">íŒ”ë¡œìš°ë¦¬ìŠ¤íŠ¸</a></li>
+							<li><a href="#" id="zz">íŒ”íŒ”ë¦¬ìŠ¤íŠ¸</a></li>
+<a href="/myHome/getYourHome?userId=user33" id="zz">ìœ ì €33</a></li>
 							<tr>
            
-								<!--	jQuery Event Ã³¸®·Î º¯°æ
+								<!--	jQuery Event ì²˜ë¦¬ë¡œ ë³€ê²½
 					
-						<a href="javascript:history.go(-1);">È®ÀÎ</a>
+						<a href="javascript:history.go(-1);">í™•ì¸</a>
 						
 					-->
 							</tr>
@@ -229,7 +229,7 @@ width : 1400px;
 			<jsp:include page="/myHome/calendar.jsp" />
 		</div>
 		<div>
-			<td width="104" class="ct_write">ÀÚ±â¼Ò°³</td>
+			<td width="104" class="ct_write">ìê¸°ì†Œê°œ</td>
 			<td bgcolor="D6D6D6" width="1"></td>
 
 		</div>
@@ -238,29 +238,29 @@ width : 1400px;
 			<div class="col-sm-offset-4 col-sm-6 text-center"></div>
 			
 <!--  <p id="demo1"></p><p id="demo2"></p> --><h4 id="demo"></h4>
-<button type="button" class="abc" value="${user.userId}">Å¬¸¯</button>
-<!-- json ºÒ·¯¼­ pÅÂ±×¿¡ ³Ö±â -->
+<button type="button" class="abc" value="${user.userId}">í´ë¦­</button>
+<!-- json ë¶ˆëŸ¬ì„œ píƒœê·¸ì— ë„£ê¸° -->
 <script type="text/javascript">
 $(document).ready(function() {
 	$("button").click(function() {
 		var userId = $(".abc").val();
 		console.log($(".abc").val());
-		alert("»ı¼º");
+		alert("ìƒì„±");
 		$.ajax({
-			url : "/myHomeRest/json/getFollowList", // ¾îµğ·Î °¥°Å´Ï? // °¥ ¶§ µ¥ÀÌÅÍ
-			type : "POST", // Å¸ÀÔÀº ¹» ¾µ°Å´Ï?
+			url : "/myHomeRest/json/getFollowList", // ì–´ë””ë¡œ ê°ˆê±°ë‹ˆ? // ê°ˆ ë•Œ ë°ì´í„°
+			type : "POST", // íƒ€ì…ì€ ë­˜ ì“¸ê±°ë‹ˆ?
 			datatype : "json",
 			 data		:  JSON.stringify({userId}),
 			contentType : "application/json",
-			success : function(data) { // °¬´Ù¿Â ´ÙÀ½ °á°ú°ª
-				alert('seccuss');	// ³ª¿À¸é ÆÄÀÏÀ» Ã£¾Ò´Ù´Â °Í
+			success : function(data) { // ê°”ë‹¤ì˜¨ ë‹¤ìŒ ê²°ê³¼ê°’
+				alert('seccuss');	// ë‚˜ì˜¤ë©´ íŒŒì¼ì„ ì°¾ì•˜ë‹¤ëŠ” ê²ƒ
 			//	alert(data);  // [object Object],[object Object],[object Object]
 				
-			// µ¥ÀÌÅÍ¸¦ È®ÀÎÇÏ°í ½ÍÀ» ¶§.
+			// ë°ì´í„°ë¥¼ í™•ì¸í•˜ê³  ì‹¶ì„ ë•Œ.
 			//	let str = JSON.stringify(data); // <> parse()
 			//	alert(str); 
            console.log(data.list[0].receiveId.nickName);
-				$.each(data.list, function(index, item) { // µ¥ÀÌÅÍ =item
+				$.each(data.list, function(index, item) { // ë°ì´í„° =item
 					$("#demo").append(item.receiveId.profileImage+" "+item.receiveId.nickName+"<br/>");
 					//$("#demo1").append(item.receiveId.profileImage );
 					console.log(item.receiveId);

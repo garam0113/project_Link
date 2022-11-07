@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="The Page Description">
@@ -64,27 +64,27 @@ body>div.container {
 		//alert(gender);
 		
 		if(nickName == null || nickName.length < 1){
-			swal.fire("´Ð³×ÀÓÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+			swal.fire("ë‹‰ë„¤ìž„ì„ ìž…ë ¥í•´ ì£¼ì„¸ìš”.");
 			return;
 		}
 		
 		if(gender == false){
-			swal.fire("¼ºº° Ã¼Å©¸¦ ÇØÁÖ¼¼¿ä.");
+			swal.fire("ì„±ë³„ ì²´í¬ë¥¼ í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 		
 		if(nickName == null || nickName.length <1){
-			swal.fire("´Ð³×ÀÓÀ» ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+			swal.fire("ë‹‰ë„¤ìž„ì„ ìž…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 			return;
 		}
 		
 		if(regExp2.test(nickName)){
-			swal.fire("°ø¹éÀº »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			swal.fire("ê³µë°±ì€ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			return;
 		}
 		
 		if(checkNickName == 2){
-			swal.fire("»ç¿ëÁßÀÎ ´Ð³×ÀÓ ÀÔ´Ï´Ù");
+			swal.fire("ì‚¬ìš©ì¤‘ì¸ ë‹‰ë„¤ìž„ ìž…ë‹ˆë‹¤");
 			return;
 		}
 		
@@ -100,7 +100,7 @@ body>div.container {
 <body style="background-color: #EBEDF0;">
 	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 
 	<form>
 		<div class="wrap wd668">
@@ -109,7 +109,7 @@ body>div.container {
 				<br /> <br />
 				<div>
 					<div class="form_txtInput">
-						<h2 class="sub_tit_txt">ÇÁ·ÎÇÊÀÛ¼º</h2>
+						<h2 class="sub_tit_txt">í”„ë¡œí•„ìž‘ì„±</h2>
 						<div class="join_form">
 							<table>
 								<colgroup>
@@ -122,57 +122,57 @@ body>div.container {
 											name="userId" value="${ getUser.userId }"></td>
 									</tr>
 									<tr>
-										<th><span>´Ð³×ÀÓ</span></th>
+										<th><span>ë‹‰ë„¤ìž„</span></th>
 										<td><input type="text" class="form-control" id="nickName"
-											name="nickName" placeholder="Áßº¹È®ÀÎÇÏ¼¼¿ä"
+											name="nickName" placeholder="ì¤‘ë³µí™•ì¸í•˜ì„¸ìš”"
 											value="${getUser.nickName }"><span id="helpBlock"
 											class="help-block"> <strong class="text-danger"
-												id="nickNameCheck">Æ¯¼ö¹®ÀÚ&nbsp;»ç¿ë&nbsp;ºÒ°¡,&nbsp;1~10ÀÚ</strong>
+												id="nickNameCheck">íŠ¹ìˆ˜ë¬¸ìž&nbsp;ì‚¬ìš©&nbsp;ë¶ˆê°€,&nbsp;1~10ìž</strong>
 												<input type="hidden" id="checkNickName"></span></td>
 									</tr>
 									<tr>
 									<tr>
-										<th><span>¼ºº°</span></th>
+										<th><span>ì„±ë³„</span></th>
 										<td><input type="radio" class="gender" id="gender"
-											name="gender" placeholder="¼ºº°" value="³²ÀÚ">&nbsp;³²ÀÚ <input
+											name="gender" placeholder="ì„±ë³„" value="ë‚¨ìž">&nbsp;ë‚¨ìž <input
 											type="radio" class="gender" id="gender" name="gender"
-											placeholder="¼ºº°" value="¿©ÀÚ">&nbsp;¿©ÀÚ</td>
+											placeholder="ì„±ë³„" value="ì—¬ìž">&nbsp;ì—¬ìž</td>
 									</tr>
 									<tr>
-										<th><span>È°µ¿¿µ¿ª</span></th>
+										<th><span>í™œë™ì˜ì—­</span></th>
 										<td><div style="display: flex;">
 												<select class="form-control" id="areaSelcet"
 													style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17; font-size: inherit;">
-													<option selected="selected">¼±ÅÃÇØÁÖ¼¼¿ä</option>
-													<option value="°­³²±¸">°­³²±¸</option>
-													<option value="°­µ¿±¸">°­µ¿±¸</option>
-													<option value="°­ºÏ±¸">°­ºÏ±¸</option>
-													<option value="°­¼­±¸">°­¼­±¸</option>
-													<option value="°ü¾Ç±¸">°ü¾Ç±¸</option>
-													<option value="±¤Áø±¸">±¤Áø±¸</option>
-													<option value="±¸·Î±¸">±¸·Î±¸</option>
-													<option value="±ÝÃµ±¸">±ÝÃµ±¸</option>
-													<option value="³ë¿ø±¸">³ë¿ø±¸</option>
-													<option value="µµºÀ±¸">µµºÀ±¸</option>
-													<option value="µ¿´ë¹®±¸">µ¿´ë¹®±¸</option>
-													<option value="µ¿ÀÛ±¸">µ¿ÀÛ±¸</option>
-													<option value="¸¶Æ÷±¸">¸¶Æ÷±¸</option>
-													<option value="¼­´ë¹®±¸">¼­´ë¹®±¸</option>
-													<option value="¼­ÃÊ±¸">¼­ÃÊ±¸</option>
-													<option value="¼ºµ¿±¸">¼ºµ¿±¸</option>
-													<option value="¼ººÏ±¸">¼ººÏ±¸</option>
-													<option value="¼ÛÆÄ±¸">¼ÛÆÎ±¸</option>
-													<option value="¾çÃµ±¸">¾çÃµ±¸</option>
-													<option value="¿µµîÆ÷±¸">¿µµîÆ÷±¸</option>
-													<option value="¿ë»ê±¸">¿ë»ê±¸</option>
-													<option value="ÀºÆò±¸">ÀºÆò±¸</option>
-													<option value="Á¾·Î±¸">Á¾·Î±¸</option>
-													<option value="Áß±¸">Áß±¸</option>
-													<option value="Áß¶û±¸">Áß¶û±¸</option>
+													<option selected="selected">ì„ íƒí•´ì£¼ì„¸ìš”</option>
+													<option value="ê°•ë‚¨êµ¬">ê°•ë‚¨êµ¬</option>
+													<option value="ê°•ë™êµ¬">ê°•ë™êµ¬</option>
+													<option value="ê°•ë¶êµ¬">ê°•ë¶êµ¬</option>
+													<option value="ê°•ì„œêµ¬">ê°•ì„œêµ¬</option>
+													<option value="ê´€ì•…êµ¬">ê´€ì•…êµ¬</option>
+													<option value="ê´‘ì§„êµ¬">ê´‘ì§„êµ¬</option>
+													<option value="êµ¬ë¡œêµ¬">êµ¬ë¡œêµ¬</option>
+													<option value="ê¸ˆì²œêµ¬">ê¸ˆì²œêµ¬</option>
+													<option value="ë…¸ì›êµ¬">ë…¸ì›êµ¬</option>
+													<option value="ë„ë´‰êµ¬">ë„ë´‰êµ¬</option>
+													<option value="ë™ëŒ€ë¬¸êµ¬">ë™ëŒ€ë¬¸êµ¬</option>
+													<option value="ë™ìž‘êµ¬">ë™ìž‘êµ¬</option>
+													<option value="ë§ˆí¬êµ¬">ë§ˆí¬êµ¬</option>
+													<option value="ì„œëŒ€ë¬¸êµ¬">ì„œëŒ€ë¬¸êµ¬</option>
+													<option value="ì„œì´ˆêµ¬">ì„œì´ˆêµ¬</option>
+													<option value="ì„±ë™êµ¬">ì„±ë™êµ¬</option>
+													<option value="ì„±ë¶êµ¬">ì„±ë¶êµ¬</option>
+													<option value="ì†¡íŒŒêµ¬">ì†¡íŒ¡êµ¬</option>
+													<option value="ì–‘ì²œêµ¬">ì–‘ì²œêµ¬</option>
+													<option value="ì˜ë“±í¬êµ¬">ì˜ë“±í¬êµ¬</option>
+													<option value="ìš©ì‚°êµ¬">ìš©ì‚°êµ¬</option>
+													<option value="ì€í‰êµ¬">ì€í‰êµ¬</option>
+													<option value="ì¢…ë¡œêµ¬">ì¢…ë¡œêµ¬</option>
+													<option value="ì¤‘êµ¬">ì¤‘êµ¬</option>
+													<option value="ì¤‘ëž‘êµ¬">ì¤‘ëž‘êµ¬</option>
 												</select>
 												<button type="button"
 													style="width: 60px; background-color: #E1BFFF; border-style: hidden;"
-													id="areaClick">Ãß°¡</button>
+													id="areaClick">ì¶”ê°€</button>
 											</div></td>
 									</tr>
 
@@ -186,24 +186,24 @@ body>div.container {
 									</tr>
 
 									<tr>
-										<th><span>°ü½ÉÄ«Å×°í¸®</span></th>
+										<th><span>ê´€ì‹¬ì¹´í…Œê³ ë¦¬</span></th>
 										<td><div style="display: flex;">
 												<select class="form-control"
 													style="height: 40px; width: 200px; margin-right: 20px; border: 1px solid #2c2b2b17; font-size: inherit;"
 													name="categorySelect" id="categorySelcet">
-													<option value="¿îµ¿">¿îµ¿</option>
-													<option value="ºÀ»çÈ°µ¿">ºÀ»çÈ°µ¿</option>
-													<option value="À½½Ä">À½½Ä</option>
-													<option value="¿©Çà">¿©Çà</option>
-													<option value="¹Ý·Áµ¿¹°">¹Ý·Áµ¿¹°</option>
-													<option value="°ÔÀÓ">°ÔÀÓ</option>
-													<option value="À½¾Ç/´í½º">À½¾Ç/´í½º</option>
-													<option value="µ¶¼­">µ¶¼­</option>
-													<option value="±âÅ¸">±âÅ¸</option>
+													<option value="ìš´ë™">ìš´ë™</option>
+													<option value="ë´‰ì‚¬í™œë™">ë´‰ì‚¬í™œë™</option>
+													<option value="ìŒì‹">ìŒì‹</option>
+													<option value="ì—¬í–‰">ì—¬í–‰</option>
+													<option value="ë°˜ë ¤ë™ë¬¼">ë°˜ë ¤ë™ë¬¼</option>
+													<option value="ê²Œìž„">ê²Œìž„</option>
+													<option value="ìŒì•…/ëŒ„ìŠ¤">ìŒì•…/ëŒ„ìŠ¤</option>
+													<option value="ë…ì„œ">ë…ì„œ</option>
+													<option value="ê¸°íƒ€">ê¸°íƒ€</option>
 												</select>
 												<button type="button"
 													style="width: 60px; background-color: #E1BFFF; border-style: hidden;"
-													id="categryClick">Ãß°¡</button>
+													id="categryClick">ì¶”ê°€</button>
 											</div></td>
 									</tr>
 
@@ -218,13 +218,13 @@ body>div.container {
 
 
 									<tr>
-										<th><span>ÇÁ·ÎÇÊ±Û</span></th>
+										<th><span>í”„ë¡œí•„ê¸€</span></th>
 										<td><input type="text" class="form-control"
-											id="profileWriting" name="profileWriting" placeholder="ÇÁ·ÎÇÊ±Û"
+											id="profileWriting" name="profileWriting" placeholder="í”„ë¡œí•„ê¸€"
 											value="${getUser.profileWriting}"></td>
 									</tr>
 									<tr>
-										<th><span>ÇÁ·ÎÇÊ»çÁø</span></th>
+										<th><span>í”„ë¡œí•„ì‚¬ì§„</span></th>
 										<td><input type="file" class="form-file"
 											id="profileImageFile" style="display: none;"
 											name="profileImageFile" onchange="setThumbnail(event);"
@@ -239,8 +239,8 @@ body>div.container {
 									<tr>
 										<th><span></span></th>
 										<td align="center">
-											<button type="button" class="btn btn-primary" id="update">µî
-												&nbsp;·Ï</button>
+											<button type="button" class="btn btn-primary" id="update">ë“±
+												&nbsp;ë¡</button>
 										</td>
 									</tr>
 								</tbody>

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,9 +11,9 @@
 	
 <head>
 
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -70,18 +70,18 @@ button {
     		value = $("#phone1").val() + "-"
     		+ phone2 + "-" + phone3;
     	}else if(phone2 != "" || phone3 !=""){
-    		swal.fire("ÇÚµåÆù ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+    		swal.fire("í•¸ë“œí° ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
     		return;
     	}
     		$("input:hidden[name='phoneNo']").val(value);
     	
     	if(!regPhone.test($("input:hidden[name='phoneNo']").val())){
-    		swal.fire("ÇÚµåÆù¹øÈ£¸¦ Á¦´ë·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+    		swal.fire("í•¸ë“œí°ë²ˆí˜¸ë¥¼ ì œëŒ€ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
     		return;
     	}	
 
     	if(checkNo != 1){
-    		swal.fire("ÇÚµåÆùÀÎÁõÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+    		swal.fire("í•¸ë“œí°ì¸ì¦ì´ í•„ìš”í•©ë‹ˆë‹¤.");
     		return;
     	}
     	
@@ -119,10 +119,10 @@ button {
    					success : function(JSONData, status) {
 						
    						console.log("JSONData : "+JSONData.phoneNo);
-   						$("#phoneNo", opener.document).val(JSONData.phoneNo);
+   						$("#phoneNo").val(JSONData.phoneNo);
    						
-   						window.close();
-						}
+   						$('#modalPhone').modal('hide');
+						} 
    				});
 				
 			}
@@ -138,7 +138,7 @@ button {
     </head>
 
 <body>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class='modal fade' id='modalPhone' style=" width: 850px; height: fit-content; margin-top: 420px; margin-left: 440px;">
 	<div class='modal-dialog'>
 	<div class='modal-content' style="width: fit-content; border-radius: 30px;"> 
@@ -162,38 +162,38 @@ button {
 			
 				<div style="margin-left: 10px;">
 					<input type="text" class="form-control" id="phone2" name="phone2" style="margin-left: 0px; width: 110px; height: 41px;"
-						placeholder="¹øÈ£">
+						placeholder="ë²ˆí˜¸">
 				</div>
 				<div style="margin-left: 10px;">
 					<input type="text" class="form-control" id="phone3" name="phone3" style="margin-left: 0px; width: 110px; height: 41px;"
-						placeholder="¹øÈ£">
+						placeholder="ë²ˆí˜¸">
 				</div>
 				<input type="hidden" id="phoneNo" name="phoneNo" />
 				<div style="margin-left: 10px;">
-					<button type="button" id="sendPhoneNumber" style="margin-left: 0px; border-radius: 12px; font-weight: bold; height: 38px;">ÀÎÁõ¹øÈ£Àü¼Û</button>
+					<button type="button" id="sendPhoneNumber" style="margin-left: 0px; border-radius: 12px; font-weight: bold; height: 38px;">ì¸ì¦ë²ˆí˜¸ì „ì†¡</button>
 				</div>
 			</div>
 
 			<div class="form-group" style="display: flex; margin-left: 60px; margin-top: 20px;">
 					<input type="text" class="form-control" id="inputCertifiedNumber" style=" width: 127px;"
-						name="inputCertifiedNumber" placeholder="ÀÎÁõ¹øÈ£">
+						name="inputCertifiedNumber" placeholder="ì¸ì¦ë²ˆí˜¸">
 					<input type="hidden" id="checkNo">
 				<div>
-					<button type="button" id="checkBtn" style="margin-left: 10px; border-radius: 12px; font-weight: bold; height: 38px;">ÀÎÁõ¹øÈ£È®ÀÎ</button>
+					<button type="button" id="checkBtn" style="margin-left: 10px; border-radius: 12px; font-weight: bold; height: 38px;">ì¸ì¦ë²ˆí˜¸í™•ì¸</button>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<div style="margin-left: 222px;	margin-top: 20px;">
-					<button type="button" id="chang" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">È® &nbsp;ÀÎ</button>
-					<button type="button" id="back" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">Ãë&nbsp;¼Ò</button>
+					<button type="button" id="chang" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">í™• &nbsp;ì¸</button>
+					<button type="button" id="back" style="border-radius: 12px; font-weight: bold; width: 70px; height: 40px;">ì·¨&nbsp;ì†Œ</button>
 				</div>
 			</div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 	    
  	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
  	</div>
  	</div>
  	</div>

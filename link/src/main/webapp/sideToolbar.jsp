@@ -79,7 +79,7 @@
 	}); 
 </script>
 
- <meta charset="EUC-KR" />
+ <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -137,7 +137,7 @@
                     <div id='report' style="margin-top: 20px;">신고내역</div>
                     <div id='QA' style="margin-top: 20px;">관리자Q&A</div>
                     <div id="stop1" style="margin-top: 20px;">정지회원</div>
-                    <div id="stop2" style="margin-top: 20px;">영구회원</div>
+                    <div id="stop2" style="margin-top: 20px;">영구정지회원</div>
                     </c:if>
                     </div>
                 </nav>

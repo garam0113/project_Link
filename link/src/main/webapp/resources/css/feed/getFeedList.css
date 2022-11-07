@@ -97,7 +97,8 @@
 	/* CHECKED TAB */
 
 	input[type="radio"]:checked + label {
-		border: 2px solid #5F0080;
+		background-color: #5F0080 !important;
+		color: white !important;
 	}
 
 	/* CHECKED TAB */

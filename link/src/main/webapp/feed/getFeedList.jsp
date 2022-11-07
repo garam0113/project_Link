@@ -359,6 +359,7 @@
 		   })
 		})//end of class="dl" 클릭시
 		   
+
 		   $(".row").on("click", function(){
 
 			    $("div[name='dialog']").parent().dialog("close");
@@ -366,6 +367,15 @@
 			}) 
 			
 		
+
+		})//end of class="dl" 클릭시
+
+		
+		$(".main").on("click",function(){
+
+			   $("div[name='dialog']").parent().dialog("close");
+
+		}) 
 		
 		$(document).on("click",".dll",function(event){
 			
@@ -518,6 +528,7 @@
 		             $("#"+nickName+"1").dialog("open");
 		      }
 		   })
+
 		});//end of class="dll" 클릭시
 		
 		   $(".row").on("click", function(){
@@ -525,10 +536,19 @@
 			    $("div[name='dialog']").parent().dialog("close");
 
 			});
+
+		   
+		  
+
 		   
 
 		
 		
+		 $(".main").on("click",function(){
+
+			    $("div[name='dialog']").parent().dialog("close");
+
+		});
 		
 		//다이얼로그 창의 차단버튼과 팔로우 활성화
 
@@ -1941,7 +1961,10 @@
 	<%--신고처리 --%>
 	
 
+
 	
+=======
+>>>>>>> refs/remotes/origin/user_darae
 	h3{
 		text-align:center;
 		text-transform: uppercase;
@@ -2043,7 +2066,13 @@
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
 	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
 
+
 	 <jsp:include page="/toolbar.jsp" /> 
+
+	<jsp:include page="/toolbar.jsp" />
+	
+	<main role="main" class="main">
+
 
 		<div id="main" class="main">
 		
@@ -2592,6 +2621,7 @@
 		</div>
 	</div>
 	<!-- 수정 Modal -->
-
+	
+	</main>
 </body>
 </html>

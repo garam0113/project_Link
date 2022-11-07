@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
     
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -16,7 +16,7 @@
 <script src="/resources/javascript/beetle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<title>Q&A¼öÁ¤</title>
+<title>Q&Aìˆ˜ì •</title>
 </head>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -32,14 +32,14 @@
 		if (title == null || title.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: 'Á¦¸ñÀº ÇÊ¼öÀÔ´Ï´Ù.',
+                title: 'ì œëª©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
             });
 				return;
 			}
 		if (content == null || content.length < 1) {
 		 	Swal.fire({
                 icon: 'error',
-                title: '³»¿ëÀº ÇÊ¼öÀÔ´Ï´Ù.',
+                title: 'ë‚´ìš©ì€ í•„ìˆ˜ì…ë‹ˆë‹¤.',
             });
 				return;
 			}
@@ -50,11 +50,11 @@
 	
 	
 	$(function(){
-		$("button:contains('´äº¯')").bind("click", function(){
+		$("button:contains('ë‹µë³€')").bind("click", function(){
 			fncUpdateQandA();
 		});
 		
-		$("button:contains('¼öÁ¤')").bind("click", function(){
+		$("button:contains('ìˆ˜ì •')").bind("click", function(){
 			fncUpdateQandA();
 		});
 		
@@ -138,25 +138,25 @@ textarea {
 
 
 
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
-	<%-- Ã¤ÆÃÀ» À§ÇÑ ¼ÒÄÏ --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
+	<%-- ì±„íŒ…ì„ ìœ„í•œ ì†Œì¼“ --%>
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
-	<%-- Ã¤ÆÃ js --%>
+	<%-- ì±„íŒ… js --%>
 	<script src="/resources/javascript/chat/chat.js"></script>
-	<%-- Ã¤ÆÃ css --%>
+	<%-- ì±„íŒ… css --%>
 	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
-	<%-- ///////////////////// Ã¤ÆÃ¿¡ ÇÊ¿äÇÑ ÄÚµù //////////////////////// --%>
+	<%-- ///////////////////// ì±„íŒ…ì— í•„ìš”í•œ ì½”ë”© //////////////////////// --%>
 	
 	<c:if test="${ sessionScope.user != null }">
 	
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
 		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
 		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
 		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
-		<%-- chat.js¿¡¼­ »ç¿ëÀ§ÇØ¼­ --%>
-		<%-- Ã¤ÆÃ --%>
+		<%-- chat.jsì—ì„œ ì‚¬ìš©ìœ„í•´ì„œ --%>
+		<%-- ì±„íŒ… --%>
 		<jsp:include page="/chat/chat.jsp" />
-		<%-- Ã¤ÆÃ --%>
+		<%-- ì±„íŒ… --%>
 	
 	</c:if>
 	
@@ -167,10 +167,10 @@ textarea {
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
   <h2>
 	<c:if test ="${user.role == '1'}"> 
-  Q&A ´äº¯ÇÏ±â
+  Q&A ë‹µë³€í•˜ê¸°
   </c:if>
   <c:if test ="${user.role == '0'}"> 
-  Q&A ¼öÁ¤ÇÏ±â
+  Q&A ìˆ˜ì •í•˜ê¸°
   </c:if>
   </h2>
 </div>
@@ -186,15 +186,15 @@ textarea {
 					 <tr class = "body" id ="body" >
 					 
 						<th style="text-align-last: center;"></th>
-						<td align="left">${qandA.qandANo}¹øÂ° Áú¹®
+						<td align="left">${qandA.qandANo}ë²ˆì§¸ ì§ˆë¬¸
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
 					<tr class = "title" id ="title">
-						<th style="text-align-last: center;">Á¦¸ñ</th>
+						<th style="text-align-last: center;">ì œëª©</th>
 						<td>
 						<textarea class="qandATitle" id="qandATitle" name="qandATitle" value="" style="width:900px; min-height: 40px; max-height:80px;"
-						maxlength="66" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">${qandA.qandATitle}</textarea>
+						maxlength="66" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">${qandA.qandATitle}</textarea>
 					</tr>
 					<tr>
 						<th></th>
@@ -203,15 +203,15 @@ textarea {
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">³»¿ë</th>
+						<th style="text-align-last: center;">ë‚´ìš©</th>
 						<td>
 						<textarea class="qandAContent" id="qandAContent" name="qandAContent" value="" style="width:900px; min-height : 150px; max-height: 800px;"
-						maxlength="500" placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">${qandA.qandAContent}</textarea></td>
+						maxlength="500" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">${qandA.qandAContent}</textarea></td>
 						
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">Ã·ºÎÆÄÀÏ</th>
-<%--ÆÄÀÏ --%>				<!-- <td><input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
+						<th style="text-align-last: center;">ì²¨ë¶€íŒŒì¼</th>
+<%--íŒŒì¼ --%>				<!-- <td><input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 50px" />
 						</td> -->
 						<c:if test="${qandA.qandAImage1 == null && qandA.qandAImage2 ==null }">
 							<td>
@@ -233,14 +233,14 @@ textarea {
 						</c:if>
 						</td>
 						
-						<c:if test ="${user.role == '1'}"> <%--°ü¸®ÀÚ--%>
+						<c:if test ="${user.role == '1'}"> <%--ê´€ë¦¬ì--%>
 					<tr>
 						<th></th>
 						<td align="left" name ="qandAAnswerRegDate" id="qandAAnswerRegDate"></td>
 						<td/>
 					</tr>
 					<tr >
-						<th style="text-align-last: center;">´äº¯ ³»¿ë</th>
+						<th style="text-align-last: center;">ë‹µë³€ ë‚´ìš©</th>
 						<td>
 						<textarea class="text" id="qandAAnswerContent" name="qandAAnswerContent" value=""  
 						style="width: 900px; size:400px;" >${qandA.qandAAnswerContent}</textarea>
@@ -253,17 +253,17 @@ textarea {
 						<c:if test="${qandA.qandAOpenCondition==0}">
 						<td style ="display:flex;"> 
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" 
-						 style ="width:auto; height:auto;" checked>³ª¸¸ º¸±â</td> <td/>
+						 style ="width:auto; height:auto;" checked>ë‚˜ë§Œ ë³´ê¸°</td> <td/>
 						<td style ="display:flex; transform: translateX(-273px);">
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
-							 style ="width:auto; height:auto;">ÀüÃ¼ º¸±â</td></c:if>
+							 style ="width:auto; height:auto;">ì „ì²´ ë³´ê¸°</td></c:if>
 						<c:if test="${qandA.qandAOpenCondition==1}">
 						<td style ="display:flex;"> 
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="0" 
-						 style ="width:auto; height:auto;" >³ª¸¸ º¸±â</td> <td/>
+						 style ="width:auto; height:auto;" >ë‚˜ë§Œ ë³´ê¸°</td> <td/>
 						<td style ="display:flex; transform: translateX(-273px);">
 						<input type="radio" class="form-control" id="qandAOpenCondition" name="qandAOpenCondition" value ="1"
-							 style ="width:auto; height:auto;" checked>ÀüÃ¼ º¸±â</td></c:if>
+							 style ="width:auto; height:auto;" checked>ì „ì²´ ë³´ê¸°</td></c:if>
 					</tr>
 			</table></form>
 			<!--  table End /////////////////////////////////////-->
@@ -273,14 +273,14 @@ textarea {
 		
 						
 									<div> 
-									<c:if test ="${user.role == '0'}"> <%--È¸¿ø--%>
+									<c:if test ="${user.role == '0'}"> <%--íšŒì›--%>
 			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
-									   ¼öÁ¤</button></c:if>
-									  <c:if test ="${user.role == '1'}"> <%--°ü¸®ÀÚ--%> 
+									   ìˆ˜ì •</button></c:if>
+									  <c:if test ="${user.role == '1'}"> <%--ê´€ë¦¬ì--%> 
 										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
-									   ´äº¯</button></c:if>
+									   ë‹µë³€</button></c:if>
 									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
-									ÀÌÀü</button>
+									ì´ì „</button>
 									
 									</div>
 				

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,9 +10,9 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -23,12 +23,6 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/SMSCheck.js"></script>
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/emailCheck.js"></script>
  
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -61,45 +55,44 @@ body {
 
 	function fncGetPassword() {
 
-		var id = $("#userId").val();
-		var name = $("#name").val();
-		var rrn1 = $("#rrn1").val();
-		var rrn2 = $("#rrn2").val();
+		var id = $("#userId1").val();
+		var name = $("#name1").val();
+		var rrn1 = $("#rrn11").val();
+		var rrn2 = $("#rrn21").val();
 		var rrn = rrn1 + "-" + rrn2;
-		var phone2 = $("#phone2").val();
-		var phone3 = $("#phone3").val();
-		var phoneNo = $("#phone1").val() + "-" + phone2 + "-" + phone3;
-		var checkNo = $("#checkNo").val();
-		var email = $("#email").val();
+		var phone2 = $("#phone21").val();
+		var phone3 = $("#phone31").val();
+		var phoneNo = $("#phone11").val() + "-" + phone2 + "-" + phone3;
+		var checkNo = $("#checkNo1").val();
+		var email = $("#email1").val();
 
-		$("#rrn").val(rrn);
+		$("#rrn1").val(rrn);
 
-		console.log("rrn °ª : " + $("#rrn").val());
 		console.log("phone2 : " + phone2 + ", phone3 : " + phone3);
 		console.log("email : " + email);
 
 		if (id == null || id.length < 1) {
-			swal.fire("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+			swal.fire("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (name == null || name.length < 1) {
-			swal.fire("ÀÌ¸§À» ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+			swal.fire("ì´ë¦„ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (rrn == null || rrn.length < 1) {
-			swal.fire("ÁÖ¹Î¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+			swal.fire("ì£¼ë¯¼ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (phone2 == "" && phone3 == "" && email == "") {
-			swal.fire("ÇÚµåÆù, ÀÌ¸ŞÀÏÁ¤º¸Áß ÇÏ³ª¸¸ Àû¾îÁÖ¼¼¿ä.")
+			swal.fire("í•¸ë“œí°, ì´ë©”ì¼ì •ë³´ì¤‘ í•˜ë‚˜ë§Œ ì ì–´ì£¼ì„¸ìš”.")
 			return;
 		}
 
 		if (checkNo != 1) {
-			swal.fire("ÀÎÁõÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+			swal.fire("ì¸ì¦ì´ í•„ìš”í•©ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -122,7 +115,7 @@ body {
 				console.log(Data.userId)
 
 				if (Data.userId != id) {
-					swal.fire("¾ÆÀÌµğ°¡ ´Ù¸¨´Ï´Ù.");
+					swal.fire("ì•„ì´ë””ê°€ ë‹¤ë¦…ë‹ˆë‹¤.");
 					return;
 				}
 
@@ -141,16 +134,16 @@ body {
 						console.log(JsonData)
 
 						if (email == null || email.length < 1) {
-							swal.fire("ÀÓ½Ã ºñ¹Ğ¹øÈ£°¡ ÇÚµåÆù¹øÈ£·Î Àü¼ÛµÇ¾ú½À´Ï´Ù.").then(
+							swal.fire("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ê°€ í•¸ë“œí°ë²ˆí˜¸ë¡œ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.").then(
 									function() {
 										window.close();
 									});
 						}
 
 						if (phone2.length < 1 || phone3.length < 1) {
-							swal.fire("ÀÓ½Ã ºñ¹Ğ¹øÈ£°¡ ÀÌ¸ŞÀÏ·Î Àü¼ÛµÇ¾ú½À´Ï´Ù.").then(
+							swal.fire("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ê°€ ì´ë©”ì¼ë¡œ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.").then(
 									function() {
-										window.close();
+										$('#modalPass').modal('hide');
 									});
 						}
 					}
@@ -158,7 +151,7 @@ body {
 			},
 			error : function() {
 				console.log("error");
-				swal.fire("°¡ÀÔµÈ Á¤º¸¿Í ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+				swal.fire("ê°€ì…ëœ ì •ë³´ì™€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			}
 		})
 	}
@@ -172,51 +165,64 @@ body {
 		<div class='madal-dialog'>
 			<div class='modal-content' style="background-color: whitesmoke;">
 				<div class='modal-header'>
-					<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+					<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 					<div class="container" style="width: 500px;">
 
 						<!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal">
 							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
-								<label for="userId" style="margin-left: 0px;">¾ÆÀÌµğ</label>
+<<<<<<< HEAD
+								<label for="userId" style="margin-left: 0px;">ï¿½ï¿½ï¿½Ìµï¿½</label>
+									<input type="text" class="form-control" id="userId1"
+										name="uesrId" style="margin-left: 35px;" value=""
+										placeholder="ï¿½ï¿½ï¿½Ìµï¿½">
+=======
+								<label for="userId" style="margin-left: 0px;">ì•„ì´ë””</label>
 									<input type="text" class="form-control" id="userId"
 										name="uesrID" style="margin-left: 35px;" value=""
-										placeholder="¾ÆÀÌµğ">
+										placeholder="ì•„ì´ë””">
+>>>>>>> refs/remotes/origin/master
 							</div>
 							<div class="form-group"
 								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
-								<label for="name" style="text-align-last: start;">ÀÌ ¸§</label> <input
+<<<<<<< HEAD
+								<label for="name" style="text-align-last: start;">ï¿½ï¿½ ï¿½ï¿½</label> <input
+									type="text" class="form-control" id="name1" name="name" value=""
+									placeholder="ï¿½Ì¸ï¿½" style="margin-left: 50px;">
+=======
+								<label for="name" style="text-align-last: start;">ì´ ë¦„</label> <input
 									type="text" class="form-control" id="name" name="name" value=""
-									placeholder="ÀÌ¸§" style="margin-left: 50px;">
+									placeholder="ì´ë¦„" style="margin-left: 50px;">
+>>>>>>> refs/remotes/origin/master
 							</div>
 
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; height: 30px; margin-top: 20px;">
-								<label for="rrn" style="text-align-last: start;">ÁÖ¹Î¹øÈ£</label>
+								<label for="rrn" style="text-align-last: start;">ì£¼ë¯¼ë²ˆí˜¸</label>
 								<div>
-									<input type="text" class="form-control" id="rrn1" name="rrn1"
+									<input type="text" class="form-control" id="rrn11" name="rrn1"
 										value="" style="margin-left: 20px; width: 100px">
 								</div>
 								<div>
-									<input type="password" class="form-control" id="rrn2"
+									<input type="password" class="form-control" id="rrn21"
 										name="rrn2" value="" style="margin-left: 10px; width: 100px">
 								</div>
-								<input type="hidden" id="rrn" name="rrn">
+								<input type="hidden" id="rrn1" name="rrn">
 							</div>
 
 							<ul class="nav nav-tabs" role="tablist"
 								style="margin-left: 20px; display: flex; margin-top: 30px;">
 								<li role="presentation" class="active"><a href="#n"
-									aria-controls="home" role="tab" data-toggle="tab">ÇÚµåÆù</a></li>
+									aria-controls="home" role="tab" data-toggle="tab">í•¸ë“œí°</a></li>
 								<li role="presentation"><a href="#q"
-									aria-controls="profile" role="tab" data-toggle="tab">ÀÌ¸ŞÀÏ</a></li>
+									aria-controls="profile" role="tab" data-toggle="tab">ì´ë©”ì¼</a></li>
 							</ul>
 
 							<div class="tab-content" style="margin-top: 15px;">
 								<div role="tabpanel" class="tab-pane active" id="home1"
 									style="display: flex; margin-left: 20px;">
 									<div>
-										<select class="form-control" name="phone1" id="phone1"
+										<select class="form-control" name="phone1" id="phone11"
 											style="margin-top: 10px; margin-left: 0px; width: auto; font-size: large;">
 											<option value="010">010</option>
 											<option value="011">011</option>
@@ -227,33 +233,43 @@ body {
 									</div>
 
 									<div style="margin: 10px">
-										<input type="text" class="form-control" id="phone2"
+										<input type="text" class="form-control" id="phone21"
 											name="phone2" style="width: 75px;">
 									</div>
 
-									<div style="margin: 10px">
-										<input type="text" class="form-control" id="phone3"
+									<div style="margin: 10px"> 
+										<input type="text" class="form-control" id="phone31"
 											name="phone3" style="margin-left: -10px; width: 75px;">
 									</div>
 									<input type="hidden" name="phoneNo" />
 
 									<div style="margin: 7px;">
+<<<<<<< HEAD
+										<button type="button" id="sendPhoneNumber1" class="btn"
+											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½</button>
+=======
 										<button type="button" id="sendPhoneNumber" class="btn"
-											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ÀÎÁõ¹øÈ£Àü¼Û</button>
+											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ì¸ì¦ë²ˆí˜¸ì „ì†¡</button>
+>>>>>>> refs/remotes/origin/master
 									</div>
 								</div>
 
 								<div role="tabpanel" class="tab-pane" id="profile1"
 									style="display: none; margin-left: 30px; margin-top: 20px;">
 									<div>
-										<input type="text" class="form-control" id="email"
+										<input type="text" class="form-control" id="email1"
 											name="email"
 											style="margin-top: 0px; margin-left: 0px; width: 220px;"
-											placeholder="º¯°æÀÌ¸ŞÀÏ">
+											placeholder="ë³€ê²½ì´ë©”ì¼">
 									</div>
 									<div>
+<<<<<<< HEAD
+										<button type="button" id="sendEmail1" class="btn "
+											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½</button>
+=======
 										<button type="button" id="sendEmail" class="btn "
-											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ÀÎÁõ¹øÈ£Àü¼Û</button>
+											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ì¸ì¦ë²ˆí˜¸ì „ì†¡</button>
+>>>>>>> refs/remotes/origin/master
 									</div>
 								</div>
 							</div>
@@ -261,22 +277,33 @@ body {
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
 								<input type="text" class="form-control"
+<<<<<<< HEAD
+									id="inputCertifiedNumber1" style="width: 100px; height: 40px;"
+									name="inputCertifiedNumber" placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£">
+=======
 									id="inputCertifiedNumber" style="width: 100px; height: 40px;"
-									name="inputCertifiedNumber" placeholder="ÀÎÁõ¹øÈ£">
+									name="inputCertifiedNumber" placeholder="ì¸ì¦ë²ˆí˜¸">
+>>>>>>> refs/remotes/origin/master
 								<div>
+<<<<<<< HEAD
+									<button type="button" id="checkBtn1" class="btn "
+										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£È®ï¿½ï¿½</button>
+									<input type="hidden" id=checkNo1>
+=======
 									<button type="button" id="checkBtn" class="btn "
-										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ÀÎÁõ¹øÈ£È®ÀÎ</button>
+										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">ì¸ì¦ë²ˆí˜¸í™•ì¸</button>
 									<input type="hidden" id=checkNo>
+>>>>>>> refs/remotes/origin/master
 								</div>
 							</div>
 
 							<div class="form-group" style="display: flex;">
 								<button type="button" id="check12" class="btn check12"
-									style="margin-left: 182px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">È®
-									&nbsp;ÀÎ</button>
+									style="margin-left: 182px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">í™•
+									&nbsp;ì¸</button>
 								<button type="button" id="black1" class="btn black1"
-									style="margin-left: 10px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">Ãë
-									&nbsp;¼Ò</button>
+									style="margin-left: 10px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px; margin-top: 15px;">ì·¨
+									&nbsp;ì†Œ</button>
 							</div>
 						</form>
 						<!-- form Start /////////////////////////////////////-->

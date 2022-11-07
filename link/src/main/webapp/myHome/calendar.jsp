@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
 
@@ -92,8 +92,8 @@ border-radius: 0px 0px 0px 0px  !important;
 	console.log(calendarId);
 	
 	$.ajax({
-		url : "/myHomeRest/json/getMeetList", // ¾îµğ·Î °¥°Å´Ï? // °¥ ¶§ µ¥ÀÌÅÍ
-		type : "POST", // Å¸ÀÔÀº ¹» ¾µ°Å´Ï?
+		url : "/myHomeRest/json/getMeetList", // ì–´ë””ë¡œ ê°ˆê±°ë‹ˆ? // ê°ˆ ë•Œ ë°ì´í„°
+		type : "POST", // íƒ€ì…ì€ ë­˜ ì“¸ê±°ë‹ˆ?
 		datatype : "json",
 		 data		:  JSON.stringify({searchKeyword:calendarId}),
 		contentType : "application/json",
@@ -102,7 +102,7 @@ border-radius: 0px 0px 0px 0px  !important;
 	              result_val = new Array;		
 				  console.log(result_val);
 		 
-				$.each(JSONData, function(index, item) { // µ¥ÀÌÅÍ =item
+				$.each(JSONData, function(index, item) { // ë°ì´í„° =item
 				       
 					console.log(item);
                     result_val.push(item);                      

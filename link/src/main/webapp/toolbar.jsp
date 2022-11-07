@@ -110,7 +110,6 @@
 					
 					Swal.fire({
 						title: '로그인 후 이용해주세요' ,
-						text: "로그인 창으로 이동합니다" ,
 						showCancelButton: false,
 						confirmButtonColor: '#3085d6',
 						cancelButtonColor: '#d33',
@@ -125,6 +124,7 @@
 			
 			$(function() {
 				$('#login').on('click', function(event) {
+				//alert("zmfflr");
 					event.stopPropagation();
 					$('#modalLogin').modal();
 				})
@@ -142,6 +142,7 @@
 <style>
 header {
 	display: flex;
+	background: linear-gradient(0deg, #958c8cc4, black);
 }
 
 /* SCROLL */
@@ -173,6 +174,8 @@ html {
 #main {
 	background-color: whitesmoke !important;
 }
+
+
 
 /* SCROLL */
 
@@ -214,7 +217,7 @@ html {
                   <li class="menu-item"><a
                      href="/myHome/getMyHome?userId=${sessionScope.user.userId}">MyHome</a></li>
                   <li class="menu-item"><a
-                     href="/serviceCenter/serviceCenterHome.jsp">ServiceCenter</a></li>
+                     href="/serviceCenter/serviceCenterHome">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
                      <li class="menu-item"><a href="#" id='login'>로그인</a></li>
                   </c:if>
@@ -334,8 +337,6 @@ html {
 				});
 				
 				$("#live").on("click", function() {
-					
-					alert("클릭")
 					
 					if(${ empty sessionScope.user}){
 						swal.fire('로그인이 필요합니다.');
