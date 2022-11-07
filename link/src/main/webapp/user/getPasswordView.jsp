@@ -23,12 +23,6 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/SMSCheck.js"></script>
-<script type="text/javascript" charset="utf-8"
-	src="/resources/javascript/user/emailCheck.js"></script>
  
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -61,20 +55,19 @@ body {
 
 	function fncGetPassword() {
 
-		var id = $("#userId").val();
-		var name = $("#name").val();
-		var rrn1 = $("#rrn1").val();
-		var rrn2 = $("#rrn2").val();
+		var id = $("#userId1").val();
+		var name = $("#name1").val();
+		var rrn1 = $("#rrn11").val();
+		var rrn2 = $("#rrn21").val();
 		var rrn = rrn1 + "-" + rrn2;
-		var phone2 = $("#phone2").val();
-		var phone3 = $("#phone3").val();
-		var phoneNo = $("#phone1").val() + "-" + phone2 + "-" + phone3;
-		var checkNo = $("#checkNo").val();
-		var email = $("#email").val();
+		var phone2 = $("#phone21").val();
+		var phone3 = $("#phone31").val();
+		var phoneNo = $("#phone11").val() + "-" + phone2 + "-" + phone3;
+		var checkNo = $("#checkNo1").val();
+		var email = $("#email1").val();
 
-		$("#rrn").val(rrn);
+		$("#rrn1").val(rrn);
 
-		console.log("rrn 값 : " + $("#rrn").val());
 		console.log("phone2 : " + phone2 + ", phone3 : " + phone3);
 		console.log("email : " + email);
 
@@ -150,7 +143,7 @@ body {
 						if (phone2.length < 1 || phone3.length < 1) {
 							swal.fire("임시 비밀번호가 이메일로 전송되었습니다.").then(
 									function() {
-										window.close();
+										$('#modalPass').modal('hide');
 									});
 						}
 					}
@@ -178,30 +171,43 @@ body {
 						<!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal">
 							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
+<<<<<<< HEAD
+								<label for="userId" style="margin-left: 0px;">���̵�</label>
+									<input type="text" class="form-control" id="userId1"
+										name="uesrId" style="margin-left: 35px;" value=""
+										placeholder="���̵�">
+=======
 								<label for="userId" style="margin-left: 0px;">아이디</label>
 									<input type="text" class="form-control" id="userId"
 										name="uesrID" style="margin-left: 35px;" value=""
 										placeholder="아이디">
+>>>>>>> refs/remotes/origin/master
 							</div>
 							<div class="form-group"
 								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
+<<<<<<< HEAD
+								<label for="name" style="text-align-last: start;">�� ��</label> <input
+									type="text" class="form-control" id="name1" name="name" value=""
+									placeholder="�̸�" style="margin-left: 50px;">
+=======
 								<label for="name" style="text-align-last: start;">이 름</label> <input
 									type="text" class="form-control" id="name" name="name" value=""
 									placeholder="이름" style="margin-left: 50px;">
+>>>>>>> refs/remotes/origin/master
 							</div>
 
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; height: 30px; margin-top: 20px;">
 								<label for="rrn" style="text-align-last: start;">주민번호</label>
 								<div>
-									<input type="text" class="form-control" id="rrn1" name="rrn1"
+									<input type="text" class="form-control" id="rrn11" name="rrn1"
 										value="" style="margin-left: 20px; width: 100px">
 								</div>
 								<div>
-									<input type="password" class="form-control" id="rrn2"
+									<input type="password" class="form-control" id="rrn21"
 										name="rrn2" value="" style="margin-left: 10px; width: 100px">
 								</div>
-								<input type="hidden" id="rrn" name="rrn">
+								<input type="hidden" id="rrn1" name="rrn">
 							</div>
 
 							<ul class="nav nav-tabs" role="tablist"
@@ -216,7 +222,7 @@ body {
 								<div role="tabpanel" class="tab-pane active" id="home1"
 									style="display: flex; margin-left: 20px;">
 									<div>
-										<select class="form-control" name="phone1" id="phone1"
+										<select class="form-control" name="phone1" id="phone11"
 											style="margin-top: 10px; margin-left: 0px; width: auto; font-size: large;">
 											<option value="010">010</option>
 											<option value="011">011</option>
@@ -227,33 +233,43 @@ body {
 									</div>
 
 									<div style="margin: 10px">
-										<input type="text" class="form-control" id="phone2"
+										<input type="text" class="form-control" id="phone21"
 											name="phone2" style="width: 75px;">
 									</div>
 
-									<div style="margin: 10px">
-										<input type="text" class="form-control" id="phone3"
+									<div style="margin: 10px"> 
+										<input type="text" class="form-control" id="phone31"
 											name="phone3" style="margin-left: -10px; width: 75px;">
 									</div>
 									<input type="hidden" name="phoneNo" />
 
 									<div style="margin: 7px;">
+<<<<<<< HEAD
+										<button type="button" id="sendPhoneNumber1" class="btn"
+											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">������ȣ����</button>
+=======
 										<button type="button" id="sendPhoneNumber" class="btn"
 											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
+>>>>>>> refs/remotes/origin/master
 									</div>
 								</div>
 
 								<div role="tabpanel" class="tab-pane" id="profile1"
 									style="display: none; margin-left: 30px; margin-top: 20px;">
 									<div>
-										<input type="text" class="form-control" id="email"
+										<input type="text" class="form-control" id="email1"
 											name="email"
 											style="margin-top: 0px; margin-left: 0px; width: 220px;"
 											placeholder="변경이메일">
 									</div>
 									<div>
+<<<<<<< HEAD
+										<button type="button" id="sendEmail1" class="btn "
+											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">������ȣ����</button>
+=======
 										<button type="button" id="sendEmail" class="btn "
 											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
+>>>>>>> refs/remotes/origin/master
 									</div>
 								</div>
 							</div>
@@ -261,12 +277,23 @@ body {
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
 								<input type="text" class="form-control"
+<<<<<<< HEAD
+									id="inputCertifiedNumber1" style="width: 100px; height: 40px;"
+									name="inputCertifiedNumber" placeholder="������ȣ">
+=======
 									id="inputCertifiedNumber" style="width: 100px; height: 40px;"
 									name="inputCertifiedNumber" placeholder="인증번호">
+>>>>>>> refs/remotes/origin/master
 								<div>
+<<<<<<< HEAD
+									<button type="button" id="checkBtn1" class="btn "
+										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">������ȣȮ��</button>
+									<input type="hidden" id=checkNo1>
+=======
 									<button type="button" id="checkBtn" class="btn "
 										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호확인</button>
 									<input type="hidden" id=checkNo>
+>>>>>>> refs/remotes/origin/master
 								</div>
 							</div>
 
