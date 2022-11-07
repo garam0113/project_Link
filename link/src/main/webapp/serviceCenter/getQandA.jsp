@@ -206,7 +206,7 @@ textarea {
 						
 									<div> 
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
 									  <c:if test="${ user.role == 0 }">
 									   수정
 									   </c:if>
@@ -214,10 +214,10 @@ textarea {
 									   답변
 									   </c:if>
 									   </button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(540px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px); margin:auto; ">
 									   삭제</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(486px, 0px); margin:auto;">
 									이전</button>
 									
 									</div>
