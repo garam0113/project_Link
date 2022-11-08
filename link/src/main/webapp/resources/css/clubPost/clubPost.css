@@ -1,3 +1,59 @@
+
+/* SIMPLE PROFILE 심플 프로필 */
+
+	.ui-dialog-titlebar{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
+	.ui-dialog-titlebar-close{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
+
+	div.ui-widget {
+		width: 180px !important;
+	}
+
+	.ui-widget.ui-widget-content{
+		width:auto !important; 
+		border-radius: 20px;   
+	}
+
+	.btnSimpleProfileIng{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px !important;
+	   color: white;
+	}
+
+	.btnSimpleProfileIng:hover{
+	   background-color: white !important;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color:blueviolet !important;
+	}
+
+	.btnSimpleProfile{
+
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color:blueviolet;
+	}
+	.btnSimpleProfile:hover{
+	   background-color: #5F0080 !important;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px !important;
+	   color: white !important;
+	}
+
+	.dl {
+		cursor: pointer;
+	}
+
+/* SIMPLE PROFILE 심플 프로필 */
+
+
+
+
 /* 수정 모달창 이게 없으면 화면 맨위에 붙어있다 툴바에 가려진다 */
 #club-post-add-modal{
 	margin-top: 50px;
@@ -28,9 +84,6 @@
 }
 .grid-items.preload{
 	width: 1140px;
-}
-#club_post_main_img{
-	
 }
 
 /* 상단 모임 툴바? */
