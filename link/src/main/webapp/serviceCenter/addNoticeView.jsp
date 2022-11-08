@@ -170,7 +170,7 @@ body{
 		<h2>공지사항 등록</h2>
 	</div>
 	<div class="container" style="margin:0 auto;">
-	<div class ="table" style="width:880px;   transform: translateX(390px);box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px;">
+	<div class ="table" style="width:880px; transform: translateX(390px);  transform: translateX(390px);box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px;">
 		<div></div>
 		<div class="page-header text-center"></div>
 
@@ -212,9 +212,9 @@ body{
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(75px, 0px);">등록</button>
+						style="transform: translate(407px, 0px);">등록</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(75px, 0px);">이전</button>
+						style="transform: translate(407px, 0px);">이전</button>
 				</div>
 			</div>
 		

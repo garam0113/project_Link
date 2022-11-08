@@ -188,7 +188,7 @@ body{
 					<strong>제목</strong> <label for="title"></label>
 					<div class="col-sm-4">
 						<textarea class="noticeTitle" id="noticeTitle" name="noticeTitle"
-							value="" maxlength="80" placeholder="제목을 입력해주세요">${notice.noticeTitle}</textarea>
+							value="${notice.noticeTitle}" maxlength="80" placeholder="제목을 입력해주세요">${notice.noticeTitle}</textarea>
 
 
 					</div>
@@ -197,7 +197,7 @@ body{
 				<div class="form-group">
 					<label for="content" class="col-sm-offset-1 col-sm-3 control-label"></label>
 					<div class="col-sm-4" style="margin-left: 161px;">
-										<textarea class="content" id="noticeContent" name="noticeContent" value=""
+										<textarea class="content" id="noticeContent" name="noticeContent" value="${notice.noticeContent}"
 						placeholder="내용을 입력해주세요." maxlength="1000"
 						style="width: 500px; height: 500px;">${notice.noticeContent}</textarea>
 					</div>
@@ -222,9 +222,9 @@ body{
 		<div class="form-group">
 			<div class="col-sm-offset-4  col-sm-4 text-center">
 				<button class="custom-btn btn-13"
-					style="transform: translate(20px, 0px);">수정</button>
+					style="transform: translate(29px, 0px);">수정</button>
 				<button class="custom-btn btn-13"
-					style="transform: translate(60px, 0px);">이전</button>
+					style="transform: translate(43px, 0px);">이전</button>
 			</div>
 		</div>
 
