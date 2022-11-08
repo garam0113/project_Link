@@ -133,11 +133,36 @@ margin: 0 auto;
    text-align: center;
    border: solid 2px;
 }
+/* 상단 툴바 start */
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	width: 2000px !important;
+	padding-left: 152px !important;
+	padding-right: 84px !important;
+}
+#brand{
+	margin-left: 16px !important;
+}
+ul.reset{
+	width: 874px !important;
+	padding-left: 126px;
+}
+/* 상단 툴바 end */
+</style>
 
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+#club_post_footer{
+	left: 0;
+}
 </style>
 </head>
 
+
 <body>
+
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
@@ -196,6 +221,12 @@ margin: 0 auto;
 
 
 	</div>
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 	<!--  화면구성 div end /////////////////////////////////////-->
 
 </body>

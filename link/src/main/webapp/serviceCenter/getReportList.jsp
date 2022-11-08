@@ -142,7 +142,12 @@ function fncGetList(currentPage) {
 	
 	
 </script>
-
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+</style>
 </head>
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/toolbar.jsp" />
@@ -312,8 +317,13 @@ function fncGetList(currentPage) {
 			</tr>
 		</table>
 	</div>
-	</div>
-	</div>
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br>
+	
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 	<!--  화면구성 div End /////////////////////////////////////-->
 
 

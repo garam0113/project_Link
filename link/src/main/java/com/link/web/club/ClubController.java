@@ -578,8 +578,14 @@ public class ClubController {
 		System.out.println("/club/getMeeting : GET");
 		
 		clubNo = (String) session.getAttribute("clubNo");
-		
 		search.setSearchKeyword(clubNo);
+		
+		if( search.getSearchKeyword() == null || search.getSearchKeyword().equals("") ) {
+			// 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다
+			int no = clubService.getClubNotoMyHome(Integer.parseInt(meetingNo));
+			System.out.println("모임 번호 : " + no);
+			search.setSearchKeyword(no+"");
+		}
 		
 		//Business Logic
 		Map<String, Object> map = clubService.getMeeting(Integer.parseInt(meetingNo));

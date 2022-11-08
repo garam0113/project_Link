@@ -384,7 +384,7 @@
 	  	FROM(	SELECT club_no 
 						FROM club_user
 							<where>
-						 			club_no = #{searchKeyword}
+						 			club_no = #{ searchKeyword }
 						 			and approval_condition = '1'								
 							</where> ) countTable						
 	 </select>
@@ -599,6 +599,11 @@
    <!-- 참가신청 했을 때 해당 일정에 신청 했는지 안했는지 확인하는 Query -->
    <select id="getCheckMeeting" parameterType="participant" resultType="int">
    		SELECT COUNT(*) FROM PARTICIPANT WHERE MEETING_NO = #{ meetingNo } AND PARTICIPANT_USER_ID = #{ user.userId }
+   </select>
+   
+   <!-- 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다 -->
+   <select id="getClubNotoMyHome" parameterType="int" resultType="int">
+   		SELECT CLUB_NO FROM MEETING WHERE MEETING_NO = #{ meeting_no }
    </select>
 	
 	

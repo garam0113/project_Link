@@ -84,7 +84,7 @@
 		
 		$(".btn_update").bind("click", function() {
 			alert("수정하기");
-			$("form").attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/updateFeed").submit();
+			$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 		})
 	
 	})

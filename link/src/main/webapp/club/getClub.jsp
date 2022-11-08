@@ -498,7 +498,7 @@
 			</div>
 		<!-- intro-wrap --> --%>
 		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background-color: yellow !important;"><!-- 중간 개별영역 -->
 			
 			
 			
@@ -550,13 +550,15 @@
 				      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
 							<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
 							
-						<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+							<c:if test="${ fn:length(clubMemberList) > 0 }">
+							<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 								<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 									<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
 										<button type="button" class="plain button red cancel" id="deleteApprovalCondition">탈퇴</button>
 									</c:if>
 								</c:if>				 	
-						 	</c:forEach>	
+						 	</c:forEach>
+						 	</c:if>	
 											
 						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
 							<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
@@ -644,7 +646,8 @@
 						
 						
 					</div>
-				
+					
+					<c:if test="${ fn:length( clubMemberList ) > 0}">
 					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
@@ -652,6 +655,7 @@
 							</c:if>
 						</c:if>				 	
 				 	</c:forEach>
+				 	</c:if>
 				</div>
 				<!-- 버튼 원래 자리 -->
 				<%-- 	<div class="form-group" id="btn_group">
@@ -708,13 +712,17 @@
 				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
 				<input type="hidden" id="no" value="${clubNo}">
 				<input type="hidden" id="total" value="${clubMemberCount}">
+				
+	
+	
+				<br><br><br><br><br><br><br><br><br><br><br><br>
+				
+				<!-- footer start -->
+				<jsp:include page="/footer.jsp" />
+				<!-- footer end -->
+	
 			</div>
 	<!-- </main> -->
-	
-	
-	<!-- footer start -->
-	<jsp:include page="/footer.jsp" />
-	<!-- footer end -->
 	
 	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>

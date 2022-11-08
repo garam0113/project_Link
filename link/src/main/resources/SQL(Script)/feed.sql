@@ -534,14 +534,15 @@ SELECT uf.user_id AS SEND_USER_ID, deepInner.* FROM users uf, ( SELECT us.user_i
 
 
 DELETE FROM FOLLOW_BLOCK where send_user_id = 'metael'
-
+DELETE FROM heart where user_id = 'meptael'
 
 SELECT * FROM follow_block where send_user_id = 'apayo'
 
+DELETE from heart
 
-
-
-
+SELECT * FROM FEED_COMMENT;
+SELECT * FROM report_push;
+DELETE FROM report_push where no = 145
 
 CREATE TABLE FEED (
    feed_no                     NUMBER                                    NOT NULL,
