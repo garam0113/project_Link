@@ -320,8 +320,8 @@ html::-webkit-scrollbar {
 			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
 			var joinClubLimit = $("input[name='joinClubLimit']").val();
 			
-			alert("나의 총 모임 수 : " + totalApprovalConditionCount);
-			alert("최대 모임 수 : " + joinClubLimit);
+			//alert("나의 총 모임 수 : " + totalApprovalConditionCount);
+			//alert("최대 모임 수 : " + joinClubLimit);
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
 				self.location="/club/addClubView.jsp"

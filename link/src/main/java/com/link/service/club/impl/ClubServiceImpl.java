@@ -299,8 +299,13 @@ public class ClubServiceImpl implements ClubService {
 		System.out.println(getClass() + ".getCheckMeeting(Participant participant) 도착");
 		return clubDAO.getCheckMeeting(participant);
 	}
-	
 
+	// 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다
+	@Override
+	public int getClubNotoMyHome(int meetingNo) throws Exception {
+		System.out.println(getClass() + ".getClubNotoMyHome(int meetingNo) 도착");
+		return clubDAO.getClubNotoMyHome(meetingNo);
+	}
 	
 	
 }
