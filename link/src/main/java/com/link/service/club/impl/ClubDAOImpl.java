@@ -153,7 +153,9 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public void deleteClub(int clubNo) throws Exception {
-		sqlSession.delete("ClubMapper.deleteClub",clubNo);
+		// 해당 모임의 모임원을 모두 삭제해야 결제 할때 잘 된다
+		sqlSession.delete("ClubMapper.deleteClubMemberList", clubNo);
+		sqlSession.update("ClubMapper.deleteClub",clubNo);
 	}
 	
 	@Override

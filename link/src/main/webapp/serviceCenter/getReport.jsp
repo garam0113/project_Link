@@ -108,6 +108,7 @@ table{
     box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
     border-radius: 20px;
     background: #c9c9ff;
+  
 }
 .row {
 	margin-left : 0px !important;
@@ -170,13 +171,13 @@ body{
 
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
-<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="margin-left: auto;">
   <h2>신고 상세보기</h2>
 </div>
 
 		<div class="container" style="margin-top: 37px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
+			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;   margin-left: 122px;">
 				<div class="row2">
 				<thead>
 				</thead>
@@ -280,11 +281,11 @@ body{
 						
 									<div> 
 									<c:if test="${user.role=='1'}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(400px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(500px,0px); ">
 									   처리</button> 
 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(500px, 0px); ">
 									이전</button>
 									</div>
 				

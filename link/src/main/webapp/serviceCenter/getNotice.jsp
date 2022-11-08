@@ -141,11 +141,11 @@ body {
 	
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
-<div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px; margin-top: 80px;">
+<div class="page-header" align="center" style="margin-left: auto; margin-bottom: 20px; margin-top: 80px;">
   <h2>공지사항 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 37px; transform: translate(92px, 10px);">
+		<div class="container" style=" transform: translate(92px, 10px);">
 	
 	
 	
