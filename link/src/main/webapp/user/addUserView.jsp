@@ -352,7 +352,7 @@ body{
 										name="email" id="email" placeholder=""></td>
 								</tr>
 								<tr>
-									<th><span>휴대폰</span><span>번호</span></th>
+									<th><span>휴대폰번호</span></th>
 									<td>
 										<div style="display: flex;">
 											<div>
@@ -487,13 +487,13 @@ body{
 									</td>
 								</tr>
 								<tr>
-									<th>프로필글</th>
+									<th><span>프로필글</span></th>
 									<td><input type="text" style="height: 40px;" autocomplete="off"
 										class="form-control" id="profileWriting" name="profileWriting"
 										placeholder="프로필글"></td>
 								</tr>
 								<tr>
-									<th>프로필사진</th>
+									<th><span>프로필사진</span></th>
 									<td><input type="file" onchange="setThumbnail(event);"
 										style="display: none;" class="form-file" id="profileImageFile"
 										name="profileImageFile" />

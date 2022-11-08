@@ -1508,9 +1508,10 @@ $(function(){
 	<!-- DELETE_FEED_HEART -->
 	
 })
-$(function(){
+	$(function(){
 		/* 모임 게시물 좋아요 또는 좋아요취소 */
 		$(document).on("click",".clubPost-header-heart", function() {
+
 			//alert("모임게시물 좋아요");
 			
 			var clubNo = $("div[class='post']").attr("clubNo");
@@ -1558,10 +1559,9 @@ $(function(){
 					});
 		}); // end of 하트
 		
-	})
- 	
 
-	
+	})
+
 	
 	
 	
@@ -2550,7 +2550,7 @@ $(function() {
 			var value = "";
 			if(item.clubPostVideo1 == null){
 			var value = 
-				"<div class='post' style='margin-bottom : 40px;'>"+
+				"<div class='post' clubPostNo='"+item.clubPostNo+"' clubNo='"+item.clubNo+"' heartCondition='"+item.heartCondition+"' style='width:500px; margin-left:65px; margin- margin-bottom : 40px;'>"+
 				"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
 			"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 			"<img src='/resources/image/uploadFiles/"+item.image1+"' height='300' width='400' style='border-radius:20px;'>"+
@@ -2583,7 +2583,7 @@ $(function() {
 		"</div>";
 			}else{
 				value =
-					"<div class='post' style='margin-bottom : 30px;'>"+
+					"<div class='post' clubPostNo='"+item.clubPostNo+"' clubNo='"+item.clubNo+"' heartCondition='"+item.heartCondition+"' style='width:500px; margin-left:65px; margin-bottom : 30px;'>"+
 					"<h5 style='text-align:right; margin-right:120px; font-size:15px !important; color:black !important;'>"+date+"</h5>"+
 				"<a href='javascript:getClubPostGo("+item.clubPostNo+")'>"+
 				"<img src='https://img.youtube.com/vi/"+item.clubPostVideo1+"/mqdefault.jpg' height='300' width='400' style='border-radius:20px;'>"+
