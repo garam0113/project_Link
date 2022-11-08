@@ -102,23 +102,24 @@
 		})
 		
 	//일정 참가
-
-		$(document).on("click", "#addMeetingMember", function() {
+	$(document).on("click", "#addMeetingMember", function() {
 		
-			Swal.fire({
-				title: '일정에 참여합니다' ,
-				text: '즐거운 만남하세요' ,
-				icon: 'warning' ,
-				showConfirmButton: true,
-				confirmButtonText: '참가',
-				cancelButtonText: '취소' ,
-			}).then((result) => {
-				if(result.value) {
-				
-			$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
-			}
-		})	
-	})
+		Swal.fire({
+			title: '일정에 참여합니다' ,
+			text: '즐거운 만남하세요' ,
+			icon: 'warning' ,
+			showConfirmButton: true,
+			confirmButtonText: '참가',
+			cancelButtonText: '취소' ,
+		}).then((result) => {
+			if(result.value) {
+
+				$("form").attr("method", "POST").attr("action", "/club/addMeetingMember").submit();
+			
+			}//end of if
+		})//end of Swal
+		
+	})//end of 참가신청
 	
 	$(function() {
 		$("#deleteMeeting").on("click", function() {
@@ -265,13 +266,15 @@
 			<div class="btn_group" id="btn_group" style="margin-top: 60px;">
 				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 20%;">
 				
-				<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+					<c:if test="${ fn:length(clubMemberList) > 0}">
+					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
 								<button type="button" class="plain button red cancel" id="addMeetingMember">참가신청</button>
 							</c:if>
-						</c:if>				 	
-				 	</c:forEach>	
+						</c:if>
+				 	</c:forEach>
+				 	</c:if>	
 					
 					<button type="button" class="plain button red cancel" id="cancel"> 이&nbsp;전</button>
 					

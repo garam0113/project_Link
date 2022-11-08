@@ -72,6 +72,9 @@ public interface ClubService {
 	
 	//결제
 	public List<ClubUser> updateClubMember(Pay pay, Search search) throws Exception;
+	
+	// 일정에 참가신청 했었는지 안 했었는지 확인
+	public int getCheckMeeting(Participant participant) throws Exception;
 
 	
 }

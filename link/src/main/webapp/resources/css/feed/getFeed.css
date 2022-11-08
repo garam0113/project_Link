@@ -1,4 +1,54 @@
 	
+	/* 프로필 요약 보기 */
+
+	.ui-widget.ui-widget-content{
+		width:auto !important; 
+		border-radius: 20px;   
+	}
+	.di{
+		border-radius:15px;
+		cursor: pointer;
+	}
+
+	.btnSimpleProfile{
+
+	   background-color: white;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color:blueviolet;
+	}
+	.btnSimpleProfile:hover{
+	   background-color: #5F0080;
+	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	   color: white !important;
+	}
+
+	.ui-dialog-titlebar{
+		border: hidden !important;
+		background-color: white !important;
+		border: none !important;
+		border-radius: 15px !important;
+	}
+
+	.dll {
+		cursor: pointer;
+	}
+
+	.dl {
+		cursor: pointer;
+	}
+
+	.yourHome {
+		cursor: pointer;
+	}
+
+	.yourHome2 {
+		cursor: pointer;
+	}
+	
+	/* 프로필 요약 보기 */
+
+
+
 	/* 유저 사진에 마우스 클릭시 이벤트 */
 
 	.dialog {

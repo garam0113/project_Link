@@ -134,7 +134,7 @@ function fncGetList(currentPage) {
 	
 	<jsp:include page="/sideToolbar.jsp" />
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="zoom: 1.2; margin-left: 312px; margin-top: 81px;">
+	<div class="container" style="zoom: 1.2; margin-left: 280px; margin-top: 57px;">
 			
 			
 	
@@ -151,12 +151,12 @@ function fncGetList(currentPage) {
 			
 		<c:if test="${user.role == '0'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold;">내정보보기>내Q&A</h3>
+				<h6 class=" text-info" style="font-weight: bold;">내정보보기 > 내Q&A</h6>
 			</div>
 		</c:if>
 		<c:if test="${user.role == '1'}">
 			<div class="page-header text-left">
-				<h3 class=" text-info" style="font-weight: bold;">Q&A</h3>
+				<h6 class=" text-info" style="font-weight: bold;">Q&A</h6>
 			</div>
 		</c:if>
 		<div class="row1" style="font-weight: bold;"> 
@@ -323,7 +323,7 @@ function fncGetList(currentPage) {
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->
 	<div style="display: flex; justify-content: center;">
-		<jsp:include page="../common/pageNavigator_new.jsp" />
+		<jsp:include page="../common/pageNavigator.jsp" />
 	</div>
 <br/><br/>
 

@@ -43,9 +43,9 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
+<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/summernote/summernote-lite.js"></script>
-<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+
 
 <script>
 		var sock = null;
@@ -121,6 +121,13 @@
 					})
 				})
 			});
+
+
+			function getModal() {
+				
+				$('#modalLogin').modal();
+			}
+
 			
 			$(function() {
 				$('#login').on('click', function(event) {
@@ -134,6 +141,7 @@
 				})  */
 			}); 
 			
+
 			
 		</script>
 
@@ -219,7 +227,8 @@ html {
                   <li class="menu-item"><a
                      href="/serviceCenter/serviceCenterHome">ServiceCenter</a></li>
                   <c:if test="${ empty sessionScope.user }">
-                     <li class="menu-item"><a href="#" id='login'>로그인</a></li>
+                     <li class="menu-item">
+                     <a href="#" id='login'  onClick="getModal()">로그인</a></li>
                   </c:if>
                   <c:if test="${!empty sessionScope.user }">
                      <li class="menu-item"><a

@@ -527,5 +527,9 @@ body>div.container {
 		</div>
 		<!-- container E -->
 	</form>
+		
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 </body>
 </html>

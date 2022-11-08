@@ -95,7 +95,7 @@ public class UserController {
 
 		session.setAttribute("user", getUser);
 
-		return "redirect:/";
+		return "redirect:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "addSnsUser", method = RequestMethod.POST)
@@ -181,7 +181,7 @@ public class UserController {
 
 		} else {
 
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 	}
 
@@ -230,7 +230,7 @@ public class UserController {
 
 			return "forward:/user/updateUserView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 
 	}
@@ -307,7 +307,7 @@ public class UserController {
 
 			return "forward:/user/updateProfileView.jsp";
 		} else {
-			return "redirect:/";
+			return "redirect:/feed/getFeedList";
 		}
 	}
 
@@ -378,7 +378,7 @@ public class UserController {
 			session.setAttribute("user", getUser);
 		}
 
-		return "forward:/";
+		return "forward:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "getPassword", method = RequestMethod.GET)
@@ -426,7 +426,7 @@ public class UserController {
 			session.setAttribute("follow", map.get("list"));
 		}
 
-		return "redirect:/";
+		return "redirect:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "snsLogin", method = RequestMethod.POST)
@@ -488,7 +488,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "getUserList")
-	public String getUserList(@ModelAttribute("search") Search search, Model model) throws Exception {
+	public String getUserList(@ModelAttribute("search") Search search, Model model, Chat chat, HttpSession session) throws Exception {
 
 		System.out.println("/user/getUserList : GET/POST");
 
@@ -507,6 +507,20 @@ public class UserController {
 		model.addAttribute("list", map.get("userList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+			// 1:1 채팅 채팅방번호 가져온다
+			chat.setUser((User)session.getAttribute("user"));
+			model.addAttribute("getChat", clubPostService.getChat(chat));
+			// 모임채팅 roomId 가져온다
+			model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		return "forward:/user/getUserList.jsp";
 	}
