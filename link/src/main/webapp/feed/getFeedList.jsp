@@ -72,7 +72,7 @@
 	function fncAddReport(){
 			
 			var title = $("textarea[name=title]").val();		
-			var content =$("textarea[name=content]").val();			
+			var content =$("textarea.reportContent").val();			
 			var checkbox = $("input:checkbox[name=reportReason]:checked").length;
 			
 			if(title == null || title.length <1){
@@ -126,39 +126,10 @@
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);			
 		}
-
 			
-		var no = 0;	
-			
-		 if( $("#clubPostNo").val()!=null){
-			 no = $("#clubPostNo").val();
-		}else if($("#clubPostCommentNo").val()!=null){
-			 no = $("#clubPostCommentNo").val();
-		}else if($("#feedNo").val()!=null){
-			 no = $("#feedNo").val();
-		}else if($("#feedCommentNo").val()!=null){
-			  no = $("#feedCommentNo").val();
-		}
-		
-		var clubNo = 0;
-		
-		if( $("#clubNo2").val()!=null ){
-			clubNo = $("#clubNo2").val();
-		}else if( $("#clubNo3").val()!=null){
-			clubNo = $("#clubNo3").val();
-		}
-		
+		var no = $("#No").val();
+		var clubNo = 0;		
 		var clubPostNo = 0;
-		
-		
-		if ( $("#clubPostNo2").val()!=0){
-			
-			clubPostNo = $("#clubPostNo2").val();
-			if(clubPostNo == undefined){
-				clubPostNo = 0;
-			}
-			
-		}
 		
 	 	$.ajax({
 		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
@@ -1830,7 +1801,7 @@
 				// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
 				
 				$("#user2").val(reportedUser);
-				$("#feedNo").val(feedNo);
+				$("#No").val(feedNo);
 				
 				$('#reportModal').modal();
 			}
@@ -2250,11 +2221,11 @@
 							</h3>
 							
 							
-							<%--
 							
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
 							
-							--%>
+							
+							
 						</div>
 
 						<div class="column six">
@@ -2597,7 +2568,7 @@
 							<button type="button" class="btn btn-default addCommentByModal">등록</button>
 							
 							<button type="button" class="btn btn-default cancelCommentByModal" data-dismiss="modal">
-								Close
+								취소
 							</button>
 						</div>
 						
@@ -2658,7 +2629,7 @@
 							</div>
 							
 							<div class="reportContent">
-								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
+								<textarea class="reportContent" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
 							</div>
 						</div>
 						
@@ -2672,7 +2643,7 @@
 						<input type="hidden" name="type" id="type" value="1">
 						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
 						<input type="hidden" id="reportSource" name="reportSource" value="3">
-						<input type="hidden" name="no" id="feedNo" value="" />
+						<input type="hidden" name="no" id="No" value="" />
 
 						<div class="reportModalReason">
 
@@ -2691,7 +2662,7 @@
 
 					<div class="modal-footer">
 
-						<button type="button" class="custom-btn btn-13">등록</button>
+						<button type="button" class="custom-btn btn-13 addReportByModal">등록</button>
 						
 						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
 							취소
