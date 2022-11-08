@@ -68,7 +68,7 @@ public class ServiceCenterRestController {
 	
 	@RequestMapping(value = "/json/addReport", method = RequestMethod.POST)
 	public String addReport(@RequestBody Report report,  Model model , @RequestParam int clubNo,
-			@RequestParam(value = "clubPostNo", required =false) int clubPostNo ,Search search  )throws Exception {
+			@RequestParam(value = "clubPostNo", required =false) int clubPostNo, Search search  )throws Exception {
 			//Search search  )throws Exception {
 		
 		Comment comment = new Comment();

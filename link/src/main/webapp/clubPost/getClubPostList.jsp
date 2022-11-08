@@ -20,9 +20,9 @@
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		
 		<!--  font -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet"> -->
 		
 		<!-- Swal 쓰기위한 cdn -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -368,10 +368,10 @@
 	
 	
 
-		<main role="main">
+		<!-- <main role="main" style="background-color: red;"> -->
 		
 
-			<div id="main" class="row" style="background: #EBEDF0;"><!-- 중간 개별영역 -->
+			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
 				<%-- chat.js에서 사용위해서 --%>
 				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
@@ -382,9 +382,13 @@
 				<%-- 채팅 --%>
 				<jsp:include page="/chat/chat.jsp" />
 				<%-- 채팅 --%>
-			
-				<div class="row-content buffer clear-after" style="padding-right: 0px;">
 				
+			
+				<div class="row-content buffer clear-after">
+					
+					<div>
+						<img src="/resources/image/uploadFiles/clubMainImage5.jpg">
+					</div>
 				
 				
 					<div class="homeBtn_group">
@@ -407,7 +411,7 @@
 					
 					
 					
-					<div class="grid-items preload">
+					<div class="grid-items preload" style="background-color: black;">
 					
 					
 							<!--  화면구성 div Start /////////////////////////////////////-->
@@ -536,38 +540,15 @@
 					</div>
 				</div><!-- row-content -->
 			</div><!-- row -->
-		</main><!-- main -->
+		<!-- </main>main -->
 		
+		<!-- summernote로 게시물 등록 모달창 보이기 -->
+		<jsp:include page="/clubPost/addClubPostModal.jsp" />
+		<!-- summernote로 게시물 등록 모달창 숨기기 -->
 		
-		
-		
-		<!-- 모달창 start -->
-		<div class="modal fade" id="club-post-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</button>
-						<h3 class="modal-title" id="exampleModalLabel">게시물 등록하기</h5>
-					</div>
-					<div class="club-post-add-view">
-						<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
-							<input type="hidden" name="clubNo" value="${ sessionScope.clubNo }">
-							<div class="clubPostTitle">
-								<input type="text" name="clubPostTitle" placeholder="제목">
-							</div>
-							<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
-							<input type="button" class="plain button red" value="등록완료">
-							<input type="button" class="plain button red cancle" value="이전으로">
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 모달창 end -->
-		
-		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 
 </body>
 </html>

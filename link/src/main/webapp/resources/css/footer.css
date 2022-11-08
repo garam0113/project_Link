@@ -5,13 +5,23 @@
 	color: gray; font-size: 20px;
 }
 #club_post_footer_img{
-	width: 100%;
+	position: absolute;
+}
+#club_post_footer_img > img{
+	width: 1900px;
+}
+#club_post_logo_img{
+	position: relative; top: 0;
+}
+#club_post_logo_img > img{
+	width: 300px;
+	height: 200px;
 }
 #club_post_footer{
-	height: 350px; overflow: hidden; background-color: whitesmoke;
+	height: 350px; overflow: hidden; background-color: whitesmoke; position: fixed;
 }
 #club_post_footer_content{
-	position: relative; background-color: red;
+	position: relative;
 }
 #club_post_footer_int{
 	position: absolute; top: 10px; left: 500px; width: 1000px; height: 300px; display: grid; grid-template-columns: 2fr 3fr 2fr;

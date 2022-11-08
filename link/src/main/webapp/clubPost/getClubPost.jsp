@@ -202,12 +202,166 @@
 					})// end of swal
 			});
 			
-			<%-- 모임 게시물 신고 --%>
-			$(".clubPost-header-report").bind("click", function(){
-				//alert("모임게시물 신고");
+			<%-- 게시물 신고 모달창 보이기 --%>
+			$(document).on("click", ".clubPost-header-report", function(event) {
 				event.stopPropagation();
-				$("form[name='clubPostReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
-			});
+				
+				var sessionUser = '${ sessionScope.user }';
+				
+				if(sessionUser == "" || sessionUser == null) {
+					Swal.fire({
+						title: '로그인 후 이용해주세요' ,
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '확인', 
+					})
+				} else {
+				
+					var reportedUserId = '${ clubPost.getClubPost.user.userId }';
+					var clubNo = '${ clubPost.getClubPost.clubNo }';
+					var clubPostNo = '${ clubPost.getClubPost.clubPostNo }';
+					
+					//alert("신고대상회원 정보 : " + reportedUser);
+					//alert("모임번호 : " + clubNo);
+					//alert("모임게시물번호 : " + clubPostNo);
+					
+					$("#user2").val(reportedUserId);
+					$("#clubNo").val(clubNo);
+					$("#clubPostNo").val(clubPostNo);
+					$("#reportSource").val("1");
+					$(".reportSourceDivSource").val("게시물");
+					
+					//$('#reportModal').modal();
+					$("#reportModal").modal('show');
+				}
+			});//end of 게시물 신고 모달창 열기
+			
+			<%-- 게시물 신고 모달창 닫기 --%>
+			$(document).on("click", "#club_post_cancle_report", function(event) {
+				$("#title").val("");
+	      		$("#content").val("");
+	      		$("input:checkbox[name=reportReason]").prop("checked", false);
+	      	 	$("#reportModal").modal("hide");
+			});//end of 게시물 신고 모달창 닫기
+			
+			<%-- 신고 등록 --%>
+			$(document).on("click", "#club_post_add_report", function(event) {
+				event.stopPropagation();
+				
+				var title = $("textarea[name=title]").val();		
+				var content =$("textarea[name=content]").val();			
+				var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+				
+				//alert("신고 제목 : " + title);
+				//alert("신고 내용 : " + content);
+				//alert("신고 사유 : " + checkbox);
+				
+				if(title == null || title.length <1){
+		          	Swal.fire({
+		                icon: 'error',
+		                title: '신고 제목은 필수입니다.',
+		            });
+						return;
+					}
+				if(content == null || content.length <1){
+					Swal.fire({
+		                icon: 'error',
+		                title: '신고 내용은 필수입니다.',
+		                text: '가능한 상세히 적어주세요.',
+		            });
+						return;
+					}
+						
+				if(checkbox==0){
+					Swal.fire({
+		                icon: 'error',
+		                title: '신고 사유는 필수입니다.',
+		                text: '1개 이상 클릭해주세요.',
+		            });
+					return;
+				}
+				
+								
+				  Swal.fire({
+			          title: '정말로 신고하시겠습니까?',
+			          text: "다시 되돌릴 수 없습니다. 신중하세요.",
+			          icon: 'warning',
+			          showCancelButton: true,
+			          confirmButtonColor: '#3085d6',
+			          cancelButtonColor: '#d33',
+			          confirmButtonText: '신고',
+			          cancelButtonText: '취소'
+			      }).then((result) => {
+			          if (result.isConfirmed) {
+
+			        	// 신고 등록!
+			        	var sum = 0;
+			      		var checkbox = $("input:checkbox[name=reportReason]:checked").length;
+			      		
+			      		for(var i =0 ; i<checkbox; i++){
+			      			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
+			      			sum += sum+parseInt(sum2);			
+			      		}
+						
+			      		// clubPostCommentNo는 댓글 신고 버튼 클릭시 해당 댓글번호를 전역변수로 선언하였다
+			      		//alert("게시물 댓글 번호 : " + clubPostCommentNo);
+			      			
+			      		var no = 0;	
+			      			
+			      		 if( clubPostCommentNo == undefined ){
+			      			 no = $("#clubPostNo").val();
+			      		}else if( clubPostCommentNo != undefined ){
+			      			 no = clubPostCommentNo;
+			      		}
+			      		
+			      		//alert("제목 : " + $("#title").val());
+			      		//alert("내용 : " + $("#content").val());
+			      		//alert("신고하는 : " + $("#user1").val());
+			      		//alert("신고받는 : " + $("#user2").val());
+			      		//alert("신고출처 : " + $("#reportSource").val());
+			      		//alert("sum : " + sum);
+			      		//alert("타입 : " + $("#type").val());
+			      		//alert("번호 : " + no);
+			      		
+			      	 	$.ajax({
+				      		url  : "/serviceCenterRest/json/addReport?clubNo="+'${ clubPost.getClubPost.clubNo }'+"&clubPostNo="+'${ clubPost.getClubPost.clubPostNo }',
+				      		contentType: 'application/json',
+				      		method : "POST",
+				      		dataType: "json",
+				      		data : JSON.stringify ({
+				      			"title":$("#title").val(),
+				      			"content":$("#content").val(),
+				      		<%--	"file": image, --%>
+				      			"user1":$("#user1").val(),
+				      			"user2":$("#user2").val(),
+				      			"reportSource":$("#reportSource").val(),
+				      			"reportReason": sum,
+				      			"type": $("#type").val(),
+				      			"no" :no
+				      		}),
+			      			success: function(status){
+			      			}//end of success
+	      				
+			      		});//end of ajax
+			      		
+			      		Swal.fire({
+      						
+	      					icon: 'success',
+	      					title: '게시물 신고 되었습니다',
+	      					showConfirmButton: false,
+	      					timer: 1500
+	      					  
+	      				}) // swal close
+	      				
+			      		$("#title").val("");
+			      		$("#content").val("");
+			      		$("input:checkbox[name=reportReason]").prop("checked", false);
+			      	 	$("#reportModal").modal("hide");
+			      	 	
+			          }
+			      })
+			});//end of 신고 등록
 
 			<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
 			$(".clubPost-header-heart").bind("click", function(){
@@ -787,18 +941,48 @@
 						});
 			}); // end of 댓글좋아요
 			
+			//댓글번호 때문에 전역변수 선언
+			var clubPostCommentNo;
+			
 			<%-- 모임 게시물 댓글 신고 --%>
 			$(document).on("click", ".reply.report", function(event) {
 				//alert("댓글 신고");
-				var clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
-				var revUserId = $(this).parent().parent().parent().parent().attr("revUserId");
-				
-				$("#sourceNumber").val( clubPostCommentNo );
-				$("#revUserId").val( revUserId );
 				
 				event.stopPropagation();
 				
-				$("form[name='commentReport']").attr("method", "post").attr("action", "/serviceCenter/addReport" ).submit();
+				var sessionUser = '${ sessionScope.user }';
+				
+				if(sessionUser == "" || sessionUser == null) {
+					Swal.fire({
+						title: '로그인 후 이용해주세요' ,
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '확인',
+					})
+				} else {
+				
+					var reportedUserId = '${ clubPost.getClubPost.user.userId }';
+					var clubNo = '${ clubPost.getClubPost.clubNo }';
+					var clubPostNo = '${ clubPost.getClubPost.clubPostNo }';
+					// 댓글 신고 클릭시 댓글번호를 전역변수에 넣어줘야 신고 등록 버튼 클릭시 댓글 번호를 알 수 있다
+					clubPostCommentNo = $(this).parent().parent().parent().parent().attr("commentNo");
+					
+					//alert("신고대상회원 아이디 : " + reportedUserId);
+					//alert("모임번호 : " + clubNo);
+					//alert("모임게시물번호 : " + clubPostNo);
+					//alert("모임게시물댓글번호 : " + clubPostCommentNo);
+					
+					$("#user2").val(reportedUserId);
+					$("#clubNo").val(clubNo);
+					$("#clubPostNo").val(clubPostNo);
+					$("#clubPostCommentNo").val(clubPostCommentNo);
+					$("#reportSource").val("2");
+					$(".reportSourceDivSource").val("게시물 댓글");
+					
+					//$('#reportModal').modal();
+					$("#reportModal").modal('show');
+				}
 				
 			}) // .report evenet close
 			
@@ -1084,7 +1268,9 @@
 					<%-- 채팅 --%>
 					<jsp:include page="/chat/chat.jsp" />
 					<%-- 채팅 --%>
-				
+					<div id="club_post_main_img">
+						<img src="/resources/image/uploadFiles/clubMainImage5.jpg">
+					</div>
 					
 				
 				
@@ -1407,7 +1593,7 @@
 														</ul>
 													</div>
 												</div>
-												<br>
+												<br><!-- <br>없으면 어디서 코드 꼬인다!!! -->
 												<%-- 대댓글 for문 --%>
 											</div>
 											
@@ -1509,40 +1695,6 @@
 				</div><!-- row-content -->
 			</div><!-- row -->
 		</main><!-- main -->
-		
-		
-		
-		
-		<!-- 모달창 start -->
-		<div class="modal fade" id="club-post-update-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</button>
-						<h3 class="modal-title" id="exampleModalLabel">게시물 수정하기</h5>
-					</div>
-					<div class="club-post-update-view">
-						<form name="summernoteUpdateClubPost">
-	
-							<input type="hidden" id="clubNo" value="${ clubPost.getClubPost.clubNo }">
-							<input type="hidden" id="clubPostNo" value="${ clubPost.getClubPost.clubPostNo }">
-							
-							<div class="clubPostTitle">
-								<input type="text" name="clubPostTitle" placeholder="제목">
-							</div>
-							<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
-							<input type="button" id="summernoteUpdate" value="게시물 수정">
-							<input type="button" id="summernoteCancle" value="이전으로">
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 모달창 end -->
-		
-		
 		
 		
 		
@@ -2204,9 +2356,17 @@
 		
 		</script>
 		
+		<!-- 신고모달 -->
+		<jsp:include page="/clubPost/clubPostReport.jsp" />
+		<!-- 신고모달 -->
 		
+		<!-- summernote로 게시물 등록 모달창 보이기 -->
+		<jsp:include page="/clubPost/updateClubPostModal.jsp" />
+		<!-- summernote로 게시물 등록 모달창 숨기기 -->
 		
-		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 				
 	</body>
 
