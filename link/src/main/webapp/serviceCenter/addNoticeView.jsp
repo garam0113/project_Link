@@ -88,7 +88,7 @@ input[type=file]::file-selector-button {
 }
 .row {
 	margin-left : 0px !important;
-	   display: initial !important;
+	display: initial !important;
 }
 
 textarea {
@@ -96,6 +96,7 @@ textarea {
 }
 .body{
 background-color: #EBEDF0 !important;
+margin: 0 auto;
 }
 .noticeTitle {
 	width: 500px;
@@ -136,16 +137,15 @@ background-color: #EBEDF0 !important;
 </style>
 </head>
 
-<body style="margin-left:470px;">
+<body>
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
-	<div class="page-header" align="center"
-		style="transform: translate(-316px, 38px);">
+	<div class="page-header" align="center">
 		<h2>공지사항 등록</h2>
 	</div>
-	<div class="container">
-	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px;">
+	<div class="container" style="margin:0 auto;">
+	<div class ="table" style="width:880px;   transform: translateX(390px);box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue; margin-top:50px;">
 		<div></div>
 		<div class="page-header text-center"></div>
 
