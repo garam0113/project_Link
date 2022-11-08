@@ -21,6 +21,8 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 
@@ -109,6 +111,7 @@
 	      }).then((result) => {
 	          if (result.isConfirmed) {
 	             AddReport()
+	             $('#reportModal').modal('hide');
 	          }
 	      })
 	      
@@ -129,27 +132,34 @@
 		var clubPostNo = 0;
 		
 	 	$.ajax({
-		url  : "/serviceCenterRest/json/addReport?clubNo=0&clubPostNo=0",
-			//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
-		contentType: 'application/json',
-		method : "POST",
-		dataType: "json",
-		data : JSON.stringify ({
-			"title":$("#title").val(),
-			"content":$("#content").val(),
-		<%--	"file": image, --%>
-			"user1":$("#user1").val(),
-			"user2":$("#user2").val(),
-			"reportSource":$("#reportSource").val(),
-			"reportReason": sum,
-			"type": $("#type").val(),
-			"no" :no,
-				
-		 success: function(){
-			 window.close();
-		 }
-		}),
-			
+			url  : "/serviceCenterRest/json/addReport?clubNo=0&clubPostNo=0",
+				//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+			contentType: 'application/json',
+			method : "POST",
+			dataType: "json",
+			data : JSON.stringify ({
+				"title":$("#title").val(),
+				"content":$("#content").val(),
+			<%--	"file": image, --%>
+				"user1":$("#user1").val(),
+				"user2":$("#user2").val(),
+				"reportSource":$("#reportSource").val(),
+				"reportReason": sum,
+				"type": $("#type").val(),
+				"no" :no,
+			}),
+			success : function(Data, status){
+				 Swal.fire({
+						
+						icon: 'success',
+						title: 'Your work has been saved',
+						showConfirmButton: false,
+						timer: 1500
+						  
+					}) // swal close
+					
+					
+			}
 		})<!-- ajax ( ReportAdd) 끝 --> 
 		
 	
@@ -1411,7 +1421,33 @@
 			
 			$(document).on("click", ".btn_updateFeed", function(event) {
 				console.log("수정하기");
-				$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+				
+				console.log($(".updateModalHeader").parent().find(".note-editable").html());
+				console.log($(".updateModalHeader").parent().find(".note-editable").html().split("<img").length-1);
+				console.log($(".updateModalHeader").parent().find(".note-editable").html().split("<iframe").length-1);
+				
+				var imgCount = $(".updateModalHeader").parent().find(".note-editable").html().split("<img").length-1;
+				var videoCount = $(".updateModalHeader").parent().find(".note-editable").html().split("<iframe").length-1;
+				
+				if($(".updateModalHeader").parent().find(".note-editable").html() == "<p><br></p>") {
+					Swal.fire({
+						  title: '내용을 입력하세요',
+						  width: 400,
+						  icon: 'warning',
+						  timer : 1000,
+						  showConfirmButton : false,
+					})
+				} else if(imgCount > 4 || videoCount > 1) {
+					Swal.fire({
+						  title: '이미지는 4개, 동영상은 1개 까지 가능합니다.',
+						  width: 400,
+						  icon: 'warning',
+						  timer : 1000,
+						  showConfirmButton : false,
+					})
+				} else {return false;
+					$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+				}
 			})
 
 			
@@ -2346,7 +2382,7 @@
 				
 			}) // .report evenet close
 			
-			$(document).on("click", "button:contains('등록')", function(event) {
+			$(document).on("click", "button:contains('신고')", function(event) {
 				event.stopPropagation();
 				
 				fncAddReport();
@@ -2870,7 +2906,7 @@ h3{
 
 				<div class="modal-footer">
 						
-					<button type="button" class="btn btn-default btn-13 add add5">등록</button>
+					<button type="button" class="btn btn-default btn-13 add add5">신고</button>
 						
 					<button type="button" class="btn btn-default btn-13" data-dismiss="modal">취소</button>
 

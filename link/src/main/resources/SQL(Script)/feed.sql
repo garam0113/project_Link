@@ -542,7 +542,16 @@ DELETE from heart
 
 SELECT * FROM FEED_COMMENT;
 SELECT * FROM report_push;
-DELETE FROM report_push where no = 145
+
+
+DELETE FROM report_push where no = 168
+DELETE FROM report_push where no = 167
+DELETE FROM report_push where no = 166
+DELETE FROM report_push where no = 165
+DELETE FROM report_push where no = 164
+DELETE FROM report_push where no = 163
+DELETE FROM report_push where no = 158
+
 
 CREATE TABLE FEED (
    feed_no                     NUMBER                                    NOT NULL,
