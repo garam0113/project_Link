@@ -540,8 +540,9 @@ SELECT * FROM follow_block where send_user_id = 'apayo'
 
 DELETE from heart
 
-
-SELECT * FROM users;
+SELECT * FROM FEED_COMMENT;
+SELECT * FROM report_push;
+DELETE FROM report_push where no = 145
 
 CREATE TABLE FEED (
    feed_no                     NUMBER                                    NOT NULL,

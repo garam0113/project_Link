@@ -124,7 +124,9 @@
 			sum += sum+parseInt(sum2);			
 		}
 		
-		var no = $("#No").val();
+		var no = $("#No").val();var no = $("#No").val();
+		var clubNo = 0;		
+		var clubPostNo = 0;
 		
 	 	$.ajax({
 		url  : "/serviceCenterRest/json/addReport?clubNo=0&clubPostNo=0",
@@ -1224,7 +1226,7 @@
 																	'</form>' +
 																	'<div class="btn_recommentCheck" style="display: none;">' +
 																	'<textarea name="commentContent" placeholder="작성"></textarea>' +
-																	'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+																	'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 																	'</div>' +
 																	'</div>' +
 																	'</li>' +
@@ -1369,7 +1371,7 @@
 											'</div>' +
 											'<div class="btn_recommentCheck" style="display: none;" >' +
 											'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-											'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+											'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 											'</div>' +
 											'</div>'
 										
@@ -1569,7 +1571,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -1733,7 +1735,7 @@
 																'</div>' +
 																'<div class="btn_recommentCheck" style="display: none;" >' +
 																'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-																'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+																'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 																'</div>' +
 																'</div>'
 															
@@ -1849,7 +1851,7 @@
 															'</form>' +
 															'<div class="btn_recommentCheck" style="display: none;">' +
 															'<textarea name="commentContent" placeholder="작성"></textarea>' +
-															'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+															'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 															'</div>' +
 															'</div>' +
 															'</li>' +
@@ -1986,7 +1988,7 @@
 												'</div>' +
 												'<div class="btn_recommentCheck" style="display: none;" >' +
 												'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-												'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+												'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 												'</div>' +
 												'</div>'
 											
@@ -2098,7 +2100,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -2202,7 +2204,7 @@
 										'</div>' +
 										'<div class="btn_recommentCheck" style="display: none;" >' +
 										'<textarea style="width:427px; resize:none;" name="commentContent" placeholder="작성"></textarea>' +
-										'<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>' +
+										'<button class="btn btn-primary btn_addRecomment" type="button">등록</button>' +
 										'</div>' +
 										'</div>'
 									
@@ -2364,103 +2366,88 @@
 	text-align: center;
 }
 
-h3 {
-	text-align: center;
-	text-transform: uppercase;
-	color: #F1FAEE;
-	font-size: 4rem;
-	margin-top: 15px !important;
-	margin-bottom: 15px !important;
-}
-
-.roller {
-	height: 3.125rem;
-	line-height: 3.9rem;
-	position: relative;
-	overflow: hidden;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: #1D3557;
-}
-
-#spare-time {
-	font-size: 1rem;
-	letter-spacing: 1rem;
-	margin-top: 0;
-	color: #A8DADC;
-}
-
-.roller #rolltext {
-	position: absolute;
-	top: 0;
-	animation: slide 10s infinite;
-}
-
-@
-keyframes slide { 0%{
-	top: 0;
-}
-
-25
-%
-{
-top
-:
--4rem;
-}
-50
-%
-{
-top
-:
--8rem;
-}
-72
-.5 %{
-	top: -12.25rem;
-}
-
-}
-@media screen and (max-width: 600px) {
-	h3 {
-		text-align: center;
+h3{
+		text-align:center;
 		text-transform: uppercase;
-		color: #F1FAEE;
+		color: #F1FAEE; 
+		font-size: 4rem;
+		margin-top: 15px !important;
+		margin-bottom: 15px !important;
+	}
+
+	.roller{
+		height: 3.125rem;
+    	line-height: 3.9rem;
+		position: relative;
+		overflow: hidden; 
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #1D3557;
+	}
+
+	#spare-time{
+		font-size: 1rem;
+		letter-spacing: 1rem;
+		margin-top: 0;
+		color: #A8DADC;
+	}
+
+	.roller #rolltext {
+		position: absolute;
+		top: 0;
+		animation: slide 10s infinite;  
+	}
+
+	@keyframes slide {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -4rem;    
+		}
+		50%{
+			top: -8rem;
+		}
+		72.5%{
+			top: -12.25rem;
+		}
+	}
+
+@media screen and (max-width: 600px){
+	h3{
+		text-align:center;
+		text-transform: uppercase;
+		color: #F1FAEE; 
 		font-size: 1.125rem !important;
 	}
-	.roller {
-		height: 2.6rem;
-		line-height: 2.125rem;
+  
+	.roller{
+		height: 2.6rem; 
+		line-height: 2.125rem;  
 	}
-	.roller #rolltext {
-		animation: slide-mob 10s infinite;
+  
+	.roller #rolltext {  
+		animation: slide-mob 10s infinite;  
 	}
-	@
-	keyframes slide-mob { 0%{
-		top: 0;
+
+	@keyframes slide-mob {
+		0%{
+			top:0;
+		}
+		25%{
+			top: -2.125rem;    
+		}
+		50%{
+			top: -4.25rem;
+		}
+		72.5%{
+			top: -6.375rem;
+		}
 	}
-	25
-	%
-{
-	top
-	:
-	-2.125rem;
 }
 
-50
-%
-{
-top
-:
--4.25rem;
-}
-72
-.5 %{
-	top: -6.375rem;
-}
-}
 </style>
 
 </head>
@@ -2688,7 +2675,7 @@ top
 							<input type="hidden" name="depth" value="0">
 							<input type="hidden" name="sequence" value="${feed.commentCount}">
 							<textarea name="mainCommentContent" placeholder="댓글작성"></textarea>
-							<button class="btn btn-primary btn_addComment" type="button">SUBMIT</button>
+							<button class="btn btn-primary btn_addComment" type="button">등록</button>
 							<!-- 댓글 관련 hidden -->
 						</form>
 
@@ -2776,7 +2763,7 @@ top
 
 											<div class='btn_recommentCheck' style="display: none;">
 												<textarea name='commentContent' placeholder='작성'></textarea>
-												<button class="btn btn-primary btn_addRecomment" type="button">SUBMIT</button>
+												<button class="btn btn-primary btn_addRecomment" type="button">등록</button>
 											</div>
 
 										</div>
@@ -2882,9 +2869,11 @@ top
 				</form>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						
+					<button type="button" class="btn btn-default btn-13 add add5">등록</button>
+						
+					<button type="button" class="btn btn-default btn-13" data-dismiss="modal">취소</button>
 
-					<button type="button" class="btn btn-default add add5">등록</button>
 				</div>
 			</div>
 		</div>
