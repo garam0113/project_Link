@@ -289,7 +289,7 @@ public class MyHomeRestController {
 			map1.put("backgroundColor", "rgb(178, 118, 255)");
             map1.put("borderColor", "rgb(178, 118, 255)");
             map1.put("width", "90px");
-            map1.put("url","/club/getMeeting?meetingNo="+( (List<Participant>) map.get("meetingMemberList")).get(i).getMeetingNo());
+            map1.put("url","/club/getMeeting?meetingNo="+( (List<Participant>) map.get("meetingMemberList") ).get(i).getMeetingNo() );
 			meetingList.add(map1);
 		}
 		
