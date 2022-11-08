@@ -106,13 +106,13 @@ body{
 
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
-<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="margin-left:0 auto;">
   <h2>공지사항 확인하기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 66px;">
+		<div class="container" style="margin-top: 20px;">
 			<!--  table Start /////////////////////////////////////-->
-			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
+			<table style="width:880px;transform: translateX(152px); box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
@@ -125,7 +125,7 @@ body{
 						<th style="text-align-last: center;">제목</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px; margin-top: 25px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">					
-					<pre>${notice.noticeTitle}</pre>	
+					${notice.noticeTitle}	
 						<input type="hidden" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle}">
 						
 						</td> 
@@ -176,13 +176,13 @@ body{
 						
 									<div> 
 								
- 									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+ 									 <button class="custom-btn btn-13" style= "transform: translate(450px,0px); ">
 									   수정</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(450px,0px); ">
 									   삭제</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(450px, 0px); ">
 										확인</button>
-										<button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
+										<button class="custom-btn btn-13" style= "transform: translate(450px, 0px); ">
 										추가등록</button>	
 									</div>
 				
