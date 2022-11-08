@@ -128,12 +128,8 @@ public class FeedController {
 			
 		}
 		
-		feed.setContent(feed.getFullContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
-		
-		String replace = feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
-		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
-		
-		feed.setContent(replace);
+		feed.setContent(feed.getFullContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", ""));
+		System.out.println("확인 :: " + feed.getContent());
 		
 		// 영상 등록
 		
@@ -345,12 +341,8 @@ public class FeedController {
 			
 		}
 		
-		feed.setContent(feed.getFullContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
-		
-		String replace = feed.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
-		replace = replace.replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", "");
-		
-		feed.setContent(replace);
+		feed.setContent(feed.getFullContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>", ""));
+		System.out.println("확인 :: " + feed.getContent());
 		
 		// 영상 등록
 		

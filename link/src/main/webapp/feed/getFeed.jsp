@@ -311,11 +311,9 @@
 		      }
 		   })
 			
-		    $(".main").on("click",function(){
-
-			   $(".ui-dialog").dialog("close");
-
-			})
+		   $(".row").on("click", function(e){
+			   $("#"+nickName+"").dialog('close');
+			});
 		   
 		})//end of class="dl" 클릭시
 		
@@ -473,10 +471,8 @@
 			      }
 			   })
 			   
-			   $(".main").on("click",function(){
-
-				    $(".ui-dialog").dialog("close");
-
+			   $(".row").on("click", function(e){
+				   $("#"+nickName+"").dialog('close');
 				});
 			   
 
@@ -487,6 +483,7 @@
 			$(document).on("click","#follow", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -528,13 +525,13 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 			               if(update.follow.fbState == 1){
-			                  $("#follow").text("팔로잉");
+			                  $(changeText).text("팔로잉");
 			                     if(sock) {
 			                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 			                           sock.send(Msg);
 			                     }
 			                  }else if(update.follow.fbState == 2){
-			                  $("#follow").text("팔로우");
+			                  $(changeText).text("팔로우");
 			                  }
 			            }
 			         })
@@ -553,7 +550,7 @@
 			               },
 			               success : function(Data, status) {
 			                  console.log("서버로부터 받은 Data(error) : " + Data);
-			                  $("#follow").text("팔로잉");
+			                  $(changeText).text("팔로잉");
 			                  
 			                  if(sock) {
 			                        var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
@@ -570,6 +567,7 @@
 			 $(document).on("click","#following", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			     
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -609,13 +607,13 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 			               if(update.follow.fbState == 1){
-			               $("#following").text("팔로잉");
+			               $(changeText).text("팔로잉");
 			               if(sock) {
 			                     var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 			                     sock.send(Msg);
 			               }
 			               }else if(update.follow.fbState == 2){
-			               $("#following").text("팔로우");
+			               $(changeText).text("팔로우");
 			               }
 			            }
 			         })
@@ -626,6 +624,7 @@
 			 $(document).on("click","#updateFollow", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -664,13 +663,13 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 			               if(update.follow.fbState == 1){
-			               $("#updateFollow").text("팔로잉");
+			               $(changeText).text("팔로잉");
 			               if(sock) {
 			                     var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 			                     sock.send(Msg);
 			               }
 			               }else if(update.follow.fbState == 2){
-			               $("#updateFollow").text("팔로우");
+			               $(changeText).text("팔로우");
 			               }
 			            }
 			         })
@@ -682,6 +681,7 @@
 			$(document).on("click","#block", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -723,9 +723,9 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 			               if(update.block.fbState == 1){
-			                  $("#block").text("차단해제");
+			                  $(changeText).text("차단해제");
 			                  }else if(update.block.fbState == 2){
-			                  $("#block").text("차단");
+			                  $(changeText).text("차단");
 			                  }
 			            }
 			         })
@@ -744,7 +744,7 @@
 			               },
 			               success : function(Data, status) {
 			                  console.log("서버로부터 받은 Data(error) : " + Data);
-			                  $("#block").text("차단해제");
+			                  $(changeText).text("차단해제");
 			               }
 			            })
 			         }
@@ -756,6 +756,7 @@
 			$(document).on("click","#stopBlock", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -795,9 +796,9 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 			               if(update.block.fbState == 1){
-			               $("#stopBlock").text("차단해제");
+			               $(changeText).text("차단해제");
 			               }else if(update.block.fbState == 2){
-			               $("#stopBlock").text("차단");
+			               $(changeText).text("차단");
 			               }
 			            }
 			         })
@@ -808,6 +809,7 @@
 			$(document).on("click","#updateBlock", function() {
 			   var userId = $(this).parent().parent().attr("id");
 			   console.log("전달받은 회원 Id : " + userId);
+			   var changeText = $(this);
 			
 			   $.ajax("/myHomeRest/json/getFollow", {
 			      type : "POST",
@@ -846,9 +848,9 @@
 			            success : function(update, status) {
 			               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 			               if(update.block.fbState == 1){
-			               $("#updateBlock").text("차단해제");
+			               $(changeText).text("차단해제");
 			               }else if(update.block.fbState == 2){
-			               $("#updateBlock").text("차단");
+			               $(changeText).text("차단");
 			               }
 			            }
 			         })
@@ -1475,7 +1477,7 @@
 				var depthValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='depth']").val()) + 1;
 				var sequenceValue = parseInt($(this).parents().siblings(".commentInfo").find("input[name='sequence']").val()) + 1;
 				var content = $(this).prev().val();
-				var commentCount = $(this).parents(".comment-section").siblings(".lastBar").find(".commentCount")
+				var commentCount = $(this).parents(".comment-section").siblings(".lastBar").find(".commentCount");
 				
 				var changePoint = $(this).parents(".comment");
 				var sessionUser = $(this).parents().siblings(".commentInfo").find("input[name='userId']").val();
@@ -1575,10 +1577,9 @@
 								
 								// console.log(changeHtml);
 								$(changePoint).html(changeHtml);
-								$(content).text( parseInt( $(content).text() ) + 1 );
 								$(htmlSequence).val( parseInt($(htmlSequence).val()) + 1);
 								
-								$(commentCount).text(parseInt( $(commentCount).text() ) + 1);
+								$(commentCount).text(parseInt( $(commentCount).text().trim() ) + 1);
 								
 								if(sock) {
 									var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 가 댓글을 작성했습니다.";
