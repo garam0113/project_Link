@@ -162,10 +162,10 @@ body>div.container {
 			return;
 		}
 
-		if (checkNo != 1) {
+		/* if (checkNo != 1) {
 			swal.fire("핸드폰인증이 필요합니다.");
 			return;
-		}
+		} */
 
 		if (email == null || email.length < 1) {
 			swal.fire("이메일을 입력하셔야 합니다.");
@@ -527,5 +527,9 @@ body>div.container {
 		</div>
 		<!-- container E -->
 	</form>
+		
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 </body>
 </html>

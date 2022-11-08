@@ -83,6 +83,15 @@
 .class_user_pointer{
 	cursor: pointer;
 }
+/* 마우스 호버시 글자 아래 흰색 밑줄 생김 */
+nav > * a:hover{
+	border-bottom: 2px solid whitesmoke !important;
+}
+.class_user_pointer:hover{
+	border-bottom: 2px solid whitesmoke !important;
+	width: 60% !important;
+	border-bottom: 1px solid whitesmoke !important;
+}
 nav div div a:hover{
 	color: red;
 }

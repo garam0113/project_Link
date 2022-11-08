@@ -101,6 +101,13 @@ background-color: #EBEDF0 !important;
 
 </style>
 
+<!-- footer css -->
+<style type="text/css">
+body {
+	position: relative;
+}
+</style>
+
 </head>
 <body>
 
@@ -209,6 +216,12 @@ background-color: #EBEDF0 !important;
 									</div>
 				
 			</div>
+			
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+			<!-- footer start -->
+			<jsp:include page="/footer.jsp" />
+			<!-- footer end -->
 
 
 </body>

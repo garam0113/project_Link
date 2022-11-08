@@ -169,6 +169,17 @@ $(function() {
 });	
 </script>
 
+<style type="text/css">
+/* footer css */
+#service_content_body{
+	/* background-color: red; */
+	height: 900px;
+	position: relative;
+}
+#club_post_footer{
+	padding-top: 90px !important;
+}
+</style>
 
 </head>
 
@@ -176,7 +187,7 @@ $(function() {
 	<jsp:include page="/toolbar.jsp" />
 
 
-<body style="overflow-x: hidden">
+<body style="overflow-x: hidden;">
 
 
 
@@ -213,8 +224,9 @@ $(function() {
 	<h4>
 	</div>	
 
-			
-	<div class="container">
+	<div id="service_content_body">
+				
+		<div class="container">
 			<div class="row">
 			
 		  		<div class="col-sm-6 col-md-4">
@@ -260,9 +272,15 @@ $(function() {
 		  		</div>
 			
 			</div>
-	</div>
-		
+			
+		</div>
 
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
+		
+	</div>
   </body>
 </html>
-</body>
+
+

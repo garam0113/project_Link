@@ -149,6 +149,16 @@ background-color: #EBEDF0 !important;
 	});
 </script>
 
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+#club_post_footer{
+	left: 0;
+}
+</style>
+
 </head>
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/toolbar.jsp" />
@@ -345,7 +355,15 @@ background-color: #EBEDF0 !important;
 					</td>
 				</tr>
 			</table>
+		
+			
 			</div>
+			
+			<br><br><br><br><br><br><br>
+
+			<!-- footer start -->
+			<jsp:include page="/footer.jsp" />
+			<!-- footer end -->
 
 	<!--  화면구성 div End /////////////////////////////////////-->
 

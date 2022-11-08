@@ -308,6 +308,11 @@
 									member : data.member
 								});
 								self.location = "https://192.168.0.183:4040";
+							},
+							error : function () {
+								console.log("error");
+									swal.fire('인원초과입니다.');
+									return;
 							}
 						})
 					})
@@ -493,7 +498,7 @@
 			</div>
 		<!-- intro-wrap --> --%>
 		
-			<div id="main" class="row"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background-color: yellow !important;"><!-- 중간 개별영역 -->
 			
 			
 			
@@ -703,13 +708,17 @@
 				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
 				<input type="hidden" id="no" value="${clubNo}">
 				<input type="hidden" id="total" value="${clubMemberCount}">
+				
+	
+	
+				<br><br><br><br><br><br><br><br><br><br><br><br>
+				
+				<!-- footer start -->
+				<jsp:include page="/footer.jsp" />
+				<!-- footer end -->
+	
 			</div>
 	<!-- </main> -->
-	
-	
-	<!-- footer start -->
-	<jsp:include page="/footer.jsp" />
-	<!-- footer end -->
 	
 	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
