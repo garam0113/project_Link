@@ -250,7 +250,7 @@ public class ClubController {
 		
 		clubNo = (String) session.getAttribute("clubNo");
 		
-		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));		
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));
 		
 //		club.setClubNo(Integer.parseInt(clubNo));
 		

@@ -368,9 +368,9 @@
 								</div>
 								<div class="pay-body-content">
 									<div>
-										<div><input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">&nbsp;&nbsp;신용카드</div>
+										<div><input type="radio" name="payOption" pg="danal_tpay" pay_method="card" value="0">&nbsp;&nbsp;&nbsp;&nbsp;신용카드</div>
 										<div><input type="radio" name="payOption" pg="kakaopay" pay_method="card" value="1">&nbsp;&nbsp;&nbsp;&nbsp;카카오페이</div>
-										<div><input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">&nbsp;&nbsp;휴대폰결제</div>
+										<div><input type="radio" name="payOption" pg="kcp" pay_method="phone" value="2">&nbsp;&nbsp;&nbsp;&nbsp;휴대폰결제</div>
 										<div><input type="radio" name="payOption" pg="tosspay" pay_method="card" value="3">&nbsp;&nbsp;&nbsp;&nbsp;토스페이</div>
 										<div><input type="radio" name="payOption" pg="kcp" pay_method="trans" value="4">&nbsp;&nbsp;&nbsp;&nbsp;실시간 계좌이체</div>
 									</div>
