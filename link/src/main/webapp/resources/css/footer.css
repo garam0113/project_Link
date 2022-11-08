@@ -1,6 +1,9 @@
 .club_post_footer_Tag{
 	color: gray; font-size: 13px;
 }
+.club_post_footer_Tag.top_name{
+	color: gray; font-size: 20px;
+}
 #club_post_footer_img{
 	width: 100%;
 }
@@ -11,5 +14,5 @@
 	position: relative; background-color: red;
 }
 #club_post_footer_int{
-	position: absolute; top: 10px; left: 500px; width: 1000px; height: 300px; display: grid; grid-template-columns: 1fr 2fr 1fr;
+	position: absolute; top: 10px; left: 500px; width: 1000px; height: 300px; display: grid; grid-template-columns: 2fr 3fr 2fr;
 }
