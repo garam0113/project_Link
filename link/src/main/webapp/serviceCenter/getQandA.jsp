@@ -115,6 +115,13 @@ textarea {
 
 
 </style>
+
+<!-- footer css -->
+<style type="text/css">
+body {
+	position: relative;
+}
+</style>
 <body>
 
 
@@ -145,11 +152,11 @@ textarea {
 	
 <jsp:include page="/toolbar.jsp" />
 
-<div class="page-header" align="center" style="transform: translate(-316px, 38px); margin-bottom: 60px;">
+<div class="page-header" align="center" style="margin-left:auto; margin-bottom: 10px;">
   <h2>Q&A 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 37px;">
+		<div class="container" style="margin-top: 17px;">
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; 
 			 transform: translate(130px, 0px); background-color:aliceblue;">
@@ -254,6 +261,14 @@ textarea {
 				
 			</div>
 <form></form>
+
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
+	
 </body>
 
 </html>

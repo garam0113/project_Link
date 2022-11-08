@@ -1,4 +1,4 @@
 SELECT * FROM live;
 
 DELETE LIVE
-WHERE live_no = 16;
+WHERE live_no = 43;

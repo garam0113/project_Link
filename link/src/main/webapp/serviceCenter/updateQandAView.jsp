@@ -133,6 +133,13 @@ textarea {
 
 
 </style>
+
+<!-- footer css -->
+<style type="text/css">
+body {
+	position: relative;
+}
+</style>
 </head>
 <body>
 
@@ -287,6 +294,12 @@ textarea {
 									</div>
 				
 			</div>
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 
 </body>
 

@@ -1,5 +1,26 @@
 	
+	/* 상위 PREV 바 수정 */
+
+	.single #post-nav ul {
+		padding: 0 !important;
+	}
+
 	/* 프로필 요약 보기 */
+
+	.ui-dialog-titlebar{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
+	.ui-dialog-titlebar-close{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
+
+	div[name='dialog'] > img {
+		border-radius: 15px !important;
+	}
 
 	.ui-widget.ui-widget-content{
 		width:auto !important; 
@@ -12,14 +33,17 @@
 
 	.btnSimpleProfile{
 
-	   background-color: white;
-	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	   color:blueviolet;
+		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
 	}
 	.btnSimpleProfile:hover{
-	   background-color: #5F0080;
-	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
-	   color: white !important;
+		background-color: #5F0080 !important;
+		color: white !important;
 	}
 
 	.ui-dialog-titlebar{
@@ -30,6 +54,18 @@
 	}
 
 	.dll {
+		cursor: pointer;
+	}
+
+	.dl {
+		cursor: pointer;
+	}
+
+	.yourHome {
+		cursor: pointer;
+	}
+
+	.yourHome2 {
 		cursor: pointer;
 	}
 	
@@ -556,7 +592,8 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 350px;
+		height: 350px !important;
+		object-fit: scale-down;
 		border-radius: 30px;
 	}
 
@@ -565,9 +602,10 @@
 	/* 해시 태그 */
 
 	.hashtagContent {
-		margin-left: 60px;
 		margin-right: 25px;
-		background-color: #bd76ff;
+		margin-bottom: 25px;
+		margin-left: 70px;
+		border: 1px #bd76ff solid;
 	    border-radius: inherit;
 	}
 
@@ -809,6 +847,22 @@
 	/* 모달창 피드 수정 */
 
 	/* 신고 모달 관련 */
+
+	.btn-13 {
+ 		background-color: white !important;
+		color: #5F0080 !important;
+		box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+		border: none !important;
+		font-weight: 700 !important;
+		border-radius: 15px;
+		height: 25px;
+	}
+
+	.btn-13:hover{
+		background-color: #5F0080 !important;
+		color: white !important
+		
+	}
 
 	#reportModal .form-horizontal {
 		margin: 30px;

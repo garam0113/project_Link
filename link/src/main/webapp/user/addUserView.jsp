@@ -248,10 +248,18 @@ body>div.container {
 		});
 	});
 </script>
-
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative !important;
+}
+#club_post_footer{
+	margin-bottom: -1500px !important;
+}
+</style>
 </head>
 
-<body style="background-color: whitesmoke;">
+<body>
 	<form>
 		<div class="wrap wd668">
 			<br />
@@ -527,5 +535,8 @@ body>div.container {
 		</div>
 		<!-- container E -->
 	</form>
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 </body>
 </html>

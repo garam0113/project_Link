@@ -72,7 +72,7 @@
 	function fncAddReport(){
 			
 			var title = $("textarea[name=title]").val();		
-			var content =$("textarea[name=content]").val();			
+			var content =$("textarea.reportContent").val();			
 			var checkbox = $("input:checkbox[name=reportReason]:checked").length;
 			
 			if(title == null || title.length <1){
@@ -126,39 +126,10 @@
 			var sum2 = parseInt($("input:checkbox[name=reportReason]:checked").val());
 			sum += sum+parseInt(sum2);			
 		}
-
 			
-		var no = 0;	
-			
-		 if( $("#clubPostNo").val()!=null){
-			 no = $("#clubPostNo").val();
-		}else if($("#clubPostCommentNo").val()!=null){
-			 no = $("#clubPostCommentNo").val();
-		}else if($("#feedNo").val()!=null){
-			 no = $("#feedNo").val();
-		}else if($("#feedCommentNo").val()!=null){
-			  no = $("#feedCommentNo").val();
-		}
-		
-		var clubNo = 0;
-		
-		if( $("#clubNo2").val()!=null ){
-			clubNo = $("#clubNo2").val();
-		}else if( $("#clubNo3").val()!=null){
-			clubNo = $("#clubNo3").val();
-		}
-		
+		var no = $("#No").val();
+		var clubNo = 0;		
 		var clubPostNo = 0;
-		
-		
-		if ( $("#clubPostNo2").val()!=0){
-			
-			clubPostNo = $("#clubPostNo2").val();
-			if(clubPostNo == undefined){
-				clubPostNo = 0;
-			}
-			
-		}
 		
 	 	$.ajax({
 		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
@@ -197,388 +168,11 @@
 
 	} //funtion 끝
 	
-
-
 		
 	
 	$(function(){
 		
-		<%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
-
-	      $(document).on("click","#follow", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "1"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log(data);
-	               console.log(data.follow);
-	            if(data.follow != null ){
-	               console.log("서버로 받은 데이터 : " + data.follow.userId);
-	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
-	               var fbState = "";
-	               if(data.follow.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.follow.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/myHomeRest/json/updateFollow", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "1",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
-	                     if(update.follow.fbState == 1){
-	                        $("#follow").text("팔로잉");
-	                           if(sock) {
-	                                 var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
-	                                 sock.send(Msg);
-	                           }
-	                        }else if(update.follow.fbState == 2){
-	                        $("#follow").text("팔로우");
-	                        }
-	                  }
-	               })
-	               }else if(data.follow ==null){
-	                  console.log("서버로 받은 데이터(error) : " + data.follow);
-
-	                  $.ajax("/myHomeRest/json/addFollow", {
-	                     type : "POST",
-	                     data : JSON.stringify({
-	                        receiveId : userId
-	                     }),
-	                     dataType : "json",
-	                     contentType : "application/json",
-	                     headers : {
-	                        "Accetp" : "application/json"
-	                     },
-	                     success : function(Data, status) {
-	                        console.log("서버로부터 받은 Data(error) : " + Data);
-	                        $("#follow").text("팔로잉");
-	                        
-	                        if(sock) {
-	                              var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
-	                              sock.send(Msg);
-	                        }
-	                     }
-	                  })
-	               } 
-	            }
-	            
-	         })
-	      })
-
-	       $(document).on("click","#following", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-	           
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "1"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log(data);
-	               console.log("서버로 받은 데이터 : " + data.follow.userId);
-	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
-	               var fbState = "";
-	               if(data.follow.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.follow.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/myHomeRest/json/updateFollow", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "1",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
-	                     if(update.follow.fbState == 1){
-	                     $("#following").text("팔로잉");
-	                     if(sock) {
-	                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
-	                           sock.send(Msg);
-	                     }
-	                     }else if(update.follow.fbState == 2){
-	                     $("#following").text("팔로우");
-	                     }
-	                  }
-	               })
-	            }
-	         })
-	      }) 
-
-	       $(document).on("click","#updateFollow", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "1"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log("서버로 받은 데이터 : " + data.follow.userId);
-	               console.log("서버로 받은 데이터 : " + data.follow.fbState);
-	               var fbState = "";
-	               if(data.follow.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.follow.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/myHomeRest/json/updateFollow", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "1",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
-	                     if(update.follow.fbState == 1){
-	                     $("#updateFollow").text("팔로잉");
-	                     if(sock) {
-	                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
-	                           sock.send(Msg);
-	                     }
-	                     }else if(update.follow.fbState == 2){
-	                     $("#updateFollow").text("팔로우");
-	                     }
-	                  }
-	               })
-	            }
-	         })
-	      })
-
-
-	      $(document).on("click","#block", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "2"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log(data);
-	               console.log(data.block);
-	               if(data.block != null ){
-	               console.log("서버로 받은 데이터 : " + data.block.userId);
-	               console.log("서버로 받은 데이터 : " + data.block.fbState);
-	               var fbState = "";
-	               if(data.block.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.block.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/userRest/json/updateBlock", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "2",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
-	                     if(update.block.fbState == 1){
-	                        $("#block").text("차단해제");
-	                        }else if(update.block.fbState == 2){
-	                        $("#block").text("차단");
-	                        }
-	                  }
-	               })
-	               }else if(data.block ==null){
-	                  console.log("서버로 받은 데이터(error) : " + data.block);
-
-	                  $.ajax("/userRest/json/addBlock", {
-	                     type : "POST",
-	                     data : JSON.stringify({
-	                        receiveId : userId
-	                     }),
-	                     dataType : "json",
-	                     contentType : "application/json",
-	                     headers : {
-	                        "Accetp" : "application/json"
-	                     },
-	                     success : function(Data, status) {
-	                        console.log("서버로부터 받은 Data(error) : " + Data);
-	                        $("#block").text("차단해제");
-	                     }
-	                  })
-	               }
-	            }
-	            
-	         })
-	      })
-
-	      $(document).on("click","#stopBlock", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "2"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log(data);
-	               console.log("서버로 받은 데이터 : " + data.block.userId);
-	               console.log("서버로 받은 데이터 : " + data.block.fbState);
-	               var fbState = "";
-	               if(data.block.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.block.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/userRest/json/updateBlock", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "2",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
-	                     if(update.block.fbState == 1){
-	                     $("#stopBlock").text("차단해제");
-	                     }else if(update.block.fbState == 2){
-	                     $("#stopBlock").text("차단");
-	                     }
-	                  }
-	               })
-	            }
-	         })
-	      })
-
-	      $(document).on("click","#updateBlock", function() {
-	         var userId = $(this).parent().parent().attr("id");
-	         console.log("전달받은 회원 Id : " + userId);
-
-	         $.ajax("/myHomeRest/json/getFollow", {
-	            type : "POST",
-	            data : JSON.stringify({
-	               receiveId : userId,
-	               fbType : "2"
-	            }),
-	            dataType : "json",
-	            contentType : "application/json",
-	            headers : {
-	               "Accept" : "application/json"
-	            },
-	            success : function(data, status) {
-	               console.log("서버로 받은 데이터 : " + data.block.userId);
-	               console.log("서버로 받은 데이터 : " + data.block.fbState);
-	               var fbState = "";
-	               if(data.block.fbState == 1){
-	                  fbState = "2";
-	               }else if(data.block.fbState == 2){
-	                  fbState = "1";
-	               }
-	               
-	               console.log("state 값 : "+fbState);
-	               $.ajax("/userRest/json/updateBlock", {
-	                  type : "POST",
-	                  data : JSON.stringify({
-	                     receiveId : userId,
-	                     fbType : "2",
-	                     fbState : fbState
-	                  }),
-	                  dataType : "json",
-	                  contentType : "application/json",
-	                  headers : {
-	                     "Accept" : "application/json"
-	                  },
-	                  success : function(update, status) {
-	                     console.log("서버로 받은 데이터(정상) : " + update.block.userId);
-	                     if(update.block.fbState == 1){
-	                     $("#updateBlock").text("차단해제");
-	                     }else if(update.block.fbState == 2){
-	                     $("#updateBlock").text("차단");
-	                     }
-	                  }
-	               })
-	            }
-	         })
-	      })
-	      
-	      
-	      <%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
+	    <%-- 사이드 바 팔로우에서 이미지 클릭시 코드 --%>
 
 		var user_Id = "";
 	
@@ -700,7 +294,7 @@
 		   
 		   
 		             $("#"+nickName+"").dialog("open");
-		   
+		             
 		      },
 		      error : function(){
 		         var value =
@@ -731,16 +325,16 @@
 		   
 		   
 		             $("#"+nickName+"").dialog("open");
+		             
 		      }
 		   })
+ 
+		   $(".row").on("click", function(e){
+			   $("#"+nickName+"").dialog('close');
+			});
+
 
 		})//end of class="dl" 클릭시
-
-		$(".row").on("click", function(){
-		
-			$("div[name='dialog']").parent().dialog("close");
-		
-		})		
 		
 		$(document).on("click",".dll",function(event){
 		
@@ -893,6 +487,10 @@
 			             $("#"+nickName+"1").dialog("open");
 			      }
 			})
+			
+			 $(".row").on("click", function(e){
+				   $("#"+nickName+"").dialog('close');
+				});
 		
 		});//end of class="dll" 클릭시
 			
@@ -902,6 +500,7 @@
 		$(document).on("click","#follow", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
+		   var changeText = $(this);
 		
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
@@ -943,13 +542,13 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 		               if(update.follow.fbState == 1){
-		                  $("#follow").text("팔로잉");
+		                  $(changeText).text("팔로잉");
 		                     if(sock) {
 		                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 		                           sock.send(Msg);
 		                     }
 		                  }else if(update.follow.fbState == 2){
-		                  $("#follow").text("팔로우");
+		                  $(chageText).text("팔로우");
 		                  }
 		            }
 		         })
@@ -968,7 +567,7 @@
 		               },
 		               success : function(Data, status) {
 		                  console.log("서버로부터 받은 Data(error) : " + Data);
-		                  $("#follow").text("팔로잉");
+		                  $(changeText).text("팔로잉");
 		                  
 		                  if(sock) {
 		                        var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
@@ -985,7 +584,8 @@
 		 $(document).on("click","#following", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
-		     
+		   var changeText = $(this);
+		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
 		      data : JSON.stringify({
@@ -1024,13 +624,13 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 		               if(update.follow.fbState == 1){
-		               $("#following").text("팔로잉");
+		               $(changeText).text("팔로잉");
 		               if(sock) {
 		                     var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 		                     sock.send(Msg);
 		               }
 		               }else if(update.follow.fbState == 2){
-		               $("#following").text("팔로우");
+		               $(changeText).text("팔로우");
 		               }
 		            }
 		         })
@@ -1041,7 +641,8 @@
 		 $(document).on("click","#updateFollow", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
-		
+		   var changeText = $(this);
+		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
 		      data : JSON.stringify({
@@ -1079,13 +680,13 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 		               if(update.follow.fbState == 1){
-		               $("#updateFollow").text("팔로잉");
+		               $(changeText).text("팔로잉");
 		               if(sock) {
 		                     var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 		                     sock.send(Msg);
 		               }
 		               }else if(update.follow.fbState == 2){
-		               $("#updateFollow").text("팔로우");
+		               $(changeText).text("팔로우");
 		               }
 		            }
 		         })
@@ -1097,7 +698,8 @@
 		$(document).on("click","#block", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
-		
+		   var changeText = $(this);
+		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
 		      data : JSON.stringify({
@@ -1138,9 +740,9 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 		               if(update.block.fbState == 1){
-		                  $("#block").text("차단해제");
+		                  $(changeText).text("차단해제");
 		                  }else if(update.block.fbState == 2){
-		                  $("#block").text("차단");
+		                  $(changeText).text("차단");
 		                  }
 		            }
 		         })
@@ -1159,7 +761,7 @@
 		               },
 		               success : function(Data, status) {
 		                  console.log("서버로부터 받은 Data(error) : " + Data);
-		                  $("#block").text("차단해제");
+		                  $(changeText).text("차단해제");
 		               }
 		            })
 		         }
@@ -1171,7 +773,8 @@
 		$(document).on("click","#stopBlock", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
-		
+		   var changeText = $(this);
+		   
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
 		      data : JSON.stringify({
@@ -1210,9 +813,9 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 		               if(update.block.fbState == 1){
-		               $("#stopBlock").text("차단해제");
+		               $(changeText).text("차단해제");
 		               }else if(update.block.fbState == 2){
-		               $("#stopBlock").text("차단");
+		               $(changeText).text("차단");
 		               }
 		            }
 		         })
@@ -1223,6 +826,7 @@
 		$(document).on("click","#updateBlock", function() {
 		   var userId = $(this).parent().parent().attr("id");
 		   console.log("전달받은 회원 Id : " + userId);
+		   var changeText = $(this);
 		
 		   $.ajax("/myHomeRest/json/getFollow", {
 		      type : "POST",
@@ -1261,9 +865,9 @@
 		            success : function(update, status) {
 		               console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 		               if(update.block.fbState == 1){
-		               $("#updateBlock").text("차단해제");
+		               $(changeText).text("차단해제");
 		               }else if(update.block.fbState == 2){
-		               $("#updateBlock").text("차단");
+		               $(changeText).text("차단");
 		               }
 		            }
 		         })
@@ -1275,7 +879,7 @@
 	      
 	    <%-- 1:1 채팅 --%>
 		$(document).on("click","button:contains('채팅')", function() {
-			alert("1:1채팅");
+			console.log("1:1채팅");
 			$("#chat-icon").attr("style", "display:none");
 			// 채팅창 보인다
 			$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
@@ -2064,6 +1668,21 @@
 		<%-- ADD_FEED_HEART --%>
 		$(document).on("click", ".feedLike", function(event){
 			event.stopPropagation();
+			
+			if('${sessionScope.user}' == null || '${sessionScope.user}' == "") {
+				
+				Swal.fire({
+					title: '로그인 후 이용해주세요' ,
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '확인', 
+				})
+				
+				return false;
+			} 
+			
+			
 			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
 			
 			var html = $(this);
@@ -2182,7 +1801,7 @@
 				// $('#reportModal .modal-content').load("/serviceCenter/addReport?reportSource=3&user2=" + reportedUser + "&sourceNumber=" + feedNo);
 				
 				$("#user2").val(reportedUser);
-				$("#feedNo").val(feedNo);
+				$("#No").val(feedNo);
 				
 				$('#reportModal').modal();
 			}
@@ -2284,7 +1903,7 @@
 	    	   console.log(item);
 				var value = 
 					"<div class='following-section' id='"+item.userId+"'>"+
-				"<div style='display: inline-block;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' id='" + item.profileImage + "'/>"+"</div><div>"+
+				"<div style='display: inline-block;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' alt='" + item.profileImage + "'/>"+"</div><div>"+
 				"<h4 class='yourHome2'>"+item.nickName+"</h4></div>"+
 				"<div id='" + item.nickName + "1' name='dialog' style='display:none !important;'></div>" +
 				"<input type='hidden' class='" + item.userId + "' value='" + item.nickName + "'>" +
@@ -2324,7 +1943,7 @@
 		    	   	console.log(item);
 					var value = 
 						"<div class='follow-section' id='"+item.receiveId.userId+"'>"+
-					"<div style='display: inline-block;'>"+"<img class='dl' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' id='" + item.profileImage + "'/>"+"</div><div>"+
+					"<div style='display: inline-block;'>"+"<img class='dl' src='/resources/image/uploadFiles/"+item.profileImage+"' width='60' height='60' alt='" + item.profileImage + "'/>"+"</div><div>"+
 					"<h4 class='yourHome'>"+item.nickName+"</h4></div>"+
 					"<div id='" + item.nickName + "' name='dialog' style='display:none !important;'></div>" +
 					"<input type='hidden' class='" + item.receiveId.userId + "' value='" + item.nickName + "'>" +
@@ -2552,6 +2171,7 @@
 
 	<jsp:include page="/toolbar.jsp" />
 	
+	
 	<main role="main" class="main">
 
 
@@ -2601,11 +2221,11 @@
 							</h3>
 							
 							
-							<%--
 							
-							<jsp:include page="/serviceCenter/getFestival.jsp" />
+							<%-- <jsp:include page="/serviceCenter/getFestival.jsp" /> --%>
 							
-							--%>
+							
+							
 						</div>
 
 						<div class="column six">
@@ -2628,7 +2248,7 @@
 												</div>
 
 												<div>
-													<button class="btn btn-primary addFeed" type="button">SUBMIT</button>
+													<button class="btn btn-primary addFeed" type="button">등록</button>
 												</div>
 
 											</div>
@@ -2948,7 +2568,7 @@
 							<button type="button" class="btn btn-default addCommentByModal">등록</button>
 							
 							<button type="button" class="btn btn-default cancelCommentByModal" data-dismiss="modal">
-								Close
+								취소
 							</button>
 						</div>
 						
@@ -3009,7 +2629,7 @@
 							</div>
 							
 							<div class="reportContent">
-								<textarea class="content" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
+								<textarea class="reportContent" id="content" name="content" placeholder="신고 내용을 입력해주세요." maxlength="500"></textarea>
 							</div>
 						</div>
 						
@@ -3023,7 +2643,7 @@
 						<input type="hidden" name="type" id="type" value="1">
 						<input type="hidden" name="user1" id="user1" value="${sessionScope.user.userId}">
 						<input type="hidden" id="reportSource" name="reportSource" value="3">
-						<input type="hidden" name="no" id="feedNo" value="" />
+						<input type="hidden" name="no" id="No" value="" />
 
 						<div class="reportModalReason">
 
@@ -3042,7 +2662,7 @@
 
 					<div class="modal-footer">
 
-						<button type="button" class="custom-btn btn-13">등록</button>
+						<button type="button" class="custom-btn btn-13 addReportByModal">등록</button>
 						
 						<button type="button" class="custom-btn btn-13" data-dismiss="modal">
 							취소
@@ -3103,6 +2723,7 @@
 		</div>
 	</div>
 	<!-- 수정 Modal -->
+	
 	
 	</main>
 </body>

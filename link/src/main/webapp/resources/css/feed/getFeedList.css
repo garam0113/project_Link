@@ -1,4 +1,17 @@
+	
+	
 	/* 프로필 요약 보기 */
+
+	.ui-dialog-titlebar{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
+	.ui-dialog-titlebar-close{
+		border: hidden;
+		background-color: white;
+		display:none;
+	}
 
 	.ui-widget.ui-widget-content{
 		width:auto !important; 
@@ -21,17 +34,22 @@
 	   color: white !important;
 	}
 
-	.ui-dialog-titlebar{
-		border: hidden !important;
-		background-color: white !important;
-		border: none !important;
-		border-radius: 15px !important;
-	}
-
 	.dll {
 		cursor: pointer;
 	}
-	
+
+	.dl {
+		cursor: pointer;
+	}
+
+	.yourHome {
+		cursor: pointer;
+	}
+
+	.yourHome2 {
+		cursor: pointer;
+	}
+
 	/* 프로필 요약 보기 */
 	
 	
@@ -392,8 +410,8 @@
 	.hashtagContent {
 		margin-right: 25px;
 		margin-bottom: 25px;
-		margin-left: 60px;
-		background-color: #bd76ff;
+		margin-left: 70px;
+		border: 1px #bd76ff solid;
 	    border-radius: inherit;
 	}
 	

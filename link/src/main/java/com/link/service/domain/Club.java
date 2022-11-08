@@ -17,7 +17,7 @@ public class Club {
 	private String approvalCondition;
 	private int currentPage;
 	private String roomId;
-	
+	private String deleteCondition;
 	
 	public String getApprovalCondition() {
 		return approvalCondition;
@@ -97,6 +97,12 @@ public class Club {
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
 	}
+	public String getDeleteCondition() {
+		return deleteCondition;
+	}
+	public void setDeleteCondition(String deleteCondition) {
+		this.deleteCondition = deleteCondition;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -126,6 +132,8 @@ public class Club {
 		builder.append(currentPage);
 		builder.append(", roomId=");
 		builder.append(roomId);
+		builder.append(", deleteCondition=");
+		builder.append(deleteCondition);
 		builder.append("]");
 		return builder.toString();
 	}

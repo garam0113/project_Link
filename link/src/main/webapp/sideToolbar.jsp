@@ -83,6 +83,15 @@
 .class_user_pointer{
 	cursor: pointer;
 }
+/* 마우스 호버시 글자 아래 흰색 밑줄 생김 */
+nav > * a:hover{
+	border-bottom: 2px solid whitesmoke !important;
+}
+.class_user_pointer:hover{
+	border-bottom: 2px solid whitesmoke !important;
+	width: 60% !important;
+	border-bottom: 1px solid whitesmoke !important;
+}
 nav div div a:hover{
 	color: red;
 }
@@ -100,7 +109,7 @@ nav div div a:hover{
 </head>
 
 <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="height: 64px;">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="height: 64px; background: linear-gradient(0deg, #958c8cc4, black);">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html" style="font-size: 28px; color: white; font-weight: bold; text-decoration: none; margin-left: 468px;">LINK</a>
             <div style="display: flex;">
@@ -135,15 +144,15 @@ nav div div a:hover{
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu" style="text-align: center; font-size: larger; color: white; font-weight: bold;">
+                    <div class="sb-sidenav-menu" style="background: linear-gradient(#9d9999 , #2e2e2e 3%); text-align: center; font-size: larger; color: white; font-weight: bold;">
                     <c:if test="${ fn:trim(user.role) == '0' }">
-                    <div class="class_user_pointer" id='myPage' style="margin-top: 35px;">내정보보기</div>
+                    <div class="class_user_pointer" id='myPage' style="margin-top: 77px;">내정보보기</div>
                     <div class="class_user_pointer" id='updatePage' style="margin-top: 20px;">내정보수정</div>
                     <div class="class_user_pointer" id='myReport' style="margin-top: 20px;">내신고내역</div>
                     <div class="class_user_pointer" id='myQA' style="margin-top: 20px;">내Q&A</div> 
                     </c:if>
                     <c:if test="${ fn:trim(user.role) == '1' }">
-                    <div class="class_user_pointer" id='userPage' style="margin-top: 35px;">회원목록</div>
+                    <div class="class_user_pointer" id='userPage' style="margin-top: 77px;">회원목록</div>
                     <div class="class_user_pointer" id='report' style="margin-top: 20px;">신고내역</div>
                     <div class="class_user_pointer" id='QA' style="margin-top: 20px;">관리자Q&A</div>
                     <div class="class_user_pointer" id="stop1" style="margin-top: 20px;">정지회원</div>

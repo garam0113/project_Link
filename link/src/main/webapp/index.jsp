@@ -18,21 +18,21 @@
 	<style>
 	
 	h1 {
-		color: black;
+		color: white;
 	}
 	
 	p {
-		color: black;
+		color: white;
 	}
 	
 	.btn-5 {
 		width: 130px;
 		height: 40px;
-		line-height: 42px;
+		line-height: 52px;
 		padding: 0;
 		border: none;
 		background: rgb(255 27 0 / 0%);
-		color: black;
+		color: white;
     	font-weight: 800;
     	font-size: 1rem;
     	cursor:pointer;

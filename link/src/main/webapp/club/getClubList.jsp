@@ -320,8 +320,8 @@ html::-webkit-scrollbar {
 			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
 			var joinClubLimit = $("input[name='joinClubLimit']").val();
 			
-			//alert(totalApprovalConditionCount);
-			//alert(joinClubLimit);
+			//alert("나의 총 모임 수 : " + totalApprovalConditionCount);
+			//alert("최대 모임 수 : " + joinClubLimit);
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
 				self.location="/club/addClubView.jsp"
@@ -547,6 +547,8 @@ html::-webkit-scrollbar {
 
 							<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 							<input type="hidden" id="currentPage1" name="currentPage" value="1" />
+							<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${ totalApprovalConditionCount }">
+							<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
 
 						</form>
 						<div style="float: right; padding-right: 12px; padding-bottom: 5px; margin-bottom: 10px; padding-top: 3px;">
@@ -690,11 +692,16 @@ html::-webkit-scrollbar {
 		</div>
 	<!-- </main> -->
 	
-	
+	<br><br><br><br><br><br><br><br><br><br><br><br>
 	
 	<!-- footer start -->
 	<jsp:include page="/footer.jsp" />
 	<!-- footer end -->
+	
+	</div>
+	
+	
+	
 </body>
 
 </html>

@@ -23,7 +23,7 @@
 		<result property="user.profileImage"		column="profile_image"				jdbcType="VARCHAR" />
 		<result property="approvalCondition" column="approval_condition"		jdbcType="CHAR" />
 		<result property="roomId"			column="roomId"					jdbcType="VARCHAR"/>
-
+		<result property="deleteCondition"			column="delete_condition"					jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap	id="clubUserSelectMap"		type="clubUser">
@@ -89,7 +89,8 @@
 		   			club_category , 
 		   			club_area ,
 		   			club_reg_date,
-		   			roomId)
+		   			roomId,
+		   			delete_condition)
 		VALUES ( 
 					seq_club_no.NEXTVAL , 
 					#{user.userId} , 
@@ -101,7 +102,8 @@
 					#{clubCategory} , 
 					#{clubArea} ,
 					SYSDATE,
-					#{roomId})
+					#{roomId},
+					'0')
 	
 	</insert>
 
@@ -138,10 +140,10 @@
 	</update>
 	
 	<!-- 모임 삭제 -->
-	<delete id="deleteClub">
-		DELETE 
-		FROM club 
-		WHERE club_no = #{clubNo}
+	<delete id="deleteClub" parameterType="int">
+		UPDATE CLUB
+		SET DELETE_CONDITION = 1 
+		WHERE club_no = #{ clubNo }
 	</delete>
 	
 	 	<select  id="getClubList"  parameterType="search"	resultMap="clubSelectMap">
@@ -150,26 +152,26 @@
 				FROM ( SELECT ROW_NUMBER() OVER( ORDER BY club_no DESC ) AS row_seq, V1.*
 	  					FROM		(	SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
 											FROM club
+											WHERE delete_condition = 0
 											  <if test="searchCondition != null and searchCondition != '' ">
-												<where>
 													<choose>
 														<when test="searchKeyword !='' and clubCategory != '' and clubArea != '' ">
 															<!--  카테고리 and 지역 and 이름검색 -->
-															club_title LIKE '%'||#{searchKeyword}||'%' and club_category = #{clubCategory} and club_area = #{clubArea}
+															and club_title LIKE '%'||#{searchKeyword}||'%' and club_category = #{clubCategory} and club_area = #{clubArea}
 														</when>													
 														<when test="searchKeyword == null or searchKeyword =='' ">
 															<choose>
 																<when test="clubArea == '' ">
 																	<!-- 카테고리만 검색 -->
-																	club_category = #{clubCategory}
+																	and club_category = #{clubCategory}
 																</when>
 																<when test="clubCategory == '' ">
 																	<!-- 지역만 검색 -->
-																	club_area = #{clubArea}	
+																	and club_area = #{clubArea}	
 																</when>
 																<otherwise>
 																	<!-- 카테고리 and 지역 -->
-																	club_category = #{clubCategory} and club_area = #{clubArea}
+																	and club_category = #{clubCategory} and club_area = #{clubArea}
 																</otherwise>
 															</choose>
 														</when>																										
@@ -177,20 +179,19 @@
 															<choose>
 																<when test="clubArea == '' ">
 																	<!-- 이름만 검색 -->
-																	club_title LIKE '%'||#{searchKeyword}||'%'
+																	and club_title LIKE '%'||#{searchKeyword}||'%'
 																</when>
 																<otherwise>
 																	<!-- 지역 and 이름검색 -->
-																	club_area = #{clubArea} and club_title LIKE '%'||#{searchKeyword}||'%'
+																	and club_area = #{clubArea} and club_title LIKE '%'||#{searchKeyword}||'%'
 																</otherwise>
 															</choose>															
 														</when>													
 														<otherwise>
 															<!-- 카ㅔ고리 and 이름검색 -->
-															club_category = #{clubCategory} and club_title LIKE '%'||#{searchKeyword}||'%'
+															and club_category = #{clubCategory} and club_title LIKE '%'||#{searchKeyword}||'%'
 														</otherwise>
 													</choose>														
-												</where>
 											 </if> 
 											ORDER BY club_no ) V1
 						 		) V2
@@ -384,7 +385,7 @@
 	  	FROM(	SELECT club_no 
 						FROM club_user
 							<where>
-						 			club_no = #{searchKeyword}
+						 			club_no = #{ searchKeyword }
 						 			and approval_condition = '1'								
 							</where> ) countTable						
 	 </select>
@@ -600,7 +601,16 @@
    <select id="getCheckMeeting" parameterType="participant" resultType="int">
    		SELECT COUNT(*) FROM PARTICIPANT WHERE MEETING_NO = #{ meetingNo } AND PARTICIPANT_USER_ID = #{ user.userId }
    </select>
-	
+   
+   <!-- 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다 -->
+   <select id="getClubNotoMyHome" parameterType="int" resultType="int">
+   		SELECT CLUB_NO FROM MEETING WHERE MEETING_NO = #{ meeting_no }
+   </select>
+   
+   <!-- 모임 삭제하기 위해서 해당 모임의 모임원을 모두 삭제한다 -->
+	<delete id="deleteClubMemberList" parameterType="int">
+		delete from club_user where club_no = #{ clubNo }
+	</delete>
 	
 	
 </mapper>

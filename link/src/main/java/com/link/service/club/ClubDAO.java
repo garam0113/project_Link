@@ -96,6 +96,9 @@ public interface ClubDAO {
 	
 	// 일정에 참가신청 했었는지 안 했었는지 확인
 	public int getCheckMeeting(Participant participant) throws Exception;
+
+	// 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다
+	public int getClubNotoMyHome(int meetingNo) throws Exception;
 	
 	
 }

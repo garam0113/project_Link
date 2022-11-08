@@ -23,6 +23,105 @@
 
 <script type="text/javascript">
 $(function(){
+	
+	
+	<%-- 1:1 채팅 --%>
+	$(document).on("click","button:contains('채팅')", function() {
+		var user_Id = $(this).parents("div[name='dialog']").attr("id");
+		console.log(user_Id + "테스트입니다");
+		
+		console.log("1:1채팅");
+		$("#chat-icon").attr("style", "display:none");
+		// 채팅창 보인다
+		$("#allChat").attr("style", "position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; border-radius: 40px; padding: 10px; padding-top: 20px; width: 350px; height: 700px; box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;");
+
+		// 1:1채팅 보이고 모임채팅 숨긴다
+		$("#user-chat-list").removeAttr("style");
+		$("#club-chat-list").attr("style", "display: none");
+		// 1:1채팅 이미지 테두리 이벤트, 모임채팅 이미지 테두리 이벤트 없애기
+		$(this).attr("style", "box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 38px, rgba(95, 0, 128, 0.3) 0px 5px 12px;");
+		$(".chat-img-sidebar.people-users").removeAttr("style");
+		
+		//alert( "1:1 채팅하고하는 상대방 아이디 : " + user_Id );
+		var make_roomId = "";
+		
+
+		socket.disconnect();
+		$('#chatLog').empty();
+		
+		$("#allChat-toobar-title").attr("style", "display: none");
+		$("#allChat-toobar-back").removeAttr("style");
+		
+		$("#chat-list-content").attr("style", "display: none");
+		$("#chat-room-content").removeAttr("style");
+		
+		// ajax로 roomId 만들어서 DB에 넣고
+		$.ajax( "/clubPostRest/json/addChat",
+				{
+					method : "POST",
+					data : JSON.stringify({
+						userId2 : user_Id
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					dataType : "json",
+					success : function(JSONData, status){
+						//alert(status);
+						
+						var user_chat_list = "";
+						$("#user-chat-list").empty();
+						
+						for (var i = 0; i < JSONData.length; i++) {
+							//alert(JSONData[i].roomId);
+							//alert(JSONData[i].user2.nickName);
+							//alert(JSONData[i].user2.profileImage);
+							//alert(JSONData[i].currentRoomId);
+							
+							make_roomId = JSONData[i].currentRoomId;
+								// 넣은 roomId까지 가져와서 1:1채팅 리스트 돌리고
+								user_chat_list = "<div class='chat-content chat-content-onechat' roomId='"+JSONData[i].roomId+"' namespace='userchat'>"
+														+"<div>"
+															+"<img class='chat-img-main' src='/resources/image/uploadFiles/"+JSONData[i].user2.profileImage+"'>"
+														+"</div>"
+														+"<div>"+JSONData[i].user2.nickName+"</div>"
+													+"</div>";
+								
+								$("#user-chat-list").append( user_chat_list );
+							}
+							
+							//alert( make_roomId );
+							console.log(socket)
+							
+							// 만든 roomId = '${ sessionScope.user.userId }'+user_Id로 채팅방 접속한다
+							//소켓서버에 접속시킨다.
+							socket = io("http://192.168.0.74:3000/userchat", { // clubchat 네임스페이스
+								cors: { origin: "*" },
+								path: '/socket.io',
+								query: {
+									userId : $("#session_userId").val(),
+									profileImage : $("#session_profileImage").val(),
+									nickName : $("#session_nickName").val(),
+									roomId : make_roomId
+								},
+								forceNew: true,
+								autoConnect:false
+							});
+							console.log(socket);
+							
+							setChat();
+							
+							socket.connect();
+							
+						}//end of success	
+						
+				});// end of ajax
+					
+		});//end of 프로필사진의 채팅 클릭시 1:1 채팅
+
+		
+		
 	$(document).on("click", ".comment", function(event) {
 		event.stopPropagation();
 		
@@ -481,6 +580,7 @@ $(function() {
 	 $(document).on("click","#following", function() {
 		var userId = $(this).parent().parent().attr("id");
 		console.log("전달받은 회원 Id : " + userId);
+		var changeText = $(this);
        
 		$.ajax("/myHomeRest/json/getFollow", {
 			type : "POST",
@@ -520,13 +620,13 @@ $(function() {
 					success : function(update, status) {
 						console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 						if(update.follow.fbState == 1){
-						$("#following").text("팔로잉");
+						$(changeText).text("팔로잉");
 						if(sock) {
 							   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 							   sock.send(Msg);
 						}
 						}else if(update.follow.fbState == 2){
-						$("#following").text("팔로우");
+						$(changeText).text("팔로우");
 						}
 					}
 				})
@@ -537,6 +637,7 @@ $(function() {
 	 $(document).on("click","#updateFollow", function() {
 		var userId = $(this).parent().parent().attr("id");
 		console.log("전달받은 회원 Id : " + userId);
+		var changeText = $(this);
 
 		$.ajax("/myHomeRest/json/getFollow", {
 			type : "POST",
@@ -575,13 +676,13 @@ $(function() {
 					success : function(update, status) {
 						console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 						if(update.follow.fbState == 1){
-						$("#updateFollow").text("팔로잉");
+						$(changeText).text("팔로잉");
 						if(sock) {
 							   var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 							   sock.send(Msg);
 						}
 						}else if(update.follow.fbState == 2){
-						$("#updateFollow").text("팔로우");
+						$(changeText).text("팔로우");
 						}
 					}
 				})
@@ -593,6 +694,7 @@ $(function() {
 	$(document).on("click","#block", function() {
 		var userId = $(this).parent().parent().attr("id");
 		console.log("전달받은 회원 Id : " + userId);
+		var changeText = $(this);
 
 		$.ajax("/myHomeRest/json/getFollow", {
 			type : "POST",
@@ -634,9 +736,9 @@ $(function() {
 					success : function(update, status) {
 						console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 						if(update.block.fbState == 1){
-							$("#block").text("차단해제");
+							$(changeText).text("차단해제");
 							}else if(update.block.fbState == 2){
-							$("#block").text("차단");
+							$(changeText).text("차단");
 							}
 					}
 				})
@@ -655,7 +757,7 @@ $(function() {
 						},
 						success : function(Data, status) {
 							console.log("서버로부터 받은 Data(error) : " + Data);
-							$("#block").text("차단해제");
+							$(changeText).text("차단해제");
 						}
 					})
 				}
@@ -667,6 +769,7 @@ $(function() {
 	$(document).on("click","#stopBlock", function() {
 		var userId = $(this).parent().parent().attr("id");
 		console.log("전달받은 회원 Id : " + userId);
+		var changeText = $(this);
 
 		$.ajax("/myHomeRest/json/getFollow", {
 			type : "POST",
@@ -706,9 +809,9 @@ $(function() {
 					success : function(update, status) {
 						console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 						if(update.block.fbState == 1){
-						$("#stopBlock").text("차단해제");
+						$(changeText).text("차단해제");
 						}else if(update.block.fbState == 2){
-						$("#stopBlock").text("차단");
+						$(changeText).text("차단");
 						}
 					}
 				})
@@ -719,6 +822,7 @@ $(function() {
 	$(document).on("click","#updateBlock", function() {
 		var userId = $(this).parent().parent().attr("id");
 		console.log("전달받은 회원 Id : " + userId);
+		var changeText = $(this);
 
 		$.ajax("/myHomeRest/json/getFollow", {
 			type : "POST",
@@ -757,9 +861,9 @@ $(function() {
 					success : function(update, status) {
 						console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 						if(update.block.fbState == 1){
-						$("#updateBlock").text("차단해제");
+						$(changeText).text("차단해제");
 						}else if(update.block.fbState == 2){
-						$("#updateBlock").text("차단");
+						$(changeText).text("차단");
 						}
 					}
 				})
@@ -775,6 +879,7 @@ $(function() {
 		$("#follow1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -816,9 +921,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 							if(update.follow.fbState == 1){
-								$("#follow1").text("팔로잉");
+								$(changeText).text("팔로잉");
 								}else if(update.follow.fbState == 2){
-								$("#follow1").text("팔로우");
+								$(changeText).text("팔로우");
 								}
 						}
 					})
@@ -837,7 +942,7 @@ $(function() {
 							},
 							success : function(Data, status) {
 								console.log("서버로부터 받은 Data(error) : " + Data);
-								$("#follow1").text("팔로잉");
+								$(changeText).text("팔로잉");
 							}
 						})
 					} 
@@ -849,6 +954,7 @@ $(function() {
 		 $("#following1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -888,9 +994,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 							if(update.follow.fbState == 1){
-							$("#following1").text("팔로잉");
+							$(changeText).text("팔로잉");
 							}else if(update.follow.fbState == 2){
-							$("#following1").text("팔로우");
+							$(changeText).text("팔로우");
 							}
 						}
 					})
@@ -901,6 +1007,7 @@ $(function() {
 		 $("#updateFollow1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -939,9 +1046,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 							if(update.follow.fbState == 1){
-							$("#updateFollow1").text("팔로잉");
+							$(changeText).text("팔로잉");
 							}else if(update.follow.fbState == 2){
-							$("#updateFollow1").text("팔로우");
+							$(changeText).text("팔로우");
 							}
 						}
 					})
@@ -953,6 +1060,7 @@ $(function() {
 		$("#block1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -994,9 +1102,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 							if(update.block.fbState == 1){
-								$("#block1").text("차단해제");
+								$(changeText).text("차단해제");
 								}else if(update.block.fbState == 2){
-								$("#block1").text("차단");
+								$(changeText).text("차단");
 								}
 						}
 					})
@@ -1015,7 +1123,7 @@ $(function() {
 							},
 							success : function(Data, status) {
 								console.log("서버로부터 받은 Data(error) : " + Data);
-								$("#block1").text("차단해제");
+								$(changeText).text("차단해제");
 							}
 						})
 					}
@@ -1027,6 +1135,7 @@ $(function() {
 		$("#stopBlock1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -1066,9 +1175,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 							if(update.block.fbState == 1){
-							$("#stopBlock1").text("차단해제");
+							$(changeText).text("차단해제");
 							}else if(update.block.fbState == 2){
-							$("#stopBlock1").text("차단");
+							$(changeText).text("차단");
 							}
 						}
 					})
@@ -1079,6 +1188,7 @@ $(function() {
 		$("#updateBlock1").on("click", function() {
 			var userId = $("#userId2").val();
 			console.log("전달받은 회원 Id : " + userId);
+			var changeText = $(this);
 
 			$.ajax("/myHomeRest/json/getFollow", {
 				type : "POST",
@@ -1117,9 +1227,9 @@ $(function() {
 						success : function(update, status) {
 							console.log("서버로 받은 데이터(정상) : " + update.block.userId);
 							if(update.block.fbState == 1){
-							$("#updateBlock1").text("차단해제");
+							$(changeText).text("차단해제");
 							}else if(update.block.fbState == 2){
-							$("#updateBlock1").text("차단");
+							$(changeText).text("차단");
 							}
 						}
 					})
@@ -1471,10 +1581,8 @@ z-index: -1;
 margin-right: 450px;
 }
 a {
-    color: #222;
     text-decoration: auto !important;
     width: 140px;
-    color : black !important;
 }
 #main{
 background-color : #EBEDF0 !important;
@@ -1926,6 +2034,7 @@ border-radius: 15px;
 margin-bottom: 15px;
 text-align: center;
 margin-left : 5px;
+cursor: pointer;
 }
 header.transparent {
     background-color: white !important;
@@ -1998,6 +2107,35 @@ border-radius: 20px;
 .row{
 border-radius: 15px !important;
 }
+
+nav > ul > li > a {
+	color: white !important;
+}
+
+.reset a {
+	color: white !important;
+}
+
+.yourHome {
+	cursor: pointer;
+}
+
+.yourHome2 {
+	cursor: pointer;
+}
+
+.dl {
+	cursor: pointer;
+}
+
+.dll {
+	cursor: pointer;
+}
+
+.feedContent > h4 {
+	white-space: normal;
+}
+
 </style>
 </head>
 

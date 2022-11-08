@@ -153,7 +153,9 @@ public class ClubDAOImpl implements ClubDAO {
 	
 	@Override
 	public void deleteClub(int clubNo) throws Exception {
-		sqlSession.delete("ClubMapper.deleteClub",clubNo);
+		// 해당 모임의 모임원을 모두 삭제해야 결제 할때 잘 된다
+		sqlSession.delete("ClubMapper.deleteClubMemberList", clubNo);
+		sqlSession.update("ClubMapper.deleteClub",clubNo);
 	}
 	
 	@Override
@@ -348,5 +350,10 @@ public class ClubDAOImpl implements ClubDAO {
 		return sqlSession.selectOne("ClubMapper.getCheckMeeting", participant);
 	}
 
-	
+	// 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다
+	@Override
+	public int getClubNotoMyHome(int meetingNo) throws Exception {
+		System.out.println(getClass() + ".getClubNotoMyHome(int meetingNo) 왔다");
+		return sqlSession.selectOne("ClubMapper.getClubNotoMyHome", meetingNo);
+	}
 }
