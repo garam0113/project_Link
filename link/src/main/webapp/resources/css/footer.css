@@ -4,11 +4,16 @@
 .club_post_footer_Tag.top_name{
 	color: gray; font-size: 20px;
 }
+#club_post_footer{
+	position: absolute !important;
+	bottom: 0 !important;
+	width: 100% !important;
+}
 #club_post_footer_img{
 	position: absolute;
 }
 #club_post_footer_img > img{
-	width: 1900px;
+	width: 2000px;
 }
 #club_post_logo_img{
 	position: relative; top: 0;

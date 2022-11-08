@@ -690,11 +690,16 @@ html::-webkit-scrollbar {
 		</div>
 	<!-- </main> -->
 	
-	
+	<br><br><br><br><br><br><br><br><br><br><br><br>
 	
 	<!-- footer start -->
 	<jsp:include page="/footer.jsp" />
 	<!-- footer end -->
+	
+	</div>
+	
+	
+	
 </body>
 
 </html>
