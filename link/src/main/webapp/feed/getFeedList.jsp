@@ -731,16 +731,18 @@
 		   
 		   
 		             $("#"+nickName+"").dialog("open");
+		             
 		      }
 		   })
+		   $(".row").on("click", function(){
+				
+				$("#"+nickName+"").dialog("close");
+			
+			})	
 
 		})//end of class="dl" 클릭시
 
-		$(".row").on("click", function(){
-		
-			$("div[name='dialog']").parent().dialog("close");
-		
-		})		
+			
 		
 		$(document).on("click",".dll",function(event){
 		
