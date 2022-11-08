@@ -18,7 +18,8 @@
 		</div>
 		<!-- 로고 이미지 -->
 		<div  id="club_post_logo_img">
-			<img src="/resources/image/uploadFiles/Logo.png">
+			<img src="/resources/image/uploadFiles/Logo1.png">
+			<div id="logo_comment">우리들의 연결고리</div>
 		</div>
 		<!-- footer 소개글 start -->
 		<div id="club_post_footer_int">

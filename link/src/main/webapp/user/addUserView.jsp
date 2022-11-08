@@ -254,8 +254,6 @@ body{
 	position: relative !important;
 }
 #club_post_footer{
-	left: 0 !important;
-	bottom: 0 !important;
 	margin-bottom: -1500px !important;
 }
 </style>

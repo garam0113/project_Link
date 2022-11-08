@@ -250,10 +250,10 @@ body {
 									   </c:if>
 									   </button> 
 
-									 <button class="custom-btn btn-13" style= "transform: translate(540px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px); ">
 									   삭제</button> 
 									</c:if>
-									<button class="custom-btn btn-13" style= "transform: translate(540px, 0px); ">
+									<button class="custom-btn btn-13" style= "transform: translate(486px, 0px); ">
 									이전</button>
 
 									
