@@ -156,7 +156,7 @@ body {
   <h2>Q&A 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 17px;">
+		<div class="container">
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; 
 			 transform: translate(130px, 0px); background-color:aliceblue;">

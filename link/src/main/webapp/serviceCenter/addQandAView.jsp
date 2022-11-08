@@ -200,8 +200,7 @@ body {
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
-	<div class="page-header" align="center"
-		style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="margin-left:0 auto;">
 		<h2>Q&A 등록</h2>
 	</div>
 	<div class="container">
