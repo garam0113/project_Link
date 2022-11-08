@@ -157,6 +157,17 @@ textarea {
 }
 
 </style>
+
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+#club_post_footer{
+	left: 0;
+}
+</style>
+
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="transform: translate(-316px, 38px);">
@@ -278,6 +289,12 @@ textarea {
 									</div>
 				
 			</div><form></form>
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 
 
 </body>

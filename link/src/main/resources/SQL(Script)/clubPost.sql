@@ -839,6 +839,53 @@ WHERE ROWNUM = 1
 
 
 
+		SELECT inner_table.*
+		FROM ( 
+				SELECT rownum AS row_seq, deep_table.*
+				FROM (
+						 SELECT
+						  p.participant_no, 
+						  p.participant_user_id, 
+						  u.nickname ,
+						  u.profile_image ,
+						  m.meeting_title ,
+						  m.meeting_place , 
+						  m.meeting_time ,
+						  m.meeting_date ,
+						  m.club_no ,
+						  m.meeting_no
+						FROM participant p, users u, meeting m
+						WHERE
+							p.participant_user_id = u.user_id
+							and p.meeting_no = m.meeting_no
+								and u.user_id = 'garam113'
+						) deep_table ) inner_table
+
+
+
+
+SELECT COUNT(*) FROM PARTICIPANT WHERE MEETING_NO = 9 AND PARTICIPANT_USER_ID = 'garam113'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

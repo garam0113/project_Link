@@ -15,8 +15,9 @@
 <script src="/resources/javascript/plugins.js"></script>
 <script src="/resources/javascript/beetle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
 
 <title>고객센터</title>
@@ -107,6 +108,18 @@ border-color: BD76FF;
    text-align: center;
    border: solid 2px;
 }
+
+div {
+	clear: initial !important;
+}
+
+.thumbnail>img {
+	height: 220px !important;
+}
+
+div.caption {
+	width: 350px !important;
+}
 </style>
 
 
@@ -156,6 +169,17 @@ $(function() {
 });	
 </script>
 
+<style type="text/css">
+/* footer css */
+#service_content_body{
+	/* background-color: red; */
+	height: 900px;
+	position: relative;
+}
+#club_post_footer{
+	padding-top: 90px !important;
+}
+</style>
 
 </head>
 
@@ -163,7 +187,7 @@ $(function() {
 	<jsp:include page="/toolbar.jsp" />
 
 
-<body style="overflow-x: hidden">
+<body style="overflow-x: hidden;">
 
 
 
@@ -193,68 +217,70 @@ $(function() {
 	
 	<%--검은색 화면 --%>
 	<%-- --%>
-	<div style="text-align: center; margin-top: 100px; transform: translateX(-23px);">
+	<div style="text-align: center; margin-top: 100px;">
 	<h1 >고  객  센  터</h1>
 	<h4>
 		고객센터를 통해 궁금증을 해결하세요
 	<h4>
 	</div>	
 
+	<div id="service_content_body">
+				
+		<div class="container">
+			<div class="row">
 			
-   <div class="container" style="transform: translate(300px, -200px);">
-      <div class="row2" style="display:flex; margin-top: -40px;">
-        <div class="col-4" style ="">
-          
-          <div class="card" style="transform: translate(-320px, 280px);">
-            <div class="card-header">
-             
-            </div>
-           <img src="/resources/image/uploadFiles/공지사항.png" class="image1" height="220px"/>
-            <div class="card-body">
-              <h3 class="card-title" align="center">공지사항</h3>
-             <p class="card-text" align="center"> 사이트 내 공지사항을</br> 조회 할 수 있습니다.</p>
-              	<button type="submit" class="button1 button1" style="transform: translate(60px, 0px); width: 150px;left: 30px;">공지사항 보기</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-            <div class="card" style="transform: translate(-320px, 280px);">
-            <div class="card-header">
+		  		<div class="col-sm-6 col-md-4">
+			   		<div class="thumbnail">
+			      		<img src="/resources/image/uploadFiles/공지사항.png" class="image1" height="220px !important"/>
+			      		<div class="caption">
+			        		<h3>공지사항</h3>
+			        		<p>사이트 내 공지사항을<br/> 조회 할 수 있습니다.</p>
+			        		<button type="submit" class="button1 button1">공지사항 보기</button>
+			      		</div>
+			    	</div>
+		  		</div>
+			
+		  		<div class="col-sm-6 col-md-4">
+			   		<div class="thumbnail">
+			      		<img src="/resources/image/uploadFiles/q&a.jpg" class="image2" height="220px !important" />
+			      		<div class="caption">
+			        		<h3>Q&A</h3>
+			        		<p>사이트 내에 궁금하신 점이나<br/> 의견을 남길 수 있습니다.</p>
+			        		<button type="submit" class="button1 button2">Q&A보기</button>
+			      		</div>
+			    	</div>
+		  		</div>
+			
+		  		<div class="col-sm-6 col-md-4">
+			   		<div class="thumbnail">
+			      		<img src="/resources/image/uploadFiles/물음표.jpg" class="image3" height="220px !important" />
+			      		<div class="caption">
+			        		<h3>내 신고 및 Q&A 보기</h3>
+			        		<p>내 신고 및 Q&A 내역을 <br/>확인할 수 있습니다.</p>
+			        		<c:if test="${ user.role == '0' || user.role== null }">
+			              	<form>
+				              	<input type="button" class="button3" value="내 신고보기" onClick="fncGetReport()" style="transform:translate(15px,0px);">
+								<input type="button" class="button4" value="내 질문보기" onClick="fncGetQandA()" style=" transform: translate(27px, 0px);" >
+							</form>
+							</c:if>
+							<c:if test="${ user.role == '1'  }">
+								<button class="button3" style="transform: translate(15px, 0px);">신고 목록</button>
+								<button class="button4" style="transform: translate(40px, 0px);">관리자 질문</button>
+							</c:if>
+			      		</div>
+			    	</div>
+		  		</div>
+			
+			</div>
+			
+		</div>
 
-            </div>
-           <img src="/resources/image/uploadFiles/q&a.jpg" class="image2" height="220px" />
-            <div class="card-body">
-             <h3 class="card-title" align="center">Q&A</h3>
-              <p class="card-text" align="center">사이트 내에 궁금하신 점이나</br> 의견을 남길 수 있습니다.</p>
-              <button type="submit" class="button1 button2" style="transform: translate(60px, 0px);	width: 150px;left: 30px;">Q&A보기</button>
-              
-            </div>
-          </div>
-        </div>
-          <div class="col-4">
-              <div class="card" style="transform: translate(-320px, 280px);">
-            <div class="card-header">
-            </div>
-            <img src="/resources/image/uploadFiles/물음표.jpg" class="image3" height="220px" />
-            <div class="card-body">
-              <h3 class="card-title" align="center">내 신고 및 Q&A 보기</h3>
-              <p class="card-text" align="center">내 신고 및 Q&A 내역을 </br>확인할 수 있습니다. </p>
-              <c:if test="${ user.role == '0' || user.role== null }">
-              	<form>
-              	<input type="button" class="button3" value="내 신고보기" onClick="fncGetReport()" style="transform:translate(15px,0px);">
-				<input type="button" class="button4" value="내 질문보기" onClick="fncGetQandA()" style=" transform: translate(27px, 0px);" >
-				</form>
-				</c:if>
-				<c:if test="${ user.role == '1'  }">
-				<button class="button3" style="transform: translate(15px, 0px);">신고 목록</button>
-				<button class="button4" style="transform: translate(40px, 0px);">관리자 질문</button>
-				</c:if>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
+		
+	</div>
   </body>
 </html>
-</body>
+
+

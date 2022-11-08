@@ -1229,10 +1229,8 @@ border-radius: 15px !important;
 margin-right: 450px;
 }
 a {
-    color: #222;
     text-decoration: auto !important;
     width: 140px;
-    color : black !important;
 }
 #main{
 background-color : #EBEDF0 !important;
@@ -1657,13 +1655,18 @@ border-radius: 15px;
 margin-bottom: 15px;
 text-align: center;
 margin-left : 5px;
+cursor: pointer;
 }
+
 header.transparent {
     background-color: white !important;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    display: flex;
+	background: linear-gradient(0deg, #958c8cc4, black);
 }
+
 .post{
 width:500px;
 margin-left:65px;
@@ -1759,6 +1762,29 @@ input[type="radio"]:checked + label h4 {
 	color: white !important;
 }
 
+nav > ul > li > a {
+	color: white !important;
+}
+
+.reset a {
+	color: white !important;
+}
+
+.yourHome {
+	cursor: pointer;
+}
+
+.yourHome2 {
+	cursor: pointer;
+}
+
+.dl {
+	cursor: pointer;
+}
+
+.dll {
+	cursor: pointer;
+}
 </style>
 </head>
 
@@ -1795,10 +1821,8 @@ input[type="radio"]:checked + label h4 {
 				<%-- 채팅 --%>
 				
 				
-				
-			<div>
 			<jsp:include page="/toolbar.jsp" />
-			</div>
+			
 			<div class="my" style="margin-top : 100px;">
 			<div>
 				<div id="calendar">
@@ -1891,7 +1915,7 @@ input[type="radio"]:checked + label h4 {
 				
 				</div>
 				<div class="tab_content-follow" id="programming-follow_content" style="white-space:nowrap; overflow-x:hidden; overflow-y:auto; width:300px; height:700px;">
-     		<div class="col-md-4" id="fl">
+     		<div id="fl">
 					 		<br />
 	
 		
@@ -2260,9 +2284,9 @@ $(function() {
        $.each(data.followerList, function(index, item) { // 데이터 =item
     	   console.log(item);
 			var value = 
-				"<div class='following-section' style='margin-left:35px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
-			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' id='"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right; margin-right:380px;'>"+
-			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1'></div>"+"<input type='hidden' class='"+item.userId+"' value='"+item.nickName+"'>"+
+				"<div class='following-section' style='margin-left:50px;' id='"+item.userId+"' name='"+item.nickName+"'>"+
+			"<div style='display: inline-block; margin-left :-50px;'>"+"<img class='dll' src='/resources/image/uploadFiles/"+item.profileImage+"' id='"+item.profileImage+"' width='100' height='100' />"+"</div><div style='float: right;'>"+
+			"<h4 class='yourHome2'>"+item.nickName+"</h4></div><div id='"+item.nickName+"1' style='display:none;'></div>"+"<input type='hidden' class='"+item.userId+"' value='"+item.nickName+"'>"+
 		"</div>";
 			
 			

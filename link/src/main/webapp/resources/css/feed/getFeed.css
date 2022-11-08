@@ -32,6 +32,18 @@
 	.dll {
 		cursor: pointer;
 	}
+
+	.dl {
+		cursor: pointer;
+	}
+
+	.yourHome {
+		cursor: pointer;
+	}
+
+	.yourHome2 {
+		cursor: pointer;
+	}
 	
 	/* 프로필 요약 보기 */
 

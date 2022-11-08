@@ -1,3 +1,37 @@
+/* 수정 모달창 이게 없으면 화면 맨위에 붙어있다 툴바에 가려진다 */
+#club-post-add-modal{
+	margin-top: 50px;
+}
+
+#club-post-update-modal{
+	margin-top: 50px;
+}
+
+.row-content.buffer.clear-after{
+	padding-top: 0;
+	padding-left: 0;
+	margin-left: 405px;
+	margin-right: 360px;
+}
+.row-content.buffer.clear-after > div:first-child{
+	width: 1140px;
+	height: 550px;
+	overflow: hidden;
+}
+.row-content.buffer.clear-after > div:first-child > img{
+	width: 100%;
+}
+.homeBtn_group{
+	background-color: red;
+	height: 100px;
+	width: 1140px;
+}
+.grid-items.preload{
+	width: 1140px;
+}
+#club_post_main_img{
+	
+}
 
 /* 상단 모임 툴바? */
 .inline.cats.filter-options{
@@ -13,7 +47,7 @@
 
 /* 전제 글씨체 */
 .row{
-	font-family: 'Single Day', cursive;
+	/* font-family: 'Single Day', cursive; */
 }
 		
 /* 댓글전체를 감싸는 태그 */

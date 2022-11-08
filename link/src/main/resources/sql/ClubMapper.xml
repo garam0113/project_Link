@@ -594,8 +594,12 @@
       	club_no = #{ clubNo }
       </where>
    </update>
-	
-	
+   
+   
+   <!-- 참가신청 했을 때 해당 일정에 신청 했는지 안했는지 확인하는 Query -->
+   <select id="getCheckMeeting" parameterType="participant" resultType="int">
+   		SELECT COUNT(*) FROM PARTICIPANT WHERE MEETING_NO = #{ meetingNo } AND PARTICIPANT_USER_ID = #{ user.userId }
+   </select>
 	
 	
 	

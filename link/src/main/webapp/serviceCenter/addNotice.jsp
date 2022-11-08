@@ -95,6 +95,13 @@ textarea {
 }
 
 </style>
+
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+</style>
 </head>
 
 <%-- 테이블 시작 --%>
@@ -180,6 +187,12 @@ textarea {
 									</div>
 				
 			</div>
+			
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+			<!-- footer start -->
+			<jsp:include page="/footer.jsp" />
+			<!-- footer end -->
 
 
 </body>

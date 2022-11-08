@@ -149,6 +149,16 @@ background-color: #EBEDF0 !important;
 	});
 </script>
 
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+#club_post_footer{
+	left: 0;
+}
+</style>
+
 </head>
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/toolbar.jsp" />
@@ -264,12 +274,13 @@ background-color: #EBEDF0 !important;
 							<td></td>
 							
 							<td align="left" class="content2" style="vertical-align: middle; cursor:pointer;">
-							<fmt:formatDate value="${getNoticeList.noticeRegDate}" pattern="dd" var ="startDate" />
-							<fmt:formatDate value="${ymd}" pattern="dd" var ="nowDate" />
+							<fmt:formatDate value="${getNoticeList.noticeRegDate}" pattern="yyyyMMdd" var ="startDate" />
+							<fmt:formatDate value="${ymd}" pattern="yyyyMMdd" var ="nowDate" />
+							<fmt:formatNumber value="${nowDate}" type="number" var ="nowDate1"/>
 							<fmt:formatNumber value="${startDate}" type="number" var ="startDate1"/>
 							<fmt:formatNumber value="${startDate+3}" type="number" var ="endDate1"/>
 							<div class="waviy">
-							<c:if test="${endDate1>nowDate && startDate1 < endDate1}" >
+							<c:if test="${endDate1>nowDate1 && startDate1 <= nowDate1}" >
 							<strong>
 							<span style="--i:1">N</span>
 							<span style="--i:2">E</span>
@@ -291,6 +302,8 @@ background-color: #EBEDF0 !important;
 							<td align="left" width ="140px" style="vertical-align: middle;">${getNoticeList.noticeRegDate}</td>
 							<td></td>
 							<td align="left" style="vertical-align: middle;">${getNoticeList.noticeCount}</td>
+							
+							
 							
 
 							
@@ -342,7 +355,15 @@ background-color: #EBEDF0 !important;
 					</td>
 				</tr>
 			</table>
+		
+			
 			</div>
+			
+			<br><br><br><br><br><br><br>
+
+			<!-- footer start -->
+			<jsp:include page="/footer.jsp" />
+			<!-- footer end -->
 
 	<!--  화면구성 div End /////////////////////////////////////-->
 

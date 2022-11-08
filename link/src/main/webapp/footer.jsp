@@ -9,18 +9,23 @@
 <body>
 <!-- footer start -->
 <div id="club_post_footer">
-	<br><br>
+	
 	<!-- footer content start -->
 	<div id="club_post_footer_content">
 		<!-- footer 배경이미지 -->
-		<img id="club_post_footer_img" src="/resources/image/uploadFiles/footerImage3.jpg">
-		
+		<div id="club_post_footer_img">
+			<img src="/resources/image/uploadFiles/footerImage3.jpg">
+		</div>
+		<!-- 로고 이미지 -->
+		<div  id="club_post_logo_img">
+			<img src="/resources/image/uploadFiles/Logo.png">
+		</div>
 		<!-- footer 소개글 start -->
 		<div id="club_post_footer_int">
 			
 			<!-- MENU -->
 			<div>
-				<p class="club_post_footer_Tag">Menu</p>
+				<p class="club_post_footer_Tag top_name">Menu</p>
 				<div><a class="club_post_footer_Tag" href="home-01.html">HOME</a></div>
 				<div><a class="club_post_footer_Tag" href="/feed/getFeedList">FEED</a></div>
 				<div>
@@ -37,7 +42,7 @@
 			</div>
 			<!-- COMPANY -->
 			<div>
-				<p class="club_post_footer_Tag">Company</p>
+				<p class="club_post_footer_Tag top_name">Company</p>
 				<p class="club_post_footer_Tag">
 				(주)링크 대표이사 김정민, 박경수<br>
 				사업자등록번호 : 703-88-00878<br>
@@ -49,7 +54,7 @@
 			</div>
 			<!-- 오시는 길 -->
 			<div>
-				<p class="club_post_footer_Tag">오시는길</p>
+				<p class="club_post_footer_Tag top_name">오시는길</p>
 				<p class="club_post_footer_Tag">주소: 서울특별시 서초구<br> 서초대로 396, 강남빌딩 20층<br> (스파크플러스 강남2호점)</p>
 			</div>
 		</div>

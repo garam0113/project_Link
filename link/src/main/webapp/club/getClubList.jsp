@@ -252,6 +252,31 @@ html {
 html::-webkit-scrollbar {
 	display:none !important;
 }
+#addClubBtn{
+	background-color: #5F0080;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	border-radius: 15px;
+	padding: 8px;
+	width: 70px !important;
+	height: 30px !importatn;
+	color: white !important;
+	font-size: 15px !important;
+	border: solid 2px white;
+}
+#addClubBtn:hover{
+	background-color: white;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 9px 8px, rgba(95, 0, 128, 0.22) 0px 5px 2px;
+	border-radius: 15px;
+	padding: 8px;
+	width: 70px !important;
+	height: 30px !importatn;
+	color: #5F0080 !important;
+	font-size: 15px !important;
+	text-align: center;
+	border: solid 2px purple;
+}
+
+
 
 /* SCROLL */
 
@@ -295,8 +320,8 @@ html::-webkit-scrollbar {
 			var totalApprovalConditionCount = $("input[name='totalApprovalConditionCount']").val();
 			var joinClubLimit = $("input[name='joinClubLimit']").val();
 			
-			//alert(totalApprovalConditionCount);
-			//alert(joinClubLimit);
+			alert("나의 총 모임 수 : " + totalApprovalConditionCount);
+			alert("최대 모임 수 : " + joinClubLimit);
 			
 			if(totalApprovalConditionCount < joinClubLimit) {
 				self.location="/club/addClubView.jsp"
@@ -522,10 +547,15 @@ html::-webkit-scrollbar {
 
 							<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 							<input type="hidden" id="currentPage1" name="currentPage" value="1" />
+							<input type="hidden" id="totalApprovalConditionCount" name="totalApprovalConditionCount" value="${ totalApprovalConditionCount }">
+							<input type="hidden" id="joinClubLimit" name="joinClubLimit" value="${sessionScope.user.joinClubLimit}">
 
 						</form>
+						<div style="float: right; padding-right: 12px; padding-bottom: 5px; margin-bottom: 10px; padding-top: 3px;">
+							<button type="button" class="btn btn-addClubBtn" id="addClubBtn">모임개설</button>
+						</div>
 					</div>
-					<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+					<!-- table 위쪽 검색 Start /////////////////////////////////////
 					<%-- <div id="main" class="row" style="width: 800px; background-color: aqua;">
 					
 					
@@ -662,11 +692,16 @@ html::-webkit-scrollbar {
 		</div>
 	<!-- </main> -->
 	
-	
+	<br><br><br><br><br><br><br><br><br><br><br><br>
 	
 	<!-- footer start -->
 	<jsp:include page="/footer.jsp" />
 	<!-- footer end -->
+	
+	</div>
+	
+	
+	
 </body>
 
 </html>

@@ -43,7 +43,7 @@
 				return;
 			}
 
-		$($("form")[0]).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
+		$($("#addNotice")).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
 	
 	//function readURL 끝 사진 미리보기  
@@ -132,11 +132,34 @@ background-color: #EBEDF0 !important;
    text-align: center;
    border: solid 2px;
 }
+/* 상단 툴바 start */
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	width: 2000px !important;
+	padding-left: 152px !important;
+	padding-right: 84px !important;
+}
+#brand{
+	margin-left: 16px !important;
+}
+ul.reset{
+	width: 874px !important;
+	padding-left: 126px;
+}
+/* 상단 툴바 end */
+</style>
 
+<!-- footer css -->
+<style type="text/css">
+body{
+	position: relative;
+}
+#club_post_footer{
+	left: 0;
+}
 </style>
 </head>
 
-<body style="margin-left:470px;">
+<body style="padding-left:470px;">
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
@@ -150,7 +173,7 @@ background-color: #EBEDF0 !important;
 		<div class="page-header text-center"></div>
 
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data" id="addNotice">
 			<input type="hidden" name="userId" id="userId" value="${user.userId}">
 
 			<div class="form-group" style="margin-left: 161px;">
@@ -175,7 +198,7 @@ background-color: #EBEDF0 !important;
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>첨부파일</strong></label>
 			<div class="col-sm-4" style="margin-left: 161px;">
-				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
+				<input multiple="multiple" type="file" name="file" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
 				
 
 			</div></form>
@@ -196,6 +219,12 @@ background-color: #EBEDF0 !important;
 
 
 	</div>
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
+	<!-- footer end -->
 	<!--  화면구성 div end /////////////////////////////////////-->
 
 </body>

@@ -342,7 +342,11 @@ public class ClubDAOImpl implements ClubDAO {
 	   return sqlSession.selectList("ClubMapper.getClubMemberList",search);
 	}// end of updateClubMember(Pay pay, Search search)
 	
-	
+	@Override
+	public int getCheckMeeting(Participant participant) throws Exception {
+		System.out.println(getClass() + ".getCheckMeeting(Participant participant) 왔다");
+		return sqlSession.selectOne("ClubMapper.getCheckMeeting", participant);
+	}
 
 	
 }

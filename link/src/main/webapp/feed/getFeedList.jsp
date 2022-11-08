@@ -291,6 +291,7 @@
 	       $(document).on("click","#following", function() {
 	         var userId = $(this).parent().parent().attr("id");
 	         console.log("전달받은 회원 Id : " + userId);
+	         var changText = $(this);
 	           
 	         $.ajax("/myHomeRest/json/getFollow", {
 	            type : "POST",
@@ -330,13 +331,13 @@
 	                  success : function(update, status) {
 	                     console.log("서버로 받은 데이터(정상) : " + update.follow.userId);
 	                     if(update.follow.fbState == 1){
-	                     $("#following").text("팔로잉");
+	                     $(changText).text("팔로잉");
 	                     if(sock) {
 	                           var Msg = "follow," + userId + ",0, 가 나를 팔로우 했습니다."
 	                           sock.send(Msg);
 	                     }
 	                     }else if(update.follow.fbState == 2){
-	                     $("#following").text("팔로우");
+							$(changText).text("팔로우");
 	                     }
 	                  }
 	               })
