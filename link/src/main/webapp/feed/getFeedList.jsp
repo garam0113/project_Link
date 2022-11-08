@@ -37,6 +37,26 @@
 
 
 <script type="text/javascript">
+
+	function dateFormat(str) {
+		
+		alert(str);
+		str = str.replace('-', '년');
+		str = str.replace('-', '월');
+		str = str.replace(' ', '일');
+		
+		str = str.replace(':', '시');
+		str = str.replace(':', '분');
+		
+		str = str.substring(0, 17);
+		
+		str = str.replace('년', '년 ');
+		str = str.replace('월', '월 ');
+		str = str.replace('일', '일 ');
+		
+		
+	    return str;
+	}
 	
 	function formatDate(date) {
 	    
@@ -45,11 +65,15 @@
 	    month = '' + (d.getMonth() + 1) , 
 	    day = '' + d.getDate(), 
 	    year = d.getFullYear();
+	    hour = d.getHours();
+	    minute = d.getMinutes();
 	    
 	    if (month.length < 2) month = '0' + month; 
 	    if (day.length < 2) day = '0' + day; 
 	    
-	    return [year, month, day].join('-');
+	    var date = year + "년 " + month + "월 " + day + "일 " + hour + "시 " + minute + "분";
+	    
+	    return date;
 	    
 	}
 	
@@ -1287,7 +1311,10 @@
 									  
 								}) // swal close
 								
-								$("#commentModal").modal('hide');
+								setTimeout(function() {
+									self.location = "/feed/getFeed?feedNo=" + feedNumber;
+								}, 3000);
+								
 							
 							} // success close
 							
@@ -1379,7 +1406,6 @@
 										} else {
 											addHtml += formatDate(item.regDate) + '</div></div>';
 										}
-										
 										
 										if(sessionUser == item.user.userId) {
 											addHtml += '<div class="udIcon">' +
@@ -1760,13 +1786,13 @@
 				return false;
 			} 
 			
-			
 			console.log($(this).parents(".feedForm").children("input[name='feedNo']").val() + "번 글 좋아요");
-			
+			console.log("작성자 :: " + $(this).parents(".feedForm").children("input[name='user2']").val());
 			var html = $(this);
 			var sessionUser = $(this).parents(".feedForm").children("input[name='userId']").val();
 			var feedNo = $(this).parents(".feedForm").children("input[name='feedNo']").val();
 			var content = $(this).parents(".feedForm").children(".feedContent").text().trim();
+			var writer = $(this).parents(".feedForm").children("input[name='user2']").val();
 			
 			$.ajax(
 					{
@@ -1790,7 +1816,7 @@
 							$(html).parent().html('<img class="feedDislike" src="/resources/image/uploadFiles/heart.jpg" />');
 							
 							if(sock) {
-								var Msg = "feed,follower," + feedNo + ", 좋아요를 눌렀습니다."
+								var Msg = "feed," + writer + "," + feedNo + ",이 좋아요를 눌렀습니다."
 								sock.send(Msg);
 							}
 							
@@ -2365,8 +2391,16 @@
 													</div>
 
 													<div class="feedDate">
-														<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>
-														<c:if test="${empty feed.updateDate}">${feed.regDate}</c:if>
+													
+														<c:if test="${!empty feed.updateDate}">
+															<fmt:formatDate value="${feed.updateDate}" pattern="yyyy년 MM월 dd일 HH시mm분"></fmt:formatDate> (수정)
+														</c:if>
+														
+														<c:if test="${empty feed.updateDate}">
+															<fmt:formatDate value="${feed.regDate}" pattern="yyyy년 MM월 dd일 HH시mm분"></fmt:formatDate>
+															
+														</c:if>
+
 													</div>
 												</div>
 

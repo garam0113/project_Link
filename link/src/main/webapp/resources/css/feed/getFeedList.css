@@ -427,7 +427,8 @@
 		margin-bottom: 25px;
 		margin-left: 70px;
 		border: 1px #bd76ff solid;
-	    border-radius: inherit;
+		border-radius: inherit;
+		font-size: 1rem;
 	}
 	
 	/* FEED HASHTAG */

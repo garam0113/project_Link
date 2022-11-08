@@ -1,4 +1,15 @@
 	
+	/* 댓글 누르기 */
+
+	a.btn_createRecomment {
+		color:red !important;
+	}
+
+	/* 댓글 누르기 */
+
+
+
+
 	/* 상위 PREV 바 수정 */
 
 	.single #post-nav ul {
@@ -528,7 +539,7 @@
 
 	div.feedContent {
 		margin-top: 10px;
-		margin-left: 60px;
+		margin-left: 70px;
 		margin-right: 25px;
 		color: black !important;
 		font-size: 1rem;
@@ -615,7 +626,8 @@
 		margin-bottom: 25px;
 		margin-left: 70px;
 		border: 1px #bd76ff solid;
-	    border-radius: inherit;
+		border-radius: inherit;
+		font-size: 1rem;
 	}
 
 	/* 해시 태그 */
