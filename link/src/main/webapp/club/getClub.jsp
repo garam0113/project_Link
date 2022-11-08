@@ -28,7 +28,15 @@
 <script src="/resources/javascript/beetle.js"></script>
 <script type="text/javascript">
 	
-	
+	/* 새로고침하면 모임 또 생성된다 막자 */
+	function NotReload() { 
+	    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) { 
+	        event.keyCode = 0; 
+	        event.cancelBubble = true; 
+	        event.returnValue = false; 
+	    } 
+	} 
+	document.onkeydown = NotReload;
 	
 	$(function () {
 		
@@ -46,7 +54,7 @@
 				}).then((result) => {
 				  if (result.value) {
 				    
-				    $("form").attr("method", "POST").attr("action", "/club/deleteClub").submit();	    
+				    $("form").attr("method", "POST").attr("action", "/club/deleteClub").submit();
 				  }
 				})
 		})
