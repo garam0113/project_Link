@@ -250,10 +250,11 @@ public class ClubController {
 		
 		clubNo = (String) session.getAttribute("clubNo");
 		
-		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));		
+		System.out.println("세션에 뭐 있지 : "+session.getAttribute("clubNo"));
 		
 //		club.setClubNo(Integer.parseInt(clubNo));
 		
+		// 해당 모임의 모임원 모두 삭제한 뒤 모임 flag처리한다
 		clubService.deleteClub(Integer.parseInt(clubNo));
 		
 		return "forward:/club/getClubList";

@@ -162,11 +162,11 @@ button {
 			
 				<div style="margin-left: 10px;">
 					<input type="text" class="form-control" id="phone2" name="phone2" style="margin-left: 0px; width: 110px; height: 41px;"
-						placeholder="번호">
+						autocomplete="off" placeholder="번호">
 				</div>
 				<div style="margin-left: 10px;">
 					<input type="text" class="form-control" id="phone3" name="phone3" style="margin-left: 0px; width: 110px; height: 41px;"
-						placeholder="번호">
+						autocomplete="off" placeholder="번호">
 				</div>
 				<input type="hidden" id="phoneNo" name="phoneNo" />
 				<div style="margin-left: 10px;">
@@ -175,8 +175,8 @@ button {
 			</div>
 
 			<div class="form-group" style="display: flex; margin-left: 60px; margin-top: 20px;">
-					<input type="text" class="form-control" id="inputCertifiedNumber" style=" width: 127px;"
-						name="inputCertifiedNumber" placeholder="인증번호">
+					<input type="text" class="form-control" id="inputCertifiedNumber" style=" width: 127px;" autocomplete="off"
+						name="inputCertifiedNumber" placeholder="인증번호"> 
 					<input type="hidden" id="checkNo">
 				<div>
 					<button type="button" id="checkBtn" style="margin-left: 10px; border-radius: 12px; font-weight: bold; height: 38px;">인증번호확인</button>

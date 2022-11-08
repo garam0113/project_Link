@@ -21,6 +21,8 @@
 <link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/summernote/summernote-lite.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <link href="/resources/css/feed/getFeedList.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -52,6 +54,24 @@
 	}
 	
 	function uploadSummernoteImageFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		
+		console.log(data.file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/feedRest/json/uploadImage",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
+	
+	function updateUploadSummernoteImageFile(file, el) {
 		data = new FormData();
 		data.append("file", file);
 		
@@ -112,7 +132,9 @@
 	          cancelButtonText: '취소'
 	      }).then((result) => {
 	          if (result.isConfirmed) {
+	        	  
 	             AddReport()
+	        	 $('#reportModal').modal('hide');
 	          }
 	      })
 	 }
@@ -132,22 +154,22 @@
 		var clubPostNo = 0;
 		
 	 	$.ajax({
-		url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
- 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
-		contentType: 'application/json',
-		method : "POST",
-		dataType: "json",
-		data : JSON.stringify ({
-			"title":$("#title").val(),
-			"content":$("#content").val(),
-		<%--	"file": image, --%>
-			"user1":$("#user1").val(),
-			"user2":$("#user2").val(),
-			"reportSource":$("#reportSource").val(),
-			"reportReason": sum,
-			"type": $("#type").val(),
-			"no" :no,
-				
+			url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo+"&clubPostNo="+clubPostNo,
+	 		//url  : "/serviceCenterRest/json/addReport?clubNo="+clubNo,
+			contentType: 'application/json',
+			method : "POST",
+			dataType: "json",
+			data : JSON.stringify ({
+				"title":$("#title").val(),
+				"content":$("#content").val(),
+			<%--	"file": image, --%>
+				"user1":$("#user1").val(),
+				"user2":$("#user2").val(),
+				"reportSource":$("#reportSource").val(),
+				"reportReason": sum,
+				"type": $("#type").val(),
+				"no" :no,
+			}),
 			success: function(){
 				Swal.fire({
 						
@@ -157,11 +179,8 @@
 					timer: 1500
 					  
 				}) // swal close
-				
-				$("#reportModal").modal('hide');
 			}
-		
-		}),
+			
 			
 		})<!-- ajax ( ReportAdd) 끝 --> 
 		
@@ -489,7 +508,7 @@
 			})
 			
 			 $(".row").on("click", function(e){
-				   $("#"+nickName+"").dialog('close');
+				   $("#"+nickName+"1").dialog('close');
 				});
 		
 		});//end of class="dll" 클릭시
@@ -1543,7 +1562,7 @@
             	onImageUpload : function(files, editor, welEditable) {
            			// 파일 업로드(다중업로드를 위해 반복문 사용)
 					for (var i = files.length - 1; i >= 0; i--) {
-			            uploadSummernoteImageFile(files[i],
+						updateUploadSummernoteImageFile(files[i],
 			            this);
 		            		
 					}
@@ -1573,14 +1592,28 @@
 		$(document).on("click", ".addFeed", function(event){
 			event.stopPropagation();
 			
-			console.log($(".note-editable").html());
+			console.log($(".addBody .note-editable").html());
+			console.log($(".addBody .note-editable").html().split("<img").length-1);
+			console.log($(".addBody .note-editable").html().split("<iframe").length-1);
 			
-			if($(".note-editable").html() == "<p><br></p>") {
+			var imgCount = $(".addBody .note-editable").html().split("<img").length-1;
+			var videoCount = $(".addBody .note-editable").html().split("<iframe").length-1;
+			
+			
+			if($(".addBody .note-editable").html() == "<p><br></p>") {
 				Swal.fire({
 					  title: '내용을 입력하세요',
 					  width: 400,
 					  icon: 'warning',
-					  timer : 500,
+					  timer : 1000,
+					  showConfirmButton : false,
+				})
+			} else if(imgCount > 4 || videoCount > 1) {
+				Swal.fire({
+					  title: '이미지는 4개, 동영상은 1개 까지 가능합니다.',
+					  width: 400,
+					  icon: 'warning',
+					  timer : 1000,
 					  showConfirmButton : false,
 				})
 			} else {
@@ -1629,7 +1662,34 @@
 		
 		$(document).on("click", ".btn_updateFeed", function(event) {
 			console.log("수정하기");
-			$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+			
+			console.log($(".updateModalHeader").parent().find(".note-editable").html());
+			console.log($(".updateModalHeader").parent().find(".note-editable").html().split("<img").length-1);
+			console.log($(".updateModalHeader").parent().find(".note-editable").html().split("<iframe").length-1);
+			
+			var imgCount = $(".updateModalHeader").parent().find(".note-editable").html().split("<img").length-1;
+			var videoCount = $(".updateModalHeader").parent().find(".note-editable").html().split("<iframe").length-1;
+			
+			if($(".updateModalHeader").parent().find(".note-editable").html() == "<p><br></p>") {
+				Swal.fire({
+					  title: '내용을 입력하세요',
+					  width: 400,
+					  icon: 'warning',
+					  timer : 1000,
+					  showConfirmButton : false,
+				})
+			} else if(imgCount > 4 || videoCount > 1) {
+				Swal.fire({
+					  title: '이미지는 4개, 동영상은 1개 까지 가능합니다.',
+					  width: 400,
+					  icon: 'warning',
+					  timer : 1000,
+					  showConfirmButton : false,
+				})
+			} else {
+				$("#updateFeedForm").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
+			}
+			
 		})
 		<%-- UPDATE_FEED --%>
 		
@@ -2219,12 +2279,12 @@
 													LINK<br/>
 							</div>
 							</h3>
-							
-							
-							
+					
+							<%-- 
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
-							
-							
+							 --%>
+
+
 							
 						</div>
 
