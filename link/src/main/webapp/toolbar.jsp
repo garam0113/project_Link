@@ -448,6 +448,11 @@ html {
 											member : data.member
 										});
 										self.location = "https://192.168.0.183:4040";
+									},
+									error : function () {
+										console.log("error");
+											swal.fire('인원초과입니다.');
+											return;
 									}
 								})
 							})
