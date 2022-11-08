@@ -29,14 +29,14 @@
 <script type="text/javascript">
 	
 	/* 새로고침하면 모임 또 생성된다 막자 */
-	function NotReload() { 
+	/* function NotReload() { 
 	    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) { 
 	        event.keyCode = 0; 
 	        event.cancelBubble = true; 
 	        event.returnValue = false; 
 	    } 
 	} 
-	document.onkeydown = NotReload;
+	document.onkeydown = NotReload; */
 	
 	$(function () {
 		
@@ -460,10 +460,72 @@
 		
 	</style>
 
+<!-- 상단 툴바 -->
+<style type="text/css">
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	width: 954px;
+	margin-left: 498px;
+}
+.col-sm-offset-4.col-sm-4.text-center{
+	margin-top: -60px !important;
+	margin-left: 510px !important;
+	width: 667px !important;
+}
+.form-horizontal{
+	width: 377px;
+	height: 678px;
+	margin-right: 59px;
+	margin-left: 0px;
+	margin-top: 70px;
+	border-radius: 20px;
+	background-color: white;
+	padding-top: 13px;
+	padding-left: 5px;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+	
+}
+#calendar{
+	width: 704px;
+}
+.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr{
+	width: 730px;
+	margin-left: -23px;
+}
+.fc-scroller{
+	margin-top: -12px;
+	margin-bottom: -24px;
+}
 
-
+.fc-daygrid.fc-dayGridMonth-view.fc-view{
+	margin-left: -25px;
+	width: 729px;
+	border-radius: 0px;
+}
+.row-content.buffer-left.buffer-right.buffer-bottom{
+	width: 1140px;
+	margin-left: 405px;
+}
+.mainForm{
+	display: inline-flex;
+}
+#addMeeting{
+	margin-top: 21px !important;
+	margin-left: 733px !important;
+}
+.fc-scrollgrid.fc-scrollgrid-liquid{
+	background-color: white !important;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+}
+/* .fc.fc-view-harness-active > .fc-view {
+	top: -63px !important;
+	height: 679px !important;
+	position: absolute !important;
+	right: -20px !important;
+	bottom: -120px !important;
+	left: 0 !important;
+} */
+</style>
 </head>
-
 
 <body class="blog masonry-style">
 
@@ -486,27 +548,27 @@
 
 	<!-- <main role="main"> -->
 
-		<%-- <div id="intro-wrap" data-height="17.35">
-			<!-- 상단 검은색 공통 영역 -->
-			<div id="intro" class="preload darken">
-				<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
-				<div class="intro-item">
-
-					<div class="club-wrap">
-
-						<div class="club-image">
-							<a href="/club/getClub?clubNo=${clubNo}"><img
-								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="800" height="300" name="file" id="clubImage"></a>
-						</div>
+			<%-- <div id="intro-wrap" data-height="17.35">
+				<!-- 상단 검은색 공통 영역 -->
+				<div id="intro" class="preload darken">
+					<!-- <div class="intro-item" style="background-image: url(http://placehold.it/1800x600/ddd/fff&text=Beetle%20image);"> -->
+					<div class="intro-item">
+	
+						<div class="club-wrap">
+	
+							<div class="club-image">
+								<a href="/club/getClub?clubNo=${clubNo}"><img
+									src="/resources/image/uploadFiles/${club.clubImage}"
+									width="800" height="300" name="file" id="clubImage"></a>
+							</div>
+							</div>
 						</div>
 					</div>
+					<!-- intro -->
 				</div>
-				<!-- intro -->
-			</div>
-		<!-- intro-wrap --> --%>
+			<!-- intro-wrap --> --%>
 		
-			<div id="main" class="row" style="background-color: yellow !important;"><!-- 중간 개별영역 -->
+			<div id="main" class="row"><!-- 중간 개별영역 -->
 			
 			
 			
@@ -521,7 +583,7 @@
 				
 				
 				
-				<div class="row-content buffer-left buffer-right buffer-bottom" style="background-color: red; width: 1140px; margin-left: 405px;">
+				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 				
 					<!-- 모임 대표이미지 -->				
@@ -532,7 +594,7 @@
 					</div>
 				
 					 <!-- 모임버튼 영역 -->			
-					<div class="homeBtn_group" style="background-color: yellow;">
+					<div class="homeBtn_group">
 						<button type="button" class="homeBtn" style="margin-top: 55px;">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</button>
@@ -551,9 +613,9 @@
 					</div>
 					
 					
-					<div class="form-group" id="btn_group" style="background-color: green;">
+					<div class="form-group" id="btn_group">
 						<!-- <button type="button" class="joinLi"></button> -->
-						<div class="col-sm-offset-4  col-sm-4 text-center" style="margin-top: -145px; margin-left: 900px; display: flex;">
+						<div class="col-sm-offset-4  col-sm-4 text-center">
 				      		
 				      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
 							<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
@@ -577,10 +639,10 @@
 				    </div>
 							
 	
-					<div class="mainForm" style="display: inline-flex; background-color: olive;">
+					<div class="mainForm">
 						<!-- 클럽상세 -->
 						<div>
-							<form class="form-horizontal" enctype="multipart/form-data" style="width: 470px; background-color: #ffffff; margin-right: 100px; margin-top: 74px; border-radius: 10px; heigth: 90%;">
+							<form class="form-horizontal" enctype="multipart/form-data">
 	
 								<div class="col-xs 6 col-md-6" style="display: contents;">
 									<div class="row">
