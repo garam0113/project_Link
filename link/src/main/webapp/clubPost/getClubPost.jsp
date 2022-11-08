@@ -1214,6 +1214,40 @@
 
 		</script>
 		
+		<style type="text/css">
+		.single.single-post {
+			padding-top: 0px !important;
+		}
+		.row-content.buffer, .row-content.buffer-left{
+			padding-left: 0px !important;
+		}
+		#club_post_main_img{
+			margin-left: 82px !important;
+		}
+		#club_post_main_img{
+			width: 1140px !important;
+			height: 550px !important;
+			/* background-color: blue; */
+		}
+		.homeBtn_group{
+			margin-left: 26px;
+			margin-top: 36px;
+		}
+		.post-area.clear-after{
+			margin-left: 18px !important;
+   		 	width: 1132px !important;
+		}
+		.glyphicon{
+			color: #5F0080 !important;
+		}
+		.row-content.buffer-left.buffer-right.buffer-bottom.clear-after{
+			/* margin-left: 40px; */
+		}
+		.row-content.buffer-left.buffer-right.buffer-bottom.clear-after{
+			margin-left: 381px;
+		}
+		</style>
+		
 	</head>
 
 	<body class="single single-post">
@@ -1269,7 +1303,7 @@
 					<jsp:include page="/chat/chat.jsp" />
 					<%-- 채팅 --%>
 					<div id="club_post_main_img">
-						<img src="/resources/image/uploadFiles/clubMainImage5.jpg">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 550px; width: 1140px; margin-left: -60px;">
 					</div>
 					
 				

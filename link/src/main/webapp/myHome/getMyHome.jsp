@@ -208,8 +208,8 @@ $(function() {
 	       console.log(data.blockList);
 	          var value="";
 	       $.each(data.blockList, function(index, item) { 
-	    	      value += 	"<div class='cc' id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' style='border-radius: 50px; width: 70px; height: 70px;'' /><h3 class='yourHome3' style='margin-left: 20px; width: 165px; text-align: left;'>"+item.receiveId.nickName+"</h3>"+
-					        "<button type='button' style='margin-left: 20px;' class='"+item.receiveId.userId+"  btn-sm' id='stopBlock2'>차단해제</button></div>"
+	    	      value += 	"<div class='cc' id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<h3 class='yourHome3' style='margin:0;'>"+item.receiveId.nickName+"</h3>"+
+					        "&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<button type='button' class='"+item.receiveId.userId+"  btn-sm' id='stopBlock2'>차단해제</button></div>"
 						                                                       
 
 	    	   
