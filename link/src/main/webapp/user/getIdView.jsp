@@ -145,7 +145,7 @@ color: #white;
 			<div class="form-group" style="display: flex; margin-top: 30px; margin-left: 20px; height: 30px;"> 
 				<label for="name" 
 					style="text-align-last: start;">이 름</label>
-					<input type="text" class="form-control" id="name" name="name"
+					<input type="text" class="form-control" id="name" name="name" autocomplete="off"
 						value="" placeholder="이름" style="margin-left: 50px;">
 			</div>
 
@@ -153,11 +153,11 @@ color: #white;
 				<label for="rrn"
 					style="text-align-last: start;">주민번호</label>
 				<div >
-					<input type="text" class="form-control" id="rrn1" name="rrn1"
+					<input type="text" class="form-control" id="rrn1" name="rrn1" autocomplete="off"
 						value=""  style=" margin-left: 20px; width: 100px">
 				</div>
 				<div >
-					<input type="password" class="form-control" id="rrn2" name="rrn2"
+					<input type="password" class="form-control" id="rrn2" name="rrn2" autocomplete="off"
 						value=""  style=" margin-left: 10px; width: 100px">
 				</div>
 					<input type="hidden" id="rrn" name="rrn">
@@ -184,12 +184,12 @@ color: #white;
 					</div>
 
 					<div style="margin: 10px">
-						<input type="text" class="form-control" id="phone2" name="phone2"
+						<input type="text" class="form-control" id="phone2" name="phone2" autocomplete="off"
 							style="width: 75px;">
 					</div>
 
 					<div style="margin: 10px">
-						<input type="text" class="form-control" id="phone3" name="phone3"
+						<input type="text" class="form-control" id="phone3" name="phone3" autocomplete="off"
 							style="margin-left: -10px; width: 75px;">
 					</div>
 					<input type="hidden" name="phoneNo" />
@@ -202,7 +202,7 @@ color: #white;
 
 				<div role="tabpanel" class="tab-pane" id="profile" style="display: none; margin-left: 30px">
 					<div>
-						<input type="text" class="form-control" id="email" name="email" style=" margin-top: 20px; margin-left: 0px; width: 300px;"
+						<input type="text" class="form-control" id="email" name="email" autocomplete="off" style=" margin-top: 20px; margin-left: 0px; width: 300px;"
 							placeholder="변경이메일"  >
 					</div>
 					<div>
@@ -212,11 +212,11 @@ color: #white;
 			</div>
  
 			<div class="form-group" style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
-					<input type="text" class="form-control" id="inputCertifiedNumber"
+					<input type="text" class="form-control" id="inputCertifiedNumber" autocomplete="off"
 						style="width: 100px; height: 40px;" name="inputCertifiedNumber"
 						placeholder="인증번호">
 				<div >
-					<button type="button" id="checkBtn" class="btn "
+					<button type="button" id="checkBtn" class="btn " 
 						style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호확인</button>
 					<input type="hidden" id=checkNo>
 				</div>

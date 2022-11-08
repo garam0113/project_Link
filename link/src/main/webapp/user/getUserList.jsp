@@ -168,7 +168,7 @@ button {
 						</div>
  
 						<div class="form-group" style="margin-left: 10px;"> 
-							<label class="sr-only" for="searchKeyword">검색어</label> <input
+							<label class="sr-only" for="searchKeyword">검색어</label> <input autocomplete="off"
 								type="text" class="form-control" id="searchKeyword"
 								name="searchKeyword" placeholder="검색어" onkeyup="enterkey()"
 								value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
