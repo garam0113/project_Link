@@ -9,7 +9,6 @@
 <body>
 <!-- footer start -->
 <div id="club_post_footer">
-	<br><br>
 	
 	<!-- footer content start -->
 	<div id="club_post_footer_content">

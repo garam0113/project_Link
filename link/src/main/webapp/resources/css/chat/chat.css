@@ -5,12 +5,12 @@
 /* 채팅 아이콘 css*/
 #chat-icon{
 	position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px;
-	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px; z-index: 20;
+	box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px; z-index: 100;
 }
 /* 채팅 아이콘에 마우스 올렸을 때 */
 #chat-icon:hover{
 	position: fixed; bottom: 0; right: 0; margin-right: 50px; margin-bottom: 50px; padding: 0px; width: 100px; height: 100px; border-radius: 50px;
-	box-shadow: rgba(102, 051, 102, 0.7) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px; z-index: 20;
+	box-shadow: rgba(102, 051, 102, 0.7) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px; z-index: 100;
 }
 
 
@@ -19,7 +19,7 @@
 /* 채팅 div css */
 #allChat{
 	background-color: white;
-	z-index: 10;
+	z-index: 100;
 }
 
 /* 채팅 툴바 css */

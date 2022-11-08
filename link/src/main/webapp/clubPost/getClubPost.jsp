@@ -348,7 +348,7 @@
 			      		Swal.fire({
       						
 	      					icon: 'success',
-	      					title: '게시물 신고 되었습니다',
+	      					title: '신고 되었습니다',
 	      					showConfirmButton: false,
 	      					timer: 1500
 	      					  
