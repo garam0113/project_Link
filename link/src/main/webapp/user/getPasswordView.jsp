@@ -173,7 +173,7 @@ body {
 							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
 
 								<label for="userId" style="margin-left: 0px;">아이디</label>
-									<input type="text" class="form-control" id="userId"
+									<input type="text" class="form-control" id="userId" autocomplete="off"
 										name="uesrID" style="margin-left: 35px;" value=""
 										placeholder="아이디">
 
@@ -181,7 +181,7 @@ body {
 							<div class="form-group"
 								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
 
-								<label for="name" style="text-align-last: start;">이 름</label> <input
+								<label for="name" style="text-align-last: start;">이 름</label> <input autocomplete="off"
 									type="text" class="form-control" id="name" name="name" value=""
 									placeholder="이름" style="margin-left: 50px;">
 
@@ -191,11 +191,11 @@ body {
 								style="display: flex; margin-left: 20px; height: 30px; margin-top: 20px;">
 								<label for="rrn" style="text-align-last: start;">주민번호</label>
 								<div>
-									<input type="text" class="form-control" id="rrn11" name="rrn1"
+									<input type="text" class="form-control" id="rrn11" name="rrn1" autocomplete="off"
 										value="" style="margin-left: 20px; width: 100px">
 								</div>
 								<div>
-									<input type="password" class="form-control" id="rrn21"
+									<input type="password" class="form-control" id="rrn21" autocomplete="off"
 										name="rrn2" value="" style="margin-left: 10px; width: 100px">
 								</div>
 								<input type="hidden" id="rrn1" name="rrn">
@@ -224,12 +224,12 @@ body {
 									</div>
 
 									<div style="margin: 10px">
-										<input type="text" class="form-control" id="phone21"
+										<input type="text" class="form-control" id="phone21" autocomplete="off"
 											name="phone2" style="width: 75px;">
 									</div>
 
 									<div style="margin: 10px"> 
-										<input type="text" class="form-control" id="phone31"
+										<input type="text" class="form-control" id="phone31" autocomplete="off"
 											name="phone3" style="margin-left: -10px; width: 75px;">
 									</div>
 									<input type="hidden" name="phoneNo" />
@@ -243,7 +243,7 @@ body {
 								<div role="tabpanel" class="tab-pane" id="profile1"
 									style="display: none; margin-left: 30px; margin-top: 20px;">
 									<div>
-										<input type="text" class="form-control" id="email1"
+										<input type="text" class="form-control" id="email1" autocomplete="off"
 											name="email"
 											style="margin-top: 0px; margin-left: 0px; width: 220px;"
 											placeholder="변경이메일">
@@ -258,7 +258,7 @@ body {
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
 								<input type="text" class="form-control"
-									id="inputCertifiedNumber" style="width: 100px; height: 40px;"
+									id="inputCertifiedNumber" style="width: 100px; height: 40px;" autocomplete="off"
 									name="inputCertifiedNumber" placeholder="인증번호">
 								<div>
 									<button type="button" id="checkBtn" class="btn "

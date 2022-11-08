@@ -123,7 +123,7 @@ body>div.container {
 									</tr>
 									<tr>
 										<th><span>닉네임</span></th>
-										<td><input type="text" class="form-control" id="nickName"
+										<td><input type="text" class="form-control" id="nickName" autocomplete="off"
 											name="nickName" placeholder="중복확인하세요"
 											value="${getUser.nickName }"><span id="helpBlock"
 											class="help-block"> <strong class="text-danger"
@@ -219,7 +219,7 @@ body>div.container {
 
 									<tr>
 										<th><span>프로필글</span></th>
-										<td><input type="text" class="form-control"
+										<td><input type="text" class="form-control" autocomplete="off"
 											id="profileWriting" name="profileWriting" placeholder="프로필글"
 											value="${getUser.profileWriting}"></td>
 									</tr>

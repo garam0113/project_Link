@@ -287,7 +287,7 @@ button {
 									<div class="group">
 										<strong class="title">비밀번호</strong>
 										<div class="value">
-											<input type="password" class="form-control" id="password" style="font-weight: bold; "
+											<input type="password" class="form-control" id="password" style="font-weight: bold; " autocomplete="off"
 												name="password" placeholder="변경비밀번호"> <strong
 												id="helpBlock" class="help-block" style="color: red;">
 												영어, 숫자 조합 6~12자 </strong>
@@ -299,7 +299,7 @@ button {
 									<div class="group">
 										<strong class="title">비밀번호확인</strong>
 										<div class="value">
-											<input type="password" class="form-control" id="password2" style="font-weight: bold; "
+											<input type="password" class="form-control" id="password2" style="font-weight: bold; " autocomplete="off"
 												name="password2" placeholder="변경비밀번호 확인"> <strong
 												id="helpBlock" class="help-block" style="color: red;">
 												영어, 숫자 조합 6~12자 </strong>
@@ -311,7 +311,7 @@ button {
 									<strong class="title">이메일</strong>
 									<div class="value">
 										<c:if test="${fn:trim(user.role) == '0'}">
-											<input type="text" class="form-control" id="email" style="font-weight: bold; "
+											<input type="text" class="form-control" id="email" style="font-weight: bold; " autocomplete="off"
 												name="email" value="${requestScope.getUser.email}" placeholder="변경이메일">
 										</c:if>
 										<c:if test="${fn:trim(user.role) == '1'}">

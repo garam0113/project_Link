@@ -171,7 +171,7 @@ body {
 
 <jsp:include page="/toolbar.jsp" />
 
-<div class="page-header" align="center" style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="margin-left:0 auto;">
   <h2>
 	<c:if test ="${user.role == '1'}"> 
   Q&A 답변하기
@@ -282,12 +282,12 @@ body {
 									<div> 
 
 									<c:if test ="${user.role == '0'}"> <%--회원--%>
-			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
+			 						 <button class="custom-btn btn-13" type="submit" style= "transform: translate(500px,0px); ">
 									   수정</button></c:if>
 									  <c:if test ="${user.role == '1'}"> <%--관리자--%> 
-										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(400px,0px); ">
+										 <button class="custom-btn btn-13" type="submit" style= "transform: translate(500px,0px); ">
 									   답변</button></c:if>
-									<button class="custom-btn btn-13" id="back" style= "transform: translate(400px, 0px); ">
+									<button class="custom-btn btn-13" id="back" style= "transform: translate(500px, 0px); ">
 									이전</button>
 
 									
