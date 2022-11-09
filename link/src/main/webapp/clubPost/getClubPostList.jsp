@@ -379,6 +379,19 @@
 .club-post-list-order{
 	color: black;
 }
+#brand{
+	margin-left: 27px;
+}
+.menu-item{
+	text-transform: uppercase !important;
+	font-weight: 700 !important;
+    font-size: 0.878em !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	padding-right: 37px;
+	width: 1166ox;
+}
 </style>
 		
 </head>
@@ -502,7 +515,7 @@
 												</div>
 												<div>
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
-														<p align="center" style="font-size: 30px; color: red;">${ clubPostList[i].user.nickName }</p>
+														<p align="center" style="font-size: 25px; color: #5F0080;">${ clubPostList[i].user.nickName }</p>
 													</a>
 												</div>
 												<div></div>
