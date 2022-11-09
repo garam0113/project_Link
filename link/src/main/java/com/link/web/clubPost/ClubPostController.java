@@ -1,5 +1,6 @@
 package com.link.web.clubPost;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -73,7 +74,7 @@ public class ClubPostController {
 	
 	
 	@RequestMapping(value = "getClubPostList")
-	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session, Chat chat) throws Exception {
+	public String getClubPostList(Search search, ClubPost clubPost, Model model, HttpSession session, Chat chat, Map<String, Object> map) throws Exception {
 		System.out.println("/getClubPostList : GET,POST : 모임 상세보기에서 모임게시물 탭 클릭시 session에 있는 모임번호로 해당 모임의 모임게시물리스트, 모임게시물 리스트 개수 가져온 후 모임게시물 리스트 화면으로 이동");
 
 		
@@ -101,14 +102,16 @@ public class ClubPostController {
 		
 		
 		
-		Map<String, Object> map = clubPostServiceImpl.getClubPostList(search, clubPost);
+		map = clubPostServiceImpl.getClubPostList(search, clubPost);
 		//model.addAttribute("clubNo", Integer.parseInt((String)session.getAttribute("clubNo")));
 		model.addAttribute("search", search);
 		model.addAttribute("clubPostList", map.get("clubPostList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
 		
-		
+		// 모임대표이미지 가져온다
+		Map<String, Object> clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
 		
 		// 알림
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
@@ -261,6 +264,10 @@ public class ClubPostController {
 		
 		
 		
+		// 모임 대표이미지 가져간다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
 		// 게시물 상세보기 + 댓글리스트
 		model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
 		// 모임게시물 상세보기 : getClubPost, 모임게시물 댓글 리스트 : getClubPostCommentList, 좋아요 여부 : getClubPost.heartCondition, 모임 직책 : getClubPost.clubRole

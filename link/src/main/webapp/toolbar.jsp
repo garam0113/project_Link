@@ -202,7 +202,7 @@ html {
             <div id="brand">
                <h1 class="reset">
                   <!--<img src="img/logo.png" alt="logo">-->
-                  <a href="/">LINK</a>
+                  <a href="/"><img src="/resources/image/uploadFiles/link_logo3.png" width=120px; height=48px; alt="logo"></a>
                </h1>
             </div>
             <!-- brand -->
