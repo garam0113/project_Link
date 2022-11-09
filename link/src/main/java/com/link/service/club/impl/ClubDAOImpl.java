@@ -281,8 +281,9 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		// 두번 참여신청한 사람 막기
 		Meeting meeting = sqlSession.selectOne("ClubMapper.getMeetingNo", participant);
+		System.out.println("일정은? : " + meeting);
 		
-		if( meeting != null) {
+		if( meeting == null) {
 			sqlSession.insert("ClubMapper.addMeetingMember",participant);
 		}
 		
@@ -360,5 +361,12 @@ public class ClubDAOImpl implements ClubDAO {
 	public int getClubNotoMyHome(int meetingNo) throws Exception {
 		System.out.println(getClass() + ".getClubNotoMyHome(int meetingNo) 왔다");
 		return sqlSession.selectOne("ClubMapper.getClubNotoMyHome", meetingNo);
+	}
+
+	// 게시물 아이콘 클릭시 로그인한 회원이 해당 모임의 모임원인지 확인
+	@Override
+	public String getClubMemberListCheck(Club club) throws Exception {
+		System.out.println(getClass() + ".getClubMemberListCheck(String userId, int clubNo) 왔다");
+		return sqlSession.selectOne("ClubMapper.getClubMemberListCheck", club);
 	}
 }

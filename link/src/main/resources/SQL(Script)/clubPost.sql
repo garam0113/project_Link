@@ -917,10 +917,12 @@ delete from club_user where club_no = 19
 
 
 
+select * from club_user where user_id = 'ash99' and club_no = 9
 
 
-
-
+SELECT V3.* FROM ( SELECT V2.* FROM ( SELECT ROW_NUMBER() OVER( ORDER BY club_no DESC ) AS row_seq, V1.*
+FROM ( SELECT club_no , user_id , club_title , club_detail , club_reg_date, current_member, club_max_member, club_category, club_area, club_image
+FROM club WHERE delete_condition = 0 and club_category = ? ORDER BY club_no ) V1 ) V2 ) V3 WHERE row_seq BETWEEN 11 AND 20
 
 
 

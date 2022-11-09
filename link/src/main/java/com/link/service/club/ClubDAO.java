@@ -100,5 +100,8 @@ public interface ClubDAO {
 	// 마이홈피에서 접근시 session에 clubNo가 없어서 미팅번호로 모임번호 가져온다
 	public int getClubNotoMyHome(int meetingNo) throws Exception;
 	
+	// 게시물 아이콘 클릭시 로그인한 회원이 해당 모임의 모임원인지 확인
+	public String getClubMemberListCheck(Club club) throws Exception;
+	
 	
 }

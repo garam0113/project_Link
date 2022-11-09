@@ -282,7 +282,7 @@
 	</select>
 	
 	<!-- 로그인한 회원이 가장 최근 만든 미팅번호 가져온다 -->
-	<select id="getMeetingNo" parameterType="participant" resultType="int">
+	<select id="getMeetingNo" parameterType="participant" resultType="meeting">
 		SELECT *
 		FROM ( SELECT meeting_no FROM meeting WHERE add_meeting_user_ID = #{ user.userId } order by meeting_reg_date DESC )
 		WHERE ROWNUM = 1	
@@ -612,5 +612,9 @@
 		delete from club_user where club_no = #{ clubNo }
 	</delete>
 	
+	<!-- 모임 상세보기에서 게시물 클릭시 해당 모임의 모임원인지 확인하는  -->
+	<select id="getClubMemberListCheck" parameterType="club" resultType="string">
+		select user_id from club_user where user_id = #{ user.userId } and club_no = #{ clubNo }
+	</select>
 	
 </mapper>

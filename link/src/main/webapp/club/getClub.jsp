@@ -174,11 +174,32 @@
 	
 	$(function() {
 		$(".clubPostBtn").on("click", function() {
+			// 기존 모임원 데이터 가져와서 해당 모임의 모임원인지 확인 후 맞으면 게시물로 네비게이션 아니면 가입신청 하라는 메세지 출력
+			var clubNo = '${ clubNo }';
+			//alert( clubNo );
+			$.ajax( "/clubRest/json/getClubMemberListCheck",
+				{
+					method : "POST",
+					data : JSON.stringify({
+								clubNo : clubNo
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					dataType : "json",
+					success : function(JSONData){
+						console.log(JSONData.userId);
+						
+						if( '${ sessionScope.user.userId }' == JSONData.userId || '${ sessionScope.user.role }' == '1' ){
+							self.location="/clubPost/getClubPostList"
+						}else{
+							swal.fire('게시물은 모임원만 볼 수 있습니다 \n 해당 모임에 가입신청해주세요');
+						}
+						
+					}
+				});// end of ajax
 			
-			
-			
-			
-			self.location="/clubPost/getClubPostList"
 		});
 	});
 	
@@ -630,7 +651,7 @@
 						<c:set var="isItClubMember" value="false" />
 						<!-- 모임원인지 아닌지 확인 -->
 						
-							<c:if test="${ fn:length(clubMemberList) > 0 }">
+							<c:if test="${ fn:length( clubMemberList ) > 0 }">
 								<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 									<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 										<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
@@ -646,7 +667,7 @@
 				      						
 							<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
 							
-							<c:if test="${ fn:length(clubMemberList) > 0 }">
+							<c:if test="${ fn:length( clubMemberList ) > 0 }">
 							<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
 								<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 									<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
@@ -744,7 +765,7 @@
 					</div>
 					
 					<c:if test="${ fn:length( clubMemberList ) > 0}">
-					<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+					<c:forEach var="k" begin="0" end="${ fn:length( clubMemberList ) - 1}" step="1">
 						<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
 							<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
 								<button type="button" class="plain button red cancel" id="addMeeting" style="margin-top: 80px; margin-left: 860px;">일정생성</button>
@@ -814,7 +835,6 @@
 				
 	
 	
-		<br><br><br><br><br><br>
 		
 		<!-- footer start -->
 		<jsp:include page="/footer.jsp" />
