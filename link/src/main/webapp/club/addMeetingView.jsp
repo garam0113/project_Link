@@ -211,7 +211,7 @@
 	<style>
 	  body>div.container {
 			border: 3px solid #D6CDB7;
-			margin-top: 10px;
+			/* margin-top: 10px; */
 		}
 		
 		textarea {
@@ -248,15 +248,20 @@
 
 </head>
 
-<body style="background: #EBEDF0;">
+<body style="background: #EBEDF0;  position: relative; height: 1950px;">
 
 	<jsp:include page="/toolbar.jsp"/>
 
 
-	<form style="background: #EBEDF0;">
-		<div class="wrap wd668" style="background-color: #f0f2f5;">
-			<div class="container" style="background-color: white; border: outset;">
-				<div class="form_txtInput" style="margin-top: 150px;">
+	<form style="background: red; margin-left: 390px; width: 1140px;">
+		<div class="wrap wd668" style="background-color: #f0f2f5; margin-left: 0px;">
+			<div class="container" style="background-color: white; width: 1140px; padding-left: 0px; padding-right: 0px;">
+	
+				<div>
+					<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 100%; height: 700px; margin-top: 14px;">
+				</div>
+				
+				<div class="form_txtInput" style="margin-top: 150px; padding-left: 315px; margin-top: -50px;">
 					<h2 class="sub_tit_txt">모임일정등록</h2>
 					<p class="exTxt">새로운 일정을 등록해보세요...</p>
 					<div class="join_form">
@@ -324,6 +329,12 @@
 						<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 			    	</div>
 				</div>
+				
+		<br><br><br><br><br><br><br><br><br><br><br><br>
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 					
 	</body>
 </html>
