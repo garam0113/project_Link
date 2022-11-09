@@ -917,7 +917,7 @@ delete from club_user where club_no = 19
 
 
 
-
+select * from club_user where user_id = 'ash99' and club_no = 9
 
 
 

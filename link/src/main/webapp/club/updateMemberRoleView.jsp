@@ -164,7 +164,7 @@
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">모임원 아이디</label>
 				<div class="col-sm-2">
-					<input type="text" id="userId" value="" style="height:34px; width: 160%; border-color:#BD76FF; border-width: thin;">
+					<input type="text" id="userId" value="" autocomplete="off" style="height:34px; width: 160%; border-color:#BD76FF; border-width: thin;">
 				</div>
 			</div>
 			
