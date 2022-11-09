@@ -702,6 +702,12 @@ public class ClubController {
 		clubMap = clubService.getClub(returnClubNo);
 		model.addAttribute("club", clubMap.get("club"));
 		
+		// 모임에 참여하는 인원 리스트
+		Map<String, Object> meetingMember = new HashMap<String, Object>();
+		Search search2 = new Search();
+		search2.setSearchKeyword(meetingNo);
+		meetingMember = clubService.getMeetingMemberList(search2);
+		model.addAttribute("meetingMemberList", meetingMember.get("meetingMemberList"));
 		
 		return "forward:/club/getMeeting.jsp";
 	}
