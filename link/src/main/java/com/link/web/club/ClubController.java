@@ -283,12 +283,19 @@ public class ClubController {
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
 		}
+		if(search.getSearchCondition() != null) {
+			if(search.getSearchCondition().equals("0")) {
+				search.setSearchCondition(null);
+			}
+		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
 		Search search2 = new Search();
 		
 		search2.setSearchKeyword(user.getUserId());
+		
+		System.out.println("페이지 : " + search.getCurrentPage() + ", seachConditoin : " + search.getSearchCondition());
 		
 		Map<String, Object> map = clubService.getClubList(search);
 		Map<String, Object> map1 = clubService.getApprovalConditionList(search2);

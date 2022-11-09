@@ -835,7 +835,6 @@
 				
 	
 	
-		<br><br><br><br><br><br>
 		
 		<!-- footer start -->
 		<jsp:include page="/footer.jsp" />
