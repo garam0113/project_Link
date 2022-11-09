@@ -515,7 +515,7 @@
 												</div>
 												<div>
 													<a href="javascript:getMyHomeGo('${ clubPostList[i].user.userId }')">
-														<p align="center" style="font-size: 30px; color: red;">${ clubPostList[i].user.nickName }</p>
+														<p align="center" style="font-size: 25px; color: #5F0080;">${ clubPostList[i].user.nickName }</p>
 													</a>
 												</div>
 												<div></div>

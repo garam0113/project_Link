@@ -1358,7 +1358,7 @@
 								</div>
 							
 								<%-- 게시물 등록 회원 닉네임 --%>
-								<div class="clubPost-header-nickName" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
+								<div class="clubPost-header-nickName" style="font-size: 20px !important; color: #5F0080;" userId="${ clubPost.getClubPost.user.userId }">${ clubPost.getClubPost.user.nickName }</div>
 								
 								<div class="clubPost-header-space"></div>
 								
