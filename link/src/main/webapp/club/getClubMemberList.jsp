@@ -298,6 +298,7 @@
 	.homeBtn_group{
 		width: 500px;
   	  	margin-left: 138px;
+  	  	margin-top: 200px;
 	}
 	.container{
 		margin-left: 123px;
@@ -357,9 +358,9 @@
 					<div>
 					
 						<!-- 모임 대표이미지 -->				
-						<div class="club-image">
+						<div class="club-image" style="height: 700px;">
 							<a href="/club/getClub?clubNo=${clubNo}">
-								<img src="/resources/image/uploadFiles/${club.clubImage}" name="file" id="clubImage">
+								<img src="/resources/image/uploadFiles/${club.clubImage}" style="height: 700px; name="file" id="clubImage">
 							</a>
 						</div>
 					

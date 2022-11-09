@@ -354,7 +354,7 @@
 	
 <style type="text/css">
 .row-content.buffer.clear-after > div:first-child > img{
-	width: 1139px;
+	/* width: 1139px; */
     height: 536px;
     margin-top: 14px;
 }
@@ -409,8 +409,8 @@
 			
 				<div class="row-content buffer clear-after">
 					
-					<div style="height: 563px;">
-						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 100%;">
+					<div style="height: 700px;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 700px;">
 					</div>
 				
 				
@@ -428,7 +428,7 @@
 						</button>
 						
 						<button type="button" class="live">
-							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
 						</button>
 					</div>
 					
