@@ -165,11 +165,36 @@
 </head>
 
 <body>
-	
-	<div class="container" style="background-color: #f0f2f5 !important;">	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
+	
+	<div class="container" style="background-color: #f0f2f5 !important;">
 	
 		<div class="homeBtn_group" style="margin-top: 200px;">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
@@ -198,6 +223,10 @@
 				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
 			
 					<div class="row-content buffer-left buffer-right buffer-bottom" style="padding-bottom: 20%;">
+				
+					<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
+						<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
+					</div>
 	
 				  <form class="form-horizontal" style="margin-top:150px;">  
 			      <!--  table Start /////////////////////////////////////-->
