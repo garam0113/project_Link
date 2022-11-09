@@ -46,7 +46,7 @@
 		$($("#addNotice")).attr("method", "POST").attr("action", "/serviceCenter/addNotice").submit();
 	} //funtion AddNotice 끝
 	
-	//function readURL 끝 사진 미리보기  
+	  
 	$(function() {
 
 		$("button:contains('등록')").bind("click", function() {
@@ -200,7 +200,7 @@ body{
 			<label for="noticeImage"
 				class="col-sm-offset-1 col-sm-3 control-label" style="margin-left: 161px;"><strong>첨부파일</strong></label>
 			<div class="col-sm-4" style="margin-left: 161px;">
-				<input multiple="multiple" type="file" name="file" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
+				<input multiple="multiple" type="file" name="image" id="file" class="ct_input_g" style="width: 200px; height: 65px" />
 				
 
 			</div></form>

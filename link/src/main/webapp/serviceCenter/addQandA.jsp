@@ -126,11 +126,13 @@ body {
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
 	<div class="page-header" align="center"
-		style="transform: translate(-316px, 38px);">
+		style="margin-left:0 auto;">
 		<h2>Q&A 확인</h2>
 	</div>
 	<div class="container">
-	<table>
+	<table style="width:880px; transform: translate(130px, 0px);box-shadow: rgb(102 51 102 / 30%) 0px 19px 38px, rgb(95 0 128 / 22%) 0px 15px 12px;
+    border-radius: 20px;
+    background: #c9c9ff;background-color:aliceblue;">
 				<div class="row2">
 				<thead>
 				</thead>
@@ -146,7 +148,7 @@ body {
 					<th style="text-align-last: center;">제목</th>
 					<td style="display: flex; min-height : 40px; max-height: 80px; width: 700px; background-color:white; margin-bottom: 30px;
 						background: white;  border: 1px solid white;  border-radius: 15px;  box-shadow: 0 0 10px rgb(0 0 0 / 20%);">		
-						<pre>${qandA.qandATitle}</pre>
+						${qandA.qandATitle}
 							<input type="hidden" id="qandATitle" name="qandATitle" value="${qandA.qandATitle}">
 					</td>	
 					</tr>
@@ -191,9 +193,9 @@ body {
 						
 									<div> 
 								
-									 <button class="custom-btn btn-13" style= "transform: translate(680px,0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(490px,0px); ">
 									   삭제</button> 
-									 <button class="custom-btn btn-13" style= "transform: translate(680px, 0px); ">
+									 <button class="custom-btn btn-13" style= "transform: translate(490px, 0px); ">
 										확인</button>
 
 									</div>
