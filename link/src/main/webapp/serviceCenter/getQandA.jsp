@@ -241,15 +241,23 @@ body {
 						
 									<div> 
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
-									  <c:if test="${ user.role == 0 }">
-									   수정
+ 									 
+									  <c:if test="${ user.role == 0 && qandA.qandACondition!=1 }">
+									  
+										  <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
+											수정
+										  </button>
+										  
 									   </c:if>
+									   
 									   <c:if test="${ user.role == 1 }">
-									   답변
+									   
+										   <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
+										   	답변
+										   </button> 
+									   
 									   </c:if>
-									   </button> 
-
+									   
 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px); ">
 									   삭제</button> 
 									</c:if>
