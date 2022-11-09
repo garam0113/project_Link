@@ -118,7 +118,7 @@
 	
 	$(function() {
 		$("#addMeeting").on("click", function() {
-			self.location="/club/addMeetingView.jsp"
+			self.location="/club/addMeetingView?clubNo=${ clubNo }";
 		});
 	});
 	
