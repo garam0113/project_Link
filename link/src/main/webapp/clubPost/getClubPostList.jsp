@@ -354,7 +354,7 @@
 	
 <style type="text/css">
 .row-content.buffer.clear-after > div:first-child > img{
-	width: 1139px;
+	/* width: 1139px; */
     height: 536px;
     margin-top: 14px;
 }
@@ -373,10 +373,16 @@
 	width: 1143px !important;
     /* background-color: blue !important; */
 }
+.column.nine, .column.threefourths{
+	margin-left: 180px !important;
+}
+.club-post-list-order{
+	color: black;
+}
 </style>
 		
 </head>
-<body class="portfolio">
+<body class="portfolio" style="position: relative; height: 950px; padding-bottom: 350px;">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
@@ -409,8 +415,8 @@
 			
 				<div class="row-content buffer clear-after">
 					
-					<div>
-						<img src="/resources/image/uploadFiles/${ club.clubImage }">
+					<div style="height: 700px;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 700px;">
 					</div>
 				
 				
@@ -428,7 +434,7 @@
 						</button>
 						
 						<button type="button" class="live">
-							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
+							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
 						</button>
 					</div>
 					

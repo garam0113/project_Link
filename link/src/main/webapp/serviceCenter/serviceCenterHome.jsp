@@ -24,6 +24,10 @@
 
 
 <style>
+.modal {
+	margin-top: 100px !important;
+}
+
 body{
 background-color: whitesmoke !important;
 }

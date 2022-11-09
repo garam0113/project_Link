@@ -635,7 +635,7 @@
 									$("textarea[name='mainCommentContent']").val('');
 									
 									if(sock) {
-										var Msg = "feedComment," + feedWriter + "," + feedNumber + ", 가 댓글을 작성했습니다.";
+										var Msg = "feedComment," + feedWriter + "," + feedNumber + ",이 댓글을 작성했습니다.";
 
 										sock.send(Msg);
 									}

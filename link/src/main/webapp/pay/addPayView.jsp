@@ -293,7 +293,7 @@
 		
 	</head>
 
-	<body class="single single-post">
+	<body class="single single-post" style="position: relative; padding-bottom: 350px; height: 1530px;">
 	
 	<!-- 모임채팅 -->
 	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
@@ -442,6 +442,10 @@
 				</div><!-- row-content -->
 			</div><!-- row -->
 		</main><!-- main -->
+				
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 		
 		
 

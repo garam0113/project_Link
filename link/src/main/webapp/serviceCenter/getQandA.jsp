@@ -32,8 +32,8 @@
 				
 				}else if(${!empty sessionScope.user.userId}){
 					if(${ sessionScope.user.role == '1'}){ //관리자
-						//location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
-						history.go(-1);
+						location.href = "/serviceCenter/getQandAList";  //겟 ==전체보기
+						
 					}else if(${sessionScope.user.role == '0' }){ //유저
 						history.go(-1); 	//겟 ==전체보기
 					}
@@ -156,7 +156,7 @@ body {
   <h2>Q&A 상세보기</h2>
 </div>
 	
-		<div class="container" style="margin-top: 17px;">
+		<div class="container">
 			<!--  table Start /////////////////////////////////////-->
 			<table style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px; 
 			 transform: translate(130px, 0px); background-color:aliceblue;">
@@ -241,15 +241,23 @@ body {
 						
 									<div> 
 									<c:if test ="${qandA.userId.userId==user.userId || user.role ==1}">
- 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
-									  <c:if test="${ user.role == 0 }">
-									   수정
+ 									 
+									  <c:if test="${ user.role == 0 && qandA.qandACondition!=1 }">
+									  
+										  <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
+											수정
+										  </button>
+										  
 									   </c:if>
+									   
 									   <c:if test="${ user.role == 1 }">
-									   답변
+									   
+										   <button class="custom-btn btn-13" style= "transform: translate(486px,0px);margin:auto; ">
+										   	답변
+										   </button> 
+									   
 									   </c:if>
-									   </button> 
-
+									   
 									 <button class="custom-btn btn-13" style= "transform: translate(486px,0px); ">
 									   삭제</button> 
 									</c:if>

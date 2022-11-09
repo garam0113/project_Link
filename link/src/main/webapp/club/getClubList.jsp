@@ -462,7 +462,7 @@ html::-webkit-scrollbar {
 			<div class="container">
 		
 				<div style="width: 1140px; height: 550px; overflow: hidden;">
-					<img src="/resources/image/uploadFiles/clubMainImage5.jpg" width="100%">
+					<img src="/resources/image/uploadFiles/clubMainImage5.jpg" style="width: 100%; height: 550px; margin-top: 14px;">
 				</div>
 
 				<div style="margin-top: 50px; margin-bottom: 40px;">

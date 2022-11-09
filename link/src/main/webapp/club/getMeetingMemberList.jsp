@@ -164,7 +164,7 @@
 	
 </head>
 
-<body style="background: #EBEDF0;">
+<body>
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">	
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -182,10 +182,6 @@
 						
 						<button type="button" class="clubMemberBtn">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</button>
-						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 						</button>
 						
 						<button type="button" class="live">
@@ -250,6 +246,11 @@
  	</div>
 	<!-- </div> -->
 	<!-- </main> -->
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
+		
 </body>
 
 </html>
