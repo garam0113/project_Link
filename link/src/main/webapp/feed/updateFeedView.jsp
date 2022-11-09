@@ -83,7 +83,7 @@
 		
 		
 		$(".btn_update").bind("click", function() {
-			alert("수정하기");
+			console.log("수정하기");
 			$("form").attr("method", "POST").attr("action", "/feed/updateFeed").submit();
 		})
 	
@@ -204,7 +204,7 @@
 								<img src="/resources/image/uploadFiles/${feed.user.profileImage}" style="vertical-align: sub; display: inline-block; width:50px; height:50px;" />
 								<h4>${feed.user.nickName}</h4>
 	
-								<button class="btn btn-primary btn_update" type="button">SUBMIT</button>
+								<button class="btn btn-primary btn_update" type="button">수정</button>
 								
 								<h5 class="meta-post">
 									<c:if test="${!empty feed.updateDate}">${feed.updateDate}</c:if>

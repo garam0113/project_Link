@@ -29,14 +29,14 @@
 <script type="text/javascript">
 	
 	/* 새로고침하면 모임 또 생성된다 막자 */
-	/* function NotReload() { 
+	function NotReload() { 
 	    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) { 
 	        event.keyCode = 0; 
-	        event.cancelBubble = true; 
+	        event.cancelBubble = true;
 	        event.returnValue = false; 
 	    } 
 	} 
-	document.onkeydown = NotReload; */
+	document.onkeydown = NotReload;
 	
 	$(function () {
 		
@@ -501,9 +501,11 @@
 	width: 729px;
 	border-radius: 0px;
 }
+
 .row-content.buffer-left.buffer-right.buffer-bottom{
 	width: 1140px;
 	margin-left: 405px;
+	margin-top: 13px;
 }
 .mainForm{
 	display: inline-flex;
@@ -524,6 +526,11 @@
 	bottom: -120px !important;
 	left: 0 !important;
 } */
+#clubImage{
+    margin-top: 0px;
+    width: 1140px !important;
+    height: 550px;
+}
 </style>
 </head>
 
@@ -587,7 +594,7 @@
 				
 				
 					<!-- 모임 대표이미지 -->				
-					<div class="club-image" style="background-color: blue; width: 1140px; height: 550px; overflow: hidden;">
+					<div class="club-image" style="width: 1140px; height: 550px; overflow: hidden;">
 						<a href="/club/getClub?clubNo=${clubNo}">
 							<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 1140px;" name="file" id="clubImage">
 						</a>
