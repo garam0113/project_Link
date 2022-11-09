@@ -229,7 +229,7 @@
 		$(".live").on("click", function() {
 			var clubNo = $("#no").val();
 			var clubTitle = $("#clubTitle").val();
-			var profile = $("#profile").val();
+			var profile = $("#session_profileImage").val();
 			var nickName = $("#nickName").val();
 			var num;
 			console.log("profile : "+profile);
