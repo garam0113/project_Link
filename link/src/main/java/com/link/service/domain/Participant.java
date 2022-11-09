@@ -8,51 +8,49 @@ public class Participant {
 	private User user;
 	private Meeting meeting;
 	
-	
 	public Participant() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
+	public Participant(int participantNo, int meetingNo, User user, Meeting meeting) {
+		super();
+		this.participantNo = participantNo;
+		this.meetingNo = meetingNo;
+		this.user = user;
+		this.meeting = meeting;
+	}
 
 	public int getParticipantNo() {
 		return participantNo;
 	}
 
-
-	public Meeting getMeeting() {
-		return meeting;
-	}
-
-
-	public void setMeeting(Meeting meeting) {
-		this.meeting = meeting;
-	}
-
-
 	public void setParticipantNo(int participantNo) {
 		this.participantNo = participantNo;
 	}
-
 
 	public int getMeetingNo() {
 		return meetingNo;
 	}
 
-
 	public void setMeetingNo(int meetingNo) {
 		this.meetingNo = meetingNo;
 	}
-
 
 	public User getUser() {
 		return user;
 	}
 
-
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	public Meeting getMeeting() {
+		return meeting;
+	}
+
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
+	}
 
 	@Override
 	public String toString() {
@@ -68,10 +66,5 @@ public class Participant {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 	
-	
-	
-
 }

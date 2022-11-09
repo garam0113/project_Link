@@ -279,13 +279,14 @@ public class ClubDAOImpl implements ClubDAO {
 		System.out.println("회원 정보 아이디 : " + participant.getUser().getUserId());
 		System.out.println("미팅번호 : " + participant.getMeetingNo());
 		
-		// 두번 참여신청한 사람 막기
+		// 일정 생성시 미팅번호가 없어서 로그인한 회원이 가장 최근 만든 
 		Meeting meeting = sqlSession.selectOne("ClubMapper.getMeetingNo", participant);
 		System.out.println("일정은? : " + meeting);
+		participant.setMeetingNo(meeting.getMeetingNo());
 		
-		if( meeting == null) {
-			sqlSession.insert("ClubMapper.addMeetingMember",participant);
-		}
+		//if( meeting == null) {
+		sqlSession.insert("ClubMapper.addMeetingMember",participant);
+		//}
 		
 	}
 	
@@ -368,5 +369,15 @@ public class ClubDAOImpl implements ClubDAO {
 	public String getClubMemberListCheck(Club club) throws Exception {
 		System.out.println(getClass() + ".getClubMemberListCheck(String userId, int clubNo) 왔다");
 		return sqlSession.selectOne("ClubMapper.getClubMemberListCheck", club);
+	}
+
+
+	@Override
+	public Meeting getMeetingNo(Participant participant) throws Exception {
+		System.out.println(getClass() + ".getMeetingNo(Participant participant) 왔다");
+		System.out.println("가져온 것 : " + participant);
+		Meeting me = sqlSession.selectOne("ClubMapper.getMeetingNo", participant);
+		System.out.println(me);
+		return me;
 	}
 }

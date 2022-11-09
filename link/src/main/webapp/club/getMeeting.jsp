@@ -239,7 +239,7 @@
 				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
 					<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
-						<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 100%; height: 100%;">
 					</div>
 				
 				

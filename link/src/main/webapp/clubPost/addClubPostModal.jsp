@@ -20,7 +20,7 @@
 				<form name="addClubPost" method="post" action="/clubPost/addClubPost" enctype="multipart/form-data">
 					<input type="hidden" name="clubNo" value="${ sessionScope.clubNo }">
 					<div class="clubPostTitle">
-						<input type="text" name="clubPostTitle" placeholder="제목">
+						<input type="text" name="clubPostTitle" autocomplete="off" placeholder="제목">
 					</div>
 					<textarea id="summernote" aria-multiline="true" name="clubPostContent"></textarea>
 					<input type="button" class="plain button red" value="등록완료">

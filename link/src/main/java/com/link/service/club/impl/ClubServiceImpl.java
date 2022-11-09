@@ -313,6 +313,12 @@ public class ClubServiceImpl implements ClubService {
 		System.out.println(getClass() + ".getClubMemberListCheck(Club clubNo) 도착");
 		return clubDAO.getClubMemberListCheck(club);
 	}
+
+	@Override
+	public Meeting getMeetingNo(Participant participant) throws Exception {
+		System.out.println(getClass() + ".getMeetingNo(Participant participant) 도착");
+		return clubDAO.getMeetingNo(participant);
+	}
 	
 	
 }

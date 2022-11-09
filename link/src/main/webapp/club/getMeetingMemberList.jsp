@@ -204,7 +204,7 @@
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">
 				
-		<div style="background-color: yellow; height: 712px; width: 1135px;margin-bottom: 40px;">
+		<div style="height: 712px; width: 1135px; margin-bottom: 40px;">
 			<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
 		</div>
 	
