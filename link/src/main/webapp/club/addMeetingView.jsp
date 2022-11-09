@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
@@ -241,14 +242,53 @@
 	   color: white !important;
 	   font-size: 16px !important;
 		}      
-      
+		.plain.button.red.cancel{
+			box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 10px;
+			padding: 7px;
+			background: white;
+		}
+		.plain.button.red.cancel:hover{
+			box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
+			border-radius: 10px;
+			margin: 10px;
+			padding: 7px;
+			background: #5F0080;
+		}
   </style>
 
 	
 
 </head>
 
-<body style="background: #EBEDF0;  position: relative; height: 1950px;">
+<body style="background: #EBEDF0; position: relative; height: 1950px;">
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
 
 	<jsp:include page="/toolbar.jsp"/>
 
@@ -330,7 +370,6 @@
 			    	</div>
 				</div>
 				
-		<br><br><br><br><br><br><br><br><br><br><br><br>
 		
 		<!-- footer start -->
 		<jsp:include page="/footer.jsp" />

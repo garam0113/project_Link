@@ -373,10 +373,16 @@
 	width: 1143px !important;
     /* background-color: blue !important; */
 }
+.column.nine, .column.threefourths{
+	margin-left: 180px !important;
+}
+.club-post-list-order{
+	color: black;
+}
 </style>
 		
 </head>
-<body class="portfolio">
+<body class="portfolio" style="position: relative; height: 950px; padding-bottom: 350px;">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
