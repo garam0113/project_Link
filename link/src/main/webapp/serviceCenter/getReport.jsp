@@ -168,7 +168,7 @@ body{
 	left: 0;
 }
 </style>
-
+<body>
 <%-- 테이블 시작 --%>
 <jsp:include page="/toolbar.jsp" />
 <div class="page-header" align="center" style="margin-left: auto;">
