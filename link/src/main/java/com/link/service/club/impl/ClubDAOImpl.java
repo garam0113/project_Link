@@ -276,11 +276,16 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addMeetingMember(Participant participant) throws Exception {
 		
 		System.out.println("미팅참가 DAO Impl 왔나?");
+		System.out.println("회원 정보 아이디 : " + participant.getUser().getUserId());
+		System.out.println("미팅번호 : " + participant.getMeetingNo());
 		
-		int meetingNo = sqlSession.selectOne("ClubMapper.getMeetingNo", participant.getUser());
-		participant.setMeetingNo(meetingNo);
+		// 두번 참여신청한 사람 막기
+		Meeting meeting = sqlSession.selectOne("ClubMapper.getMeetingNo", participant);
 		
-		sqlSession.insert("ClubMapper.addMeetingMember",participant);
+		if( meeting != null) {
+			sqlSession.insert("ClubMapper.addMeetingMember",participant);
+		}
+		
 	}
 	
 	//JUNIT TEST
