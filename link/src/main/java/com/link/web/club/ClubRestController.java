@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -264,7 +265,20 @@ public class ClubRestController {
 
 	}
 	
-	
+	// 기존 모임원 데이터 가져와서 해당 모임의 모임원인지 확인
+	@RequestMapping(value = "/json/getClubMemberListCheck", method = RequestMethod.POST)
+	public User getClubMemberListCheck(@RequestBody Club club, HttpSession session) throws Exception {
+		club.setUser((User)session.getAttribute("user"));
+		System.out.println("로그인한 회원 아이디 : " + club.getUser().getUserId() + ", 모임번호 : " + club.getClubNo());
+		String returnUserId = clubService.getClubMemberListCheck(club);
+		System.out.println("리턴 회원 아이디 : " + returnUserId);
+		if(returnUserId == null) {
+			returnUserId = "no";
+		}
+		User user = new User(returnUserId);
+		System.out.println("리턴 회원 아이디 : " + returnUserId);
+		return user;
+	}
 	
 	
 	
