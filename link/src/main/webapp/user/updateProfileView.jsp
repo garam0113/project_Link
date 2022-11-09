@@ -92,7 +92,10 @@ body>div.container {
 			$("form").attr("method", "POST").attr("action", "/user/addProfile").attr("encType", "multipart/form-data").submit();
 		}else{
 			$("form").attr("method", "POST").attr("action", "/user/updateProfile").attr("encType", "multipart/form-data").submit();
-			window.close();
+			setTimeout(function() {   
+	             window.close();
+
+	        }, 100);
 		}
 	}
 </script>

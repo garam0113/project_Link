@@ -26,6 +26,18 @@
 	<!-- alert -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
+	<script type="text/javascript">
+	/* 새로고침하면 모임 또 생성된다 막자 */
+	function NotReload() { 
+	    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+	        event.keyCode = 0; 
+	        event.cancelBubble = true;
+	        event.returnValue = false; 
+	    } 
+	} 
+	document.onkeydown = NotReload;
+	</script>
+	
 	
 
 	<style>

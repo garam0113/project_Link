@@ -443,7 +443,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="getMeetingMemberList")
-	public String getMeetingMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, Participant participant) throws Exception {
+	public String getMeetingMemberList(@ModelAttribute("search") Search search, Model model, HttpSession session, User user, Participant participant, Chat chat) throws Exception {
 		
 		System.out.println("/club/getMeetingMemberList : GET/POST");
 		
@@ -468,6 +468,26 @@ public class ClubController {
 		model.addAttribute("meetingMemberList", map.get("meetingMemberList"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		// 미팅번호로 모임번호 가져온다
+		int returnClubNo = clubService.getClubNotoMyHome(Integer.parseInt((String)session.getAttribute("meetingNo")));
+		
+		// 모임 대표 이미지 가져온다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubService.getClub(returnClubNo);
+		model.addAttribute("club", clubMap.get("club"));
+		
+		
 		
 		return "forward:/club/getMeetingMemberList.jsp";
 	}
