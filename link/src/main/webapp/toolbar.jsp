@@ -40,7 +40,7 @@
 <%-- SOCKET IO --%>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
 <link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
@@ -193,7 +193,7 @@ html {
 
 </head>
 
-<body class="page">
+<body class="page"> 
 
    <header role="banner" class="transparent light"> 
       <div class="row">
