@@ -208,8 +208,8 @@ $(function() {
 	       console.log(data.blockList);
 	          var value="";
 	       $.each(data.blockList, function(index, item) { 
-	    	      value += 	"<div class='cc' id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<h3 class='yourHome3' style='margin:0;'>"+item.receiveId.nickName+"</h3>"+
-					        "&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<button type='button' class='"+item.receiveId.userId+"  btn-sm' id='stopBlock2'>차단해제</button></div>"
+	    	      value += 	"<div class='cc' id='"+item.receiveId.userId+"'><img class='mc' src='/resources/image/uploadFiles/"+item.receiveId.profileImage+"' width='100' height='100' style='border-radius: 50px;'' /><h3 class='yourHome3' style='margin:0;'>"+item.receiveId.nickName+"</h3>"+
+					        "<button type='button' class='"+item.receiveId.userId+"  btn-sm' id='stopBlock2'>차단해제</button></div>"
 						                                                       
 
 	    	   
@@ -1340,8 +1340,10 @@ z-index: -1;
 border-radius: 15px !important;
 }
 .cc{
-    display: flex;
+   display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 .my{
 margin-right: 450px;
