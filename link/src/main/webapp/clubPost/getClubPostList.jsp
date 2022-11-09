@@ -409,8 +409,8 @@
 			
 				<div class="row-content buffer clear-after">
 					
-					<div>
-						<img src="/resources/image/uploadFiles/${ club.clubImage }">
+					<div style="height: 563px;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 100%;">
 					</div>
 				
 				
