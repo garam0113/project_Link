@@ -276,6 +276,7 @@ public class ClubDAOImpl implements ClubDAO {
 	public void addMeetingMember(Participant participant) throws Exception {
 		
 		System.out.println("미팅참가 DAO Impl 왔나?");
+		System.out.println(participant.getUser());
 		
 		int meetingNo = sqlSession.selectOne("ClubMapper.getMeetingNo", participant.getUser());
 		participant.setMeetingNo(meetingNo);
