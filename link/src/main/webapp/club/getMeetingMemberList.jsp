@@ -164,7 +164,7 @@
 	
 </head>
 
-<body style="background: #EBEDF0;">
+<body>
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">	
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -246,6 +246,11 @@
  	</div>
 	<!-- </div> -->
 	<!-- </main> -->
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
+		
 </body>
 
 </html>

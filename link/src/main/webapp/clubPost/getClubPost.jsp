@@ -1236,6 +1236,7 @@
 		.post-area.clear-after{
 			margin-left: 18px !important;
    		 	width: 1132px !important;
+   		 	margin-top: 200px !important;
 		}
 		.glyphicon{
 			color: #5F0080 !important;
@@ -1246,11 +1247,19 @@
 		.row-content.buffer-left.buffer-right.buffer-bottom.clear-after{
 			margin-left: 381px;
 		}
+		#main{
+			background-color: white !important;
+			z-index: 0 !important;
+			position: static !important;
+		}
+		#club_post_footer{
+			z-index: 9 !important;
+		}
 		</style>
 		
 	</head>
 
-	<body class="single single-post">
+	<body class="single single-post" style="position: relative !important; padding-bottom: 300px;">
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
@@ -1265,11 +1274,13 @@
 
 
 
-		<main role="main" style="background: #EBEDF0;">
+		<!-- <main role="main" style="background: #EBEDF0;"> -->
+		<main role="main">
 
 
 
-			<div id="main" class="row" style="background: #EBEDF0;">
+			<!-- <div id="main" class="row" style="background: #EBEDF0;"> -->
+			<div id="main" class="row">
 				<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
 				<!-- <div class="row-content buffer-left buffer-right buffer-bottom"> -->
 	
@@ -1303,7 +1314,7 @@
 					<jsp:include page="/chat/chat.jsp" />
 					<%-- 채팅 --%>
 					<div id="club_post_main_img">
-						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 550px; width: 1140px; margin-left: -60px;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 700px; width: 1140px; margin-left: -60px;">
 					</div>
 					
 				
@@ -1311,7 +1322,7 @@
 				
 				
 				<div class="homeBtn_group">
-						<button type="button" class="homeBtn" style="margin-top: 17px;">
+						<button type="button" class="homeBtn" style="margin-top: 160px;">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
 						</button>
 						
@@ -1420,7 +1431,7 @@
 						<h3 id="reply-title"></h3>
 						<form class="comment-form">
 							<br><br>
-							<textarea class="plain buffer" placeholder="댓글 등록란"></textarea>
+							<textarea class="plain buffer" style="background-color: white;" placeholder="댓글 등록란"></textarea>
 							<input class="plain button red add" id="replyadd" value="댓글 등록하기">
 							<input class="plain button red cancle" value="취소하기">
 						</form>						

@@ -506,6 +506,7 @@
 	width: 1140px;
 	margin-left: 405px;
 	margin-top: 13px;
+	height: 1700px;
 }
 .mainForm{
 	display: inline-flex;
@@ -534,7 +535,7 @@
 </style>
 </head>
 
-<body class="blog masonry-style">
+<body class="blog masonry-style" style="position: relative; height: 2120px; padding-bottom: 350px;">
 
 
 
@@ -790,17 +791,17 @@
 				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
 				<input type="hidden" id="no" value="${clubNo}">
 				<input type="hidden" id="total" value="${clubMemberCount}">
-				
-	
-	
-				<br><br><br><br><br><br><br><br><br><br><br><br>
-				
-				<!-- footer start -->
-				<jsp:include page="/footer.jsp" />
-				<!-- footer end -->
 	
 			</div>
 	<!-- </main> -->
+				
+	
+	
+		<br><br><br><br><br><br>
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 	
 	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>
