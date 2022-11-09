@@ -118,7 +118,7 @@
 	
 	$(function() {
 		$("#addMeeting").on("click", function() {
-			self.location="/club/addMeetingView.jsp"
+			self.location="/club/addMeetingView?clubNo=${ clubNo }";
 		});
 	});
 	
@@ -526,11 +526,11 @@
 	bottom: -120px !important;
 	left: 0 !important;
 } */
-#clubImage{
+/* #clubImage{
     margin-top: 0px;
     width: 1140px !important;
     height: 550px;
-}
+} */
 </style>
 </head>
 
@@ -594,9 +594,10 @@
 				
 				
 					<!-- 모임 대표이미지 -->				
-					<div class="club-image" style="width: 1140px; height: 550px; overflow: hidden;">
+					<!-- <div class="club-image" style="width: 1140px; height: 550px; overflow: hidden;"> -->
+					<div class="club-image" style="height: 700px;">
 						<a href="/club/getClub?clubNo=${clubNo}">
-							<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 1140px;" name="file" id="clubImage">
+							<img src="/resources/image/uploadFiles/${club.clubImage}" style="height: 700px; width: 1140px;" name="file" id="clubImage">
 						</a>
 					</div>
 				
@@ -754,7 +755,7 @@
 			    </div> --%>
 				<!-- 모달영역 -->
 				<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document" style="margin-top: 150px; top: 200px;">
+					<div class="modal-dialog" role="document" style="padding-top: 100px; top: 0px;">
 						<div class="modal-content" style="height: 300px; width: 440px;">
 							<div class="modal-header">
 								<button class="close" type="button" data-dismiss="modal" aria-label="Close">

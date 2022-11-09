@@ -660,13 +660,27 @@ public class ServiceCenterController {
 	}
 
 	@RequestMapping(value = "getReport")
-	public String getReport(@ModelAttribute Report report, Model model, HttpServletResponse response) throws Exception {
+	public String getReport(@ModelAttribute Report report, Model model, HttpServletResponse response, Chat chat, HttpSession session) throws Exception {
 
 		System.out.println("/ServiceCenter/getReport : GET & POST");
 
 		report = serviceCenterService.getReport(report.getNo());
 
 		model.addAttribute("report", report);
+		
+		
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		if(session.getAttribute("user") != null) {
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostService.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostService.getRoomIdList((User)session.getAttribute("user")));
+		}
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		
 
 		String URI = "forward:/serviceCenter/getReport.jsp";
 

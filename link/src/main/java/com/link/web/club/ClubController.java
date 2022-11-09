@@ -458,6 +458,14 @@ public class ClubController {
 		
 		return "forward:/club/getMeetingMemberList.jsp";
 	}
+	@RequestMapping(value = "addMeetingView", method = RequestMethod.GET)
+	public String addMeetingView(@ModelAttribute Club club, Model model, Map<String, Object> map) throws Exception{
+		System.out.println("모임번호 : " + club.getClubNo());
+		map = clubService.getClub(club.getClubNo());
+		System.out.println("모임이미지 : " + ((Club)map.get("club")).getClubImage());
+		model.addAttribute("club", map.get("club"));
+		return "forward:/club/addMeetingView.jsp";
+	}
 	
 	@RequestMapping(value="addMeeting", method=RequestMethod.POST)
 	public String addMeeting(@ModelAttribute Meeting meeting, Model model, HttpSession session, String clubNo, User user, Club club, Participant participant, String meetingNo, Map<String, Object> map) throws Exception {
