@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/footer.css" type="text/css" media="screen" title="no title">
-<style type="text/css">
+<!-- <style type="text/css">
 #club_post_footer_int{
 top: 60px
 }
-</style>
+</style> -->
 </head>
 <body>
 <!-- footer start -->
