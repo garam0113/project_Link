@@ -111,8 +111,10 @@ nav div div a:hover{
 <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="height: 64px; background: linear-gradient(0deg, #958c8cc4, black);">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html" style="font-size: 28px; color: white; font-weight: bold; text-decoration: none; margin-left: 468px;">LINK</a>
-            <div style="display: flex;">
+            <a class="navbar-brand ps-3" href="index.html" style="font-size: 28px; color: white; font-weight: bold; text-decoration: none; margin-left: 30px;">
+            	<img src="/resources/image/uploadFiles/Logo1.png" style="height: 50px; width: 150px;">
+            </a>
+            <div style="display: flex; margin-left: 439px;">
             <div style="margin-left: 78px;"><a href="/" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">HOME</a></div>
             <div style="margin-left: 24px;"><a href="/feed/getFeedList" style="font-size: 16px; color: white; font-weight: bold; text-decoration: none;">FEED</a></div>
             <c:if test="${! empty sessionScope.user }">

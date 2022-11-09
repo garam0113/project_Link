@@ -32,7 +32,7 @@
 	function NotReload() { 
 	    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) { 
 	        event.keyCode = 0; 
-	        event.cancelBubble = true; 
+	        event.cancelBubble = true;
 	        event.returnValue = false; 
 	    } 
 	} 
@@ -594,7 +594,7 @@
 				
 				
 					<!-- 모임 대표이미지 -->				
-					<div class="club-image" style="background-color: blue; width: 1140px; height: 550px; overflow: hidden;">
+					<div class="club-image" style="width: 1140px; height: 550px; overflow: hidden;">
 						<a href="/club/getClub?clubNo=${clubNo}">
 							<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 1140px;" name="file" id="clubImage">
 						</a>
