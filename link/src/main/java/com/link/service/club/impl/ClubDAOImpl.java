@@ -281,8 +281,9 @@ public class ClubDAOImpl implements ClubDAO {
 		
 		// 두번 참여신청한 사람 막기
 		Meeting meeting = sqlSession.selectOne("ClubMapper.getMeetingNo", participant);
+		System.out.println("일정은? : " + meeting);
 		
-		if( meeting != null) {
+		if( meeting == null) {
 			sqlSession.insert("ClubMapper.addMeetingMember",participant);
 		}
 		
