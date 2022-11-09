@@ -10,7 +10,7 @@ DELETE users
 WHERE phone_no = 'admin01';
 
 DELETE users
-WHERE user_id = 'user06';
+WHERE user_id = 'Link6562';
 
 INSERT
 INTO users (user_id, add_user_type ,add_user_date)

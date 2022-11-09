@@ -68,8 +68,8 @@ body {
 
 		$("#rrn1").val(rrn);
 
-		console.log("phone2 : " + phone2 + ", phone3 : " + phone3);
-		console.log("email : " + email);
+		console.log("phone21 : " + phone2 + ", phone31 : " + phone3);
+		console.log("email1 : " + email);
 
 		if (id == null || id.length < 1) {
 			swal.fire("아이디를 입력해 주세요.");
@@ -93,7 +93,7 @@ body {
 
 		if (checkNo != 1) {
 			swal.fire("인증이 필요합니다.");
-			return;
+			return; 
 		}
 
 		$.ajax("/userRest/json/getUserId", {
@@ -136,7 +136,7 @@ body {
 						if (email == null || email.length < 1) {
 							swal.fire("임시 비밀번호가 핸드폰번호로 전송되었습니다.").then(
 									function() {
-										window.close();
+										$('#modalPass').modal('hide');
 									});
 						}
 
@@ -173,16 +173,16 @@ body {
 							<div class="form-group" style="margin-top: 30px; margin-left: 20px; display: flex; height: 30px">
 
 								<label for="userId" style="margin-left: 0px;">아이디</label>
-									<input type="text" class="form-control" id="userId" autocomplete="off"
-										name="uesrID" style="margin-left: 35px;" value=""
-										placeholder="아이디">
+									<input type="text" class="form-control" id="userId1" autocomplete="off"
+										name="uesrId" style="margin-left: 35px;" value=""
+						 				placeholder="아이디">
 
 							</div>
 							<div class="form-group"
 								style="display: flex; margin-top: 20px; margin-left: 20px; height: 30px;">
 
 								<label for="name" style="text-align-last: start;">이 름</label> <input autocomplete="off"
-									type="text" class="form-control" id="name" name="name" value=""
+									type="text" class="form-control" id="name1" name="name" value=""
 									placeholder="이름" style="margin-left: 50px;">
 
 							</div>
@@ -195,7 +195,7 @@ body {
 										value="" style="margin-left: 20px; width: 100px">
 								</div>
 								<div>
-									<input type="password" class="form-control" id="rrn21" autocomplete="off"
+ 								<input type="password" class="form-control" id="rrn21" autocomplete="off"
 										name="rrn2" value="" style="margin-left: 10px; width: 100px">
 								</div>
 								<input type="hidden" id="rrn1" name="rrn">
@@ -235,7 +235,7 @@ body {
 									<input type="hidden" name="phoneNo" />
 
 									<div style="margin: 7px;">
-										<button type="button" id="sendPhoneNumber" class="btn"
+										<button type="button" id="sendPhoneNumber1" class="btn"
 											style="margin-top: 3px; height: 20px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
 									</div>
 								</div>
@@ -245,11 +245,11 @@ body {
 									<div>
 										<input type="text" class="form-control" id="email1" autocomplete="off"
 											name="email"
-											style="margin-top: 0px; margin-left: 0px; width: 220px;"
+											style="margin-top: 0px; margin-left: 0px; width: 300px;"
 											placeholder="변경이메일">
 									</div>
 									<div>
-										<button type="button" id="sendEmail" class="btn "
+										<button type="button" id="sendEmail1" class="btn "
 											style="margin-bottom: 20px; margin-top: -10px; margin-left: 0px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호전송</button>
 									</div>
 								</div>
@@ -258,12 +258,12 @@ body {
 							<div class="form-group"
 								style="display: flex; margin-left: 20px; width: 100px; height: 40px;">
 								<input type="text" class="form-control"
-									id="inputCertifiedNumber" style="width: 100px; height: 40px;" autocomplete="off"
+									id="inputCertifiedNumber1" style="width: 100px; height: 40px;" autocomplete="off"
 									name="inputCertifiedNumber" placeholder="인증번호">
 								<div>
-									<button type="button" id="checkBtn" class="btn "
+									<button type="button" id="checkBtn1" class="btn "
 										style="margin-left: 15px; margin-top: 3px; height: 22px; font-size: large; font-weight: 600; border-color: #5F0080; border-radius: 13px;">인증번호확인</button>
-									<input type="hidden" id=checkNo>
+									<input type="hidden" id=checkNo1>
 								</div>
 							</div>
 

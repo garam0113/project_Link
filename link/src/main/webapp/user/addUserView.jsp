@@ -536,7 +536,6 @@ body{
 		<!-- container E -->
 	</form>
 	<!-- footer start -->
-	<jsp:include page="/footer.jsp" />
-	<!-- footer end -->
+	<!-- footer end --> 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.link.service.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Feed {
 
@@ -16,8 +17,8 @@ public class Feed {
 	private String hashtag;
 	private int heartCount;
 	private int commentCount;
-	private Date regDate;
-	private Date updateDate;
+	private Timestamp regDate;
+	private Timestamp updateDate;
 	private int reportCondition;
 	private int deleteCondition;
 	private int checkHeart;			// -1 	: 추가,		-2 : 취소
@@ -127,19 +128,19 @@ public class Feed {
 		this.commentCount = commentCount;
 	}
 
-	public Date getRegDate() {
+	public Timestamp getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
 
-	public Date getUpdateDate() {
+	public Timestamp getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
 

@@ -40,7 +40,7 @@
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   border-radius: 10px;
 	   margin: 1rem;
-	   padding: 0px;
+	   padding: 10px !important;
 	   width: 65px !important;
 	   color: #5F0080 !important;
 	   font-size: 16px !important;
@@ -53,7 +53,7 @@
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   border-radius: 10px;
 	   margin: 1rem;
-	   padding: 0px;
+	   padding: 10px;
 	   width: 65px !important;
 	   color: white !important;
 	   font-size: 16px !important;
@@ -256,10 +256,67 @@
 	
 
 	</script>
+	
+	<style type="text/css">
+	.row-content .buffer-left .buffer-right .buffer-bottom{
+		margin-top: 130px !important;
+		padding-bottom: 20% !important;
+	}
+	.club-image{
+		margin-left: 130px !important;
+		margin-top: -45px !important;
+		margin-bottom: 35px !important;
+	}
+	.form_txtInput{
+		margin-top: 50px !important;
+	}
+	.listForm{
+		margin-top: 35px !important;
+		box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px !important;
+		border-radius: 10px !important;
+		/* background-color: white; */
+	}
+	.row-content.buffer-left.buffer-right.buffer-bottom{
+		/* background-color: green !important; */
+		margin-left: 405px !important;
+		margin-right: 358px !important;
+	}
+	.club-image{
+		padding-left: 8px !important;
+		width: 1147px !important;
+    	height: 550px !important;
+		/* background-color: yellow; */
+	}
+	.row-content.buffer-left.buffer-right.buffer-bottom > div:first-child{
+		margin-left: -290px;
+	}
+	#clubImage{
+	    margin-top: 57px;
+	    width: 1140px !important;
+	    height: 550px;
+	}
+	.homeBtn_group{
+		width: 500px;
+  	  	margin-left: 138px;
+	}
+	.container{
+		margin-left: 123px;
+	}
+	#btn_group{
+		margin-top: 25px;
+		display: flex;
+	}
+	.plain1.button.red.cancel{
+		padding: 0px;
+	}
+	tbody{
+		background-color: white !important;
+	}
+	</style>
 </head>
 
 	
-	<body class="blog masonry-style" style="background: #EBEDF0;">
+	<body class="blog masonry-style" style="background: whitesmoke;">
 
 
 
@@ -284,9 +341,9 @@
 			
 			
 				<%-- chat.js에서 사용위해서 --%>
-					<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
-					<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
-					<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+				<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+				<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+				<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
 				<%-- chat.js에서 사용위해서 --%>
 				<%-- 채팅 --%>
 				<jsp:include page="/chat/chat.jsp" />
@@ -294,23 +351,23 @@
 				
 				
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 130px; padding-bottom: 20%;">
+				<div class="row-content buffer-left buffer-right buffer-bottom">
 				
-				<!-- 이미지랑 합친 div -->
+					<!-- 이미지랑 합친 div -->
 					<div>
 					
 						<!-- 모임 대표이미지 -->				
-						<div class="club-image" style="margin-left: 130px; margin-top: -45px; margin-bottom: 35px;">
-							<a href="/club/getClub?clubNo=${clubNo}"><img
-								src="/resources/image/uploadFiles/${club.clubImage}"
-								width="800" height="300" name="file" id="clubImage"></a>
+						<div class="club-image">
+							<a href="/club/getClub?clubNo=${clubNo}">
+								<img src="/resources/image/uploadFiles/${club.clubImage}" name="file" id="clubImage">
+							</a>
 						</div>
 					
 					
 					
 						<div class="homeBtn_group">
 								<button type="button" class="homeBtn" style="margin-top: 17px;">
-									<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+									<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 								</button>
 								
 								<button type="button" class="clubPostBtn">
@@ -327,100 +384,106 @@
 						</div>
 		
 
-	<div class="container">
-	
-		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">${club.clubTitle}의 모임원 </h2>
+						<div class="container">
+						
+							<div class="form_txtInput" style="display: flex;">
+								<h2 class="sub_tit_txt" style="width: 900px;">${club.clubTitle}의 모임원 </h2>
+								
+								<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+								<div class="row" style="width: 250px;">
+									<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+									<!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
+							
+									<div class="form-group" id="btn_group">
+							
+										<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
+								
+										<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+										<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
+										</c:if>
+										<button type="button" class="plain1 button red cancel" id="cancel">이&nbsp;전</button>
+									</div>
+								</div>
+								<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+						
+								<input type="hidden" id="totalClubMemberCount" name="totalClubMemberCount" value="${totalClubMemberCount}">
+								<input type="hidden" id="clubMaxMember" name="clubMaxMember" value="${club.clubMaxMember}">
+							
+							</div>
+						    
+						    
+							
+						
+							<div class="listForm">	
+						      <!--  table Start /////////////////////////////////////-->
+						      <table class="table table-hover table-striped" >
+						      
+						        <thead>
+						          <tr>
+						            <th align="center">프로필사진</th>	
+						            <th align="left" >회원 ID</th>
+						            <th align="left">회원 닉네임</th>
+						            <th align="left">모임직책</th>
+						            <th align="left">마지막 접속시간</th>
+						            <th align="left">모임가입날짜</th>
+						            <th align="left">승인상태</th>
+							            <c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+								            <th align="left">직책수정</th>
+								            <th align="left">추방</th>
+								            <th align="left">승인/거절</th>
+								            <th align="left">Max</th>
+								        </c:if>
+						          	</tr>
+						          	
+						        </thead>
+						       
+								<tbody>
+								<tr>
+								  <c:forEach var="i" items="${clubMemberList}">
+									<tr>
+									<td align="center">
+									<a href="/myHome/getYourHome?userId=${i.user.userId}"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></a>
+									<%-- <img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"> --%>
+									
+									</td>
+									
+									  <td >${i.user.userId}</td>
+									  <td align="left">${i.user.nickName}</td>
+									  <%-- <td align="center">${i.memberRole}</td> --%>
+									  <td align="left">${ fn:trim(i.memberRole) == 0 ? "모임원" : ""} ${ fn:trim(i.memberRole) == 1 ? "모임부대표" : ""} ${fn:trim(i.memberRole) == 2 ? "모임대표" : ""}</td>
+									  <td align="left">${i.logoutDate}</td>
+									  <td align="left">${i.joinRegDate}</td>
+									  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "승인완료" : ""}</td> 
+						<%-- 			  <td align="center">${i.approvalCondition}</td> --%>
+										<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
+									  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
+									  	
+									  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
+									  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">승인</button></td>
+											<td>${i.club.clubMaxMember}</td>
+										</c:if>
+									</tr>
+						          </c:forEach>
+						        </tbody>
+						      
+						      </table>
+							  <!--  table End /////////////////////////////////////-->
+							  
+							</div>
+						 	<!--  화면구성 div End /////////////////////////////////////-->
+					 	
+					 	<!-- 이미지랑 합친 div -->
+					 	</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br><br><br><br>
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
+		
 		</div>
 	
-		<input type="hidden" id="totalClubMemberCount" name="totalClubMemberCount" value="${totalClubMemberCount}">
-		<input type="hidden" id="clubMaxMember" name="clubMaxMember" value="${club.clubMaxMember}">
-	    
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	  		  <div class="row">
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <!-- <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
-				  
-				  <div class="form-group" id="btn_group" style="float: right; margin: 0px;">
-				  
-					<!--  <div class="col-sm-offset-4  col-sm-4 text-center"> -->
-						
-						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-							<button type="button" class="plain1 button red cancel" id="updateMemberRole">직책수정</button>
-						</c:if>
-						<button type="button" class="plain1 button red cancel" id="cancel">이&nbsp;전</button>
-		  			</div>
-				</div>	
-	    	
-	
-	
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-	
-	<div class="listForm" style="margin-top: 35px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >	
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-            <th align="center">프로필사진</th>	
-            <th align="left" >회원 ID</th>
-            <th align="left">회원 닉네임</th>
-            <th align="left">모임직책</th>
-            <th align="left">마지막 접속시간</th>
-            <th align="left">모임가입날짜</th>
-            <th align="left">승인상태</th>
-	            <c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-		            <th align="left">직책수정</th>
-		            <th align="left">추방</th>
-		            <th align="left">승인/거절</th>
-		            <th align="left">Max</th>
-		        </c:if>
-          	</tr>
-          	
-        </thead>
-       
-		<tbody>
-		<tr>
-		  <c:forEach var="i" items="${clubMemberList}">
-			<tr>
-			<td align="center">
-			<a href="/myHome/getYourHome?userId=${i.user.userId}"><img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"></a>
-			<%-- <img src="/resources/image/uploadFiles/${i.user.profileImage}" width="100" height="100"> --%>
-			
-			</td>
-			
-			  <td >${i.user.userId}</td>
-			  <td align="left">${i.user.nickName}</td>
-			  <%-- <td align="center">${i.memberRole}</td> --%>
-			  <td align="left">${ fn:trim(i.memberRole) == 0 ? "모임원" : ""} ${ fn:trim(i.memberRole) == 1 ? "모임부대표" : ""} ${fn:trim(i.memberRole) == 2 ? "모임대표" : ""}</td>
-			  <td align="left">${i.logoutDate}</td>
-			  <td align="left">${i.joinRegDate}</td>
-			  <td align="left">${ fn:trim(i.approvalCondition) == 0 ? "승인대기" : ""} ${ fn: trim(i.approvalCondition) == 1 ? "승인완료" : ""}</td> 
-<%-- 			  <td align="center">${i.approvalCondition}</td> --%>
-				<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
-			  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
-			  	
-			  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
-			  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">승인</button></td>
-					<td>${i.club.clubMaxMember}</td>
-				</c:if>
-			</tr>
-          </c:forEach>
-        </tbody>
-      
-      </table>
-	  <!--  table End /////////////////////////////////////-->
-	  
-	</div>
- 	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 	<!-- 이미지랑 합친 div -->
- 	</div>
- 	
-	</div>
-	</div>
-	</div>
 	<!-- </main> -->
 </body>
 
