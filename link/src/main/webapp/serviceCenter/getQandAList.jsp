@@ -316,7 +316,7 @@ body{
 								<a href="/serviceCenter/getQandA?qandANo=${getQandAList.qandANo}" style="color: black;">
 										${getQandAList.qandATitle} 
 										<c:if test="${getQandAList.qandAImage1 !=null || getQandAList.qandAImage2 != null}">
-									&nbsp;<img src="/resources/image/uploadFiles/파일.png" style="width:15px; height:15px; display: inline;">
+									&nbsp;
 									</c:if>	</a>
 							</c:if>
 							
