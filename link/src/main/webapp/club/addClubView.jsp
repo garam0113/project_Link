@@ -50,8 +50,8 @@
 	
 	<style>
 	  body>div.container {
-			border: 3px solid #D6CDB7;
-			margin-top: 10px;
+			/* border: 3px solid #D6CDB7; */
+			margin-top: 50px;
 		}
 
 		.plain.button.red.cancel{
@@ -89,6 +89,13 @@
 		.clubTitle {
 			width: 500px;
 			height: 50px;
+		}
+		.container{
+			width: 1150px;
+			height: 2000px;
+		}
+		.wrap.wd668{
+			margin-right: 900px;
 		}
         
     </style>
@@ -263,17 +270,53 @@
 
 
 </script>
+
+<style type="text/css">
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	/* background-color: red; */
+	width: 1400px;
+	margin-left: 500px;
+	font-weight: bold;
+}
+.row-content.buffer, .row-content.buffer-left{
+	padding-left: 0px !important;
+}
+.row-content.buffer, .row-content.buffer-right{
+	padding-right: 0px !important;
+}
+h1.reset{
+	margin-left: 0px;
+}
+.reset, .reset-right{
+	margin-right: 90px !important;
+}
+nav > ul > li{
+	font: unset !important;
+	font-weight: bold !important;
+}
+.form_txtInput{
+	padding-left: 346px;
+}
+.container{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+</style>
 </head>
 
-<body style="background: #EBEDF0;">
+<body style="background: #EBEDF0; position: relative; height: 2215px;">
 
 	<jsp:include page="/toolbar.jsp"/>
 	
-	
 	<form class="form-horizontal" method="post" action="/club/addClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
-			<div class="container" style="background: white;">
-				<div class="form_txtInput" style="margin-top: 150px;">
+			<div class="container" style="background: white; height: 1820px; margin-bottom: -400px;">
+	
+				<div>
+					<img src="/resources/image/uploadFiles/clubMainImage5.jpg" style="width: 100%; height: 550px; margin-top: 14px;">
+				</div>
+				
+				<div class="form_txtInput">
 					<h2 class="sub_tit_txt">모 임 등 록</h2>
 					<p class="exTxt">새로운 모임을 등록해보세요...</p>
 					<div class="join_form">
@@ -293,7 +336,7 @@
 			<div class="form-group">
 				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
-					<strong>모 임 설 명</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" placeholder="모임설명은 필수입니다. (최대 500자)" maxlength="500" style="width: 500px; height: 300px;"></textarea>
+					<strong>모 임 설 명</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" placeholder="모임설명은 필수입니다. (최대 500자)" maxlength="500" style="width: 500px; height: 200px;"></textarea>
 				</div>		
 			</div>
 			
@@ -362,7 +405,7 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 28%;">
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 0px;">
 		      		<button type="button" class="plain button red cancel" id="addClub">등 &nbsp;록</button>
 					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
@@ -373,6 +416,14 @@
 		</div>	
 			
 		</form>	
+				
+	
+	
+		<br><br><br><br><br><br><br><br><br><br><br><br>
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 		
 		
 </body>

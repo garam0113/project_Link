@@ -184,10 +184,6 @@
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						</button>
 						
-						<button type="button" class="clubChatBtn">
-							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-						</button>
-						
 						<button type="button" class="live">
 							 <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 
 						</button>

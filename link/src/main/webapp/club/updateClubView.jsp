@@ -37,38 +37,54 @@
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	  body {
-            padding-top : 50px;
-        }
-        
-        .plain.button.red.cancel{
+	  body>div.container {
+			/* border: 3px solid #D6CDB7; */
+			margin-top: 50px;
+		}
+
+		.plain.button.red.cancel{
 	   background-color: white;
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: #5F0080 !important;
 	   font-size: 16px !important;
 	   text-align: center;
 	   border: solid 2px;
 	}
 	
-		.plain.button.red.cancel:hover{
+	.plain.button.red.cancel:hover{
 	   background-color: #5F0080;
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: white !important;
 	   font-size: 16px !important;
 	}
 		
+		
 		textarea {
 		resize: none;
 	
-		}          
+		}
+		
+		.clubTitle {
+			width: 500px;
+			height: 50px;
+		}
+		.container{
+			width: 1150px;
+			height: 2000px;
+		}
+		.wrap.wd668{
+			margin-right: 900px;
+		}
         
     </style>
     
@@ -151,17 +167,55 @@
 	
 
 </script>
+
+<style type="text/css">
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	/* background-color: red; */
+	width: 1400px;
+	margin-left: 500px;
+	font-weight: bold;
+}
+.row-content.buffer, .row-content.buffer-left{
+	padding-left: 0px !important;
+}
+.row-content.buffer, .row-content.buffer-right{
+	padding-right: 0px !important;
+}
+h1.reset{
+	margin-left: 0px;
+}
+.reset, .reset-right{
+	margin-right: 90px !important;
+}
+nav > ul > li{
+	font: unset !important;
+	font-weight: bold !important;
+}
+.form_txtInput{
+	padding-left: 346px;
+}
+.container{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+</style>
+
 </head>
 
-<body>
+<body style="background: #EBEDF0; position: relative; height: 2215px;">
 	
 	<jsp:include page="/toolbar.jsp"/>
 	
 	
-	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data" style="background: #EBEDF0;">
-		<div class="wrap wd668" style="background: #EBEDF0;">
-			<div class="container" style="background: white;">
-				<div class="form_txtInput" style="margin-top: 150px;">
+	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
+		<div class="wrap wd668">
+			<div class="container" style="background: white; height: 1820px; margin-bottom: -400px;">
+				
+				<div>
+					<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 100%; height: 550px; margin-top: 14px;">
+				</div>
+				
+				<div class="form_txtInput">
 					<h2 class="sub_tit_txt">모 임 수 정</h2>
 					<p class="exTxt">모임을 수정해보세요...</p>
 					<div class="join_form">
@@ -170,7 +224,7 @@
 		
 		
 			<div class="form-group">
-				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<label for="clubTitle" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<strong>모 임 이 름</strong><textarea class="clubTitle" id="clubTitle" name="clubTitle" value="" maxlength="80" style="width: 500px; height: 50px;">${club.clubTitle }</textarea>
 				</div>					
@@ -179,17 +233,17 @@
 			
 		
 			<div class="form-group">
-				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<label for="clubDetail" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
-					<strong>모 임 설 명</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" maxlength="500" style="width: 500px; height: 300px;">${club.clubDetail }</textarea>
+					<strong>모 임 설 명</strong><textarea class="clubDetail" id="clubDetail" name="clubDetail" value="" maxlength="500" style="width: 500px; height: 200px;">${club.clubDetail }</textarea>
 				</div>		
 			</div>
 			
 			<div class="form-group">
-				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<label for="clubCategory" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<strong>모임카테고리</strong>
-					<select class="form-control" id="clubCategory" name="clubCategory" style="width:350px;">
+					<select class="form-control" id="clubCategory" name="clubCategory" style="text-align: left; width: 350px;">
 						<option value="운동">운동</option>
   						<option value="봉사활동">봉사활동</option>
   						<option value="음식">음식</option>
@@ -204,10 +258,10 @@
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<label for="clubArea" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 					<strong>지 역</strong>
-					<select class="form-control" id="clubArea" name="clubArea" style="width:350px;">
+					<select class="form-control" id="clubArea" name="clubArea" style="text-align: left; width: 350px;">
 						<option value="강남구">강남구</option>
 						<option value="강동구">강동구</option>
 						<option value="강북구">강북구</option>
@@ -238,7 +292,7 @@
 			</div>			
 			
 			<div class="form-group">
-				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<label for="clubImage" class="col-sm-offset-1 col-sm-3 control-label" style="text-align: left;"></label>
 				<div class="col-sm-4">
 				<strong>모임이미지</strong><input type="file" class="file" id="clubImage" name="file" multiple="multiple" onchange="setThumbnail(event);" style="display: none;" class="form-file" />
 					<button id="im" type="button" class="image" style="border-style: hidden;"><img id="imga" src="/resources/image/uploadFiles/default.png" style="height: 300px; width: 300px; max-width: 260%;"></button>
@@ -248,7 +302,7 @@
 			
 			
 			<div class="form-group" id="btn_group">
-				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 150px;">
+				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 0px;">
 		      		<button type="button" class="plain button red cancel" id="updateClub" >수 &nbsp;정</button>
 					<button type="button" class="plain button red cancel" id="cancel">취&nbsp;소</button>
 		    </div>
@@ -258,6 +312,13 @@
 		</div>
 		</div>
 	</form>	
+				
+	
+	
+		<br><br><br><br><br><br><br><br><br><br><br><br>
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
 		
 </body>
 </html>
