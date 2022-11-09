@@ -183,7 +183,7 @@ function fncGetList(currentPage) {
 
 					<div class="form-group" style="margin-top: 0px; margin-left: 10px;">
 						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
+							type="text" class="form-control" id="searchKeyword" autocomplete="off"
 							name="searchKeyword" placeholder="검색어"
 							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 					</div>

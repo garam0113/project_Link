@@ -466,7 +466,7 @@ public class UserController {
 
 		session.invalidate(); // session정보 제거
 
-		return "redirect:/";
+		return "redirect:/feed/getFeedList";
 	}
 
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)

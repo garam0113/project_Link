@@ -277,19 +277,19 @@ body{
 							<tbody>
 								<tr>
 									<th><span>아이디</span></th>
-									<td><input style="height: 40px;" type="text" id="userId"
+									<td><input style="height: 40px;" type="text" id="userId" autocomplete="off"
 										name="userId" placeholder="ID 를 입력하세요."> <span><strong
 											class="text-danger" id="userIdCheck">영어, 숫자조합 5~8자</strong> </span>
 										<input type="hidden" id="checkId"></td>
 								</tr>
 								<tr>
 									<th><span>이름</span></th>
-									<td><input type="text" id="name" style="height: 40px;"
+									<td><input type="text" id="name" style="height: 40px;" autocomplete="off"
 										name="name" placeholder=""></td>
 								</tr>
 								<tr>
 									<th><span>닉네임</span></th>
-									<td><input type="text" id="nickName" style="height: 40px;"
+									<td><input type="text" id="nickName" style="height: 40px;" autocomplete="off"
 										name="nickName" placeholder=""><strong
 										class="text-danger" id="nickNameCheck">" 특수문자 사용 불가,
 											1~10자</strong><input type="hidden" id="checkNickName"></td>
@@ -299,11 +299,11 @@ body{
 									<td>
 										<div style="display: flex;">
 											<div style="margin-right: 10px;">
-												<input type="radio" class="radiog" id="gender" name="gender"
+												<input type="radio" class="radiog" id="gender" name="gender" autocomplete="off"
 													placeholder="남자" value="남자">남자
 											</div>
 											<div>
-												<input type="radio" class="radiog" id="gender" name="gender"
+												<input type="radio" class="radiog" id="gender" name="gender" autocomplete="off"
 													placeholder="여자" value="여자">여자
 											</div>
 										</div>
@@ -315,11 +315,11 @@ body{
 										<div style="display: flex;">
 											<div>
 												<input
-													style="height: 40px; width: 150px; margin-right: 20px;"
+													style="height: 40px; width: 150px; margin-right: 20px;" autocomplete="off"
 													type="text" id="rrn1" name="rrn1" class="rrn1">
 											</div>
 											<div>
-												<input style="height: 40px; width: 150px;" type="password"
+												<input style="height: 40px; width: 150px;" type="password" autocomplete="off"
 													id="rrn2" name="rrn2" class="rrn2">
 											</div>
 											<input type="hidden" id="rrn" name="rrn" class="rrn">
@@ -328,8 +328,8 @@ body{
 									</td>
 								</tr>
 								<tr>
-									<th><span>비밀번호</span></th>
-									<td><input type="password" id="password"
+									<th><span>비밀번호</span></th> 
+									<td><input type="password" id="password" autocomplete="off"
 										style="height: 40px;" name="password"
 										placeholder="비밀번호를 입력해주세요."><span id="helpBlock"
 										class="help-block"> <strong class="text-danger">영어,
@@ -338,7 +338,7 @@ body{
 								</tr>
 								<tr>
 									<th><span>비밀번호</span> <span>확인</span></th>
-									<td><input type="password" id="password2"
+									<td><input type="password" id="password2" autocomplete="off"
 										style="height: 40px;" name="password2"
 										placeholder="비밀번호를 확인하세요"><span id="helpBlock"
 										class="help-block"> <strong class="text-danger">영어,
@@ -347,12 +347,12 @@ body{
 								</tr>
 								<tr class="email">
 									<th><span>이메일</span></th>
-									<td><input type="text"
+									<td><input type="text" autocomplete="off"
 										style="height: 40px; width: 461.59px;" class="email"
 										name="email" id="email" placeholder=""></td>
 								</tr>
 								<tr>
-									<th><span>휴대폰</span><span>번호</span></th>
+									<th><span>휴대폰번호</span></th>
 									<td>
 										<div style="display: flex;">
 											<div>
@@ -368,13 +368,13 @@ body{
 											</div>
 											<div>
 												<input
-													style="height: 40px; width: 80px; margin-right: 20px;"
+													style="height: 40px; width: 80px; margin-right: 20px;" autocomplete="off"
 													type="text" id="phone2" name="phone2" class="phone2"
 													placeholder="">
 											</div>
 											<div>
 												<input
-													style="height: 40px; width: 80px; margin-right: 20px;"
+													style="height: 40px; width: 80px; margin-right: 20px;" autocomplete="off"
 													type="text" id="phone3" name="phone3" class="phone3"
 													placeholder="">
 												<button type="button" id="sendPhoneNumber"
@@ -392,8 +392,8 @@ body{
 								<tr>
 									<th><span>인증번호</span></th>
 									<td><div style="display: flex;">
-											<input type="text" id="inputCertifiedNumber"
-												style="height: 40px; margin-right: 20px;"
+											<input type="text" id="inputCertifiedNumber" autocomplete="off"
+												style="height: 40px; margin-right: 20px; width: 100px;" 
 												name="inputCertifiedNumber" class="send_number"
 												placeholder="10:00">
 											<button type="button"
@@ -487,13 +487,13 @@ body{
 									</td>
 								</tr>
 								<tr>
-									<th>프로필글</th>
-									<td><input type="text" style="height: 40px;"
+									<th><span>프로필글</span></th>
+									<td><input type="text" style="height: 40px;" autocomplete="off"
 										class="form-control" id="profileWriting" name="profileWriting"
 										placeholder="프로필글"></td>
 								</tr>
 								<tr>
-									<th>프로필사진</th>
+									<th><span>프로필사진</span></th>
 									<td><input type="file" onchange="setThumbnail(event);"
 										style="display: none;" class="form-file" id="profileImageFile"
 										name="profileImageFile" />
@@ -536,7 +536,6 @@ body{
 		<!-- container E -->
 	</form>
 	<!-- footer start -->
-	<jsp:include page="/footer.jsp" />
-	<!-- footer end -->
+	<!-- footer end --> 
 </body>
 </html>

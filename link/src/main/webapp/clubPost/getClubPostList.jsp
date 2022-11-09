@@ -3,356 +3,379 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<meta name="description" content="The Page Description">
-		
-		<style type="text/css">@-ms-viewport{width: device-width;}</style>
-		
-		<title>모임 게시물 리스트</title>
-		
-		<!-- 사용자 정의 css -->
-		<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="The Page Description">
 
-		<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
-		
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-		
-		<!--  font -->
-		<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet"> -->
-		
-		<!-- Swal 쓰기위한 cdn -->
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-		
-		<!--  ///////////////////////// jQuery CDN, bootstrap CDN ////////////////////////// -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">@-ms-viewport{width: device-width;}</style>
+
+<title>모임 게시물 리스트</title>
+
+<!-- 사용자 정의 css -->
+<link href="/resources/css/clubPost/clubPost.css" rel="stylesheet">
+
+<!-- 공통 css는 toolbar.jsp include 받아서 쓰고있다 -->
+
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+
+<!--  font -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet"> -->
+
+<!-- Swal 쓰기위한 cdn -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!--  ///////////////////////// jQuery CDN, bootstrap CDN ////////////////////////// -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- 템플릿에 있던 코드 -->
+<script src="/resources/javascript/plugins.js"></script>
+<script src="/resources/javascript/beetle.js"></script>
+
+<!-- include summernote css/js -->
+<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/summernote/summernote-lite.js"></script>
 	
-		<!-- 템플릿에 있던 코드 -->
-		<script src="/resources/javascript/plugins.js"></script>
-		<script src="/resources/javascript/beetle.js"></script>
-		
-		<!-- include summernote css/js -->
-		<link href="/resources/summernote/summernote-lite.css" rel="stylesheet">
-		<script src="/resources/summernote/summernote-lite.js"></script>
-		
-		<script type="text/javascript">
-			function textEdit(){
-			    jsonArray = [];
-				$('#summernote').summernote({
-	                disableResizeEditor: true,
-	                minHeight : 400,
-	                maxHeight : 700,
-	                focus : true,
-	                lang : 'ko-KR',
-	                toolbar : [
-	  	              ["style", ["style"]],
-		              ["font", ["bold", "underline", "clear"]],
-		              ["fontname", ["fontname"]],
-		              ["para", ["ul", "ol", "paragraph"]],
-		              ["table", ["table"]],
-		              ["insert", ["link", "picture", "video"]],
-		              ["view", ["fullscreen", "codeview"]],
-		              ['highlight', ['highlight']]
-		            ],
-	                //콜백 함수
-	                callbacks : {
-	                	onImageUpload : function(files, editor, welEditable) {
-	               	 		// 파일 업로드(다중업로드를 위해 반복문 사용)
-	               	 		for (var i = files.length - 1; i >= 0; i--) {
-	                			uploadSummernoteImageFile(files[i], this);
-	                		}
-	                	}
-	                }//end of callbacks
-	            });//end of summernote
+<script type="text/javascript">
+	function textEdit(){
+	    jsonArray = [];
+		$('#summernote').summernote({
+               disableResizeEditor: true,
+               minHeight : 400,
+               maxHeight : 700,
+               focus : true,
+               lang : 'ko-KR',
+               toolbar : [
+ 	              ["style", ["style"]],
+              ["font", ["bold", "underline", "clear"]],
+              ["fontname", ["fontname"]],
+              ["para", ["ul", "ol", "paragraph"]],
+              ["table", ["table"]],
+              ["insert", ["link", "picture", "video"]],
+              ["view", ["fullscreen", "codeview"]],
+              ['highlight', ['highlight']]
+            ],
+               //콜백 함수
+               callbacks : {
+               	onImageUpload : function(files, editor, welEditable) {
+              	 		// 파일 업로드(다중업로드를 위해 반복문 사용)
+              	 		for (var i = files.length - 1; i >= 0; i--) {
+               			uploadSummernoteImageFile(files[i], this);
+               		}
+               	}
+               }//end of callbacks
+           });//end of summernote
 
-				function uploadSummernoteImageFile(file, el) {
-					var data = new FormData();
-					data.append("file",file);
-						$.ajax({
-							url: '/clubPostRest/json/uploadSummernoteImageFile',
-							type: "POST",
-							enctype: 'multipart/form-data',
-							data: data,
-							cache: false,
-							contentType : false,
-							processData : false,
-							success : function(data) {
-								//alert(data.responseCode);
-								//alert(data.url);
-								//alert("업로드 하였습니다");
-								$(el).summernote('editor.insertImage', data.url);
-								//alert(data.url);
-								//jsonArray.push(json["url"]);
-								//jsonFn(jsonArray);
-							}
+		function uploadSummernoteImageFile(file, el) {
+			var data = new FormData();
+			data.append("file",file);
+				$.ajax({
+					url: '/clubPostRest/json/uploadSummernoteImageFile',
+					type: "POST",
+					enctype: 'multipart/form-data',
+					data: data,
+					cache: false,
+					contentType : false,
+					processData : false,
+					success : function(data) {
+						//alert(data.responseCode);
+						//alert(data.url);
+						//alert("업로드 하였습니다");
+						$(el).summernote('editor.insertImage', data.url);
+						//alert(data.url);
+						//jsonArray.push(json["url"]);
+						//jsonFn(jsonArray);
+					}
+				});
+		}//end of uploadSummernoteImageFile
+		
+		function jsonFn(jsonArray){
+			//console.log(jsonArray);
+		}
+
+	};//end of textEdit
+</script>
+	
+<script type="text/javascript">
+	$(function() {
+		// summernote
+		textEdit();
+		
+		$("#club-post-add").bind("click", function(e) {
+			// 모달창 열기
+			$('#club-post-add-modal').modal("show");
+		});
+		
+		$("input[value='등록완료']").bind("click", function(){
+			//alert('등록완료');
+			//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
+			
+			if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
+				Swal.fire({
+					  icon: 'error',
+					  title: '제목은 필수입니다'
+					})
+					return;
+			}
+			
+			if( $("input[name='clubPostTitle']").val().length > 40 ){
+				Swal.fire({
+					  icon: 'error',
+					  title: '제목은 40자까지 가능합니다'
+					})
+					return;
+			}
+			
+			if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
+				Swal.fire({
+					  icon: 'error',
+					  title: '이미지나 동영상 1개 필수입니다'
+					})
+					return;
+			}
+			
+			if( $("#summernote").val().length > 1000 ){
+				Swal.fire({
+					  icon: 'error',
+					  title: '내용이 너무 깁니다'
+					})
+					return;
+			}
+			
+			//$("form").attr("accept-charset", "EUC-KR").submit();
+			$("form").submit();
+			
+			if(sock) {
+				var Msg = "게시물 작성";
+				sock.send(Msg);
+			}
+			
+		});
+		
+		$("input[value='이전으로']").bind("click", function(){
+			//alert('이전으로');
+			
+			// 제목과 내용 초기화
+			$("input[name='clubPostTitle']").val("");
+			// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
+			$(".note-editable").text("");
+			$("#summernote").val("");
+			
+			// 모달창 닫기
+			$('#club-post-add-modal').modal("hide");
+		});
+		
+		// 모달창 x 클릭시 이벤트
+		$("button[class='close']").bind("click", function(){
+			//alert('수정완료 이전으로');
+			
+			// 제목과 내용 초기화
+			$("input[name='clubPostTitle']").val("");
+			// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
+			$(".note-editable").text("");
+			$("#summernote").val("");
+			
+			// 모달창 닫기
+			$('#club-post-add-modal').modal("hide");
+		});
+		
+		$("b:contains('최신순')").bind("click", function() {
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
+		});
+		$("b:contains('오래된순')").bind("click", function() {
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=1";
+		});
+		$("b:contains('좋아요 많은순')").bind("click", function() {
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=2";
+		});
+		$("b:contains('내가 작성한 게시물')").bind("click", function() {
+			location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=3";
+		});
+		$("input[value='검색']").bind("click", function() {
+			$("input[name='currentPage']").val("1");
+			//$("form").submit();
+		});
+		
+		//무한 페이징
+		var currentPage = 1;
+		$(window).scroll(function() {
+			var maxHeight = $(document).height();
+			var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+			
+			if(currentScroll >= maxHeight) {
+				
+				currentPage++;
+				//alert(currentPage);
+				$("input[name='currentPage']").val(currentPage);
+				
+				var clubNo = "2";
+				var searchCondition = $("option:selected").val();
+				var searchKeyword = $("input[name='searchKeyword']").val();
+				var order = $("input[name='order']").val();
+				
+				//alert(searchCondition);
+				//alert(searchKeyword);
+				//alert(order);
+				
+				$.ajax({
+					url : "/clubPostRest/json/getClubPostList",
+					type : "post",
+					dataType : "json",
+					data : JSON.stringify({
+						pageUnit : clubNo,
+						currentPage : currentPage,
+						searchCondition : searchCondition,
+						searchKeyword : searchKeyword,
+						order : order
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function( JSONData, status ) {
+						//alert(status);
+						//console.log(JSONData.clubPostList);
+						//console.log(JSONData.clubPostList.length);
+
+						$.each( JSONData, function( item, el ) {
+							console.log( item );
+							console.log( el );
+							//var check = (JSONData.clubPostList.clubPostVideo1 == null)? false: true
+									
+							var display = "";
+							
+							console.log( display );
+							$(".col-md-4").append( display );
 						});
-				}//end of uploadSummernoteImageFile
-				
-				function jsonFn(jsonArray){
-					//console.log(jsonArray);
-				}
-
-			};//end of textEdit
-		</script>
+						
+						$("input[name='order']").val( JSONData.search.order );
+						
+					}// end of success
+				});// end of ajax				
+			}// end of if			
+		}); // end of scroll
 		
-		<script type="text/javascript">
-			$(function() {
-				// summernote
-				textEdit();
-				
-				$("#club-post-add").bind("click", function(e) {
-					// 모달창 열기
-					$('#club-post-add-modal').modal("show");
-				});
-				
-				$("input[value='등록완료']").bind("click", function(){
-					//alert('등록완료');
-					//$(this.form).attr("method", "POST").attr("accept-charset", "EUC-KR").attr("action", "/feed/addFeed").attr("enctype", "multipart/form-data").submit();
-					
-					if( $.trim($("input[name='clubPostTitle']").val()) == '' ){
-						Swal.fire({
-							  icon: 'error',
-							  title: '제목은 필수입니다'
-							})
-							return;
-					}
-					
-					if( $("input[name='clubPostTitle']").val().length > 40 ){
-						Swal.fire({
-							  icon: 'error',
-							  title: '제목은 40자까지 가능합니다'
-							})
-							return;
-					}
-					
-					if( $("#summernote").val().match("img") == null && $("#summernote").val().match("iframe") == null ){
-						Swal.fire({
-							  icon: 'error',
-							  title: '이미지나 동영상 1개 필수입니다'
-							})
-							return;
-					}
-					
-					if( $("#summernote").val().length > 1000 ){
-						Swal.fire({
-							  icon: 'error',
-							  title: '내용이 너무 깁니다'
-							})
-							return;
-					}
-					
-					//$("form").attr("accept-charset", "EUC-KR").submit();
-					$("form").submit();
-					
-					if(sock) {
-						var Msg = "게시물 작성";
-						sock.send(Msg);
-					}
-					
-				});
-				
-				$("input[value='이전으로']").bind("click", function(){
-					//alert('이전으로');
-					
-					// 제목과 내용 초기화
-					$("input[name='clubPostTitle']").val("");
-					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
-					$(".note-editable").text("");
-					$("#summernote").val("");
-					
-					// 모달창 닫기
-					$('#club-post-add-modal').modal("hide");
-				});
-				
-				// 모달창 x 클릭시 이벤트
-				$("button[class='close']").bind("click", function(){
-					//alert('수정완료 이전으로');
-					
-					// 제목과 내용 초기화
-					$("input[name='clubPostTitle']").val("");
-					// summernote는 불러오고 나서 F12번으로 textArea 클릭해서 class명 다시 지정해줌
-					$(".note-editable").text("");
-					$("#summernote").val("");
-					
-					// 모달창 닫기
-					$('#club-post-add-modal').modal("hide");
-				});
-				
-				$("b:contains('최신순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=0";
-				});
-				$("b:contains('오래된순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=1";
-				});
-				$("b:contains('좋아요 많은순')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=2";
-				});
-				$("b:contains('내가 작성한 게시물')").bind("click", function() {
-					location.href = "/clubPost/getClubPostList?clubNo="+${ clubNo }+"&order=3";
-				});
-				$("input[value='검색']").bind("click", function() {
-					$("input[name='currentPage']").val("1");
-					//$("form").submit();
-				});
-				
-				//무한 페이징
-				var currentPage = 1;
-				$(window).scroll(function() {
-					var maxHeight = $(document).height();
-					var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
-					
-					if(currentScroll >= maxHeight) {
-						
-						currentPage++;
-						//alert(currentPage);
-						$("input[name='currentPage']").val(currentPage);
-						
-						var clubNo = "2";
-						var searchCondition = $("option:selected").val();
-						var searchKeyword = $("input[name='searchKeyword']").val();
-						var order = $("input[name='order']").val();
-						
-						//alert(searchCondition);
-						//alert(searchKeyword);
-						//alert(order);
-						
-						$.ajax({
-							url : "/clubPostRest/json/getClubPostList",
-							type : "post",
-							dataType : "json",
-							data : JSON.stringify({
-								pageUnit : clubNo,
-								currentPage : currentPage,
-								searchCondition : searchCondition,
-								searchKeyword : searchKeyword,
-								order : order
-							}),
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function( JSONData, status ) {
-								//alert(status);
-								//console.log(JSONData.clubPostList);
-								//console.log(JSONData.clubPostList.length);
+		// order
+		$(document).ready(function () {
+			$(".club-post-list-order").hover(function () {
+				$(this).css("color", "#5F0080");
+			}, function () {
+				$(this).css("color", "black");
+			});
+		});
+		
+		
+		
+		
+		<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
+		<%--$(".clubPost-header-heart").bind("click", function(){
+			//alert("모임게시물 좋아요");
+			$.ajax( "/clubPostRest/json/updateClubPost",
+					{
+						method : "POST",
+						data : JSON.stringify({
+									clubNo : ${ clubNo },
+									clubPostNo : ${ clubPost.getClubPost.clubPostNo }
+								}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						dataType : "json",
+						success : function(JSONData, status){
+							$(".clubPost-header-heart").children().remove();
+							$(".clubPost-header-heartCount").text("");
 
-								$.each( JSONData, function( item, el ) {
-									console.log( item );
-									console.log( el );
-									//var check = (JSONData.clubPostList.clubPostVideo1 == null)? false: true
-											
-									var display = "";
-									
-									console.log( display );
-									$(".col-md-4").append( display );
-								});
-								
-								$("input[name='order']").val( JSONData.search.order );
-								
-							}// end of success
-						});// end of ajax				
-					}// end of if			
-				}); // end of scroll
-				
-				// order
-				$(document).ready(function () {
-					$(".club-post-list-order").hover(function () {
-						$(this).css("color", "#5F0080");
-					}, function () {
-						$(this).css("color", "black");
+							var heartDisplay = "";
+							
+							// 로그인한 회원이 좋아요하면 게시물번호를 안했으면 0을 리턴한다
+							if(JSONData.heartCondition == 0){
+								heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
+							}else{
+								heartDisplay = "<img src='/resources/image/uploadFiles/heart.jpg' height='70' width='70'>";
+							}
+							
+							$(".clubPost-header-heart").append( heartDisplay );
+							$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
+							
+							if(sock) {
+								var Msg = "하트 좋아요";
+								sock.send(Msg);
+							}
+						}
 					});
-				});
-				
-				
-				
-				
-				<%-- 모임 게시물 좋아요 또는 좋아요취소 --%>
-				<%--$(".clubPost-header-heart").bind("click", function(){
-					//alert("모임게시물 좋아요");
-					$.ajax( "/clubPostRest/json/updateClubPost",
-							{
-								method : "POST",
-								data : JSON.stringify({
-											clubNo : ${ clubNo },
-											clubPostNo : ${ clubPost.getClubPost.clubPostNo }
-										}),
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								dataType : "json",
-								success : function(JSONData, status){
-									$(".clubPost-header-heart").children().remove();
-									$(".clubPost-header-heartCount").text("");
+		});--%> // end of 하트
+		
+		
+						
+		
+		
+	});// end of function()
+	
+	
+	//클럽버튼 펑션입니다.
+	$(function() {
+		$(".homeBtn").on("click", function() {
+			self.location="/club/getClub?clubNo=${clubNo}";
+		});
+	});
+	
+	$(function() {
+		$(".clubPostBtn").on("click", function() {
+			self.location="/clubPost/getClubPostList"
+		});
+	});
+	
+	$(function() {
+		$(".clubMemberBtn").on("click", function() {
+			self.location="/club/getClubMemberList"
+		});
+	});
 
-									var heartDisplay = "";
-									
-									// 로그인한 회원이 좋아요하면 게시물번호를 안했으면 0을 리턴한다
-									if(JSONData.heartCondition == 0){
-										heartDisplay = "<img src='/resources/image/uploadFiles/no_heart.jpg' height='70' width='70'>";
-									}else{
-										heartDisplay = "<img src='/resources/image/uploadFiles/heart.jpg' height='70' width='70'>";
-									}
-									
-									$(".clubPost-header-heart").append( heartDisplay );
-									$(".clubPost-header-heartCount").text( JSONData.clubPostHeartCount );
-									
-									if(sock) {
-										var Msg = "하트 좋아요";
-										sock.send(Msg);
-									}
-								}
-							});
-				});--%> // end of 하트
-				
-				
-								
-				
-				
-			});// end of function()
-			
-			
-			//클럽버튼 펑션입니다.
-			$(function() {
-				$(".homeBtn").on("click", function() {
-					self.location="/club/getClub?clubNo=${clubNo}";
-				});
-			});
-			
-			$(function() {
-				$(".clubPostBtn").on("click", function() {
-					self.location="/clubPost/getClubPostList"
-				});
-			});
-			
-			$(function() {
-				$(".clubMemberBtn").on("click", function() {
-					self.location="/club/getClubMemberList"
-				});
-			});
+	
+	
+	//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
+	function getClubPostGo(clubNo, clubPostNo){
+		location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
+	}
+	
+	// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
+	function getMyHomeGo(userId){
+		location.href = "/myHome/getYourHome?userId="+userId;
+	}
+	
+	
+	
+</script>
+	
+<style type="text/css">
+.row-content.buffer.clear-after > div:first-child > img{
+	width: 1139px;
+    height: 536px;
+    margin-top: 14px;
+}
+.homeBtn_group{
+	background-color: whitesmoke;
+	margin-top: 51px;
+}
+.glyphicon{
+	color: #5F0080 !important;
+}
+.grid-items.shuffle{
+	width: 1143px;
+    /* background-color: red; */
+}
+.text-primary{
+	width: 1143px !important;
+    /* background-color: blue !important; */
+}
+</style>
 		
-			
-			
-			//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
-			function getClubPostGo(clubNo, clubPostNo){
-				location.href = "/clubPost/getClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo;
-			}
-			
-			// 닉네임, 프로필사진 클릭시 해당 유저의 마이홈피로 이동
-			function getMyHomeGo(userId){
-				location.href = "/myHome/getYourHome?userId="+userId;
-			}
-			
-			
-			
-		</script>
-		
-	</head>
+</head>
 <body class="portfolio">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -386,8 +409,8 @@
 			
 				<div class="row-content buffer clear-after">
 					
-					<div>
-						<img src="/resources/image/uploadFiles/clubMainImage5.jpg">
+					<div style="height: 563px;">
+						<img src="/resources/image/uploadFiles/${ club.clubImage }" style="height: 100%;">
 					</div>
 				
 				
@@ -411,7 +434,7 @@
 					
 					
 					
-					<div class="grid-items preload" style="background-color: black;">
+					<div class="grid-items preload">
 					
 					
 							<!--  화면구성 div Start /////////////////////////////////////-->
@@ -539,16 +562,18 @@
 						
 					</div>
 				</div><!-- row-content -->
+				
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<!-- footer start -->
+			<jsp:include page="/footer.jsp" />
+			<!-- footer end -->
+			
 			</div><!-- row -->
 		<!-- </main>main -->
 		
 		<!-- summernote로 게시물 등록 모달창 보이기 -->
 		<jsp:include page="/clubPost/addClubPostModal.jsp" />
 		<!-- summernote로 게시물 등록 모달창 숨기기 -->
-		
-		<!-- footer start -->
-		<jsp:include page="/footer.jsp" />
-		<!-- footer end -->
 
 </body>
 </html>

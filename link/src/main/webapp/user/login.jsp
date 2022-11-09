@@ -195,13 +195,13 @@ z-index: 10000;
 									style='margin-left: 60px'>
 									<h1 class="login__title">Sign In</h1>
 									<div class="login__box" style="height: 60px;">
-										<i class='bx bx-user login__icon'></i> <input type="text"
+										<i class='bx bx-user login__icon'></i> <input type="text" autocomplete="off"
 											onkeyup="enterkey()" placeholder="아이디" class="login__input"
 											name="userId" style="font-size: initial; border: none;"
 											id="loginUserId">
 									</div>
 									<div class="login__box" style="height: 60px;">
-										<i class='bx bx-lock login__icon'></i> <input type="password"
+										<i class='bx bx-lock login__icon'></i> <input type="password" autocomplete="off"
 											placeholder="비밀번호" class="login__input" name="password"
 											onkeyup="enterkey()"
 											style="font-size: initial; border: none;" id="password">
@@ -265,7 +265,7 @@ z-index: 10000;
 	})  
 	})
 		var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c",
-				"http://192.168.0.183:8080/user/login.jsp");
+				"http://192.168.0.183:8080/toolbar.jsp");
 		var state = naver_id_login.getUniqState();
 		naver_id_login.setButton("green", 3, 50);
 		naver_id_login.setDomain("http://192.168.0.183:8080/");
