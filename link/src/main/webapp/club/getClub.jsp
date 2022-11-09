@@ -191,7 +191,7 @@
 					success : function(JSONData){
 						console.log(JSONData.userId);
 						
-						if( '${ sessionScope.user.userId }' == JSONData.userId ){
+						if( '${ sessionScope.user.userId }' == JSONData.userId || '${ sessionScope.user.role }' == '1' ){
 							self.location="/clubPost/getClubPostList"
 						}else{
 							swal.fire('게시물은 모임원만 볼 수 있습니다 \n 해당 모임에 가입신청해주세요');
