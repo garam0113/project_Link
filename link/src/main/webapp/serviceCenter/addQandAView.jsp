@@ -200,13 +200,12 @@ body {
 
 	<jsp:include page="/toolbar.jsp" />
 	<!-- form Start /////////////////////////////////////-->
-	<div class="page-header" align="center"
-		style="transform: translate(-316px, 38px);">
+<div class="page-header" align="center" style="margin-left:0 auto; transform: translateX(-220px);">
 		<h2>Q&A 등록</h2>
 	</div>
 	<div class="container">
 	<div class ="table" style="width:880px; box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
-	    transform: translate(205px, 0px); background-color:aliceblue; margin-top:50px; height:750px;">
+	    transform: translate(115px, 0px); background-color:aliceblue; margin-top:30px; height:750px;">
 		<div></div>
 		<div class="page-header text-center"></div>
 
@@ -249,9 +248,9 @@ body {
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">등록</button>
+						style="transform: translate(153px, 0px);">등록</button>
 					<button class="custom-btn btn-13"
-						style="transform: translate(220px, 0px);">이전</button>
+						style="transform: translate(153px, 0px);">이전</button>
 				</div>
 			</div>
 			 

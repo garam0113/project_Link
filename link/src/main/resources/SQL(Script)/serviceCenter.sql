@@ -41,11 +41,11 @@ set profile_image ='admin.JPG'
 where user_id='admin01';
 
 select *
-from report_push;
+from users;
 
 delete 
 from report_push
-where no='151';
+where no='169';
 
 //===============================================================여기까지 노티스	
 //===============================================================밑부턴 Q&A
