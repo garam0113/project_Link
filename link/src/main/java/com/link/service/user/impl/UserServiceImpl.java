@@ -142,13 +142,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void sendSMS(String phoneNo, String cerNo) {
 		// TODO Auto-generated method stub
-		String api_key = "NCS1BDT5MCKAA0XC";
-		String api_secret = "REKHECI15HOEGVDGXKEVODOVJMFTT2WJ";
+		String api_key = "NCSLST2PMJ9SKBCH";
+		String api_secret = "WBT25HFORXO44GDVYEXDZLMGTULR4SFN";
 		Message coolsms = new Message(api_key,api_secret);
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phoneNo);
-		params.put("from", "01087090770");
+		params.put("from", "01047669445");
 		params.put("type", "SMS");
 		params.put("text", "Link에서 보낸 인증번호["+cerNo+"]");
 		params.put("app_version", "test app 1,2");
@@ -166,8 +166,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void sendPasswordSMS(User user) {
 		// TODO Auto-generated method stub
-		String api_key = "NCS1BDT5MCKAA0XC";
-		String api_secret = "REKHECI15HOEGVDGXKEVODOVJMFTT2WJ";
+		String api_key = "NCSLST2PMJ9SKBCH";
+		String api_secret = "WBT25HFORXO44GDVYEXDZLMGTULR4SFN";
 		Message coolsms = new Message(api_key,api_secret);
 		
 		String phoneNo = user.getPhone1()+user.getPhone2()+user.getPhone3();
@@ -175,7 +175,7 @@ public class UserServiceImpl implements UserService {
 		
 		HashMap<String, String> param = new HashMap<String, String>();
 		param.put("to",phoneNo);
-		param.put("from","01087090770");
+		param.put("from","01047669445");
 		param.put("type","SMS");
 		param.put("text","임시비밀번호발급["+user.getPassword()+"]");
 		param.put("app_version", "test app 1,2");
