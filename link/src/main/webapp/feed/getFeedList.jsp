@@ -71,7 +71,7 @@
 	    if (month.length < 2) month = '0' + month; 
 	    if (day.length < 2) day = '0' + day; 
 	    
-	    var date = year + "년 " + month + "월 " + day + "일 " + hour + "시 " + minute + "분";
+	    var date = month + "월 " + day + "일 " + hour + "시 " + minute + "분";
 	    
 	    return date;
 	    
@@ -2301,7 +2301,7 @@
 						<div class="column three">
 							<div>
 								<button class="btn btn-primary searchPlace" type="button"
-									onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+									onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 	
 								<%-- 검색 --%>
 								<form id="searchForm" method="POST" action="/feed/getFeedList">
@@ -2393,11 +2393,11 @@
 													<div class="feedDate">
 													
 														<c:if test="${!empty feed.updateDate}">
-															<fmt:formatDate value="${feed.updateDate}" pattern="yyyy년 MM월 dd일 HH시mm분"></fmt:formatDate> (수정)
+															<fmt:formatDate value="${feed.updateDate}" pattern="MM월 dd일 HH시mm분"></fmt:formatDate> (수정)
 														</c:if>
 														
 														<c:if test="${empty feed.updateDate}">
-															<fmt:formatDate value="${feed.regDate}" pattern="yyyy년 MM월 dd일 HH시mm분"></fmt:formatDate>
+															<fmt:formatDate value="${feed.regDate}" pattern="MM월 dd일 HH시mm분"></fmt:formatDate>
 															
 														</c:if>
 

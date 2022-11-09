@@ -553,7 +553,7 @@ DELETE FROM report_push where no = 163
 DELETE FROM report_push where no = 158
 
 SELECT f.feed_no, f.user_id, u.profile_image, u.nickName , f.feed_open_condition, f.feed_full_content, f.feed_content, f.feed_image1, f.feed_image2, f.feed_image3, f.feed_image4, f.feed_video, f.hashtag, f.feed_heart_count, f.feed_comment_count, TO_CHAR(f.feed_reg_date, 'YYYY-MM-DD HH24:MI:SS') as feed_reg_date, f.feed_update_date, f.report_condition, f.delete_condition , isLike.EXIST FROM feed f, users u, ( SELECT source_no as EXIST FROM HEART WHERE TRIM(source) = '0' AND user_id = 'meptael' ) isLike WHERE f.feed_no = isLike.EXIST(+) AND f.user_id = u.user_id AND f.feed_no = 17 
-
+SELECT * FROM CLUB
 
 CREATE TABLE FEED (
    feed_no                     NUMBER                                    NOT NULL,
