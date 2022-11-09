@@ -164,7 +164,7 @@
 	
 </head>
 
-<body>
+<body style="position: relative; height: 2070px; padding-bottom: 350px;">
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
@@ -195,6 +195,10 @@
 	
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">
+				
+		<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
+			<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
+		</div>
 	
 		<div class="homeBtn_group" style="margin-top: 200px;">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
@@ -223,10 +227,6 @@
 				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
 			
 					<div class="row-content buffer-left buffer-right buffer-bottom" style="padding-bottom: 20%;">
-				
-					<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
-						<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
-					</div>
 	
 				  <form class="form-horizontal" style="margin-top:150px;">  
 			      <!--  table Start /////////////////////////////////////-->

@@ -480,7 +480,7 @@ public class ClubController {
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
 		
 		// 미팅번호로 모임번호 가져온다
-		int returnClubNo = clubService.getClubNotoMyHome((Integer)session.getAttribute("meetingNo"));
+		int returnClubNo = clubService.getClubNotoMyHome(Integer.parseInt((String)session.getAttribute("meetingNo")));
 		
 		// 모임 대표 이미지 가져온다
 		Map<String, Object> clubMap = new HashMap<String, Object>();
