@@ -2324,11 +2324,11 @@
 							</div>
 							</h3>
 					
-							<%-- 
+
+
 							<jsp:include page="/serviceCenter/getFestival.jsp" />
-							 --%>
 
-
+							
 							
 						</div>
 
