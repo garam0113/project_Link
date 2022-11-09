@@ -202,17 +202,17 @@ nav > ul > li{
 
 </head>
 
-<body style="background: #EBEDF0; position: relative; height: 2215px;">
+<body style="background: #EBEDF0; position: relative; height: 2300px;">
 	
 	<jsp:include page="/toolbar.jsp"/>
 	
 	
 	<form class="form-horizontal" method="post" action="/club/updateClub" enctype="multipart/form-data">
 		<div class="wrap wd668">
-			<div class="container" style="background: white; height: 1820px; margin-bottom: -400px;">
+			<div class="container" style="background: white; height: 2000px; margin-bottom: -400px;">
 				
 				<div>
-					<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 100%; height: 550px; margin-top: 14px;">
+					<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 1140px; height: 700px; margin-top: 14px;">
 				</div>
 				
 				<div class="form_txtInput">
