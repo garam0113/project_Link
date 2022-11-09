@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
@@ -86,6 +87,9 @@
 	
 	#main {
 		background-color: #f0f2f5 !important;
+		padding-bottom: 0% !important;
+		margin-right: 0px !important;
+    	margin-left: 0px;
 	}
 	
 	.h2-color {
@@ -94,6 +98,10 @@
 	
 	.p-color {
 		color: yellow;
+	}
+	
+	.buffer-bottom {
+		padding-bottom: 0px !important;
 	}
 	
 	</style>
@@ -196,11 +204,11 @@
 	
 	<div class="container" style="background-color: #f0f2f5 !important;">
 				
-		<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
+		<div style="background-color: yellow; height: 712px; width: 1135px;margin-bottom: 40px;">
 			<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
 		</div>
 	
-		<div class="homeBtn_group" style="margin-top: 200px;">
+		<div class="homeBtn_group" style="margin-top: 100px;">
 						<button type="button" class="homeBtn" style="margin-top: 17px;">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
 						</button>
@@ -218,15 +226,15 @@
 						</button>
 				</div>
 				
-		<div class="form_txtInput" style="margin-top: 150px;">
+		<div class="form_txtInput" style="margin-top: 100px;">
 			<h2 class="sub_tit_txt">일정 참여자</h2>
 		</div>
 			<!-- 중간 개별영역 -->
-			<div id="main" class="row" style="padding-bottom: 20%;">
+			<div id="main" class="row">
 			
 				<div class="listForm" style="margin-top: 20px; box-shadow:rgb(0 0 0 / 30%) 0px 7px 9px, rgb(0 0 0 / 22%) 0px 4px 5px; border-radius: 10px;" >
 			
-					<div class="row-content buffer-left buffer-right buffer-bottom" style="padding-bottom: 20%;">
+					<div class="row-content buffer-left buffer-right buffer-bottom" >
 	
 				  <form class="form-horizontal" style="margin-top:150px;">  
 			      <!--  table Start /////////////////////////////////////-->
@@ -261,11 +269,21 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
 		<div class="form-group">
-				<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 30%;">
-					<button type="button" class="plain button red cancel" id="deleteParticipant">신청취소</button>
+			<div class="col-sm-offset-6  col-sm-6 text-center" style="margin-left: 30%;">
+				
+					<c:if test="${ fn:length(meetingMemberList) > 0 }">
+						<c:forEach var="k" begin="0" end="${ fn:length(meetingMemberList) - 1}" step="1">
+							<c:if test="${ fn:trim(meetingMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+								<button type="button" class="plain button red cancel" id="deleteParticipant">신청취소</button>
+							</c:if>
+					 	</c:forEach>
+				 	</c:if>		
+
+				
+					
 					<button type="button" class="plain button red cancel" id="cancel">닫&nbsp;기</button>					
 		    </div>
-			</div>		
+		</div>		
 	  
 	  </form>
  	</div>
@@ -281,5 +299,11 @@
 		<!-- footer end -->
 		
 </body>
+	<style>
+		#club_post_footer {
+			margin-top: 100px !important;
+			position: relative !important;
+		}
+	</style>
 
 </html>

@@ -654,7 +654,7 @@
 									</c:if>
 								</c:if>				 	
 						 	</c:forEach>
-						 	</c:if>	
+						 	</c:if>
 											
 						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
 							<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
