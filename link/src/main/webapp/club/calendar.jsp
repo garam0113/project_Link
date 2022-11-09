@@ -138,10 +138,9 @@ a {
 				  console.log(result_val);
 		 
 				$.each(JSONData, function(index, item) { // 데이터 =item
-				    
 					console.log(item);
                     result_val.push(item);
-				
+					
 				});
 			    
 			 	var calendarEl = document.getElementById('calendar');
