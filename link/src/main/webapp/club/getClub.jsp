@@ -435,12 +435,12 @@
 		
 		
 		.modal { 
-			position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none; margin-top: 350px;
+			width:100%; height:100%; background: rgba(0,0,0,0.2); top:0; left:0; display:none;
 		}
 			
 		.modal_content{
 			width:400px; height:200px;
-			background:#fff; border-radius:10px;
+			background:#fff; border-radius:30px;
 			position:relative; top:50%; left:50%;
 			margin-top:-100px; margin-left:-200px;
 			text-align:center;
@@ -506,6 +506,7 @@
 	width: 1140px;
 	margin-left: 405px;
 	margin-top: 13px;
+	height: 1700px;
 }
 .mainForm{
 	display: inline-flex;
@@ -534,7 +535,7 @@
 </style>
 </head>
 
-<body class="blog masonry-style">
+<body class="blog masonry-style" style="position: relative; height: 2120px; padding-bottom: 350px;">
 
 
 
@@ -755,8 +756,8 @@
 			    </div> --%>
 				<!-- 모달영역 -->
 				<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document" style="padding-top: 100px; top: 0px;">
-						<div class="modal-content" style="height: 300px; width: 440px;">
+					<div class="modal-dialog" role="document" style="padding-top: 100px; top: 195px;">
+						<div class="modal-content" style="height: 300px; width: 440px; margin-left: 130px; border-radius: 30px;">
 							<div class="modal-header">
 								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -790,17 +791,17 @@
 				<input type="hidden" id="profile" value="${sessionScope.user.profileImage }">
 				<input type="hidden" id="no" value="${clubNo}">
 				<input type="hidden" id="total" value="${clubMemberCount}">
-				
-	
-	
-				<br><br><br><br><br><br><br><br><br><br><br><br>
-				
-				<!-- footer start -->
-				<jsp:include page="/footer.jsp" />
-				<!-- footer end -->
 	
 			</div>
 	<!-- </main> -->
+				
+	
+	
+		<br><br><br><br><br><br>
+		
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 	
 	
 	<script src="https://192.168.0.183:4000/socket.io/socket.io.js"></script>

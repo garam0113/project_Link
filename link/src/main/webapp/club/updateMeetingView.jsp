@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -42,25 +44,18 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body>div.container {
-			border: 3px solid #D6CDB7;
-			margin-top: 10px;
+			/* border: 3px solid #D6CDB7; */
+			margin-top: 50px;
 		}
-		
-		body {
-			background-color: #f0f2f5 !important;
-		}
-		
-		textarea {
-			resize: none;
-		}
-		
+
 		.plain.button.red.cancel{
 	   background-color: white;
 	   box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px;
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: #5F0080 !important;
 	   font-size: 16px !important;
 	   text-align: center;
@@ -73,13 +68,30 @@
 	   border-radius: 10px;
 	   margin: 1rem;
 	   padding: 0px;
-	   width: 65px !important;
+	   width: 85px !important;
+	   height: 40px;
 	   color: white !important;
 	   font-size: 16px !important;
 	}
 		
 		
-      
+		textarea {
+		resize: none;
+	
+		}
+		
+		.clubTitle {
+			width: 500px;
+			height: 50px;
+		}
+		.container{
+			width: 1150px;
+			height: 2000px;
+		}
+		.wrap.wd668{
+			margin-right: 900px;
+		}
+        
     </style>
     
 <script type="text/javascript">
@@ -223,16 +235,80 @@
 	
 
 </script>
+
+<style type="text/css">
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	/* background-color: red; */
+	width: 1400px;
+	margin-left: 500px;
+	font-weight: bold;
+}
+.row-content.buffer, .row-content.buffer-left{
+	padding-left: 0px !important;
+}
+.row-content.buffer, .row-content.buffer-right{
+	padding-right: 0px !important;
+}
+h1.reset{
+	margin-left: 0px;
+}
+.reset, .reset-right{
+	margin-right: 90px !important;
+}
+nav > ul > li{
+	font: unset !important;
+	font-weight: bold !important;
+}
+.form_txtInput{
+	padding-left: 346px;
+}
+.container{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+</style>
+
 </head>
 
-<body>
+<body style="background: whitesmoke; position: relative; height: 1900px;">
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
+	
+	
 
 	<jsp:include page="/toolbar.jsp"/>
 	
 	<form>
 		<div class="wrap wd668">
-			<div class="container">
-				<div class="form_txtInput" style="margin-top:150px;">
+			<div class="container" style="background: white; height: 1400px; padding-bottom: 350px;">
+	
+				<div>
+					<img src="/resources/image/uploadFiles/${ club.clubTitle }" style="width: 100%; height: 550px; margin-top: 14px;">
+				</div>
+				
+				<div class="form_txtInput">
 					<h2 class="sub_tit_txt">모 임 일 정 수 정</h2>
 					<p class="exTxt">일정을 수정해보세요...</p>
 					<div class="join_form">
@@ -298,6 +374,10 @@
 			    </div>
 			</div>
 			
+			
+		<!-- footer start -->
+		<jsp:include page="/footer.jsp" />
+		<!-- footer end -->
 
 		
 	</body>

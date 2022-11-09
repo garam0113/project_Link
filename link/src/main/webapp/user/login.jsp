@@ -25,7 +25,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script type="text/javascript"
+<script type="text/javascript" 
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
 	charset="utf-8"></script>
 <script type="text/javascript"
@@ -33,9 +33,9 @@
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
-<!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
+ 
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
 
 <script type="text/javascript"
 	src="/resources/javascript/user/kakaoLogin.js" charset="utf-8"></script>
@@ -266,9 +266,9 @@ z-index: 10000;
 	})
 		var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c",
 				"http://192.168.0.183:8080/toolbar.jsp");
-		var state = naver_id_login.getUniqState();
+		var state = naver_id_login.getUniqState(); 
 		naver_id_login.setButton("green", 3, 50);
-		naver_id_login.setDomain("http://192.168.0.183:8080/");
+		naver_id_login.setDomain("http://192.168.0.183:8080/"); 
 		naver_id_login.setState(state);
 		naver_id_login.init_naver_id_login();
 		console.log(naver_id_login);

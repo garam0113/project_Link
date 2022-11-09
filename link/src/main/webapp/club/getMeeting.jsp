@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -160,18 +158,77 @@
 	
 });
 	
-	</script>	
+	</script>
+	
+	<style type="text/css">
+	.plain.button.red.cancel{
+		padding: 7px;
+	}
+	.plain.button.red.cancel:hover{
+		padding: 7px;
+	}
+	.col-sm-offset-6.col-sm-6.text-center{
+		margin-left: 100px !important;
+		margin-bottom: -148px;
+		width: 560px;
+	}
+	.row{
+		/* background-color: whitesmoke !important; */
+	}
+	.row-content.buffer-left.buffer-right.buffer-bottom{
+		
+	}
+	.homrBtn_group{
+		margin-left: -78px;
+	}
+	.container{
+		/* background-color: red; */
+		width: 830px;
+		margin-top: 50px;
+		box-shadow: rgba(102, 051, 102, 0.3) 0px 19px 38px, rgba(95, 0, 128, 0.22) 0px 15px 12px !important;
+		border-radius: 20px;
+		background-color: whitesmoke !important;
+	}
+	</style>
 
 </head>
 
-<body>
+<body style="position: relative; height: 2070px; padding-bottom: 350px;">
+
+
+
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	<%-- 채팅을 위한 소켓 --%>
+	<script src="http://192.168.0.74:3000/socket.io/socket.io.js"></script>
+	<%-- 채팅 js --%>
+	<script src="/resources/javascript/chat/chat.js"></script>
+	<%-- 채팅 css --%>
+	<link rel="stylesheet" href="/resources/css/chat/chat.css" type="text/css" media="screen" title="no title">
+	<%-- ///////////////////// 채팅에 필요한 코딩 //////////////////////// --%>
+	
+	<c:if test="${ sessionScope.user != null }">
+	
+		<%-- chat.js에서 사용위해서 --%>
+		<input type="hidden" id="session_userId" value="${ sessionScope.user.userId }">
+		<input type="hidden" id="session_profileImage" value="${ sessionScope.user.profileImage }">
+		<input type="hidden" id="session_nickName" value="${ sessionScope.user.nickName }">
+		<%-- chat.js에서 사용위해서 --%>
+		<%-- 채팅 --%>
+		<jsp:include page="/chat/chat.jsp" />
+		<%-- 채팅 --%>
+	
+	</c:if>
 
 	
-	<jsp:include page="/toolbar.jsp" />	
+	<jsp:include page="/toolbar.jsp" />
 		
-			<div id="main" class="row" style="background: #EBEDF0 !important;"><!-- 중간 개별영역 -->
+			<div id="main" class="row" style="background: whitesmoke !important;"><!-- 중간 개별영역 -->
 			
-				<div class="row-content buffer-left buffer-right buffer-bottom" style="margin-top: 100px;">
+				<div class="row-content buffer-left buffer-right buffer-bottom">
+				
+					<div style="background-color: yellow; height: 712px; width: 1135px; margin-left: -77px; margin-bottom: 40px;">
+						<img src="/resources/image/uploadFiles/${club.clubImage}" style="width: 100%; height: 100%;">
+					</div>
 				
 				
 				
@@ -195,7 +252,7 @@
 		
 	<div class="container">
 		<div class="form_txtInput" style="margin-top: 50px;">
-			<h2 class="sub_tit_txt">일정상세보기</h2>
+			<h2 class="sub_tit_txt">${ club.clubTitle }</h2>
 		
 		</div>
 		
@@ -289,6 +346,9 @@
 		</div>
 		</div>
 	</div>
+	
+	<!-- footer start -->
+	<jsp:include page="/footer.jsp" />
 	
 </body>
 </html>
