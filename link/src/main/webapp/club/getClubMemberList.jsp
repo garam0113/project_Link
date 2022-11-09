@@ -325,6 +325,9 @@
 	tbody{
 		background-color: white !important;
 	}
+	.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+		margin-left: 347px !important;
+	}
 	</style>
 </head>
 

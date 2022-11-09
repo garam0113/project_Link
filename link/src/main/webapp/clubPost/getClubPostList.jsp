@@ -379,6 +379,19 @@
 .club-post-list-order{
 	color: black;
 }
+#brand{
+	margin-left: 27px;
+}
+.menu-item{
+	text-transform: uppercase !important;
+	font-weight: 700 !important;
+    font-size: 0.878em !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.nav-inner.row-content.buffer-left.buffer-right.even.clear-after{
+	padding-right: 37px;
+	width: 1166ox;
+}
 </style>
 		
 </head>
