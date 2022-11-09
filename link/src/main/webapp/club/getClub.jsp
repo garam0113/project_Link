@@ -625,8 +625,25 @@
 					<div class="form-group" id="btn_group">
 						<!-- <button type="button" class="joinLi"></button> -->
 						<div class="col-sm-offset-4  col-sm-4 text-center">
+						
+						<!-- 모임원인지 아닌지 확인 -->
+						<c:set var="isItClubMember" value="false" />
+						<!-- 모임원인지 아닌지 확인 -->
+						
+							<c:if test="${ fn:length(clubMemberList) > 0 }">
+								<c:forEach var="k" begin="0" end="${ fn:length(clubMemberList) - 1}" step="1">
+									<c:if test="${ fn:trim(clubMemberList[k].approvalCondition) == '1' }">
+										<c:if test="${ fn:trim(clubMemberList[k].user.userId) == fn:trim(sessionScope.user.userId)}">
+											<c:set var="isItClubMember" value="true" />
+				      					</c:if>
+				      				</c:if>
+				      			</c:forEach>
+				      		</c:if>
 				      		
-				      		<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+				      		<c:if test="${isItClubMember eq false}">
+				      			<button type="button" class="plain button red cancel" id="club-add-approval">가입신청</button>
+				      		</c:if>
+				      						
 							<button type="button" class="plain button red cancel" id="cancel">이&nbsp;전</button>
 							
 							<c:if test="${ fn:length(clubMemberList) > 0 }">
