@@ -149,12 +149,14 @@
 					//alert("모임원을 승인합니다 : ");
 					
 					var totalClubMemberCount = $("input[name='totalClubMemberCount']").val();
+					console.log(totalClubMemberCount)
 					var clubMaxMember = $("input[name='clubMaxMember']").val();
+					console.log(clubMaxMember)
 					
 				//	alert(totalClubMemberCount);
 				//	alert(clubMaxMember);
 					
-					if(totalClubMemberCount >= clubMaxMember) {
+					if(parseInt(totalClubMemberCount) >= parseInt(clubMaxMember)) {
 							
 						Swal.fire({
 							title: '모임원 한도 초과입니다.' ,
@@ -171,10 +173,10 @@
 							}
 						})
 						
-						} else{
+						} /* else{
 							
 							$("form").attr("method", "POST").attr("action", "/club/updateApprovalCondition").submit();							
-						}
+						} */
 					});
 					
 			});
@@ -183,6 +185,8 @@
 				//alert('승인');
 				var clubUserNo = $(this).val();
 				var approvalCondition = $(this).attr('approvalCondition');
+				var userId = $(this).attr('state');
+ 				//alert(userId);
  				//alert(clubUserNo);
 				//alert(approvalCondition);
 				$.ajax("/clubRest/json/updateApprovalCondition",
@@ -198,10 +202,18 @@
 							},
 							dataType : "json",
 							success : function(JSONData, status) {
-								alert(status);
-							} // end of success
+							//	alert(status);
+								/* swal.fire('승인이 완료되었습니다');
+								$($(this).parent().parent().children())[6].text("승인완료"); */
+							}, // end of success
+							error : function() {
+								swal.fire('승인이 완료되었습니다');
+								//console.log("///"+$("button[state='"+userId+"']").text());
+								$($("button[state='"+userId+"']").parent().parent().children()[6]).text("승인완료");
+							//	console.log("====="+$($("button[state='"+userId+"']").parent().parent().children()[6]).text());
+							}
 						}); // end of ajax
-						refreshMemList();
+					//	refreshMemList();
 				}); // end of 승인
 			});
 
@@ -460,7 +472,7 @@
 									  		<td align="left"><button value="${i.clubUserNo}" memberRole="${i.memberRole}" userId="${i.user.userId}">전달</button></td>
 									  	
 									  		<td align="left"><button value="${i.clubUserNo}" id="banMember">추방</button></td>
-									  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn">승인</button></td>
+									  		<td align="left"><button value="${i.clubUserNo}" approvalCondition = "${i.approvalCondition}" id="updateApprovalCondition" class="updateApprovalConditionBtn" state="${i.user.userId}">승인</button></td>
 											<td>${i.club.clubMaxMember}</td>
 										</c:if>
 									</tr>

@@ -193,9 +193,9 @@ html {
 
 </head>
 
-<body class="page">
+<body class="page"> 
 
-   <header role="banner" class="transparent light">
+   <header role="banner" class="transparent light"> 
       <div class="row">
          <div
             class="nav-inner row-content buffer-left buffer-right even clear-after">
