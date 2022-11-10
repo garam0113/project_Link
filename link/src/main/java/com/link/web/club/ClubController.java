@@ -123,6 +123,12 @@ public class ClubController {
 		// 모임채팅 roomId 가져온다
 		model.addAttribute("roomList", clubPostService.getRoomIdList((User)httpSession.getAttribute("user")));
 		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+
+		
+		// 모임 대표 이미지 가져온다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubService.getClub(clubNo);
+		model.addAttribute("club", clubMap.get("club"));
 		
 		
 		
