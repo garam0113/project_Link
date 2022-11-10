@@ -133,7 +133,7 @@ body{
 					<tr>
 						<th></th>
 						<td align="left" name ="noticeRegDate" id="noticeRegDate" style="display: flex; height: 40px;">${notice.noticeRegDate }</td>
-						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;">${notice.userId.nickName}</td>
+						<td align="left" style="transform: translateX(-370px);" style="display: flex; weight:80px;  height: 40px;">${notice.userId.nickName}</td>
 						
 					</tr>
 					<tr >

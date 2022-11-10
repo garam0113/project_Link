@@ -95,7 +95,7 @@ body>div.container {
 			setTimeout(function() {   
 	             window.close();
 
-	        }, 100);
+	        }, 50);
 		}
 	}
 </script>

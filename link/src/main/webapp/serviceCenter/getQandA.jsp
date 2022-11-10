@@ -167,7 +167,7 @@ body {
 				</tbody>
 					 <tr class = "body" id ="body" >
 						<th style="text-align-last: center;"></th>
-						<td align="left"><strong>${qandA.qandANo}번째 질문</strong>
+						<td align="left"> <strong>질문</strong>
 						<input type="hidden" name="qandANo" id="qandANo" value="${qandA.qandANo}">
 						</td>
 					</tr>
@@ -181,7 +181,7 @@ body {
 					<tr>
 						<th></th>
 						<td align="left" name ="qandARegDate" id="qandARegDate"><strong>${qandA.qandARegDate }</strong>
-						<strong style="margin-left:300px;">${qandA.userId.nickName}</strong></td>
+						<strong style="margin-left:300px;"> 작성자 : ${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >

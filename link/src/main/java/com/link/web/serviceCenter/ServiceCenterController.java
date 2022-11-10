@@ -98,7 +98,7 @@ public class ServiceCenterController {
 		// 파일 업로드 시작
 		int fileCount = 0;
 
-		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+		String root = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
 
 		for (MultipartFile files : file) {
 			fileCount++;
@@ -178,7 +178,9 @@ public class ServiceCenterController {
 		System.out.println("/serviceCenter/updateNotice : POST");
 		int fileCount = 0;
 
-		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
+		String root = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
 
 		for (MultipartFile files : file) {
 			fileCount++;
@@ -266,7 +268,9 @@ public class ServiceCenterController {
 		User userId = (User) session.getAttribute("user");
 		qandA.setUserId(userId);
 		int fileCount = 0;
-		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
+		String root = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
 
 		for (MultipartFile files : file) {
 			fileCount++;
@@ -386,7 +390,9 @@ public class ServiceCenterController {
 		qandA.setUserId(userId);
 		System.out.println(qandA);
 		int fileCount = 0;
-		String root = "C:\\Users\\903-16\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
+		String root = "C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\";
+
 
 		for (MultipartFile files : file) {
 			fileCount++;
