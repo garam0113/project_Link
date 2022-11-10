@@ -229,7 +229,7 @@
 		$(".live").on("click", function() {
 			var clubNo = $("#no").val();
 			var clubTitle = $("#clubTitle").val();
-			var profile = $("#profile").val();
+			var profile = $("#session_profileImage").val();
 			var nickName = $("#nickName").val();
 			var num;
 			console.log("profile : "+profile);
@@ -675,7 +675,7 @@
 									</c:if>
 								</c:if>				 	
 						 	</c:forEach>
-						 	</c:if>	
+						 	</c:if>
 											
 						<c:if test="${ fn:trim(sessionScope.user.userId) == fn:trim(club.user.userId) }">
 							<button type="button" class="plain button red cancel" id="updateClub">수&nbsp;정</button>
@@ -835,7 +835,6 @@
 				
 	
 	
-		<br><br><br><br><br><br>
 		
 		<!-- footer start -->
 		<jsp:include page="/footer.jsp" />

@@ -283,12 +283,19 @@ public class ClubController {
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
 		}
+		if(search.getSearchCondition() != null) {
+			if(search.getSearchCondition().equals("0")) {
+				search.setSearchCondition(null);
+			}
+		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
 		
 		Search search2 = new Search();
 		
 		search2.setSearchKeyword(user.getUserId());
+		
+		System.out.println("페이지 : " + search.getCurrentPage() + ", seachConditoin : " + search.getSearchCondition());
 		
 		Map<String, Object> map = clubService.getClubList(search);
 		Map<String, Object> map1 = clubService.getApprovalConditionList(search2);
@@ -695,6 +702,12 @@ public class ClubController {
 		clubMap = clubService.getClub(returnClubNo);
 		model.addAttribute("club", clubMap.get("club"));
 		
+		// 모임에 참여하는 인원 리스트
+		Map<String, Object> meetingMember = new HashMap<String, Object>();
+		Search search2 = new Search();
+		search2.setSearchKeyword(meetingNo);
+		meetingMember = clubService.getMeetingMemberList(search2);
+		model.addAttribute("meetingMemberList", meetingMember.get("meetingMemberList"));
 		
 		return "forward:/club/getMeeting.jsp";
 	}
