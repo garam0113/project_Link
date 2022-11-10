@@ -56,13 +56,10 @@
 		});
 
 		$("button:contains('이전')").bind("click", function(){
-			if(${empty sessionScope.user.userId}){
-				$("form").attr("method","get").attr("action","/serviceCenter/getQandAList").submit();
-			}
-			else if(${!empty sessionScope.user.userId}){
-				$("form").attr("method","post").attr("action","/serviceCenter/getQandAList/${sessionScope.user.userId}").submit();
-			}
+			
+				history.go(-1); 
 		})
+		
 		
 		
 	});
