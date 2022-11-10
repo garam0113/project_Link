@@ -155,7 +155,7 @@ body {
 					<tr>
 						<th></th>
 						<td align="left" name ="qandARegDate" id="qandARegDate" style="display: flex; height: 40px;">${qandA.qandARegDate }</td>
-						<td align="left" style="transform: translateX(-370px);" style="display: flex; height: 40px;"><strong>${qandA.userId.nickName}</strong></td>
+						<td align="left" style="transform: translateX(400px); display: flex; height: 40px;"><strong>작성자 : ${qandA.userId.nickName}</strong></td>
 						
 					</tr>
 					<tr >

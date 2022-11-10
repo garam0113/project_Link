@@ -226,7 +226,6 @@ body {
 							
 						</c:if>
 						<td><c:if test="${qandA.qandAImage1 != null }">
-					
 						<input type="hidden" name="qandAImage1" id="qandAImage1" value="${qandA.qandAImage1}">
 						<img src="/resources/image/uploadFiles/${qandA.qandAImage1}" 
 						style="vertical-align: sub; display: inline-block; width:250px; height:250px; border: 10px solid white; border-radius: 15px;
