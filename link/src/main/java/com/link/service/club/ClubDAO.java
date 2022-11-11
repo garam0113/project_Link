@@ -10,6 +10,7 @@ import com.link.service.domain.ClubUser;
 import com.link.service.domain.Meeting;
 import com.link.service.domain.Participant;
 import com.link.service.domain.Pay;
+import com.link.service.domain.User;
 
 public interface ClubDAO {
 
@@ -102,6 +103,9 @@ public interface ClubDAO {
 	
 	// 게시물 아이콘 클릭시 로그인한 회원이 해당 모임의 모임원인지 확인
 	public String getClubMemberListCheck(Club club) throws Exception;
+	
+	// 일정 생성 후 참여자로 등록하기 위해서 가장 최근 등록한 일정번호를 가져온다
+	public Meeting getMeetingNo(Participant participant) throws Exception;
 	
 	
 }

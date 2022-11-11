@@ -230,10 +230,10 @@
 	    			
 				} else {
 					var msg = rsp.error_msg;
-					Swal.fire({
+					/* Swal.fire({
 						icon: 'error',
 						title: msg,
-					})
+					}) */
 					return;
 				}
 			});

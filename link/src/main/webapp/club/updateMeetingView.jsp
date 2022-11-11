@@ -305,7 +305,7 @@ nav > ul > li{
 			<div class="container" style="background: white; height: 1400px; padding-bottom: 350px;">
 	
 				<div>
-					<img src="/resources/image/uploadFiles/${ club.clubTitle }" style="width: 100%; height: 550px; margin-top: 14px;">
+					<img src="/resources/image/uploadFiles/${ club.clubImage }" style="width: 100%; height: 550px; margin-top: 14px;">
 				</div>
 				
 				<div class="form_txtInput">

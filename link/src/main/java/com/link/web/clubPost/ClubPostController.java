@@ -214,6 +214,10 @@ public class ClubPostController {
 		//model.addAttribute("alarm", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarm"));
 		//model.addAttribute("alarmCount", serviceCenterService.getPushList((User)session.getAttribute("user")).get("alarmCount"));
 		
+		// 모임 대표이미지 가져간다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
 		
 		
 		return "forward:/clubPost/getClubPost.jsp";
@@ -278,8 +282,11 @@ public class ClubPostController {
 	}
 
 	@RequestMapping(value = "updateClubPost")
-	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session) throws Exception {
+	public String updateClubPost(@ModelAttribute ClubPost clubPost, Model model, Map<String, Object> map, Report report, HttpSession session, Comment comment, Chat chat) throws Exception {
 		System.out.println("/updateClubPost : POST : 모임게시물 수정, 수정된 모임게시물 상세보기 가져온 후 모임게시물 상세보기 화면으로 이동");
+		System.out.println("모임번호 : " + clubPost.getClubNo() + ", 모임게시물번호 : " + clubPost.getClubPostNo()
+		+ ", 제목 : " + clubPost.getClubPostTitle() + ", 내용 : " + clubPost.getClubPostContent());
+		
 		// session으로 로그인한 회원 정보를 가져온다
 		clubPost.setUser((User)session.getAttribute("user"));
 
@@ -313,9 +320,27 @@ public class ClubPostController {
 		
 		System.out.println("모임 게시물 대표 영상 썸네일 : " + clubPost.getClubPostVideo1() + ", 모임 게시물 대표 이미지 : " + clubPost.getImage1() + ", 모임 게시물 작성자 아이디 : " + clubPost.getUser().getUserId());
 		
+		map.put("comment", comment);
 		map.put("report", report);
 		map.put("clubPost", clubPost);
 		model.addAttribute("clubPost", clubPostServiceImpl.updateClubPost(map));
+		
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		// 1:1 채팅 채팅방번호 가져온다
+		chat.setUser((User)session.getAttribute("user"));
+		model.addAttribute("getChat", clubPostServiceImpl.getChat(chat));
+		// 모임채팅 roomId 가져온다
+		model.addAttribute("roomList", clubPostServiceImpl.getRoomIdList((User)session.getAttribute("user")));
+		///////////////////////// 채팅에 필요한 코딩 //////////////////////////////////
+		
+		// 댓글 가져온다
+		//model.addAttribute("clubPost", clubPostServiceImpl.getClubPost(map));
+		
+		// 모임 대표이미지 가져간다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
+				
 		return "forward:/clubPost/getClubPost.jsp";
 	}
 
@@ -330,6 +355,12 @@ public class ClubPostController {
 		model.addAttribute("heartList", map.get("heartList"));
 		model.addAttribute("clubPostListCount", map.get("clubPostListCount"));
 		// 모임게시물 리스트 : clubPostList, 모임게시물 리스트 개수 : clubPostListCount
+
+		// 모임 대표이미지 가져간다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
+		
 		return "forward:/clubPost/getClubPostList.jsp";
 	}
 	

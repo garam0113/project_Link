@@ -928,6 +928,26 @@ FROM club WHERE delete_condition = 0 and club_category = ? ORDER BY club_no ) V1
 
 
 
+SELECT *
+FROM ( SELECT *
+		FROM meeting
+		WHERE add_meeting_user_id = 'alexash'
+		order by meeting_no DESC )
+WHERE ROWNUM = 1
+
+SELECT *
+FROM ( SELECT * FROM meeting WHERE add_meeting_user_id = 'alexash' order by meeting_no DESC )
+WHERE ROWNUM = 1
+
+
+INSERT into participant  (    participant_no ,    meeting_no ,    participant_user_id      )     VALUES (    seq_participant_no.nextval ,    ? ,    ?   )
+
+
+
+
+
+
+
 
 
 

@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.link.common.Search;
+import com.link.service.club.ClubService;
 import com.link.service.clubPost.ClubPostService;
 import com.link.service.domain.Chat;
 import com.link.service.domain.ClubPost;
@@ -41,6 +42,10 @@ public class ClubPostRestController {
 	@Autowired
 	@Qualifier("clubPostServiceImpl")
 	ClubPostService clubPostServiceImpl;
+
+	@Autowired
+	@Qualifier("clubServiceImpl")
+	ClubService clubServiceImpl;
 
 	@Autowired
 	@Qualifier("ServiceCenterServiceImpl")
@@ -200,7 +205,12 @@ public class ClubPostRestController {
 		
 		
 		////////////////////////////////////// BUSINESS LOGIC /////////////////////////////////////////
+
 		
+		// 모임 대표이미지 가져간다
+		Map<String, Object> clubMap = new HashMap<String, Object>();
+		clubMap = clubServiceImpl.getClub(clubPost.getClubNo());
+		model.addAttribute("club", clubMap.get("club"));
 		
 		
 		map.put("report", report);
@@ -219,7 +229,7 @@ public class ClubPostRestController {
 		//String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 		String savedFileName = multipartFile.getOriginalFilename();	//저장될 파일 명
 		
-		File targetFile = new File("C:\\Users\\bitcamp\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);	//저장될 전체 파일 경로 + 파일명
+		File targetFile = new File("C:\\Users\\903-19\\git\\link\\link\\src\\main\\webapp\\resources\\image\\uploadFiles\\" + savedFileName);	//저장될 전체 파일 경로 + 파일명
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장

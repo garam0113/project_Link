@@ -142,8 +142,11 @@
 				//alert("모임게시물 수정");
 				//$("form").attr("method", "post").attr("action", "/clubPost/updateClubPostView?clubNo="+${ clubPost.getClubPost.clubNo }+"&clubPostNo="+${ clubPost.getClubPost.clubPostNo }).submit();
 				
-				var clubNo = $("#clubNo").val();
-				var clubPostNo = $("#clubPostNo").val();
+				var clubNo = '${ clubPost.getClubPost.clubNo }';
+				var clubPostNo = '${ clubPost.getClubPost.clubPostNo }';
+				
+				//alert("모임번호 : " + clubNo);
+				//alert("모임게시물번호 : " + clubPostNo);
 				
 				// 기존 데이터 가져와서 넣기
 				$.ajax( "/clubPostRest/json/getClubPost",
@@ -191,12 +194,11 @@
 					  cancelButtonText: '취소',
 					}).then((result) => {
 					  if (result.isConfirmed) {
-					    Swal.fire(
+					    /* Swal.fire(
 					      '삭제완료',
-					      '댓글이 삭제되었습니다',
+					      '게시물이 삭제되었습니다',
 					      'success'
-					    )
-					    
+					    ) */
 					    clubPostdeleteFnc();
 					  }//end of if
 					})// end of swal
@@ -1049,22 +1051,25 @@
 					/* $("form[name='summernoteUpdateClubPost']").attr("method", "post").attr("enctype", "multipart/form-data")
 					.attr("action", "/clubPost/updateClubPost?clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&clubPostTitle="+$("input[name='clubPostTitle']").val()
 					+"&clubPostContent="+$("#summernote").val()).attr("accept-charset", "EUC-KR").submit(); */
-					
-					//self.location="/clubPost/updateClubPost?clubPostNo="+${ clubPost.getClubPost.clubPostNo }+"&clubPostTitle="+$("input[name='clubPostTitle']").val()+"&clubPostContent="+$("#summernote").val()
-					
+
 					// 모달창 닫기
 					$('#club-post-update-modal').modal("hide");
 					
 					// 게시물 제목
-					var title = $("input[name='clubPostTitle']").val();
-					
+					var title = $("input[name='clubPostTitle']").val();					
 					// 게시물 내용
 					var content = $("#summernote").val();
-					
+					// 모임번호
+					var clubNo = '${ clubPost.getClubPost.clubNo }';
 					// 게시물 번호
-					var clubPostNo = $("#clubPostNo").val();
+					var clubPostNo = '${ clubPost.getClubPost.clubPostNo }';
+					
+					//alert("모임번호 : " + clubNo + ", 게시물번호 : " + clubPostNo + ", 제목 : " + title + ", 내용 : " + content);
+					
+					self.location="/clubPost/updateClubPost?clubNo="+clubNo+"&clubPostNo="+clubPostNo+"&clubPostTitle="+title+"&clubPostContent="+content;
+					
 
-					$.ajax( "/clubPostRest/json/updateClubPostSummernote",
+					/* $.ajax( "/clubPostRest/json/updateClubPostSummernote",
 						{
 							method : "POST",
 							data : JSON.stringify({
@@ -1097,7 +1102,7 @@
 								$('#club-post-update-modal').modal("hide");
 								
 							}//end of success
-						});//end of ajax
+						});//end of ajax */
 				});
 				
 				$("#summernoteCancle").bind("click", function(){
