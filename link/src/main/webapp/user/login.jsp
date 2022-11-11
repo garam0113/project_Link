@@ -265,10 +265,10 @@ z-index: 10000;
 	})  
 	})
 		var naver_id_login = new naver_id_login("Ml9RKhaCexgFbiAJLp0c",
-				"http://192.168.0.183:8080/toolbar.jsp");
+				"http://127.0.0.1:8080/toolbar.jsp");
 		var state = naver_id_login.getUniqState(); 
 		naver_id_login.setButton("green", 3, 50);
-		naver_id_login.setDomain("http://192.168.0.183:8080/"); 
+		naver_id_login.setDomain("http://127.0.0.1:8080/"); 
 		naver_id_login.setState(state);
 		naver_id_login.init_naver_id_login();
 		console.log(naver_id_login);

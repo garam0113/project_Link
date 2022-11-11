@@ -2301,7 +2301,7 @@
 						<div class="column three">
 							<div>
 								<button class="btn btn-primary searchPlace" type="button"
-									onclick="window.open('http://localhost:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
+									onclick="window.open('http://192.168.0.21:5005/', '_blank', 'width=800, height=600, location =no,status=no, toolbar=no, scrollbars=no'); return false;">주변검색</button>
 	
 								<%-- 검색 --%>
 								<form id="searchForm" method="POST" action="/feed/getFeedList">
