@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="link:war">
+    <output-path>$PROJECT_DIR$/../git/link/link/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>link</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="link.war">
+      <element id="artifact" artifact-name="link:war exploded" />
+    </root>
+  </artifact>
+</component>
